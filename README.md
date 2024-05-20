@@ -1,4 +1,4 @@
-# Geeks REACT
+# DIMP REACT
 
 Geeks UI Kit is built with the most popular front-end framework [React Bootstrap](https://react-bootstrap.github.io/) latest with react-scripts.
 
