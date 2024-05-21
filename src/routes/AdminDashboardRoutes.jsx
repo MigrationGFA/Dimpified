@@ -42,16 +42,16 @@ export const DashboardMenu = [
 
   {
     id: uuid(),
-    title: "Jobs",
+    title: "My Campaign",
     icon: "book",
-    children: [
-      { id: uuid(), link: "admin/jobs/all-jobs", name: "All Jobs" },
-      {
-        id: uuid(),
-        link: "admin/jobs/job-category",
-        name: "Job Category",
-      },
-    ],
+    // children: [
+    //   { id: uuid(), link: "admin/jobs/all-jobs", name: "All campaign" },
+    //   {
+    //     id: uuid(),
+    //     link: "admin/jobs/job-category",
+    //     name: "Campaign Category",
+    //   },
+    // ],
   },
   {
     id: uuid(),
@@ -62,12 +62,12 @@ export const DashboardMenu = [
 
   {
     id: uuid(),
-    title: "User",
+    title: "Students",
     icon: "user",
-    children: [
-      { id: uuid(), link: "/admin/JobSeeker", name: "JobSeeker" },
-      { id: uuid(), link: "/admin/JobProvider", name: "JobProvider" },
-    ],
+    // children: [
+    //   { id: uuid(), link: "/admin/JobSeeker", name: "JobSeeker" },
+    //   { id: uuid(), link: "/admin/JobProvider", name: "JobProvider" },
+    // ],
   },
   {
     id: uuid(),
@@ -85,6 +85,15 @@ export const DashboardMenu = [
     title: "Support",
     icon: "help-circle",
     link: "/admin/support",
+  },
+  {
+    id: uuid(),
+    title: "Notification",
+    icon: "help-circle",
+    children: [
+      {id: uuid(), link:"/user/notifications", name: "Notification"},
+      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},l
+    ]
   },
 
   {
@@ -163,11 +172,7 @@ export const DashboardMenu = [
   //         link: "/authentication/forget-password",
   //         name: "Forget Password",
   //       },
-  //       {
-  //         id: uuid(),
-  //         link: "/authentication/notifications",
-  //         name: "Notifications",
-  //       },
+        
   //       {
   //         id: uuid(),
   //         link: "/marketing/specialty/404-error/",
