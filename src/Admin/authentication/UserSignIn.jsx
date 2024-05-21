@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../context/AuthContext';
 
 import Logo from '../../assets/unleashified-logo.png';
 
-const AdminSignIn = () => {
+const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { Login, loading } = useGlobalContext();
   const navigate = useNavigate();
@@ -46,10 +46,16 @@ const AdminSignIn = () => {
           <Card>
             <Card.Body className="p-6">
               <div className="mb-4">
-                <Link to="/">
+                <Link to="/user/dashboard/overview">
                   <Image src={Logo} className="mb-4" alt="" />
                 </Link>
                 <h1 className="mb-1 fw-bold">Sign in</h1>
+                <span>
+                    Don’t have an account?
+                    <Link to="/user/signup" className="ms-1">
+                      Sign up
+                    </Link>
+                  </span>
               </div> 
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
@@ -110,4 +116,4 @@ const AdminSignIn = () => {
   );
 };
 
-export default AdminSignIn;
+export default UserSignIn;

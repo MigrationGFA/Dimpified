@@ -32,6 +32,10 @@ import JobProvider from "../Admin/user/JobProvider";
 import JobSeeker from "../Admin/user/JobSeeker";
 import AdminDashboardIndex from "../Admin/AdminDashboardIndex";
 
+// Import Notification
+import Notification from "../Admin/authentication/Notifications";
+import NotificationSingle from "../Admin/Notification/NotificationSingle";
+
 // ** Import Admin Payment components
 import AllPayment from "../Admin/Payment/AllPayment";
 import PendingPayment from "../Admin/Payment/PendingPayment";
@@ -39,7 +43,8 @@ import ReceivedPayment from "../Admin/Payment/ReceivedPayment";
 import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
 
 // ** Import Admin Authentication components
-import AdminSignIn from "../Admin/authentication/AdminSignIn";
+import UserSignIn from "../Admin/authentication/UserSignIn";
+import UserSignUp from "../Admin/authentication/UserSignUp"
 import AdminForgetPassword from "../Admin/authentication/AdminForgetPassword";
 
 // ** Import Admin Support components
@@ -123,7 +128,8 @@ const AllRoutes = () => {
       <Route element={<AuthLayout />}>
         <Route path="/authentication/signup" element={<SignUp />} />
         <Route path="/authentication/signin" element={<SignIn />} />
-        <Route path="/admin/signin" element={<AdminSignIn />} />
+        <Route path="/" element={<UserSignIn />} />
+        <Route path="/user/signup" element={<UserSignUp />} />
         <Route
           path="/admin/forget-password"
           element={<AdminForgetPassword />}
@@ -138,7 +144,7 @@ const AllRoutes = () => {
         <Route path="/user/reset-password" element={<NewPassword />} />
       </Route>
       {/* Landing Pages */}
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/landingpage" element={<LandingPage />} />
       <Route path="/aboutus" element={<About />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/contactUs" element={<Contact />} />
@@ -297,8 +303,11 @@ const AllRoutes = () => {
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
-        <Route path="/admin/dashboard/overview" element={<Overview />} />
-        <Route path="/admin/dashboard/analytics" element={<Analytics />} />
+        <Route path="/user/dashboard/overview" element={<Overview />} />
+        <Route path="/user/dashboard/analytics" element={<Analytics />} />
+        <Route path="/user/notifications" element={<Notification />} />
+        <Route path="user/notification-single" element={<NotificationSingle />} />
+
         <Route path="/admin/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/admin/out-source" element={<OutSource />} />
         <Route

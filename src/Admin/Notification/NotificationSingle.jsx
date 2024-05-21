@@ -19,7 +19,7 @@ import DotBadge from '../../Components/elements/bootstrap/DotBadge';
 // import data files
 import NotificationData from '../../data/NotificationData';
 
-const Notifications = () => {
+const NotificationSingle = () => {
 	function NotificationsIcon(icon, color) {
 		if (icon === 'ThumbsUp') {
 			return <ThumbsUp className={`text-${color} me-1`} size="12px" />;
@@ -140,4 +140,4 @@ const Notifications = () => {
 	);
 };
 
-export default Notifications;
+export default NotificationSingle;
