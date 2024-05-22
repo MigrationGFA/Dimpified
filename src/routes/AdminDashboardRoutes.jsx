@@ -35,8 +35,8 @@ export const DashboardMenu = [
     title: "Dashboard",
     icon: "home",
     children: [
-      { id: uuid(), link: "admin/dashboard/overview", name: "Overview" },
-      { id: uuid(), link: "admin/dashboard/analytics", name: "Analytics" },
+      { id: uuid(), link: "user/dashboard/overview", name: "Overview" },
+      { id: uuid(), link: "user/dashboard/analytics", name: "Analytics" },
     ],
   },
 
