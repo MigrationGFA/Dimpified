@@ -91,9 +91,13 @@ export const DashboardMenu = [
     title: "Notification",
     icon: "help-circle",
     children: [
-      {id: uuid(), link:"/user/notifications", name: "Notification"},
-      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},l
-    ]
+      { id: uuid(), link: "/user/notifications", name: "Notification" },
+      {
+        id: uuid(),
+        link: "/user/notification-single",
+        name: "Notification Single",
+      },
+    ],
   },
 
   {
@@ -172,7 +176,7 @@ export const DashboardMenu = [
   //         link: "/authentication/forget-password",
   //         name: "Forget Password",
   //       },
-        
+
   //       {
   //         id: uuid(),
   //         link: "/marketing/specialty/404-error/",
