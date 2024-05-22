@@ -35,11 +35,14 @@ import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
 // ** Import Admin Authentication components
 import UserSignIn from "../Admin/authentication/UserSignIn";
 import UserSignUp from "../Admin/authentication/UserSignUp"
-import AdminForgetPassword from "../Admin/authentication/AdminForgetPassword";
+import UserForgetPassword from "../Admin/authentication/UserForgetPassword";
 
 // ** Import Admin Support components
 import Support from "../Admin/Support/Support";
 import Resolution from "../Admin/Support/Resolution";
+
+// Import Onboard
+import Onboard from "../Pages/Creator/Onboard"
 
 const AllRoutes = () => {
   return (
@@ -49,8 +52,8 @@ const AllRoutes = () => {
         <Route path="/" element={<UserSignIn />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route
-          path="/admin/forget-password"
-          element={<AdminForgetPassword />}
+          path="/user/forget-password"
+          element={<UserForgetPassword />}
         />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
@@ -79,6 +82,7 @@ const AllRoutes = () => {
         <Route path="/admin/withdraw-request" element={<WithdrawPayment />} />
         <Route path="/admin/support" element={<Support />} />
         <Route path="/admin/resolution" element={<Resolution />} />
+        <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="admin/dashboard/layouts/layout-vertical"
           element={<Overview />}

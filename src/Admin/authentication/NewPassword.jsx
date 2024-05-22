@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image, Alert } from "react-bootstrap";
-import Logo from "../assets/unleashified-logo.png";
+import Logo from "../assets/GFA logo Rebrand Blue.png";
 import Logo2 from "../assets/LogoList/cote-logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { showToast } from "../Components/Showtoast";
+import { showToast } from "../../Components/Showtoast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
@@ -54,7 +54,7 @@ const ForgetPassword = () => {
     console.log("this can submit");
     try {
       const response = await axios.post(
-        `https://unleashified-backend.azurewebsites.net/api/v1/reset-password`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/reset-password`,
         {
           email: queryParam.get("email"),
           resetToken: queryParam.get("token"),

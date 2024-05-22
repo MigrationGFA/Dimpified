@@ -1,14 +1,14 @@
+// import node module libraries
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
+import Logo from "../../assets/GFA logo Rebrand Blue.png";
+// import Logo2 from "../assets/LogoList/cote-logo.png";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import { showToast } from "../../Components/Showtoast";
-
-// import media files
-import Logo from "../../assets/images/brand/logo/logo-icon.svg";
 
 const formSchema = yup.object().shape({
   email: yup
@@ -29,12 +29,13 @@ const ForgetPassword = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
+
   const submit = async (data, e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://unleashified-backend.azurewebsites.net/api/v1/forgot-password",
+        "https://dimpified-backend.azurewebsites.net/api/v1/forgot-password",
         {
           email: data.email,
         }
@@ -46,20 +47,27 @@ const ForgetPassword = () => {
       showToast(error.response.data.message);
     }
   };
-
   return (
     <Fragment>
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
             <Card.Body className="p-6">
-              <div className="mb-4">
+              <div className="mb-4 d-flex flex-column align-items-center justify-content-center">
                 <Link to="/">
-                  <Image src={Logo} className="mb-4" alt="" />
+                  <Image
+                    src={Logo}
+                    className="mb-4"
+                    alt=""
+                    style={{ height: "100px", width: "120px" }}
+                  />
                 </Link>
                 <h1 className="mb-1 fw-bold">Forgot Password</h1>
-                <span>Fill the form to reset your password.</span>
+                <span className="text-center">
+                  Fill the form to reset your password.
+                </span>
               </div>
+
               {/* Form */}
               <Form onSubmit={handleSubmit(submit)}>
                 <Row>
@@ -67,11 +75,11 @@ const ForgetPassword = () => {
                     {/*  email */}
                     <Form.Label>Email</Form.Label>
                     {/* <Form.Control
-                                            type="email"
-                                            id="email"
-                                            placeholder="Enter your email"
-                                            required
-                                        /> */}
+                      type="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      required
+                    /> */}
                     <Form.Control
                       type="email"
                       id="email"
@@ -103,10 +111,13 @@ const ForgetPassword = () => {
                         Send Reset Link
                       </Button>
                     )}
+                    {/* <Button variant="primary" type="submit">
+                      Send Reset Link
+                    </Button> */}
                   </Col>
                 </Row>
                 <span>
-                  Return to <Link to="/admin/signin">Sign in</Link>
+                  Return to <Link to="/">Sign in</Link>
                 </span>
               </Form>
             </Card.Body>
