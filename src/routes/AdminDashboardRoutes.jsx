@@ -35,8 +35,8 @@ export const DashboardMenu = [
     title: "Dashboard",
     icon: "home",
     children: [
-      { id: uuid(), link: "admin/dashboard/overview", name: "Overview" },
-      { id: uuid(), link: "admin/dashboard/analytics", name: "Analytics" },
+      { id: uuid(), link: "creator/dashboard/overview", name: "Overview" },
+      { id: uuid(), link: "creator/dashboard/analytics", name: "Analytics" },
     ],
   },
 
@@ -53,16 +53,16 @@ export const DashboardMenu = [
     //   },
     // ],
   },
-  {
-    id: uuid(),
-    title: "Out-Source",
-    icon: "book",
-    link: "/admin/out-source",
-  },
+  // {
+  //   id: uuid(),
+  //   title: "Out-Source",
+  //   icon: "book",
+  //   link: "/admin/out-source",
+  // },
 
   {
     id: uuid(),
-    title: "Students",
+    title: "My Users",
     icon: "user",
     // children: [
     //   { id: uuid(), link: "/admin/JobSeeker", name: "JobSeeker" },
@@ -74,37 +74,28 @@ export const DashboardMenu = [
     title: "Payment",
     icon: "user",
     children: [
-      // { id: uuid(), link: "/admin/all-payment", name: "All" },
-      { id: uuid(), link: "/admin/pending-payment", name: "Pending" },
-      { id: uuid(), link: "/admin/received-payment", name: "Received" },
-      { id: uuid(), link: "/admin/withdraw-request", name: " Withdraw" },
+      { id: uuid(), link: "/creator/received-payment", name: "Received" },
+      { id: uuid(), link: "/creator/withdraw-request", name: " Withdraw" },
     ],
   },
   {
     id: uuid(),
     title: "Support",
     icon: "help-circle",
-    link: "/admin/support",
+    link: "/creator/support",
   },
   {
     id: uuid(),
     title: "Notification",
     icon: "help-circle",
-    children: [
-      { id: uuid(), link: "/user/notifications", name: "Notification" },
-      {
-        id: uuid(),
-        link: "/user/notification-single",
-        name: "Notification Single",
-      },
-    ],
+    link: "/creator/notifications",
   },
 
   {
     id: uuid(),
     title: "Resolution",
     icon: "help-circle",
-    link: "/admin/resolution",
+    link: "/creator/resolution",
   },
   // {
   // 	id: uuid(),

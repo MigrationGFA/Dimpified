@@ -98,7 +98,14 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Col lg={12} md={12} className="mb-0 d-grid gap-2">
+                  <Link
+                      to="/user/Forget-password"
+                      className="ms-1 text-bold"
+                    >
+                      Forgot Password
+                    </Link>
+
+                    <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
                     {loading ? (
                       <Button
                         variant="primary"

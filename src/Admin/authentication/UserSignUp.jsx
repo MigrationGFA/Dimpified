@@ -146,7 +146,7 @@ const UserSignUp = () => {
                       </Button>
                     ) : (
                       <Button variant="primary" type="submit">
-                        Sign in
+                        Sign up
                       </Button>
                     )}
                   </Col>

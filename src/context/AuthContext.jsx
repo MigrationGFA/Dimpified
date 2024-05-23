@@ -52,7 +52,7 @@ const UserProvider = ({ children }) => {
         const seekerURL = sessionStorage.getItem("redirectSeekerUrl");
         showToast(response.data.message);
 
-        if (response.data.data.interest === "yes") {
+        if (response.data.data.interest === "no") {
           navigate("/creator/onboard");
         }
 
