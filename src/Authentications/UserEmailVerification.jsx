@@ -18,7 +18,7 @@ const UserEmailVerification = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://unleashified-backend.azurewebsites.net/api/v1/verify-email`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/verify-email`,
         {
           verificationToken: queryParam.get("token"),
           email: queryParam.get("email"),

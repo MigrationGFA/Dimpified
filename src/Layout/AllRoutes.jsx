@@ -44,7 +44,7 @@ import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
 
 // ** Import Admin Authentication components
 import UserSignIn from "../Admin/authentication/UserSignIn";
-import UserSignUp from "../Admin/authentication/UserSignUp"
+import UserSignUp from "../Admin/authentication/UserSignUp";
 import AdminForgetPassword from "../Admin/authentication/AdminForgetPassword";
 
 // ** Import Admin Support components
@@ -120,6 +120,7 @@ import ProtectedRoutes from "../Components/ProtectedRoute";
 import OutsourceJobs from "../Providerdashboard/OutsourceJobs";
 import OutsourceAJobs from "../Components/marketing/pages/jobs/outsource-a-job/OutsourceAJob";
 import Outsource from "../Pages/outsource/Outsource";
+import Onboard from "../Pages/creator/Onboard";
 
 const AllRoutes = () => {
   return (
@@ -196,6 +197,7 @@ const AllRoutes = () => {
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoutes />}>
+        <Route path="/creator/onboard" element={<Onboard />} />
         <Route
           path="/jobs/listing/dashboard-job-list/"
           element={<DashboardJobSingle />}
@@ -306,7 +308,10 @@ const AllRoutes = () => {
         <Route path="/user/dashboard/overview" element={<Overview />} />
         <Route path="/user/dashboard/analytics" element={<Analytics />} />
         <Route path="/user/notifications" element={<Notification />} />
-        <Route path="user/notification-single" element={<NotificationSingle />} />
+        <Route
+          path="user/notification-single"
+          element={<NotificationSingle />}
+        />
 
         <Route path="/admin/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/admin/out-source" element={<OutSource />} />

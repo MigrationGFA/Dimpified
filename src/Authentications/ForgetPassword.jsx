@@ -2,7 +2,7 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
-import Logo from "../assets/unleashified-logo.png";
+import Logo from "../assets/GFA logo Rebrand Blue.png";
 import Logo2 from "../assets/LogoList/cote-logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,7 +35,7 @@ const ForgetPassword = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://unleashified-backend.azurewebsites.net/api/v1/forgot-password",
+        "https://dimpified-backend.azurewebsites.net/api/v1/forgot-password",
         {
           email: data.email,
         }

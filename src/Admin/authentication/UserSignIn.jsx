@@ -1,13 +1,13 @@
-import React, { Fragment, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Col, Row, Card, Form, Button, Image } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useGlobalContext } from '../../context/AuthContext';
+import React, { Fragment, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useGlobalContext } from "../../context/AuthContext";
 
-import Logo from '../../assets/unleashified-logo.png';
+import Logo from "../../assets/GFA logo Rebrand Blue.png";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,27 +15,30 @@ const UserSignIn = () => {
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(prev => !prev);
+    setPasswordVisible((prev) => !prev);
   };
 
   const formSchema = yup.object().shape({
-    email: yup.string().required('Email cannot be empty').email('Invalid email address'),
-    password: yup.string().required('Password is required'),
+    email: yup
+      .string()
+      .required("Email cannot be empty")
+      .email("Invalid email address"),
+    password: yup.string().required("Password is required"),
   });
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(formSchema)
+    resolver: yupResolver(formSchema),
   });
 
   const onSubmit = async (data, e) => {
     try {
       await Login(data, e); // Pass the event object to the Login function
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error("Error logging in:", error);
     }
   };
 
@@ -47,16 +50,21 @@ const UserSignIn = () => {
             <Card.Body className="p-6">
               <div className="mb-4">
                 <Link to="/user/dashboard/overview">
-                  <Image src={Logo} className="mb-4" alt="" />
+                  <Image
+                    src={Logo}
+                    className="mb-4"
+                    alt="logo"
+                    style={{ height: "100px" }}
+                  />
                 </Link>
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
-                    Don’t have an account?
-                    <Link to="/user/signup" className="ms-1">
-                      Sign up
-                    </Link>
-                  </span>
-              </div> 
+                  Don’t have an account?
+                  <Link to="/user/signup" className="ms-1">
+                    Sign up
+                  </Link>
+                </span>
+              </div>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                   <Col lg={12} md={12} className="mb-3">
@@ -64,7 +72,7 @@ const UserSignIn = () => {
                     <Form.Control
                       type="email"
                       placeholder="Email address here"
-                      {...register('email')}
+                      {...register("email")}
                     />
                     <small className="text-danger">
                       {errors.email && errors.email.message}
@@ -74,13 +82,13 @@ const UserSignIn = () => {
                     <Form.Label>Password</Form.Label>
                     <div className="position-relative">
                       <Form.Control
-                        type={passwordVisible ? 'text' : 'password'}
+                        type={passwordVisible ? "text" : "password"}
                         placeholder="**************"
-                        {...register('password')}
+                        {...register("password")}
                       />
                       <div
                         className="position-absolute end-20 top-50 translate-middle-y"
-                        style={{ right: '10px', cursor: 'pointer' }}
+                        style={{ right: "10px", cursor: "pointer" }}
                         onClick={togglePasswordVisibility}
                       >
                         {passwordVisible ? <FaEyeSlash /> : <FaEye />}

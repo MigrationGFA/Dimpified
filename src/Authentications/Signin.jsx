@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
-import Logo from "../assets/unleashified-logo.png";
+import Logo from "../assets/GFA logo Rebrand Blue.png";
 import Logo2 from "../assets/LogoList/cote-logo.png";
 import "./signupforms/signup.css";
 import { useGlobalContext } from "../context/AuthContext";
