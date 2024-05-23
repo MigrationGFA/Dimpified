@@ -54,6 +54,8 @@ const UserProvider = ({ children }) => {
 
         if (response.data.data.interest === "no") {
           navigate("/creator/onboard");
+        } else {
+          navigate("/creator/dashboard/overview");
         }
 
         // if (response.data.data.role === "seeker") {
