@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
 import Ecosystem from "../../assets/ecosystem.png";
 
-const Onboard = () => {
+const OnboardTwo = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { userId } = useGlobalContext();
   const [loading, setLoading] = useState(false);
@@ -157,4 +157,4 @@ const Onboard = () => {
   );
 };
 
-export default Onboard;
+export default OnboardTwo;

@@ -23,7 +23,7 @@ import Logo from "../../assets/GFA logo Rebrand Blue.png";
 import GiftBox from "../../assets/images/background/giftbox.png";
 
 // import routes file
-import { DashboardMenu } from "../../routes/AdminDashboardRoutes";
+import { DashboardMenu } from "../../routes/UserDashboardRoutes";
 
 const NavbarVertical = (props) => {
   const location = useLocation();
