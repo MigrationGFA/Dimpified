@@ -38,19 +38,17 @@ import Support from "../Creator/Support/Support";
 import Resolution from "../Creator/Support/Resolution";
 
 // Import Onboard
-import Onboard from "../Pages/Creator/Onboard"
+import Onboard from "../Pages/creator/Onboard";
 
 const AllRoutes = () => {
   return (
     <Routes>
       {/* Auth Pages */}
       {/* <Route element={<AuthLayout />}> */}
-        <Route path="/" element={<UserSignIn />} />
-        <Route path="/user/signup" element={<UserSignUp />} />
-        <Route
-          path="/user/forget-password"
-          element={<UserForgetPassword />}
-        />
+      <Route path="/" element={<UserSignIn />} />
+      <Route path="/user/signup" element={<UserSignUp />} />
+      <Route path="/user/forget-password" element={<UserForgetPassword />} />
+      <Route path="/creator/Onboard" element={<Onboard />} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>

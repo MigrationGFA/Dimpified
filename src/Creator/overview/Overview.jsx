@@ -57,29 +57,30 @@ const ChartActionMenu = () => {
 
 const Overview = () => {
   const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 0,
+    monthlySeeker: 1,
     totalSeeker: 1,
-    monthlyProvider: 0,
+    monthlyProvider: 1,
     totalProvider: 1,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDashboardData();
+    // fetchDashboardData();
+    setLoading(false);
   }, []);
 
-  const fetchDashboardData = async () => {
-    try {
-      const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview"
-      );
-      setDashboardData(response.data.dashboardData);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-      setLoading(false);
-    }
-  };
+  // const fetchDashboardData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview"
+  //     );
+  //     setDashboardData(response.data.dashboardData);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error fetching dashboard data:", error);
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div>
@@ -104,11 +105,11 @@ const Overview = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightIcon
-                title="Total Job Seeker"
+                title="Total Ecosystem"
                 value={dashboardData.totalSeeker}
                 iconName="user"
                 iconColorVariant="primary"
-                summary="Monthly Job Seekers"
+                summary="Monthly Ecosystem"
                 summaryValue={dashboardData.monthlySeeker}
                 summaryIcon="up"
                 showSummaryIcon
@@ -117,11 +118,11 @@ const Overview = () => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightIcon
-                title="Total Job Provider"
+                title="Total Users"
                 value={dashboardData.totalProvider}
                 iconName="users"
                 iconColorVariant="primary"
-                summary="Monthly Job Providers"
+                summary="Monthly Users"
                 summaryValue={dashboardData.monthlyProvider}
                 summaryIcon="up"
                 showSummaryIcon
@@ -130,11 +131,11 @@ const Overview = () => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightIcon
-                title="Total Job Created"
-                value={dashboardData.totalJob}
+                title="Total Materials "
+                value="0"
                 iconName="user-check"
                 iconColorVariant="primary"
-                summary="Monthly Jobs"
+                summary="Monthly Materials"
                 summaryValue={dashboardData.monthlyJob}
                 summaryIcon="up"
                 showSummaryIcon
@@ -143,12 +144,13 @@ const Overview = () => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightIcon
-                title="Total Services"
-                value={dashboardData.totalService}
+                title="Total Paid Users"
+                // value={dashboardData.totalService}
+                value="0"
                 iconName="users"
                 iconColorVariant="primary"
-                summary="Monthly Services "
-                summaryValue={dashboardData.totalService}
+                summary="Monthly Paid Users"
+                summaryValue="0"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -209,10 +211,10 @@ const Overview = () => {
 
           <Row>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <PopularInstructor title="Popular Job Category" />
+              <PopularInstructor title="Popular EcoSystems" />
             </Col>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <RecentCourses title="Recent Jobs" />
+              <RecentCourses title="Recent Payments" />
             </Col>
             {/* <Col xl={4} lg={6} md={12} className="mb-4">
                             <Activity title="Activity" />

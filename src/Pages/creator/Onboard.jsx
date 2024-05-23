@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Form } from "react-bootstrap";
 import Categories from "../../data/CreatorInterest";
 import axios from "axios";
 import { useGlobalContext } from "../../context/AuthContext";
 import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
+import { FormSelect } from "../../Components/elements/form-select/FormSelect";
 
 const Onboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const { userId } = useGlobalContext();
   const [loading, setLoading] = useState(false);
+  const [department, setDepartment] = useState(null);
 
   // Function to handle selecting or unselecting a category
   const handleCategoryClick = (categoryId) => {
@@ -25,19 +27,37 @@ const Onboard = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    const userId = sessionStorage.getItem("UserId");
     try {
       const response = await axios.post(
-        `https://unleashified-backend.azurewebsites.net/api/v1/save-interest/${userId}`,
-        { interests: selectedCategories }
+        `https://dimpified-backend.azurewebsites.net/api/v1/onboarding`,
+        {
+          userId: userId,
+          categoryInterest: selectedCategories,
+          numberOfTargetAudience: department,
+        }
       );
       setLoading(false);
       showToast(response.data.message);
-      navigate("/JobSeeker");
+      navigate("/creator/dashboard/overview");
     } catch (error) {
       setLoading(false);
       showToast(error.response.message);
     }
   };
+
+  const departments = [
+    { value: "1 - 1000", label: "1 - 1000" },
+    { value: "1001 - 5000", label: "1001 - 5000" },
+    { value: "5000 - 10,000", label: "5000 - 10,000" },
+    { value: "10,001 - 20,000", label: "10,001 - 20,000" },
+    { value: "20,001 - 50,000", label: "20,001 - 50,000" },
+    { value: "50,001 - 100,000", label: "50,001 - 100,000" },
+    { value: "100,001 - 250,000", label: "100,001 - 250,000" },
+    { value: "250,001 - 500,000", label: "250,001 - 500,000" },
+    { value: "500,001 - 1,000,000", label: "500,001 - 1,000,000" },
+    { value: "1,000,001 & More", label: "1,000,001 & More" },
+  ];
 
   return (
     <div className="d-flex justify-content-center align-items-center  ">
@@ -63,6 +83,21 @@ const Onboard = () => {
               </Button>
             ))}
           </div>
+          <Col md={12} xs={12} className="mb-3 mt-5">
+            <Form.Label htmlFor="department">
+              Select Target Audience
+              <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              as={FormSelect}
+              options={departments}
+              placeholder="Select Target Audience"
+              defaultValue=""
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              required
+            />
+          </Col>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end ">
           {loading ? (
@@ -77,7 +112,7 @@ const Onboard = () => {
           ) : (
             <Button
               variant="primary"
-              disabled={selectedCategories.length === 0}
+              disabled={selectedCategories.length === 0 || department === null}
               onClick={handleSubmit}
             >
               Next

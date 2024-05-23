@@ -19,7 +19,7 @@ import "simplebar/dist/simplebar.min.css";
 
 // import media files
 // import InverseLogo from '../../assets/images/brand/logo/logo-inverse.svg';
-import Logo from "../../assets/unleashified-logo.png";
+import Logo from "../../assets/GFA logo Rebrand Blue.png";
 import GiftBox from "../../assets/images/background/giftbox.png";
 
 // import routes file
@@ -86,11 +86,7 @@ const NavbarVertical = (props) => {
       <SimpleBar style={{ maxHeight: "100vh" }}>
         <div className="nav-scroller">
           <div className="navbar-brand">
-            <Image
-              src={Logo}
-              alt="Logo"
-              style={{ width: "140px", height: "100px" }}
-            />
+            <Image src={Logo} alt="Logo" style={{ height: "100px" }} />
           </div>
         </div>
         {/* Dashboard Menu */}
