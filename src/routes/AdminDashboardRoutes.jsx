@@ -42,7 +42,7 @@ export const DashboardMenu = [
 
   {
     id: uuid(),
-    title: "My Campaign",
+    title: "My EcoSystem",
     icon: "book",
     // children: [
     //   { id: uuid(), link: "admin/jobs/all-jobs", name: "All campaign" },
