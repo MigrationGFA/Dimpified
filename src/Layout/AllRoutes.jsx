@@ -34,7 +34,7 @@ import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
 
 // ** Import Admin Authentication components
 import UserSignIn from "../Admin/authentication/UserSignIn";
-import UserSignUp from "../Admin/authentication/UserSignUp"
+import UserSignUp from "../Admin/authentication/UserSignUp";
 import UserForgetPassword from "../Admin/authentication/UserForgetPassword";
 
 // ** Import Admin Support components
@@ -42,26 +42,27 @@ import Support from "../Admin/Support/Support";
 import Resolution from "../Admin/Support/Resolution";
 
 // Import Onboard
-import Onboard from "../Pages/Creator/Onboard"
+import Onboard from "../Pages/creator/Onboard";
 
 const AllRoutes = () => {
   return (
     <Routes>
       {/* Auth Pages */}
       {/* <Route element={<AuthLayout />}> */}
-        <Route path="/" element={<UserSignIn />} />
-        <Route path="/user/signup" element={<UserSignUp />} />
-        <Route
-          path="/user/forget-password"
-          element={<UserForgetPassword />}
-        />
+      <Route path="/" element={<UserSignIn />} />
+      <Route path="/user/signup" element={<UserSignUp />} />
+      <Route path="/user/forget-password" element={<UserForgetPassword />} />
+      <Route path="/creator/Onboard" element={<Onboard />} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
-        <Route path="/user/dashboard/overview" element={<Overview />} />
-        <Route path="/user/dashboard/analytics" element={<Analytics />} />
-        <Route path="/user/notifications" element={<Notification />} />
-        <Route path="user/notification-single" element={<NotificationSingle />} />
+        <Route path="/creator/dashboard/overview" element={<Overview />} />
+        <Route path="/creator/dashboard/analytics" element={<Analytics />} />
+        <Route path="/creator/notifications" element={<Notification />} />
+        <Route
+          path="user/notification-single"
+          element={<NotificationSingle />}
+        />
 
         <Route path="/admin/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/admin/out-source" element={<OutSource />} />
@@ -78,11 +79,11 @@ const AllRoutes = () => {
         <Route path="/admin/jobSeeker" element={<JobSeeker />} />
         <Route path="/admin/all-payment" element={<AllPayment />} />
         <Route path="/admin/pending-payment" element={<PendingPayment />} />
-        <Route path="/admin/received-payment" element={<ReceivedPayment />} />
-        <Route path="/admin/withdraw-request" element={<WithdrawPayment />} />
-        <Route path="/admin/support" element={<Support />} />
-        <Route path="/admin/resolution" element={<Resolution />} />
-        <Route path="/creator/Onboard" element={<Onboard />} />
+        <Route path="/creator/received-payment" element={<ReceivedPayment />} />
+        <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/creator/support" element={<Support />} />
+        <Route path="/creator/resolution" element={<Resolution />} />
+
         <Route
           path="admin/dashboard/layouts/layout-vertical"
           element={<Overview />}
