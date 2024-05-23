@@ -6,7 +6,7 @@ import { Row, Col, Image, Dropdown } from "react-bootstrap";
 import { useGlobalContext } from "../context/AuthContext";
 import DarkLightMode from "./DarkLightMode";
 import { showToast } from "../Components/Showtoast";
-import Notifications from "../Admin/authentication/Notifications";
+import Notifications from "../Creator/authentication/Notifications";
 import Avatar1 from "../assets/images/avatar/avatar-1.jpg";
 
 const QuickMenu = () => {
