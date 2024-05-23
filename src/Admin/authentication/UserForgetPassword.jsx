@@ -2,13 +2,13 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
-import Logo from "../assets/GFA logo Rebrand Blue.png";
-import Logo2 from "../assets/LogoList/cote-logo.png";
+import Logo from "../../assets/GFA logo Rebrand Blue.png";
+// import Logo2 from "../assets/LogoList/cote-logo.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { showToast } from "../Components/Showtoast";
+import { showToast } from "../../Components/Showtoast";
 
 const formSchema = yup.object().shape({
   email: yup
@@ -117,7 +117,7 @@ const ForgetPassword = () => {
                   </Col>
                 </Row>
                 <span>
-                  Return to <Link to="/authentication/signin">Sign in</Link>
+                  Return to <Link to="/">Sign in</Link>
                 </span>
               </Form>
             </Card.Body>

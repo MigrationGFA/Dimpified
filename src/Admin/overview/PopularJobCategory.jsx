@@ -61,7 +61,7 @@ const PopularJobCategory = ({ title }) => {
                   <h4 className="mb-0 h5">{category.companyName}</h4>
                   <span className="me-2 fs-6">
                     <span className="text-dark  me-1 fw-semi-bold">
-                      {category.totalJobs} Jobs
+                      {category.totalJobs} Subscriber
                     </span>
                   </span>
                 </Col>

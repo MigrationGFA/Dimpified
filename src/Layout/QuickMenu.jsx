@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Fragment } from 'react';
+import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Row, Col, Image, Dropdown } from "react-bootstrap";
 import { useGlobalContext } from "../context/AuthContext";
@@ -26,12 +26,14 @@ const QuickMenu = () => {
 
   return (
     <Fragment>
-      <DarkLightMode />
+      <div style={{ marginRight: "10px" }}>
+        <DarkLightMode />
+      </div>
       <Dropdown as="li">
         <Dropdown.Toggle
           as="a"
           bsPrefix=" "
-          className="text-dark icon-notifications me-lg-1  btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
+          className="text-dark  icon-notifications me-lg-1  btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
           id="dropdownNotification"
         >
           <i className="fe fe-bell"></i>
@@ -53,7 +55,7 @@ const QuickMenu = () => {
           <Notifications />
           <div className="border-top px-3 pt-3 pb-3">
             <Link
-              to="/authentication/notifications"
+              to="/creator/notifications"
               className="text-link fw-semi-bold"
             >
               See all Notifications

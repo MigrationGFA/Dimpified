@@ -20,7 +20,7 @@ const UserProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://unleashified-backend.azurewebsites.net/api/v1/login`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/login`,
         {
           email: data.email,
           password: data.password,
@@ -28,7 +28,7 @@ const UserProvider = ({ children }) => {
       );
       setLoading(false);
       if (response.status === 200) {
-        const name = response.data.data.username;
+        const name = response.data.data.organizationName;
         const id = response.data.data.UserId;
         const image = response.data.data.image
           ? response.data.data.image
@@ -51,31 +51,38 @@ const UserProvider = ({ children }) => {
         sessionStorage.setItem("profile", response.data.data.profile);
         const seekerURL = sessionStorage.getItem("redirectSeekerUrl");
         showToast(response.data.message);
-        if (response.data.data.role === "seeker") {
-          if (response.data.data.profile === true) {
-            if (seekerURL) {
-              navigate(seekerURL);
-            } else {
-              navigate("/JobSeeker");
-            }
-          } else if (response.data.data.profile === false) {
-            navigate("/jobs/upload-resume");
-          }
-        } else if (response.data.data.role === "provider") {
-          if (response.data.data.profile === true) {
-            navigate("/Providerdashboard");
-          } else {
-            navigate("/provider-profile");
-          }
-        } else if (response.data.data.role === "admin") {
-          navigate("/admin/dashboard/overview");
+
+        if (response.data.data.interest === "no") {
+          navigate("/creator/onboard");
+        } else {
+          navigate("/creator/dashboard/overview");
         }
-        if (response.data.data.role === "admin") {
-          navigate("/admin/dashboard/overview");
-        }
-        if (response.data.data.email === "admin") {
-          navigate("/admin/signin");
-        }
+
+        // if (response.data.data.role === "seeker") {
+        //   if (response.data.data.profile === true) {
+        //     if (seekerURL) {
+        //       navigate(seekerURL);
+        //     } else {
+        //       navigate("/JobSeeker");
+        //     }
+        //   } else if (response.data.data.profile === false) {
+        //     navigate("/jobs/upload-resume");
+        //   }
+        // } else if (response.data.data.role === "provider") {
+        //   if (response.data.data.profile === true) {
+        //     navigate("/Providerdashboard");
+        //   } else {
+        //     navigate("/provider-profile");
+        //   }
+        // } else if (response.data.data.role === "admin") {
+        //   navigate("/admin/dashboard/overview");
+        // }
+        // if (response.data.data.role === "admin") {
+        //   navigate("/admin/dashboard/overview");
+        // }
+        // if (response.data.data.email === "admin") {
+        //   navigate("/admin/signin");
+        // }
       }
     } catch (error) {
       setLoading(false);
