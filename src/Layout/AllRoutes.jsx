@@ -4,42 +4,38 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
 
-// ** Import Admin Dahbaord Menu Pages
-import Overview from "../Admin/overview/Overview";
-import Analytics from "../Admin/analytics/Analytics";
+// ** Import Dahbaord Menu Pages
+import Overview from "../Creator/overview/Overview";
+import Analytics from "../Creator/analytics/Analytics";
 
-// ** Import Admin Courses Pages
-import AllJobs from "../Admin/courses/all-courses/AllJobs";
-import JobCategory from "../Admin/courses/JobCategory";
-import CategorySingle from "../Admin/courses/CategorySingle";
+// ** Import Courses Pages
+import AllJobs from "../Creator/courses/all-courses/AllJobs";
+import JobCategory from "../Creator/courses/JobCategory";
+import CategorySingle from "../Creator/courses/CategorySingle";
 
-// Import Admin Out-source
-import OutSource from "../Admin/Outsource/OutSource";
-import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
-
-// ** Import Admin Users Pages
-import JobProvider from "../Admin/user/JobProvider";
-import JobSeeker from "../Admin/user/JobSeeker";
-import AdminDashboardIndex from "../Admin/AdminDashboardIndex";
+// ** Import Users Pages
+import JobProvider from "../Creator/user/JobProvider";
+import JobSeeker from "../Creator/user/JobSeeker";
+import AdminDashboardIndex from "../Creator/UserDashboardIndex";
 
 // Import Notification
-import Notification from "../Admin/authentication/Notifications";
-import NotificationSingle from "../Admin/Notification/NotificationSingle";
+import Notification from "../Creator/authentication/Notifications";
+import NotificationSingle from "../Creator/Notification/NotificationSingle";
 
-// ** Import Admin Payment components
-import AllPayment from "../Admin/Payment/AllPayment";
-import PendingPayment from "../Admin/Payment/PendingPayment";
-import ReceivedPayment from "../Admin/Payment/ReceivedPayment";
-import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
+// ** Import Payment components
+import AllPayment from "../Creator/Payment/AllPayment";
+import PendingPayment from "../Creator/Payment/PendingPayment";
+import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
+import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
-// ** Import Admin Authentication components
-import UserSignIn from "../Admin/authentication/UserSignIn";
-import UserSignUp from "../Admin/authentication/UserSignUp"
-import UserForgetPassword from "../Admin/authentication/UserForgetPassword";
+// ** Import Authentication components
+import UserSignIn from "../Creator/authentication/UserSignIn";
+import UserSignUp from "../Creator/authentication/UserSignUp"
+import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
 
-// ** Import Admin Support components
-import Support from "../Admin/Support/Support";
-import Resolution from "../Admin/Support/Resolution";
+// ** Import Support components
+import Support from "../Creator/Support/Support";
+import Resolution from "../Creator/Support/Resolution";
 
 // Import Onboard
 import Onboard from "../Pages/Creator/Onboard"
@@ -63,28 +59,23 @@ const AllRoutes = () => {
         <Route path="/user/notifications" element={<Notification />} />
         <Route path="user/notification-single" element={<NotificationSingle />} />
 
-        <Route path="/admin/jobs/all-jobs" element={<AllJobs />} />
-        <Route path="/admin/out-source" element={<OutSource />} />
+        <Route path="/user/jobs/all-jobs" element={<AllJobs />} />
+        <Route path="/user/jobs/job-category" element={<JobCategory />} />
         <Route
-          path="/admin/out-source/job-single"
-          element={<OutsourceJobSingle />}
-        />
-        <Route path="/admin/jobs/job-category" element={<JobCategory />} />
-        <Route
-          path="/admin/jobs/category-single"
+          path="/user/jobs/category-single"
           element={<CategorySingle />}
         />
-        <Route path="/admin/jobProvider" element={<JobProvider />} />
-        <Route path="/admin/jobSeeker" element={<JobSeeker />} />
-        <Route path="/admin/all-payment" element={<AllPayment />} />
-        <Route path="/admin/pending-payment" element={<PendingPayment />} />
-        <Route path="/admin/received-payment" element={<ReceivedPayment />} />
-        <Route path="/admin/withdraw-request" element={<WithdrawPayment />} />
-        <Route path="/admin/support" element={<Support />} />
-        <Route path="/admin/resolution" element={<Resolution />} />
+        <Route path="/user/jobProvider" element={<JobProvider />} />
+        <Route path="/user/jobSeeker" element={<JobSeeker />} />
+        <Route path="/user/all-payment" element={<AllPayment />} />
+        <Route path="/user/pending-payment" element={<PendingPayment />} />
+        <Route path="/user/received-payment" element={<ReceivedPayment />} />
+        <Route path="/user/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/user/support" element={<Support />} />
+        <Route path="/user/resolution" element={<Resolution />} />
         <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
-          path="admin/dashboard/layouts/layout-vertical"
+          path="user/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
       </Route>

@@ -23,7 +23,7 @@ import Logo from "../../assets/unleashified-logo.png";
 import GiftBox from "../../assets/images/background/giftbox.png";
 
 // import routes file
-import { DashboardMenu } from "../../routes/AdminDashboardRoutes";
+import { DashboardMenu } from "../../routes/UserDashboardRoutes";
 
 const NavbarVertical = (props) => {
   const location = useLocation();
