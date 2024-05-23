@@ -39,7 +39,7 @@ const Onboard = () => {
       );
       setLoading(false);
       showToast(response.data.message);
-      navigate("/user/dashboard/overview");
+      navigate("/creator/dashboard/overview");
     } catch (error) {
       setLoading(false);
       showToast(error.response.message);
