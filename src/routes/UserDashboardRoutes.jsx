@@ -57,25 +57,15 @@ export const DashboardMenu = [
     title: "Payment",
     icon: "user",
     children: [
-<<<<<<< HEAD:src/routes/UserDashboardRoutes.jsx
-      { id: uuid(), link: "/user/pending-payment", name: "Pending" },
-      { id: uuid(), link: "/user/received-payment", name: "Received" },
-      { id: uuid(), link: "/user/withdraw-request", name: " Withdraw" },
-=======
       { id: uuid(), link: "/creator/received-payment", name: "Received" },
       { id: uuid(), link: "/creator/withdraw-request", name: " Withdraw" },
->>>>>>> 5ccb6bb778aa0f7d3df62c9e614eb10b01bdabe7:src/routes/AdminDashboardRoutes.jsx
     ],
   },
   {
     id: uuid(),
     title: "Support",
     icon: "help-circle",
-<<<<<<< HEAD:src/routes/UserDashboardRoutes.jsx
-    link: "/user/support",
-=======
     link: "/creator/support",
->>>>>>> 5ccb6bb778aa0f7d3df62c9e614eb10b01bdabe7:src/routes/AdminDashboardRoutes.jsx
   },
   {
     id: uuid(),
@@ -88,11 +78,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Resolution",
     icon: "help-circle",
-<<<<<<< HEAD:src/routes/UserDashboardRoutes.jsx
-    link: "/user/resolution",
-=======
     link: "/creator/resolution",
->>>>>>> 5ccb6bb778aa0f7d3df62c9e614eb10b01bdabe7:src/routes/AdminDashboardRoutes.jsx
   },
   // {
   // 	id: uuid(),
