@@ -1,73 +1,107 @@
 import React, { useState, useEffect } from "react";
-import { Card, Table, Spinner } from "react-bootstrap";
+import { Col, Row, Card, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import Pagination from "../../Components/elements/advance-table/Pagination";
-import { numberWithCommas } from "../../helper/utils";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 
 const ReceivedPayment = () => {
-  const [payments, setPayments] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
+    monthlySeeker: 1,
+    totalSeeker: 1,
+    monthlyProvider: 1,
+    totalProvider: 1,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/get-all-payment-records"
-        );
-        setPayments(response.data.records);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching payments:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchPayments();
+    setLoading(false);
   }, []);
 
   return (
-    <Card className="border-0 mt-4">
-      <Card.Header>
-        <h3 className="mb-0 h4">Received Payment</h3>
-      </Card.Header>
-      <Card.Body>
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+    <div>
+      <Row>
+        <Col lg={12} md={12} sm={12}>
+          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+            <div className="mb-3 mb-lg-0">
+              <h1 className="mb-0 h2 fw-bold">Received Payment</h1>
+            </div>
+            {/* <div className="d-flex">
+              <Link
+                to="#"
+                className="btn btn-primary"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Create Ecosystem
+              </Link>
+            </div> */}
           </div>
-        ) : (
-          <Table hover responsive className="text-nowrap table-centered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Job Title</th>
-                <th>Amount (₦)</th>
-                <th>Method</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payments.map((payment) => (
-                <tr key={payment.id}>
-                  <td>{payment.id}</td>
-                  <td>{payment.email}</td>
-                  <td>{payment.jobTitle}</td>
-                  <td>₦{numberWithCommas(payment.amount)}</td>
-                  <td>{payment.paymentMethod}</td>
-                  <td>{payment.status}</td>
-                  <td>{new Date(payment.createdAt).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-        {!loading && payments.length === 0 && <div>No payments found.</div>}
-      </Card.Body>
-    </Card>
+        </Col>
+      </Row>
+
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <div>
+          <Row>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Ecosystem"
+                value="1"
+                summary="Number of sales"
+                // summaryValue="1 Monthly Ecosystem"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="UserChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Users"
+                value="1"
+                summary="Number of pending"
+                // summaryValue="1 Monthly Users"
+                summaryIcon="down"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="VisitorChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Materials"
+                value="0"
+                summary="Students"
+                // summaryValue="Monthly Materials"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="BounceChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Paid Users"
+                value="0"
+                summary="Instructor"
+                // summaryValue="1 Monthly Paid Users"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="AverageVisitTimeChart"
+              />
+            </Col>
+          </Row>
+        </div>
+      )}
+    </div>
   );
 };
 

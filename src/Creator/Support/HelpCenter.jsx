@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 
-const  WithdrawPayment = () => {
+const  HelpCenter = () => {
   const [dashboardData, setDashboardData] = useState({
     monthlySeeker: 1,
     totalSeeker: 1,
@@ -23,7 +23,7 @@ const  WithdrawPayment = () => {
         <Col lg={12} md={12} sm={12}>
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
-              <h1 className="mb-0 h2 fw-bold"> Withdraw Payment</h1>
+              <h1 className="mb-0 h2 fw-bold"> Help Center</h1>
             </div>
             {/* <div className="d-flex">
               <Link
@@ -105,4 +105,4 @@ const  WithdrawPayment = () => {
   );
 };
 
-export default WithdrawPayment;
+export default HelpCenter;

@@ -5,6 +5,7 @@ import axios from "axios";
 import { FlatPickr } from "../../Components/elements/flat-pickr/FlatPickr";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
 import StatRightIcon from "../../Creator/analytics/stats/StatRightIcon";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import PopularInstructor from "./PopularJobCategory";
 import RecentCourses from "./RecentJobs";
 import Activity from "./Activity";
@@ -90,6 +91,15 @@ const Overview = () => {
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Dashboard</h1>
             </div>
+            <div className="d-flex">
+              <Link
+                to="#"
+                className="btn btn-primary"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Create Ecosystem
+              </Link>
+            </div>
           </div>
         </Col>
       </Row>
@@ -103,60 +113,58 @@ const Overview = () => {
       ) : (
         <div>
           <Row>
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightIcon
-                title="Total Ecosystem"
-                value={dashboardData.totalSeeker}
-                iconName="user"
-                iconColorVariant="primary"
-                summary="Monthly Ecosystem"
-                summaryValue={dashboardData.monthlySeeker}
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-              />
-            </Col>
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightIcon
-                title="Total Users"
-                value={dashboardData.totalProvider}
-                iconName="users"
-                iconColorVariant="primary"
-                summary="Monthly Users"
-                summaryValue={dashboardData.monthlyProvider}
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-              />
-            </Col>
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightIcon
-                title="Total Materials "
-                value="0"
-                iconName="user-check"
-                iconColorVariant="primary"
-                summary="Monthly Materials"
-                summaryValue={dashboardData.monthlyJob}
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-              />
-            </Col>
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightIcon
-                title="Total Paid Users"
-                // value={dashboardData.totalService}
-                value="0"
-                iconName="users"
-                iconColorVariant="primary"
-                summary="Monthly Paid Users"
-                summaryValue="0"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-              />
-            </Col>
-          </Row>
+        <Col xl={3} lg={6} md={12} sm={12}>
+          <StatRightChart
+            title="Total Ecosystem"
+            value="1"
+            summary="Number of sales"
+            summaryValue="1 Monthly Ecosystem"
+            summaryIcon="up"
+            showSummaryIcon
+            classValue="mb-4"
+            chartName="UserChart"
+          />
+        </Col>
+
+        <Col xl={3} lg={6} md={12} sm={12}>
+          <StatRightChart
+            title="Total Users"
+            value="1"
+            summary="Number of pending"
+            summaryValue="1 Monthly Users"
+            summaryIcon="down"
+            showSummaryIcon
+            classValue="mb-4"
+            chartName="VisitorChart"
+          />
+        </Col>
+
+        <Col xl={3} lg={6} md={12} sm={12}>
+          <StatRightChart
+            title="Total Materials"
+            value="0"
+            summary="Students"
+            summaryValue="Monthly Materials"
+            summaryIcon="up"
+            showSummaryIcon
+            classValue="mb-4"
+            chartName="BounceChart"
+          />
+        </Col>
+
+        <Col xl={3} lg={6} md={12} sm={12}>
+          <StatRightChart
+            title="Total Paid Users"
+            value="0"
+            summary="Instructor"
+            summaryValue="1 Monthly Paid Users"
+            summaryIcon="up"
+            showSummaryIcon
+            classValue="mb-4"
+            chartName="AverageVisitTimeChart"
+          />
+        </Col>
+      </Row>
 
           <Row>
             <Col xl={8} lg={12} md={12} className="mb-4">

@@ -50,7 +50,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "My Users",
     icon: "user",
-    link: "#",
+    link: "/creator/my-user",
   },
   {
     id: uuid(),
@@ -63,9 +63,9 @@ export const DashboardMenu = [
   },
   {
     id: uuid(),
-    title: "Support",
+    title: "Help Center",
     icon: "help-circle",
-    link: "/creator/support",
+    link: "/creator/help-center",
   },
   {
     id: uuid(),
@@ -76,9 +76,9 @@ export const DashboardMenu = [
 
   {
     id: uuid(),
-    title: "Resolution",
+    title: "Support",
     icon: "help-circle",
-    link: "/creator/resolution",
+    link: "/creator/support",
   },
   // {
   // 	id: uuid(),

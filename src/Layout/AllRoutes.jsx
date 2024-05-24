@@ -14,6 +14,7 @@ import JobCategory from "../Creator/courses/JobCategory";
 import CategorySingle from "../Creator/courses/CategorySingle";
 
 // ** Import Users Pages
+import MyUser from "../Creator/user/MyUser";
 import JobProvider from "../Creator/user/JobProvider";
 import JobSeeker from "../Creator/user/JobSeeker";
 import AdminDashboardIndex from "../Creator/UserDashboardIndex";
@@ -34,8 +35,8 @@ import UserSignUp from "../Creator/authentication/UserSignUp"
 import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
 
 // ** Import Support components
+import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-import Resolution from "../Creator/Support/Resolution";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
@@ -63,14 +64,15 @@ const AllRoutes = () => {
           path="/creator/jobs/category-single"
           element={<CategorySingle />}
         />
+        <Route path="/creator/my-user" element={<MyUser />} />
         <Route path="/creator/jobProvider" element={<JobProvider />} />
         <Route path="/creator/jobSeeker" element={<JobSeeker />} />
         <Route path="/creator/all-payment" element={<AllPayment />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
-        <Route path="/creator/resolution" element={<Resolution />} />
         <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="creator/dashboard/layouts/layout-vertical"
