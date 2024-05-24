@@ -46,16 +46,6 @@ export const DashboardMenu = [
     icon: "book",
     link: "#",
   },
-<<<<<<< HEAD:src/routes/AdminDashboardRoutes.jsx
-  // {
-  //   id: uuid(),
-  //   title: "Out-Source",
-  //   icon: "book",
-  //   link: "/admin/out-source",
-  // },
-
-=======
->>>>>>> 406cc11375a185302aed6f1ae881e48fd716e13f:src/routes/UserDashboardRoutes.jsx
   {
     id: uuid(),
     title: "My Users",

@@ -39,7 +39,7 @@ const Onboard = () => {
       );
       setLoading(false);
       showToast(response.data.message);
-      navigate("/creator/dashboard/overview");
+      navigate("/creator/OnboardTwo");
     } catch (error) {
       setLoading(false);
       showToast(error.response.message);
@@ -105,8 +105,8 @@ const Onboard = () => {
                         : "outline-primary"
                     }
                     onClick={() => handleCategoryClick(category.name)}
-                    className="me-2 mb-2"
-                    style={{ borderRadius: "0.5rem", fontSize: "1rem" }}
+                    className="me-1 mb-2"
+                    style={{ borderRadius: "0.5rem", fontSize: "0.8rem" }}
                   >
                     {category.name}
                   </Button>

@@ -2,18 +2,11 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
-<<<<<<< HEAD:src/Admin/authentication/UserForgetPassword.jsx
+
 import Logo from "../../assets/GFA logo Rebrand Blue.png";
 // import Logo2 from "../assets/LogoList/cote-logo.png";
-=======
-<<<<<<<< HEAD:src/Authentications/ForgetPassword.jsx
-import Logo from "../assets/GFA logo Rebrand Blue.png";
-import Logo2 from "../assets/LogoList/cote-logo.png";
-========
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
-// import Logo2 from "../assets/LogoList/cote-logo.png";
->>>>>>>> 406cc11375a185302aed6f1ae881e48fd716e13f:src/Creator/authentication/UserForgetPassword.jsx
->>>>>>> 406cc11375a185302aed6f1ae881e48fd716e13f:src/Creator/authentication/UserForgetPassword.jsx
+
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

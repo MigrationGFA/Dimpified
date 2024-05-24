@@ -4,46 +4,42 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
 
-// ** Import Admin Dahbaord Menu Pages
-import Overview from "../Admin/overview/Overview";
-import Analytics from "../Admin/analytics/Analytics";
+// ** Import Dahbaord Menu Pages
+import Overview from "../Creator/overview/Overview";
+import Analytics from "../Creator/analytics/Analytics";
 
-// ** Import Admin Courses Pages
-import AllJobs from "../Admin/courses/all-courses/AllJobs";
-import JobCategory from "../Admin/courses/JobCategory";
-import CategorySingle from "../Admin/courses/CategorySingle";
+// ** Import Courses Pages
+import AllJobs from "../Creator/courses/all-courses/AllJobs";
+import JobCategory from "../Creator/courses/JobCategory";
+import CategorySingle from "../Creator/courses/CategorySingle";
 
-// Import Admin Out-source
-import OutSource from "../Admin/Outsource/OutSource";
-import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
-
-// ** Import Admin Users Pages
-import JobProvider from "../Admin/user/JobProvider";
-import JobSeeker from "../Admin/user/JobSeeker";
-import AdminDashboardIndex from "../Admin/AdminDashboardIndex";
+// ** Import Users Pages
+import JobProvider from "../Creator/user/JobProvider";
+import JobSeeker from "../Creator/user/JobSeeker";
+import AdminDashboardIndex from "../Creator/UserDashboardIndex";
 
 // Import Notification
 import Notification from "../Creator/authentication/Notifications";
 import NotificationSingle from "../Creator/Notification/NotificationSingle";
 
-// ** Import Admin Payment components
-import AllPayment from "../Admin/Payment/AllPayment";
-import PendingPayment from "../Admin/Payment/PendingPayment";
-import ReceivedPayment from "../Admin/Payment/ReceivedPayment";
-import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
+// ** Import Payment components
+import AllPayment from "../Creator/Payment/AllPayment";
+import PendingPayment from "../Creator/Payment/PendingPayment";
+import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
+import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
-// ** Import Admin Authentication components
-import UserSignIn from "../Admin/authentication/UserSignIn";
-import UserSignUp from "../Admin/authentication/UserSignUp";
-import UserForgetPassword from "../Admin/authentication/UserForgetPassword";
+// ** Import Authentication components
+import UserSignIn from "../Creator/authentication/UserSignIn";
+import UserSignUp from "../Creator/authentication/UserSignUp"
+import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
 
-// ** Import Admin Support components
-import Support from "../Admin/Support/Support";
-import Resolution from "../Admin/Support/Resolution";
+// ** Import Support components
+import Support from "../Creator/Support/Support";
+import Resolution from "../Creator/Support/Resolution";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
-import OnboardTwo from "Pages/creator/OnboardTwo";
+import OnboardTwo from "../Pages/creator/OnboardTwo";
 
 const AllRoutes = () => {
   return (
