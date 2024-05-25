@@ -10,9 +10,9 @@ import ApexCharts from "../../Components/elements/charts/ApexCharts";
 import UsersbyCountry from "../../routes/marketing/maps/UsersbyCountry";
 
 // import sub components
-import MostViewPages from "./MostViewPages";
-import Browsers from "./Browsers";
-import SocialMediaTraffic from "./SocialMediaTraffic";
+// import MostViewPages from "./MostViewPages";
+// import Browsers from "./Browsers";
+// import SocialMediaTraffic from "./SocialMediaTraffic";
 
 // import MDI icons
 import Icon from "@mdi/react";
@@ -335,7 +335,7 @@ const Analytics = () => {
       {/* end of Users by Country + Traffic Channel + Operating System  */}
 
       {/* Browsers + Social Media Traffic + Most View Pages  */}
-      <Row>
+      {/* <Row>
         <Col xl={4} lg={12} md={12} className="mb-4">
           <Browsers title="Browsers" />
         </Col>
@@ -347,7 +347,7 @@ const Analytics = () => {
         <Col xl={4} lg={12} md={12} className="mb-4">
           <MostViewPages title="Most View Pages" />
         </Col>
-      </Row>
+      </Row> */}
       {/* end of Users by Country + Traffic Channel + Operating System  */}
     </Fragment>
   );

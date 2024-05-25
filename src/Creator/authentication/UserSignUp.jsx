@@ -54,7 +54,7 @@ const UserSignUp = () => {
       if (response.status === 201) {
         console.log(response.data.message);
         showToast(response.data.message);
-        navigate(`/authentication/verify-email?email=${data.email}`);
+        navigate(`/creator/Verify-email?email=${data.email}`);
       }
     } catch (error) {
       console.log("this is good");
