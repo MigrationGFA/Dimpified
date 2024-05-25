@@ -40,6 +40,11 @@ import Resolution from "../Creator/Support/Resolution";
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
 import OnboardTwo from "../Pages/creator/OnboardTwo";
+import Ecosystem from "../Creator/ecosystem/Ecosystem";
+import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
+import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
+import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
+import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 
 const AllRoutes = () => {
   return (
@@ -51,6 +56,10 @@ const AllRoutes = () => {
       <Route path="/user/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+      <Route path="/creator/dashboard/New-Ecosystem" element={<NewEcosystem/>} />
+      <Route path="/creator/dashboard/Edit-Template" element={<EditTemplate/>} />
+      <Route path="/creator/dashboard/Create-Form" element={<CreateForm/>} />
+      <Route path="/creator/dashboard/Preview-and-Send" element={<PreviewAndSend/>} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
@@ -61,6 +70,8 @@ const AllRoutes = () => {
           path="user/notification-single"
           element={<NotificationSingle />}
         />
+        <Route path="/creator/dashboard/All-Ecosystem" element={<Ecosystem/>} />
+        
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />

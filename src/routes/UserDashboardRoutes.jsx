@@ -44,7 +44,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "My Campaign",
     icon: "book",
-    link: "#",
+    link: "/creator/dashboard/All-Ecosystem",
   },
   {
     id: uuid(),
