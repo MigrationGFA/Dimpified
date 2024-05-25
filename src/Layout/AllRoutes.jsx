@@ -30,8 +30,10 @@ import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
-import UserSignUp from "../Creator/authentication/UserSignUp"
+import UserSignUp from "../Creator/authentication/UserSignUp";
 import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
+import UserEmailVerification from "../Creator/authentication/UserEmailVerification";
+import VerifyEmail from "../Creator/authentication/VerifyEmail";
 
 // ** Import Support components
 import Support from "../Creator/Support/Support";
@@ -46,16 +48,21 @@ const AllRoutes = () => {
       {/* Auth Pages */}
       {/* <Route element={<AuthLayout />}> */}
       <Route path="/" element={<UserSignIn />} />
-      <Route path="/user/signup" element={<UserSignUp />} />
-      <Route path="/user/forget-password" element={<UserForgetPassword />} />
+      <Route path="/creator/signup" element={<UserSignUp />} />
+      <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
+      <Route path="/user/verify-email" element={<UserEmailVerification />} />
+      <Route path="/creator/Verify-email" element={<VerifyEmail />} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
         <Route path="/creator/notifications" element={<Notification />} />
-        <Route path="/creator/notification-single" element={<NotificationSingle />} />
+        <Route
+          path="/creator/notification-single"
+          element={<NotificationSingle />}
+        />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
