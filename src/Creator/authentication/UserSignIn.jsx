@@ -49,18 +49,16 @@ const UserSignIn = () => {
           <Card>
             <Card.Body className="p-6">
               <div className="mb-4">
-                <Link to="/user/dashboard/overview">
-                  <Image
-                    src={Logo}
-                    className="mb-4"
-                    alt="logo"
-                    style={{ height: "100px" }}
-                  />
-                </Link>
+                <Image
+                  src={Logo}
+                  className="mb-4"
+                  alt="logo"
+                  style={{ height: "100px" }}
+                />
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to="/user/signup" className="ms-1">
+                  <Link to="/creator/signup" className="ms-1">
                     Sign up
                   </Link>
                 </span>
@@ -98,14 +96,11 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Link
-                      to="/user/Forget-password"
-                      className="ms-1 text-bold"
-                    >
-                      Forgot Password
-                    </Link>
+                  <Link to="/user/Forget-password" className="ms-1 text-bold">
+                    Forgot Password
+                  </Link>
 
-                    <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
+                  <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
                     {loading ? (
                       <Button
                         variant="primary"
