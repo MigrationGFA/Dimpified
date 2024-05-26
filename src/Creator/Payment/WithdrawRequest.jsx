@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Table,
-  Badge,
-  Button,
-  Spinner, // Import Spinner component
-} from "react-bootstrap";
+import { Col, Row, Card, Spinner, Table, Badge, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { numberWithCommas } from "../../helper/utils";
 import { showToast } from "../../Components/Showtoast";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 
 const WithdrawPayment = () => {
+  const [dashboardData, setDashboardData] = useState({
+    monthlySeeker: 1,
+    totalSeeker: 1,
+    monthlyProvider: 1,
+    totalProvider: 1,
+  });
   const [withdrawalRequests, setWithdrawalRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [Cloading, SetCloading] = useState(false);
+  const [Cloading, setCloading] = useState(false);
 
   useEffect(() => {
     const fetchWithdrawalRequests = async () => {
@@ -30,9 +32,9 @@ const WithdrawPayment = () => {
     };
 
     fetchWithdrawalRequests();
+    setLoading(false);
   }, []);
 
-  // Define a function to handle completing a withdrawal request
   const handleAction = async (id) => {
     const rowIndex = withdrawalRequests.findIndex((row) => row.id === id);
     if (rowIndex !== -1) {
@@ -60,99 +62,168 @@ const WithdrawPayment = () => {
   };
 
   return (
-    <Card className="border-0 mt-4">
-      <Card.Header>
-        <h3 className="mb-0 h4">Withdraw Request</h3>
-      </Card.Header>
-      <Card.Body className="p-0 pb-4">
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+    <div>
+      <Row>
+        <Col lg={12} md={12} sm={12}>
+          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+            <div className="mb-3 mb-lg-0">
+              <h1 className="mb-0 h2 fw-bold">Withdraw Payment</h1>
+            </div>
           </div>
-        ) : (
-          <Table hover responsive className="text-nowrap table-centered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Amount (₦)</th>
-                <th>Bank Details</th>
-                <th>User Details</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {withdrawalRequests.map((request) => (
-                <tr key={request.id}>
-                  <td>#{request.id}</td>
-                  <td>₦{numberWithCommas(request.amount)}</td>{" "}
-                  {/* Display in Naira */}
-                  <td>
-                    <span>{request.Account.accountNumber}</span>
-                    <br />
-                    <span>{request.Account.accountName}</span>
-                    <br />
-                    <p>{request.Account.bankName}</p>
-                  </td>
-                  <td>
-                    {" "}
-                    <span>{request.User.username} </span>
-                    <br />
-                    <span>{request.User.email} </span>
-                  </td>
-                  <td>{new Date(request.requestDate).toLocaleString()}</td>
-                  <td>
-                    <Badge
-                      bg={request.status === "pending" ? "warning" : "success"}
-                    >
-                      {request.status}
-                    </Badge>
-                  </td>
-                  <td>
-                    {/* Render the action button based on request status */}
-                    {request.status !== "completed" && (
-                      <Button
-                        variant="success"
-                        onClick={() => handleAction(request.id)}
-                        style={{
-                          backgroundColor: "light-green",
-                          borderColor: "#b8f7b2",
-                          opacity:
-                            request.status === "completed" || request.Cloading
-                              ? 0.6
-                              : 1,
-                        }}
-                      >
-                        {request.Cloading ? "Processing" : "Completed"}
-                      </Button>
-                    )}
-                    {request.status === "completed" && (
-                      <Button
-                        variant="success"
-                        disabled
-                        style={{
-                          backgroundColor: "light-green",
-                          borderColor: "#b8f7b2",
-                          opacity: ".7",
-                        }}
-                      >
-                        Completed
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-        {!loading && withdrawalRequests.length === 0 && (
-          <div className="ml-5">No withdrawal requests found.</div>
-        )}
-      </Card.Body>
-    </Card>
+        </Col>
+      </Row>
+
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <div>
+          <Row>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Ecosystem"
+                value="1"
+                summary="Number of sales"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="UserChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Users"
+                value="1"
+                summary="Number of pending"
+                summaryIcon="down"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="VisitorChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Materials"
+                value="0"
+                summary="Students"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="BounceChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Paid Users"
+                value="0"
+                summary="Instructor"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="AverageVisitTimeChart"
+              />
+            </Col>
+          </Row>
+
+          <Card className="border-0 mt-4">
+            <Card.Header>
+              <h3 className="mb-0 h4">Withdraw Request</h3>
+            </Card.Header>
+            <Card.Body className="p-0 pb-4">
+              {loading ? (
+                <div className="text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              ) : (
+                <Table hover responsive className="text-nowrap table-centered">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount (₦)</th>
+                      <th>Bank Details</th>
+                      <th>User Details</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {withdrawalRequests.map((request) => (
+                      <tr key={request.id}>
+                        <td>#{request.id}</td>
+                        <td>₦{numberWithCommas(request.amount)}</td>
+                        <td>
+                          <span>{request.Account.accountNumber}</span>
+                          <br />
+                          <span>{request.Account.accountName}</span>
+                          <br />
+                          <p>{request.Account.bankName}</p>
+                        </td>
+                        <td>
+                          <span>{request.User.username}</span>
+                          <br />
+                          <span>{request.User.email}</span>
+                        </td>
+                        <td>{new Date(request.requestDate).toLocaleString()}</td>
+                        <td>
+                          <Badge
+                            bg={request.status === "pending" ? "warning" : "success"}
+                          >
+                            {request.status}
+                          </Badge>
+                        </td>
+                        <td>
+                          {request.status !== "completed" && (
+                            <Button
+                              variant="success"
+                              onClick={() => handleAction(request.id)}
+                              style={{
+                                backgroundColor: "light-green",
+                                borderColor: "#b8f7b2",
+                                opacity:
+                                  request.status === "completed" || request.Cloading
+                                    ? 0.6
+                                    : 1,
+                              }}
+                            >
+                              {request.Cloading ? "Processing" : "Completed"}
+                            </Button>
+                          )}
+                          {request.status === "completed" && (
+                            <Button
+                              variant="success"
+                              disabled
+                              style={{
+                                backgroundColor: "light-green",
+                                borderColor: "#b8f7b2",
+                                opacity: ".7",
+                              }}
+                            >
+                              Completed
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+              {!loading && withdrawalRequests.length === 0 && (
+                <div className="ml-5">No withdrawal requests found.</div>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
+      )}
+    </div>
   );
 };
 

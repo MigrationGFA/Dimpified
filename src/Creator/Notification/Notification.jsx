@@ -1,143 +1,46 @@
-// import node module libraries
-import { Fragment } from 'react';
-import {
-	Col,
-	Row,
-	Card,
-	ListGroup,
-	OverlayTrigger,
-	Tooltip,
-	CloseButton,
-	Image
-} from 'react-bootstrap';
-import { ThumbsUp, Award, MessageSquare } from 'react-feather';
-import { Link } from 'react-router-dom';
+// import media files
+import Avatar1 from '../../assets/images/avatar/avatar-1.jpg';
+import Avatar2 from '../../assets/images/avatar/avatar-1.jpg';
+import Avatar3 from '../../assets/images/avatar/avatar-1.jpg';
+import Avatar4 from '../../assets/images/avatar/avatar-1.jpg';
 
-// import custom components
-import DotBadge from '../../Components/elements/bootstrap/DotBadge';
-
-// import data files
-import NotificationData from '../../data/NotificationData';
-
-const Notifications = () => {
-	function NotificationsIcon(icon, color) {
-		if (icon === 'ThumbsUp') {
-			return <ThumbsUp className={`text-${color} me-1`} size="12px" />;
-		}
-		if (icon === 'Award') {
-			return <Award className={`text-${color} me-1`} size="12px" />;
-		}
-		if (icon === 'MessageSquare') {
-			return <MessageSquare className={`text-${color} me-1`} size="12px" />;
-		}
+const Notification = [
+	{
+		id: 1,
+		read: false,
+		image: Avatar1,
+		sender: 'Kristin Watson',
+		date: '2 hours ago',
+		time: '2:19 PM',
+		message: `Krisitn Watsan like your comment on course Javascript Introduction!`
+	},
+	{
+		id: 2,
+		read: true,
+		image: Avatar2,
+		sender: 'Brooklyn Simmons',
+		date: 'Oct 9,',
+		time: '1:20 PM',
+		message: `Just launched a new Courses React for Beginner.`
+	},
+	{
+		id: 3,
+		read: true,
+		image: Avatar3,
+		sender: 'Jenny Wilson',
+		date: 'Oct 9,',
+		time: '1:56 PM',
+		message: `Krisitn Watsan like your comment on course Javascript Introduction!`
+	},
+	{
+		id: 4,
+		read: true,
+		image: Avatar4,
+		sender: 'Sina Ray',
+		date: 'Oct 9,',
+		time: '1:56 PM',
+		message: `You earn new certificate for complete the Javascript Beginner course.`
 	}
+];
 
-	function MarkAsRead(removable) {
-		if (removable) {
-			return (
-				<Fragment>
-					<OverlayTrigger
-						placement="top"
-						overlay={<Tooltip id="tooltip-top">Mark as read</Tooltip>}
-					>
-						<Link to="#">
-							<DotBadge bg="info"></DotBadge>
-						</Link>
-					</OverlayTrigger>
-
-					<OverlayTrigger
-						placement="top"
-						overlay={<Tooltip id="tooltip-top">Remove</Tooltip>}
-					>
-						<CloseButton className="btn-close fs-6 d-block me-1" />
-					</OverlayTrigger>
-				</Fragment>
-			);
-		} else {
-			return (
-				<OverlayTrigger
-					placement="top"
-					overlay={<Tooltip id="tooltip-top">Mark as unread</Tooltip>}
-				>
-					<Link to="#">
-						<DotBadge bg="secondary"></DotBadge>
-					</Link>
-				</OverlayTrigger>
-			);
-		}
-	}
-
-	return (
-		<Fragment>
-			<Row>
-				<Col lg={12} md={12} sm={12}>
-					<div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
-						<div className="mb-3 mb-md-0">
-							<h1 className="mb-1 h2 font-weight-bold">Notification History</h1>
-							<p className="mb-0">Check your all notification and read it.</p>
-						</div>
-						<div>
-							<Link to="#" className="btn btn-white">
-								Mark all as read
-							</Link>
-						</div>
-					</div>
-				</Col>
-			</Row>
-			<Row>
-				<Col lg={12} md={12} sm={12}>
-					<Card className="rounded-3">
-						<Card.Body className="rounded-3 p-0">
-							<ListGroup>
-								{NotificationData.map((item, index) => {
-									return (
-										<ListGroup.Item className="py-4" key={index}>
-											<Row className="align-items-center">
-												<Col>
-													<div className="d-flex align-items-center">
-														<Link to="#">
-															<Image
-																src={item.image}
-																alt=""
-																className="avatar-lg rounded-circle"
-															/>
-														</Link>
-														<div className="ms-3">
-															<Link to="#">
-																<p className="mb-0 text-body">
-																	<span className="fw-bold mb-0 h5">
-																		{item.name}:
-																	</span>{' '}
-																	{item.notification}
-																</p>
-															</Link>
-															<span className="fs-6 text-muted">
-																<span>
-																	{NotificationsIcon(
-																		item.icon,
-																		item.colorClass
-																	)}
-																	{item.date},
-																</span>
-																<span className="ms-1">{item.time}</span>
-															</span>
-														</div>
-													</div>
-												</Col>
-												<Col xs="auto" className="text-center p-2">
-													{MarkAsRead(item.removable)}
-												</Col>
-											</Row>
-										</ListGroup.Item>
-									);
-								})}
-							</ListGroup>
-						</Card.Body>
-					</Card>
-				</Col>
-			</Row>
-		</Fragment>
-	);
-};
-
-export default Notifications;
+export default Notification;
