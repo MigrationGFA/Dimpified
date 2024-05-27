@@ -53,8 +53,10 @@ const AllRoutes = () => {
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
+
       <Route path="/user/verify-email" element={<UserEmailVerification />} />
       <Route path="/creator/Verify-email" element={<VerifyEmail />} />
+
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
