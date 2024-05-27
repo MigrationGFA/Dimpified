@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Card, Dropdown, Spinner } from "react-bootstrap";
+import { Col, Row, Card, Dropdown, Spinner, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FlatPickr } from "../../Components/elements/flat-pickr/FlatPickr";
@@ -91,13 +91,12 @@ const Overview = () => {
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Dashboard</h1>
             </div>
-            <div className="d-flex">
-              <Link
-                to="#"
-                className="btn btn-primary"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Create Ecosystem
+            <div>
+              <Link to="/creator/dashboard/New-Ecosystem">
+                <Button variant="primary">
+                  <i className="fe fe-edit me-2"></i>
+                  New Ecosystem
+                </Button>
               </Link>
             </div>
           </div>
@@ -113,58 +112,58 @@ const Overview = () => {
       ) : (
         <div>
           <Row>
-        <Col xl={3} lg={6} md={12} sm={12}>
-          <StatRightChart
-            title="Total Ecosystem"
-            value="1"
-            summary="Number of sales"
-            summaryValue="1 Monthly Ecosystem"
-            summaryIcon="up"
-            showSummaryIcon
-            classValue="mb-4"
-            chartName="UserChart"
-          />
-        </Col>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Ecosystem"
+                value="1"
+                summary="Number of sales"
+                summaryValue="1 Monthly"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="UserChart"
+              />
+            </Col>
 
-        <Col xl={3} lg={6} md={12} sm={12}>
-          <StatRightChart
-            title="Total Users"
-            value="1"
-            summary="Number of pending"
-            summaryValue="1 Monthly Users"
-            summaryIcon="down"
-            showSummaryIcon
-            classValue="mb-4"
-            chartName="VisitorChart"
-          />
-        </Col>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Users"
+                value="1"
+                summary="Number of pending"
+                summaryValue="1 Monthly"
+                summaryIcon="down"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="VisitorChart"
+              />
+            </Col>
 
-        <Col xl={3} lg={6} md={12} sm={12}>
-          <StatRightChart
-            title="Total Materials"
-            value="0"
-            summary="Students"
-            summaryValue="Monthly Materials"
-            summaryIcon="up"
-            showSummaryIcon
-            classValue="mb-4"
-            chartName="BounceChart"
-          />
-        </Col>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Materials"
+                value="0"
+                summary="Students"
+                summaryValue="Monthly "
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="BounceChart"
+              />
+            </Col>
 
-        <Col xl={3} lg={6} md={12} sm={12}>
-          <StatRightChart
-            title="Total Paid Users"
-            value="0"
-            summary="Instructor"
-            summaryValue="1 Monthly Paid Users"
-            summaryIcon="up"
-            showSummaryIcon
-            classValue="mb-4"
-            chartName="AverageVisitTimeChart"
-          />
-        </Col>
-      </Row>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Paid Users"
+                value="0"
+                summary="Instructor"
+                summaryValue="1 Monthly "
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="AverageVisitTimeChart"
+              />
+            </Col>
+          </Row>
 
           <Row>
             <Col xl={8} lg={12} md={12} className="mb-4">

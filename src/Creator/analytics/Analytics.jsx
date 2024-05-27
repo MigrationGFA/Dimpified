@@ -1,6 +1,6 @@
 // import node module libraries
 import { Fragment } from "react";
-import { Col, Row, Card, Table, ListGroup } from "react-bootstrap";
+import { Col, Row, Card, Table, ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 // import custom components
@@ -39,19 +39,12 @@ const Analytics = () => {
             <div className="mb-3 mb-md-0">
               <h1 className="mb-0 h2 fw-bold">Analytics</h1>
             </div>
-            <div className="d-flex">
-              {/* <div className="input-group me-3  ">
-                <FlatPickr value={""} />
-                <span className="input-group-text text-muted" id="basic-addon2">
-                  <i className="fe fe-calendar"></i>
-                </span>
-              </div> */}
-              <Link
-                to="#"
-                className="btn btn-primary"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Create Ecosystem
+            <div>
+              <Link to="/creator/dashboard/New-Ecosystem">
+                <Button variant="primary">
+                  <i className="fe fe-edit me-2"></i>
+                  New Ecosystem
+                </Button>
               </Link>
             </div>
           </div>

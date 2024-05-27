@@ -6,6 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useGlobalContext } from "../../context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/login";
+import { showToast } from "../../Components/Showtoast";
 
 import Logo from "../../assets/GFA logo Rebrand Blue.png";
 
@@ -13,6 +16,10 @@ const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { Login, loading } = useGlobalContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, error, user } = useSelector(
+    (state) => state.authentication
+  );
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
@@ -34,11 +41,43 @@ const UserSignIn = () => {
     resolver: yupResolver(formSchema),
   });
 
+  // const onSubmit = async (data, e) => {
+  //   try {
+  //     await Login(data, e); // Pass the event object to the Login function
+  //   } catch (error) {
+  //     console.error("Error logging in:", error);
+  //   }
+  // };
+
   const onSubmit = async (data, e) => {
+    e.preventDefault();
+
     try {
-      await Login(data, e); // Pass the event object to the Login function
+      // Dispatch the login action
+      const resultAction = await dispatch(
+        login({
+          email: data.email,
+          password: data.password,
+        })
+      );
+
+      if (login.rejected.match(resultAction)) {
+        // Login failed, access the payload from the rejected action
+        const errorPayload = resultAction.payload;
+        showToast(errorPayload);
+      } else if (login.fulfilled.match(resultAction)) {
+        // Login was successful
+        showToast(resultAction.payload.message);
+
+        if (resultAction.payload.data.interest === "no") {
+          navigate("/creator/onboard");
+        } else {
+          navigate("/creator/dashboard/overview");
+        }
+      }
     } catch (error) {
-      console.error("Error logging in:", error);
+      // Handle unexpected errors, such as network issues
+      showToast("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -101,7 +140,7 @@ const UserSignIn = () => {
                   </Link>
 
                   <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
-                    {loading ? (
+                    {isLoading ? (
                       <Button
                         variant="primary"
                         type="submit"

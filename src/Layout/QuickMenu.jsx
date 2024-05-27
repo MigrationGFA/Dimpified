@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Row, Col, Image, Dropdown, ListGroup } from "react-bootstrap";
@@ -7,79 +7,88 @@ import { useGlobalContext } from "../context/AuthContext";
 import DarkLightMode from "./DarkLightMode";
 import { showToast } from "../Components/Showtoast";
 // import Notifications from "../../Creator/authentication/Notifications";
-import Avatar1 from "../assets/images/avatar/avatar-1.jpg";
-import NotificationList from '../Creator/Notification/Notification';
+import Avatar1 from "../assets/images/avatar/person.png";
+import NotificationList from "../Creator/Notification/Notification";
 
 //  simple bar scrolling used for notification item scrolling
-import SimpleBar from 'simplebar-react';
-import 'simplebar/dist/simplebar.min.css';
-import GKTippy from '../Components/elements/tooltips/GKTippy';
-import DotBadge from '../Components/elements/bootstrap/DotBadge';
-
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
+import GKTippy from "../Components/elements/tooltips/GKTippy";
+import DotBadge from "../Components/elements/bootstrap/DotBadge";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/login";
+import { useSelector } from "react-redux";
 
 const QuickMenu = () => {
-  const { user, userImage, LogOut } = useGlobalContext() || {}; // Ensure user and userImage are defined
-  const Email = sessionStorage.getItem("email");
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
+  const navigate = useNavigate();
 
-  const handleSignOut = async () => {
-    try {
-      await LogOut();
-    } catch (error) {
-      showToast(error.response.data.message);
-    }
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    // Dispatch the logout action
+    dispatch(logout());
+    showToast("LogOut Successfully");
+    navigate("/");
   };
 
+  const username = useSelector(
+    (state) => state.authentication.user.data.organizationName
+  );
+  const userImage = useSelector(
+    (state) => state.authentication.user.data.image
+  );
+  const Email = useSelector((state) => state.authentication.user.data.email);
+
   const Notifications = () => {
-		return (
-			<SimpleBar style={{ maxHeight: '300px' }}>
-				<ListGroup variant="flush">
-					{NotificationList.map(function (item, index) {
-						return (
-							<ListGroup.Item
-								className={index === 0 ? 'bg-light' : ''}
-								key={index}
-							>
-								<Row>
-									<Col>
-										<Link className="text-body" to="#">
-											<div className="d-flex">
-												<Image
-													src={item.image}
-													alt=""
-													className="avatar-md rounded-circle"
-												/>
-												<div className="ms-3">
-													<h5 className="fw-bold mb-1">{item.sender}</h5>
-													<p className="mb-3">{item.message}</p>
-													<span className="fs-6 text-muted">
-														<span>
-															<span className="fe fe-thumbs-up text-success me-1"></span>
-															{item.date}
-														</span>
-														<span className="ms-1">{item.time}</span>
-													</span>
-												</div>
-											</div>
-										</Link>
-									</Col>
-									<Col xs="auto" className="text-center me-2">
-										<GKTippy content="Mark as unread">
-											<Link to="#">
-												<DotBadge bg="secondary"></DotBadge>
-											</Link>
-										</GKTippy>
-									</Col>
-								</Row>
-							</ListGroup.Item>
-						);
-					})}
-				</ListGroup>
-			</SimpleBar>
-		);
-	};
+    return (
+      <SimpleBar style={{ maxHeight: "300px" }}>
+        <ListGroup variant="flush">
+          {NotificationList.map(function (item, index) {
+            return (
+              <ListGroup.Item
+                className={index === 0 ? "bg-light" : ""}
+                key={index}
+              >
+                <Row>
+                  <Col>
+                    <Link className="text-body" to="#">
+                      <div className="d-flex">
+                        <Image
+                          src={item.image}
+                          alt=""
+                          className="avatar-md rounded-circle"
+                        />
+                        <div className="ms-3">
+                          <h5 className="fw-bold mb-1">{item.sender}</h5>
+                          <p className="mb-3">{item.message}</p>
+                          <span className="fs-6 text-muted">
+                            <span>
+                              <span className="fe fe-thumbs-up text-success me-1"></span>
+                              {item.date}
+                            </span>
+                            <span className="ms-1">{item.time}</span>
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col xs="auto" className="text-center me-2">
+                    <GKTippy content="Mark as unread">
+                      <Link to="#">
+                        <DotBadge bg="secondary"></DotBadge>
+                      </Link>
+                    </GKTippy>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
+      </SimpleBar>
+    );
+  };
 
   return (
     <Fragment>
@@ -151,13 +160,13 @@ const QuickMenu = () => {
                 />
               </div>
               <div className="ms-3 lh-1">
-                <h5 className="mb-1">{user}</h5>
+                <h5 className="mb-1">{username}</h5>
                 <p className="mb-0 text-muted">{Email}</p>
               </div>
             </div>
           </Dropdown.Item>
-          <Dropdown.Item className="mb-3" onClick={handleSignOut}>
-            <i className="fe fe-power me-2"></i> Sign Out
+          <Dropdown.Item className="mb-3" onClick={handleLogout}>
+            <i className="fe fe-power me-2"></i> Log Out
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
