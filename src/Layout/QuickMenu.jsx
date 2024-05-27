@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Row, Col, Image, Dropdown } from "react-bootstrap";
@@ -7,22 +7,32 @@ import { useGlobalContext } from "../context/AuthContext";
 import DarkLightMode from "./DarkLightMode";
 import { showToast } from "../Components/Showtoast";
 import Notifications from "../Creator/authentication/Notifications";
-import Avatar1 from "../assets/images/avatar/avatar-1.jpg";
+import Avatar1 from "../assets/images/avatar/person.png";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/login";
 
 const QuickMenu = () => {
-  const { user, userImage, LogOut } = useGlobalContext() || {}; // Ensure user and userImage are defined
-  const Email = sessionStorage.getItem("email");
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
+  const navigate = useNavigate();
 
-  const handleSignOut = async () => {
-    try {
-      await LogOut();
-    } catch (error) {
-      showToast(error.response.data.message);
-    }
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    // Dispatch the logout action
+    dispatch(logout());
+    showToast("LogOut Successfully");
+    navigate("/");
   };
+
+  const username = useSelector(
+    (state) => state.authentication.user.data.organizationName
+  );
+  const userImage = useSelector(
+    (state) => state.authentication.user.data.image
+  );
+  const Email = useSelector((state) => state.authentication.user.data.email);
 
   return (
     <Fragment>
@@ -94,13 +104,13 @@ const QuickMenu = () => {
                 />
               </div>
               <div className="ms-3 lh-1">
-                <h5 className="mb-1">{user}</h5>
+                <h5 className="mb-1">{username}</h5>
                 <p className="mb-0 text-muted">{Email}</p>
               </div>
             </div>
           </Dropdown.Item>
-          <Dropdown.Item className="mb-3" onClick={handleSignOut}>
-            <i className="fe fe-power me-2"></i> Sign Out
+          <Dropdown.Item className="mb-3" onClick={handleLogout}>
+            <i className="fe fe-power me-2"></i> Log Out
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

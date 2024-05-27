@@ -5,27 +5,23 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useGlobalContext } from "../../context/AuthContext";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/login";
 import { showToast } from "../../Components/Showtoast";
+import axios from "axios";
 
 import Logo from "../../assets/GFA logo Rebrand Blue.png";
 
-const UserSignIn = () => {
+const UserSignUp = () => {
+  const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { Login, loading } = useGlobalContext();
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, error, user } = useSelector(
-    (state) => state.authentication
-  );
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
 
   const formSchema = yup.object().shape({
+    organisation: yup.string().required("organization name is required"),
     email: yup
       .string()
       .required("Email cannot be empty")
@@ -41,43 +37,29 @@ const UserSignIn = () => {
     resolver: yupResolver(formSchema),
   });
 
-  // const onSubmit = async (data, e) => {
-  //   try {
-  //     await Login(data, e); // Pass the event object to the Login function
-  //   } catch (error) {
-  //     console.error("Error logging in:", error);
-  //   }
-  // };
-
   const onSubmit = async (data, e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
-      // Dispatch the login action
-      const resultAction = await dispatch(
-        login({
+      const response = await axios.post(
+        "https://dimpified-backend.azurewebsites.net/api/v1/register",
+        {
           email: data.email,
+          userType: "creator",
           password: data.password,
-        })
-      );
-
-      if (login.rejected.match(resultAction)) {
-        // Login failed, access the payload from the rejected action
-        const errorPayload = resultAction.payload;
-        showToast(errorPayload);
-      } else if (login.fulfilled.match(resultAction)) {
-        // Login was successful
-        showToast(resultAction.payload.message);
-
-        if (resultAction.payload.data.interest === "no") {
-          navigate("/creator/onboard");
-        } else {
-          navigate("/creator/dashboard/overview");
+          organizationName: data.organisation,
         }
+      );
+      setLoading(false);
+      if (response.status === 201) {
+        console.log(response.data.message);
+        showToast(response.data.message);
+        navigate(`/authentication/verify-email?email=${data.email}`);
       }
     } catch (error) {
-      // Handle unexpected errors, such as network issues
-      showToast("An unexpected error occurred. Please try again.");
+      console.log("this is good");
+      setLoading(false);
+      showToast(error.response.data.message);
     }
   };
 
@@ -88,28 +70,43 @@ const UserSignIn = () => {
           <Card>
             <Card.Body className="p-6">
               <div className="mb-4">
-                <Image
-                  src={Logo}
-                  className="mb-4"
-                  alt="logo"
-                  style={{ height: "100px" }}
-                />
-                <h1 className="mb-1 fw-bold">Sign in</h1>
+                <Link to="/">
+                  <Image
+                    src={Logo}
+                    className="mb-4"
+                    alt="logo"
+                    style={{ height: "100px" }}
+                  />
+                </Link>
+                <h1 className="mb-1 fw-bold">Sign Up</h1>
                 <span>
-                  Don’t have an account?
-                  <Link to="/creator/signup" className="ms-1">
-                    Sign up
+                  Already have an account?
+                  <Link to="/" className="ms-1">
+                    Sign in
                   </Link>
                 </span>
               </div>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                   <Col lg={12} md={12} className="mb-3">
+                    <Form.Label>Organisation</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Organisation name here"
+                      {...register("organisation", {
+                        required: "Organisation is required",
+                      })}
+                    />
+                    <small className="text-danger">
+                      {errors.organisation && errors.organisation.message}
+                    </small>
+                  </Col>
+                  <Col lg={12} md={12} className="mb-3">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
                       placeholder="Email address here"
-                      {...register("email")}
+                      {...register("email", { required: "Email is required" })}
                     />
                     <small className="text-danger">
                       {errors.email && errors.email.message}
@@ -121,7 +118,9 @@ const UserSignIn = () => {
                       <Form.Control
                         type={passwordVisible ? "text" : "password"}
                         placeholder="**************"
-                        {...register("password")}
+                        {...register("password", {
+                          required: "Password is required",
+                        })}
                       />
                       <div
                         className="position-absolute end-20 top-50 translate-middle-y"
@@ -135,12 +134,8 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Link to="/user/Forget-password" className="ms-1 text-bold">
-                    Forgot Password
-                  </Link>
-
-                  <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
-                    {isLoading ? (
+                  <Col lg={12} md={12} className="mb-0 d-grid gap-2">
+                    {loading ? (
                       <Button
                         variant="primary"
                         type="submit"
@@ -151,7 +146,7 @@ const UserSignIn = () => {
                       </Button>
                     ) : (
                       <Button variant="primary" type="submit">
-                        Sign in
+                        Sign up
                       </Button>
                     )}
                   </Col>
@@ -165,4 +160,4 @@ const UserSignIn = () => {
   );
 };
 
-export default UserSignIn;
+export default UserSignUp;

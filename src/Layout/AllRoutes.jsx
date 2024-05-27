@@ -41,6 +41,8 @@ import Resolution from "../Creator/Support/Resolution";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
+import OnboardTwo from "../Pages/creator/OnboardTwo";
+import MultiStepForm from "./basicDetails";
 
 const AllRoutes = () => {
   return (
@@ -53,6 +55,7 @@ const AllRoutes = () => {
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/user/verify-email" element={<UserEmailVerification />} />
       <Route path="/creator/Verify-email" element={<VerifyEmail />} />
+      <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
@@ -63,6 +66,7 @@ const AllRoutes = () => {
           path="/creator/notification-single"
           element={<NotificationSingle />}
         />
+        <Route path="/creator/edit-template" element={<MultiStepForm />} />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
@@ -70,15 +74,14 @@ const AllRoutes = () => {
           path="/creator/jobs/category-single"
           element={<CategorySingle />}
         />
-        <Route path="/creator/jobProvider" element={<JobProvider />} />
-        <Route path="/creator/jobSeeker" element={<JobSeeker />} />
-        <Route path="/creator/all-payment" element={<AllPayment />} />
-        <Route path="/creator/pending-payment" element={<PendingPayment />} />
+        <Route path="/admin/jobProvider" element={<JobProvider />} />
+        <Route path="/admin/jobSeeker" element={<JobSeeker />} />
+        <Route path="/admin/all-payment" element={<AllPayment />} />
+        <Route path="/admin/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
         <Route path="/creator/support" element={<Support />} />
         <Route path="/creator/resolution" element={<Resolution />} />
-        <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
