@@ -74,7 +74,7 @@ const EditTemplate = () => {
     alert("Form submitted!");
     console.log("Selected Template:", selectedTemplate);
     console.log("Answers:", answers);
-    navigate("/creator/dashboard/Create-Form")
+    navigate("/creator/dashboard/Create-Form");
   };
 
   const scroll = (scrollOffset) => {
@@ -164,178 +164,182 @@ const EditTemplate = () => {
         </Col>
 
         <Col xs="auto">
-        <Link to="/creator/dashboard/All-Ecosystem">
+          <Link to="/creator/dashboard/All-Ecosystem">
             <Button variant="outline-light"> Cancel</Button>
           </Link>
         </Col>
       </Row>
 
       <Container className="mt-5 ">
-          <div className="d-flex flex-column align-items-center">
-            <h2>Select Template</h2>
-            <p>Select and Edit your ecosystem template</p>
-            <div className="w-50 mb-4" style={{ height: "1px" }}>
-              <ProgressBar now={(step / 3) * 100} />
-            </div>
+        <div className="d-flex flex-column align-items-center">
+          <h2>Select Template</h2>
+          <p>Select and Edit your ecosystem template</p>
+          <div className="w-50 mb-4" style={{ height: "1px" }}>
+            <ProgressBar now={(step / 3) * 100} />
           </div>
+        </div>
 
-          <div>
-            {step === 1 && (
-              <div>
-                <h3>Template Sections</h3>
-                <div className="d-flex align-items-center position-relative">
-                  <FaChevronLeft
-                    className={`scroll-arrow ${
-                      !canScrollLeft ? "disabled" : ""
-                    }`}
-                    onClick={() => scroll(-100)}
-                    disabled={!canScrollLeft}
-                  />
-                  <div
-                    className="template-sections flex-nowrap overflow-auto mx-8"
-                    ref={scrollRef}
-                    onScroll={checkScroll}
-                    style={{ display: "flex", whiteSpace: "nowrap" }}
-                  >
-                    {templateSections.map((section) => (
-                      <div
-                        key={section.id}
-                        className={`template-section ${
-                          activeSection === section.id
-                            ? "bg-primary text-white"
-                            : "bg-body-secondary"
-                        }`}
-                        onClick={() => setActiveSection(section.id)}
-                        style={{
-                          padding: "10px 20px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {section.name}
-                      </div>
-                    ))}
-                  </div>
-                  <FaChevronRight
-                    className={`scroll-arrow ${
-                      !canScrollRight ? "disabled" : ""
-                    }`}
-                    onClick={() => scroll(100)}
-                    disabled={!canScrollRight}
-                  />
-                </div>
-                <h3 className="mt-8">Select a Template</h3>
-                <Row>
-                  {templates.map((template) => (
-                    <Col key={template.id} md={4} className="mt-5 md-mt-0">
-                      <Card className="template-card">
-                        <Card.Img variant="top" src={template.img} />
-                        <Card.Body className="text-center">
-                          <Card.Title>{template.name}</Card.Title>
-                          <Button
-                            variant="primary"
-                            className="select-button"
-                            onClick={() => handleTemplateSelect(template)}
-                          >
-                            Select & Continue
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            )}
-            {step === 2 && (
-              <div>
-                <h3>Edit Template Content</h3>
-                <Form>
-                  <Form.Group>
-                    <Form.Label>Logo</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={content.logo}
-                      onChange={(e) =>
-                        handleContentChange("logo", e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Header</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={content.header}
-                      onChange={(e) =>
-                        handleContentChange("header", e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Main Text</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      value={content.mainText}
-                      onChange={(e) =>
-                        handleContentChange("mainText", e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Footer</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={content.footer}
-                      onChange={(e) =>
-                        handleContentChange("footer", e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                </Form>
-                <div className="d-flex justify-content-between mt-3">
-                  <Button variant="secondary" onClick={() => setStep(1)}>
-                    Back
-                  </Button>
-                  <Button variant="primary" onClick={() => setStep(3)}>
-                    Continue
-                  </Button>
-                </div>
-              </div>
-            )}
-            {step === 3 && (
-              <div>
-                <h3>Preview Template</h3>
+        <div>
+          {step === 1 && (
+            <div>
+              <h3>Template Sections</h3>
+              <div className="d-flex align-items-center position-relative">
+                <FaChevronLeft
+                  className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
+                  onClick={() => scroll(-100)}
+                  disabled={!canScrollLeft}
+                />
                 <div
-                  className="template-preview p-3"
-                  style={{
-                    backgroundColor: "#f8f9fa",
-                    border: "1px solid #ddd",
-                  }}
+                  className="template-sections flex-nowrap overflow-auto mx-8"
+                  ref={scrollRef}
+                  onScroll={checkScroll}
+                  style={{ display: "flex", whiteSpace: "nowrap" }}
                 >
-                  <header className="text-center">
-                    <h1>{content.logo}</h1>
-                    <h2>{content.header}</h2>
-                  </header>
-                  <main className="mt-4">
-                    <p>{content.mainText}</p>
-                  </main>
-                  <footer className="text-center mt-4">
-                    <p>{content.footer}</p>
-                  </footer>
+                  {templateSections.map((section) => (
+                    <div
+                      key={section.id}
+                      className={`template-section ${
+                        activeSection === section.id
+                          ? "bg-primary text-white"
+                          : "bg-body-secondary"
+                      }`}
+                      onClick={() => setActiveSection(section.id)}
+                      style={{
+                        padding: "10px 20px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {section.name}
+                    </div>
+                  ))}
                 </div>
-                <div className="d-flex justify-content-between mt-3">
-                  <Button variant="secondary" onClick={() => setStep(2)}>
-                    Back
-                  </Button>
-                  <Button variant="primary" onClick={handleSubmit}>
-                    Submit
-                  </Button>
-                </div>
+                <FaChevronRight
+                  className={`scroll-arrow ${
+                    !canScrollRight ? "disabled" : ""
+                  }`}
+                  onClick={() => scroll(100)}
+                  disabled={!canScrollRight}
+                />
               </div>
-            )}
-          </div>
-        </Container>
+              <h3 className="mt-8">Select a Template</h3>
+              <Row>
+                {templates.map((template) => (
+                  <Col key={template.id} md={4} className="mt-5 md-mt-0">
+                    <Card className="template-card">
+                      <Card.Img variant="top" src={template.img} />
+                      <Card.Body className="text-center">
+                        <Card.Title>{template.name}</Card.Title>
+                        <Button
+                          variant="primary"
+                          className="select-preview"
+                          onClick={() => handleTemplateSelect(template)}
+                        >
+                          Preview Template
+                        </Button>
+                        <Button
+                          variant="primary"
+                          className="select-button"
+                          onClick={() => handleTemplateSelect(template)}
+                        >
+                          Select Template
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          )}
+          {step === 2 && (
+            <div>
+              <h3>Edit Template Content</h3>
+              <Form>
+                <Form.Group>
+                  <Form.Label>Logo</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={content.logo}
+                    onChange={(e) =>
+                      handleContentChange("logo", e.target.value)
+                    }
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Header</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={content.header}
+                    onChange={(e) =>
+                      handleContentChange("header", e.target.value)
+                    }
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Main Text</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={content.mainText}
+                    onChange={(e) =>
+                      handleContentChange("mainText", e.target.value)
+                    }
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Footer</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={content.footer}
+                    onChange={(e) =>
+                      handleContentChange("footer", e.target.value)
+                    }
+                  />
+                </Form.Group>
+              </Form>
+              <div className="d-flex justify-content-between mt-3">
+                <Button variant="secondary" onClick={() => setStep(1)}>
+                  Back
+                </Button>
+                <Button variant="primary" onClick={() => setStep(3)}>
+                  Continue
+                </Button>
+              </div>
+            </div>
+          )}
+          {step === 3 && (
+            <div>
+              <h3>Preview Template</h3>
+              <div
+                className="template-preview p-3"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  border: "1px solid #ddd",
+                }}
+              >
+                <header className="text-center">
+                  <h1>{content.logo}</h1>
+                  <h2>{content.header}</h2>
+                </header>
+                <main className="mt-4">
+                  <p>{content.mainText}</p>
+                </main>
+                <footer className="text-center mt-4">
+                  <p>{content.footer}</p>
+                </footer>
+              </div>
+              <div className="d-flex justify-content-between mt-3">
+                <Button variant="secondary" onClick={() => setStep(2)}>
+                  Back
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </Container>
     </Container>
-
   );
 };
 
