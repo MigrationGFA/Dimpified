@@ -38,10 +38,18 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
+// import Resolution from "../Creator/Support/Resolution";
+import Chat from "../Admin/chat/Chat"
+import ChatLayout from "./Dashboard/ChatLayout";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
 import OnboardTwo from "../Pages/creator/OnboardTwo";
+import Ecosystem from "../Creator/ecosystem/Ecosystem";
+import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
+import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
+import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
+import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 
 const AllRoutes = () => {
   return (
@@ -57,7 +65,14 @@ const AllRoutes = () => {
       <Route path="/creator/Verify-email" element={<VerifyEmail />} />
 
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+      <Route path="/creator/dashboard/New-Ecosystem" element={<NewEcosystem/>} />
+      <Route path="/creator/dashboard/Edit-Template" element={<EditTemplate/>} />
+      <Route path="/creator/dashboard/Create-Form" element={<CreateForm/>} />
+      <Route path="/creator/dashboard/Preview-and-Send" element={<PreviewAndSend/>} />
 
+      <Route element={<ChatLayout />}>
+				<Route path="/creator/dashboard/chat" element={<Chat />} />
+			</Route>
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
@@ -71,6 +86,8 @@ const AllRoutes = () => {
 
           element={<NotificationSingle />}
         />
+        <Route path="/creator/dashboard/All-Ecosystem" element={<Ecosystem/>} />
+        
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
