@@ -38,6 +38,8 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import Support from "../Creator/Support/Support";
 import Resolution from "../Creator/Support/Resolution";
+import Chat from "../Admin/chat/Chat"
+import ChatLayout from "./Dashboard/ChatLayout";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
@@ -67,6 +69,9 @@ const AllRoutes = () => {
       <Route path="/creator/dashboard/Create-Form" element={<CreateForm/>} />
       <Route path="/creator/dashboard/Preview-and-Send" element={<PreviewAndSend/>} />
 
+      <Route element={<ChatLayout />}>
+				<Route path="/creator/dashboard/chat" element={<Chat />} />
+			</Route>
 
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>

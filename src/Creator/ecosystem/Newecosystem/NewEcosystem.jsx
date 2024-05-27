@@ -134,7 +134,9 @@ const NewEcosystem = () => {
           </Nav>
         </Col>
         <Col xs="auto">
-          <Button variant="outline-light"> Cancel</Button>
+        <Link to="/creator/dashboard/All-Ecosystem">
+            <Button variant="outline-light"> Cancel</Button>
+          </Link>
         </Col>
       </Row>
       <Row className="mt-4 justify-content-center">
@@ -265,10 +267,10 @@ const NewEcosystem = () => {
                   </Col>
 
                   <div className="d-flex justify-content-end mt-4">
-                    <Button variant="secondary" className="me-2">
-                      Save as Draft
-                    </Button>
+                    <Link to="/creator/dashboard/Edit-Template">
                     <Button variant="primary">Next</Button>
+                    </Link>
+                    
                   </div>
                 </Form>
               </div>

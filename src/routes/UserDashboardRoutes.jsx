@@ -216,12 +216,12 @@ export const DashboardMenu = [
   // },
 
   // -- Apps -> Chat and Task - v1.4.0
-  // {
-  //   id: uuid(),
-  //   title: "Chat",
-  //   icon: "message-square",
-  //   link: "/dashboard/chat",
-  // },
+  {
+    id: uuid(),
+    title: "Chat",
+    icon: "message-square",
+    link: "/creator/dashboard/chat",
+  },
   //   {
   //     id: uuid(),
   //     title: "Task",
