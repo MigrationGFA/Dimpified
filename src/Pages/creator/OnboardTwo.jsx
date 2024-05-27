@@ -10,6 +10,10 @@ const OnboardTwo = () => {
   const handleNoClick = () => {
     navigate("/creator/dashboard/overview");
   };
+  const handleYesClick = () => {
+    navigate("/creator/dashboard/New-Ecosystem");
+  };
+  
 
   const handlePreviousClick = () => {
     navigate("/creator/Onboard");
@@ -52,7 +56,7 @@ const OnboardTwo = () => {
                   <Button
                     variant={ecosystemSetup === "yes" ? "primary" : "outline-primary"}
                     className="me-2"
-                    onClick={() => setEcosystemSetup("yes")}
+                    onClick={handleYesClick}
                   >
                     YES
                   </Button>

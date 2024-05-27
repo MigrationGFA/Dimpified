@@ -402,11 +402,11 @@ export const UserChartOptions = {
   },
   dataLabels: { enabled: !1 },
   stroke: { curve: "smooth", width: 2 },
-  colors: [theme.primary],
+  colors: ["#FFD700"], // Gold
   fill: {
     type: "gradient",
     gradient: {
-      gradientToColors: [theme.primary],
+      gradientToColors: ["#FFD700"], // Gold
       shadeIntensity: 0.9,
       opacityFrom: 0.5,
       opacityTo: 0.04,
@@ -418,10 +418,8 @@ export const UserChartOptions = {
   yaxis: [{ y: 0, offsetX: 0, offsetY: 0, padding: { left: 0, right: 0 } }],
   tooltip: { x: { show: !1 } },
 };
-
-/** Visitor Chart Series and options used in Dashboard Analytics -> StartRightChart component */
 export const VisitorChartSeries = [
-  { name: "User", data: [28, 40, 36, 52, 38, 60, 55] },
+	{ name: 'User', data: [28, 40, 36, 52, 38, 60, 55] }
 ];
 export const VisitorChartOptions = {
   chart: {
@@ -431,15 +429,15 @@ export const VisitorChartOptions = {
     sparkline: { enabled: !0 },
     grid: { show: !1, padding: { left: 0, right: 0 } },
   },
-  colors: [theme.success],
+  colors: ["#228B22"], // Forest Green
   dataLabels: { enabled: !1 },
   stroke: { curve: "smooth", width: 2 },
   fill: {
-    colors: [theme.success],
+    colors: ["#228B22"], // Forest Green
     type: "gradient",
     gradient: {
       type: "vertical",
-      gradientToColors: [theme.success],
+      gradientToColors: ["#228B22"], // Forest Green
       shadeIntensity: 0.7,
       opacityFrom: 0.5,
       opacityTo: 0.04,
@@ -451,10 +449,8 @@ export const VisitorChartOptions = {
   yaxis: [{ y: 0, offsetX: 0, offsetY: 0, padding: { left: 0, right: 0 } }],
   tooltip: { x: { show: !1 } },
 };
-
-/** Bounce Chart Series and options used in Dashboard Analytics -> StartRightChart component */
 export const BounceChartSeries = [
-  { name: "Bonus Rate", data: [28, 40, 36, 52, 38, 60, 55] },
+	{ name: 'Bonus Rate', data: [28, 40, 36, 52, 38, 60, 55] }
 ];
 export const BounceChartOptions = {
   chart: {
@@ -464,7 +460,7 @@ export const BounceChartOptions = {
     sparkline: { enabled: !0 },
     grid: { show: !1, padding: { left: 0, right: 0 } },
   },
-  colors: [theme.darkWarning],
+  colors: ["#9932CC"], // Dark Orchid
   dataLabels: { enabled: !1 },
   stroke: { curve: "straight", width: 4 },
   markers: { size: 4, hover: { size: 6, sizeOffset: 3 } },
@@ -472,6 +468,7 @@ export const BounceChartOptions = {
   yaxis: [{ y: 0, offsetX: 0, offsetY: 0, padding: { left: 0, right: 0 } }],
   tooltip: { x: { show: !1 } },
 };
+
 
 /** Average Visit Time Chart Series and options used in Dashboard Analytics -> StartRightChart component */
 export const AverageVisitTimeChartSeries = [

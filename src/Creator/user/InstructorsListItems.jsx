@@ -153,7 +153,7 @@ const InstructorsListItems = () => {
 			data={data}
 			columns={columns}
 			filter={true}
-			filterPlaceholder="Search Instructors"
+			filterPlaceholder="Search Ecosystem"
 			pagination={true} />
 	);
 };

@@ -2,15 +2,22 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Row, Col, Image, Dropdown } from "react-bootstrap";
+import { Row, Col, Image, Dropdown, ListGroup } from "react-bootstrap";
 import { useGlobalContext } from "../context/AuthContext";
 import DarkLightMode from "./DarkLightMode";
 import { showToast } from "../Components/Showtoast";
-import Notifications from "../Creator/authentication/Notifications";
+// import Notifications from "../../Creator/authentication/Notifications";
 import Avatar1 from "../assets/images/avatar/person.png";
-import { useSelector } from "react-redux";
+import NotificationList from "../Creator/Notification/Notification";
+
+//  simple bar scrolling used for notification item scrolling
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
+import GKTippy from "../Components/elements/tooltips/GKTippy";
+import DotBadge from "../Components/elements/bootstrap/DotBadge";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/login";
+import { useSelector } from "react-redux";
 
 const QuickMenu = () => {
   const isDesktop = useMediaQuery({
@@ -33,6 +40,55 @@ const QuickMenu = () => {
     (state) => state.authentication.user.data.image
   );
   const Email = useSelector((state) => state.authentication.user.data.email);
+
+  const Notifications = () => {
+    return (
+      <SimpleBar style={{ maxHeight: "300px" }}>
+        <ListGroup variant="flush">
+          {NotificationList.map(function (item, index) {
+            return (
+              <ListGroup.Item
+                className={index === 0 ? "bg-light" : ""}
+                key={index}
+              >
+                <Row>
+                  <Col>
+                    <Link className="text-body" to="#">
+                      <div className="d-flex">
+                        <Image
+                          src={item.image}
+                          alt=""
+                          className="avatar-md rounded-circle"
+                        />
+                        <div className="ms-3">
+                          <h5 className="fw-bold mb-1">{item.sender}</h5>
+                          <p className="mb-3">{item.message}</p>
+                          <span className="fs-6 text-muted">
+                            <span>
+                              <span className="fe fe-thumbs-up text-success me-1"></span>
+                              {item.date}
+                            </span>
+                            <span className="ms-1">{item.time}</span>
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col xs="auto" className="text-center me-2">
+                    <GKTippy content="Mark as unread">
+                      <Link to="#">
+                        <DotBadge bg="secondary"></DotBadge>
+                      </Link>
+                    </GKTippy>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
+      </SimpleBar>
+    );
+  };
 
   return (
     <Fragment>
@@ -57,9 +113,9 @@ const QuickMenu = () => {
           <div className="border-bottom px-3 pt-3 pb-3 d-flex justify-content-between align-items-end">
             <span className="h4 mb-0">Notifications</span>
             <Link to="# " className="text-muted">
-              <span className="align-middle">
+              {/* <span className="align-middle">
                 <i className="fe fe-settings me-1"></i>
-              </span>
+              </span> */}
             </Link>
           </div>
           <Notifications />
