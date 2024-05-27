@@ -3,7 +3,7 @@ import { Col, Row, Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import Ecosystem1 from "../../assets/design.png";
+import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
 
 function getTimeDifference(updatedAt) {
   // Parse the updatedAt string to a Date object

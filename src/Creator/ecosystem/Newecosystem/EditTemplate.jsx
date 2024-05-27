@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
-import logo from "../../../assets/digital.png";
+// import logo from "../../../assets/digital.png";
 
 const templates = [
   { id: 1, name: "Template 1", img: "https://via.placeholder.com/150" },

@@ -38,7 +38,7 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-import Resolution from "../Creator/Support/Resolution";
+// import Resolution from "../Creator/Support/Resolution";
 import Chat from "../Admin/chat/Chat"
 import ChatLayout from "./Dashboard/ChatLayout";
 
