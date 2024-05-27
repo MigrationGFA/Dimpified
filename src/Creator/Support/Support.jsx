@@ -1,10 +1,18 @@
 import React, { Fragment, useState, useMemo, useEffect } from "react";
-import { Card, Row, Table, Button, Spinner } from "react-bootstrap";
-import axios from "axios"; // Import Axios
+import { Col, Row, Card, Spinner, Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import { numberWithCommas } from "../../helper/utils";
 import { showToast } from "../../Components/Showtoast";
 
 const Support = () => {
+  const [dashboardData, setDashboardData] = useState({
+    monthlySeeker: 1,
+    totalSeeker: 1,
+    monthlyProvider: 1,
+    totalProvider: 1,
+  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Cloading, setCLoading] = useState(false);
@@ -62,25 +70,6 @@ const Support = () => {
           </Button>
         ),
       },
-      // {
-      //   header: "Action",
-      //   accessorKey: "action",
-      //   cell: ({ row }) => (
-      //     <Fragment>
-      //       <Button
-      //         variant="success"
-      //         onClick={() => row && handleAction(row.id, "Completed")}
-      //         style={{
-      //           backgroundColor: "green",
-      //           borderColor: "#b8f7b2",
-      //           color: "white",
-      //         }}
-      //       >
-      //         View
-      //       </Button>
-      //     </Fragment>
-      //   ),
-      // },
     ],
     []
   );
@@ -108,82 +97,156 @@ const Support = () => {
   };
 
   return (
-    <Card className="border-0 mt-4">
-      <Card.Header>
-        <h3 className="mb-0 h4">Support</h3>
-      </Card.Header>
-      <Card.Body>
-        <Row className="align-items-center">
-          {/* Your FormSelect components */}
-        </Row>
-      </Card.Body>
-      <Card.Body className="p-0 pb-4">
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
+    <div>
+      <Row>
+        <Col lg={12} md={12} sm={12}>
+          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+            <div className="mb-3 mb-lg-0">
+              <h1 className="mb-0 h2 fw-bold">Support</h1>
+            </div>
           </div>
-        ) : (
-          <Fragment>
-            <Table hover responsive className="text-nowrap table-centered">
-              <thead>
-                <tr>
-                  {columns.map((column) => (
-                    <th key={column.accessorKey}>{column.header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data && data.lenght > 0 ? data.map((row) => (
-                  <tr key={row.id}>
-                    {columns.map((column) => (
-                      <td key={column.accessorKey}>
-                       
-                        {column.accessorKey === "message" &&
-                        row.message.length > 20 ? (
-                          <span
-                            title={row.message}
-                            className="mb-1 text-primary-hover cursor-pointer"
-                          >
-                            {row.message.slice(0, 20)}...
-                          </span>
-                        ) : (
-                          row[column.accessorKey]
-                        )}
-                        {/* Render buttons only in corresponding columns */}
-                        {column.accessorKey === "completed" && (
-                          <Button
-                            variant="success"
-                            onClick={() => handleAction(row.id)}
-                            disabled={
-                              row.status === "completed" || row.Cloading
-                            }
-                            style={{
-                              backgroundColor: "green",
-                              borderColor: "#b8f7b2",
-                              color: "white",
-                              opacity:
-                                row.status === "completed" || row.Cloading
-                                  ? 0.6
-                                  : 1,
-                            }}
-                          >
-                            {row.Cloading ? "Processing" : "Completed"}
-                          </Button>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                )) : <div className="p-12">No Support request available</div>}
-              </tbody>
-            </Table>
-            <div className="mt-4">{/* Pagination */}</div>
-          </Fragment>
-        )}
-        {!loading && data.length === 0 && <div>No data found.</div>}
-      </Card.Body>
-    </Card>
+        </Col>
+      </Row>
+
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <div>
+          <Row>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Ecosystem"
+                value="1"
+                summary="Number of sales"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="UserChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Users"
+                value="1"
+                summary="Number of pending"
+                summaryIcon="down"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="VisitorChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Materials"
+                value="0"
+                summary="Students"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="BounceChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Total Paid Users"
+                value="0"
+                summary="Instructor"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="AverageVisitTimeChart"
+              />
+            </Col>
+          </Row>
+
+          <Card className="border-0 mt-4">
+            <Card.Header>
+              <h3 className="mb-0 h4">Support Requests</h3>
+            </Card.Header>
+            <Card.Body>
+              <Row className="align-items-center">
+                {/* Your FormSelect components */}
+              </Row>
+            </Card.Body>
+            <Card.Body className="p-0 pb-4">
+              {loading ? (
+                <div className="text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              ) : (
+                <Fragment>
+                  <Table hover responsive className="text-nowrap table-centered">
+                    <thead>
+                      <tr>
+                        {columns.map((column) => (
+                          <th key={column.accessorKey}>{column.header}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data && data.length > 0 ? (
+                        data.map((row) => (
+                          <tr key={row.id}>
+                            {columns.map((column) => (
+                              <td key={column.accessorKey}>
+                                {column.accessorKey === "message" &&
+                                row.message.length > 20 ? (
+                                  <span
+                                    title={row.message}
+                                    className="mb-1 text-primary-hover cursor-pointer"
+                                  >
+                                    {row.message.slice(0, 20)}...
+                                  </span>
+                                ) : (
+                                  row[column.accessorKey]
+                                )}
+                                {column.accessorKey === "completed" && (
+                                  <Button
+                                    variant="success"
+                                    onClick={() => handleAction(row.id)}
+                                    disabled={
+                                      row.status === "completed" || row.Cloading
+                                    }
+                                    style={{
+                                      backgroundColor: "green",
+                                      borderColor: "#b8f7b2",
+                                      color: "white",
+                                      opacity:
+                                        row.status === "completed" || row.Cloading
+                                          ? 0.6
+                                          : 1,
+                                    }}
+                                  >
+                                    {row.Cloading ? "Processing" : "Completed"}
+                                  </Button>
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        ))
+                      ) : (
+                        <div className="p-12">No Support request available</div>
+                      )}
+                    </tbody>
+                  </Table>
+                  <div className="mt-4">{/* Pagination */}</div>
+                </Fragment>
+              )}
+              {!loading && data.length === 0 && <div>No data found.</div>}
+            </Card.Body>
+          </Card>
+        </div>
+      )}
+    </div>
   );
 };
 

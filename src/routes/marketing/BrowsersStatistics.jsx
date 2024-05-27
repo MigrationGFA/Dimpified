@@ -1,10 +1,10 @@
 // import media files
-import Chrome from '../../assets/images/browser-svg/chrome.svg';
-import Firefox from '../../assets/images/browser-svg/firefox.svg';
-import Brave from '../../assets/images/browser-svg/brave.svg';
-import Safari from '../../assets/images/browser-svg/safari.svg';
-import IE from '../../assets/images/browser-svg/ie.svg';
-import Opera from '../../assets/images/browser-svg/opera.svg';
+import Chrome from '../../assets/images/avatar/avatar-1.jpg';
+import Firefox from '../../assets/images/avatar/avatar-1.jpg';
+import Brave from '../../assets/images/avatar/avatar-1.jpg';
+import Safari from '../../assets/images/avatar/avatar-1.jpg';
+import IE from '../../assets/images/avatar/avatar-1.jpg';
+import Opera from '../../assets/images/avatar/avatar-1.jpg';
 
 const BrowsersStatistics = [
 	{

@@ -14,6 +14,7 @@ import JobCategory from "../Creator/courses/JobCategory";
 import CategorySingle from "../Creator/courses/CategorySingle";
 
 // ** Import Users Pages
+import MyUser from "../Creator/user/MyUser";
 import JobProvider from "../Creator/user/JobProvider";
 import JobSeeker from "../Creator/user/JobSeeker";
 import AdminDashboardIndex from "../Creator/UserDashboardIndex";
@@ -23,7 +24,6 @@ import Notification from "../Creator/authentication/Notifications";
 import NotificationSingle from "../Creator/Notification/NotificationSingle";
 
 // ** Import Payment components
-import AllPayment from "../Creator/Payment/AllPayment";
 import PendingPayment from "../Creator/Payment/PendingPayment";
 import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
 import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
@@ -36,6 +36,7 @@ import UserEmailVerification from "../Creator/authentication/UserEmailVerificati
 import VerifyEmail from "../Creator/authentication/VerifyEmail";
 
 // ** Import Support components
+import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
 import Resolution from "../Creator/Support/Resolution";
 import Chat from "../Admin/chat/Chat"
@@ -94,14 +95,15 @@ const AllRoutes = () => {
           path="/creator/jobs/category-single"
           element={<CategorySingle />}
         />
-        <Route path="/admin/jobProvider" element={<JobProvider />} />
-        <Route path="/admin/jobSeeker" element={<JobSeeker />} />
-        <Route path="/admin/all-payment" element={<AllPayment />} />
-        <Route path="/admin/pending-payment" element={<PendingPayment />} />
+        <Route path="/creator/my-user" element={<MyUser />} />
+        <Route path="/creator/jobProvider" element={<JobProvider />} />
+        <Route path="/creator/jobSeeker" element={<JobSeeker />} />
+        <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
-        <Route path="/creator/resolution" element={<Resolution />} />
+        <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
