@@ -140,7 +140,7 @@ const Overview = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Total Support"
                 value="0"
                 summary="Students"
                 summaryValue="Monthly "
