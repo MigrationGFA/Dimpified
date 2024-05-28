@@ -95,7 +95,7 @@ const Overview = () => {
               <Link to="/creator/dashboard/New-Ecosystem">
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
-                  New Ecosystem
+                  Create New Ecosystem
                 </Button>
               </Link>
             </div>
@@ -140,7 +140,7 @@ const Overview = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Total Contents"
                 value="0"
                 summary="Students"
                 summaryValue="Monthly "
