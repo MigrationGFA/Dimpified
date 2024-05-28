@@ -12,13 +12,16 @@ import {
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
+import AddNewCourse from "../AddNewCourse";
+import ModalVideo from "react-modal-video";
 // import logo from "../../../assets/digital.png";
+import PlayBtn from "../../../assets/play-btn.svg";
 import EcoHeader from "./ecoHeader";
 
 const templates = [
-  { id: 1, name: "Template 1", img: "https://via.placeholder.com/150" },
-  { id: 2, name: "Template 2", img: "https://via.placeholder.com/150" },
-  { id: 3, name: "Template 3", img: "https://via.placeholder.com/150" },
+  { id: 1, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
+  { id: 2, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
+  { id: 3, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
 ];
 
 const questions = [
@@ -40,9 +43,10 @@ const templateSections = [
   { id: 11, name: "Training-2" },
 ];
 
-const EditTemplate = () => {
+const Courses = () => {
   const location = useLocation();
   const [step, setStep] = useState(1);
+  const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [answers, setAnswers] = useState({});
   const [activeSection, setActiveSection] = useState(templateSections[0].id);
@@ -57,10 +61,31 @@ const EditTemplate = () => {
     footer: "© 2024 Your Company. All rights reserved.",
   });
   const navigate = useNavigate();
+  const [isOpen, setOpen] = useState(false);
+  const [YouTubeURL] = useState("hns6IABNVn4");
 
-  const handleTemplateSelect = (template) => {
-    setSelectedTemplate(template);
+  const handleTemplateSelect = (templateId) => {
+    setSelectedTemplates((prevSelected) => {
+      if (prevSelected.includes(templateId)) {
+        return prevSelected.filter((id) => id !== templateId);
+      } else {
+        return [...prevSelected, templateId];
+      }
+    });
+  };
+
+  const handleCreateNewCourse = () => {
     setStep(2);
+  };
+
+  const handleSkipAndContinue = () => {
+    setStep(3);
+  };
+
+  const handleContinue = () => {
+    if (selectedTemplates.length > 0) {
+      setStep(3);
+    }
   };
 
   const handleContentChange = (field, value) => {
@@ -75,7 +100,7 @@ const EditTemplate = () => {
     alert("Form submitted!");
     console.log("Selected Template:", selectedTemplate);
     console.log("Answers:", answers);
-    navigate("/creator/dashboard/Create-Form");
+    navigate("/creator/dashboard/Payment");
   };
 
   const scroll = (scrollOffset) => {
@@ -95,10 +120,11 @@ const EditTemplate = () => {
   return (
     <Container fluid className="p-0">
       <EcoHeader />
+
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
-          <h2>Select Template</h2>
-          <p>Select and Edit your ecosystem template</p>
+          <h2>Course Section</h2>
+          <p>Select and create your courses</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
             <ProgressBar now={(step / 3) * 100} />
           </div>
@@ -107,7 +133,7 @@ const EditTemplate = () => {
         <div>
           {step === 1 && (
             <div>
-              <h3>Template Sections</h3>
+              <h3>Course Sections</h3>
               <div className="d-flex align-items-center position-relative">
                 <FaChevronLeft
                   className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
@@ -146,82 +172,94 @@ const EditTemplate = () => {
                   disabled={!canScrollRight}
                 />
               </div>
-              <h3 className="mt-8">Select a Template</h3>
-              <Row>
+              <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
+                <h3>Select from our Existing Courses</h3>
+                <Link to="">
+                  <Button variant="primary" onClick={handleCreateNewCourse}>
+                    Create Course
+                  </Button>
+                </Link>
+              </div>
+
+              <Row className="mt-5">
+                <h4>Video Courses</h4>
                 {templates.map((template) => (
-                  <Col key={template.id} md={4} className="mt-5 md-mt-0">
-                    <Card className="template-card">
-                      <Card.Img variant="top" src={template.img} />
+                  <Col key={template.id} md={4} className="mt-1 md-mt-0">
+                    <Card className="template-card position-relative">
+                      
+                      <div className="position-relative">
+                      <div className="position-absolute top-0 end-0 m-3">
+                        <Form.Check
+                          type="checkbox"
+                          style={{ transform: "scale(1.5)" }}
+                          onChange={() => handleTemplateSelect(template.id)}
+                          checked={selectedTemplates.includes(template.id)}
+                        />
+                      </div>
+                        <Card.Img variant="top" src={template.img} />
+                        <div className="position-absolute bottom-50 start-50 translate-middle-x">
+                          <Link
+                            to="#"
+                            onClick={() => setOpen(true)}
+                            className="popup-youtube fs-4 text-inherit"
+                          >
+                            <img src={PlayBtn} alt="" className="me-2" />
+                            Watch Demo
+                          </Link>
+                        </div>
+                      </div>
+
                       <Card.Body className="text-center">
                         <Card.Title>{template.name}</Card.Title>
-                        <Button
-                          variant="primary"
-                          className="select-button"
-                          onClick={() => handleTemplateSelect(template)}
-                        >
-                          Select & Continue
-                        </Button>
+                        <Card.Text>{template.description}</Card.Text>
                       </Card.Body>
                     </Card>
                   </Col>
                 ))}
+
+                <ModalVideo
+                  channel="youtube"
+                  autoplay
+                  isOpen={isOpen}
+                  videoId={YouTubeURL}
+                  onClose={() => setOpen(false)}
+                />
               </Row>
+
+              <Row className="mt-5">
+                <h4>Audio Courses</h4>  
+              </Row>
+
+              <Row className="mt-5">
+                <h4>Document Courses</h4>  
+              </Row>
+
+              <div className="d-flex justify-content-end mt-4">
+                <Button
+                  variant="secondary"
+                  className="me-2"
+                  onClick={handleSkipAndContinue}
+                >
+                  Skip and Continue
+                </Button>
+                <Button
+                  variant="primary"
+                  disabled={selectedTemplates.length === 0}
+                  onClick={handleContinue}
+                >
+                  Continue
+                </Button>
+              </div>
             </div>
           )}
           {step === 2 && (
             <div>
-              <h3>Edit Template Content</h3>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Logo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.logo}
-                    onChange={(e) =>
-                      handleContentChange("logo", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Header</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.header}
-                    onChange={(e) =>
-                      handleContentChange("header", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Main Text</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={content.mainText}
-                    onChange={(e) =>
-                      handleContentChange("mainText", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Footer</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.footer}
-                    onChange={(e) =>
-                      handleContentChange("footer", e.target.value)
-                    }
-                  />
-                </Form.Group>
-              </Form>
-              <div className="d-flex justify-content-between mt-3">
-                <Button variant="secondary" onClick={() => setStep(1)}>
-                  Back
-                </Button>
-                <Button variant="primary" onClick={() => setStep(3)}>
-                  Continue
-                </Button>
-              </div>
+              <h3>Create Your Course</h3>
+              <AddNewCourse />
+
+              <Button variant="primary" onClick={() => setStep(3)}>
+                Continue
+              </Button>
             </div>
           )}
           {step === 3 && (
@@ -261,4 +299,4 @@ const EditTemplate = () => {
   );
 };
 
-export default EditTemplate;
+export default Courses;
