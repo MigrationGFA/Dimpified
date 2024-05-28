@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Nav, Button, Card, Form } from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation } from "react-router-dom";
+import EcoHeader from "./ecoHeader";
 
 const NewEcosystem = () => {
   const location = useLocation();
@@ -68,77 +69,7 @@ const NewEcosystem = () => {
 
   return (
     <Container fluid className="p-0">
-      <Row
-        style={{ backgroundColor: "#00008B" }}
-        className="rounded-3 text-white d-flex align-items-center p-2"
-      >
-        <Col>
-          <Nav className="d-flex justify-content-center align-items-center">
-            <Nav.Item>
-              <Nav.Link
-                className={`p-2 rounded-2 transition-colors duration-300 ${
-                  location.pathname === "/creator/dashboard/New-Ecosystem"
-                    ? "bg-white text-blue-800"
-                    : "text-white hover:bg-gray-100 hover:text-blue-800"
-                }`}
-              >
-                Information About Ecosystem
-              </Nav.Link>
-            </Nav.Item>
-            <div className="mx-2 d-flex align-items-center">
-              <span>&gt;</span>
-            </div>
-            <Nav.Item>
-              <Nav.Link
-                className={`p-2 rounded-2 transition-colors duration-300 ${
-                  location.pathname === "/creator/dashboard/Edit-Template"
-                    ? "bg-white text-blue-800"
-                    : "text-white hover:bg-gray-100 hover:text-blue-800"
-                }`}
-              >
-                Edit Template
-              </Nav.Link>
-            </Nav.Item>
-            <div className="mx-2 d-flex align-items-center">
-              <span>&gt;</span>
-            </div>
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to=""
-                className={`p-2 rounded-2 transition-colors duration-300 ${
-                  location.pathname === "/creator/dashboard/Create-Form"
-                    ? "bg-white text-blue-800"
-                    : "text-white hover:bg-gray-100 hover:text-blue-800"
-                }`}
-              >
-                Create Form
-              </Nav.Link>
-            </Nav.Item>
-            <div className="mx-2 d-flex align-items-center">
-              <span>&gt;</span>
-            </div>
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to=""
-                className={`p-2 rounded-2 transition-colors duration-300 ${
-                  location.pathname === "/creator/dashboard/Preview-and-Send"
-                    ? "bg-white text-blue-800"
-                    : "text-white hover:bg-gray-100 hover:text-blue-800"
-                }`}
-              >
-                Preview and Send
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Col>
-        <Col xs="auto">
-        <Link to="/creator/dashboard/All-Ecosystem">
-            <Button variant="outline-light"> Cancel</Button>
-          </Link>
-        </Col>
-      </Row>
+      <EcoHeader />
       <Row className="mt-4 justify-content-center">
         <Col lg={8}>
           <Card>
@@ -152,7 +83,7 @@ const NewEcosystem = () => {
               </div>
               <div>
                 <Form>
-                  <Row className="mb-4"> 
+                  <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
                         EcoSystem Name<span className="text-danger">*</span>
@@ -268,9 +199,8 @@ const NewEcosystem = () => {
 
                   <div className="d-flex justify-content-end mt-4">
                     <Link to="/creator/dashboard/Edit-Template">
-                    <Button variant="primary">Next</Button>
+                      <Button variant="primary">Next</Button>
                     </Link>
-                    
                   </div>
                 </Form>
               </div>
