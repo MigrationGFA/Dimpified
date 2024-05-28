@@ -128,7 +128,7 @@ const HelpCenter = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Ecosystem"
+                title="Total Help Center"
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -140,7 +140,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Users"
+                title="Completed Help Center"
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -152,7 +152,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Pending Help Center"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -164,7 +164,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Paid Users"
+                title="Help Center"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"
