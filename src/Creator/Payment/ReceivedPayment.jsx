@@ -16,6 +16,8 @@ const ReceivedPayment = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -45,6 +47,14 @@ const ReceivedPayment = () => {
     let ecosystem = event.target.value;
     setSelectedEcosystem(ecosystem);
   };
+  const indexOfLastPayment = currentPage * itemsPerPage;
+  const indexOfFirstPayment = indexOfLastPayment - itemsPerPage;
+  const currentPayments = payments.slice(
+    indexOfFirstPayment,
+    indexOfLastPayment
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -69,7 +79,7 @@ const ReceivedPayment = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Ecosystem"
+                title="Total Received Payment"
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -81,7 +91,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Users"
+                title="Completed Received Payment"
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -93,7 +103,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Pending Received Payment"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -105,7 +115,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Paid Users"
+                title="Total Payment"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"
@@ -163,7 +173,7 @@ const ReceivedPayment = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {payments.map((payment) => (
+                      {currentPayments.map((payment) => (
                         <tr key={payment.id}>
                           <td>{payment.id}</td>
                           <td>{payment.email}</td>
@@ -179,6 +189,12 @@ const ReceivedPayment = () => {
                     </tbody>
                   </Table>
                   {payments.length === 0 && <div>No payments found.</div>}
+                  <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={payments.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
                 </>
               )}
             </Card.Body>
