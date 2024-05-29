@@ -95,7 +95,7 @@ const Overview = () => {
               <Link to="/creator/dashboard/New-Ecosystem">
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
-                  New Ecosystem
+                  Create New Ecosystem
                 </Button>
               </Link>
             </div>

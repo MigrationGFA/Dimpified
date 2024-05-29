@@ -9,16 +9,24 @@ import {
   ProgressBar,
   Card,
   Form,
+  Modal,
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
+import template1 from "../../../assets/Screenshot 2024-05-27 165727.png";
+import template2 from "../../../assets/save2.png";
+import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
 
 const templates = [
-  { id: 1, name: "Template 1", img: "https://via.placeholder.com/150" },
-  { id: 2, name: "Template 2", img: "https://via.placeholder.com/150" },
-  { id: 3, name: "Template 3", img: "https://via.placeholder.com/150" },
+  {
+    id: 1,
+    name: "Template 1",
+    img: template1,
+  },
+  { id: 2, name: "Template 2", img: template2 },
+  { id: 3, name: "Template 3", img: template3 },
 ];
 
 const questions = [
@@ -42,6 +50,8 @@ const templateSections = [
 
 const EditTemplate = () => {
   const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
+
   const [step, setStep] = useState(1);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -92,9 +102,90 @@ const EditTemplate = () => {
     checkScroll();
   }, []);
 
+  const handleShow = () => {
+    setShowModal(true);
+  };
+
   return (
     <Container fluid className="p-0">
+      {/* <Row
+        style={{ backgroundColor: "#00008B" }}
+        className="rounded-3 text-white d-flex align-items-center p-2"
+      >
+        <Col>
+          <Nav className="d-flex justify-content-center align-items-center">
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to=""
+                className={`p-2 rounded-2 transition-colors duration-300 ${
+                  location.pathname === "/creator/dashboard/New-Ecosystem"
+                    ? "bg-white text-blue-800"
+                    : "text-white hover:bg-gray-100 hover:text-blue-800"
+                }`}
+              >
+                Information About Ecosystem
+              </Nav.Link>
+            </Nav.Item>
+            <div className="mx-2 d-flex align-items-center">
+              <span>&gt;</span>
+            </div>
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to=""
+                className={`p-2 rounded-2 transition-colors duration-300 ${
+                  location.pathname === "/creator/dashboard/Edit-Template"
+                    ? "bg-white text-blue-800"
+                    : "text-white hover:bg-gray-100 hover:text-blue-800"
+                }`}
+              >
+                Edit Template
+              </Nav.Link>
+            </Nav.Item>
+            <div className="mx-2 d-flex align-items-center">
+              <span>&gt;</span>
+            </div>
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to=""
+                className={`p-2 rounded-2 transition-colors duration-300 ${
+                  location.pathname === "/creator/dashboard/Create-Form"
+                    ? "bg-white text-blue-800"
+                    : "text-white hover:bg-gray-100 hover:text-blue-800"
+                }`}
+              >
+                Create Form
+              </Nav.Link>
+            </Nav.Item>
+            <div className="mx-2 d-flex align-items-center">
+              <span>&gt;</span>
+            </div>
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to=""
+                className={`p-2 rounded-2 transition-colors duration-300 ${
+                  location.pathname === "/creator/dashboard/Preview-and-Send"
+                    ? "bg-white text-blue-800"
+                    : "text-white hover:bg-gray-100 hover:text-blue-800"
+                }`}
+              >
+                Preview and Send
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
+
+        <Col xs="auto">
+          <Link to="/creator/dashboard/All-Ecosystem">
+            <Button variant="outline-light"> Cancel</Button>
+          </Link>
+        </Col>
+      </Row> */}
       <EcoHeader />
+
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
           <h2>Select Template</h2>
@@ -146,21 +237,55 @@ const EditTemplate = () => {
                   disabled={!canScrollRight}
                 />
               </div>
-              <h3 className="mt-8">Select a Template</h3>
-              <Row>
+              <div className="d-sm-flex justify-content-between align-items-center mt-8">
+                <h3 className="">Select a Template</h3>
+                <div className="d-flex ">
+                  <div className="me-5" onClick={handleShow}>
+                    <Link to="">
+                      <Button variant="primary">
+                        {/* <i className="fe fe-edit me-2"></i> */}
+                        Get Premium Template
+                      </Button>
+                    </Link>
+                  </div>
+
+                  <Link to="">
+                    <Button variant="primary">
+                      <i className="fe fe-edit me-2"></i>
+                      Create New Template
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <Row className={showModal ? "blurred" : ""}>
                 {templates.map((template) => (
                   <Col key={template.id} md={4} className="mt-5 md-mt-0">
                     <Card className="template-card">
-                      <Card.Img variant="top" src={template.img} />
+                      <Card.Img
+                        variant="top"
+                        src={template.img}
+                        style={{
+                          height: "400px",
+                        }}
+                      />
                       <Card.Body className="text-center">
                         <Card.Title>{template.name}</Card.Title>
-                        <Button
-                          variant="primary"
-                          className="select-button"
-                          onClick={() => handleTemplateSelect(template)}
-                        >
-                          Select & Continue
-                        </Button>
+                        <div className="overlay">
+                          <Button
+                            variant="primary"
+                            className="select-preview"
+                            onClick={handleShow}
+                          >
+                            Preview Template
+                          </Button>
+                          <Button
+                            variant="primary"
+                            className="select-button"
+                            onClick={() => handleTemplateSelect(template)}
+                          >
+                            Select Template
+                          </Button>
+                        </div>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -257,6 +382,21 @@ const EditTemplate = () => {
           )}
         </div>
       </Container>
+      <Modal
+        className="custom-modal"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Preview Template</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img src={template1} alt="template" />
+          <img src={template2} alt="template2" className="mt-5" />
+          <img src={template3} alt="template3" className="mt-5" />
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
     </Container>
   );
 };

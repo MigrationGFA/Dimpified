@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Card, Spinner, Table } from "react-bootstrap";
+import { Col, Row, Card, Spinner, Table, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { numberWithCommas } from "../../helper/utils";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
@@ -14,6 +15,7 @@ const ReceivedPayment = () => {
   });
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedEcosystem, setSelectedEcosystem] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -34,9 +36,23 @@ const ReceivedPayment = () => {
     fetchPayments();
   }, []);
 
+  const ecosystems = [
+    "Ecosystem 1",
+    "Ecosystem 2",
+    "Ecosystem 3",
+    "Ecosystem 4",
+  ];
+
+  const handleEcosystemChange = (event) => {
+    let ecosystem = event.target.value;
+    setSelectedEcosystem(ecosystem);
+  };
   const indexOfLastPayment = currentPage * itemsPerPage;
   const indexOfFirstPayment = indexOfLastPayment - itemsPerPage;
-  const currentPayments = payments.slice(indexOfFirstPayment, indexOfLastPayment);
+  const currentPayments = payments.slice(
+    indexOfFirstPayment,
+    indexOfLastPayment
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -109,7 +125,24 @@ const ReceivedPayment = () => {
               />
             </Col>
           </Row>
-
+          <Form.Control
+            as="select"
+            value={selectedEcosystem}
+            onChange={handleEcosystemChange}
+            className="mr-2"
+            style={{
+              fontSize: "0.875rem",
+              padding: "0.5rem",
+              maxWidth: "200px",
+            }}
+          >
+            <option value="">All Ecosystems</option>
+            {ecosystems.map((ecosystem, index) => (
+              <option key={index} value={ecosystem}>
+                {ecosystem}
+              </option>
+            ))}
+          </Form.Control>
           <Card className="border-0 mt-4">
             <Card.Header>
               <h3 className="mb-0 h4">Received Payment</h3>
@@ -123,7 +156,11 @@ const ReceivedPayment = () => {
                 </div>
               ) : (
                 <>
-                  <Table hover responsive className="text-nowrap table-centered">
+                  <Table
+                    hover
+                    responsive
+                    className="text-nowrap table-centered"
+                  >
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -144,7 +181,9 @@ const ReceivedPayment = () => {
                           <td>₦{numberWithCommas(payment.amount)}</td>
                           <td>{payment.paymentMethod}</td>
                           <td>{payment.status}</td>
-                          <td>{new Date(payment.createdAt).toLocaleDateString()}</td>
+                          <td>
+                            {new Date(payment.createdAt).toLocaleDateString()}
+                          </td>
                         </tr>
                       ))}
                     </tbody>

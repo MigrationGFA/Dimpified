@@ -45,7 +45,7 @@ const Ecosystem = () => {
     <div>
       <Row>
         <Col lg={12} md={12} sm={12}>
-          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+          <div className="border-bottom pb-4 mb-4 d-sm-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">All Ecosystem</h1>
             </div>
@@ -53,7 +53,7 @@ const Ecosystem = () => {
               <Link to="/creator/dashboard/New-Ecosystem">
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
-                  New Ecosystem
+                  Create New Ecosystem
                 </Button>
               </Link>
             </div>

@@ -19,9 +19,24 @@ import PlayBtn from "../../../assets/play-btn.svg";
 import EcoHeader from "./ecoHeader";
 
 const templates = [
-  { id: 1, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
-  { id: 2, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
-  { id: 3, name: "Why Choose GetFundedAfrica", img: "https://via.placeholder.com/150", description: "We all know Nigeria has been hard...." },
+  {
+    id: 1,
+    name: "Why Choose GetFundedAfrica",
+    img: "https://via.placeholder.com/150",
+    description: "We all know Nigeria has been hard....",
+  },
+  {
+    id: 2,
+    name: "Why Choose GetFundedAfrica",
+    img: "https://via.placeholder.com/150",
+    description: "We all know Nigeria has been hard....",
+  },
+  {
+    id: 3,
+    name: "Why Choose GetFundedAfrica",
+    img: "https://via.placeholder.com/150",
+    description: "We all know Nigeria has been hard....",
+  },
 ];
 
 const questions = [
@@ -176,7 +191,7 @@ const Courses = () => {
                 <h3>Select from our Existing Courses</h3>
                 <Link to="">
                   <Button variant="primary" onClick={handleCreateNewCourse}>
-                    Create Course
+                    Create New Course
                   </Button>
                 </Link>
               </div>
@@ -186,16 +201,15 @@ const Courses = () => {
                 {templates.map((template) => (
                   <Col key={template.id} md={4} className="mt-1 md-mt-0">
                     <Card className="template-card position-relative">
-                      
                       <div className="position-relative">
-                      <div className="position-absolute top-0 end-0 m-3">
-                        <Form.Check
-                          type="checkbox"
-                          style={{ transform: "scale(1.5)" }}
-                          onChange={() => handleTemplateSelect(template.id)}
-                          checked={selectedTemplates.includes(template.id)}
-                        />
-                      </div>
+                        <div className="position-absolute top-0 end-0 m-3">
+                          <Form.Check
+                            type="checkbox"
+                            style={{ transform: "scale(1.5)" }}
+                            onChange={() => handleTemplateSelect(template.id)}
+                            checked={selectedTemplates.includes(template.id)}
+                          />
+                        </div>
                         <Card.Img variant="top" src={template.img} />
                         <div className="position-absolute bottom-50 start-50 translate-middle-x">
                           <Link
@@ -227,11 +241,11 @@ const Courses = () => {
               </Row>
 
               <Row className="mt-5">
-                <h4>Audio Courses</h4>  
+                <h4>Audio Courses</h4>
               </Row>
 
               <Row className="mt-5">
-                <h4>Document Courses</h4>  
+                <h4>Document Courses</h4>
               </Row>
 
               <div className="d-flex justify-content-end mt-4">
