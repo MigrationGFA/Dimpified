@@ -119,7 +119,7 @@ const Support = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Ecosystem"
+                title="Total Support"
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -131,7 +131,7 @@ const Support = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Users"
+                title="Pending Support Request"
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -143,7 +143,7 @@ const Support = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Completed Support Request"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -155,7 +155,7 @@ const Support = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Paid Users"
+                title="Support Request"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"

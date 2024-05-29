@@ -1,8 +1,14 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import EcoHeader from './ecoHeader';
+import React from "react";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import EcoHeader from "./ecoHeader";
+import { useNavigate } from "react-router-dom";
 
 const EcoPayment = () => {
+  const navigate = useNavigate();
+  const handleSkipAndContinue = () => {
+    navigate("/creator/dashboard/Preview-and-Send");
+  };
+
   return (
     <div>
       <EcoHeader />
@@ -21,7 +27,9 @@ const EcoPayment = () => {
                   </ul>
                   <h3>$10/month</h3>
                 </Card.Text>
-                <Button variant="primary" className='w-100'>Select</Button>
+                <Button variant="primary" className="w-100">
+                  Select
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -38,7 +46,9 @@ const EcoPayment = () => {
                   </ul>
                   <h3>$30/month</h3>
                 </Card.Text>
-                <Button variant="primary" className='w-100'>Select</Button>
+                <Button variant="primary" className="w-100">
+                  Select
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -55,11 +65,20 @@ const EcoPayment = () => {
                   </ul>
                   <h3>$50/month</h3>
                 </Card.Text>
-                <Button variant="primary" className='w-100'>Select</Button>
+                <Button variant="primary" className="w-100">
+                  Select
+                </Button>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        <Button
+          variant="primary"
+          // disabled={selectedTemplates.length === 0}
+          onClick={handleSkipAndContinue}
+        >
+          Continue
+        </Button>
       </Container>
     </div>
   );

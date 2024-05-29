@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  Col,
-  Row,
-  Card,
-  Spinner,
-  Table,
-  Button,
-} from "react-bootstrap";
+import { Col, Row, Card, Spinner, Table, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
@@ -24,6 +17,7 @@ const HelpCenter = () => {
   const [loading, setLoading] = useState(true);
   const [Cloading, setCloading] = useState(false);
   const [viewMessage, setViewMessage] = useState("");
+  const [selectedEcosystem, setSelectedEcosystem] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +35,18 @@ const HelpCenter = () => {
 
     fetchData();
   }, []);
+
+  const ecosystems = [
+    "Ecosystem 1",
+    "Ecosystem 2",
+    "Ecosystem 3",
+    "Ecosystem 4",
+  ];
+
+  const handleEcosystemChange = (event) => {
+    let ecosystem = event.target.value;
+    setSelectedEcosystem(ecosystem);
+  };
 
   const handleAction = async (id) => {
     const rowIndex = data.findIndex((row) => row.id === id);
@@ -128,7 +134,7 @@ const HelpCenter = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Ecosystem"
+                title="Total Help Center"
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -140,7 +146,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Users"
+                title="Completed Help Center"
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -152,7 +158,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Materials"
+                title="Pending Help Center"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -164,7 +170,7 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Paid Users"
+                title="Help Center"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"
@@ -176,6 +182,24 @@ const HelpCenter = () => {
           </Row>
         </div>
       )}
+      <Form.Control
+        as="select"
+        value={selectedEcosystem}
+        onChange={handleEcosystemChange}
+        className="mr-2"
+        style={{
+          fontSize: "0.875rem",
+          padding: "0.5rem",
+          maxWidth: "200px",
+        }}
+      >
+        <option value="">All Ecosystems</option>
+        {ecosystems.map((ecosystem, index) => (
+          <option key={index} value={ecosystem}>
+            {ecosystem}
+          </option>
+        ))}
+      </Form.Control>
 
       <Card className="border-0 mt-4">
         <Card.Header>
@@ -221,25 +245,30 @@ const HelpCenter = () => {
                               </div>
                             )}
                             {column.accessorKey === "message" &&
-                              row.message.length > 30 ? (
-                                <span
-                                  title={row.message}
-                                  className="mb-1 text-primary-hover cursor-pointer"
-                                >
-                                  {row.message.slice(0, 30)}...
-                                </span>
-                              ) : (
-                                row[column.accessorKey]
-                              )}
+                            row.message.length > 30 ? (
+                              <span
+                                title={row.message}
+                                className="mb-1 text-primary-hover cursor-pointer"
+                              >
+                                {row.message.slice(0, 30)}...
+                              </span>
+                            ) : (
+                              row[column.accessorKey]
+                            )}
                             {column.accessorKey === "completed" && (
                               <Button
                                 variant="success"
-                                disabled={row.status === "completed" || row.Cloading}
+                                disabled={
+                                  row.status === "completed" || row.Cloading
+                                }
                                 style={{
                                   backgroundColor: "green",
                                   borderColor: "#b8f7b2",
                                   color: "white",
-                                  opacity: row.status === "completed" || row.Cloading ? 0.6 : 1,
+                                  opacity:
+                                    row.status === "completed" || row.Cloading
+                                      ? 0.6
+                                      : 1,
                                 }}
                                 onClick={() => handleAction(row.id)}
                               >

@@ -45,7 +45,7 @@ const Ecosystem = () => {
     <div>
       <Row>
         <Col lg={12} md={12} sm={12}>
-          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+          <div className="border-bottom pb-4 mb-4 d-sm-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">All Ecosystem</h1>
             </div>
@@ -53,7 +53,7 @@ const Ecosystem = () => {
               <Link to="/creator/dashboard/New-Ecosystem">
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
-                  New Ecosystem
+                  Create New Ecosystem
                 </Button>
               </Link>
             </div>
@@ -64,7 +64,7 @@ const Ecosystem = () => {
       <Row>
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="USER"
+            title="Total Ecosystem"
             value="30.6k"
             summary="Number of sales"
             summaryValue="+20.9$"
@@ -77,7 +77,7 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="UNIQUE VISITORS"
+            title="Completed Ecosystem"
             value="256k"
             summary="Number of pending"
             summaryValue="5%"
@@ -90,7 +90,7 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="BOUNCE RATE"
+            title="Pending Ecosystem"
             value="51.46%"
             summary="Students"
             summaryValue="+1200"
@@ -103,7 +103,7 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="AVERAGE VISIT TIME"
+            title="Total Users"
             value="1m:17s"
             summary="Instructor"
             summaryValue="12%"

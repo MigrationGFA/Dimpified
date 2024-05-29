@@ -17,12 +17,11 @@ function InstructorsGridCard() {
     const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
-	const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
     const displayInstructors = instructors
         .slice(pagesVisited, pagesVisited + instructorsPerPage)
@@ -100,94 +99,92 @@ function InstructorsGridCard() {
 
     return (
         <Fragment>
-            <div className="mb-4">
-                <Form.Group className="d-flex align-items-center">
-                    <Form.Control
-                        as="select"
-                        value={selectedEcosystem}
-                        onChange={handleEcosystemChange}
-                        className="mr-2"
-                        style={{ fontSize: '0.875rem', padding: '0.5rem', maxWidth: '200px' }}
-                    >
-                        <option value="">All Ecosystems</option>
-                        {ecosystems.map((ecosystem, index) => (
-                            <option key={index} value={ecosystem}>
-                                {ecosystem}
-                            </option>
-                        ))}
-                    </Form.Control>
-                    <Form.Control
-                        type="search"
-                        placeholder="Search Ecosystem"
-                        value={searchTerm}
-                        onChange={getSearchTerm}
-                        style={{ fontSize: '0.875rem', padding: '0.5rem', maxWidth: '300px' }}
-                    />
-                </Form.Group>
-            </div>
-			{loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        ) : (
-          <div>
-            <Row>
-              <Col xl={3} lg={6} md={12} sm={12}>
-                <StatRightChart
-                  title="Total Ecosystem"
-                  value="1"
-                  summary="Number of sales"
-                  // summaryValue="1 Monthly Ecosystem"
-                  summaryIcon="up"
-                  showSummaryIcon
-                  classValue="mb-4"
-                  chartName="UserChart"
-                />
-              </Col>
+            {loading ? (
+                <div className="text-center">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) : (
+                <div>
+                    <Row>
+                        <Col xl={3} lg={6} md={12} sm={12}>
+                            <StatRightChart
+                                title="Total Users"
+                                value="1"
+                                summary="Number of sales"
+                                summaryIcon="up"
+                                showSummaryIcon
+                                classValue="mb-4"
+                                chartName="UserChart"
+                            />
+                        </Col>
 
-              <Col xl={3} lg={6} md={12} sm={12}>
-                <StatRightChart
-                  title="Total Users"
-                  value="1"
-                  summary="Number of pending"
-                  // summaryValue="1 Monthly Users"
-                  summaryIcon="down"
-                  showSummaryIcon
-                  classValue="mb-4"
-                  chartName="VisitorChart"
-                />
-              </Col>
+                        <Col xl={3} lg={6} md={12} sm={12}>
+                            <StatRightChart
+                                title="Completed Users"
+                                value="1"
+                                summary="Number of pending"
+                                summaryIcon="down"
+                                showSummaryIcon
+                                classValue="mb-4"
+                                chartName="VisitorChart"
+                            />
+                        </Col>
 
-              <Col xl={3} lg={6} md={12} sm={12}>
-                <StatRightChart
-                  title="Total Materials"
-                  value="0"
-                  summary="Students"
-                  // summaryValue="Monthly Materials"
-                  summaryIcon="up"
-                  showSummaryIcon
-                  classValue="mb-4"
-                  chartName="BounceChart"
-                />
-              </Col>
+                        <Col xl={3} lg={6} md={12} sm={12}>
+                            <StatRightChart
+                                title="Pending Users"
+                                value="0"
+                                summary="Students"
+                                summaryIcon="up"
+                                showSummaryIcon
+                                classValue="mb-4"
+                                chartName="BounceChart"
+                            />
+                        </Col>
 
-              <Col xl={3} lg={6} md={12} sm={12}>
-                <StatRightChart
-                  title="Total Paid Users"
-                  value="0"
-                  summary="Instructor"
-                  // summaryValue="1 Monthly Paid Users"
-                  summaryIcon="up"
-                  showSummaryIcon
-                  classValue="mb-4"
-                  chartName="AverageVisitTimeChart"
-                />
-              </Col>
-            </Row>
-          </div>
-        )}
+                        <Col xl={3} lg={6} md={12} sm={12}>
+                            <StatRightChart
+                                title="Total Paid Users"
+                                value="0"
+                                summary="Instructor"
+                                summaryIcon="up"
+                                showSummaryIcon
+                                classValue="mb-4"
+                                chartName="AverageVisitTimeChart"
+                            />
+                        </Col>
+                    </Row>
+
+                    <div className="mb-4">
+                        <Form.Group className="d-flex align-items-center">
+                            <Form.Control
+                                as="select"
+                                value={selectedEcosystem}
+                                onChange={handleEcosystemChange}
+                                className="mr-2"
+                                style={{ fontSize: '0.875rem', padding: '0.5rem', maxWidth: '200px', marginRight: '10px' }}
+                            >
+                                <option value="">All Ecosystems</option>
+                                {ecosystems.map((ecosystem, index) => (
+                                    <option key={index} value={ecosystem}>
+                                        {ecosystem}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                            <Form.Control
+                                type="search"
+                                placeholder="Search Ecosystem"
+                                value={searchTerm}
+                                onChange={getSearchTerm}
+                                style={{ fontSize: '0.875rem', padding: '0.5rem', maxWidth: '300px' }}
+                            />
+                        </Form.Group>
+                    </div>
+                </div>
+            )}
+
             <Row>
                 {displayInstructors.length > 0 ? (
                     displayInstructors
