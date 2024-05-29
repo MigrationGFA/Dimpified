@@ -11,7 +11,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "./Steps.css";
+import "./Course.css";
 import AddNewCourse from "../AddNewCourse";
 import ModalVideo from "react-modal-video";
 // import logo from "../../../assets/digital.png";
