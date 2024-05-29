@@ -17,6 +17,7 @@ import template1 from "../../../assets/Screenshot 2024-05-27 165727.png";
 import template2 from "../../../assets/save2.png";
 import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
+import EcoHeader from "./ecoHeader";
 
 const templates = [
   {
@@ -107,7 +108,7 @@ const EditTemplate = () => {
 
   return (
     <Container fluid className="p-0">
-      <Row
+      {/* <Row
         style={{ backgroundColor: "#00008B" }}
         className="rounded-3 text-white d-flex align-items-center p-2"
       >
@@ -182,7 +183,8 @@ const EditTemplate = () => {
             <Button variant="outline-light"> Cancel</Button>
           </Link>
         </Col>
-      </Row>
+      </Row> */}
+      <EcoHeader />
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">

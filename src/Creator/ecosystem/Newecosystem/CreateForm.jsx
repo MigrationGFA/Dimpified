@@ -137,6 +137,7 @@ import template1 from "../../../assets/form1.png";
 import template2 from "../../../assets/form2.png";
 import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
+import EcoHeader from "./ecoHeader";
 
 const templates = [
   {
@@ -204,7 +205,7 @@ const CreateForm = () => {
     alert("Form submitted!");
     console.log("Selected Template:", selectedTemplate);
     console.log("Answers:", answers);
-    navigate("/creator/dashboard/Create-Form");
+    navigate("/creator/dashboard/Courses");
   };
 
   const scroll = (scrollOffset) => {
@@ -227,7 +228,7 @@ const CreateForm = () => {
 
   return (
     <Container fluid className="p-0">
-      <Row
+      {/* <Row
         style={{ backgroundColor: "#00008B" }}
         className="rounded-3 text-white d-flex align-items-center p-2"
       >
@@ -302,7 +303,8 @@ const CreateForm = () => {
             <Button variant="outline-light"> Cancel</Button>
           </Link>
         </Col>
-      </Row>
+      </Row> */}
+      <EcoHeader />
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
