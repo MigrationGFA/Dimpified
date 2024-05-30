@@ -1,11 +1,29 @@
-import React from "react";
-import { Container, Row, Col, Nav, Button, Card, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Nav,
+  Button,
+  Card,
+  Form,
+  Modal,
+  FormControl
+} from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation } from "react-router-dom";
 import EcoHeader from "./ecoHeader";
 
 const NewEcosystem = () => {
   const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
+  const [domainName, setDomainName] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchDomain = () => {
+    // Implement domain search functionality here
+    console.log("Searching for domain:", domainName);
+  };
 
   const departments = [
     { value: "Graphics and Design", label: "Graphics and Design" },
@@ -106,16 +124,59 @@ const NewEcosystem = () => {
                           id="ecosystem-domain"
                           placeholder="Ecosystem Domain"
                           required
+                          value={domainName}
+                          onChange={(e) => setDomainName(e.target.value)}
                         />
                         <span className="input-group-text">
-                          .dimplified.com
+                          .dimpified.com
                         </span>
+                        <Button
+                          variant="primary"
+                          onClick={() => setShowModal(true)}
+                        >
+                          Purchase Domain
+                        </Button>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters, numbers
                         (0-9), and hyphens.
                       </Form.Text>
                     </Col>
+
+                    {/* Modal for domain search */}
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Search Domain</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Form.Label>Search for Domain</Form.Label>
+                          <div className="d-flex">
+                            <FormControl
+                              type="text"
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              placeholder="Enter domain name..."
+                              className="me-2"
+                            />
+                            <Button
+                              variant="primary"
+                              onClick={handleSearchDomain}
+                            >
+                              Search
+                            </Button>
+                          </div>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          variant="secondary"
+                          onClick={() => setShowModal(false)}
+                        >
+                          Close
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
                   </Row>
 
                   <Row className="mb-3">
