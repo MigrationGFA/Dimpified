@@ -1,47 +1,67 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation, Link, useNavigate, Navigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Nav,
-  Button,
-  ProgressBar,
-  Card,
-  Form,
-} from "react-bootstrap";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Button, ProgressBar, Card, Form } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "./Course.css";
-import AddNewCourse from "../AddNewCourse";
+import Draggable from "react-draggable";
 import ModalVideo from "react-modal-video";
-// import logo from "../../../assets/digital.png";
 import PlayBtn from "../../../assets/play-btn.svg";
 import EcoHeader from "./ecoHeader";
+import AddNewCourse from "../AddNewCourse";
+import "./Course.css";
 
+// Example templates and dummy data
 const templates = [
   {
     id: 1,
     name: "Why Choose GetFundedAfrica",
     img: "https://via.placeholder.com/150",
     description: "We all know Nigeria has been hard....",
+    type: "video",
   },
   {
     id: 2,
     name: "Why Choose GetFundedAfrica",
     img: "https://via.placeholder.com/150",
     description: "We all know Nigeria has been hard....",
+    type: "video",
   },
   {
     id: 3,
     name: "Why Choose GetFundedAfrica",
     img: "https://via.placeholder.com/150",
     description: "We all know Nigeria has been hard....",
+    type: "video",
   },
 ];
 
-const questions = [
-  { id: 1, question: "Do you have experience with online training?" },
-  { id: 2, question: "What is the size of your audience?" },
+const dummyAudioCourses = [
+  {
+    id: 4,
+    name: "Audio Course 1",
+    description: "Description for Audio Course 1",
+    type: "audio",
+  },
+  {
+    id: 5,
+    name: "Audio Course 2",
+    description: "Description for Audio Course 2",
+    type: "audio",
+  },
+];
+
+const dummyDocumentCourses = [
+  {
+    id: 6,
+    name: "Document Course 1",
+    description: "Description for Document Course 1",
+    type: "document",
+  },
+  {
+    id: 7,
+    name: "Document Course 2",
+    description: "Description for Document Course 2",
+    type: "document",
+  },
 ];
 
 const templateSections = [
@@ -57,22 +77,19 @@ const templateSections = [
   { id: 10, name: "Training-1" },
   { id: 11, name: "Training-2" },
 ];
-
 const Courses = () => {
   const location = useLocation();
   const [step, setStep] = useState(1);
   const [selectedTemplates, setSelectedTemplates] = useState([]);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [activeSection, setActiveSection] = useState(1);
   const [answers, setAnswers] = useState({});
-  const [activeSection, setActiveSection] = useState(templateSections[0].id);
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [content, setContent] = useState({
     logo: "Your Logo",
     header: "Welcome to Our Website",
-    mainText:
-      "This is the main content of your landing page. You can edit this text.",
+    mainText: "This is the main content of your landing page. You can edit this text.",
     footer: "© 2024 Your Company. All rights reserved.",
   });
   const navigate = useNavigate();
@@ -94,28 +111,13 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    setStep(3);
+    navigate("/creator/dashboard/Integrations");
   };
 
   const handleContinue = () => {
     if (selectedTemplates.length > 0) {
       setStep(3);
     }
-  };
-
-  const handleContentChange = (field, value) => {
-    setContent({ ...content, [field]: value });
-  };
-
-  const handleAnswerChange = (questionId, answer) => {
-    setAnswers({ ...answers, [questionId]: answer });
-  };
-
-  const handleSubmit = () => {
-    alert("Form submitted!");
-    console.log("Selected Template:", selectedTemplate);
-    console.log("Answers:", answers);
-    navigate("/creator/dashboard/Payment");
   };
 
   const scroll = (scrollOffset) => {
@@ -131,6 +133,42 @@ const Courses = () => {
   useEffect(() => {
     checkScroll();
   }, []);
+
+  const handleSubmit = () => {
+    alert("Form submitted!");
+    console.log("Selected Templates:", selectedTemplates);
+    console.log("Answers:", answers);
+    navigate("/creator/dashboard/Integrations");
+  };
+
+  const renderCourses = (courses) => {
+    return (
+      <div>
+        {courses.map((course) => (
+          <Draggable key={course.id}>
+            <div className="mb-3">
+              <Card className="templates-card">
+                <Card.Body>
+                  <Card.Title>{course.name}</Card.Title>
+                  <Card.Text>{course.description}</Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+          </Draggable>
+        ))}
+      </div>
+    );
+  };
+
+  const videoCourses = templates.filter(
+    (template) => selectedTemplates.includes(template.id) && template.type === "video"
+  );
+  const audioCourses = dummyAudioCourses.filter(
+    (course) => selectedTemplates.includes(course.id) && course.type === "audio"
+  );
+  const documentCourses = dummyDocumentCourses.filter(
+    (course) => selectedTemplates.includes(course.id) && course.type === "document"
+  );
 
   return (
     <Container fluid className="p-0">
@@ -164,11 +202,7 @@ const Courses = () => {
                   {templateSections.map((section) => (
                     <div
                       key={section.id}
-                      className={`template-section ${
-                        activeSection === section.id
-                          ? "bg-primary text-white"
-                          : "bg-body-secondary"
-                      }`}
+                      className={`template-section ${activeSection === section.id ? "bg-primary text-white" : "bg-body-secondary"}`}
                       onClick={() => setActiveSection(section.id)}
                       style={{
                         padding: "10px 20px",
@@ -179,13 +213,7 @@ const Courses = () => {
                     </div>
                   ))}
                 </div>
-                <FaChevronRight
-                  className={`scroll-arrow ${
-                    !canScrollRight ? "disabled" : ""
-                  }`}
-                  onClick={() => scroll(100)}
-                  disabled={!canScrollRight}
-                />
+                <FaChevronRight className={`scroll-arrow ${!canScrollRight ? "disabled" : ""}`} onClick={() => scroll(100)} disabled={!canScrollRight} />
               </div>
               <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
                 <h3>Select from our Existing Courses</h3>
@@ -200,7 +228,7 @@ const Courses = () => {
                 <h4>Video Courses</h4>
                 {templates.map((template) => (
                   <Col key={template.id} md={4} className="mt-1 md-mt-0">
-                    <Card className="template-card position-relative">
+                    <Card className="templates-card position-relative">
                       <div className="position-relative">
                         <div className="position-absolute top-0 end-0 m-3">
                           <Form.Check
@@ -212,11 +240,7 @@ const Courses = () => {
                         </div>
                         <Card.Img variant="top" src={template.img} />
                         <div className="position-absolute bottom-50 start-50 translate-middle-x">
-                          <Link
-                            to="#"
-                            onClick={() => setOpen(true)}
-                            className="popup-youtube fs-4 text-inherit"
-                          >
+                          <Link to="#" onClick={() => setOpen(true)} className="popup-youtube fs-4 text-inherit">
                             <img src={PlayBtn} alt="" className="me-2" />
                             Watch Demo
                           </Link>
@@ -231,36 +255,24 @@ const Courses = () => {
                   </Col>
                 ))}
 
-                <ModalVideo
-                  channel="youtube"
-                  autoplay
-                  isOpen={isOpen}
-                  videoId={YouTubeURL}
-                  onClose={() => setOpen(false)}
-                />
+                <ModalVideo channel="youtube" autoplay isOpen={isOpen} videoId={YouTubeURL} onClose={() => setOpen(false)} />
               </Row>
 
               <Row className="mt-5">
                 <h4>Audio Courses</h4>
+                {/* Dummy audio courses, you can add similar code for rendering */}
               </Row>
 
               <Row className="mt-5">
                 <h4>Document Courses</h4>
+                {/* Dummy document courses, you can add similar code for rendering */}
               </Row>
 
               <div className="d-flex justify-content-end mt-4">
-                <Button
-                  variant="secondary"
-                  className="me-2"
-                  onClick={handleSkipAndContinue}
-                >
+                <Button variant="secondary" className="me-2" onClick={handleSkipAndContinue}>
                   Skip and Continue
                 </Button>
-                <Button
-                  variant="primary"
-                  disabled={selectedTemplates.length === 0}
-                  onClick={handleContinue}
-                >
+                <Button variant="primary" disabled={selectedTemplates.length === 0} onClick={handleContinue}>
                   Continue
                 </Button>
               </div>
@@ -278,25 +290,18 @@ const Courses = () => {
           )}
           {step === 3 && (
             <div>
-              <h3>Preview Template</h3>
-              <div
-                className="template-preview p-3"
-                style={{
-                  backgroundColor: "#f8f9fa",
-                  border: "1px solid #ddd",
-                }}
-              >
-                <header className="text-center">
-                  <h1>{content.logo}</h1>
-                  <h2>{content.header}</h2>
-                </header>
-                <main className="mt-4">
-                  <p>{content.mainText}</p>
-                </main>
-                <footer className="text-center mt-4">
-                  <p>{content.footer}</p>
-                </footer>
-              </div>
+              <h3>Preview Course</h3>
+              
+              <h4 className="mt-4">Video Courses</h4>
+              <p className="mt-4">Drag the cards to rearrange your course as you like</p>
+              {renderCourses(videoCourses)}
+
+              <h4 className="mt-4">Audio Courses</h4>
+              {renderCourses(audioCourses)}
+
+              <h4 className="mt-4">Document Courses</h4>
+              {renderCourses(documentCourses)}
+
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back

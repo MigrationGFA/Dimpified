@@ -88,14 +88,14 @@
     pointer-events: none;
 } */
 
-.template-card {
+.templates-card {
     position: relative;
     cursor: pointer;
     overflow: hidden;
     /* Ensure hidden overflow for smooth button animation */
 }
 
-.template-card:hover .select-button {
+.templates-card:hover .select-button {
     opacity: 1;
     transform: translate(-50%, -50%);
 }
