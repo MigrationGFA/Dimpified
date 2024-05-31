@@ -8,7 +8,7 @@ import {
   Card,
   Form,
   Modal,
-  FormControl
+  FormControl,
 } from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation } from "react-router-dom";
@@ -127,20 +127,27 @@ const NewEcosystem = () => {
                           value={domainName}
                           onChange={(e) => setDomainName(e.target.value)}
                         />
-                        <span className="input-group-text">
-                          .dimpified.com
-                        </span>
-                        <Button
+                        <span className="input-group-text">.dimpified.com</span>
+                        {/* <Button
                           variant="primary"
                           onClick={() => setShowModal(true)}
                         >
                           Purchase Domain
-                        </Button>
+                        </Button> */}
                       </div>
                       <Form.Text className="text-muted fst-italic">
-                        The domain must contain only lowercase letters, numbers
-                        (0-9), and hyphens.
+                        The domain must contain only lowercase letters and
+                        hyphens.
                       </Form.Text>
+                      <p className="text-danger text-uppercase fs-5 fw-bold">
+                        Or
+                      </p>
+                      <Button
+                        variant="primary"
+                        onClick={() => setShowModal(true)}
+                      >
+                        Purchase New Domain
+                      </Button>
                     </Col>
 
                     {/* Modal for domain search */}
