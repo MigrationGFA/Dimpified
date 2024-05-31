@@ -54,6 +54,7 @@ import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
 import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
 import Integration from "../Creator/ecosystem/Newecosystem/Integration";
+import Template1 from "../EditTemplate/Template1";
 
 const AllRoutes = () => {
   return (
@@ -73,6 +74,7 @@ const AllRoutes = () => {
         path="/creator/dashboard/New-Ecosystem"
         element={<NewEcosystem />}
       />
+      <Route path="/creator/dashboard/Template" element={<Template1 />} />
       <Route
         path="/creator/dashboard/Edit-Template"
         element={<EditTemplate />}
@@ -87,16 +89,8 @@ const AllRoutes = () => {
         path="/creator/dashboard/Add-New-Course"
         element={<AddNewCourse />}
       />
-      <Route
-        path="/creator/dashboard/Payment"
-        element={<EcoPayment />}
-      />
-       <Route
-        path="/creator/dashboard/Integrations"
-        element={<Integration />}
-      />
-
-
+      <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
+      <Route path="/creator/dashboard/Integrations" element={<Integration />} />
 
       <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
