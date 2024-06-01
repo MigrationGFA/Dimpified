@@ -38,9 +38,12 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-// import Resolution from "../Creator/Support/Resolution";
 import Chat from "../Admin/chat/Chat";
 import ChatLayout from "./Dashboard/ChatLayout";
+
+// import Suggestion components
+import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
+import Feedback from "../Creator/Suggestion/Feedback"
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
@@ -121,6 +124,8 @@ const AllRoutes = () => {
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/creator/feature-update" element={<FeatureUpdate />} />
+        <Route path="/creator/feedback" element={<Feedback />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
         <Route path="/creator/Onboard" element={<Onboard />} />
