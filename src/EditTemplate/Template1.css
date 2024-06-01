@@ -1,0 +1,26 @@
+/* .template-container {
+    display: flex;
+    flex-direction: row;
+} */
+
+.side-editor {
+    position: fixed;
+    top: 70px;
+    /* Adjust based on your navbar height */
+    right: 0;
+    width: 200px;
+    height: calc(100vh - 70px);
+    /* Adjust based on your navbar height */
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    overflow-y: auto;
+}
+
+.ql-container {
+    height: auto;
+}
+
+.ql-editor {
+    min-height: 150px;
+}

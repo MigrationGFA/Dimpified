@@ -81,6 +81,22 @@ const ecoHeader = () => {
                 as={Link}
                 to=""
                 className={`p-2 rounded-2 transition-colors duration-300 ${
+                  location.pathname === "/creator/dashboard/Integrations"
+                    ? "bg-white text-blue-800"
+                    : "text-white hover:bg-gray-100 hover:text-blue-800"
+                }`}
+              >
+                Integration
+              </Nav.Link>
+            </Nav.Item>
+            <div className="mx-2 d-flex align-items-center">
+              <span>&gt;</span>
+            </div>
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to=""
+                className={`p-2 rounded-2 transition-colors duration-300 ${
                   location.pathname === "/creator/dashboard/Payment"
                     ? "bg-white text-blue-800"
                     : "text-white hover:bg-gray-100 hover:text-blue-800"
@@ -102,7 +118,7 @@ const ecoHeader = () => {
                     : "text-white hover:bg-gray-100 hover:text-blue-800"
                 }`}
               >
-                Preview and Send
+                Preview and Publish
               </Nav.Link>
             </Nav.Item>
           </Nav>
