@@ -18,6 +18,7 @@ import template2 from "../../../assets/save2.png";
 import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
+import Template1 from "../../../EditTemplate/Template1";
 
 const templates = [
   {
@@ -296,7 +297,8 @@ const EditTemplate = () => {
           {step === 2 && (
             <div>
               <h3>Edit Template Content</h3>
-              <Form>
+              <Template1 />
+              {/* <Form>
                 <Form.Group>
                   <Form.Label>Logo</Form.Label>
                   <Form.Control
@@ -338,7 +340,7 @@ const EditTemplate = () => {
                     }
                   />
                 </Form.Group>
-              </Form>
+              </Form> */}
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(1)}>
                   Back

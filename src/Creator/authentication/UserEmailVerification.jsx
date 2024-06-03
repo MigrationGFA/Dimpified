@@ -18,7 +18,7 @@ const UserEmailVerification = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/verify-email`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/creator/verify-email`,
         {
           verificationToken: queryParam.get("token"),
           email: queryParam.get("email"),
@@ -123,12 +123,7 @@ const UserEmailVerification = () => {
                 <h1 className="fs-3 mb-4">Your Email has been verified</h1>
               </Col>
               <Col lg={10} md={9} className="text-center">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  as={Link}
-                  to="/authentication/signin"
-                >
+                <Button variant="primary" type="submit" as={Link} to="/">
                   Please Login
                 </Button>
               </Col>

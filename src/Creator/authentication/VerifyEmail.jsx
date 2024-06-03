@@ -21,7 +21,7 @@ const VerifyEmail = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/resend-email`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/creator/resend-email`,
         {
           email: email,
         }
@@ -51,7 +51,7 @@ const VerifyEmail = () => {
               md={1}
               className=" align-items-center justify-content-center"
             >
-              <Link to="/authentication/signup">
+              <Link to="/">
                 <FontAwesomeIcon icon={faArrowLeft} size="lg" />
               </Link>
             </Col>

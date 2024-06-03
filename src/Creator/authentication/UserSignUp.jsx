@@ -42,7 +42,7 @@ const UserSignUp = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/register",
+        "https://dimpified-backend.azurewebsites.net/api/v1/creator/register",
         {
           email: data.email,
           userType: "creator",
@@ -54,7 +54,7 @@ const UserSignUp = () => {
       if (response.status === 201) {
         console.log(response.data.message);
         showToast(response.data.message);
-        navigate(`/creator/Verify-email?email=${data.email}`);
+        navigate(`/creator/verification?email=${data.email}`);
       }
     } catch (error) {
       console.log("this is good");

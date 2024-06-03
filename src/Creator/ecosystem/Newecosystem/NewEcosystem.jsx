@@ -143,7 +143,8 @@ const NewEcosystem = () => {
                         Or
                       </p>
                       <Button
-                        variant="primary"
+                        // variant="primary"
+                        style={{ backgroundColor: "#00008B" }}
                         onClick={() => setShowModal(true)}
                       >
                         Purchase New Domain
