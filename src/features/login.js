@@ -17,7 +17,7 @@ const initialState = {
 export const login = createAsyncThunk('authentication/login', async ({ email, password }, { rejectWithValue }) => {
     // Make an API request to login the user with Axios
     try {
-        const response = await axios.post(`https://dimpified-backend.azurewebsites.net/api/v1/login`, {
+        const response = await axios.post(`https://dimpified-backend.azurewebsites.net/api/v1/creator/login`, {
             email,
             password,
         });

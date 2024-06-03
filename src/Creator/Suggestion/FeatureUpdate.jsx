@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Form, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 
 const FeatureUpdate = () => {
   const [featureName, setFeatureName] = useState("");
   const [featureType, setFeatureType] = useState("");
   const [featureDescription, setFeatureDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dashboardLoading, setDashboardLoading] = useState(true);
+
+  useEffect(() => {
+    setDashboardLoading(false);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,6 +42,65 @@ const FeatureUpdate = () => {
 
   return (
     <div>
+      {dashboardLoading ? (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <div>
+          <Row>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Update Requests"
+                value="1"
+                summary="Number of sales"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="UserChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Completed Requests"
+                value="1"
+                summary="Number of Users"
+                summaryIcon="down"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="VisitorChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Pending Requests"
+                value="0"
+                summary="Students"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="BounceChart"
+              />
+            </Col>
+
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <StatRightChart
+                title="Decline Requests"
+                value="0"
+                summary="Instructor"
+                summaryIcon="up"
+                showSummaryIcon
+                classValue="mb-4"
+                chartName="AverageVisitTimeChart"
+              />
+            </Col>
+          </Row>
+        </div>
+      )}
       <Row>
         <Col lg={12} md={12} sm={12}>
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
@@ -86,10 +151,22 @@ const FeatureUpdate = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="mt-3" disabled={loading}>
+            <Button
+              variant="primary"
+              type="submit"
+              className="mt-3"
+              disabled={loading}
+            >
               {loading ? (
                 <>
-                  <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Submitting...
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />{" "}
+                  Submitting...
                 </>
               ) : (
                 "Submit Feature"

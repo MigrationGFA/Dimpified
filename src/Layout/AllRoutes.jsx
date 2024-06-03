@@ -43,7 +43,7 @@ import ChatLayout from "./Dashboard/ChatLayout";
 
 // import Suggestion components
 import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
-import Feedback from "../Creator/Suggestion/Feedback"
+import Feedback from "../Creator/Suggestion/Feedback";
 
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
@@ -69,8 +69,8 @@ const AllRoutes = () => {
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
 
-      <Route path="/user/verify-email" element={<UserEmailVerification />} />
-      <Route path="/creator/Verify-email" element={<VerifyEmail />} />
+      <Route path="/creator/verify-email" element={<UserEmailVerification />} />
+      <Route path="/creator/verification" element={<VerifyEmail />} />
 
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
       <Route
