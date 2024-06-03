@@ -10,7 +10,7 @@ import { showToast } from "../Components/Showtoast";
 import Avatar1 from "../assets/images/avatar/person.png";
 import NotificationList from "../Creator/Notification/Notification";
 
-//  simple bar scrolling used for notification item scrolling
+// simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import GKTippy from "../Components/elements/tooltips/GKTippy";
@@ -33,13 +33,10 @@ const QuickMenu = () => {
     navigate("/");
   };
 
-  const username = useSelector(
-    (state) => state.authentication.user.data.organizationName
-  );
-  const userImage = useSelector(
-    (state) => state.authentication.user.data.image
-  );
-  const Email = useSelector((state) => state.authentication.user.data.email);
+  const user = useSelector((state) => state.authentication.user);
+  const username = user?.data?.organizationName || "Unknown User";
+  const userImage = user?.data?.image || Avatar1;
+  const Email = user?.data?.email || "No email";
 
   const Notifications = () => {
     return (
@@ -139,7 +136,7 @@ const QuickMenu = () => {
           <div className="avatar avatar-md avatar-indicators avatar-online">
             <Image
               alt="avatar"
-              src={userImage || Avatar1}
+              src={userImage}
               className="rounded-circle"
             />
           </div>
@@ -155,7 +152,7 @@ const QuickMenu = () => {
               <div className="avatar avatar-md avatar-indicators avatar-online">
                 <Image
                   alt="avatar"
-                  src={userImage || Avatar1}
+                  src={userImage}
                   className="rounded-circle"
                 />
               </div>

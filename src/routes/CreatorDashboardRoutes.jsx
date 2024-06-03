@@ -80,6 +80,15 @@ export const DashboardMenu = [
     icon: "help-circle",
     link: "/creator/support",
   },
+  {
+    id: uuid(),
+    title: "Suggestion",
+    icon: "user",
+    children: [
+      { id: uuid(), link: "/creator/feature-update", name: "Feature Updates" },
+      { id: uuid(), link: "/creator/feedback", name: " Feedbacks" },
+    ],
+  },
   // {
   // 	id: uuid(),
   // 	title: 'CMS',
