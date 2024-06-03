@@ -7,6 +7,9 @@ const AddTopic = ({ onAddTopic }) => {
   const [topicDescription, setTopicDescription] = useState("");
   const [topicVideoUrl, setTopicVideoUrl] = useState("");
   const [topicVideoDuration, setTopicVideoDuration] = useState("");
+  const [sections, setSections] = useState([
+    { title: "", contentLink: "", duration: "" },
+  ]);
 
   const handleClose = () => {
     setShow(false);
@@ -14,9 +17,26 @@ const AddTopic = ({ onAddTopic }) => {
     setTopicDescription("");
     setTopicVideoUrl("");
     setTopicVideoDuration("");
+    setSections([{ title: "", contentLink: "", duration: "" }]);
   };
 
   const handleShow = () => setShow(true);
+
+  const handleAddSection = () => {
+    setSections([...sections, { title: "", contentLink: "", duration: "" }]);
+  };
+
+  const handleRemoveSection = (index) => {
+    const newSections = [...sections];
+    newSections.splice(index, 1);
+    setSections(newSections);
+  };
+
+  const handleSectionChange = (index, field, value) => {
+    const newSections = [...sections];
+    newSections[index][field] = value;
+    setSections(newSections);
+  };
 
   const handleAddTopic = () => {
     onAddTopic({
@@ -24,9 +44,13 @@ const AddTopic = ({ onAddTopic }) => {
       topicDescription,
       topicVideoUrl,
       topicVideoDuration,
+      sections,
     });
     handleClose();
   };
+
+  const isInitialSectionFilled =
+    sections[0].title && sections[0].contentLink && sections[0].duration;
 
   return (
     <>
@@ -35,22 +59,23 @@ const AddTopic = ({ onAddTopic }) => {
         className="btn btn-outline-primary btn-sm mt-3"
         onClick={handleShow}
       >
-        Add Topic
+        Add Module
       </Button>
       <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add New Topic</Modal.Title>
+          <Modal.Title>Add New Module</Modal.Title>
         </Modal.Header>
         <Modal.Body className="pb-0">
           <Form.Group className="mb-3" controlId="formTopic">
             <Form.Control
               type="text"
-              placeholder="Topic"
+              placeholder="Module Title"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
             />
@@ -58,17 +83,9 @@ const AddTopic = ({ onAddTopic }) => {
           <Form.Group className="mb-3" controlId="formTopicDescription">
             <Form.Control
               as="textarea"
-              placeholder="Topic Description"
+              placeholder="Module Description"
               value={topicDescription}
               onChange={(e) => setTopicDescription(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formTopicCourseContentLink">
-            <Form.Control
-              type="text"
-              placeholder="Audio/Video/Document course content link"
-              value={topicVideoUrl}
-              onChange={(e) => setTopicVideoUrl(e.target.value)}
             />
           </Form.Group>
           <Form.Group
@@ -77,15 +94,73 @@ const AddTopic = ({ onAddTopic }) => {
           >
             <Form.Control
               type="number"
-              placeholder="Audio/Video/Document course content duration"
+              placeholder="Total Audio/Video/Document course content duration"
               value={topicVideoDuration}
               onChange={(e) => setTopicVideoDuration(e.target.value)}
             />
           </Form.Group>
+          {sections.map((section, index) => (
+            <div key={index} className="d-flex align-items-center mb-3 gap-3">
+              <Form.Group>
+                <Form.Label>Section Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Section Title"
+                  value={section.title}
+                  onChange={(e) =>
+                    handleSectionChange(index, "title", e.target.value)
+                  }
+                  className="me-2"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Section Content Link</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Section Content Link"
+                  value={section.contentLink}
+                  onChange={(e) =>
+                    handleSectionChange(index, "contentLink", e.target.value)
+                  }
+                  className="me-2"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Section Duration</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Section Duration"
+                  value={section.duration}
+                  onChange={(e) =>
+                    handleSectionChange(index, "duration", e.target.value)
+                  }
+                  className="me-2"
+                />
+              </Form.Group>
+
+              {index > 0 && (
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleRemoveSection(index)}
+                  className="mt-5"
+                >
+                  Remove
+                </Button>
+              )}
+            </div>
+          ))}
+          <Button
+            variant="outline-primary"
+            onClick={handleAddSection}
+            disabled={!isInitialSectionFilled}
+            className="mb-3"
+          >
+            Add Section
+          </Button>
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline ">
           <Button variant="primary" onClick={handleAddTopic}>
-            Add New Topic
+            Add New Module
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
             Close
@@ -103,6 +178,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
   const [editDescription, setEditDescription] = useState("");
   const [editVideoUrl, setEditVideoUrl] = useState("");
   const [editVideoDuration, setEditVideoDuration] = useState("");
+  const [editSections, setEditSections] = useState([]);
 
   useEffect(() => {
     const storedData = sessionStorage.getItem("curriculum");
@@ -119,6 +195,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
         description: newTopic.topicDescription,
         videoUrl: newTopic.topicVideoUrl,
         videoDuration: newTopic.topicVideoDuration,
+        sections: newTopic.sections,
       },
     ]);
   };
@@ -135,6 +212,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
     setEditDescription(sections[index].description);
     setEditVideoUrl(sections[index].videoUrl);
     setEditVideoDuration(sections[index].videoDuration);
+    setEditSections(sections[index].sections);
   };
 
   const handleSaveEdit = () => {
@@ -144,6 +222,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
       description: editDescription,
       videoUrl: editVideoUrl,
       videoDuration: editVideoDuration,
+      sections: editSections,
     };
     setSections(updatedSections);
     setEditIndex(null);
@@ -199,11 +278,62 @@ const Curriculum = ({ onNext, onPrevious }) => {
                     <Form.Control
                       type="number"
                       value={editVideoDuration}
-                      onChange={(e) =>
-                        setEditVideoDuration(e.target.value)
-                      }
+                      onChange={(e) => setEditVideoDuration(e.target.value)}
                     />
                   </Form.Group>
+                  {editSections.map((section, secIndex) => (
+                    <div
+                      key={secIndex}
+                      className="d-flex align-items-center mb-3"
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="Section Title"
+                        value={section.title}
+                        onChange={(e) =>
+                          handleSectionChange(secIndex, "title", e.target.value)
+                        }
+                        className="me-2"
+                      />
+                      <Form.Control
+                        type="text"
+                        placeholder="Section Content Link"
+                        value={section.contentLink}
+                        onChange={(e) =>
+                          handleSectionChange(
+                            secIndex,
+                            "contentLink",
+                            e.target.value
+                          )
+                        }
+                        className="me-2"
+                      />
+                      <Form.Control
+                        type="number"
+                        placeholder="Section Duration"
+                        value={section.duration}
+                        onChange={(e) =>
+                          handleSectionChange(
+                            secIndex,
+                            "duration",
+                            e.target.value
+                          )
+                        }
+                        className="me-2"
+                      />
+                      {secIndex > 0 && (
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => handleRemoveSection(secIndex)}
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                  <Button variant="outline-primary" onClick={handleAddSection}>
+                    Add Section
+                  </Button>
                   <div className="mt-5">
                     <Button onClick={handleSaveEdit}>Save</Button>
                     <Button
