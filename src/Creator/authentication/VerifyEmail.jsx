@@ -27,10 +27,10 @@ const VerifyEmail = () => {
         }
       );
       setLoading(false);
-      showToast(response.data.message);
+      showToast(response.data.msg);
     } catch (error) {
       setLoading(false);
-      showToast(error.response.data.message);
+      showToast(error.response.data.msg);
     }
   };
 

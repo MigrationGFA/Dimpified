@@ -72,7 +72,6 @@ const Onboard = () => {
               src={Ecosystem}
               alt="Onboarding"
               className="img-fluid vh-100 vw-100"
-              
             />
           </div>
         </Col>

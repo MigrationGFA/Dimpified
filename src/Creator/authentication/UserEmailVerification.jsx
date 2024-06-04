@@ -26,10 +26,12 @@ const UserEmailVerification = () => {
       );
       if (
         response.data.msg === "Email verified successfully" ||
-        response.data.msg === "Email has been verified"
+        response.data.msg === "Email has been verified" ||
+        response.data.msg === "Email has already been verified"
       ) {
         sessionStorage.setItem("isVerified", "true");
         setIsVerified(true);
+        setError(false);
         showToast(response.data.msg);
       } else {
         setError(true);
@@ -47,13 +49,16 @@ const UserEmailVerification = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://unleashified-backend.azurewebsites.net/api/v1/resend-email`,
+        `https://dimpified-backend.azurewebsites.net/api/v1/creator/resend-email`,
         {
           email: queryParam.get("email"),
         }
       );
-      setLoading(false);
-      showToast(response.data.message);
+      if (response.data.msg === "Email address have been verified") {
+        setError(false);
+        setLoading(false);
+        showToast("Email address have been verified");
+      }
     } catch (error) {
       setLoading(false);
       showToast(error.response.data.message);
