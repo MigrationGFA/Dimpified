@@ -79,7 +79,7 @@ const ReceivedPayment = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Payment"
+                title="Total "
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -91,7 +91,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Completed Payment"
+                title="Completed "
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -103,7 +103,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Pending Payment"
+                title="Pending"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -115,7 +115,7 @@ const ReceivedPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Payment"
+                title="Approved Payment"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"

@@ -33,27 +33,27 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 const ChartActionMenu = () => {
-  return (
-    <div>
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <i className="fe fe-more-vertical text-muted"></i>
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            <i className="fe fe-external-link dropdown-item-icon "></i> Export
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            <i className="fe fe-mail dropdown-item-icon "></i> Email Report
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="3">
-            <i className="fe fe-download dropdown-item-icon "></i> Download
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <Dropdown>
+  //       <Dropdown.Toggle as={CustomToggle}>
+  //         <i className="fe fe-more-vertical text-muted"></i>
+  //       </Dropdown.Toggle>
+  //       <Dropdown.Menu align="end">
+  //         <Dropdown.Header>SETTINGS</Dropdown.Header>
+  //         <Dropdown.Item eventKey="1">
+  //           <i className="fe fe-external-link dropdown-item-icon "></i> Export
+  //         </Dropdown.Item>
+  //         <Dropdown.Item eventKey="2">
+  //           <i className="fe fe-mail dropdown-item-icon "></i> Email Report
+  //         </Dropdown.Item>
+  //         <Dropdown.Item eventKey="3">
+  //           <i className="fe fe-download dropdown-item-icon "></i> Download
+  //         </Dropdown.Item>
+  //       </Dropdown.Menu>
+  //     </Dropdown>
+  //   </div>
+  // );
 };
 
 const Overview = () => {
@@ -117,7 +117,7 @@ const Overview = () => {
                 title="Total Ecosystem"
                 value="1"
                 summary="Number of sales"
-                summaryValue="1 Monthly"
+                // summaryValue="1 Monthly"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -130,7 +130,7 @@ const Overview = () => {
                 title="Total Users"
                 value="1"
                 summary="Number of pending"
-                summaryValue="1 Monthly"
+                // summaryValue="1 Monthly"
                 summaryIcon="down"
                 showSummaryIcon
                 classValue="mb-4"
@@ -143,7 +143,7 @@ const Overview = () => {
                 title="Total Support"
                 value="0"
                 summary="Students"
-                summaryValue="Monthly "
+                // summaryValue="Monthly "
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -156,7 +156,7 @@ const Overview = () => {
                 title="Total Paid Users"
                 value="0"
                 summary="Instructor"
-                summaryValue="1 Monthly "
+                // summaryValue="1 Monthly "
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -170,7 +170,7 @@ const Overview = () => {
               <Card>
                 <Card.Header className="align-items-center card-header-height d-flex justify-content-between align-items-center">
                   <div>
-                    <h4 className="mb-0">Earnings</h4>
+                    <h4 className="mb-0">User</h4>
                   </div>
                   <div>
                     <ChartActionMenu />

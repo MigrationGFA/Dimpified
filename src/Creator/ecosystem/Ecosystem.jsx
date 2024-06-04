@@ -64,10 +64,10 @@ const Ecosystem = () => {
       <Row>
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Total Ecosystem"
+            title="Total "
             value="30.6k"
             summary="Number of sales"
-            summaryValue="+20.9$"
+            // summaryValue="+20.9$"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -77,10 +77,10 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Completed Ecosystem"
+            title="Completed "
             value="256k"
             summary="Number of pending"
-            summaryValue="5%"
+            // summaryValue="5%"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -90,10 +90,10 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Pending Ecosystem"
+            title="Pending "
             value="51.46%"
             summary="Students"
-            summaryValue="+1200"
+            // summaryValue="+1200"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -106,7 +106,7 @@ const Ecosystem = () => {
             title="Total Users"
             value="1m:17s"
             summary="Instructor"
-            summaryValue="12%"
+            // summaryValue="12%"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
