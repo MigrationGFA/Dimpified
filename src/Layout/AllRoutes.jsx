@@ -1,8 +1,18 @@
+
+
+
+
 // ** Import from react dom
 import { Route, Routes, Navigate } from "react-router-dom";
 
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
+
+
+import DimpHome from "../dimp-home/DimpHome";
+import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
+import Pricing from "../dimp-pages/pricing/Pricing";
+import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -63,9 +73,16 @@ import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
 const AllRoutes = () => {
   return (
     <Routes>
-      {/* Auth Pages */}
-      {/* <Route element={<AuthLayout />}> */}
-      <Route path="/" element={<UserSignIn />} />
+    
+      
+      <Route path="/" element={<DimpHome />} />
+      <Route path="/education" element={<CustomerTraining />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/non-profit" element={<NonProfit />} />
+
+
+
+      <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
@@ -135,9 +152,10 @@ const AllRoutes = () => {
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
-      </Route>
+      </Route> 
     </Routes>
   );
 };
 
 export default AllRoutes;
+
