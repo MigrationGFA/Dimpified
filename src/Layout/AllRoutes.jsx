@@ -73,8 +73,7 @@ import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
 const AllRoutes = () => {
   return (
     <Routes>
-      {/* Auth Pages */}
-      {/* <Route element={<AuthLayout />}> */}
+    
       
       <Route path="/" element={<DimpHome />} />
       <Route path="/education" element={<CustomerTraining />} />
