@@ -59,6 +59,8 @@ import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
 import Integration from "../Creator/ecosystem/Newecosystem/Integration";
 import Template1 from "../EditTemplate/Template1";
 import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
+import ContractPage from "../Creator/Payment/ContractPage";
+import Payouts from "../Creator/Payment/Payouts";
 
 const AllRoutes = () => {
   return (
@@ -124,6 +126,8 @@ const AllRoutes = () => {
         <Route path="/creator/my-user" element={<MyUser />} />
         <Route path="/creator/jobProvider" element={<JobProvider />} />
         <Route path="/creator/jobSeeker" element={<JobSeeker />} />
+        <Route path="/creator/escrow-payment" element={<ContractPage />} />
+        <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
