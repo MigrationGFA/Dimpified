@@ -11,7 +11,7 @@ import "../assets/scss/theme.scss";
 
 import DimpHome from "../dimp-home/DimpHome";
 import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
-import EcoPayment from "../dimp-pages/pricing/Pricing";
+import Pricing from "../dimp-pages/pricing/Pricing";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
 // ** Import Dahbaord Menu Pages
@@ -78,7 +78,7 @@ const AllRoutes = () => {
       
       <Route path="/" element={<DimpHome />} />
       <Route path="/education" element={<CustomerTraining />} />
-      <Route path="/pricing" element={<EcoPayment />} />
+      <Route path="/pricing" element={<Pricing />} />
       <Route path="/non-profit" element={<NonProfit />} />
 
 
