@@ -14,61 +14,61 @@ import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
 import Pricing from "../dimp-pages/pricing/Pricing";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
-// // ** Import Dahbaord Menu Pages
-// import Overview from "../Creator/overview/Overview";
-// import Analytics from "../Creator/analytics/Analytics";
+// ** Import Dahbaord Menu Pages
+import Overview from "../Creator/overview/Overview";
+import Analytics from "../Creator/analytics/Analytics";
 
-// // ** Import Courses Pages
-// import AllJobs from "../Creator/courses/all-courses/AllJobs";
-// import JobCategory from "../Creator/courses/JobCategory";
-// import CategorySingle from "../Creator/courses/CategorySingle";
+// ** Import Courses Pages
+import AllJobs from "../Creator/courses/all-courses/AllJobs";
+import JobCategory from "../Creator/courses/JobCategory";
+import CategorySingle from "../Creator/courses/CategorySingle";
 
-// // ** Import Users Pages
-// import MyUser from "../Creator/user/MyUser";
-// import JobProvider from "../Creator/user/JobProvider";
-// import JobSeeker from "../Creator/user/JobSeeker";
-// import AdminDashboardIndex from "../Creator/UserDashboardIndex";
+// ** Import Users Pages
+import MyUser from "../Creator/user/MyUser";
+import JobProvider from "../Creator/user/JobProvider";
+import JobSeeker from "../Creator/user/JobSeeker";
+import AdminDashboardIndex from "../Creator/UserDashboardIndex";
 
-// // Import Notification
-// import Notification from "../Creator/authentication/Notifications";
-// import NotificationSingle from "../Creator/Notification/NotificationSingle";
+// Import Notification
+import Notification from "../Creator/authentication/Notifications";
+import NotificationSingle from "../Creator/Notification/NotificationSingle";
 
-// // ** Import Payment components
-// import PendingPayment from "../Creator/Payment/PendingPayment";
-// import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
-// import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
+// ** Import Payment components
+import PendingPayment from "../Creator/Payment/PendingPayment";
+import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
+import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
-// // ** Import Authentication components
-// import UserSignIn from "../Creator/authentication/UserSignIn";
-// import UserSignUp from "../Creator/authentication/UserSignUp";
-// import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
-// import UserEmailVerification from "../Creator/authentication/UserEmailVerification";
-// import VerifyEmail from "../Creator/authentication/VerifyEmail";
+// ** Import Authentication components
+import UserSignIn from "../Creator/authentication/UserSignIn";
+import UserSignUp from "../Creator/authentication/UserSignUp";
+import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
+import UserEmailVerification from "../Creator/authentication/UserEmailVerification";
+import VerifyEmail from "../Creator/authentication/VerifyEmail";
 
-// // ** Import Support components
-// import HelpCenter from "../Creator/Support/HelpCenter";
-// import Support from "../Creator/Support/Support";
-// import Chat from "../Admin/chat/Chat";
-// import ChatLayout from "./Dashboard/ChatLayout";
+// ** Import Support components
+import HelpCenter from "../Creator/Support/HelpCenter";
+import Support from "../Creator/Support/Support";
+import Chat from "../Admin/chat/Chat";
+import ChatLayout from "./Dashboard/ChatLayout";
 
-// // import Feature Update components
-// import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
+// import Feature Update components
+import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
 
 
-// // Import Onboard
-// import Onboard from "../Pages/creator/Onboard";
-// import OnboardTwo from "../Pages/creator/OnboardTwo";
-// import Ecosystem from "../Creator/ecosystem/Ecosystem";
-// import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
-// import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
-// import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
-// import Courses from "../Creator/ecosystem/Newecosystem/Courses";
-// import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
-// import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
-// import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
-// import Integration from "../Creator/ecosystem/Newecosystem/Integration";
-// import Template1 from "../EditTemplate/Template1";
-// import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
+// Import Onboard
+import Onboard from "../Pages/creator/Onboard";
+import OnboardTwo from "../Pages/creator/OnboardTwo";
+import Ecosystem from "../Creator/ecosystem/Ecosystem";
+import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
+import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
+import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
+import Courses from "../Creator/ecosystem/Newecosystem/Courses";
+import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
+import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
+import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
+import Integration from "../Creator/ecosystem/Newecosystem/Integration";
+import Template1 from "../EditTemplate/Template1";
+import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
 
 const AllRoutes = () => {
   return (
@@ -82,7 +82,7 @@ const AllRoutes = () => {
 
 
 
-{/*       <Route path="/creator/signin" element={<UserSignIn />} />
+      <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
@@ -119,7 +119,7 @@ const AllRoutes = () => {
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route>
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
-{/*       <Route element={<AdminDashboardIndex />}>
+      <Route element={<AdminDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
         <Route path="/creator/notifications" element={<Notification />} />
@@ -152,7 +152,7 @@ const AllRoutes = () => {
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
-      </Route> */} 
+      </Route> 
     </Routes>
   );
 };
