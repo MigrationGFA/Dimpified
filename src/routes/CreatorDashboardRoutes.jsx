@@ -82,12 +82,13 @@ export const DashboardMenu = [
   },
   {
     id: uuid(),
-    title: "Suggestion",
+    title: "Feature Updates",
     icon: "user",
-    children: [
-      { id: uuid(), link: "/creator/feature-update", name: "Feature Updates" },
-      { id: uuid(), link: "/creator/feedback", name: " Feedbacks" },
-    ],
+    link: "/creator/feature-update",
+    // children: [
+    //   { id: uuid(), link: "/creator/feature-update", name: "Feature Updates" },
+    //   { id: uuid(), link: "/creator/feedback", name: " Feedbacks" },
+    // ],
   },
   // {
   // 	id: uuid(),
