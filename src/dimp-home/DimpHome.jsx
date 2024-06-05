@@ -58,9 +58,9 @@ const DimpHome = () => {
           className="bg-dark"
           title="Are you ready? Sign Up Now!"
           btntext1="Get started for Free"
-          btnlink1="/authentication/sign-up"
+          btnlink1="/creator/signup"
           btntext2="Watch Demo"
-          btnlink2="/authentication/sign-up"
+          btnlink2="#"
         />
       </main>
 
