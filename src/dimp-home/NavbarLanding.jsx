@@ -59,15 +59,15 @@ const NavbarLanding = props => {
 							
 							<div className={`mt-3 mt-lg-0`}>
 							<Nav.Link
-									href="https://themes.getbootstrap.com/store/codescandy/"
+									href="/creator/signin"
 									target="_blank"
 									bsPrefix="btn"
 									className="btn btn-outline-primary mx-2"
 								>
-									Login
+									Sign In
 								</Nav.Link>
 								<Nav.Link
-									href="https://themes.getbootstrap.com/store/codescandy/"
+									href="/creator/signup"
 									target="_blank"
 									bsPrefix="btn"
 									className="btn btn-primary"
