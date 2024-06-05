@@ -129,13 +129,13 @@ const UseCasesMenu = ({ className }) => {
                 <SME />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/corporate" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Corporate />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/creators" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Creators />
@@ -144,7 +144,7 @@ const UseCasesMenu = ({ className }) => {
           </Col>
           <Col lg={3} md={6} xs={12}>
             <NavDropdown.Item
-              href="/dashboard/documentation"
+              href="/medical"
               className="py-2 px-3"
             >
               <div className="d-flex align-items-center">
@@ -158,7 +158,7 @@ const UseCasesMenu = ({ className }) => {
                 <NGO />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/religious" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Religious />
@@ -167,7 +167,7 @@ const UseCasesMenu = ({ className }) => {
           </Col>
           <Col lg={3} md={6} xs={12}>
             <NavDropdown.Item
-              href="/dashboard/documentation"
+              href="/fundraising"
               className="py-2 px-3"
             >
               <div className="d-flex align-items-center">
@@ -175,7 +175,7 @@ const UseCasesMenu = ({ className }) => {
                 <Fundraising />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/government" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Government />
@@ -199,22 +199,76 @@ const UseCasesMenu = ({ className }) => {
   const DocMenuMobile = () => {
     return (
       <NavDropdown
-        title="Features"
+        title="Use Cases"
         id="basic-nav-dropdown"
         bsPrefix="no-dropdown-arrow d-block nav-link fs-3 lh-1 pt-0"
       >
-        <NavDropdown.Item href="/dashboard/documentation" className="py-2 px-3">
-          <div className="d-flex align-items-center">
-            <i className="fe fe-file-text fs-3 text-primary"></i>
-            
-          </div>
+        <NavDropdown.Item
+              href="/sme"
+              className="py-2 px-3"
+            >
+              <div className="d-flex align-items-center">
+                <i className="fe fe-file-text fs-3 text-primary"></i>
+                <SME />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/corporate" className="py-2 px-3">
+              <div className="d-flex align-items-center">
+                <i className="fe fe-layers fs-3 text-primary"></i>
+                <Corporate />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/creators" className="py-2 px-3">
+              <div className="d-flex align-items-center">
+                <i className="fe fe-layers fs-3 text-primary"></i>
+                <Creators />
+              </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
-          <div className="d-flex align-items-center">
-            <i className="fe fe-layers fs-3 text-primary"></i>
-            
-          </div>
+        <NavDropdown.Item
+              href="/medical"
+              className="py-2 px-3"
+            >
+              <div className="d-flex align-items-center">
+                <i className="fe fe-file-text fs-3 text-primary"></i>
+                <Medical />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/non-profit" className="py-2 px-3">
+              <div className="d-flex align-items-center">
+                <i className="fe fe-layers fs-3 text-primary"></i>
+                <NGO />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/religious" className="py-2 px-3">
+              <div className="d-flex align-items-center">
+                <i className="fe fe-layers fs-3 text-primary"></i>
+                <Religious />
+              </div>
         </NavDropdown.Item>
+        <NavDropdown.Item
+              href="/fundraising"
+              className="py-2 px-3"
+            >
+              <div className="d-flex align-items-center">
+                <i className="fe fe-file-text fs-3 text-primary"></i>
+                <Fundraising />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/government" className="py-2 px-3">
+              <div className="d-flex align-items-center">
+                <i className="fe fe-layers fs-3 text-primary"></i>
+                <Government />
+              </div>
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              href="/education"
+              className="py-2 px-3"
+            >
+              <div className="d-flex align-items-center">
+                <i className="fe fe-file-text fs-3 text-primary"></i>
+                <Education />
+              </div>
+            </NavDropdown.Item>
       </NavDropdown>
     );
   };
