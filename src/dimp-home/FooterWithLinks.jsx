@@ -5,7 +5,7 @@ import { Row, Col, Image, Container, ListGroup } from 'react-bootstrap';
 
 // import MDI icons
 import Icon from '@mdi/react';
-import { mdiFacebook, mdiTwitter, mdiInstagram } from '@mdi/js';
+import { mdiFacebook, mdiTwitter, mdiInstagram, mdiLinkedin } from '@mdi/js';
 
 // import media files
 import FooterLogo from './images/gfa-blue.png';
@@ -28,6 +28,9 @@ const FooterWithLinks = () => {
 									</p>
 									{/* social media */}
 									<div className="fs-4 mt-4">
+									<Link to="#" className="mdi mdi-facebook text-muted me-2">
+											<Icon path={mdiLinkedin} size={0.7} />
+										</Link>
 										<Link to="#" className="mdi mdi-facebook text-muted me-2">
 											<Icon path={mdiFacebook} size={0.7} />
 										</Link>
@@ -121,12 +124,12 @@ const FooterWithLinks = () => {
 								<h3 className="fw-bold mb-3">Get in touch</h3>
 								<p>Ogun Tech Hub, Abeokuta</p>
 								<p className="mb-1">
-									Email: <Link to="#">support@gfa-tech.com</Link>
+									Email: <Link to="#">info@dimpified.com</Link>
 								</p>
 								<p>
 									Phone:{' '}
 									<span className="text-dark fw-semi-bold">
-										(000) 123 456 789
+									+234 808 009 4426
 									</span>
 								</p>
 								{/* <div className="d-flex">
@@ -153,15 +156,10 @@ const FooterWithLinks = () => {
 							className="d-md-flex justify-content-end"
 						>
 							<nav className="nav nav-footer">
-								<Link className="nav-link ps-0" to="#">
+								<Link className="nav-link ps-0" to="https://gfa-tech/company/privacy-policy">
 									Privacy Policy
 								</Link>
-								<Link className="nav-link px-2 px-md-3" to="#">
-									Cookie Notice{' '}
-								</Link>
-								<Link className="nav-link d-none d-lg-block" to="#">
-									Do Not Sell My Personal Information{' '}
-								</Link>
+								
 								<Link className="nav-link" to="#">
 									Terms of Use
 								</Link>
