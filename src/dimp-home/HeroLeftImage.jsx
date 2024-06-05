@@ -19,27 +19,25 @@ const HeroLeftImage = () => {
   const featurescol1 = [
     {
       id: 1,
-      
+
       title: "Corporate",
-      description:
-        "Hackathons, pitch competitions, upskilling programs",
+      description: "Hackathons, pitch competitions, upskilling programs",
     },
     {
       id: 2,
-      
+
       title: "Creators",
-      description:
-        "Acquire subscribers, manage your community.",
+      description: "Acquire subscribers, manage your community.",
     },
     {
       id: 3,
-      
+
       title: `SMEs`,
       description: "Staff training and evaluation, customer training e.t.c.",
     },
     {
       id: 4,
-      
+
       title: `Medical`,
       description: "Patient-care management, clinical research management.",
     },
@@ -47,26 +45,27 @@ const HeroLeftImage = () => {
   const featurescol2 = [
     {
       id: 1,
-      
+
       title: "Education",
       description: "A lightweight LMS that's fast, flexible & easy to use.",
     },
     {
       id: 2,
-      
+
       title: "Non Profit (NGO)",
-      description: "Donor & Volunteer management, Alumni, parents/teachers associations.",
+      description:
+        "Donor & Volunteer management, Alumni, parents/teachers associations.",
     },
     {
       id: 3,
-      
+
       title: `Government`,
       description:
         "Licensing, e-governance, tax management, skills management.",
     },
     {
       id: 3,
-      
+
       title: `Religious Bodies`,
       description: " Mosque Management, church management.",
     },
@@ -95,7 +94,6 @@ const HeroLeftImage = () => {
                       bsPrefix="mb-2"
                       className="d-flex"
                     >
-                      
                       <div className="ms-3">
                         <h3
                           className="mb-2"
@@ -118,7 +116,6 @@ const HeroLeftImage = () => {
                       bsPrefix="mb-2"
                       className="d-flex"
                     >
-                     
                       <div className="ms-3">
                         <h3
                           className="mb-2"
@@ -130,13 +127,18 @@ const HeroLeftImage = () => {
                   );
                 })}
               </ListGroup>
-              <div className="d-grid d-md-block">
-                <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+              
+            </Col>
+            <div className="d-grid d-md-block">
+                <Link
+                  to="#"
+                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                >
                   See more use cases
                 </Link>{" "}
               </div>
-            </Col>
           </Row>
+          
         </div>
       </Col>
     </Row>
