@@ -60,11 +60,14 @@ const HeroFormCenter = () => {
           <Row className="justify-content-center text-center mt-6">
             <Col md={9} sm={12}>
               <div className="d-grid d-md-block">
-                <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+                <Link
+                  to="/creator/signup"
+                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                >
                   Get started for free
                 </Link>{" "}
                 <Link
-                  href=""
+                  to=""
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   Watch Demo
