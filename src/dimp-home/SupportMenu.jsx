@@ -6,7 +6,7 @@ import { Col, Row, Image, ListGroup } from "react-bootstrap";
 
 // import context file
 import { AppConfigContext } from "../context/Context";
-import TemplatesImage from '../dimp-home/images/security.png';
+import TemplatesImage from "../dimp-home/images/security.png";
 
 const SupportMenu = ({ className }) => {
   const ConfigContext = useContext(AppConfigContext);
@@ -15,93 +15,68 @@ const SupportMenu = ({ className }) => {
     query: "(min-width: 1224px)",
   });
 
-  const CustomerTraining = () => {
+  const DimpAcademy = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Dimp Academy</h5>
         <p className="mb-0 fs-6">
-          Drive business results through <br/>powerful Customer education.
+          Achieve success through learning
+          <br /> and growth with our academy.
         </p>
       </div>
     );
   };
-  const Enterprise = () => {
+  const HelpCenter = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Help Center</h5>
         <p className="mb-0 fs-6">
-          A lightweight LMS that's<br/> fast, flexible & easy to use.
+          Access over 600 articles
+          <br /> to enhance your ecosystem.
         </p>
       </div>
     );
   };
-  const NGO = () => {
+  const Experts = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Experts</h5>
         <p className="mb-0 fs-6">
-          Your elearning platform to<br/> Educate, Connect, & Inspire!
+          Expand your academy with the support
+          <br /> of vetted consultants and agencies.
         </p>
       </div>
     );
   };
-  const Creators = () => {
+  const Webinars = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Daily Webinars</h5>
         <p className="mb-0 fs-6">
-          Cash in on your passion. <br/>Make money in ways you never thought of!
+          Participate in daily webinars tailored
+          <br /> for both new and experienced school owners.
         </p>
       </div>
     );
   };
-  const Coaching = () => {
+  const CourseMasters = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Course Masters</h5>
         <p className="mb-0 fs-6">
-          Transform the way you <br/>coach and maximize your impact.
+          Accelerate your business growth using
+          <br /> industry best practices from experts.
         </p>
       </div>
     );
   };
-  const Fitness = () => {
+  const AI = () => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">AI Central</h5>
         <p className="mb-0 fs-6">
-          Shape up your fitness online<br/> business & boost profits.
-        </p>
-      </div>
-    );
-  };
-  const Finance = () => {
-    return (
-      <div className="ms-3 lh-3">
-        <h5 className="mb-0">Finance</h5>
-        <p className="mb-0 fs-6">
-          Educate the next generation<br/> of financial experts.
-        </p>
-      </div>
-    );
-  };
-  const Health = () => {
-    return (
-      <div className="ms-3 lh-3">
-        <h5 className="mb-0">Health</h5>
-        <p className="mb-0 fs-6">
-          Lead the future of Health <br/>and Medical online training.
-        </p>
-      </div>
-    );
-  };
-  const Employee = () => {
-    return (
-      <div className="ms-3 lh-3">
-        <h5 className="mb-0">Employee Training</h5>
-        <p className="mb-0 fs-6">
-        Set your business up for success with<br/>
-          internal education & onboarding.
+          Your comprehensive hub for AI
+          <br /> and online course resources.
         </p>
       </div>
     );
@@ -110,7 +85,6 @@ const SupportMenu = ({ className }) => {
     return (
       <div className="ms-3 lh-3">
         <h5 className="mb-0">Blog</h5>
-        
       </div>
     );
   };
@@ -125,85 +99,69 @@ const SupportMenu = ({ className }) => {
         show
       >
         <Row className="align-items-center">
-        <Col lg={3} md={6} xs={12}>
-        <Image src={TemplatesImage} alt="..." className="img-fluid w-100" />
-        </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item
-              href="/dashboard/documentation"
-              className="py-2 px-3"
-            >
+            <Image src={TemplatesImage} alt="..." className="img-fluid w-100" />
+          </Col>
+          <Col lg={3} md={6} xs={12}>
+            <NavDropdown.Item href="/dimpacademy" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
-                <CustomerTraining />
+                <DimpAcademy />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/expert" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
-                <Enterprise />
+                <Experts />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item
-              href="/dashboard/documentation"
-              className="py-2 px-3"
-            >
+            <NavDropdown.Item href="/coursemasters" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
-                <Fitness />
+                <CourseMasters />
               </div>
             </NavDropdown.Item>
           </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item
-              href="/dashboard/documentation"
-              className="py-2 px-3"
-            >
+            <NavDropdown.Item href="/helpcenter" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
-                <Employee />
+                <HelpCenter />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/webinars" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
-                <Creators />
+                <Webinars />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+            <NavDropdown.Item href="/ai" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
-                <NGO />
+                <AI />
               </div>
             </NavDropdown.Item>
           </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item
-              href="/dashboard/documentation"
-              className="py-4 px-3"
-            >
+            <NavDropdown.Item href="/blog" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <Blog />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/dashboard/changelog" className="py-4 px-3">
+            <NavDropdown.Item href="/blog" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Blog />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item
-              href="/dashboard/documentation"
-              className="py-4 px-3"
-            >
+            <NavDropdown.Item href="/blog" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <Blog />
               </div>
             </NavDropdown.Item>
           </Col>
-          
         </Row>
       </NavDropdown>
     );
@@ -211,20 +169,62 @@ const SupportMenu = ({ className }) => {
   const DocMenuMobile = () => {
     return (
       <NavDropdown
-        title="Features"
+        title="360 Support"
         id="basic-nav-dropdown"
         bsPrefix="no-dropdown-arrow d-block nav-link fs-3 lh-1 pt-0"
       >
-        <NavDropdown.Item href="/dashboard/documentation" className="py-2 px-3">
+        <NavDropdown.Item href="/dimpacademy" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
-            
+            <DimpAcademy />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/dashboard/changelog" className="py-2 px-3">
+        <NavDropdown.Item href="/expert" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-layers fs-3 text-primary"></i>
-            
+            <Experts />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/coursemasters" className="py-2 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-file-text fs-3 text-primary"></i>
+            <CourseMasters />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/helpcenter" className="py-2 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-file-text fs-3 text-primary"></i>
+            <HelpCenter />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/webinars" className="py-2 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-layers fs-3 text-primary"></i>
+            <Webinars />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/ai" className="py-2 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-layers fs-3 text-primary"></i>
+            <AI />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/blog" className="py-4 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-file-text fs-3 text-primary"></i>
+            <Blog />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/blog" className="py-4 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-layers fs-3 text-primary"></i>
+            <Blog />
+          </div>
+        </NavDropdown.Item>
+        <NavDropdown.Item href="/blog" className="py-4 px-3">
+          <div className="d-flex align-items-center">
+            <i className="fe fe-file-text fs-3 text-primary"></i>
+            <Blog />
           </div>
         </NavDropdown.Item>
       </NavDropdown>
