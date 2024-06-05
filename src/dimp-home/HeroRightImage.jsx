@@ -13,38 +13,38 @@ import FeaturedImg2 from "./images/marketing.jpg";
 // import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 const HeroRightImage = () => {
-  const title = "Profitable Marketing Funnels to increase your ROI";
+  const title = "Profitable Marketing Startegies designed to boost your Return on investment";
   const subtitle = "Benefits of DIMP";
 
   const features = [
     {
       id: 1,
-      
-      title: "Sell Courses, Bundles and Memberships",
+
+      title: "Offer educational courses, package deals, and subscription services",
       description:
-        "A powerful sales engine, with advanced pricing options for all kinds of digital products",
+        "A robust sales system equipped with sophisticated pricing features suitable for various digital offerings",
     },
     {
       id: 2,
-    
-      title: "Upsell and cross-sell with promotions",
+
+      title: "Maximize revenue through additional sales",
       description:
-        "Upsell and cross-sell with irresistible offers, high-converting sales pages, 1-click funnels and customizable checkout experiences.",
+        "Drive more purchases with enticing deals, persuasive sales pages, streamlined purchasing processes, and customizable checkout options.",
     },
     {
       id: 3,
-      
-      title: `A true White Label ecosystem platform`,
+
+      title: `A fully customizable platform`,
       description:
-        "Use your own domain name, imprint your brand identity, take full control of the customer experience.",
+        "Tailor the platform to match your branding, establish a cohesive customer journey, and maintain complete ownership over the user experience.",
     },
-	{
-		id: 4,
-		
-		title: `Connect marketing stack seamlessly`,
-		description:
-		  "Integrations with the top marketing tools of the trade used by the best Course Sellers.",
-	  },
+    {
+      id: 4,
+
+      title: `Effortlessly integrate with marketing tools`,
+      description:
+        "Seamlessly connect with leading marketing solutions utilized by top sellers in the education industry.",
+    },
   ];
   return (
     <Row className="align-items-center">
@@ -57,7 +57,6 @@ const HeroRightImage = () => {
             {features.map((item, index) => {
               return (
                 <div className="d-flex mb-4" key={index}>
-                  
                   <div className="ms-3">
                     <h3
                       className="mb-2"
@@ -70,23 +69,29 @@ const HeroRightImage = () => {
             })}
           </div>
           <div className="d-grid d-md-block">
-              <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
-                Get started for free
-              </Link>{" "}
-              <Link
-                href=""
-                className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
-              >
-                Watch Demo
-              </Link>{" "}
-            </div>
+            <Link
+              to="/creator/signup"
+              className="btn btn-primary btn-lg mb-2 mb-md-0"
+            >
+              Get started for free
+            </Link>{" "}
+            <Link
+              href=""
+              className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
+            >
+              Watch Demo
+            </Link>{" "}
+          </div>
         </div>
-        
       </Col>
       <Col lg={6} md={12} xs={12}>
         {/* image */}
         <div className="mt-4 mt-lg-0 bg-gray-200 rounded rounded-4">
-          <Image src={FeaturedImg2} alt="..." className="img-fluid w-100 rounded-4" />
+          <Image
+            src={FeaturedImg2}
+            alt="..."
+            className="img-fluid w-100 rounded-4"
+          />
         </div>
       </Col>
     </Row>
