@@ -1,5 +1,14 @@
 import React, { Fragment, useState, useMemo, useEffect } from "react";
-import { Col, Row, Card, Spinner, Table, Button } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Card,
+  Spinner,
+  Table,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
@@ -16,6 +25,8 @@ const Support = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Cloading, setCLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
 
   useEffect(() => {
     fetchData().then((data) => {
@@ -23,6 +34,19 @@ const Support = () => {
       setLoading(false); // Set loading to false after data is fetched
     });
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const fetchData = async () => {
     try {
@@ -35,6 +59,24 @@ const Support = () => {
       return [];
     }
   };
+
+  const handleSubmitReview = async () => {
+    setReviewLoading(true);
+    const UserId = sessionStorage.getItem("UserId");
+    const selectedJobId = "exampleJobId"; // Replace with actual job ID
+    const selectedJobposterId = "exampleJobPosterId"; // Replace with actual job poster ID
+    const selectedJobTitle = "exampleJobTitle"; // Replace with actual job title
+  
+    if (!selectedJobId || !selectedJobposterId) {
+      alert("Job ID or Jobposter ID not provided");
+      setReviewLoading(false);
+      return;
+    }
+  
+    setShowModal(false);
+    setReviewLoading(false);
+  };
+  
 
   const columns = useMemo(
     () => [
@@ -103,6 +145,10 @@ const Support = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Support</h1>
+              <p>
+                Keep track of your support information and submit support
+                requests.
+              </p>
             </div>
           </div>
         </Col>
@@ -165,6 +211,62 @@ const Support = () => {
               />
             </Col>
           </Row>
+          <Row>
+            <Col lg={12} md={12} sm={12}>
+              <div className="d-lg-flex justify-content-end align-items-center mb-4">
+                <Button
+                  variant="primary"
+                  className="me-3"
+                  onClick={() => setShowModal(true)}
+                >
+                  Support Request
+                </Button>
+              </div>
+            </Col>
+          </Row>
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Support Request</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group controlId="contactReason">
+                  <Form.Label>Support Reason</Form.Label>
+                  <Form.Select aria-label="Select">
+                    <option>Select</option>
+                    <option>Template Upgrade</option>
+                    <option>Pricing features</option>
+                    <option>Payment Issues</option>
+                    <option>Ecosystem Upgrade</option>
+                    <option>Others</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group controlId="message">
+                  <Form.Label>Message</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    name="message"
+                    onChange={handleInputChange}
+                    placeholder="Message"
+                    rows={4}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+            <Button
+  variant="primary"
+  disabled={reviewLoading}
+  style={{ marginRight: "10px" }}
+  onClick={handleSubmitReview}
+>
+  {reviewLoading ? "Processing" : "Submit"}
+</Button>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           <Card className="border-0 mt-4">
             <Card.Header>
@@ -184,7 +286,11 @@ const Support = () => {
                 </div>
               ) : (
                 <Fragment>
-                  <Table hover responsive className="text-nowrap table-centered">
+                  <Table
+                    hover
+                    responsive
+                    className="text-nowrap table-centered"
+                  >
                     <thead>
                       <tr>
                         {columns.map((column) => (
@@ -221,7 +327,8 @@ const Support = () => {
                                       borderColor: "#b8f7b2",
                                       color: "white",
                                       opacity:
-                                        row.status === "completed" || row.Cloading
+                                        row.status === "completed" ||
+                                        row.Cloading
                                           ? 0.6
                                           : 1,
                                     }}

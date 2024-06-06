@@ -43,22 +43,22 @@ const InstructorsListItems = () => {
     ));
 
     const ActionMenu = () => {
-        return (
-            <Dropdown>
-                <Dropdown.Toggle as={CustomToggle}>
-                    <MoreVertical size="15px" className="text-secondary" />
-                </Dropdown.Toggle>
-                <Dropdown.Menu align="end">
-                    <Dropdown.Header>SETTINGS</Dropdown.Header>
-                    <Dropdown.Item eventKey="1">
-                        <Edit size="15px" className="dropdown-item-icon" /> Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="2">
-                        <Trash size="15px" className="dropdown-item-icon" /> Remove
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-        );
+        // return (
+        //     <Dropdown>
+        //         <Dropdown.Toggle as={CustomToggle}>
+        //             <MoreVertical size="15px" className="text-secondary" />
+        //         </Dropdown.Toggle>
+        //         <Dropdown.Menu align="end">
+        //             <Dropdown.Header>SETTINGS</Dropdown.Header>
+        //             <Dropdown.Item eventKey="1">
+        //                 <Edit size="15px" className="dropdown-item-icon" /> Edit
+        //             </Dropdown.Item>
+        //             <Dropdown.Item eventKey="2">
+        //                 <Trash size="15px" className="dropdown-item-icon" /> Remove
+        //             </Dropdown.Item>
+        //         </Dropdown.Menu>
+        //     </Dropdown>
+        // );
     };
 
     const columns = useMemo(
@@ -77,23 +77,23 @@ const InstructorsListItems = () => {
                     </div>
                 )
             },
-            { accessorKey: 'topic', header: 'Topic' },
+            // { accessorKey: 'topic', header: 'Topic' },
             { accessorKey: 'courses', header: 'Courses' },
             { accessorKey: 'joined', header: 'Joined' },
             {
-                accessorKey: 'students',
-                header: 'Students',
-                cell: ({ getValue }) => numberWithCommas(getValue())
+                accessorKey: 'Ecosystem',
+                header: 'Ecosystem',
+                cell: ({ getValue }) => numberWithCommas(12345)
             },
-            {
-                accessorKey: 'rating',
-                header: 'Rating',
-                cell: ({ getValue }) => (
-                    <div className="align-middle text-warning border-top-0">
-                        {getValue()} <Icon path={mdiStar} size={0.6} />
-                    </div>
-                )
-            },
+            // {
+            //     accessorKey: 'rating',
+            //     header: 'Rating',
+            //     cell: ({ getValue }) => (
+            //         <div className="align-middle text-warning border-top-0">
+            //             {getValue()} <Icon path={mdiStar} size={0.6} />
+            //         </div>
+            //     )
+            // },
             {
                 accessorKey: 'message',
                 header: '',
@@ -183,7 +183,7 @@ const InstructorsListItems = () => {
                     <Row>
                         <Col xl={3} lg={6} md={12} sm={12}>
                             <StatRightChart
-                                title="Total Users"
+                                title="Total "
                                 value="1"
                                 summary="Number of sales"
                                 summaryIcon="up"
@@ -194,7 +194,7 @@ const InstructorsListItems = () => {
                         </Col>
                         <Col xl={3} lg={6} md={12} sm={12}>
                             <StatRightChart
-                                title="Completed Users"
+                                title="Completed "
                                 value="1"
                                 summary="Number of pending"
                                 summaryIcon="down"
@@ -205,7 +205,7 @@ const InstructorsListItems = () => {
                         </Col>
                         <Col xl={3} lg={6} md={12} sm={12}>
                             <StatRightChart
-                                title="Pending Users"
+                                title="Pending "
                                 value="0"
                                 summary="Students"
                                 summaryIcon="up"

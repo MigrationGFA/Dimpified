@@ -94,6 +94,11 @@ const FeatureUpdate = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Feature Update</h1>
+              <p>
+                Share your feature suggestions with us by completing the{" "}
+                <b>Request New Features</b> form, and provide feedback through
+                the <b>Give Feedback</b> form.
+              </p>
             </div>
           </div>
         </Col>
@@ -159,7 +164,10 @@ const FeatureUpdate = () => {
             >
               Request new feature
             </Button>
-            <Button variant="primary" onClick={() => setShowFeedbackModal(true)}>
+            <Button
+              variant="primary"
+              onClick={() => setShowFeedbackModal(true)}
+            >
               Give feedback
             </Button>
           </div>
@@ -179,9 +187,8 @@ const FeatureUpdate = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            
+
             <tbody>
-              
               <tr>
                 {/* <td>1</td>
                 <td>Example Feature</td>
@@ -212,15 +219,17 @@ const FeatureUpdate = () => {
             </Form.Group>
 
             <Form.Group controlId="featureType" className="mt-3">
-              <Form.Label>Feature Type</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter feature type"
-                value={featureType}
-                onChange={(e) => setFeatureType(e.target.value)}
-                required
-              />
-            </Form.Group>
+  <Form.Label>Feature Type</Form.Label>
+  <Form.Select aria-label="Select">
+                    <option>Select</option>
+                    <option>Template Upgrade</option>
+                    <option>Pricing features</option>
+                    <option>Payment Issues</option>
+                    <option>Ecosystem Upgrade</option>
+                    <option>Others</option>
+                  </Form.Select>
+</Form.Group>
+
 
             <Form.Group controlId="featureDescription" className="mt-3">
               <Form.Label>Feature Description</Form.Label>
@@ -233,32 +242,33 @@ const FeatureUpdate = () => {
                 required
               />
             </Form.Group>
-
-            
           </Form>
         </Modal.Body>
         <Modal.Footer>
-  <Button
-    variant="primary"
-    disabled={reviewLoading}
-    style={{ marginRight: '10px' }}
-    onClick={handleSubmitReview}
-  >
-    {reviewLoading ? "Processing" : "Submit Feature"}
-  </Button>
-  <Button variant="secondary" onClick={() => setShowModal(false)}>
-    Close
-  </Button>
-</Modal.Footer>
+          <Button
+            variant="primary"
+            disabled={reviewLoading}
+            style={{ marginRight: "10px" }}
+            onClick={handleSubmitReview}
+          >
+            {reviewLoading ? "Processing" : "Submit Feature"}
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
 
-      <Modal show={showFeedbackModal} onHide={() => setShowFeedbackModal(false)}>
-  <Modal.Header closeButton>
-    <Modal.Title>Give Feedback</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
+      <Modal
+        show={showFeedbackModal}
+        onHide={() => setShowFeedbackModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Give Feedback</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <div className="mb-3">
-            <h3 className="mb-4">Give Your Review on this Job</h3>
+            <h3 className="mb-4">Give Your Review on this Application</h3>
             <Row className="align-items-center">
               <Col xs="auto" className="text-center">
                 <h6>Press any of the stars for your star rating</h6>
@@ -280,7 +290,7 @@ const FeatureUpdate = () => {
           </div>
 
           <div className="w-100 mb-3">
-          <h4 className="mb-3">Write Your Review</h4>
+            <h4 className="mb-3">Write Your Review</h4>
             <Form className="position-relative">
               <Form.Group className="mb-3">
                 <Form.Control
@@ -299,21 +309,23 @@ const FeatureUpdate = () => {
             </Form>
           </div>
         </Modal.Body>
-  <Modal.Footer>
-    <Button
-      variant="primary"
-      disabled={reviewLoading}
-      style={{ marginRight: '10px' }}
-      onClick={handleSubmitReview}
-    >
-      {reviewLoading ? "Processing" : "Submit Review"}
-    </Button>
-    <Button variant="secondary" onClick={() => setShowFeedbackModal(false)}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
-
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            disabled={reviewLoading}
+            style={{ marginRight: "10px" }}
+            onClick={handleSubmitReview}
+          >
+            {reviewLoading ? "Processing" : "Submit Review"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => setShowFeedbackModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
