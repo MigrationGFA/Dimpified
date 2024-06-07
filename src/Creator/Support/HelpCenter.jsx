@@ -118,6 +118,7 @@ const HelpCenter = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Help Center</h1>
+              <p>Navigate effortlessly! Access FAQs, guides, and troubleshooting tips for seamless platform usage.</p>
             </div>
           </div>
         </Col>

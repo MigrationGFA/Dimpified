@@ -94,7 +94,7 @@ const WithdrawPayment = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Withdrawal"
+                title="Total "
                 value="1"
                 summary="Number of sales"
                 summaryIcon="up"
@@ -106,7 +106,7 @@ const WithdrawPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Completed Withdarwal"
+                title="Completed "
                 value="1"
                 summary="Number of pending"
                 summaryIcon="down"
@@ -118,7 +118,7 @@ const WithdrawPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Pending Withdrawal"
+                title="Pending"
                 value="0"
                 summary="Students"
                 summaryIcon="up"
@@ -130,7 +130,7 @@ const WithdrawPayment = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Payment"
+                title="Approved Payment"
                 value="0"
                 summary="Instructor"
                 summaryIcon="up"
