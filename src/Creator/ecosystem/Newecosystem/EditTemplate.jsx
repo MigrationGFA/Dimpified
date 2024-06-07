@@ -190,7 +190,7 @@ const EditTemplate = () => {
                         variant="top"
                         src={template.img}
                         style={{
-                          height: "400px",
+                          height: "250px",
                         }}
                       />
                       <Card.Body className="text-center">
@@ -222,54 +222,15 @@ const EditTemplate = () => {
             <div>
               <h3>Edit Template Content</h3>
               <Template1 />
-              {/* <Form>
-                <Form.Group>
-                  <Form.Label>Logo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.logo}
-                    onChange={(e) =>
-                      handleContentChange("logo", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Header</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.header}
-                    onChange={(e) =>
-                      handleContentChange("header", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Main Text</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={content.mainText}
-                    onChange={(e) =>
-                      handleContentChange("mainText", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Footer</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.footer}
-                    onChange={(e) =>
-                      handleContentChange("footer", e.target.value)
-                    }
-                  />
-                </Form.Group>
-              </Form> */}
-              <div className="d-flex justify-content-between mt-3">
+              <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
-                  Back
+                  Backs
                 </Button>
-                <Button variant="primary" onClick={() => setStep(3)}>
+                <Button
+                  variant="primary"
+                  className="ml-12"
+                  onClick={() => setStep(3)}
+                >
                   Continue
                 </Button>
               </div>
