@@ -1,55 +1,51 @@
-// // import React, { useState } from "react";
-// // import { Form } from "react-bootstrap";
-// // import ReactQuill from "react-quill";
-// // import "react-quill/dist/quill.snow.css";
-
-// // const EditableBlock = ({ initialContent }) => {
-// //   const [content, setContent] = useState(initialContent);
-// //   const [isEditing, setIsEditing] = useState(false);
-
-// //   return (
-// //     <div onDoubleClick={() => setIsEditing(true)}>
-// //       {isEditing ? (
-// //         <div>
-// //           <Form.Control
-// //             as="textarea"
-// //             rows={3}
-// //             value={content}
-// //             onChange={(e) => setContent(e.target.value)}
-// //             onBlur={() => setIsEditing(false)}
-// //           />
-// //           <ReactQuill theme="snow" value={content} onChange={setContent} />
-// //         </div>
-// //       ) : (
-// //         <div dangerouslySetInnerHTML={{ __html: content }} />
-// //       )}
-// //     </div>
-// //   );
-// // };
-
-// // export default EditableBlock;
-
-// import React, { useState } from "react";
-// import { Form } from "react-bootstrap";
+// import { useState } from "react";
+// import { Form, Button } from "react-bootstrap";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
-// import "./EditableBlock.css";
 
-// const EditableBlock = ({ initialContent }) => {
+// const EditableBlock = ({
+//   initialContent,
+//   isButton = false,
+//   onContentChange,
+// }) => {
 //   const [content, setContent] = useState(initialContent);
 //   const [isEditing, setIsEditing] = useState(false);
 
+//   const handleChange = (event) => {
+//     setContent(event.target.value);
+//     onContentChange(event.target.value);
+//   };
+//   const handleQuillChange = (value) => {
+//     setContent(value);
+//     onContentChange(value);
+//   };
+
 //   return (
-//     <div onClick={() => setIsEditing(true)}>
+//     <div onDoubleClick={() => setIsEditing(true)}>
 //       {isEditing ? (
 //         <div>
-//           <ReactQuill
-//             theme="snow"
-//             value={content}
-//             onChange={setContent}
-//             onBlur={() => setIsEditing(false)}
-//           />
+//           {isButton ? (
+//             <Form.Control
+//               type="text"
+//               value={content}
+//               // onChange={(e) => setContent(e.target.value)}
+//               onChange={handleChange}
+//               onBlur={() => setIsEditing(false)}
+//             />
+//           ) : (
+//             // <ReactQuill theme="snow" value={content} onChange={setContent} />
+//             <ReactQuill
+//               theme="snow"
+//               value={content}
+//               onChange={handleQuillChange}
+//               onBlur={() => setIsEditing(false)}
+//             />
+//           )}
 //         </div>
+//       ) : isButton ? (
+//         <Button variant="primary" onClick={() => setIsEditing(true)}>
+//           {content}
+//         </Button>
 //       ) : (
 //         <div dangerouslySetInnerHTML={{ __html: content }} />
 //       )}
@@ -59,14 +55,27 @@
 
 // export default EditableBlock;
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const EditableBlock = ({ initialContent, isButton = false }) => {
+const EditableBlock = ({
+  initialContent,
+  isButton = false,
+  onContentChange,
+}) => {
   const [content, setContent] = useState(initialContent);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setContent(initialContent);
+  }, [initialContent]);
+
+  const handleChange = (value) => {
+    setContent(value);
+    onContentChange(value);
+  };
 
   return (
     <div onDoubleClick={() => setIsEditing(true)}>
@@ -76,11 +85,16 @@ const EditableBlock = ({ initialContent, isButton = false }) => {
             <Form.Control
               type="text"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => handleChange(e.target.value)}
               onBlur={() => setIsEditing(false)}
             />
           ) : (
-            <ReactQuill theme="snow" value={content} onChange={setContent} />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={handleChange}
+              onBlur={() => setIsEditing(false)}
+            />
           )}
         </div>
       ) : isButton ? (
