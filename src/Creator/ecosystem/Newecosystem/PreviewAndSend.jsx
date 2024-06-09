@@ -3,11 +3,12 @@ import { useLocation, Link } from "react-router-dom";
 import { Container, Row, Col, Nav, Button, Card, Modal } from "react-bootstrap";
 import Ecosystem from "../../../assets/ecosystem.png";
 import EcoHeader from "./ecoHeader";
+import { useNavigate } from "react-router-dom";
 
 const PreviewAndSend = () => {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
-
+const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   const [content, setContent] = useState({
@@ -17,6 +18,9 @@ const PreviewAndSend = () => {
       "This is the main content of your landing page. You can edit this text.",
     footer: "© 2024 Your Company. All rights reserved.",
   });
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Payment");
+  };
 
   return (
     <Container fluid className="p-0">
@@ -141,7 +145,10 @@ const PreviewAndSend = () => {
                 </div>
           </Card.Body>
         </Card>
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-between">
+        <Button variant="secondary" onClick={handlePrevious}>
+            Previous
+          </Button>
           <Button variant="primary" onClick={handleShowModal}>
             Create Ecosystem
           </Button>

@@ -1,6 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Button, ProgressBar, Card, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  ProgressBar,
+  Card,
+  Form,
+} from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Draggable from "react-draggable";
 import ModalVideo from "react-modal-video";
@@ -80,16 +88,17 @@ const templateSections = [
 const Courses = () => {
   const location = useLocation();
   const [step, setStep] = useState(1);
-  const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [activeSection, setActiveSection] = useState(1);
   const [answers, setAnswers] = useState({});
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [content, setContent] = useState({
     logo: "Your Logo",
     header: "Welcome to Our Website",
-    mainText: "This is the main content of your landing page. You can edit this text.",
+    mainText:
+      "This is the main content of your landing page. You can edit this text.",
     footer: "© 2024 Your Company. All rights reserved.",
   });
   const navigate = useNavigate();
@@ -118,6 +127,10 @@ const Courses = () => {
     if (selectedTemplates.length > 0) {
       setStep(3);
     }
+  };
+
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Create-Form");
   };
 
   const scroll = (scrollOffset) => {
@@ -161,13 +174,15 @@ const Courses = () => {
   };
 
   const videoCourses = templates.filter(
-    (template) => selectedTemplates.includes(template.id) && template.type === "video"
+    (template) =>
+      selectedTemplates.includes(template.id) && template.type === "video"
   );
   const audioCourses = dummyAudioCourses.filter(
     (course) => selectedTemplates.includes(course.id) && course.type === "audio"
   );
   const documentCourses = dummyDocumentCourses.filter(
-    (course) => selectedTemplates.includes(course.id) && course.type === "document"
+    (course) =>
+      selectedTemplates.includes(course.id) && course.type === "document"
   );
 
   return (
@@ -202,7 +217,11 @@ const Courses = () => {
                   {templateSections.map((section) => (
                     <div
                       key={section.id}
-                      className={`template-section ${activeSection === section.id ? "bg-primary text-white" : "bg-body-secondary"}`}
+                      className={`template-section ${
+                        activeSection === section.id
+                          ? "bg-primary text-white"
+                          : "bg-body-secondary"
+                      }`}
                       onClick={() => setActiveSection(section.id)}
                       style={{
                         padding: "10px 20px",
@@ -213,7 +232,13 @@ const Courses = () => {
                     </div>
                   ))}
                 </div>
-                <FaChevronRight className={`scroll-arrow ${!canScrollRight ? "disabled" : ""}`} onClick={() => scroll(100)} disabled={!canScrollRight} />
+                <FaChevronRight
+                  className={`scroll-arrow ${
+                    !canScrollRight ? "disabled" : ""
+                  }`}
+                  onClick={() => scroll(100)}
+                  disabled={!canScrollRight}
+                />
               </div>
               <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
                 <h3>Select from our Existing Courses</h3>
@@ -240,7 +265,11 @@ const Courses = () => {
                         </div>
                         <Card.Img variant="top" src={template.img} />
                         <div className="position-absolute bottom-50 start-50 translate-middle-x">
-                          <Link to="#" onClick={() => setOpen(true)} className="popup-youtube fs-4 text-inherit">
+                          <Link
+                            to="#"
+                            onClick={() => setOpen(true)}
+                            className="popup-youtube fs-4 text-inherit"
+                          >
                             <img src={PlayBtn} alt="" className="me-2" />
                             Watch Demo
                           </Link>
@@ -255,7 +284,13 @@ const Courses = () => {
                   </Col>
                 ))}
 
-                <ModalVideo channel="youtube" autoplay isOpen={isOpen} videoId={YouTubeURL} onClose={() => setOpen(false)} />
+                <ModalVideo
+                  channel="youtube"
+                  autoplay
+                  isOpen={isOpen}
+                  videoId={YouTubeURL}
+                  onClose={() => setOpen(false)}
+                />
               </Row>
 
               <Row className="mt-5">
@@ -267,14 +302,30 @@ const Courses = () => {
                 <h4>Document Courses</h4>
                 {/* Dummy document courses, you can add similar code for rendering */}
               </Row>
-
-              <div className="d-flex justify-content-end mt-4">
-                <Button variant="secondary" className="me-2" onClick={handleSkipAndContinue}>
-                  Skip and Continue
-                </Button>
-                <Button variant="primary" disabled={selectedTemplates.length === 0} onClick={handleContinue}>
-                  Continue
-                </Button>
+              <div className="d-flex justify-content-between align-content-center">
+                <div>
+                  <Button
+                    variant="secondary"
+                    className="me-2"
+                    onClick={handlePrevious}
+                  >Previous</Button>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <Button
+                    variant="secondary"
+                    className="me-2"
+                    onClick={handleSkipAndContinue}
+                  >
+                    Skip and Continue
+                  </Button>
+                  <Button
+                    variant="primary"
+                    disabled={selectedTemplates.length === 0}
+                    onClick={handleContinue}
+                  >
+                    Continue
+                  </Button>
+                </div>
               </div>
             </div>
           )}
@@ -282,18 +333,24 @@ const Courses = () => {
             <div>
               <h3>Create Your Course</h3>
               <AddNewCourse />
-
-              <Button variant="primary" onClick={() => setStep(3)}>
-                Continue
-              </Button>
+              <div className="d-flex justify-content-between w-100">
+                <Button variant="primary" onClick={() => setStep(1)}>
+                  Previous
+                </Button>
+                <Button variant="primary" onClick={() => setStep(3)}>
+                  Continue
+                </Button>
+              </div>
             </div>
           )}
           {step === 3 && (
             <div>
               <h3>Preview Course</h3>
-              
+
               <h4 className="mt-4">Video Courses</h4>
-              <p className="mt-4">Drag the cards to rearrange your course as you like</p>
+              <p className="mt-4">
+                Drag the cards to rearrange your course as you like
+              </p>
               {renderCourses(videoCourses)}
 
               <h4 className="mt-4">Audio Courses</h4>
