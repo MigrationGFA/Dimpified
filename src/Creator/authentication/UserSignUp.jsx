@@ -81,7 +81,7 @@ const UserSignUp = () => {
                 <h1 className="mb-1 fw-bold">Sign Up</h1>
                 <span>
                   Already have an account?
-                  <Link to="/" className="ms-1">
+                  <Link to="/creator/signin" className="ms-1">
                     Sign in
                   </Link>
                 </span>
