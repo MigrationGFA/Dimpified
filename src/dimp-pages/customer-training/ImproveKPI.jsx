@@ -18,23 +18,23 @@ const ImproveKPI = () => {
     {
       id: 1,
 
-      title: "Reduce customer support costs",
+      title: "Reduce Learner's support costs",
       description:
-        "Ease the burden of inquiries coming through pre-sales, customer support and customer success teams.",
+        "Ease the burden of inquiries coming through pre-sales, Learner's support and Learner's success teams.",
     },
     {
       id: 2,
 
-      title: "Strengthen customer retention",
+      title: "Strengthen Learner's retention",
       description:
-        "Customer training programs with DIMP contribute to a more positive customer experience. Happy customers are more likely to renew.",
+        "Learner's training programs with DIMP contribute to a more positive Learner's experience. Happy Learner'ss are more likely to renew.",
     },
     {
       id: 3,
 
-      title: "Activate your customers",
+      title: "Activate your Learner'ss",
       description:
-        "Boost activation by making your customers fully aware of your products and services benefits. Provide consistent, comprehensive, and trackable customer training.",
+        "Boost activation by making your Learner's fully aware of your products and services benefits. Provide consistent, comprehensive, and trackable Learner's training.",
     },
     {
       id: 4,
