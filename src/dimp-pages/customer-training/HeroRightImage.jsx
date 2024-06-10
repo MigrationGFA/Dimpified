@@ -1,6 +1,7 @@
 // import node module libraries
 import { Col, Row, Container, ListGroup, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Typewriter } from "react-simple-typewriter";
 
 // import bootstrap icons
 import { CheckCircleFill } from "react-bootstrap-icons";
@@ -18,17 +19,40 @@ const HeroRightImage = () => {
           <Col xxl={5} xl={6} lg={6} xs={12}>
             <div>
               <h1 className="display-3 fw-bold mb-3">
-                Drive business results through powerful
-                <u className="text-warning">
-                  <span className="text-primary"> customer education</span>
-                </u>
+                <span className="text-dark  px-md-0">
+                  Ecosystem Management Platform for
+                </span>
+                <span className="text-primary ms-2">
+                  <Typewriter
+                    words={[
+                      "Tutors",
+                      "Coaches",
+                      "Trainers",
+                      "Mentors",
+                      "Consultants",
+                      "Teachers",
+                      "Lecturers",
+                      "Advisors",
+                      "Facilitators",
+                      "Councelors",
+                      "Guides",
+                      "Educators",
+                    ]}
+                    loop
+                    cursor
+                    cursorStyle="|"
+                    typeSpeed={60}
+                    deleteSpeed={50}
+                    delaySpeed={1000}
+                  />
+                </span>
               </h1>
               <p className="lead mb-4">
-                Use customer education as a powerful strategy to improve your
-                KPIs across your funnel. An educated customer is a better
-                customer, and that's why your elearning platform matters. DIMP
-                gives you all the tools you need to onboard, engage, and retain
-                customers at scale.
+                Use your knowledge as a powerful strategy to improve your KPIs
+                across your funnel. An educated individual is a better customer,
+                and that's why your elearning platform matters. DIMP gives you
+                all the tools you need to onboard, engage, and retain learner's
+                at scale.
               </p>
               {/* <ListGroup as="ul" bsPrefix='list-unstyled' className="mb-5">
                 <ListGroup.Item as="li" bsPrefix="mb-2" >
@@ -49,7 +73,10 @@ const HeroRightImage = () => {
                 </ListGroup.Item>
               </ListGroup> */}
               <div className="d-grid d-md-block">
-                <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+                <Link
+                  to="/creator/signup"
+                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                >
                   Get started for free
                 </Link>{" "}
                 <Link
