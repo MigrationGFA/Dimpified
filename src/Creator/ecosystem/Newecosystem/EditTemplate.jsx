@@ -19,6 +19,7 @@ import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
+import TemplateOne from "../../../EditTemplate/TemplateOneV1";
 
 const templates = [
   {
@@ -222,6 +223,7 @@ const EditTemplate = () => {
             <div>
               <h3>Edit Template Content</h3>
               <Template1 />
+              {/* <TemplateOne /> */}
               <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
                   Backs

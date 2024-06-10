@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  landingPage: {
-    heading: "Welcome to Our Company",
-    subheading: "We provide the best solutions for your business.",
+  navbar: {
+    logo: "https://via.placeholder.com/50",
+    links: [
+      { text: "Home", href: "#landingPage" },
+      { text: "About Us", href: "#landingPage" },
+      { text: "Who We Are", href: "#whoWeAre" },
+      { text: "Contact Us", href: "#contactUs" },
+      { text: "FAQ", href: "#faq" },
+    ],
     buttonText: "Get Started",
     styles: {
       backgroundColor: "#ffffff",
@@ -11,22 +17,62 @@ const initialState = {
       fontFamily: "Arial, sans-serif",
     },
   },
-  aboutUs: {
-    heading: "About Us",
-    text: "We are a leading company in our industry, committed to providing top-notch services to our clients.",
+  landingPage: {
+    heading: `Welcome OGun Tech Skil",
+    subheading: "The Heart Land Skills Program is a visionary initiative aimed to provide youth and SMEs comprehensive support in areas such as digital literacy, entrepreneurship training, access to finance, mentorship, as well as placement for jobs and income generation opportunities. Our mission is to unleash the potentials of youth and SMEs through relevant technological training and skill acquisition.
+     <br />
+    Our vision involves selecting and nurturing potential youths and early-stage businesses in imo State. Through tailored mentorship, skill enhancement, and the seamless integration of cutting-edge technology, we aspire to make youths job-ready and catapult businesses to unprecedented levels of success.
+    `,
+    buttonText: "Get Started",
     styles: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#CBD5E1",
       color: "#000000",
       fontFamily: "Arial, sans-serif",
+      minHeight: "400px",
+      textAlign: "center",
+       paddingTop: "50px",
+    paddingBottom: "30px",
+      width: "100%"
+    },
+  },
+  aboutUs: {
+    heading: "About Us",
+    text: `<i className="fa fa-quote-left" />
+                      <br />
+                      We are committed to harnessing the incredible potential of
+                      our city to become Africa's leading tech skill hub. With
+                      our vibrant ecosystem, diverse talent pool, and strategic
+                      partnerships, we're laying the foundation for innovation
+                      and entrepreneurship to thrive.
+                      <br /> <br />
+                      Together, we will propel imo to the forefront of
+                      technological advancement, empowering our youth and
+                      driving economic growth for generations to come.
+                      <br />
+                      <i className="fa fa-quote-right" />`,
+    styles: {
+      backgroundColor: "#FFFFFF",
+      color: "#000000",
+      fontFamily: "Arial, sans-serif",
+       minHeight: "400px",
+      textAlign: "center",
+       paddingTop: "50px",
+    paddingBottom: "30px",
+      width: "100%"
     },
   },
   whoWeAre: {
-    heading: "Who We Are",
-    text: "Our team consists of experts with extensive experience and a passion for excellence.",
+    heading: "Who Should Enroll",
+    text: ` The Program is for indigenes and resident of ogun state that are:`,
     styles: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#CBD5E1",
       color: "#000000",
       fontFamily: "Arial, sans-serif",
+       minHeight: "400px",
+      textAlign: "center",
+       paddingTop: "50px",
+    paddingBottom: "30px",
+      width: "100%"
     },
   },
   contactUs: {
@@ -35,9 +81,14 @@ const initialState = {
     phone: "(123) 456-7890",
     email: "info@company.com",
     styles: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#FFFFFF",
       color: "#000000",
       fontFamily: "Arial, sans-serif",
+       minHeight: "400px",
+      textAlign: "center",
+       paddingTop: "50px",
+    paddingBottom: "30px",
+      width: "100%"
     },
   },
   faq: [
@@ -60,6 +111,17 @@ const initialState = {
       },
     },
   ],
+   faqStyles: {
+      backgroundColor: "#CBD5E1",
+      color: "#000000",
+      fontFamily: "Arial, sans-serif",
+       minHeight: "400px",
+      textAlign: "center",
+       paddingTop: "50px",
+    paddingBottom: "30px",
+      width: "100%"
+    },
+
 };
 
 const templateSlice = createSlice({
