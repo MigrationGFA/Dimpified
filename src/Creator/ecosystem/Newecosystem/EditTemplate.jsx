@@ -19,6 +19,8 @@ import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
+import TemplateOne from "../../../EditTemplate/TemplateOneV1";
+import PreviewPage from "../../../EditTemplate/Preview";
 
 const templates = [
   {
@@ -74,8 +76,6 @@ const EditTemplate = () => {
     setStep(2);
   };
 
- 
-
   const handleContentChange = (field, value) => {
     setContent({ ...content, [field]: value });
   };
@@ -109,7 +109,6 @@ const EditTemplate = () => {
       setStep(3);
     }
   };
-
 
   useEffect(() => {
     checkScroll();
@@ -237,7 +236,6 @@ const EditTemplate = () => {
                 >
                   Previous
                 </Button>
-                
               </div>
             </div>
           )}
@@ -245,6 +243,7 @@ const EditTemplate = () => {
             <div>
               <h3>Edit Template Content</h3>
               <Template1 />
+              {/* <TemplateOne /> */}
               <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
                   Backs
@@ -261,7 +260,16 @@ const EditTemplate = () => {
           )}
           {step === 3 && (
             <div>
-              <h3>Preview Template</h3>
+              <PreviewPage />
+              <div className="d-flex justify-content-between mt-3">
+                <Button variant="secondary" onClick={() => setStep(2)}>
+                  Back
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
+              {/* <h3>Preview Template</h3>
               <div
                 className="template-preview p-3"
                 style={{
@@ -280,14 +288,7 @@ const EditTemplate = () => {
                   <p>{content.footer}</p>
                 </footer>
               </div>
-              <div className="d-flex justify-content-between mt-3">
-                <Button variant="secondary" onClick={() => setStep(2)}>
-                  Back
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-              </div>
+               */}
             </div>
           )}
         </div>
@@ -301,9 +302,10 @@ const EditTemplate = () => {
           <Modal.Title>Preview Template</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={template1} alt="template" />
+          <TemplateOne />
+          {/* <img src={template1} alt="template" />
           <img src={template2} alt="template2" className="mt-5" />
-          <img src={template3} alt="template3" className="mt-5" />
+          <img src={template3} alt="template3" className="mt-5" /> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
