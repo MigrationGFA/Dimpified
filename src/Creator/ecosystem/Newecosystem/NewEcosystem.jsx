@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
@@ -9,14 +9,12 @@ import {
   Form,
   Modal,
   FormControl,
+  Spinner,
 } from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import EcoHeader from "./ecoHeader";
-import {
-  updateField,
-  setEcosystemId,
-} from "../../../features/ecosystem";
+import { updateField, setEcosystemId } from "../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 
@@ -31,11 +29,40 @@ const NewEcosystem = () => {
   const [showModal, setShowModal] = useState(false);
   const [domainName, setDomainName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  
+  useEffect(() => {
+    validateForm();
+  }, [ecosystem]);
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
+  };
+
+  const validateForm = () => {
+    const {
+      ecosystemName,
+      ecosystemDomain,
+      targetAudienceSector,
+      mainObjective,
+      expectedAudienceNumber,
+      experience,
+      ecosystemDescription,
+    } = ecosystem;
+    if (
+      ecosystemName &&
+      ecosystemDomain &&
+      targetAudienceSector &&
+      mainObjective &&
+      expectedAudienceNumber &&
+      experience &&
+      ecosystemDescription
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
   };
 
   const handleSearchDomain = () => {
@@ -43,6 +70,7 @@ const NewEcosystem = () => {
   };
 
   const handleSubmit = async () => {
+    setIsProcessing(true);
     try {
       const response = await axios.post(
         "https://dimpified-backend.azurewebsites.net/api/v1/ecosystem/aboutDetails",
@@ -51,18 +79,21 @@ const NewEcosystem = () => {
           creatorId: creatorId,
         }
       );
-      const data = response.data.ecosystem; 
+      const data = response.data.ecosystem;
       const { _id } = data;
-      dispatch(setEcosystemId(_id)); 
-      console.log(data)
+      dispatch(setEcosystemId(_id));
+      console.log(data);
       navigate("/creator/dashboard/Edit-Template");
       showToast(response.data.message);
     } catch (error) {
       console.error("Error submitting ecosystem:", error);
-      showToast(error.response.data.message)
+      showToast(error.response.data.message);
       navigate("/creator/dashboard/New-Ecosystem");
+    } finally {
+      setIsProcessing(false);
     }
   };
+
   const departments = [
     { value: "Graphics and Design", label: "Graphics and Design" },
     { value: "Digital Marketing", label: "Digital Marketing" },
@@ -170,7 +201,9 @@ const NewEcosystem = () => {
                             handleFieldChange("ecosystemDomain", e.target.value)
                           }
                         />
-                        <span className="input-group-text">.dimpified.com</span>
+                        <span className="input-group-text">
+                          .dimpified.com
+                        </span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
@@ -229,7 +262,7 @@ const NewEcosystem = () => {
                         </Form.Label>
                         <FormSelect
                           options={departments}
-                          placeholder="select Targeted Audience"
+                          placeholder="Select Target Audience Sector"
                           id="target"
                           name="target"
                           selectedValue={ecosystem.targetAudienceSector}
@@ -241,7 +274,7 @@ const NewEcosystem = () => {
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-objective">
-                        Whats your main Objective of Creating this Ecosystem
+                        What's your main Objective of Creating this Ecosystem
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <FormSelect
@@ -259,13 +292,13 @@ const NewEcosystem = () => {
                   </Row>
                   <Row>
                     <Col lg={6} className="col-12">
-                      <Form.Label htmlFor="department">
+                      <Form.Label htmlFor="expected-audience-number">
                         Expected Audience Number
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <FormSelect
                         options={audienceNumber}
-                        placeholder="Select Target Audience Range"
+                        placeholder="Select Expected Audience Number"
                         selectedValue={ecosystem.expectedAudienceNumber}
                         onChange={(value) =>
                           handleFieldChange("expectedAudienceNumber", value)
@@ -276,7 +309,7 @@ const NewEcosystem = () => {
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label>
-                          Do you have experience with creating ecosystem?{" "}
+                          Do you have experience with creating ecosystems?{" "}
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <FormSelect
@@ -292,7 +325,7 @@ const NewEcosystem = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Col>
+                  <Col className="mb-3">
                     <Form.Label htmlFor="ecosystem-description">
                       Ecosystem Description
                       <span className="text-danger">*</span>
@@ -313,11 +346,26 @@ const NewEcosystem = () => {
                     />
                   </Col>
                   <div className="d-flex justify-content-end mt-4">
-                    <Link to="">
-                      <Button variant="primary" onClick={handleSubmit}>
-                        Next
-                      </Button>
-                    </Link>
+                    <Button
+                      variant="primary"
+                      onClick={handleSubmit}
+                      disabled={!isFormValid || isProcessing}
+                    >
+                      {isProcessing ? (
+                        <>
+                          <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                          {" Processing..."}
+                        </>
+                      ) : (
+                        "Next"
+                      )}
+                    </Button>
                   </div>
                 </Form>
               </div>
