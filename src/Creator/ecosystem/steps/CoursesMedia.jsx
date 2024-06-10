@@ -3,91 +3,90 @@ import { Card, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
-import { useGlobalContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCourseCoverImage,
+  setTotalDuration,
+  setIncludedOptions,
+  updateCourseData,
+  resetCourseData,
+} from "../../../features/course";
 
 const CoursesMedia = ({ submit, previous }) => {
-  const { userId, userImage, user } = useGlobalContext();
-  const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+
+
+  const courseData = useSelector((state) => state.course);
+  const {
+    category,
+    courseTitle,
+    requirements,
+    description,
+    level,
+    currency,
+    type,
+    price,
+    curriculum,
+    courseCoverImage,
+    totalDuration,
+    includedOptions,
+  } = courseData;
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      dispatch(setCourseCoverImage(file));
+    }
+  };
+
+  const handleDurationChange = (e) => {
+    dispatch(setTotalDuration(e.target.value));
+  };
+
+  const handleIncludedOptionsChange = (selectedOptions) => {
+    dispatch(setIncludedOptions(selectedOptions));
+  };
 
   const handleSubmit = () => {
     setLoading(true);
-    const curriculumData = sessionStorage.getItem("curriculum");
-    const requiremnetDatas = sessionStorage.getItem("requirements");
-    const requirementsArrays = JSON.parse(requiremnetDatas);
-    const Newrequirements = requirementsArrays.map((requiremnetData) => ({
-      name: requiremnetData,
-    }));
-    const requirementsString = JSON.stringify(Newrequirements);
-    // const whatIsIncludedData = sessionStorage.getItem("curriculum");
 
+    const requirementsString = JSON.stringify(requirements.map(req => ({ name: req.name })));
     const formData = new FormData();
-    formData.append("category", sessionStorage.getItem("category"));
-    formData.append("title", sessionStorage.getItem("courseTitle"));
+    formData.append("category", category);
+    formData.append("title", courseTitle);
     formData.append("requirement", requirementsString);
-    formData.append("description", sessionStorage.getItem("description"));
-    formData.append("level", sessionStorage.getItem("level"));
-    formData.append("currency", sessionStorage.getItem("currency"));
-    formData.append(
-      "courseType",
-      sessionStorage.getItem("type").toLocaleLowerCase()
-    );
-    formData.append("price", parseInt(sessionStorage.getItem("price")));
-    formData.append("curriculum", curriculumData);
-    formData.append("image", document.getElementById("inputfavicon").files[0]);
-    formData.append("hour", document.getElementById("hour").value);
-    formData.append(
-      "whatIsIncluded",
-      JSON.stringify(selected.map((option) => option.value))
-    );
-    formData.append("status", "pending");
-    formData.append("Agent", userId);
-    formData.append("InstructorImage", userImage);
-    formData.append("username", user);
-    console.log("this is curriculum", requirementsString);
+    formData.append("description", description);
+    formData.append("level", level);
+    formData.append("currency", currency);
+    formData.append("courseType", type.toLowerCase());
+    formData.append("price", parseInt(price));
+    formData.append("curriculum", JSON.stringify(curriculum));
+    formData.append("image", courseCoverImage);
+    formData.append("hour", totalDuration);
+    formData.append("whatIsIncluded", JSON.stringify(includedOptions.map(option => option.value)));
+    formData.append("creatorId", creatorId);
+    formData.append("ecosystemId", ecosystemId);
 
     axios
-      .post(
-        "https://remsana-backend-testing.azurewebsites.net/api/v1/create-course",
-        formData
-      )
+      .post("https://dimpified-backend.azurewebsites.net/api/v1/create-course", formData)
       .then((response) => {
         setLoading(false);
-        console.log("Response from API:", response.data);
         showToast(response.data.message);
-        sessionStorage.removeItem("category");
-        sessionStorage.removeItem("courseTitle");
-        sessionStorage.removeItem("requirements");
-        sessionStorage.removeItem("description");
-        sessionStorage.removeItem("level");
-        sessionStorage.removeItem("type");
-        sessionStorage.removeItem("price");
-        sessionStorage.removeItem("curriculum");
-        sessionStorage.removeItem("whatIsIncluded");
-
-        navigate("/Instructordashboard/My-Courses");
-
+        dispatch(resetCourseData());
+        navigate("/creator/dashboard/Courses");
         submit();
-
-        // if (response.data.message ==="Course created successfully") {
-
-        // }
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error:", error);
         showToast(error.response.data.message);
-        sessionStorage.removeItem("category");
-        sessionStorage.removeItem("courseTitle");
-        sessionStorage.removeItem("requirements");
-        sessionStorage.removeItem("description");
-        sessionStorage.removeItem("level");
-        sessionStorage.removeItem("type");
-        sessionStorage.removeItem("price");
-        sessionStorage.removeItem("curriculum");
-        sessionStorage.removeItem("whatIsIncluded");
         navigate("/Instructordashboard/My-Courses");
       });
   };
@@ -122,38 +121,33 @@ const CoursesMedia = ({ submit, previous }) => {
               name="image"
               accept="image/*"
               className="form-control"
+              onChange={handleFileChange}
             />
-            <Form.Label
-              htmlFor="inputfavicon"
-              className="input-group-text mb-0"
-            >
+            <Form.Label htmlFor="inputfavicon" className="input-group-text mb-0">
               Upload
             </Form.Label>
             <Form.Text className="text-muted">
-              Upload your course image here. It must meet our course image
-              quality standards to be accepted. Important guidelines: 750x440
-              pixels; .jpg, .jpeg,. gif, or .png. no text on the image.
+              Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x440 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.
             </Form.Text>
           </Form.Group>
 
-          
-
-          <Form.Label className=" mt-3">Total Course Content Duration </Form.Label>
+          <Form.Label className="mt-3">Total Course Content Duration</Form.Label>
           <Form.Group className="mb-3">
             <Form.Control
               type="text"
               placeholder="Enter Total Course Content Duration in this format, 4h 20min, 20min, 4h"
               id="hour"
+              value={totalDuration}
+              onChange={handleDurationChange}
             />
           </Form.Group>
 
-          {/* Included Option */}
           <Form.Group className="mb-3">
             <Form.Label>What is included</Form.Label>
             <Select
               options={IncludedOptions}
-              value={selected}
-              onChange={setSelected}
+              value={includedOptions}
+              onChange={handleIncludedOptionsChange}
               labelledBy="Select"
               id="included_category"
               name="included_category"
@@ -165,18 +159,12 @@ const CoursesMedia = ({ submit, previous }) => {
         </Card.Body>
       </Card>
 
-      {/* Button */}
       <div className="d-flex justify-content-between">
         <Button variant="secondary" onClick={previous}>
           Previous
         </Button>
         {loading ? (
-          <Button
-            variant="danger"
-            onClick={handleSubmit}
-            className="opacity-50"
-            disabled
-          >
+          <Button variant="danger" className="opacity-50" disabled>
             Processing
           </Button>
         ) : (

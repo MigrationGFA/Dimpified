@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Row,
   Col,
-  Nav,
   Button,
   Card,
   Form,
@@ -11,20 +11,58 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import EcoHeader from "./ecoHeader";
+import {
+  updateField,
+  setEcosystemId,
+} from "../../../features/ecosystem";
+import axios from "axios";
+import { showToast } from "../../../Components/Showtoast";
 
 const NewEcosystem = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const ecosystem = useSelector((state) => state.ecosystem);
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
+
   const [showModal, setShowModal] = useState(false);
   const [domainName, setDomainName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
+  
+
+  const handleFieldChange = (field, value) => {
+    dispatch(updateField({ field, value }));
+  };
+
   const handleSearchDomain = () => {
-    // Implement domain search functionality here
     console.log("Searching for domain:", domainName);
   };
 
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "https://dimpified-backend.azurewebsites.net/api/v1/ecosystem/aboutDetails",
+        {
+          ...ecosystem,
+          creatorId: creatorId,
+        }
+      );
+      const data = response.data.ecosystem; 
+      const { _id } = data;
+      dispatch(setEcosystemId(_id)); 
+      console.log(data)
+      navigate("/creator/dashboard/Edit-Template");
+      showToast(response.data.message);
+    } catch (error) {
+      console.error("Error submitting ecosystem:", error);
+      showToast(error.response.data.message)
+      navigate("/creator/dashboard/New-Ecosystem");
+    }
+  };
   const departments = [
     { value: "Graphics and Design", label: "Graphics and Design" },
     { value: "Digital Marketing", label: "Digital Marketing" },
@@ -92,8 +130,8 @@ const NewEcosystem = () => {
         <Col lg={8}>
           <Card>
             <Card.Body>
-              <div className=" d-lg-flex justify-content-between align-items-center border-bottom mb-4 ">
-                <div className=" mb-lg-0">
+              <div className="d-lg-flex justify-content-between align-items-center border-bottom mb-4">
+                <div className="mb-lg-0">
                   <h3 className="mb-0 h3 fw-bold">
                     Basic Ecosystem Information
                   </h3>
@@ -111,9 +149,12 @@ const NewEcosystem = () => {
                         id="ecosystem-name"
                         placeholder="Ecosystem Name"
                         required
+                        value={ecosystem.ecosystemName}
+                        onChange={(e) =>
+                          handleFieldChange("ecosystemName", e.target.value)
+                        }
                       />
                     </Col>
-
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
                         Ecosystem Domain<span className="text-danger">*</span>
@@ -124,16 +165,12 @@ const NewEcosystem = () => {
                           id="ecosystem-domain"
                           placeholder="Ecosystem Domain"
                           required
-                          value={domainName}
-                          onChange={(e) => setDomainName(e.target.value)}
+                          value={ecosystem.ecosystemDomain}
+                          onChange={(e) =>
+                            handleFieldChange("ecosystemDomain", e.target.value)
+                          }
                         />
                         <span className="input-group-text">.dimpified.com</span>
-                        {/* <Button
-                          variant="primary"
-                          onClick={() => setShowModal(true)}
-                        >
-                          Purchase Domain
-                        </Button> */}
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
@@ -143,15 +180,12 @@ const NewEcosystem = () => {
                         Or
                       </p>
                       <Button
-                        // variant="primary"
                         style={{ backgroundColor: "#00008B" }}
                         onClick={() => setShowModal(true)}
                       >
                         Purchase New Domain
                       </Button>
                     </Col>
-
-                    {/* Modal for domain search */}
                     <Modal show={showModal} onHide={() => setShowModal(false)}>
                       <Modal.Header closeButton>
                         <Modal.Title>Search Domain</Modal.Title>
@@ -186,12 +220,11 @@ const NewEcosystem = () => {
                       </Modal.Footer>
                     </Modal>
                   </Row>
-
                   <Row className="mb-3">
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label>
-                          Target Audience Sector{" "}
+                          Target Audience Sector
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <FormSelect
@@ -199,8 +232,10 @@ const NewEcosystem = () => {
                           placeholder="select Targeted Audience"
                           id="target"
                           name="target"
-                          //   value={currency}
-                          //   onChange={(e) => setCurrency(e.target.value)}
+                          selectedValue={ecosystem.targetAudienceSector}
+                          onChange={(value) =>
+                            handleFieldChange("targetAudienceSector", value)
+                          }
                         />
                       </Form.Group>
                     </Col>
@@ -212,9 +247,12 @@ const NewEcosystem = () => {
                       <FormSelect
                         options={objectOptions}
                         placeholder="Select Objective"
-                        defaultValue=""
-                        //   value={department}
-                        //   onChange={(e) => setDepartment(e.target.value)}
+                        id="objective"
+                        name="objective"
+                        selectedValue={ecosystem.mainObjective}
+                        onChange={(value) =>
+                          handleFieldChange("mainObjective", value)
+                        }
                         required
                       />
                     </Col>
@@ -228,9 +266,10 @@ const NewEcosystem = () => {
                       <FormSelect
                         options={audienceNumber}
                         placeholder="Select Target Audience Range"
-                        defaultValue=""
-                        //   value={department}
-                        //   onChange={(e) => setDepartment(e.target.value)}
+                        selectedValue={ecosystem.expectedAudienceNumber}
+                        onChange={(value) =>
+                          handleFieldChange("expectedAudienceNumber", value)
+                        }
                         required
                       />
                     </Col>
@@ -245,11 +284,14 @@ const NewEcosystem = () => {
                           placeholder="Select"
                           id="experience"
                           name="experience"
+                          selectedValue={ecosystem.experience}
+                          onChange={(value) =>
+                            handleFieldChange("experience", value)
+                          }
                         />
                       </Form.Group>
                     </Col>
                   </Row>
-
                   <Col>
                     <Form.Label htmlFor="ecosystem-description">
                       Ecosystem Description
@@ -259,16 +301,22 @@ const NewEcosystem = () => {
                       as="textarea"
                       id="ecosystem-description"
                       placeholder="Write the ecosystem description"
-                      // value={jobDescription}
-                      // onChange={(e) => setJobDescription(e.target.value)}
+                      value={ecosystem.ecosystemDescription}
+                      onChange={(e) =>
+                        handleFieldChange(
+                          "ecosystemDescription",
+                          e.target.value
+                        )
+                      }
                       required
                       rows={5}
                     />
                   </Col>
-
                   <div className="d-flex justify-content-end mt-4">
-                    <Link to="/creator/dashboard/Edit-Template">
-                      <Button variant="primary">Next</Button>
+                    <Link to="">
+                      <Button variant="primary" onClick={handleSubmit}>
+                        Next
+                      </Button>
                     </Link>
                   </div>
                 </Form>

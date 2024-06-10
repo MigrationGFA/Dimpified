@@ -201,6 +201,9 @@ const CreateForm = () => {
     setAnswers({ ...answers, [questionId]: answer });
   };
 
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Edit-Template");
+  };
   const handleSubmit = () => {
     alert("Form submitted!");
     console.log("Selected Template:", selectedTemplate);
@@ -402,6 +405,17 @@ const CreateForm = () => {
                   </Col>
                 ))}
               </Row>
+              
+              <div className="d-flex justify-content-between mt-4">
+                <Button
+                  variant="secondary"
+                  className="me-2"
+                  onClick={handlePrevious}
+                >
+                  Previous
+                </Button>
+                
+              </div>
             </div>
           )}
           {step === 2 && (

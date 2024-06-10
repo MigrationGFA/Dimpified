@@ -75,6 +75,8 @@ const EditTemplate = () => {
     setStep(2);
   };
 
+ 
+
   const handleContentChange = (field, value) => {
     setContent({ ...content, [field]: value });
   };
@@ -99,6 +101,16 @@ const EditTemplate = () => {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
   };
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/New-Ecosystem");
+  };
+
+  const handleContinue = () => {
+    if (selectedTemplate.length > 0) {
+      setStep(3);
+    }
+  };
+
 
   useEffect(() => {
     checkScroll();
@@ -217,6 +229,17 @@ const EditTemplate = () => {
                   </Col>
                 ))}
               </Row>
+
+              <div className="d-flex justify-content-between mt-4">
+                <Button
+                  variant="secondary"
+                  className="me-2"
+                  onClick={handlePrevious}
+                >
+                  Previous
+                </Button>
+                
+              </div>
             </div>
           )}
           {step === 2 && (

@@ -1,5 +1,5 @@
-
-import { Fragment } from "react";
+// import node module libraries
+import { Fragment, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -20,13 +20,14 @@ export const FormSelect = ({
     return null;
   }
 
+ 
   return (
     <Fragment>
       <Form.Select
         value={selectedValue}
         id={id}
         name={name}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         required={required}
         style={style}
       >

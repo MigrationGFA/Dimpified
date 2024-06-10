@@ -1,25 +1,23 @@
-
-
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-// import storageSession from 'redux-persist/lib/storage/session'
 import authReducer from './features/login';
-import temPlate1Reducer from "./features/Template/Template1"
+import temPlate1Reducer from './features/Template/Template1';
 import activeSectionReducer from './features/Template/activeTemplateSection';
+import courseReducer from './features/course';
+import ecosystemReducer from './features/ecosystem'; 
 
 const persistConfig = {
   key: 'root',
   storage,
-  // storageSession,
 };
 
 const rootReducer = combineReducers({
-  // Add your reducers here 
   authentication: authReducer,
   template1: temPlate1Reducer,
   activeSection: activeSectionReducer,
-  // Add other reducers here
+  course: courseReducer,
+  ecosystem: ecosystemReducer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -17,8 +17,6 @@ import HeroLeftImage2 from "./HeroLeftImage2";
 import FAQsection from "./FAQsection";
 
 
-// import custom components
-import LogosTopHeading2 from "../../Components/marketing/common/clientlogos/LogosTopHeading2";
 
 // import layouts
 import NavbarLanding from "../../dimp-home/NavbarLanding";
@@ -42,12 +40,7 @@ const CustomerTraining = () => {
         {/*  learn today hero section */}
         <HeroRightImage />
 
-        {/*  trusted */}
-        <LogosTopHeading2
-          title="TRUSTED BY OVER 12,500 GREAT TEAMS"
-          logos={LogoList2}
-          limit={5}
-        />
+       
         
         <TemplatesNoPlay />
           
