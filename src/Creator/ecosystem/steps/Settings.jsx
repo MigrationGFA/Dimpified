@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import GKTagsInput from "../../../Components/elements/tags/GKTagsInput";
+import { useDispatch, useSelector } from "react-redux";
+import { setRequirements } from "../../../features/course";
 
 const Settings = ({ onNext, onPrevious }) => {
-  const [tags, setTags] = useState([]);
+  const dispatch = useDispatch();
+  const requirements = useSelector((state) => state.course.requirements) || [];
+  console.log(requirements);
+  const [tags, setTags] = useState(requirements.map((req) => req.name));
 
-  // Load tags from session storage on component mount
   useEffect(() => {
-    const storedTags = sessionStorage.getItem("requirements");
-    if (storedTags) {
-      setTags(JSON.parse(storedTags));
-    }
-  }, []);
+    setTags(requirements.map((req) => req.name));
+  }, [requirements]);
 
   const handleAddTag = (tag) => {
     const newTags = [...tags, tag];
     setTags(newTags);
+    dispatch(setRequirements(newTags)); // Dispatch the action to set requirements
   };
 
   const handleRemoveTag = (indexToRemove) => {
     const newTags = tags.filter((_, index) => index !== indexToRemove);
     setTags(newTags);
+    dispatch(setRequirements(newTags)); // Dispatch the action to set requirements
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Save tags to session storage
-    sessionStorage.setItem("requirements", JSON.stringify(tags));
-    // Proceed to the next step or perform any other action
+    dispatch(setRequirements(tags)); // Dispatch the action to set requirements
     onNext();
   };
 
@@ -39,7 +40,7 @@ const Settings = ({ onNext, onPrevious }) => {
         </Card.Header>
         <Card.Body>
           <GKTagsInput
-            defaultTags={tags}
+            defaultTags={tags} // Use tags directly
             onAddTag={handleAddTag}
             onRemoveTag={handleRemoveTag}
           />

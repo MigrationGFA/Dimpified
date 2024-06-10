@@ -76,6 +76,9 @@ const EcoPayment = () => {
     setSelectedSize(newSize);
   };
 
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Integrations");
+  };
   const handleSkipAndContinue = () => {
     navigate("/creator/dashboard/Preview-and-Send");
   };
@@ -188,6 +191,14 @@ const EcoPayment = () => {
           </Col>
         </Row>
         <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
+        <div className="d-flex justify-content-between">
+        <Button
+          variant="secondary"
+          onClick={handlePrevious}
+          className="mt-4"
+        >
+          Previous
+        </Button>
         <Button
           variant="primary"
           onClick={handleSkipAndContinue}
@@ -195,6 +206,9 @@ const EcoPayment = () => {
         >
           Continue
         </Button>
+
+        </div>
+        
       </Container>
     </div>
   );
