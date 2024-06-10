@@ -18,12 +18,22 @@ import Logo from "./images/gfa-blue.png";
 const NavbarLanding = (props) => {
   const { transparent, center } = props;
   const [expandedMenu, setExpandedMenu] = useState(false);
-  const isDesktop = useMediaQuery({ query: "(min-width: 1300px)" });
+  // Media queries for different device types
+  const isDesktop = useMediaQuery({ minWidth: 1224 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1223 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isIpadPro = useMediaQuery({ minWidth: 1024, maxWidth: 1366 }); // Adjust as needed for iPad Pro dimensions
 
   const linkStyle = {
     fontWeight: "500",
     color: "black",
-    fontSize: isDesktop ? "1rem" : "3rem", // 1.25rem for desktop, 1rem for mobile
+    fontSize: isDesktop
+      ? "1rem"
+      : isIpadPro
+      ? "1.25rem" // Different value for iPad Pro
+      : isTablet || isMobile
+      ? "1.25rem"
+      : "1.25rem", // Default for other devices
   };
 
   return (
@@ -32,7 +42,7 @@ const NavbarLanding = (props) => {
         onToggle={(collapsed) => setExpandedMenu(collapsed)}
         expanded={expandedMenu}
         expand="lg"
-        className={`navbar navbar-default shadow-none ${
+        className={`navbar navbar-default bg-white shadow-none ${
           transparent ? "navbar-transparent" : ""
         }`}
       >
@@ -51,7 +61,7 @@ const NavbarLanding = (props) => {
               <UseCasesMenu />
               <Nav.Link
                 href="/pricing"
-                className="dropdown-arrow d-block nav-link fs-4 lh-1 pt-2"
+                className="dropdown-arrow d-block nav-link lh-1 pt-2"
                 style={linkStyle}
               >
                 Pricing
