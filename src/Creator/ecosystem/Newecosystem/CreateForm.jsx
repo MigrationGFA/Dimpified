@@ -138,6 +138,7 @@ import template2 from "../../../assets/form2.png";
 import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
+import FormTemplate from "../../../EditTemplate/FormTemplate";
 
 const templates = [
   {
@@ -201,6 +202,9 @@ const CreateForm = () => {
     setAnswers({ ...answers, [questionId]: answer });
   };
 
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Edit-Template");
+  };
   const handleSubmit = () => {
     alert("Form submitted!");
     console.log("Selected Template:", selectedTemplate);
@@ -402,6 +406,16 @@ const CreateForm = () => {
                   </Col>
                 ))}
               </Row>
+
+              <div className="d-flex justify-content-between mt-4">
+                <Button
+                  variant="secondary"
+                  className="me-2"
+                  onClick={handlePrevious}
+                >
+                  Previous
+                </Button>
+              </div>
             </div>
           )}
           {step === 2 && (
@@ -502,9 +516,10 @@ const CreateForm = () => {
           <Modal.Title>Preview Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={template1} alt="template" />
+          <FormTemplate />
+          {/* <img src={template1} alt="template" />
           <img src={template2} alt="template2" className="mt-5" />
-          <img src={template3} alt="template3" className="mt-5" />
+          <img src={template3} alt="template3" className="mt-5" /> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

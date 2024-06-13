@@ -73,13 +73,13 @@ const HeroLeftImage = () => {
 
   return (
     <Row className="align-items-center">
-      <Col lg={6} md={12} xs={12}>
+      <Col lg={6} md={12} sm={12} xs={12}>
         {/* image */}
         <div className="mb-4 mb-lg-0 bg-gray-200 rounded-4 ">
           <Image src={FeaturedImg1} alt="..." className="img-fluid w-100" />
         </div>
       </Col>
-      <Col lg={6} md={12} xs={12} className="mt-4 mt-lg-0">
+      <Col lg={6} md={12} sm={12} xs={12} className="mt-4 mt-lg-0">
         {/* content */}
         <div className="ps-lg-7">
           <SectionHeadingLeftBold title={title} subtitle={subtitle} />
@@ -132,7 +132,7 @@ const HeroLeftImage = () => {
             <div className="d-grid d-md-block">
                 <Link
                   to="#"
-                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                  className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   See more use cases
                 </Link>{" "}

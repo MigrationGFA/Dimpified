@@ -1,48 +1,50 @@
 import { v4 as uuid } from 'uuid';
 
-// import media files
-import Dropbox from '../assets/images/brand/dropbox-logo.svg';
-import HubSpot from '../assets/images/brand/hubspot.svg';
-import Drive from '../assets/images/brand/google-drive.svg';
-import Slack from '../assets/images/brand/slack-logo.svg';
-import Zapier from '../assets/images/brand/zapier.svg';
+
+
+import Google from './images/google.png';
+import Cloudinary from './images/cloudinary.png';
+import Azure from './images/azure.png';
+import Flutterwave from './images/flutterwave.png';
+import Zoom from './images/zoom.png';
+import Sendpulse from './images/sendpulse.png';
 
 export const AppIntegrationData = [
 	{
 		id: uuid(),
-		applogo: Dropbox,
-		appname: 'Dropbox',
+		applogo: Cloudinary,
+		appname: 'Cloudinary',
 		content: 'Bring your files and cloud content together.'
 	},
 	{
 		id: uuid(),
-		applogo: HubSpot,
-		appname: 'HubSpot',
+		applogo: Google,
+		appname: 'Google',
 		content: 'Full platform of marketing, sales, other service.'
 	},
 	{
 		id: uuid(),
-		applogo: Drive,
-		appname: 'Drive',
-		content: 'Integrates seamlessly with Docs, Sheets...'
+		applogo: Flutterwave,
+		appname: 'Flutterwave',
+		content: 'Integrates payments seamlessly...'
 	},
 	{
 		id: uuid(),
-		applogo: Slack,
-		appname: 'Slack',
-		content: 'New way to communicate with your team'
+		applogo: Azure,
+		appname: 'Azure',
+		content: 'Cloud storage made easier.'
 	},
 	{
 		id: uuid(),
-		applogo: Zapier,
-		appname: 'Zapier',
-		content: 'Streamline work with automation today.'
+		applogo: Zoom,
+		appname: 'Zoom',
+		content: 'Schedule and organize video calls.'
 	},
 	{
 		id: uuid(),
-		applogo: HubSpot,
-		appname: 'HubSpot',
-		content: 'Full platform of marketing,sales, other service.'
+		applogo: Sendpulse,
+		appname: 'SendPulse',
+		content: 'Full platform of bulk email marketing.'
 	}
 ];
 

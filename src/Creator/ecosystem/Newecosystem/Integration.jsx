@@ -192,8 +192,17 @@ const Integration = () => {
               ))}
             </Row>
           </div>
-
-          <div className="d-flex justify-content-end mt-4">
+<div className="d-flex justify-content-between mt-5">
+  <div>
+  <Button
+              variant="secondary"
+              className="me-2"
+              onClick={() => navigate("/creator/dashboard/Courses")}
+            >
+              Previous
+            </Button>
+  </div>
+<div className="d-flex justify-content-end">
             <Button
               variant="secondary"
               className="me-2"
@@ -209,6 +218,9 @@ const Integration = () => {
               Continue
             </Button>
           </div>
+
+</div>
+          
         </div>
       </Container>
     </Container>

@@ -11,7 +11,7 @@ import AppIntegrationData from './AppIntegrationData';
 const AppIntegration = () => {
 	const title = 'Integrate with your favorite tools';
 	const subtitle = '';
-	const description = `Connect your school with virtually infinite marketing and affiliate tools and increase your sales! Discover all available integrations`;
+	const description = `Connect your ecosystem with wide range of useful integrations and increase your revenue! `;
 
 	return (
 		<section className="py-lg-14 py-8 bg-purple mb-lg-6">

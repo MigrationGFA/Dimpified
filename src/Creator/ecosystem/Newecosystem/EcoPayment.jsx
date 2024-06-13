@@ -76,6 +76,9 @@ const EcoPayment = () => {
     setSelectedSize(newSize);
   };
 
+  const handlePrevious = () => {
+    navigate("/creator/dashboard/Integrations");
+  };
   const handleSkipAndContinue = () => {
     navigate("/creator/dashboard/Preview-and-Send");
   };
@@ -94,31 +97,30 @@ const EcoPayment = () => {
         return "";
     }
   };
-  
 
   const renderPlanCard = (plan) => {
     if (plan.name === "Lite") {
       return (
         <Col md={3} className="mb-4" key={plan.name}>
-          <Card style={{ height: '400px', overflow: 'hidden' }}>
+          <Card style={{ height: "400px", overflow: "hidden" }}>
             <Card.Body>
-            <Card.Title style={{ fontSize: '1.5rem' }}>Lite</Card.Title>
+              <Card.Title style={{ fontSize: "1.5rem" }}>Lite</Card.Title>
               <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
               <h2>Free</h2>
               <Button variant="primary" className="mt-3 w-100">
-                Sign Up 
+                Sign Up
               </Button>
             </Card.Body>
           </Card>
         </Col>
       );
     }
-  
+
     return (
       <Col md={3} className="mb-4" key={plan.name}>
-        <Card style={{ height: '400px', overflow: 'hidden' }}>
+        <Card style={{ height: "400px", overflow: "hidden" }}>
           <Card.Body>
-          <Card.Title style={{ fontSize: '1.5rem' }}>{plan.name}</Card.Title>
+            <Card.Title style={{ fontSize: "1.5rem" }}>{plan.name}</Card.Title>
             <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
             <>
               <Form.Label>Choose the size of your list</Form.Label>
@@ -132,23 +134,30 @@ const EcoPayment = () => {
             {pricingData.plans.map((pricingPlan) => {
               if (pricingPlan.name === plan.name) {
                 return (
-                  <p key={`${plan.name}-${selectedPlan}-${selectedSize}`} className=" mt-5">
+                  <p
+                    key={`${plan.name}-${selectedPlan}-${selectedSize}`}
+                    className=" mt-5"
+                  >
                     $
-                    <span className="mx-1 h2">{pricingPlan.prices[selectedSize]?.[selectedPlan] || "N/A"}</span>/ {selectedPlan}
+                    <span className="mx-1 h2">
+                      {pricingPlan.prices[selectedSize]?.[selectedPlan] ||
+                        "N/A"}
+                    </span>
+                    / {selectedPlan}
                   </p>
                 );
               }
               return null;
             })}
             <Button variant="primary" className="mt-3 w-100">
-              Sign Up Now
+              Upgrade To Plan
             </Button>
           </Card.Body>
         </Card>
       </Col>
     );
   };
-  
+
   return (
     <div>
       <EcoHeader />
@@ -188,13 +197,18 @@ const EcoPayment = () => {
           </Col>
         </Row>
         <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
-        <Button
-          variant="primary"
-          onClick={handleSkipAndContinue}
-          className="mt-4"
-        >
-          Continue
-        </Button>
+        <div className="d-flex justify-content-between">
+          <Button variant="secondary" onClick={handlePrevious} className="mt-4">
+            Previous
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSkipAndContinue}
+            className="mt-4"
+          >
+            Continue
+          </Button>
+        </div>
       </Container>
     </div>
   );

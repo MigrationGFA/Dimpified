@@ -1,9 +1,8 @@
 // import node module libraries
 import { Col, Container, Row, Image, ListGroup } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // import custom components
-
 
 // import MDI icons
 import Icon from "@mdi/react";
@@ -14,7 +13,7 @@ import FeaturedImg1 from "../images/customer-sec4.jpg";
 
 const HeroLeftImage = () => {
   const title =
-    "Afraid that you bore your users? Challenge accepted…and problem solved!";
+    "Afraid that you might bore your students? Challenge accepted…and problem solved!";
   const subtitle = "Use Cases of DIMP";
 
   const featurescol1 = [
@@ -23,26 +22,28 @@ const HeroLeftImage = () => {
       icon: mdiStar,
       title: "Offer rich and interactive learning experiences",
       description:
-        "Create your courses in no time. Build a powerful ecosystem of learning activities ranging from videos and SCORM files to ebooks, assessments, 1:1 and group sessions.",
+        "Create your courses in no time. Build a powerful ecosystem of learning activities ranging from videos to ebooks, assessments, 1:1 and group sessions.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Drive customer engagement",
+      title: "Drive Learner's engagement",
       description:
-        "Trigger customer involvement with self assessments, exams, and forms. Take advantage of 18 different question types and a powerful question builder.",
+        "Trigger Learner'sinvolvement with self assessments, exams, and forms. Take advantage of different question types and a powerful question builder.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
       title: `Develop training programs for all segments`,
-      description: "Design personalized customer education programs based on product type or complexity level, dividing learners into User Groups. Track everything in one dashboard.",
+      description:
+        "Design personalized Learner's education programs based on course category or complexity level, dividing learners into Groups. Track everything in one dashboard.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
       title: `Issue online certificates`,
-      description: "Reward your customers, partners, and resellers with branded online certificates. Auto-generate certificates on course completion and enable LinkedIn certification sharing to promote your brand.",
+      description:
+        "Reward your learners, partners, and resellers with branded online certificates. Auto-generate certificates on course completion and enable certification sharing to promote your brand.",
     },
   ];
 
@@ -52,7 +53,7 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-              Afraid that you bore your users? Challenge accepted…and problem
+              Afraid that you might bore your students? Challenge accepted…and problem
               solved!
             </h2>
           </div>
@@ -94,7 +95,10 @@ const HeroLeftImage = () => {
               </Col>
             </Row>
             <div className="d-grid d-md-block">
-              <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+              <Link
+                to="/creator/signup"
+                className="btn btn-primary btn-lg mb-2 mb-md-0"
+              >
                 Get started for free
               </Link>{" "}
               <Link
@@ -105,7 +109,6 @@ const HeroLeftImage = () => {
               </Link>{" "}
             </div>
           </div>
-          
         </Col>
       </Row>
     </Container>

@@ -65,7 +65,7 @@ export const FAQList = [
 		id: uuid(),
 		title: 'What is the cost of an online course',
 		content:
-			'Create beautiful website with this Geeks UI template. Get started building a site today.'
+			'Create beautiful website with this DIMP UI template. Get started building a site today.'
 	},
 	{
 		id: uuid(),
