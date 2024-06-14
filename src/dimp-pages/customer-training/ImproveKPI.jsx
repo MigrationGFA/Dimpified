@@ -32,7 +32,7 @@ const ImproveKPI = () => {
     {
       id: 3,
 
-      title: "Activate your Learner'ss",
+      title: "Activate your Learners",
       description:
         "Boost activation by making your Learner's fully aware of your products and services benefits. Provide consistent, comprehensive, and trackable Learner's training.",
     },
