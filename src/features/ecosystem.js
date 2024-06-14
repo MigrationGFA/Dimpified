@@ -26,10 +26,11 @@ const ecosystemSlice = createSlice({
     },
     setEcosystemId: (state, action) => {
       state.ecosystemId = action.payload;
-    }
+    },
+    resetState: () => initialState,
   },
 });
 
-export const { updateField, setCreatorId, setEcosystemId } = ecosystemSlice.actions;
+export const { updateField, setCreatorId, setEcosystemId, resetState } = ecosystemSlice.actions;
 
 export default ecosystemSlice.reducer;

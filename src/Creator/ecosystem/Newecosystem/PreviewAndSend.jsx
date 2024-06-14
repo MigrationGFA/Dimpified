@@ -4,6 +4,9 @@ import { Container, Row, Col, Nav, Button, Card, Modal } from "react-bootstrap";
 import Ecosystem from "../../../assets/ecosystem.png";
 import EcoHeader from "./ecoHeader";
 import { useNavigate } from "react-router-dom";
+import { resetState } from "../../../features/ecosystem";
+import { useDispatch, useSelector } from "react-redux";
+import PreviewPage from "../../../EditTemplate/Preview";
 
 const PreviewAndSend = () => {
   const location = useLocation();
@@ -22,11 +25,19 @@ const PreviewAndSend = () => {
     navigate("/creator/dashboard/Payment");
   };
 
+  const dispatch = useDispatch();
+
+  const handleCancle = async () => {
+    dispatch(resetState());
+    navigate("/creator/dashboard/All-Ecosystem");
+  };
+
+  const ecosystem = useSelector((state) => state.ecosystem);
   return (
     <Container fluid className="p-0">
       <EcoHeader />
 
-      <Container className="mt-4">
+      <Container className="mt-4 mb-12">
         <Card className="mb-4">
           <Card.Body>
             <Card.Title className="mb-3 h2 ">
@@ -39,7 +50,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>Awesome Ecosystem</p>
+                <p>{ecosystem.ecosystemName}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -49,7 +60,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>awesome.dimplified.com</p>
+                <p>{ecosystem.ecosystemDomain}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -59,7 +70,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>Digital Marketing</p>
+                <p>{ecosystem.targetAudienceSector}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -69,7 +80,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>Educating customers or partners</p>
+                <p>{ecosystem.mainObjective}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -79,7 +90,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>1001 - 5000</p>
+                <p>{ecosystem.expectedAudienceNumber}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -89,7 +100,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>Yes</p>
+                <p>{ecosystem.experience.toUpperCase()}</p>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -99,10 +110,7 @@ const PreviewAndSend = () => {
                 </p>
               </Col>
               <Col lg={6}>
-                <p>
-                  This ecosystem focuses on educating customers about the latest
-                  trends in digital marketing.
-                </p>
+                <p>{ecosystem.ecosystemDescription}</p>
               </Col>
             </Row>
           </Card.Body>
@@ -111,25 +119,8 @@ const PreviewAndSend = () => {
         <hr />
         <Card className="mb-4">
           <Card.Body>
-            <Card.Title>Edit Template</Card.Title>
-            <div
-              className="template-preview p-3"
-              style={{
-                backgroundColor: "#f8f9fa",
-                border: "1px solid #ddd",
-              }}
-            >
-              <header className="text-center">
-                <h1>{content.logo}</h1>
-                <h2>{content.header}</h2>
-              </header>
-              <main className="mt-4">
-                <p>{content.mainText}</p>
-              </main>
-              <footer className="text-center mt-4">
-                <p>{content.footer}</p>
-              </footer>
-            </div>
+            <Card.Title>View Template</Card.Title>
+            <PreviewPage />
           </Card.Body>
         </Card>
         <hr />
@@ -159,14 +150,22 @@ const PreviewAndSend = () => {
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to create this ecosystem?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to Make this Ecosystem Live for users to have
+          access to?
+          <br />
+          <strong>Note:</strong> <br />
+          If you click on No, you can still edit the ecosystem from your
+          ecosystempage
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={handleCancle}>
             No
           </Button>
-          <Link to="/creator/dashboard/All-Ecosystem">
-            <Button variant="primary">Yes</Button>
-          </Link>
+
+          <Button variant="primary" onClick={handleCancle}>
+            Yes
+          </Button>
         </Modal.Footer>
       </Modal>
     </Container>
