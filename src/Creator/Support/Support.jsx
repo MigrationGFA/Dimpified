@@ -13,26 +13,20 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import { showToast } from "../../Components/Showtoast";
-import PaginationComponent from "../../Components/elements/advance-table/Pagination"; // Update with the correct path
-import SupportModal from "../Support/SupportModal";
+import PaginationComponent from "../../Components/elements/advance-table/Pagination";
 
 const Support = () => {
-  // Fetch creatorId from Redux
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-    reason: "",
-    message: "",
-  });
   const [reviewLoading, setReviewLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedSupportID, setSelectedSupportID] = useState(null);
-  const [selectedUserMessage, setSelectedUserMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ reason: "", message: "" });
+  const [showMessageModal, setShowMessageModal] = useState(false); 
+  const [modalMessage, setModalMessage] = useState(""); 
 
   useEffect(() => {
     if (creatorId) {
@@ -87,12 +81,6 @@ const Support = () => {
     }
   };
 
-  const handleReply = (supportID, userMessage) => {
-    setSelectedSupportID(supportID);
-    setSelectedUserMessage(userMessage);
-    setOpenModal(true);
-  };
-  
   const handleAction = async (id) => {
     const rowIndex = data.findIndex((row) => row.id === id);
     if (rowIndex !== -1) {
@@ -108,6 +96,10 @@ const Support = () => {
 
         updatedData[rowIndex].status = "completed";
         setData(updatedData);
+
+        // Set message and show modal
+        setModalMessage(response.data.message);
+        setShowMessageModal(true);
       } catch (error) {
         showToast(error.response?.data?.message || "Error completing action");
       } finally {
@@ -137,12 +129,6 @@ const Support = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleModalClose = () => {
-    setOpenModal(false);
-    setSelectedSupportID(null);
-    setSelectedUserMessage("");
-  };
-
   const columns = useMemo(
     () => [
       {
@@ -165,15 +151,21 @@ const Support = () => {
         cell: ({ getValue }) => getValue() || "N/A",
       },
       {
-        accessorKey: "reply",
-        header: "Action",
+        header: "Completed",
+        accessorKey: "completed",
         cell: ({ row }) => (
           <Button
             variant="success"
-            size="sm"
-            onClick={() => handleReply(row.id, row.message)}
+            onClick={() => row && handleAction(row.original.id)}
+            disabled={row && row.original.status === "completed"}
+            style={{
+              backgroundColor: "green",
+              borderColor: "#b8f7b2",
+              color: "white",
+              opacity: row && row.original.status === "completed" ? 0.5 : 1,
+            }}
           >
-            Reply
+            Completed
           </Button>
         ),
       },
@@ -360,17 +352,24 @@ const Support = () => {
                     onPageChange={handlePageChange}
                   />
                 </Card.Footer>
-                {/* SupportModal */}
-                <SupportModal
-                  openModal={openModal}
-                  setOpenModal={setOpenModal}
-                  supportID={selectedSupportID}
-                  userMessage={selectedUserMessage}
-                  onClose={handleModalClose}
-                />
               </Card>
             </Col>
           </Row>
+
+          {/* Message Modal */}
+          <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Action Completed</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>{modalMessage}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       )}
     </div>
