@@ -13,7 +13,7 @@ import SVGgraphics2 from "../images/svg/graphics-2.svg";
 
 const HeroRightImage = () => {
   return (
-    <section className="py-lg-16 py-6">
+    <section className="px-lg-12 px-4 py-lg-16 py-6">
       <Container>
         <Row className="d-flex align-items-center">
           <Col xxl={5} xl={6} lg={6} xs={12}>
