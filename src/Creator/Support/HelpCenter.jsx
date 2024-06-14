@@ -23,7 +23,7 @@ const HelpCenter = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/all-conflicts"
+          `${import.meta.env.VITE_API_URL}/all-conflicts`
         );
         setData(response.data.conflicts || []);
         setLoading(false);
@@ -57,7 +57,7 @@ const HelpCenter = () => {
         setData(updatedData);
 
         const response = await axios.put(
-          `https://unleashified-backend.azurewebsites.net/api/v1/conflicts/${id}`
+          `${import.meta.env.VITE_API_URL}/conflicts/${id}`
         );
         showToast(response.data.message);
       } catch (error) {
@@ -118,7 +118,10 @@ const HelpCenter = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Help Center</h1>
-              <p>Navigate effortlessly! Access FAQs, guides, and troubleshooting tips for seamless platform usage.</p>
+              <p>
+                Navigate effortlessly! Access FAQs, guides, and troubleshooting
+                tips for seamless platform usage.
+              </p>
             </div>
           </div>
         </Col>

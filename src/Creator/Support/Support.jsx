@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Col, Row, Card, Spinner, Button, Modal, Form, Table } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Card,
+  Spinner,
+  Button,
+  Modal,
+  Form,
+  Table,
+} from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
@@ -31,7 +40,9 @@ const Support = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://dimpified-backend.azurewebsites.net/api/v1/support-request-by-a-creator/${creatorId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/support-request-by-a-creator/${creatorId}`
       );
       console.log("Fetched data:", response.data);
       setData(response.data.supportRequestByCreator || []);
@@ -50,7 +61,7 @@ const Support = () => {
     setReviewLoading(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/creator-support",
+        `${import.meta.env.VITE_API_URL}/creator-support`,
         {
           reason: formData.reason,
           message: formData.message,
@@ -64,7 +75,9 @@ const Support = () => {
       setFormData({ reason: "", message: "" });
     } catch (error) {
       console.error("Error submitting support request:", error);
-      showToast(error.response?.data?.message || "Error submitting support request");
+      showToast(
+        error.response?.data?.message || "Error submitting support request"
+      );
     } finally {
       setReviewLoading(false);
     }
@@ -165,7 +178,10 @@ const Support = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Support</h1>
-              <p>Keep track of your support information and submit support requests.</p>
+              <p>
+                Keep track of your support information and submit support
+                requests.
+              </p>
             </div>
           </div>
         </Col>
@@ -195,7 +211,9 @@ const Support = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Pending Support Request"
-                value={data.filter((item) => item.status === "pending").length.toString()}
+                value={data
+                  .filter((item) => item.status === "pending")
+                  .length.toString()}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -207,7 +225,9 @@ const Support = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Completed Support Request"
-                value={data.filter((item) => item.status === "completed").length.toString()}
+                value={data
+                  .filter((item) => item.status === "completed")
+                  .length.toString()}
                 summary="Number of completed"
                 summaryIcon="up"
                 showSummaryIcon
@@ -279,7 +299,11 @@ const Support = () => {
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleSubmitReview} disabled={reviewLoading}>
+              <Button
+                variant="primary"
+                onClick={handleSubmitReview}
+                disabled={reviewLoading}
+              >
                 {reviewLoading ? "Submitting..." : "Submit Request"}
               </Button>
             </Modal.Footer>

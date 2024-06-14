@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Button, Spinner, Modal, Form, Card, Table } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Button,
+  Spinner,
+  Modal,
+  Form,
+  Card,
+  Table,
+} from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { showToast } from "../../Components/Showtoast";
@@ -34,10 +43,14 @@ const FeatureUpdate = () => {
           setDashboardLoading(true);
           const [featureResponse, reviewResponse] = await Promise.all([
             axios.get(
-              `https://dimpified-backend.azurewebsites.net/api/v1/get-a-creator-feature/${creatorId}`
+              `${
+                import.meta.env.VITE_API_URL
+              }/get-a-creator-feature/${creatorId}`
             ),
             axios.get(
-              `https://dimpified-backend.azurewebsites.net/api/v1/get-reviews-by-creator/${creatorId}`
+              `${
+                import.meta.env.VITE_API_URL
+              }/get-reviews-by-creator/${creatorId}`
             ),
           ]);
           setFeatures(featureResponse.data.featuresByCreator || []);
@@ -62,7 +75,7 @@ const FeatureUpdate = () => {
     setReviewLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/creator-submit-review`,
+        `${import.meta.env.VITE_API_URL}/creator-submit-review`,
         {
           rating,
           review: reviewText,
@@ -78,7 +91,7 @@ const FeatureUpdate = () => {
 
       // Refresh reviews
       const reviewResponse = await axios.get(
-        `https://dimpified-backend.azurewebsites.net/api/v1/get-reviews-by-creator/${creatorId}`
+        `${import.meta.env.VITE_API_URL}/get-reviews-by-creator/${creatorId}`
       );
       setReviews(reviewResponse.data.reviews || []);
     } catch (error) {
@@ -103,7 +116,7 @@ const FeatureUpdate = () => {
 
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/creator-suggest-feature`,
+        `${import.meta.env.VITE_API_URL}/creator-suggest-feature`,
         {
           featureName,
           featureType,
@@ -121,7 +134,7 @@ const FeatureUpdate = () => {
 
       // Refresh features
       const featureResponse = await axios.get(
-        `https://dimpified-backend.azurewebsites.net/api/v1/get-a-creator-feature/${creatorId}`
+        `${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`
       );
       setFeatures(featureResponse.data.featuresByCreator || []);
     } catch (error) {
@@ -168,7 +181,10 @@ const FeatureUpdate = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Feature Update</h1>
-              <p>Keep track of your feature requests and submit new feature ideas.</p>
+              <p>
+                Keep track of your feature requests and submit new feature
+                ideas.
+              </p>
             </div>
           </div>
         </Col>
@@ -279,125 +295,131 @@ const FeatureUpdate = () => {
       </Card>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
-        <Modal.Title>Request New Feature</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleSubmitFeature}>
-          <Form.Group controlId="featureName">
-            <Form.Label>Feature Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter feature name"
-              value={featureName}
-              onChange={(e) => setFeatureName(e.target.value)}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group controlId="featureType" className="mt-3">
-            <Form.Label>Feature Type</Form.Label>
-            <Form.Select
-              value={featureType}
-              onChange={(e) => setFeatureType(e.target.value)}
-              required
-            >
-              <option value="">Select</option>
-              <option value="Template Upgrade">Template Upgrade</option>
-              <option value="Pricing Features">Pricing Features</option>
-              <option value="Payment Issues">Payment Issues</option>
-              <option value="Ecosystem Upgrade">Ecosystem Upgrade</option>
-              <option value="Others">Others</option>
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group controlId="featureDescription" className="mt-3">
-            <Form.Label>Feature Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Enter feature description"
-              value={featureDescription}
-              onChange={(e) => setFeatureDescription(e.target.value)}
-              required
-            />
-          </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={loading}
-            className="mt-3"
-          >
-            {loading ? "Submitting..." : "Submit Feature"}
-          </Button>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-
-    <Modal show={showFeedbackModal} onHide={() => setShowFeedbackModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>Give Feedback</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="mb-3">
-          <h3 className="mb-4">Give Your Review on this Application</h3>
-          <Row className="align-items-center">
-            <Col xs="auto" className="text-center">
-              <h6>Press any of the stars for your star rating</h6>
-              {[1, 2, 3, 4, 5].map((value) => (
-                <span
-                  key={value}
-                  className="text-warning"
-                  onClick={() => handleStarClick(value)}
-                >
-                  <i
-                    className={`${value <= rating ? "fas" : "far"} fa-star`}
-                    style={{ cursor: "pointer", fontSize: "24px" }}
-                  />
-                </span>
-              ))}
-              <span className="ms-2 fs-5">{rating}/5</span>
-            </Col>
-          </Row>
-        </div>
-
-        <div className="w-100 mb-3">
-          <h4 className="mb-3">Write Your Review</h4>
-          <Form className="position-relative">
-            <Form.Group className="mb-3">
+        <Modal.Header closeButton>
+          <Modal.Title>Request New Feature</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmitFeature}>
+            <Form.Group controlId="featureName">
+              <Form.Label>Feature Name</Form.Label>
               <Form.Control
-                as="textarea"
-                rows={5}
-                placeholder="Write your review here..."
-                className="w-100"
-                value={reviewText}
-                onChange={(e) => setReviewText(e.target.value)}
+                type="text"
+                placeholder="Enter feature name"
+                value={featureName}
+                onChange={(e) => setFeatureName(e.target.value)}
                 required
               />
             </Form.Group>
+
+            <Form.Group controlId="featureType" className="mt-3">
+              <Form.Label>Feature Type</Form.Label>
+              <Form.Select
+                value={featureType}
+                onChange={(e) => setFeatureType(e.target.value)}
+                required
+              >
+                <option value="">Select</option>
+                <option value="Template Upgrade">Template Upgrade</option>
+                <option value="Pricing Features">Pricing Features</option>
+                <option value="Payment Issues">Payment Issues</option>
+                <option value="Ecosystem Upgrade">Ecosystem Upgrade</option>
+                <option value="Others">Others</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group controlId="featureDescription" className="mt-3">
+              <Form.Label>Feature Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter feature description"
+                value={featureDescription}
+                onChange={(e) => setFeatureDescription(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={loading}
+              className="mt-3"
+            >
+              {loading ? "Submitting..." : "Submit Feature"}
+            </Button>
           </Form>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          variant="primary"
-          disabled={reviewLoading}
-          onClick={handleSubmitReview}
-        >
-          {reviewLoading ? "Processing..." : "Submit Review"}
-        </Button>
-        <Button variant="secondary" onClick={() => setShowFeedbackModal(false)}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showFeedbackModal}
+        onHide={() => setShowFeedbackModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Give Feedback</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="mb-3">
+            <h3 className="mb-4">Give Your Review on this Application</h3>
+            <Row className="align-items-center">
+              <Col xs="auto" className="text-center">
+                <h6>Press any of the stars for your star rating</h6>
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <span
+                    key={value}
+                    className="text-warning"
+                    onClick={() => handleStarClick(value)}
+                  >
+                    <i
+                      className={`${value <= rating ? "fas" : "far"} fa-star`}
+                      style={{ cursor: "pointer", fontSize: "24px" }}
+                    />
+                  </span>
+                ))}
+                <span className="ms-2 fs-5">{rating}/5</span>
+              </Col>
+            </Row>
+          </div>
+
+          <div className="w-100 mb-3">
+            <h4 className="mb-3">Write Your Review</h4>
+            <Form className="position-relative">
+              <Form.Group className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  rows={5}
+                  placeholder="Write your review here..."
+                  className="w-100"
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </Form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            disabled={reviewLoading}
+            onClick={handleSubmitReview}
+          >
+            {reviewLoading ? "Processing..." : "Submit Review"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => setShowFeedbackModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
 };
 
