@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+// Function to shorten a message
+function shortenMessage(message, maxLength = 20) {
+  if (message.length > maxLength) {
+    return message.slice(0, maxLength) + "...";
+  }
+  return message;
+}
+
+function getOrdinalSuffix(day) {
+  if (day > 3 && day < 21) return "th"; // Covers 11th to 20th
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
+
+function formatDateWithOrdinal(date) {
+  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+  const dayWithSuffix = day + getOrdinalSuffix(day);
+
+  return `${dayWithSuffix} ${month}, ${year}`;
+}
 
 function getTimeDifference(updatedAt) {
   // Parse the updatedAt string to a Date object
@@ -24,22 +57,35 @@ function getTimeDifference(updatedAt) {
   // Convert hours to days
   const days = Math.floor(hours / 24);
 
-  return { days, hours: hours % 24, minutes: minutes % 60 };
+  // Format the updatedAt date
+  const formattedDate = formatDateWithOrdinal(updatedAtDate);
+
+  // Return combined string
+  return `${formattedDate}`;
 }
 
 const Ecosystem = () => {
-  const getTimeDifferenceString = (time) => {
-    if (time.days > 0) {
-      return `${time.days} days ago`;
-    } else if (time.hours > 0) {
-      return `${time.hours} hours ago`;
-    } else {
-      return `${time.minutes} minutes ago`;
+  const [ecosystem, setEcosystem] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const user = useSelector((state) => state.authentication.user);
+  const userId = user?.data?.CreatorId || "Unknown User";
+
+  const getMyEcosystems = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/creator-ecosystems/${userId}`
+      );
+      setEcosystem(response.data.ecosystem);
+      console.log("this is ecosystem", ecosystem);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  //   const time = getTimeDifference(item.updatedAt);
-  //   const timeString = getTimeDifferenceString(time);
+  useEffect(() => {
+    getMyEcosystems();
+  }, []);
 
   return (
     <div>
@@ -114,170 +160,101 @@ const Ecosystem = () => {
           />
         </Col>
       </Row>
-      <Card className="card-bordered mb-4 card-hover cursor-pointer">
-        <Card.Body>
-          <div>
-            <div className="d-md-flex">
-              <div className="">
-                <Image
-                  src={Ecosystem1}
-                  alt="Ecosystem"
-                  className="img-fluid"
-                  style={{ maxHeight: "100px", maxWidth: "100%" }}
-                />
-              </div>
-              <div className="ms-md-3 w-100 mt-3 mt-xl-1">
-                <div className="d-md-flex justify-content-between ">
-                  <div>
-                    <i className="fe fe-clock text-muted"></i>
-                    {/* <span>{timeString}</span> */}
-                    <span>May 24, 2024, 3:30pm</span>
+      {ecosystem && ecosystem.length > 0 ? (
+        ecosystem.map((eco) => (
+          <Card
+            key={eco._id}
+            className="card-bordered mb-4 card-hover cursor-pointer"
+          >
+            <Card.Body>
+              <div>
+                <div className="d-md-flex">
+                  <div className="">
+                    <Image
+                      src={Ecosystem1}
+                      alt="Ecosystem"
+                      className="img-fluid"
+                      style={{ maxHeight: "100px", maxWidth: "100%" }}
+                    />
                   </div>
-                </div>
-                <div className="d-flex justify-content-between mb-3">
-                  <div>
-                    <h3 className="mb-1 fs-4">
-                      <Link to="" className="text-inherit me-1">
-                        Commencement of the Gateway Online Program
-                      </Link>
-                    </h3>
-                    <div>
-                      <span>category of Fitness</span>
-
-                      <span className="ms-0">(0 Reviews)</span>
-                    </div>
-                    <span className="mt-2">
-                      Service Description: this was used to send emails to the
-                      choosen participants
-                    </span>
+                  <div className="ms-md-3 w-100 mt-3 mt-xl-1">
                     <div className="d-md-flex justify-content-between ">
-                      <div className="mb-2 mb-md-0">
-                        <span className="me-2">
-                          <i className="fe fe-clock text-muted"></i>
-                          <span className="ms-1 ">Published</span>
-                        </span>
+                      <div>
+                        <i className="fe fe-clock text-muted"></i>
+                        {/* <span>{timeString}</span> */}
+                        <span>{getTimeDifference(eco.createdAt)}</span>
+                      </div>
+                    </div>
+                    <div className="d-md-flex justify-content-between mb-3">
+                      <div>
+                        <h3 className="mb-1 fs-4">
+                          <Link to="" className="text-inherit me-1">
+                            {eco.ecosystemName}
+                          </Link>
+                        </h3>
+                        <div>Sector: {eco.targetAudienceSector}</div>
+                        <p className="mt-2">
+                          <strong> Ecosystem Description:</strong> <br />
+                          <span>
+                            {shortenMessage(eco.ecosystemDescription)}
+                          </span>
+                        </p>
+                        <div className="d-md-flex justify-content-between ">
+                          <div className="mb-2 mb-md-0">
+                            <span className="me-2">
+                              <i className="fe fe-clock text-muted"></i>
+                              <span className="ms-1 ">
+                                {eco.status.toUpperCase()}
+                              </span>
+                            </span>
 
-                        <span className="me-2">
-                          <i className="fe fe-briefcase text-muted"></i>
-                          <span className="ms-1 ">Adefemi Omotayo</span>
-                        </span>
+                            <span className="me-2">
+                              <i className="fe fe-briefcase text-muted"></i>
+                              <span className="ms-1 ">Adefemi Omotayo</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="mb-1 fs-4">
+                          <h3 className="text-inherit me-1">
+                            {eco.users.toString()}
+                          </h3>
+                          <h4>Users</h4>
+                        </h3>
+                      </div>
+
+                      <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
+                        {/* Button group */}
+                        <div>
+                          <Button
+                            variant="primary"
+                            className="me-2 mb-2 mb-md-0"
+                          >
+                            Dashboard
+                          </Button>
+                          <Button
+                            variant="outline-primary"
+                            className="me-2 mb-2 mb-md-0"
+                          >
+                            Continue
+                          </Button>
+
+                          <Button variant="outline-danger" className="md-mt-4">
+                            Delete
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="mb-1 fs-4">
-                      <h3 className="text-inherit me-1">345678</h3>
-                      <h4>Users</h4>
-                    </h3>
-                  </div>
-
-                  <div className="d-flex justify-content-between align-items-center">
-                    {/* Button group */}
-                    <div>
-                      <Button
-                        variant="outline-primary"
-                        className="me-2 mb-2 mb-md-0"
-                        //   onClick={() => navigate(`/jobs/edit-a-service/${item._id}`)}
-                      >
-                        Edit
-                      </Button>
-
-                      <Button
-                        variant="outline-danger"
-                        //   onClick={handleDelete}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
-      <Card className="card-bordered mb-4 card-hover cursor-pointer">
-        <Card.Body>
-          <div>
-            <div className="d-md-flex">
-              <div className="">
-                <Image
-                  src={Ecosystem1}
-                  alt="Ecosystem"
-                  className="img-fluid"
-                  style={{ maxHeight: "100px", maxWidth: "100%" }}
-                />
-              </div>
-              <div className="ms-md-3 w-100 mt-3 mt-xl-1">
-                <div className="d-md-flex justify-content-between ">
-                  <div>
-                    <i className="fe fe-clock text-muted"></i>
-                    {/* <span>{timeString}</span> */}
-                    <span>May 24, 2024, 3:30pm</span>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-between mb-3">
-                  <div>
-                    <h3 className="mb-1 fs-4">
-                      <Link to="" className="text-inherit me-1">
-                        Commencement of the Gateway Online Program
-                      </Link>
-                    </h3>
-                    <div>
-                      <span>category of Fitness</span>
-
-                      <span className="ms-0">(0 Reviews)</span>
-                    </div>
-                    <span className="mt-2">
-                      Service Description: this was used to send emails to the
-                      choosen participants
-                    </span>
-                    <div className="d-md-flex justify-content-between ">
-                      <div className="mb-2 mb-md-0">
-                        <span className="me-2">
-                          <i className="fe fe-clock text-muted"></i>
-                          <span className="ms-1 ">Published</span>
-                        </span>
-
-                        <span className="me-2">
-                          <i className="fe fe-briefcase text-muted"></i>
-                          <span className="ms-1 ">Adefemi Omotayo</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="mb-1 fs-4">
-                      <h3 className="text-inherit me-1">345678</h3>
-                      <h4>Users</h4>
-                    </h3>
-                  </div>
-
-                  <div className="d-flex justify-content-between align-items-center">
-                    {/* Button group */}
-                    <div>
-                      <Button
-                        variant="outline-primary"
-                        className="me-2 mb-2 mb-md-0"
-                        //   onClick={() => navigate(`/jobs/edit-a-service/${item._id}`)}
-                      >
-                        Edit
-                      </Button>
-
-                      <Button
-                        variant="outline-danger"
-                        //   onClick={handleDelete}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
+            </Card.Body>
+          </Card>
+        ))
+      ) : (
+        <div>You have not create any Ecosystem</div>
+      )}
     </div>
   );
 };
