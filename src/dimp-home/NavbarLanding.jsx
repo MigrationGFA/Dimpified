@@ -78,7 +78,7 @@ const NavbarLanding = (props) => {
             >
               <div className={`mt-3 mt-lg-0`}>
                 <Nav.Link
-                  href="/creator/signup"
+                  href="/creator/signin"
                   bsPrefix="btn"
                   className="btn btn-outline-primary mx-2"
                 >
