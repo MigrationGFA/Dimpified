@@ -5,7 +5,8 @@ import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
-import Ecosystem from "../../assets/ecosystem.png";
+// import Ecosystem from "../../assets/ecosystem.png";
+import Ecosystem from "../../assets/images/background/Onboard.jpg";
 import { useSelector } from "react-redux";
 
 const Onboard = () => {
