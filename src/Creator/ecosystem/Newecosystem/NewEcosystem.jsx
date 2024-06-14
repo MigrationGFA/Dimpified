@@ -258,6 +258,7 @@ const NewEcosystem = () => {
                           Target Audience Sector
                           <span className="text-danger">*</span>
                         </Form.Label>
+
                         <FormSelect
                           options={departments}
                           placeholder="Select Target Audience Sector"
