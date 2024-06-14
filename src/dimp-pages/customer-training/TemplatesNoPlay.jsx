@@ -11,7 +11,7 @@ const TemplatesNoPlay = () => {
   const [isOpen, setOpen] = useState(false);
   const [YouTubeURL] = useState('JRzWRZahOVU');
   return (
-    <section className="py-lg-5 py-5 mt-5 mb-5 bg-light">
+    <section className="px-lg-12 px-4 py-lg-5 py-5 mt-5 mb-5 bg-light">
       <Container>
         <Row>
           <Col xl={{ span: 10, offset: 1 }} md={12} xs={12}>
