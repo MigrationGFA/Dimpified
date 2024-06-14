@@ -53,11 +53,11 @@ const ImproveKPI = () => {
   );
 
   return (
-    <section className="pb-lg-14 pb-6">
+    <section className="px-lg-12 px-4 pb-lg-14 pb-6">
       <Container>
         <Row>
           <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
-            <div className="text-center mb-lg-10 mb-6">
+            <div className="text-center mb-lg-6 mt-lg-6 mb-3">
               <h2 className="h1 fw-bold">
                 Improve{" "}
                 <u className="text-warning">
