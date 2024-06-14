@@ -55,7 +55,7 @@ const CustomerTraining = () => {
   
         </section>
         <LearnLatestSkills/>
-        <section className="px-12 py-4 py-lg-16 bg-white">
+        <section className="px-3 py-4 py-lg-16 bg-white">
          <HeroLeftImage2 />
           
         </section>
