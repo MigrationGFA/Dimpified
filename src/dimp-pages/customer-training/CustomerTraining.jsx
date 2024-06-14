@@ -49,14 +49,19 @@ const CustomerTraining = () => {
 
         {/*  Building strong foundational skills */}
         <ImproveKPI />
-        <section className="px-lg-12 px-4 py-4 py-lg-16 bg-white">
+        <section className=" px-lg-12 px-4 py-lg-16 bg-white">
           <HeroLeftImage />
           <HeroRightImage2 />
+          
   
         </section>
         <LearnLatestSkills/>
-        <section className="px-3 py-4 py-lg-16 bg-white">
-         <HeroLeftImage2 />
+          
+        
+        <section className="px-lg-12 px-4 py-4 py-lg-16 bg-white">
+        <HeroLeftImage2 />
+        
+         
           
         </section>
 
