@@ -8,6 +8,7 @@ import ImproveKPI from "./ImproveKPI";
 import TemplatesNoPlay from "./TemplatesNoPlay";
 
 import HeroLeftImage from "./HeroLeftImage";
+import HeroRightImage2 from "./HeroRightImage2";
 
 import LearnLatestSkills from "./LearnLatestSkills";
 
@@ -48,8 +49,9 @@ const CustomerTraining = () => {
 
         {/*  Building strong foundational skills */}
         <ImproveKPI />
-        <section className="px-12 py-4 py-lg-16 bg-white">
+        <section className="px-lg-12 px-4 py-4 py-lg-16 bg-white">
           <HeroLeftImage />
+          <HeroRightImage2 />
   
         </section>
         <LearnLatestSkills/>
