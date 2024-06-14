@@ -103,19 +103,19 @@ const SupportMenu = ({ className }) => {
             <Image src={TemplatesImage} alt="..." className="img-fluid w-100" />
           </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item href="/dimpacademy" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <DimpAcademy />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/expert" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Experts />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/coursemasters" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <CourseMasters />
@@ -123,19 +123,19 @@ const SupportMenu = ({ className }) => {
             </NavDropdown.Item>
           </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item href="/helpcenter" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <HelpCenter />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/webinars" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Webinars />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/ai" className="py-2 px-3">
+            <NavDropdown.Item href="#" className="py-2 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <AI />
@@ -143,19 +143,19 @@ const SupportMenu = ({ className }) => {
             </NavDropdown.Item>
           </Col>
           <Col lg={3} md={6} xs={12}>
-            <NavDropdown.Item href="/blog" className="py-4 px-3">
+            <NavDropdown.Item href="#" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <Blog />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/blog" className="py-4 px-3">
+            <NavDropdown.Item href="#" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-layers fs-3 text-primary"></i>
                 <Blog />
               </div>
             </NavDropdown.Item>
-            <NavDropdown.Item href="/blog" className="py-4 px-3">
+            <NavDropdown.Item href="#" className="py-4 px-3">
               <div className="d-flex align-items-center">
                 <i className="fe fe-file-text fs-3 text-primary"></i>
                 <Blog />
@@ -173,55 +173,55 @@ const SupportMenu = ({ className }) => {
         id="basic-nav-dropdown"
         bsPrefix="no-dropdown-arrow d-block nav-link fs-3 lh-1 pt-0"
       >
-        <NavDropdown.Item href="/dimpacademy" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
             <DimpAcademy />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/expert" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-layers fs-3 text-primary"></i>
             <Experts />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/coursemasters" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
             <CourseMasters />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/helpcenter" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
             <HelpCenter />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/webinars" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-layers fs-3 text-primary"></i>
             <Webinars />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/ai" className="py-2 px-3">
+        <NavDropdown.Item href="#" className="py-2 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-layers fs-3 text-primary"></i>
             <AI />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/blog" className="py-4 px-3">
+        <NavDropdown.Item href="#" className="py-4 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
             <Blog />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/blog" className="py-4 px-3">
+        <NavDropdown.Item href="#" className="py-4 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-layers fs-3 text-primary"></i>
             <Blog />
           </div>
         </NavDropdown.Item>
-        <NavDropdown.Item href="/blog" className="py-4 px-3">
+        <NavDropdown.Item href="#" className="py-4 px-3">
           <div className="d-flex align-items-center">
             <i className="fe fe-file-text fs-3 text-primary"></i>
             <Blog />

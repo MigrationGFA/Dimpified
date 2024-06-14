@@ -13,7 +13,7 @@ import SVGgraphics2 from "../images/svg/graphics-2.svg";
 
 const HeroRightImage = () => {
   return (
-    <section className="py-lg-16 py-6">
+    <section className="px-lg-12 px-4 py-lg-16 py-6">
       <Container>
         <Row className="d-flex align-items-center">
           <Col xxl={5} xl={6} lg={6} xs={12}>
@@ -34,7 +34,7 @@ const HeroRightImage = () => {
                       "Lecturers",
                       "Advisors",
                       "Facilitators",
-                      "Councelors",
+                      "Councellors",
                       "Guides",
                       "Educators",
                     ]}
@@ -48,11 +48,10 @@ const HeroRightImage = () => {
                 </span>
               </h1>
               <p className="lead mb-4">
-                Use your knowledge as a powerful strategy to improve your KPIs
-                across your funnel. An educated individual is a better customer,
-                and that's why your elearning platform matters. DIMP gives you
-                all the tools you need to onboard, engage, and retain learner's
-                at scale.
+                Transform your educational services with DIMP, a comprehensive
+                platform for educators. Manage your contents, onboard learners,
+                collect information, sell services, track activities, build
+                communities in one place and maxmize your impact.
               </p>
               {/* <ListGroup as="ul" bsPrefix='list-unstyled' className="mb-5">
                 <ListGroup.Item as="li" bsPrefix="mb-2" >

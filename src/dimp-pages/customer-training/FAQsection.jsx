@@ -15,7 +15,7 @@ const FAQsection = () => {
   const description = `Everything you have ever wondered, but were too afraid to ask..`;
 
   return (
-    <section className="py-8 py-lg-18 bg-light">
+    <section className="px-lg-12 px-4 py-8 py-lg-18 bg-light">
       <Container>
         <SectionHeadingCenter title={title} description={description} />
         <Row className="justify-content-center">
