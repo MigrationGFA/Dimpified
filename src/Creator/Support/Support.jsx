@@ -44,7 +44,9 @@ const Support = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://dimpified-backend.azurewebsites.net/api/v1/support-request-by-a-creator/${creatorId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/support-request-by-a-creator/${creatorId}`
       );
       console.log("Fetched data:", response.data);
       setData(response.data.supportRequestByCreator || []);
@@ -63,7 +65,7 @@ const Support = () => {
     setReviewLoading(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/creator-support",
+        `${import.meta.env.VITE_API_URL}/creator-support`,
         {
           reason: formData.reason,
           message: formData.message,

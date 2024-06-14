@@ -17,7 +17,7 @@ const HelpCenter = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/all-conflicts"
+          `${import.meta.env.VITE_API_URL}/all-conflicts`
         );
         setData(response.data.conflicts || []);
         setLoading(false);
@@ -80,7 +80,10 @@ const HelpCenter = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Help Center</h1>
-              <p>Navigate effortlessly! Access FAQs, guides, and troubleshooting tips for seamless platform usage.</p>
+              <p>
+                Navigate effortlessly! Access FAQs, guides, and troubleshooting
+                tips for seamless platform usage.
+              </p>
             </div>
           </div>
         </Col>
@@ -158,11 +161,13 @@ const HelpCenter = () => {
         }}
       >
         <option value="">All Ecosystems</option>
-        {["Ecosystem 1", "Ecosystem 2", "Ecosystem 3", "Ecosystem 4"].map((ecosystem, index) => (
-          <option key={index} value={ecosystem}>
-            {ecosystem}
-          </option>
-        ))}
+        {["Ecosystem 1", "Ecosystem 2", "Ecosystem 3", "Ecosystem 4"].map(
+          (ecosystem, index) => (
+            <option key={index} value={ecosystem}>
+              {ecosystem}
+            </option>
+          )
+        )}
       </Form.Control>
 
       <Card className="border-0 mt-4">
@@ -207,7 +212,8 @@ const HelpCenter = () => {
                                 <br />
                                 <span>{row.User.email}</span>
                               </div>
-                            ) : column.accessorKey === "message" && row.message.length > 30 ? (
+                            ) : column.accessorKey === "message" &&
+                              row.message.length > 30 ? (
                               <span
                                 title={row.message}
                                 className="mb-1 text-primary-hover cursor-pointer"

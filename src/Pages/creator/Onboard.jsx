@@ -32,7 +32,7 @@ const Onboard = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/onboarding`,
+        `${import.meta.env.VITE_API_URL}/onboarding`,
         {
           userId: userId,
           categoryInterest: selectedCategories,

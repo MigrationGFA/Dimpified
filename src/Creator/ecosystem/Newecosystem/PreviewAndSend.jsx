@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const PreviewAndSend = () => {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   const [content, setContent] = useState({
@@ -137,20 +137,20 @@ const navigate = useNavigate();
           <Card.Body>
             <Card.Title>Create Form</Card.Title>
             <div>
-                  <img
-                    src={Ecosystem}
-                    alt="Onboarding"
-                    className="img-fluid vh-100 vw-100"
-                  />
-                </div>
+              <img
+                src={Ecosystem}
+                alt="Onboarding"
+                className="img-fluid vh-100 vw-100"
+              />
+            </div>
           </Card.Body>
         </Card>
         <div className="d-flex justify-content-between">
-        <Button variant="secondary" onClick={handlePrevious}>
+          <Button variant="secondary" onClick={handlePrevious}>
             Previous
           </Button>
           <Button variant="primary" onClick={handleShowModal}>
-            Create Ecosystem
+            Publish Ecosystem
           </Button>
         </div>
       </Container>
@@ -164,7 +164,9 @@ const navigate = useNavigate();
           <Button variant="secondary" onClick={handleCloseModal}>
             No
           </Button>
-          <Button variant="primary">Yes</Button>
+          <Link to="/creator/dashboard/All-Ecosystem">
+            <Button variant="primary">Yes</Button>
+          </Link>
         </Modal.Footer>
       </Modal>
     </Container>

@@ -73,7 +73,7 @@ const NewEcosystem = () => {
     setIsProcessing(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/ecosystem/aboutDetails",
+        `${import.meta.env.VITE_API_URL}/ecosystem/aboutDetails`,
         {
           ...ecosystem,
           creatorId: creatorId,
@@ -201,9 +201,7 @@ const NewEcosystem = () => {
                             handleFieldChange("ecosystemDomain", e.target.value)
                           }
                         />
-                        <span className="input-group-text">
-                          .dimpified.com
-                        </span>
+                        <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
