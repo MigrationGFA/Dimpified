@@ -1,10 +1,20 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Col, Row, Card, Spinner, Button, Modal, Form, Table } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Card,
+  Spinner,
+  Button,
+  Modal,
+  Form,
+  Table,
+} from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import { showToast } from "../../Components/Showtoast";
 import PaginationComponent from "../../Components/elements/advance-table/Pagination"; // Update with the correct path
+import SupportModal from "../Support/SupportModal";
 
 const Support = () => {
   // Fetch creatorId from Redux
@@ -20,6 +30,9 @@ const Support = () => {
   });
   const [reviewLoading, setReviewLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedSupportID, setSelectedSupportID] = useState(null);
+  const [selectedUserMessage, setSelectedUserMessage] = useState("");
 
   useEffect(() => {
     if (creatorId) {
@@ -64,12 +77,20 @@ const Support = () => {
       setFormData({ reason: "", message: "" });
     } catch (error) {
       console.error("Error submitting support request:", error);
-      showToast(error.response?.data?.message || "Error submitting support request");
+      showToast(
+        error.response?.data?.message || "Error submitting support request"
+      );
     } finally {
       setReviewLoading(false);
     }
   };
 
+  const handleReply = (supportID, userMessage) => {
+    setSelectedSupportID(supportID);
+    setSelectedUserMessage(userMessage);
+    setOpenModal(true);
+  };
+  
   const handleAction = async (id) => {
     const rowIndex = data.findIndex((row) => row.id === id);
     if (rowIndex !== -1) {
@@ -114,6 +135,12 @@ const Support = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
+  const handleModalClose = () => {
+    setOpenModal(false);
+    setSelectedSupportID(null);
+    setSelectedUserMessage("");
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -136,21 +163,15 @@ const Support = () => {
         cell: ({ getValue }) => getValue() || "N/A",
       },
       {
+        accessorKey: "reply",
         header: "Action",
-        accessorKey: "action",
         cell: ({ row }) => (
           <Button
             variant="success"
-            onClick={() => row && handleAction(row.original.id)}
-            disabled={row && row.original.status === "completed"}
-            style={{
-              backgroundColor: "green",
-              borderColor: "#b8f7b2",
-              color: "white",
-              opacity: row && row.original.status === "completed" ? 0.5 : 1,
-            }}
+            size="sm"
+            onClick={() => handleReply(row.id, row.message)}
           >
-            {row.original.Cloading ? "Processing" : "Completed"}
+            Reply
           </Button>
         ),
       },
@@ -165,7 +186,10 @@ const Support = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Support</h1>
-              <p>Keep track of your support information and submit support requests.</p>
+              <p>
+                Keep track of your support information and submit support
+                requests.
+              </p>
             </div>
           </div>
         </Col>
@@ -195,7 +219,9 @@ const Support = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Pending Support Request"
-                value={data.filter((item) => item.status === "pending").length.toString()}
+                value={data
+                  .filter((item) => item.status === "pending")
+                  .length.toString()}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -207,7 +233,9 @@ const Support = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Completed Support Request"
-                value={data.filter((item) => item.status === "completed").length.toString()}
+                value={data
+                  .filter((item) => item.status === "completed")
+                  .length.toString()}
                 summary="Number of completed"
                 summaryIcon="up"
                 showSummaryIcon
@@ -279,7 +307,11 @@ const Support = () => {
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleSubmitReview} disabled={reviewLoading}>
+              <Button
+                variant="primary"
+                onClick={handleSubmitReview}
+                disabled={reviewLoading}
+              >
                 {reviewLoading ? "Submitting..." : "Submit Request"}
               </Button>
             </Modal.Footer>
@@ -326,6 +358,14 @@ const Support = () => {
                     onPageChange={handlePageChange}
                   />
                 </Card.Footer>
+                {/* SupportModal */}
+                <SupportModal
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                  supportID={selectedSupportID}
+                  userMessage={selectedUserMessage}
+                  onClose={handleModalClose}
+                />
               </Card>
             </Col>
           </Row>
