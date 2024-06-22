@@ -102,34 +102,50 @@ const Pricing = () => {
   const getPlanFeatures = (plan) => {
     const features = {
       Lite: {
+        Website: [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+        ],
         "Website and Landing Pages": [
           { feature: "Access to templates", available: true },
           { feature: "No code web page edit mode", available: true },
+          { feature: "Add logo to page", available: false },
+          { feature: "Custom domain", available: false },
+          { feature: "Remove GFA brand from landing page", available: false },
         ],
         "Forms Design & Development": [
           { feature: "1 form per ecosystem project", available: true },
           { feature: "3 Usecase form templates", available: true },
           { feature: "10 questions per form", available: true },
+          { feature: "Premium form templates", available: false },
+
+          { feature: "Remove GFA brand from form", available: false },
         ],
         "Course Management and Automation": [
           { feature: "Course builder module", available: true },
           { feature: "1 courses per ecosystem deployment", available: true },
+
+          { feature: "Assessment builder module", available: false },
+          { feature: "Statistics & visualization", available: false },
+
+          { feature: "Exams & Quizzes", available: false },
+          { feature: "Zoom, Teams or Webex Integration", available: false },
         ],
-        "Payment and Subscriptions"
-: [
+        "Payment and Subscriptions": [
           { feature: "1 payment gateway", available: true },
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
+
+          { feature: "Multi-currency module", available: false },
+          { feature: "Flexible pricing module", available: false },
         ],
         Emails: [
           { feature: "Up to 15000 emails per month", available: true },
           { feature: "100 MB of image storage", available: true },
           { feature: "3 sender email addresses, 1 domain", available: true },
-          
         ],
         "Admin Users": [
           { feature: "3 Admin Users per account", available: true },
-          
         ],
       },
       Plus: {
@@ -137,6 +153,7 @@ const Pricing = () => {
           { feature: "Access to templates", available: true },
           { feature: "No code web page edit mode", available: true },
           { feature: "Add logo to page", available: true },
+          { feature: "Custom domain", available: false },
           { feature: "Remove GFA brand from landing page", available: true },
         ],
         "Forms Design & Development": [
@@ -144,30 +161,30 @@ const Pricing = () => {
           { feature: "10 Usecase form templates", available: true },
           { feature: "10 Premium form templates", available: true },
           { feature: "10 questions per form", available: true },
+          { feature: "Remove GFA brand from form", available: false },
         ],
         "Course Management and Automation": [
           { feature: "Course builder module", available: true },
           { feature: "Assessment builder module", available: true },
           { feature: "10 courses per ecosystem deployment", available: true },
+          { feature: "Statistics & visualization", available: false },
           { feature: "Exams & Quizzes", available: true },
           { feature: "Zoom, Teams or Webex Integration", available: true },
         ],
-        "Payment and Subscriptions"
-: [
+        "Payment and Subscriptions": [
           { feature: "3 payment gateways", available: true },
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
           { feature: "Multi-currency module", available: true },
+          { feature: "Flexible pricing module", available: false },
         ],
         Emails: [
           { feature: "Unlimited number of emails per month", available: true },
           { feature: "200 MB of image storage", available: true },
           { feature: "100 sender email addresses, 3 domain", available: true },
-          
         ],
         "Admin Users": [
           { feature: "10 Admin Users per account", available: true },
-          
         ],
       },
       Pro: {
@@ -193,8 +210,7 @@ const Pricing = () => {
           { feature: "Exams & Quizzes", available: true },
           { feature: "Zoom, Teams or Webex Integration", available: true },
         ],
-        "Payment and Subscriptions"
-: [
+        "Payment and Subscriptions": [
           { feature: "6 payment gateways", available: true },
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
@@ -205,11 +221,9 @@ const Pricing = () => {
           { feature: "Unlimited number of emails per month", available: true },
           { feature: "500 MB of image storage", available: true },
           { feature: "300 sender email addresses, 5 domains", available: true },
-          
         ],
         "Admin Users": [
           { feature: "25 Admin Users per account", available: true },
-          
         ],
       },
       Extra: {
@@ -250,8 +264,7 @@ const Pricing = () => {
           { feature: "Exams & Quizzes", available: true },
           { feature: "Zoom, Teams or Webex Integration", available: true },
         ],
-        "Payment and Subscriptions"
-: [
+        "Payment and Subscriptions": [
           { feature: "Unlimited Number of payment gateways", available: true },
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
@@ -261,12 +274,13 @@ const Pricing = () => {
         Emails: [
           { feature: "Unlimited number of emails per month", available: true },
           { feature: "5 GB of image storage", available: true },
-          { feature: "Unlimited sender email addresses and domain", available: true },
-          
+          {
+            feature: "Unlimited sender email addresses and domain",
+            available: true,
+          },
         ],
         "Admin Users": [
           { feature: "Unlimited number of Admin Users", available: true },
-          
         ],
       },
     };
@@ -302,20 +316,34 @@ const Pricing = () => {
 
       return (
         <Col md={3} className="mb-4" key={plan.name}>
-          <Card style={{ height: "1100px", overflow: "hidden" }}>
+          <Card style={{ height: "1750px", overflow: "hidden" }}>
             <Card.Body>
               <Card.Title style={{ fontSize: "1.5rem" }}>Lite</Card.Title>
               <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
               <h2>Free</h2>
-              <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+              <ul
+                style={{
+                  listStyleType: "none",
+                  paddingLeft: 0,
+                  visibility: "hidden",
+                }}
+              >
                 {firstFourFeatures}
               </ul>
+
               <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
                 Sign Up
               </Button>
+
               <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
                 {remainingFeatures}
               </ul>
+              <Button
+                variant="outline-primary"
+                className="mt-3 w-100 btn-lg  mb-3"
+              >
+                Sign Up Now
+              </Button>
             </Card.Body>
           </Card>
         </Col>
@@ -362,7 +390,10 @@ const Pricing = () => {
               Sign Up Now
             </Button>
             <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
-            <Button variant="outline-primary" className="mt-3 w-100 btn-lg  mb-3">
+            <Button
+              variant="outline-primary"
+              className="mt-3 w-100 btn-lg  mb-3"
+            >
               Sign Up Now
             </Button>
           </Card.Body>
