@@ -11,7 +11,7 @@ const LearnLatestSkills = () => {
   const [isOpen, setOpen] = useState(false);
   const [YouTubeURL] = useState('JRzWRZahOVU');
   return (
-    <section className="py-lg-10 py-6 bg-gray-100">
+    <section className="px-lg-12 px-4 py-lg-10 py-6 bg-gray-100">
       <Container>
         <Row>
           <Col xl={{ span: 10, offset: 1 }} md={12} xs={12}>

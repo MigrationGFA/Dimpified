@@ -37,7 +37,7 @@ const ForgetPassword = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/creator/forgot-password",
+        `${import.meta.env.VITE_API_URL}/creator/forgot-password`,
         {
           email: data.email,
         }

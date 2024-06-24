@@ -1,29 +1,23 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Col, Row, Card, Spinner, Table, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import { numberWithCommas } from "../../helper/utils";
+import SupportModal from "../Support/SupportModal";
 import { showToast } from "../../Components/Showtoast";
 
 const HelpCenter = () => {
-  const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 1,
-    totalSeeker: 1,
-    monthlyProvider: 1,
-    totalProvider: 1,
-  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [Cloading, setCloading] = useState(false);
-  const [viewMessage, setViewMessage] = useState("");
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedSupportID, setSelectedSupportID] = useState(null);
+  const [selectedUserMessage, setSelectedUserMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/all-conflicts"
+          `${import.meta.env.VITE_API_URL}/all-conflicts`
         );
         setData(response.data.conflicts || []);
         setLoading(false);
@@ -36,38 +30,16 @@ const HelpCenter = () => {
     fetchData();
   }, []);
 
-  const ecosystems = [
-    "Ecosystem 1",
-    "Ecosystem 2",
-    "Ecosystem 3",
-    "Ecosystem 4",
-  ];
-
-  const handleEcosystemChange = (event) => {
-    let ecosystem = event.target.value;
-    setSelectedEcosystem(ecosystem);
+  const handleReply = (id, message) => {
+    setSelectedSupportID(id);
+    setSelectedUserMessage(message);
+    setOpenModal(true);
   };
 
-  const handleAction = async (id) => {
-    const rowIndex = data.findIndex((row) => row.id === id);
-    if (rowIndex !== -1) {
-      try {
-        const updatedData = [...data];
-        updatedData[rowIndex].Cloading = true;
-        setData(updatedData);
-
-        const response = await axios.put(
-          `https://unleashified-backend.azurewebsites.net/api/v1/conflicts/${id}`
-        );
-        showToast(response.data.message);
-      } catch (error) {
-        showToast(error.response.data.message);
-      } finally {
-        const updatedData = [...data];
-        updatedData[rowIndex].Cloading = false;
-        setData(updatedData);
-      }
-    }
+  const handleModalClose = () => {
+    setOpenModal(false);
+    setSelectedSupportID(null);
+    setSelectedUserMessage("");
   };
 
   const columns = useMemo(
@@ -75,35 +47,25 @@ const HelpCenter = () => {
       {
         accessorKey: "id",
         header: "ID",
-        cell: ({ getValue }) => {
-          return "#" + getValue();
+        cell: ({ row }) => {
+          return "#" + row.id;
         },
       },
-      // {
-      //   accessorKey: "date",
-      //   header: "Date",
-      // },
       { accessorKey: "role", header: "Role" },
       { accessorKey: "userDetails", header: "User Details" },
       { accessorKey: "reason", header: "Reason" },
       { accessorKey: "message", header: "Message" },
       { accessorKey: "status", header: "Status" },
       {
-        header: "Completed",
-        accessorKey: "completed",
+        accessorKey: "reply",
+        header: "Action",
         cell: ({ row }) => (
           <Button
             variant="success"
-            disabled={row && row.status === "completed"}
-            style={{
-              backgroundColor: "green",
-              borderColor: "#b8f7b2",
-              color: "white",
-              opacity: row && row.status === "completed" ? 0.7 : 1,
-            }}
-            onClick={() => handleAction(row.id)}
+            size="sm"
+            onClick={() => handleReply(row.id, row.message)}
           >
-            {row && row.status === "completed" ? "Completed" : "Process"}
+            Reply
           </Button>
         ),
       },
@@ -118,7 +80,10 @@ const HelpCenter = () => {
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Help Center</h1>
-              <p>Navigate effortlessly! Access FAQs, guides, and troubleshooting tips for seamless platform usage.</p>
+              <p>
+                Navigate effortlessly! Access FAQs, guides, and troubleshooting
+                tips for seamless platform usage.
+              </p>
             </div>
           </div>
         </Col>
@@ -183,10 +148,11 @@ const HelpCenter = () => {
           </Row>
         </div>
       )}
+
       <Form.Control
         as="select"
         value={selectedEcosystem}
-        onChange={handleEcosystemChange}
+        onChange={(e) => setSelectedEcosystem(e.target.value)}
         className="mr-2"
         style={{
           fontSize: "0.875rem",
@@ -195,11 +161,13 @@ const HelpCenter = () => {
         }}
       >
         <option value="">All Ecosystems</option>
-        {ecosystems.map((ecosystem, index) => (
-          <option key={index} value={ecosystem}>
-            {ecosystem}
-          </option>
-        ))}
+        {["Ecosystem 1", "Ecosystem 2", "Ecosystem 3", "Ecosystem 4"].map(
+          (ecosystem, index) => (
+            <option key={index} value={ecosystem}>
+              {ecosystem}
+            </option>
+          )
+        )}
       </Form.Control>
 
       <Card className="border-0 mt-4">
@@ -238,43 +206,30 @@ const HelpCenter = () => {
                       <tr key={row.id}>
                         {columns.map((column) => (
                           <td key={column.accessorKey}>
-                            {column.accessorKey === "userDetails" && (
+                            {column.accessorKey === "userDetails" ? (
                               <div>
                                 <span>{row.User.username}</span>
                                 <br />
                                 <span>{row.User.email}</span>
                               </div>
-                            )}
-                            {column.accessorKey === "message" &&
-                            row.message.length > 30 ? (
+                            ) : column.accessorKey === "message" &&
+                              row.message.length > 30 ? (
                               <span
                                 title={row.message}
                                 className="mb-1 text-primary-hover cursor-pointer"
                               >
                                 {row.message.slice(0, 30)}...
                               </span>
-                            ) : (
-                              row[column.accessorKey]
-                            )}
-                            {column.accessorKey === "completed" && (
+                            ) : column.accessorKey === "reply" ? (
                               <Button
                                 variant="success"
-                                disabled={
-                                  row.status === "completed" || row.Cloading
-                                }
-                                style={{
-                                  backgroundColor: "green",
-                                  borderColor: "#b8f7b2",
-                                  color: "white",
-                                  opacity:
-                                    row.status === "completed" || row.Cloading
-                                      ? 0.6
-                                      : 1,
-                                }}
-                                onClick={() => handleAction(row.id)}
+                                size="sm"
+                                onClick={() => handleReply(row.id, row.message)}
                               >
-                                {row.Cloading ? "Processing" : "Completed"}
+                                Reply
                               </Button>
+                            ) : (
+                              row[column.accessorKey]
                             )}
                           </td>
                         ))}
@@ -286,6 +241,13 @@ const HelpCenter = () => {
             </>
           )}
         </Card.Body>
+        <SupportModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          supportID={selectedSupportID}
+          userMessage={selectedUserMessage}
+          onClose={handleModalClose}
+        />
       </Card>
     </div>
   );

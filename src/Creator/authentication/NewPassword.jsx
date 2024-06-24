@@ -54,7 +54,7 @@ const ForgetPassword = () => {
     console.log("this can submit");
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/creator/reset-password`,
+        `${import.meta.env.VITE_API_URL}/creator/reset-password`,
         {
           email: queryParam.get("email"),
           resetToken: queryParam.get("token"),

@@ -18,7 +18,7 @@ const UserEmailVerification = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/creator/verify-email`,
+        `${import.meta.env.VITE_API_URL}/creator/verify-email`,
         {
           verificationToken: queryParam.get("token"),
           email: queryParam.get("email"),

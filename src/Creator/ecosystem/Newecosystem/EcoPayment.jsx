@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { SizeSelect } from "../../../Components/elements/form-select/SizeSelect";
 import pricingData from "./PricingData";
 import EcoHeader from "./ecoHeader";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+// import FAQsData from "./FAQsData";
+
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 const options = [
   { value: "1-500", label: "1 - 500" },
@@ -68,6 +76,58 @@ const EcoPayment = () => {
   const [selectedSize, setSelectedSize] = useState(options[0].value);
   const [selectedPlan, setSelectedPlan] = useState("Monthly");
 
+  const user = useSelector((state) => state.authentication.user);
+  const username = user?.data?.organizationName || "Unknown User";
+  const Email = user?.data?.email || "No email";
+
+  // flutterwave payment
+  const generateTxRef = () => {
+    const randomString = Math.random().toString(36).substring(7); // Generate a random string
+    const timestamp = Date.now(); // Get the current timestamp
+    return `${timestamp}-${randomString}`; // Combine timestamp and random string
+  };
+
+  const handleFlutterPayment = useFlutterwave({
+    public_key: "FLWPUBK-66d8ea488d57ba291013b93eae8bc3e8-X",
+    tx_ref: generateTxRef(),
+    amount: parseInt(sessionStorage.getItem("totalAmount")), // Default value, will be overwritten
+    currency: sessionStorage.getItem("currencyValue"),
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: Email,
+      phone_number: "09064000000",
+      name: username,
+    },
+    customizations: {
+      title: "Dimpified Plan Payment",
+      description: "Payment for Plan Upgrade",
+      logo: "https://res.cloudinary.com/djhnaee9k/image/upload/v1714038296/et5gicqtnuw4u1tqujjr.png",
+    },
+  });
+
+  const verifyFlutterwave = async (tx_ref) => {
+    sessionStorage.removeItem("totalAmount");
+    try {
+      const response = await axios.post(
+        "https://unleashified-backend.azurewebsites.net/api/v1/provider-payment",
+        {
+          reference: tx_ref,
+          email: emailUser,
+          jobId: sessionStorage.getItem("jobId"),
+          userId: sessionStorage.getItem("UserId"),
+          type: "JOB",
+          currency: sessionStorage.getItem("currencyValue"),
+          provider: "flutterwave",
+        }
+      );
+      setLoading(false);
+      showToast(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      showToast(error.response.data.message);
+    }
+  };
+
   const handlePlanChange = (plan) => {
     setSelectedPlan(plan);
   };
@@ -76,9 +136,6 @@ const EcoPayment = () => {
     setSelectedSize(newSize);
   };
 
-  const handlePrevious = () => {
-    navigate("/creator/dashboard/Integrations");
-  };
   const handleSkipAndContinue = () => {
     navigate("/creator/dashboard/Preview-and-Send");
   };
@@ -98,18 +155,216 @@ const EcoPayment = () => {
     }
   };
 
+  const getPlanFeatures = (plan) => {
+    const features = {
+      Lite: {
+        "Website and Landing Pages": [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+        ],
+        "Forms Design & Development": [
+          { feature: "1 form per ecosystem project", available: true },
+          { feature: "3 Usecase form templates", available: true },
+          { feature: "10 questions per form", available: true },
+        ],
+        "Course Management and Automation": [
+          { feature: "Course builder module", available: true },
+          { feature: "1 courses per ecosystem deployment", available: true },
+        ],
+        "Payment and Subscriptions": [
+          { feature: "1 payment gateway", available: true },
+          { feature: "Payment management module", available: true },
+          { feature: "Customer payment summary", available: true },
+        ],
+        Emails: [
+          { feature: "Up to 15000 emails per month", available: true },
+          { feature: "100 MB of image storage", available: true },
+          { feature: "3 sender email addresses, 1 domain", available: true },
+        ],
+        "Admin Users": [
+          { feature: "3 Admin Users per account", available: true },
+        ],
+      },
+      Plus: {
+        "Website and Landing Pages": [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+          { feature: "Add logo to page", available: true },
+          { feature: "Remove GFA brand from landing page", available: true },
+        ],
+        "Forms Design & Development": [
+          { feature: "10 forms per ecosystem project", available: true },
+          { feature: "10 Usecase form templates", available: true },
+          { feature: "10 Premium form templates", available: true },
+          { feature: "10 questions per form", available: true },
+        ],
+        "Course Management and Automation": [
+          { feature: "Course builder module", available: true },
+          { feature: "Assessment builder module", available: true },
+          { feature: "10 courses per ecosystem deployment", available: true },
+          { feature: "Exams & Quizzes", available: true },
+          { feature: "Zoom, Teams or Webex Integration", available: true },
+        ],
+        "Payment and Subscriptions": [
+          { feature: "3 payment gateways", available: true },
+          { feature: "Payment management module", available: true },
+          { feature: "Customer payment summary", available: true },
+          { feature: "Multi-currency module", available: true },
+        ],
+        Emails: [
+          { feature: "Unlimited number of emails per month", available: true },
+          { feature: "200 MB of image storage", available: true },
+          { feature: "100 sender email addresses, 3 domain", available: true },
+        ],
+        "Admin Users": [
+          { feature: "10 Admin Users per account", available: true },
+        ],
+      },
+      Pro: {
+        "Website and Landing Pages": [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+          { feature: "Add logo to page", available: true },
+          { feature: "Custom domain", available: true },
+          { feature: "Remove GFA brand from landing page", available: true },
+        ],
+        "Forms Design & Development": [
+          { feature: "20 forms per ecosystem project", available: true },
+          { feature: "20 Usecase form templates", available: true },
+          { feature: "20 Premium form templates", available: true },
+          { feature: "20 questions per form", available: true },
+          { feature: "Remove GFA brand from form", available: true },
+        ],
+        "Course Management and Automation": [
+          { feature: "Course builder module", available: true },
+          { feature: "Assessment builder module", available: true },
+          { feature: "Statistics & visualization", available: true },
+          { feature: "10 courses per ecosystem deployment", available: true },
+          { feature: "Exams & Quizzes", available: true },
+          { feature: "Zoom, Teams or Webex Integration", available: true },
+        ],
+        "Payment and Subscriptions": [
+          { feature: "6 payment gateways", available: true },
+          { feature: "Payment management module", available: true },
+          { feature: "Customer payment summary", available: true },
+          { feature: "Multi-currency module", available: true },
+          { feature: "Flexible pricing module", available: true },
+        ],
+        Emails: [
+          { feature: "Unlimited number of emails per month", available: true },
+          { feature: "500 MB of image storage", available: true },
+          { feature: "300 sender email addresses, 5 domains", available: true },
+        ],
+        "Admin Users": [
+          { feature: "25 Admin Users per account", available: true },
+        ],
+      },
+      Extra: {
+        "Website and Landing Pages": [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+          { feature: "Add logo to page", available: true },
+          { feature: "Custom domain", available: true },
+          { feature: "Remove GFA brand from landing page", available: true },
+        ],
+        "Forms Design & Development": [
+          {
+            feature: "Unlimited Number of forms per ecosystem project",
+            available: true,
+          },
+          {
+            feature: "Unlimited Number of Usecase form templates",
+            available: true,
+          },
+          {
+            feature: "Unlimited Number of Premium form templates",
+            available: true,
+          },
+          {
+            feature: "Unlimited Number of questions per form",
+            available: true,
+          },
+          { feature: "Remove GFA brand from form", available: true },
+        ],
+        "Course Management and Automation": [
+          { feature: "Course builder module", available: true },
+          { feature: "Assessment builder module", available: true },
+          { feature: "Statistics & visualization", available: true },
+          {
+            feature: "30 Number of courses per ecosystem deployment",
+            available: true,
+          },
+          { feature: "Exams & Quizzes", available: true },
+          { feature: "Zoom, Teams or Webex Integration", available: true },
+        ],
+        "Payment and Subscriptions": [
+          { feature: "Unlimited Number of payment gateways", available: true },
+          { feature: "Payment management module", available: true },
+          { feature: "Customer payment summary", available: true },
+          { feature: "Multi-currency module", available: true },
+          { feature: "Flexible pricing module", available: true },
+        ],
+        Emails: [
+          { feature: "Unlimited number of emails per month", available: true },
+          { feature: "5 GB of image storage", available: true },
+          {
+            feature: "Unlimited sender email addresses and domain",
+            available: true,
+          },
+        ],
+        "Admin Users": [
+          { feature: "Unlimited number of Admin Users", available: true },
+        ],
+      },
+    };
+
+    return (
+      <ul className="lh-3" style={{ listStyleType: "none", paddingLeft: 0 }}>
+        {Object.keys(features[plan]).map((section, sectionIndex) => (
+          <li key={sectionIndex}>
+            <h5 className="mt-6">{section}</h5>
+            <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+              {features[plan][section].map((item, itemIndex) => (
+                <li key={itemIndex}>
+                  {item.available ? (
+                    <FaCheck color="green" className="fs-6" />
+                  ) : (
+                    <FaTimes color="red" />
+                  )}{" "}
+                  {item.feature}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   const renderPlanCard = (plan) => {
     if (plan.name === "Lite") {
+      const liteFeatures = getPlanFeatures(plan.name);
+      const firstFourFeatures = liteFeatures.props.children.slice(0, 1);
+      const remainingFeatures = liteFeatures.props.children.slice(1);
+
       return (
         <Col md={3} className="mb-4" key={plan.name}>
-          <Card style={{ height: "400px", overflow: "hidden" }}>
+          <Card style={{ height: "1100px", overflow: "hidden" }}>
             <Card.Body>
-              <Card.Title style={{ fontSize: "1.5rem" }}>Lite</Card.Title>
-              <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
+              <Card.Title style={{ fontSize: "1.5rem", height: "40px" }}>
+                Lite
+              </Card.Title>
+              <Card.Text style={{ height: "80px" }}>
+                {getPlanDescription(plan.name)}
+              </Card.Text>
               <h2>Free</h2>
-              <Button variant="primary" className="mt-3 w-100">
-                Sign Up
-              </Button>
+              <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+                {firstFourFeatures}
+              </ul>
+
+              <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+                {remainingFeatures}
+              </ul>
             </Card.Body>
           </Card>
         </Col>
@@ -118,10 +373,17 @@ const EcoPayment = () => {
 
     return (
       <Col md={3} className="mb-4" key={plan.name}>
-        <Card style={{ height: "400px", overflow: "hidden" }}>
+        <Card
+          className="border-0 mb-3"
+          style={{ height: "1850px", overflow: "hidden" }}
+        >
           <Card.Body>
-            <Card.Title style={{ fontSize: "1.5rem" }}>{plan.name}</Card.Title>
-            <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
+            <Card.Title style={{ fontSize: "1.5rem", height: "40px" }}>
+              {plan.name}
+            </Card.Title>
+            <Card.Text style={{ height: "80px" }}>
+              {getPlanDescription(plan.name)}
+            </Card.Text>
             <>
               <Form.Label>Choose the size of your list</Form.Label>
               <SizeSelect
@@ -142,16 +404,17 @@ const EcoPayment = () => {
                     <span className="mx-1 h2">
                       {pricingPlan.prices[selectedSize]?.[selectedPlan] ||
                         "N/A"}
-                    </span>
+                    </span>{" "}
                     / {selectedPlan}
                   </p>
                 );
               }
               return null;
             })}
-            <Button variant="primary" className="mt-3 w-100">
-              Upgrade To Plan
+            <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
+              Select Plan
             </Button>
+            <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
           </Card.Body>
         </Card>
       </Col>
@@ -159,58 +422,105 @@ const EcoPayment = () => {
   };
 
   return (
-    <div>
-      <EcoHeader />
-      <Container className="mt-5">
-        <h2 className="text-center mb-4">Choose Your Plan</h2>
-        <Row>
-          <Col
-            md={12}
-            className="mb-4 d-flex justify-content-end align-items-center gap-4"
-          >
-            <Form.Label className="mb-2">Billing Period:</Form.Label>
-            <div className="d-flex gap-3">
-              <Form.Check
-                type="radio"
-                id="monthly"
-                checked={selectedPlan === "Monthly"}
-                onChange={() => handlePlanChange("Monthly")}
-              />
-              <Form.Label htmlFor="monthly">Monthly</Form.Label>
+    <Fragment>
+      <section className="py-lg-5 py-3">
+        <Container>
+          {/* Page header */}
+          <Row className="align-items-center">
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <div className="mb-4 px-lg-1 px-1">
+                <h1 className="display-4 text-dark fw-bold">
+                  Choose your preferred plan
+                </h1>
+                <p className="display-8 text-dark">
+                  Choose the best plan that suits your needs and get started
+                  with our ecosystem.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <div>
+        <Container className="">
+          <Row>
+            <Col
+              md={12}
+              className="mb-4 d-flex justify-content-end align-items-center gap-4"
+            >
+              <Form.Label className="mb-2">Billing Period:</Form.Label>
+              <div className="d-flex gap-3">
+                <Form.Check
+                  type="radio"
+                  id="monthly"
+                  checked={selectedPlan === "Monthly"}
+                  onChange={() => handlePlanChange("Monthly")}
+                />
+                <Form.Label htmlFor="monthly">Monthly</Form.Label>
 
-              <Form.Check
-                type="radio"
-                id="sixMonths"
-                checked={selectedPlan === "6 Months"}
-                onChange={() => handlePlanChange("6 Months")}
-              />
-              <Form.Label htmlFor="sixMonths">6 Months</Form.Label>
+                <Form.Check
+                  type="radio"
+                  id="sixMonths"
+                  checked={selectedPlan === "6 Months"}
+                  onChange={() => handlePlanChange("6 Months")}
+                />
+                <Form.Label htmlFor="sixMonths">6 Months</Form.Label>
 
-              <Form.Check
-                type="radio"
-                id="annual"
-                checked={selectedPlan === "Annual"}
-                onChange={() => handlePlanChange("Annual")}
-              />
-              <Form.Label htmlFor="annual">Annual</Form.Label>
-            </div>
-          </Col>
-        </Row>
-        <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
-        <div className="d-flex justify-content-between">
-          <Button variant="secondary" onClick={handlePrevious} className="mt-4">
-            Previous
-          </Button>
+                <Form.Check
+                  type="radio"
+                  id="annual"
+                  checked={selectedPlan === "Annual"}
+                  onChange={() => handlePlanChange("Annual")}
+                />
+                <Form.Label htmlFor="annual">Annual</Form.Label>
+              </div>
+            </Col>
+          </Row>
+          <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
           <Button
             variant="primary"
             onClick={handleSkipAndContinue}
-            className="mt-4"
+            className="mt-4 mb-5"
           >
             Continue
           </Button>
-        </div>
-      </Container>
-    </div>
+        </Container>
+      </div>
+      <section className="bg-white py-lg-10 py-5">
+        <Container>
+          <Row>
+            <Col md={12} sm={12}>
+              <div className="mb-8 text-center">
+                <h2 className="h1">Frequently Asked Questions</h2>
+              </div>
+            </Col>
+          </Row>
+          {/* <Row>
+            {FAQsData.map((item, index) => (
+              <Col lg={4} md={6} sm={12} className="mb-3" key={index}>
+                <h4>{item.question}</h4>
+                <p>{item.answer}</p>
+              </Col>
+            ))}
+            <Col md={12} sm={12} className="mt-lg-10 mt-4">
+              <Card>
+                <Card.Body>
+                  <div className="d-lg-flex justify-content-between align-items-center">
+                    <h4 className="mb-0">Have other questions?</h4>
+                    <span>
+                      Send us a mail via:{" "}
+                      <Link to="mailto:info@gfa-tech.com" target="_blank">
+                        info@gfa-tech.com
+                      </Link>
+                    </span>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row> */}
+        </Container>
+      </section>
+    </Fragment>
   );
 };
 

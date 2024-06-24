@@ -5,7 +5,8 @@ import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
-import Ecosystem from "../../assets/ecosystem.png";
+// import Ecosystem from "../../assets/ecosystem.png";
+import Ecosystem from "../../assets/images/background/Onboard.jpg";
 import { useSelector } from "react-redux";
 
 const Onboard = () => {
@@ -32,7 +33,7 @@ const Onboard = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/onboarding`,
+        `${import.meta.env.VITE_API_URL}/onboarding`,
         {
           userId: userId,
           categoryInterest: selectedCategories,
@@ -173,7 +174,7 @@ const Onboard = () => {
                   Select Target Audience
                   <span className="text-danger">*</span>
                 </h2>
-                <Form.Control
+                {/* <FormSelect
                   as={FormSelect}
                   options={departments}
                   placeholder="Select Target Audience"
@@ -181,7 +182,22 @@ const Onboard = () => {
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   required
-                />
+                /> */}
+                <Form.Control
+                  as="select"
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>
+                    Select Target Audience
+                  </option>
+                  {departments.map((dept) => (
+                    <option key={dept.value} value={dept.value}>
+                      {dept.label}
+                    </option>
+                  ))}
+                </Form.Control>
               </Col>
             </Card.Body>
             <Card.Footer className="d-flex justify-content-end">

@@ -51,10 +51,10 @@ const HeroLeftImage = () => {
     <Container>
       <Row>
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
-          <div className="text-center mb-lg-10 mb-6">
+          <div className="text-center mb-lg-6 mb-6">
             <h2 className="h1 fw-bold">
-              Afraid that you might bore your students? Challenge accepted…and problem
-              solved!
+              Afraid that you might bore your students? <br/>
+              DIMP is your problem solver!
             </h2>
           </div>
         </Col>

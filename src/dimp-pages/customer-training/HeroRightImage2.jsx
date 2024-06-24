@@ -9,9 +9,9 @@ import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import BrandedApp from "../images/branded-apps.png";
+import AuthImg from "../images/authentication.png";
 
-const HeroLeftImage = () => {
+const HeroRightImage2 = () => {
   const title =
     "White label your academy and get your branded iOS and Android apps";
 
@@ -19,23 +19,24 @@ const HeroLeftImage = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Build a true white label academy",
+      title:
+        "Make your ecosystem yours with a Branded Authentication Experience",
       description:
-        "Create your own branded online academy with our powerful Site Builder, complete with total design freedom and easy domain connection. ",
+        "By personalizing your sign-in, sign-up, and password retrieval pages, you create a consistent and branded user journey. Track user progress, manage data securely, and provide a tailored experience that enhances overall engagement.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Train using your own apps",
+      title: "Seamless Integration and Enhanced Security",
       description:
-        "Encourage customer engagement with self-assessments, tests, and forms. Choose from 18 question types and build custom questions. You can also create your own branded mobile app for iOS and Android to reach customers on the move. ",
+        "Our platform supports a variety of authentication protocols, allowing you to implement your preferred methods securely. With Single Sign-On (SSO) capabilities, users can access your academy using their existing credentials, streamlining the authentication process.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Connect your academy with your marketing stack`,
+      title: `Effortless Password Retrieval`,
       description:
-        "Expand your customer training academy with native integrations with third-party apps. Single sign-on (SSO) and a robust API simplify training across your customer network. ",
+        "Ensure that your users have a hassle-free experience with a branded password retrieval page. Customize the instructions, layout, and design to make the process intuitive and straightforward.",
     },
   ];
 
@@ -43,20 +44,14 @@ const HeroLeftImage = () => {
     <Container>
       <Row>
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
-          <div className="text-center mt-6 mb-lg-10 mb-6">
+          <div className="text-center mt-6 mt-lg-16 mb-6">
             <h2 className="h1 fw-bold">
-              White label your academy and get your branded iOS and Android apps
+              Personalize your ecosystem with your own user authentication page
             </h2>
           </div>
         </Col>
       </Row>
       <Row className="align-items-center">
-        <Col lg={6} md={12} xs={12}>
-          {/* image */}
-          <div className="mb-4 mb-lg-0 bg-gray-200 rounded-4 ">
-            <Image src={BrandedApp} alt="..." className="img-fluid w-100" />
-          </div>
-        </Col>
         <Col lg={6} md={12} xs={12} className="mt-4 mt-lg-0">
           {/* content */}
           <div className="ps-lg-7">
@@ -101,9 +96,15 @@ const HeroLeftImage = () => {
             </div>
           </div>
         </Col>
+        <Col lg={6} md={12} xs={12}>
+          {/* image */}
+          <div className="mb-4 mb-lg-0 bg-gray-200 rounded-4 ">
+            <Image src={AuthImg} alt="..." className="img-fluid w-100" />
+          </div>
+        </Col>
       </Row>
     </Container>
   );
 };
 
-export default HeroLeftImage;
+export default HeroRightImage2;

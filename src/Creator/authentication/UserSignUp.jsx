@@ -42,7 +42,7 @@ const UserSignUp = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/creator/register",
+        `${import.meta.env.VITE_API_URL}/creator/register`,
         {
           email: data.email,
           userType: "creator",
