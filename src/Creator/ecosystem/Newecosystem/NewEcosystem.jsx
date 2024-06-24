@@ -31,13 +31,18 @@ const NewEcosystem = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isDomainValid, setIsDomainValid] = useState(true);
+  const [domainErrorMessage, setDomainErrorMessage] = useState("");
 
   useEffect(() => {
     validateForm();
-  }, [ecosystem]);
+  }, [ecosystem, isDomainValid]);
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
+    if (field === "ecosystemDomain") {
+      validateDomain(value);
+    }
   };
 
   const validateForm = () => {
@@ -57,11 +62,32 @@ const NewEcosystem = () => {
       mainObjective &&
       expectedAudienceNumber &&
       experience &&
-      ecosystemDescription
+      ecosystemDescription &&
+      isDomainValid
     ) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
+    }
+  };
+
+  const validateDomain = async (ecosystemDomain) => {
+    try {
+      const response = await axios.post(
+        "https://dimpified-backend.azurewebsites.net/api/v1/check-domain",
+        { domainName: ecosystemDomain }
+      );
+      if (response.data.available) {
+        setIsDomainValid(true);
+        setDomainErrorMessage("");
+      } else {
+        setIsDomainValid(false);
+        setDomainErrorMessage("Domain is already taken.");
+      }
+    } catch (error) {
+      console.error("Error validating domain:", error);
+      setIsDomainValid(false);
+      setDomainErrorMessage("Error checking domain availability.");
     }
   };
 
@@ -209,6 +235,9 @@ const NewEcosystem = () => {
                         The domain must contain only lowercase letters and
                         hyphens.
                       </Form.Text>
+                      {!isDomainValid && (
+                        <p className="text-danger">{domainErrorMessage}</p>
+                      )}
                       <p className="text-danger text-uppercase fs-5 fw-bold">
                         Or
                       </p>

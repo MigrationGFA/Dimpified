@@ -72,6 +72,43 @@ import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
 import ContractPage from "../Creator/Payment/ContractPage";
 import Payouts from "../Creator/Payment/Payouts";
 
+
+
+import UserLandingPage from "../UserDashboard/StudentLandingPage";
+import UserDashboard from "../UserDashboard/student/StudentDashboard";
+import UserMyCourse from "../UserDashboard/student/MyCourses";
+import UserReviews from "../UserDashboard/student/Reviews";
+import UserBookmarked from "../UserDashboard/student/Bookmarked";
+import UserLearning from "../UserDashboard/student/Learning";
+import UserQiuzResult from "../UserDashboard/student/QuizResult";
+import UserEditProfile from "../UserDashboard/student/account-settings/EditProfile";
+import UserPayouts from "../UserDashboard/student/account-settings/Payouts";
+import UserSocialProfile from "../UserDashboard/student/account-settings/SocialProfiles";
+import UserNotification from "../UserDashboard/student/account-settings/Notifications";
+import UserDeleteProfile from "../UserDashboard/student/account-settings/DeleteProfile";
+import UserBrowseCourse from "../UserDashboard/Components/marketing/pages/courses/CourseFilterPage";
+import UserSingleCourse from "../UserDashboard/Components/marketing/pages/courses/course-single/CourseSingle";
+import UserLearningCourse from "../UserDashboard/Components/marketing/pages/courses/course-single2/CourseSingle2";
+import UserResolution from "../UserDashboard/student/Resolution";
+
+
+
+import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
+import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemReviews from "../EcosystemDashboard/Reviews";
+import EcosystemEarning from "../EcosystemDashboard/Earnings";
+import EcosystemOrders from "../EcosystemDashboard/Orders";
+import EcosystemStudents from "../EcosystemDashboard/Students";
+import EcosystemPayouts from "../EcosystemDashboard/account-settings/Payouts";
+import EcosystemQuiz from "../EcosystemDashboard/Quiz";
+import EcosystemQuizSingle from "../EcosystemDashboard/QuizSingle";
+import EcosystemQuizResult from "../EcosystemDashboard/QuizResult";
+import EcosystemEditProfile from "../EcosystemDashboard/account-settings/EditProfile";
+import EcosystemSocialProfiles from "../EcosystemDashboard/account-settings/SocialProfiles";
+import EcosystemDeleteProfile from "../EcosystemDashboard/account-settings/DeleteProfile";
+import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
+import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
+
 const AllRoutes = () => {
   return (
     <Routes>
@@ -157,6 +194,105 @@ const AllRoutes = () => {
           element={<Overview />}
         />
       </Route> 
+
+      <Route path="/User" element={<UserLandingPage />} />
+      <Route path="/User-My-Course" element={<UserMyCourse />} />
+      <Route path="/Userdashboard" element={<UserDashboard />} />
+      <Route path="/User-Reviews" element={<UserReviews />} />
+      <Route
+        path="/User-My-Course/Bookmarked"
+        element={<UserBookmarked />}
+      />
+      <Route path="/User-My-Course/Learning" element={<UserLearning />} />
+      <Route path="/User-quiz-result" element={<UserQiuzResult />} />
+      <Route path="/User-edit-profile" element={<UserEditProfile />} />
+      <Route path="/User-payout" element={<UserPayouts />} />
+      <Route
+        path="/User-social-profile"
+        element={<UserSocialProfile />}
+      />
+      <Route path="/User-notifications" element={<UserNotification />} />
+
+      <Route
+        path="/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
+      <Route
+        path="/User-Resolution"
+        element={<UserResolution/>}
+      />
+      <Route path="/User/browse-course" element={<UserBrowseCourse />} />
+      <Route path="/User/single-course" element={<UserSingleCourse />} />
+      <Route
+        path="/User/single/learning/single-course"
+        element={<UserLearningCourse />}
+      />
+      <Route
+        path="/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
+
+
+<Route path="/Ecosystemdashboard" element={<EcosystemDashboard />} />
+      <Route
+        path="/Ecosystemdashboard/My-Courses"
+        element={<EcosystemCourses />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-reviews"
+        element={<EcosystemReviews />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-earning"
+        element={<EcosystemEarning />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-orders"
+        element={<EcosystemOrders />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-students"
+        element={<EcosystemStudents />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-payouts"
+        element={<EcosystemPayouts />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz"
+        element={<EcosystemQuiz />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz-single"
+        element={<EcosystemQuizSingle />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz-result"
+        element={<EcosystemQuizResult />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-edit-profile"
+        element={<EcosystemEditProfile />}
+      />
+
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-social-profiles"
+        element={<EcosystemSocialProfiles />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-delete-profile"
+        element={<EcosystemDeleteProfile />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-add-new-course"
+        element={<EcosystemAddNewCourse />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-edit-course"
+        element={<EcosystemAddEditCourse />}
+      />
+
+
     </Routes>
   );
 };
