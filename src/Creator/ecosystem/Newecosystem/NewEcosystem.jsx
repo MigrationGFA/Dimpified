@@ -10,6 +10,7 @@ import {
   Modal,
   FormControl,
   Spinner,
+  Alert,
 } from "react-bootstrap";
 import { FormSelect } from "../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -27,16 +28,19 @@ const NewEcosystem = () => {
   const creatorId = user?.data?.CreatorId;
 
   const [showModal, setShowModal] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
   const [domainName, setDomainName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [isDomainValid, setIsDomainValid] = useState(true);
+  const [isDomainValid, setIsDomainValid] = useState(false);
+  const [domainMessage, setDomainMessage] = useState("");
   const [domainErrorMessage, setDomainErrorMessage] = useState("");
+  const [domainSuggestions, setDomainSuggestions] = useState([]);
 
   useEffect(() => {
     validateForm();
-  }, [ecosystem, isDomainValid]);
+  }, [ecosystem]);
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
@@ -62,8 +66,7 @@ const NewEcosystem = () => {
       mainObjective &&
       expectedAudienceNumber &&
       experience &&
-      ecosystemDescription &&
-      isDomainValid
+      ecosystemDescription
     ) {
       setIsFormValid(true);
     } else {
@@ -74,20 +77,27 @@ const NewEcosystem = () => {
   const validateDomain = async (ecosystemDomain) => {
     try {
       const response = await axios.post(
-        "https://dimpified-backend.azurewebsites.net/api/v1/check-domain",
+        `${import.meta.env.VITE_API_URL}/check-domain`,
         { domainName: ecosystemDomain }
       );
-      if (response.data.available) {
+      const { available, message, suggestions = [] } = response.data;
+      if (message === "Domain name is available") {
         setIsDomainValid(true);
+        setDomainMessage(message);
         setDomainErrorMessage("");
-      } else {
+        setDomainSuggestions([]);
+      } else if (message === "Domain name not available") {
         setIsDomainValid(false);
-        setDomainErrorMessage("Domain is already taken.");
+        setDomainErrorMessage(message);
+        setDomainMessage("");
+        setDomainSuggestions(suggestions);
       }
     } catch (error) {
       console.error("Error validating domain:", error);
       setIsDomainValid(false);
       setDomainErrorMessage("Error checking domain availability.");
+      setDomainMessage("");
+      setDomainSuggestions([]);
     }
   };
 
@@ -95,8 +105,13 @@ const NewEcosystem = () => {
     console.log("Searching for domain:", domainName);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+    setConfirmModal(true);
+  };
+
+  const handleConfirm = async () => {
     setIsProcessing(true);
+    setConfirmModal(false);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/ecosystem/aboutDetails`,
@@ -226,6 +241,7 @@ const NewEcosystem = () => {
                           onChange={(e) =>
                             handleFieldChange("ecosystemDomain", e.target.value)
                           }
+                          isInvalid={domainErrorMessage !== ""}
                         />
                         <span className="input-group-text">.dimpified.com</span>
                       </div>
@@ -233,8 +249,27 @@ const NewEcosystem = () => {
                         The domain must contain only lowercase letters and
                         hyphens.
                       </Form.Text>
-                      {!isDomainValid && (
-                        <p className="text-danger">{domainErrorMessage}</p>
+                      {domainMessage && (
+                        <Alert className="bg-primary text-white">
+                          {domainMessage}
+                        </Alert>
+                      )}
+                      {domainErrorMessage && (
+                        <Alert variant="danger">
+                          {domainErrorMessage}
+                          {domainSuggestions.length > 0 && (
+                            <div className="mt-2">
+                              <strong>Suggestions:</strong>
+                              <ul>
+                                {domainSuggestions.map(
+                                  (suggestion, index) => (
+                                    <li key={index}>{suggestion}</li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          )}
+                        </Alert>
                       )}
                       <p className="text-danger text-uppercase fs-5 fw-bold">
                         Or
@@ -377,7 +412,7 @@ const NewEcosystem = () => {
                     <Button
                       variant="primary"
                       onClick={handleSubmit}
-                      disabled={!isFormValid || isProcessing}
+                      disabled={!isFormValid || isProcessing || !isDomainValid}
                     >
                       {isProcessing ? (
                         <>
@@ -401,6 +436,27 @@ const NewEcosystem = () => {
           </Card>
         </Col>
       </Row>
+      <Modal show={confirmModal} onHide={() => setConfirmModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to Make this Ecosystem Live for users to have
+          access to?
+          <br />
+          <strong>Note:</strong> <br />
+          If you click on No, you can still edit the ecosystem information
+          and If you click on Next you will be creating your ecosystem but you won't be able to edit the ecosystem information 
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setConfirmModal(false)}>
+            No
+          </Button>
+          <Button variant="primary" onClick={handleConfirm}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

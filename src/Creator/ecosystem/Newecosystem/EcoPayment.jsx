@@ -423,6 +423,7 @@ const EcoPayment = () => {
 
   return (
     <Fragment>
+      <EcoHeader />
       <section className="py-lg-5 py-3">
         <Container>
           {/* Page header */}
