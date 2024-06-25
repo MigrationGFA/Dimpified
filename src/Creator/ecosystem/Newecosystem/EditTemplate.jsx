@@ -13,29 +13,13 @@ import {
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
-import template1 from "../../../assets/Screenshot 2024-05-27 165727.png";
-import template2 from "../../../assets/save2.png";
-import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
+import Template2 from "../../../EditTemplate/Template2";
 import TemplateOne from "../../../EditTemplate/TemplateOneV1";
 import PreviewPage from "../../../EditTemplate/Preview";
-
-const templates = [
-  {
-    id: 1,
-    name: "Template 1",
-    img: template1,
-  },
-  { id: 2, name: "Template 2", img: template2 },
-  { id: 3, name: "Template 3", img: template3 },
-];
-
-const questions = [
-  { id: 1, question: "Do you have experience with online training?" },
-  { id: 2, question: "What is the size of your audience?" },
-];
+import Templates from "../../../data/Template/LandingPageTemplate";
 
 const templateSections = [
   { id: 1, name: "All" },
@@ -75,13 +59,16 @@ const EditTemplate = () => {
     setSelectedTemplate(template);
     setStep(2);
   };
-
-  const handleContentChange = (field, value) => {
-    setContent({ ...content, [field]: value });
-  };
-
-  const handleAnswerChange = (questionId, answer) => {
-    setAnswers({ ...answers, [questionId]: answer });
+  const renderTemplate = (templateId) => {
+    switch (templateId) {
+      case 1:
+        return <Template2 />;
+      case 2:
+        return <Template1 />;
+      // Add cases for Template3 and Template4...
+      default:
+        return <div>Invalid template</div>;
+    }
   };
 
   const handleSubmit = () => {
@@ -104,12 +91,6 @@ const EditTemplate = () => {
     navigate("/creator/dashboard/New-Ecosystem");
   };
 
-  const handleContinue = () => {
-    if (selectedTemplate.length > 0) {
-      setStep(3);
-    }
-  };
-
   useEffect(() => {
     checkScroll();
   }, []);
@@ -119,7 +100,7 @@ const EditTemplate = () => {
   };
 
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 mb-5">
       <EcoHeader />
 
       <Container className="mt-5 ">
@@ -194,7 +175,7 @@ const EditTemplate = () => {
                 </div>
               </div>
               <Row className={showModal ? "blurred" : ""}>
-                {templates.map((template) => (
+                {Templates.map((template) => (
                   <Col key={template.id} md={4} className="mt-5 md-mt-0">
                     <Card className="template-card">
                       <Card.Img
@@ -217,7 +198,7 @@ const EditTemplate = () => {
                           <Button
                             variant="primary"
                             className="select-button"
-                            onClick={() => handleTemplateSelect(template)}
+                            onClick={() => handleTemplateSelect(template.id)}
                           >
                             Select Template
                           </Button>
@@ -242,7 +223,8 @@ const EditTemplate = () => {
           {step === 2 && (
             <div>
               <h3>Edit Template Content</h3>
-              <Template1 />
+              {/* <Template1 /> */}
+              {renderTemplate(selectedTemplate)}
               {/* <TemplateOne /> */}
               <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
