@@ -53,24 +53,7 @@ const HeroRightImage = () => {
                 collect information, sell services, track activities, build
                 communities in one place and maxmize your impact.
               </p>
-              {/* <ListGroup as="ul" bsPrefix='list-unstyled' className="mb-5">
-                <ListGroup.Item as="li" bsPrefix="mb-2" >
-                  <CheckCircleFill size={12} fill="var(--geeks-success)" />
-                  <span className="ms-2">No credit card required</span>
-                </ListGroup.Item>
-                <ListGroup.Item as="li" bsPrefix="mb-2" >
-                  <CheckCircleFill size={12} fill="var(--geeks-success)" />
-                  <span className="ms-2">Customer service 24/7</span>
-                </ListGroup.Item>
-                <ListGroup.Item as="li" bsPrefix="mb-2" >
-                  <CheckCircleFill size={12} fill="var(--geeks-success)" />
-                  <span className="ms-2">No setup fee</span>
-                </ListGroup.Item>
-                <ListGroup.Item as="li" bsPrefix="mb-2" >
-                  <CheckCircleFill size={12} fill="var(--geeks-success)" />
-                  <span className="ms-2">Cancel any time</span>
-                </ListGroup.Item>
-              </ListGroup> */}
+
               <div className="d-grid d-md-block">
                 <Link
                   to="/creator/signup"
@@ -103,7 +86,7 @@ const HeroRightImage = () => {
                 alt="online course"
                 className="img-fluid rounded-4 w-100 z-1 position-relative"
               />
-              <div className="position-absolute top-100 start-100 translate-middle  d-none d-md-block">
+              <div className="position-absolute top-100  start-100 translate-middle  d-none d-md-block">
                 <Image src={SVGgraphics1} alt="graphics-1" />
               </div>
             </div>

@@ -1,13 +1,8 @@
-
-
-
-
 // ** Import from react dom
 import { Route, Routes, Navigate } from "react-router-dom";
 
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
-
 
 import DimpHome from "../dimp-home/DimpHome";
 import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
@@ -54,7 +49,6 @@ import ChatLayout from "./Dashboard/ChatLayout";
 // import Feature Update components
 import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
 
-
 // Import Onboard
 import Onboard from "../Pages/creator/Onboard";
 import OnboardTwo from "../Pages/creator/OnboardTwo";
@@ -75,14 +69,10 @@ import Payouts from "../Creator/Payment/Payouts";
 const AllRoutes = () => {
   return (
     <Routes>
-    
-      
       <Route path="/" element={<DimpHome />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/non-profit" element={<NonProfit />} />
-
-
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
@@ -156,10 +146,9 @@ const AllRoutes = () => {
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
-      </Route> 
+      </Route>
     </Routes>
   );
 };
 
 export default AllRoutes;
-

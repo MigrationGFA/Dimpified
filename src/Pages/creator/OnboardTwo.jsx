@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Ecosystem from "../../assets/ecosystem.png";
+import Ecosystem from "../../assets/images/background/Onboard.jpg";
 
 const OnboardTwo = () => {
   const [ecosystemSetup, setEcosystemSetup] = useState(null);
@@ -13,7 +13,6 @@ const OnboardTwo = () => {
   const handleYesClick = () => {
     navigate("/creator/dashboard/New-Ecosystem");
   };
-  
 
   const handlePreviousClick = () => {
     navigate("/creator/Onboard");
@@ -54,14 +53,18 @@ const OnboardTwo = () => {
                 <h2 className="mb-3">DO YOU WANT TO SET UP AN/A ECOSYSTEM</h2>
                 <div className="d-flex justify-content-center">
                   <Button
-                    variant={ecosystemSetup === "yes" ? "primary" : "outline-primary"}
+                    variant={
+                      ecosystemSetup === "yes" ? "primary" : "outline-primary"
+                    }
                     className="me-2"
                     onClick={handleYesClick}
                   >
                     YES
                   </Button>
                   <Button
-                    variant={ecosystemSetup === "no" ? "primary" : "outline-primary"}
+                    variant={
+                      ecosystemSetup === "no" ? "primary" : "outline-primary"
+                    }
                     onClick={handleNoClick}
                   >
                     NO

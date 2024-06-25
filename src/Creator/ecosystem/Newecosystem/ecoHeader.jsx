@@ -16,7 +16,7 @@ const ecoHeader = () => {
   return (
     <Row
       style={{ backgroundColor: "#00008B" }}
-      className="text-white d-flex align-items-center p-2 overflow-hidden  "
+      className="text-white d-flex align-items-center p-2 overflow-hidden"
     >
       <Col>
         <Nav className="d-flex justify-content-center align-items-center">
