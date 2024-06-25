@@ -20,28 +20,28 @@ const ImproveKPI = () => {
 
       title: "Reduce Learner's support costs",
       description:
-        "Ease the burden of inquiries coming through pre-sales, Learner's support and Learner's success teams.",
+        "Optimize Learner’s support processes by leveraging DIMP self-taught services, FAQs and tutorials,  to minimize the need for direct assistance.",
     },
     {
       id: 2,
 
       title: "Strengthen Learner's retention",
       description:
-        "Learner's training programs with DIMP contribute to a more positive Learner's experience. Happy Learner'ss are more likely to renew.",
+        "Give your learners a personalized & engaging learning experience with an active feedback function that keeps them ",
     },
     {
       id: 3,
 
-      title: "Activate your Learners",
+      title: "Engage your Learners",
       description:
-        "Boost activation by making your Learner's fully aware of your products and services benefits. Provide consistent, comprehensive, and trackable Learner's training.",
+        "Ensure your learners are well-informed about the benefits of your products and services. Deliver regular, thorough, and measurable training for learners.",
     },
     {
       id: 4,
 
-      title: "Reduce churn",
+      title: "Increase revenue",
       description:
-        "Loyalty and retention equal reduced churn. Reduce churn significantly through continuous, highly tailored product education programs.",
+        "Open new streams of revenue by monetising your training program. Drive customer success and expect to sell more extensions and add-ons for your product.",
     },
   ];
 

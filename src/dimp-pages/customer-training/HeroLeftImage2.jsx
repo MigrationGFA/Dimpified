@@ -21,21 +21,21 @@ const HeroLeftImage = () => {
       icon: mdiStar,
       title: "Build a true white label academy",
       description:
-        "Use the most powerful Site Builder to create your branded online academy that you can also connect with your domain. Enjoy total design freedom with the best drag-and-drop tool.",
+        "Create your own branded online academy with our powerful Site Builder, complete with total design freedom and easy domain connection. ",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
       title: "Train using your own apps",
       description:
-        "Trigger customer involvement with self assessments, exams, and forms. Take advantage of 18 different question types and a powerful question builder.Take your branded academy mobile with your white-label iOS and Android apps! Meet your customers on the go and allow them to learn from anywhere in the world.",
+        "Encourage customer engagement with self-assessments, tests, and forms. Choose from 18 question types and build custom questions. You can also create your own branded mobile app for iOS and Android to reach customers on the move. ",
     },
     {
       id: 3,
       icon: mdiFileDocument,
       title: `Connect your academy with your marketing stack`,
       description:
-        "Start growing your customer training academy with our native integrations of 4,000+ third-party apps. SSO and an extensive API will facilitate training throughout your customer network.",
+        "Expand your customer training academy with native integrations with third-party apps. Single sign-on (SSO) and a robust API simplify training across your customer network. ",
     },
   ];
 
