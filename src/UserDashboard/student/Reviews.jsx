@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { Card, Form, ListGroup, Row, Col, Spinner, Button } from 'react-bootstrap';
 import axios from 'axios';
 import StudentProfileLayout from './StudentProfileLayout';
-import InstructorReviewCard from '../Components/marketing/common/cards/StudentReviewCard';
+import InstructorReviewCard from '../../Components/marketing/common/cards/StudentReviewCard';
 
-import { FormSelect } from '../Components/elements/form-select/FormSelect';
-import { useGlobalContext } from '../context/AuthContext';
+import { FormSelect } from '../../Components/elements/form-select/FormSelect';
+import { useGlobalContext } from '../../context/AuthContext';
 
 const Reviews = () => {
   // const { userId, user, userImage } = useGlobalContext();

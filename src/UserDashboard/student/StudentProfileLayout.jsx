@@ -1,17 +1,17 @@
 import React, { Fragment, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Col, Row, Nav, Container, Navbar } from "react-bootstrap";
-import NavBar from "../Pages/home-academy/navbars/NavbarDefault";
+import NavBar from "../../Pages/Pages/home-academy/navbars/NavbarDefault";
 import "./StudentProfileLayout.css";
 import {
   DashboardMenu,
   AccountSettingsMenu,
-} from "../routes/marketing/StudentDashboard";
-import Avatar3 from "../assets/images/avatar/person.png";
-import ProfileCover from "../Components/marketing/common/headers/ProfileCover";
+} from "../../routes/marketing/StudentDashboard";
+import Avatar3 from "../../assets/images/avatar/person.png";
+import ProfileCover from "../../Components/marketing/common/headers/ProfileCover";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
-// import { useGlobalContext } from "../context/AuthContext";
+// import { useGlobalContext } from "../../context/AuthContext";
 
 
 const StudentProfileLayout = (props) => {

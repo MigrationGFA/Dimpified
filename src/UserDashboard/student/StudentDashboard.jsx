@@ -5,11 +5,11 @@ import ApexCharts from "react-apexcharts";
 import axios from "axios"; // Added axios import
 
 // Import custom components
-import StatRightBadge from "../Components/marketing/common/stats/StatRightBadge";
+import StatRightBadge from "../../Components/marketing/common/stats/StatRightBadge";
 import StudentProfileLayout from "../student/StudentProfileLayout";
 
 // Import chart options
-import { OrderColumnChartOptions } from "../data/charts/ChartData";
+import { OrderColumnChartOptions } from "../../data/charts/ChartData";
 
 const StudentDashboard = () => {
   const [top4Courses, setTop4Courses] = useState([]);

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Spinner } from "react-bootstrap";
-import CourseCard from "../Components/marketing/pages/courses/BookmarkedCourseCard";
+import CourseCard from "../../Components/marketing/Pages/courses/BookmarkedCourseCard";
 import StudentProfileLayout from "./StudentProfileLayout";
 import axios from "axios";
-import { useGlobalContext } from "../context/AuthContext";
+import { useGlobalContext } from "../../context/AuthContext";
 
 const Bookmarked = () => {
   // const { userId } = useGlobalContext();

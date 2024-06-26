@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { Card, Modal, Button, Form } from 'react-bootstrap';
 
 // import custom components
-import Question from '../UserDashboard/Components/marketing/common/quiz/Question';
+import Question from '../Components/marketing/common/quiz/Question';
 import { FormSelect } from '../Components/elements/form-select/FormSelect';
 
 // import data files
-import { QuizData } from '../UserDashboard/data/marketing/quiz/QuizData';
+import { QuizData } from '../data/marketing/quiz/QuizData';
 
 // import profile layout wrapper
 import InstructorProfileLayout from '../EcosystemDashboard/InstructorProfileLayout';

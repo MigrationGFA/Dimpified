@@ -15,7 +15,7 @@ import {
   AccountSettingsMenu,
 } from "../routes/marketing/InstructorDashboard";
 
-import NavbarDefault from "../UserDashboard/Pages/home-academy/navbars/NavbarDefault";
+import NavbarDefault from "../Pages/Pages/home-academy/navbars/NavbarDefault";
 
 // import media files
 import Avatar3 from "../assets/images/avatar/person.png";

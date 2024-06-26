@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-import CourseSlider from '../UserDashboard/Components/marketing/pages/courses/CourseSlider';
-import FeaturesList from '../UserDashboard/Components/marketing/pages/courses/course-index/FeaturesList';
-import HeroHeader from '../UserDashboard/Components/marketing/pages/courses/course-index/HeroHeader';
-import NavbarDefault from '../UserDashboard/Pages/home-academy/navbars/NavbarDefault';
+import CourseSlider from '../Components/marketing/Pages/courses/CourseSlider';
+import FeaturesList from '../Components/marketing/Pages/courses/course-index/FeaturesList';
+import HeroHeader from '../Components/marketing/Pages/courses/course-index/HeroHeader';
+import NavbarDefault from '../Pages/Pages/home-academy/navbars/NavbarDefault';
 
 
 const StudentLandingPage = () => {

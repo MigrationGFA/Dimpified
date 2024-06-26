@@ -15,7 +15,7 @@ import Pagination from '../Components/elements/advance-table/Pagination';
 import { FormSelect } from '../Components/elements/form-select/FormSelect';
 
 // import data files
-import QuizResultsData from '../UserDashboard/data/marketing/quiz/QuizResultsData';
+import QuizResultsData from '../data/marketing/quiz/QuizResultsData';
 
 // import profile layout wrapper
 import InstructorProfileLayout from './InstructorProfileLayout';

@@ -22,7 +22,7 @@ import {
 import { FormSelect } from "../Components/elements/form-select/FormSelect";
 import GlobalFilter from "../Components/elements/advance-table/GlobalFilter";
 import Pagination from "../Components/elements/advance-table/Pagination";
-import LevelIcon from "../UserDashboard/Components/marketing/common/miscellaneous/LevelIcon";
+import LevelIcon from "../Components/marketing/common/miscellaneous/LevelIcon";
 import InstructorProfileLayout from "./InstructorProfileLayout";
 import Icon from "@mdi/react";
 import { mdiStar } from "@mdi/js";

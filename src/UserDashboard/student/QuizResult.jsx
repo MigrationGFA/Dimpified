@@ -10,12 +10,12 @@ import {
 import { Row, Col, Image, Table, Card, Form } from 'react-bootstrap';
 
 // import custom components
-import GlobalFilter from '../Components/elements/advance-table/GlobalFilter';
-import Pagination from '../Components/elements/advance-table/Pagination';
-import { FormSelect } from '../Components/elements/form-select/FormSelect';
+import GlobalFilter from '../../Components/elements/advance-table/GlobalFilter';
+import Pagination from '../../Components/elements/advance-table/Pagination';
+import { FormSelect } from '../../Components/elements/form-select/FormSelect';
 
 // import data files
-import QuizResultsData from '../data/marketing/quiz/QuizResultsData';
+import QuizResultsData from '../../data/marketing/quiz/QuizResultsData';
 
 // import profile layout wrapper
 import StudentProfileLayout from './StudentProfileLayout';

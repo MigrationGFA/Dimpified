@@ -17,10 +17,10 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { FormSelect } from "../Components/elements/form-select/FormSelect";
-import GlobalFilter from "../Components/elements/advance-table/GlobalFilter";
-import Pagination from "../Components/elements/advance-table/Pagination";
-import LevelIcon from "../Components/marketing/common/miscellaneous/LevelIcon";
+import { FormSelect } from "../../Components/elements/form-select/FormSelect";
+import GlobalFilter from "../../Components/elements/advance-table/GlobalFilter";
+import Pagination from "../../Components/elements/advance-table/Pagination";
+import LevelIcon from "../../Components/marketing/common/miscellaneous/LevelIcon";
 import StudentProfileLayout from "./StudentProfileLayout";
 import axios from "axios";
 // import { useGlobalContext } from "../context/AuthContext";

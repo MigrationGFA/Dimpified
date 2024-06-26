@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Spinner, Tab, Modal } from "react-bootstrap";
-import { FormSelect } from "../Components/elements/form-select/FormSelect";
+import { FormSelect } from "../../Components/elements/form-select/FormSelect";
 import StudentProfileLayout from "./StudentProfileLayout";
 import ResolutionTable from "./ResolutionTable";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
-import { useGlobalContext } from "../context/AuthContext";
+import { useGlobalContext } from "../../context/AuthContext";
 const Resolution = () => {
   const [resolution, setResolution] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

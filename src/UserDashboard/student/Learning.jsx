@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Spinner } from "react-bootstrap";
-import LearningCourseCard from "../Components/marketing/pages/courses/LearningCourseCard";
+import LearningCourseCard from "../../Components/marketing/Pages/courses/LearningCourseCard";
 import StudentProfileLayout from './StudentProfileLayout';
 import axios from "axios";
-import { useGlobalContext } from "../context/AuthContext";
+import { useGlobalContext } from "../../context/AuthContext";
 
 const Learning = () => {
   // const { userId } = useGlobalContext();

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, Table } from 'react-bootstrap';
 
 // import data files
-import QuizListData from '../UserDashboard/data/marketing/quiz/QuizListData';
+import QuizListData from '../data/marketing/quiz/QuizListData';
 
 // import profile layout wrapper
 import InstructorProfileLayout from './InstructorProfileLayout';
