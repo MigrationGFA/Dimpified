@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+// import { SketchPicker } from "react-color";
 
 const fonts = [
   { label: "Arial", value: "Arial, sans-serif" },
@@ -20,6 +21,7 @@ const SideEditor = ({
   onBackgroundColorChange,
   onTextColorChange,
   onFontChange,
+  onButtonColorChange,
 }) => {
   const handleBackgroundColorChange = (e) => {
     onBackgroundColorChange(sectionId, e.target.value);
@@ -42,6 +44,10 @@ const SideEditor = ({
     );
   };
 
+  const handleButtonColorChange = (e) => {
+    onButtonColorChange(sectionId, e.target.value); // Corrected value extraction
+  };
+
   return (
     <div
       className="side-editor"
@@ -57,6 +63,7 @@ const SideEditor = ({
         <Form.Label>Background Color</Form.Label>
         <Form.Control type="color" onChange={handleBackgroundColorChange} />
       </Form.Group>
+
       <Form.Group controlId="textColor">
         <Form.Label>Text Color</Form.Label>
         <Form.Control type="color" onChange={handleTextColorChange} />
@@ -75,81 +82,13 @@ const SideEditor = ({
           ))}
         </Form.Control>
       </Form.Group>
+
+      <Form.Group controlId="buttonColor">
+        <Form.Label>Button Background Color</Form.Label>
+        <Form.Control type="color" onChange={handleButtonColorChange} />
+      </Form.Group>
     </div>
   );
 };
 
 export default SideEditor;
-
-// import React from "react";
-// import { useDispatch } from "react-redux";
-// import { updateStyles } from "../features/Template/Template1"; // Assuming this is your action creator
-// import { Form } from "react-bootstrap";
-
-// const SideEditor = ({
-//   sectionId,
-//   onBackgroundColorChange,
-//   onTextColorChange,
-//   onFontChange,
-// }) => {
-//   const dispatch = useDispatch();
-
-//   const handleBackgroundColorChange = (e) => {
-//     onBackgroundColorChange(sectionId, e.target.value);
-//   };
-
-//   const handleTextColorChange = (e) => {
-//     onTextColorChange(sectionId, e.target.value);
-//   };
-
-//   const handleFontChange = (e) => {
-//     const selectedFont = fonts.find(
-//       (font) =>
-//         font.value === e.target.value &&
-//         font.fontStyle === e.target.dataset.fontstyle
-//     );
-//     onFontChange(
-//       sectionId,
-//       selectedFont.value,
-//       selectedFont.fontStyle || "normal"
-//     );
-//   };
-
-//   // const handleBackgroundColorChange = (e) => {
-//   //   const color = e.target.value;
-//   //   dispatch(updateStyles(sectionId, { backgroundColor: color })); // Dispatching action to update background color
-//   // };
-
-//   // const handleTextColorChange = (e) => {
-//   //   const color = e.target.value;
-//   //   dispatch(updateStyles(sectionId, { textColor: color })); // Dispatching action to update text color
-//   // };
-
-//   // const handleFontChange = (e) => {
-//   //   const fontFamily = e.target.value;
-//   //   dispatch(updateStyles(sectionId, { fontFamily: fontFamily })); // Dispatching action to update font family
-//   // };
-
-//   return (
-//     <div>
-//       <Form.Group>
-//         <Form.Label>Background Color</Form.Label>
-//         <Form.Control type="color" onChange={handleBackgroundColorChange} />
-//       </Form.Group>
-//       <Form.Group>
-//         <Form.Label>Text Color</Form.Label>
-//         <Form.Control type="color" onChange={handleTextColorChange} />
-//       </Form.Group>
-//       <Form.Group>
-//         <Form.Label>Font Family</Form.Label>
-//         <Form.Control as="select" onChange={handleFontChange}>
-//           <option value="Arial, sans-serif">Arial</option>
-//           <option value="Times New Roman, serif">Times New Roman</option>
-//           <option value="Courier New, monospace">Courier New</option>
-//         </Form.Control>
-//       </Form.Group>
-//     </div>
-//   );
-// };
-
-// export default SideEditor;
