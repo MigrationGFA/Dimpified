@@ -6,9 +6,10 @@ import { Image, Navbar, Nav, Container } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 
 // import custom components
-import FeaturesMenu from "./FeaturesMenu";
-import UseCasesMenu from "./UseCasesMenu";
-import SupportMenu from "./SupportMenu";
+
+import UseCaseMenu from "./navbars/usecases-menu/UseCaseMenu";
+import FeaturesMenu from "./navbars/features-menu/FeaturesMenu";
+import SupportMenu from "./navbars/support-menu/SupportMenu";
 
 // import media files
 import Logo from "./images/gfa-blue.png";
@@ -30,10 +31,10 @@ const NavbarLanding = (props) => {
     fontSize: isDesktop
       ? "1rem"
       : isIpadPro
-      ? "1.25rem" // Different value for iPad Pro
+      ? "1rem" // Different value for iPad Pro
       : isTablet || isMobile
-      ? "1.25rem"
-      : "1.25rem", // Default for other devices
+      ? "1rem"
+      : "1rem", // Default for other devices
   };
 
   return (
@@ -57,8 +58,8 @@ const NavbarLanding = (props) => {
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={`${"mx-auto"}`}>
-              <FeaturesMenu />
-              <UseCasesMenu />
+              <FeaturesMenu style={linkStyle}/>
+              <UseCaseMenu style={linkStyle}/>
               <Nav.Link
                 href="/pricing"
                 className="dropdown-arrow d-block nav-link lh-1 pt-2"
@@ -67,7 +68,7 @@ const NavbarLanding = (props) => {
                 Pricing
               </Nav.Link>
 
-              <SupportMenu />
+              <SupportMenu style={linkStyle}/>
             </Nav>
             <Nav
               className={`${
