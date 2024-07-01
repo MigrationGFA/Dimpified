@@ -176,9 +176,7 @@ const EditTemplate = () => {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
   };
-  const handlePrevious = () => {
-    navigate("/creator/dashboard/New-Ecosystem");
-  };
+  
 
   useEffect(() => {
     checkScroll();
@@ -298,15 +296,7 @@ const EditTemplate = () => {
                 ))}
               </Row>
 
-              <div className="d-flex justify-content-between mt-4">
-                <Button
-                  variant="secondary"
-                  className="me-2"
-                  onClick={handlePrevious}
-                >
-                  Previous
-                </Button>
-              </div>
+              
             </div>
           )}
           {step === 2 && (
