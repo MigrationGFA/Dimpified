@@ -15,7 +15,7 @@ import Technical from "../icons/technical-support.png";
 const NavbarMegaMenuRoutes = [
   {
     id: uuid(),
-    
+
     children: [
       {
         id: uuid(),
@@ -24,14 +24,14 @@ const NavbarMegaMenuRoutes = [
         subtitle1: "Upskilling Programs,",
         subtitle2: "e-Governance,",
         subtitle3: "Licensing,",
-		subtitle3: "Tax Mangement",
-		 link: "#",
+        subtitle4: "Tax Mangement",
+        link: "#",
       },
     ],
   },
   {
     id: uuid(),
-   
+
     children: [
       {
         id: uuid(),
@@ -48,7 +48,7 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-    
+
     link: "#",
     children: [
       {
@@ -65,7 +65,7 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-   
+
     children: [
       {
         id: uuid(),
@@ -81,7 +81,7 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-   
+
     children: [
       {
         id: uuid(),
@@ -113,7 +113,7 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-   
+
     children: [
       {
         id: uuid(),
@@ -153,7 +153,7 @@ const NavbarMegaMenuRoutes = [
         image: Educational,
         subtitle1: "Tutoring,",
         subtitle2: "Coding Bootcamps,",
-		subtitle3: "Educational Consulting,",
+        subtitle3: "Educational Consulting,",
         subtitle4: "College Admissions Counseling",
 
         link: "/education",

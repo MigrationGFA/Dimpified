@@ -123,11 +123,9 @@ const NewEcosystem = () => {
       const data = response.data.ecosystem;
       const { _id } = data;
       dispatch(setEcosystemId(_id));
-      console.log(data);
       navigate("/creator/dashboard/Edit-Template");
       showToast(response.data.message);
     } catch (error) {
-      console.error("Error submitting ecosystem:", error);
       showToast(error.response.data.message);
       navigate("/creator/dashboard/New-Ecosystem");
     } finally {

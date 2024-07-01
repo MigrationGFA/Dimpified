@@ -6,6 +6,8 @@ import temPlate1Reducer from './features/Template/Template1';
 import activeSectionReducer from './features/Template/activeTemplateSection';
 import courseReducer from './features/course';
 import ecosystemReducer from './features/ecosystem'; 
+import form1Reducer from "./features/Template/Form1"
+
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +17,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   authentication: authReducer,
   template1: temPlate1Reducer,
+  form1: form1Reducer,
   activeSection: activeSectionReducer,
   course: courseReducer,
   ecosystem: ecosystemReducer, 
