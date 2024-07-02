@@ -4,16 +4,9 @@ import React, { useState, Fragment, useRef } from "react";
 import Icon from "@mdi/react";
 import { mdiFacebook, mdiTwitter, mdiInstagram, mdiLinkedin } from "@mdi/js";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  updateContent,
-  updateStyles,
-  updateFAQ,
-} from "../features/Template/Template1";
-import { setActiveSection } from "../features/Template/activeTemplateSection";
-import EditableBlock from "./EditableBlock";
-import SideEditor from "./SideEditor";
-import useImageEditor from "./userImageEditor";
+import { useSelector } from "react-redux";
+import "./PreviewSize.css";
+// import classNames from "classnames";
 
 import "../assets/scss/theme.scss";
 import {
@@ -31,12 +24,8 @@ import {
   ListGroup,
 } from "react-bootstrap";
 
-const PreviewPage = () => {
-  const dispatch = useDispatch();
+const PreviewPage = ({ view }) => {
   const content = useSelector((state) => state.template1);
-  const activeSection = useSelector(
-    (state) => state.activeSection.activeSection
-  );
 
   return (
     <div
