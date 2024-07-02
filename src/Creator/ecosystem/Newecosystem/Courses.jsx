@@ -16,6 +16,7 @@ import PlayBtn from "../../../assets/play-btn.svg";
 import EcoHeader from "./ecoHeader";
 import AddNewCourse from "../AddNewCourse";
 import "./Course.css";
+import PostService from "./PostService";
 
 // Example templates and dummy data
 const templates = [
@@ -94,6 +95,7 @@ const Courses = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [selectedTemplates, setSelectedTemplates] = useState([]);
+  const [showPostService, setShowPostService] = useState(false);
   const [content, setContent] = useState({
     logo: "Your Logo",
     header: "Welcome to Our Website",
@@ -131,6 +133,12 @@ const Courses = () => {
 
   const handlePrevious = () => {
     navigate("/creator/dashboard/Create-Form");
+  };
+
+  const handleService = () => {
+    setStep(2);
+    setShowPostService(true);
+    // navigate("/creator/dashboard/Post-Service");
   };
 
   const scroll = (scrollOffset) => {
@@ -191,8 +199,8 @@ const Courses = () => {
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
-          <h2>Course Section</h2>
-          <p>Select and create your courses</p>
+          <h2>Product Section</h2>
+          <p>Select and create your products</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
             <ProgressBar now={(step / 3) * 100} />
           </div>
@@ -201,7 +209,7 @@ const Courses = () => {
         <div>
           {step === 1 && (
             <div>
-              <h3>Course Sections</h3>
+              <h3>Product Sections</h3>
               <div className="d-flex align-items-center position-relative">
                 <FaChevronLeft
                   className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
@@ -242,11 +250,36 @@ const Courses = () => {
               </div>
               <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
                 <h3>Select from our Existing Courses</h3>
+                <div>
+               
+                <Button
+                    variant="primary"
+                    className="mx-2"
+                    onClick={handleService}
+                  >
+                    Upload Service
+                  </Button>
+                
                 <Link to="">
-                  <Button variant="primary" onClick={handleCreateNewCourse}>
-                    Create New Course
+                  <Button
+                    variant="primary"
+                    onClick=""
+                    className="mx-2"
+                  >
+                    Upload Product
                   </Button>
                 </Link>
+                <Link to="">
+                  <Button
+                    variant="primary"
+                    onClick={handleCreateNewCourse}
+                    className="mx-2"
+                  >
+                    Upload Course
+                  </Button>
+                </Link>
+                </div>
+                
               </div>
 
               <Row className="mt-5">
@@ -294,12 +327,12 @@ const Courses = () => {
               </Row>
 
               <Row className="mt-5">
-                <h4>Audio Courses</h4>
+              <h3>Select from our Existing Product</h3>
                 {/* Dummy audio courses, you can add similar code for rendering */}
               </Row>
 
               <Row className="mt-5">
-                <h4>Document Courses</h4>
+              <h3>Select from our Existing Services</h3>
                 {/* Dummy document courses, you can add similar code for rendering */}
               </Row>
               <div className="d-flex justify-content-between align-content-center">
@@ -308,7 +341,9 @@ const Courses = () => {
                     variant="secondary"
                     className="me-2"
                     onClick={handlePrevious}
-                  >Previous</Button>
+                  >
+                    Previous
+                  </Button>
                 </div>
                 <div className="d-flex justify-content-end">
                   <Button
@@ -329,7 +364,23 @@ const Courses = () => {
               </div>
             </div>
           )}
-          {step === 2 && (
+          {step === 2 && showPostService && (
+            
+            <div>
+              <h3>Create Your Service</h3>
+              <PostService />
+              <div className="d-flex justify-content-between w-100 mt-4">
+                <Button variant="primary" onClick={() => setStep(1)}>
+                  Previous
+                </Button>
+                <Button variant="primary" onClick={() => setStep(3)}>
+                  Continue
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 2 && !showPostService && (
             <div>
               <h3>Create Your Course</h3>
               <AddNewCourse />
@@ -376,3 +427,4 @@ const Courses = () => {
 };
 
 export default Courses;
+
