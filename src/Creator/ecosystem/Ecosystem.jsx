@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Pagination from "../../Components/elements/advance-table/Pagination"; 
 
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
@@ -39,34 +39,19 @@ function formatDateWithOrdinal(date) {
 }
 
 function getTimeDifference(updatedAt) {
-  // Parse the updatedAt string to a Date object
   const updatedAtDate = new Date(updatedAt);
-
-  // Get the current time
   const currentTime = new Date();
-
-  // Calculate the time difference in milliseconds
-  const timeDifference = currentTime - updatedAtDate;
-
-  // Convert milliseconds to minutes
-  const minutes = Math.floor(timeDifference / (1000 * 60));
-
-  // Convert minutes to hours
-  const hours = Math.floor(minutes / 60);
-
-  // Convert hours to days
-  const days = Math.floor(hours / 24);
-
-  // Format the updatedAt date
   const formattedDate = formatDateWithOrdinal(updatedAtDate);
 
-  // Return combined string
   return `${formattedDate}`;
 }
 
 const Ecosystem = () => {
   const [ecosystem, setEcosystem] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1); // Pagination state
+  const itemsPerPage = 10; // Number of items per page
 
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
@@ -77,7 +62,6 @@ const Ecosystem = () => {
         `${import.meta.env.VITE_API_URL}/creator-ecosystems/${userId}`
       );
       setEcosystem(response.data.ecosystem);
-      console.log("this is ecosystem", ecosystem);
     } catch (error) {
       console.log(error);
     }
@@ -86,6 +70,14 @@ const Ecosystem = () => {
   useEffect(() => {
     getMyEcosystems();
   }, []);
+
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = ecosystem.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -113,7 +105,6 @@ const Ecosystem = () => {
             title="Total "
             value="30"
             summary="Number of sales"
-            // summaryValue="+20.9$"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -126,7 +117,6 @@ const Ecosystem = () => {
             title="Private"
             value="5"
             summary="Number of pending"
-            // summaryValue="5%"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -139,7 +129,6 @@ const Ecosystem = () => {
             title="Draft"
             value="5"
             summary="Students"
-            // summaryValue="+1200"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -152,7 +141,6 @@ const Ecosystem = () => {
             title="Total Users"
             value="20,000"
             summary="Instructor"
-            // summaryValue="12%"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -160,8 +148,8 @@ const Ecosystem = () => {
           />
         </Col>
       </Row>
-      {ecosystem && ecosystem.length > 0 ? (
-        ecosystem.map((eco) => (
+      {currentItems && currentItems.length > 0 ? (
+        currentItems.map((eco) => (
           <Card
             key={eco._id}
             className="card-bordered mb-4 card-hover cursor-pointer"
@@ -181,7 +169,6 @@ const Ecosystem = () => {
                     <div className="d-md-flex justify-content-between ">
                       <div>
                         <i className="fe fe-clock text-muted"></i>
-                        {/* <span>{timeString}</span> */}
                         <span>{getTimeDifference(eco.createdAt)}</span>
                       </div>
                     </div>
@@ -253,8 +240,15 @@ const Ecosystem = () => {
           </Card>
         ))
       ) : (
-        <div>You have not create any Ecosystem</div>
+        <div>You have not created any Ecosystem</div>
       )}
+
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={ecosystem.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 };
