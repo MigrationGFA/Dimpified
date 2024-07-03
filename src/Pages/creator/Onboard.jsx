@@ -174,7 +174,7 @@ const Onboard = () => {
                   Select Target Audience
                   <span className="text-danger">*</span>
                 </h2>
-                <Form.Control
+                {/* <FormSelect
                   as={FormSelect}
                   options={departments}
                   placeholder="Select Target Audience"
@@ -182,7 +182,22 @@ const Onboard = () => {
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   required
-                />
+                /> */}
+                <Form.Control
+                  as="select"
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>
+                    Select Target Audience
+                  </option>
+                  {departments.map((dept) => (
+                    <option key={dept.value} value={dept.value}>
+                      {dept.label}
+                    </option>
+                  ))}
+                </Form.Control>
               </Col>
             </Card.Body>
             <Card.Footer className="d-flex justify-content-end">

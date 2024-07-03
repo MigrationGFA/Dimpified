@@ -13,29 +13,17 @@ import {
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
-import template1 from "../../../assets/Screenshot 2024-05-27 165727.png";
-import template2 from "../../../assets/save2.png";
-import template3 from "../../../assets/save3.png";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
+import Template2 from "../../../EditTemplate/Template2";
 import TemplateOne from "../../../EditTemplate/TemplateOneV1";
 import PreviewPage from "../../../EditTemplate/Preview";
-
-const templates = [
-  {
-    id: 1,
-    name: "Template 1",
-    img: template1,
-  },
-  { id: 2, name: "Template 2", img: template2 },
-  { id: 3, name: "Template 3", img: template3 },
-];
-
-const questions = [
-  { id: 1, question: "Do you have experience with online training?" },
-  { id: 2, question: "What is the size of your audience?" },
-];
+import Templates from "../../../data/Template/LandingPageTemplate";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { showToast } from "../../../Components/Showtoast";
+import PreviewPageSize from "./PreviewPageSize";
 
 const templateSections = [
   { id: 1, name: "All" },
@@ -54,7 +42,13 @@ const templateSections = [
 const EditTemplate = () => {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
+  const [view, setView] = useState("desktop");
 
+  // submit modal
+  const [showSubmitModal, setSubmitShowModal] = useState(false);
+  const handleShowModal = () => setSubmitShowModal(true);
+  const handleCloseModal = () => setSubmitShowModal(false);
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -62,33 +56,115 @@ const EditTemplate = () => {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [content, setContent] = useState({
-    logo: "Your Logo",
-    header: "Welcome to Our Website",
-    mainText:
-      "This is the main content of your landing page. You can edit this text.",
-    footer: "© 2024 Your Company. All rights reserved.",
-  });
+  const content = useSelector((state) => state.template1);
+  const userId = useSelector(
+    (state) => state.authentication.user.data.CreatorId
+  );
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+
   const navigate = useNavigate();
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
     setStep(2);
+    localStorage.setItem("templateId", template);
+  };
+  const renderTemplate = (templateId) => {
+    switch (templateId) {
+      case 1:
+        return <Template2 />;
+      case 2:
+        return <Template1 />;
+      // Add cases for Template3 and Template4...
+      default:
+        return <div>Invalid template</div>;
+    }
   };
 
-  const handleContentChange = (field, value) => {
-    setContent({ ...content, [field]: value });
+  // to convert to file type
+  const convertBase64ToFile = (base64String, filename) => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
   };
 
-  const handleAnswerChange = (questionId, answer) => {
-    setAnswers({ ...answers, [questionId]: answer });
-  };
+  const handleSubmit = async () => {
+    setLoading(true);
+    const formData = new FormData();
 
-  const handleSubmit = () => {
-    alert("Form submitted!");
-    console.log("Selected Template:", selectedTemplate);
-    console.log("Answers:", answers);
-    navigate("/creator/dashboard/Create-Form");
+    // Add template details to FormData
+    formData.append("creatorId", userId);
+    formData.append("ecosystemId", ecosystemId);
+    formData.append("templateNumber", localStorage.getItem("templateId"));
+
+    // Convert nested objects to JSON and append to FormData
+    formData.append("navbar", JSON.stringify(content.navbar));
+    formData.append("hero", JSON.stringify(content.hero));
+    formData.append("aboutUs", JSON.stringify(content.aboutUs));
+    formData.append("vision", JSON.stringify(content.Vision));
+    formData.append("audience", JSON.stringify(content.Audience));
+    formData.append("cta", JSON.stringify(content.CTA));
+    formData.append("whyUs", JSON.stringify(content.WhyUs));
+    formData.append("contactUs", JSON.stringify(content.contactUs));
+    formData.append("faq", JSON.stringify(content.faq));
+    formData.append("footer", JSON.stringify(content.footer));
+
+    // Convert and append base64 images directly to FormData
+    const imageProperties = {
+      "navbar.logo": "navbarLogo.png",
+      "hero.backgroundImage": "heroBackgroundImage.png",
+      "Vision.image": "visionImage.png",
+      "Audience.image1": "audienceImage1.png",
+      "Audience.image2": "audienceImage2.png",
+      "Audience.image3": "audienceImage3.png",
+      "Audience.image4": "audienceImage4.png",
+      "CTA.image": "ctaImage.png",
+      "footer.logo": "footerLogo.png",
+    };
+    for (const [key, filename] of Object.entries(imageProperties)) {
+      const keys = key.split(".");
+      let imageProp = content;
+      try {
+        for (const k of keys) {
+          imageProp = imageProp[k];
+          if (imageProp === undefined) break; // Exit loop if property is undefined
+        }
+        if (
+          typeof imageProp === "string" &&
+          imageProp.startsWith("data:image")
+        ) {
+          const convertedFile = convertBase64ToFile(imageProp, filename);
+          formData.append(key, convertedFile);
+        }
+      } catch (error) {
+        console.error(`Error accessing property ${key}:`, error);
+      }
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-templates`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setLoading(false);
+      navigate("/creator/dashboard/Create-Form");
+      showToast(response.data.message);
+      console.log("Template created successfully", response.data);
+    } catch (error) {
+      setLoading(false);
+      showToast(error.response.data.message);
+    }
   };
 
   const scroll = (scrollOffset) => {
@@ -100,15 +176,7 @@ const EditTemplate = () => {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
   };
-  const handlePrevious = () => {
-    navigate("/creator/dashboard/New-Ecosystem");
-  };
-
-  const handleContinue = () => {
-    if (selectedTemplate.length > 0) {
-      setStep(3);
-    }
-  };
+  
 
   useEffect(() => {
     checkScroll();
@@ -119,7 +187,7 @@ const EditTemplate = () => {
   };
 
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 mb-5">
       <EcoHeader />
 
       <Container className="mt-5 ">
@@ -194,7 +262,7 @@ const EditTemplate = () => {
                 </div>
               </div>
               <Row className={showModal ? "blurred" : ""}>
-                {templates.map((template) => (
+                {Templates.map((template) => (
                   <Col key={template.id} md={4} className="mt-5 md-mt-0">
                     <Card className="template-card">
                       <Card.Img
@@ -217,7 +285,7 @@ const EditTemplate = () => {
                           <Button
                             variant="primary"
                             className="select-button"
-                            onClick={() => handleTemplateSelect(template)}
+                            onClick={() => handleTemplateSelect(template.id)}
                           >
                             Select Template
                           </Button>
@@ -228,21 +296,14 @@ const EditTemplate = () => {
                 ))}
               </Row>
 
-              <div className="d-flex justify-content-between mt-4">
-                <Button
-                  variant="secondary"
-                  className="me-2"
-                  onClick={handlePrevious}
-                >
-                  Previous
-                </Button>
-              </div>
+              
             </div>
           )}
           {step === 2 && (
             <div>
               <h3>Edit Template Content</h3>
-              <Template1 />
+              {/* <Template1 /> */}
+              {renderTemplate(selectedTemplate)}
               {/* <TemplateOne /> */}
               <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
@@ -260,39 +321,21 @@ const EditTemplate = () => {
           )}
           {step === 3 && (
             <div>
-              <PreviewPage />
+              <PreviewPageSize setView={setView} />
+              <PreviewPage view={view} />
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back
                 </Button>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" onClick={handleShowModal}>
                   Submit
                 </Button>
               </div>
-              {/* <h3>Preview Template</h3>
-              <div
-                className="template-preview p-3"
-                style={{
-                  backgroundColor: "#f8f9fa",
-                  border: "1px solid #ddd",
-                }}
-              >
-                <header className="text-center">
-                  <h1>{content.logo}</h1>
-                  <h2>{content.header}</h2>
-                </header>
-                <main className="mt-4">
-                  <p>{content.mainText}</p>
-                </main>
-                <footer className="text-center mt-4">
-                  <p>{content.footer}</p>
-                </footer>
-              </div>
-               */}
             </div>
           )}
         </div>
       </Container>
+      {/* select template modal */}
       <Modal
         className="custom-modal"
         show={showModal}
@@ -303,11 +346,37 @@ const EditTemplate = () => {
         </Modal.Header>
         <Modal.Body>
           <TemplateOne />
-          {/* <img src={template1} alt="template" />
-          <img src={template2} alt="template2" className="mt-5" />
-          <img src={template3} alt="template3" className="mt-5" /> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
+      </Modal>
+
+      {/* submit template modal */}
+      <Modal show={showSubmitModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Please cross check for spelling or any error before submiting
+          <br />
+          <p className="mt-5">
+            <strong>Note:</strong> <br />
+            If you click on No, you can still edit the ecosystem by clicking on
+            previous page
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            disabled={loading}
+            variant="secondary"
+            onClick={handleCloseModal}
+          >
+            No
+          </Button>
+
+          <Button variant="primary" disabled={loading} onClick={handleSubmit}>
+            {loading ? "Processing" : "Yes"}
+          </Button>
+        </Modal.Footer>
       </Modal>
     </Container>
   );

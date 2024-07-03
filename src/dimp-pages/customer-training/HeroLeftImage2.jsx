@@ -1,21 +1,19 @@
 // import node module libraries
 import { Col, Container, Row, Image, ListGroup } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // import custom components
-
 
 // import MDI icons
 import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import FeaturedImg1 from "../images/customer-sec6.jpg";
+import BrandedApp from "../images/branded-apps.png";
 
 const HeroLeftImage = () => {
   const title =
     "White label your academy and get your branded iOS and Android apps";
-  
 
   const featurescol1 = [
     {
@@ -23,22 +21,22 @@ const HeroLeftImage = () => {
       icon: mdiStar,
       title: "Build a true white label academy",
       description:
-        "Use the most powerful Site Builder to create your branded online academy that you can also connect with your domain. Enjoy total design freedom with the best drag-and-drop tool.",
+        "Create your own branded online academy with our powerful Site Builder, complete with total design freedom and easy domain connection. ",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
       title: "Train using your own apps",
       description:
-        "Trigger customer involvement with self assessments, exams, and forms. Take advantage of 18 different question types and a powerful question builder.Take your branded academy mobile with your white-label iOS and Android apps! Meet your customers on the go and allow them to learn from anywhere in the world.",
+        "Encourage customer engagement with self-assessments, tests, and forms. Choose from 18 question types and build custom questions. You can also create your own branded mobile app for iOS and Android to reach customers on the move. ",
     },
     {
       id: 3,
       icon: mdiFileDocument,
       title: `Connect your academy with your marketing stack`,
-      description: "Start growing your customer training academy with our native integrations of 4,000+ third-party apps. SSO and an extensive API will facilitate training throughout your customer network.",
+      description:
+        "Expand your customer training academy with native integrations with third-party apps. Single sign-on (SSO) and a robust API simplify training across your customer network. ",
     },
-    
   ];
 
   return (
@@ -47,7 +45,7 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mt-6 mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-            White label your academy and get your branded iOS and Android apps
+              White label your academy and get your branded iOS and Android apps
             </h2>
           </div>
         </Col>
@@ -56,7 +54,7 @@ const HeroLeftImage = () => {
         <Col lg={6} md={12} xs={12}>
           {/* image */}
           <div className="mb-4 mb-lg-0 bg-gray-200 rounded-4 ">
-            <Image src={FeaturedImg1} alt="..." className="img-fluid w-100" />
+            <Image src={BrandedApp} alt="..." className="img-fluid w-100" />
           </div>
         </Col>
         <Col lg={6} md={12} xs={12} className="mt-4 mt-lg-0">
@@ -88,7 +86,10 @@ const HeroLeftImage = () => {
               </Col>
             </Row>
             <div className="d-grid d-md-block">
-              <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+              <Link
+                to="/creator/signup"
+                className="btn btn-primary btn-lg mb-2 mb-md-0"
+              >
                 Get started for free
               </Link>{" "}
               <Link
@@ -99,7 +100,6 @@ const HeroLeftImage = () => {
               </Link>{" "}
             </div>
           </div>
-          
         </Col>
       </Row>
     </Container>
