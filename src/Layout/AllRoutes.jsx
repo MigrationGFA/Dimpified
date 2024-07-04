@@ -8,7 +8,8 @@ import "../assets/scss/theme.scss";
 
 import LandingPage from "../landing-job/LandingJob";
 import About from "../Pages/about/About";
-import Pricing from "../Pages/pricing/Pricing";
+// import Pricing from "../Pages/pricing/Pricing";
+
 import Contact from "../Pages/contact/Contact";
 import FAQs from "../Pages/compare-plan/FAQs";
 import TermsOfUse from "../../src/Pages/home-academy/TermsOfUse";
@@ -120,6 +121,8 @@ import ProtectedRoutes from "../Components/ProtectedRoute";
 import OutsourceJobs from "../Providerdashboard/OutsourceJobs";
 import OutsourceAJobs from "../Components/marketing/pages/jobs/outsource-a-job/OutsourceAJob";
 import Outsource from "../Pages/outsource/Outsource";
+
+import DeveloperProgram from "../developer-program/DeveloperProgram";
 
 const AllRoutes = () => {
   return (
@@ -332,6 +335,8 @@ const AllRoutes = () => {
           element={<Overview />}
         />
       </Route>
+
+      <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
     </Routes>
   );
 };

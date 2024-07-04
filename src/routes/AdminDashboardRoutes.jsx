@@ -92,7 +92,7 @@ export const DashboardMenu = [
     icon: "help-circle",
     children: [
       {id: uuid(), link:"/user/notifications", name: "Notification"},
-      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},l
+      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},
     ]
   },
 
