@@ -1,0 +1,27 @@
+.submenu {
+    list-style: none;
+    padding-left: 0; /* Remove default padding */
+  }
+  
+  .submenu li {
+    margin-left: 0; /* Remove default margin */
+    margin-right: 5px;
+  }
+  
+  
+  .submenu li a.active {
+    background-color: #f0f0f0; /* Adjust background color for active item */
+    font-weight: bold; /* Adjust font weight for active item */
+  }
+  .submenu li a {
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Center items vertically */
+    padding: 10px 15px;
+    color: #000; /* Adjust color as needed */
+    text-decoration: none;
+  }
+  
+  .submenu li a .fe {
+    margin-right: 8px; /* Add margin between the icon and text */
+  }
+  

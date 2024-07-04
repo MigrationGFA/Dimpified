@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import LevelIcon from './LevelIcon';
 
 // import custom components
-import GKTippy from '../../../../Components/elements/tooltips/GKTippy';
+import GKTippy from '../../../../../Components/elements/tooltips/GKTippy';
 
 const LevelIconWithTooltip = ({ level }) => {
 	if (level === 'Beginner' || level === 'Intermediate' || level === 'Advance') {

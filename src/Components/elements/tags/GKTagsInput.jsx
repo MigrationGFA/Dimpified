@@ -1,51 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTagInput from '@pathofdev/react-tag-input';
 
-const GKTagsInput = ({ defaultTags, onAddTag, onRemoveTag }) => {
-  const [tags, setTags] = useState([]);
+const GKTagsInput = ({ defaultTags = [], onAddTag, onRemoveTag }) => {
+    // Filter out undefined elements from defaultTags array
+    const filteredTags = defaultTags.filter(tag => tag && typeof tag === 'string');
 
-  // Update tags when defaultTags changes
-  useEffect(() => {
-    // Extracting names from defaultTags and setting as initial tags
-    setTags(defaultTags.map(tag => ({ name: tag.name })));
-  }, [defaultTags]);
+    return (
+        <ReactTagInput
+            tags={filteredTags}
+            onChange={(newTags) => {
+                // Identify added and removed tags
+                const addedTags = newTags.filter(tag => !filteredTags.includes(tag));
+                const removedTags = filteredTags.filter(tag => !newTags.includes(tag));
+                
+                // Handle added tags
+                if (addedTags.length > 0) {
+                    addedTags.forEach(tag => onAddTag(tag));
+                }
 
-  const handleTagChange = (newTags) => {
-    // Update state
-    setTags(newTags.map(tag => ({ name: tag }))); // Ensure tags are objects with 'name' property
-
-    // Call callbacks
-    newTags.forEach(tag => {
-      const existingTag = defaultTags.find(t => t.name === tag);
-      if (!existingTag) {
-        onAddTag({ name: tag }); // Pass the tag in the correct format
-      }
-    });
-
-    defaultTags.forEach(tag => {
-      if (!newTags.includes(tag.name)) {
-        onRemoveTag(tag);
-      }
-    });
-  };
-
-  return (
-    <ReactTagInput
-      tags={tags.map(tag => tag.name)}
-      onChange={handleTagChange}
-    />
-  );
+                // Handle removed tags
+                if (removedTags.length > 0) {
+                    removedTags.forEach(tag => {
+                        const indexToRemove = filteredTags.indexOf(tag);
+                        onRemoveTag(indexToRemove);
+                    });
+                }
+            }}
+        />
+    );
 };
 
 GKTagsInput.propTypes = {
-  defaultTags: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })), // Change the propType to an array of objects with 'name' property
-  onAddTag: PropTypes.func.isRequired,
-  onRemoveTag: PropTypes.func.isRequired,
-};
-
-GKTagsInput.defaultProps = {
-  defaultTags: [],
+    defaultTags: PropTypes.arrayOf(PropTypes.string),
+    onAddTag: PropTypes.func.isRequired,
+    onRemoveTag: PropTypes.func.isRequired
 };
 
 export default GKTagsInput;
