@@ -540,7 +540,7 @@ const AddTopic = () => {
         className="btn btn-outline-primary btn-sm mt-3"
         onClick={handleShow}
       >
-        Add Module
+        Add New Module
       </Button>
       <Modal
         show={show}
@@ -641,7 +641,7 @@ const AddTopic = () => {
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline ">
           <Button variant="primary" onClick={handleAddTopic}>
-            Add New Module
+            save Module
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
             Close

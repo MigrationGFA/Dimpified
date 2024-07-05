@@ -1,9 +1,25 @@
-import { useState, Fragment } from "react";
-import { Col, Row, Form, Container, Button } from "react-bootstrap";
+import { useState, Fragment, useRef } from "react";
+import { Col, Row, Form, Container, Button, Card } from "react-bootstrap";
 import axios from "axios";
 // import { useGlobalContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { MdPayments } from "react-icons/md";
+import { FaChevronLeft, FaChevronRight, FaEye } from "react-icons/fa";
+import { Tooltip } from "flowbite-react";
+
+const templateSections = [
+  { id: 1, name: "Government" },
+  { id: 2, name: "Corporations" },
+  { id: 3, name: "Foundations/NGO's" },
+  { id: 4, name: "Religious Bodies" },
+  { id: 5, name: "Professional Services" },
+  { id: 6, name: "Creative Services" },
+  { id: 7, name: "Home Services" },
+  { id: 8, name: "Health and Wellness Services" },
+  { id: 9, name: "Educational Services" },
+  { id: 10, name: "Event Services" },
+  { id: 11, name: "Technical Services" },
+];
 
 const PostService = () => {
   // const { UserId } = useGlobalContext();
@@ -15,6 +31,10 @@ const PostService = () => {
   const [format, setFormat] = useState("");
   const [serviceBackground, setServiceBackground] = useState([]);
   const [currency, setCurrency] = useState("");
+  const [activeSection, setActiveSection] = useState(templateSections[0].id);
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   // const [PackageType, setPakageType] = useState("");
   const [pricingPlan, setPricingPlan] = useState("starter");
   const [pricingPackages, setPricingPackages] = useState({
@@ -23,10 +43,6 @@ const PostService = () => {
       shortDescription: "",
       price: "",
       deliveryTime: "",
-      packageType: "",
-      copyright: "",
-      fdd: "",
-      additionalRevision: "",
     },
     professional: {
       basic: {
@@ -220,10 +236,84 @@ const PostService = () => {
     { value: "professional", label: "Professional" },
   ];
 
+  const scroll = (scrollOffset) => {
+    scrollRef.current.scrollLeft += scrollOffset;
+  };
+
+  const checkScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+  };
+
+  const handleAddPricingPackage = () => {
+    setPricingPackages((prevState) => {
+      const updatedStarter = Array.isArray(prevState.starter)
+        ? [...prevState.starter]
+        : [];
+      updatedStarter.push({
+        header: "",
+        shortDescription: "",
+        price: "",
+        deliveryTime: "",
+      });
+      return {
+        ...prevState,
+        starter: updatedStarter,
+      };
+    });
+  };
+
+  const handleRemovePricingPackage = (plan, index) => {
+    setPricingPackages((prevState) => {
+      const updatedPackages = {
+        ...prevState,
+        [plan]: prevState[plan].filter((_, idx) => idx !== index),
+      };
+      return updatedPackages;
+    });
+  };
+
   return (
     <Fragment>
-      <section className="py-6 py-lg-14 bg-white">
+      <section className="px-10 py-6 py-lg-8 bg-white">
         <Container>
+          <div className="d-flex align-items-center position-relative mb-6">
+            <FaChevronLeft
+              className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
+              onClick={() => scroll(-100)}
+              disabled={!canScrollLeft}
+            />
+            <div
+              className="template-sections flex-nowrap overflow-auto mx-8"
+              ref={scrollRef}
+              onScroll={checkScroll}
+              style={{ display: "flex", whiteSpace: "nowrap" }}
+            >
+              {templateSections.map((section) => (
+                <div
+                  key={section.id}
+                  className={`template-section ${
+                    activeSection === section.id
+                      ? "bg-primary text-white"
+                      : "bg-body-secondary"
+                  }`}
+                  onClick={() => setActiveSection(section.id)}
+                  style={{
+                    padding: "10px 20px",
+                    cursor: "pointer",
+                  }}
+                >
+                  {section.name}
+                </div>
+              ))}
+            </div>
+            <FaChevronRight
+              className={`scroll-arrow ${!canScrollRight ? "disabled" : ""}`}
+              onClick={() => scroll(100)}
+              disabled={!canScrollRight}
+            />
+          </div>
           <Row>
             <Col md={12}>
               <Col lg={6} className="mb-12">
@@ -274,11 +364,12 @@ const PostService = () => {
                       as={Row}
                       className="mb-3 mt-4 justify-content-center"
                     >
+                      {/* Header */}
                       <Col md={9} className="mb-3">
                         <Form.Label md={4} htmlFor="header">
                           Header<span className="text-danger">*</span>
                         </Form.Label>
-                        <div className="d-flex">
+                        <div className="d-flex align-items-center">
                           <Form.Select
                             value={prefix}
                             onChange={(e) => setPrefix(e.target.value)}
@@ -298,70 +389,116 @@ const PostService = () => {
                           <Form.Control
                             type="text"
                             id="header"
-                            placeholder="Enter header"
+                            placeholder="Give a professional Haircut"
                             value={header}
                             onChange={(e) => setHeader(e.target.value)}
                             required
+                            className="ms-0 ps-3"
                             style={{
-                              marginLeft: "0",
-                              paddingLeft: "10px",
+                              maxWidth: "calc(100% - 150px)", // Adjust to fit the remaining space
                               borderTopLeftRadius: "0",
                               borderBottomLeftRadius: "0",
                             }}
                           />
+                          <Tooltip
+                            content="Describe briefly the service you are offering"
+                            placement="top"
+                            className="custom-tooltip bg-primary text-white"
+                            style={{ minWidth: "150px" }}
+                          >
+                            <FaEye className="ms-2 cursor-pointer" />
+                          </Tooltip>
                         </div>
                       </Col>
+
+                      {/* Description */}
                       <Col md={9} className="mb-3">
                         <Form.Label md={4} htmlFor="description">
                           Description<span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          id="description"
-                          rows={4}
-                          placeholder="Enter description"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                          required
-                        />
+                        <div className="d-flex align-items-center">
+                          <Form.Control
+                            as="textarea"
+                            id="description"
+                            rows={4}
+                            placeholder="e.g Experience top-notch grooming with our professional barber service. We offer precision haircuts, classic shaves, and personalized styles in a relaxing atmosphere. Our skilled barbers use premium products to ensure you leave looking and feeling your best. Book your appointment today for a tailored grooming experience"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                          />
+                          <Tooltip
+                            content="Provide detailed information about the service like the e.g"
+                            placement="top"
+                            className="custom-tooltip bg-primary text-white"
+                            style={{ minWidth: "150px" }}
+                          >
+                            <FaEye className="ms-2 cursor-pointer" />
+                          </Tooltip>
+                        </div>
                       </Col>
+
+                      {/* Department */}
                       <Col md={5} className="mb-3">
                         <Form.Label md={2} htmlFor="department">
                           Department<span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Select
-                          as="select"
-                          id="department"
-                          value={department}
-                          onChange={(e) => setDepartment(e.target.value)}
-                          required
-                        >
-                          {departments.map((dept, index) => (
-                            <option key={index} value={dept.value}>
-                              {dept.label}
-                            </option>
-                          ))}
-                        </Form.Select>
+                        <div className="d-flex align-items-center">
+                          <Form.Select
+                            as="select"
+                            id="department"
+                            value={department}
+                            onChange={(e) => setDepartment(e.target.value)}
+                            required
+                          >
+                            {departments.map((dept, index) => (
+                              <option key={index} value={dept.value}>
+                                {dept.label}
+                              </option>
+                            ))}
+                          </Form.Select>
+                          <Tooltip
+                            content="Select the department related to the service"
+                            placement="top"
+                            className="custom-tooltip bg-primary text-white"
+                            style={{ minWidth: "150px" }}
+                          >
+                            <FaEye className="ms-2 cursor-pointer" />
+                          </Tooltip>
+                        </div>
                       </Col>
+
+                      {/* Format */}
                       <Col md={4} className="mb-3">
                         <Form.Label md={2} htmlFor="format">
                           Format<span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Select
-                          as="select"
-                          id="format"
-                          defaultValue="Select Format"
-                          value={format}
-                          onChange={(e) => setFormat(e.target.value)}
-                          required
-                        >
-                          {formatType.map((dept, index) => (
-                            <option key={index} value={dept.value}>
-                              {dept.label}
-                            </option>
-                          ))}
-                        </Form.Select>
+                        <div className="d-flex align-items-center">
+                          <Form.Select
+                            as="select"
+                            id="format"
+                            defaultValue="Select Format"
+                            value={format}
+                            onChange={(e) => setFormat(e.target.value)}
+                            required
+                          >
+                            {formatType.map((dept, index) => (
+                              <option key={index} value={dept.value}>
+                                {dept.label}
+                              </option>
+                            ))}
+                          </Form.Select>
+                          <Tooltip
+                            content="Choose the format of the service (e.g., online, in-person)"
+                            placement="top"
+                            className="custom-tooltip bg-primary text-white"
+                            style={{ minWidth: "150px" }}
+                          >
+                            <FaEye className="ms-2 cursor-pointer" />
+                          </Tooltip>
+                        </div>
                       </Col>
+
+                      {/* Service Background */}
                       <Col md={9} className="mb-3">
                         <Form.Label md={4} htmlFor="serviceBackground">
                           Service Background{" "}
@@ -372,44 +509,54 @@ const PostService = () => {
                           </small>
                           <span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Control
-                          type="file"
-                          multiple
-                          accept="image/*"
-                          onChange={(e) =>
-                            handleBackgroundChange(e.target.files)
-                          }
-                        />
-                        <div style={{ marginTop: "0.5rem" }}>
-                          {serviceBackground.map((image, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: "0.5rem",
-                              }}
-                              className="d-inline-flex"
-                            >
-                              <img
-                                src={URL.createObjectURL(image)}
-                                alt={`Background ${index}`}
+                        <div className="d-flex align-items-center">
+                          <Form.Control
+                            type="file"
+                            multiple
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleBackgroundChange(e.target.files)
+                            }
+                          />
+                          <div style={{ marginTop: "0.5rem" }}>
+                            {serviceBackground.map((image, index) => (
+                              <div
+                                key={index}
                                 style={{
-                                  width: "80px",
-                                  height: "80px",
-                                  marginRight: "1px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  marginBottom: "0.5rem",
                                 }}
-                              />
-                              <Button
-                                variant="danger"
-                                size="sm"
-                                onClick={() => handleRemoveBackground(index)}
-                                style={{ marginRight: "10px" }}
+                                className="d-inline-flex"
                               >
-                                Remove
-                              </Button>
-                            </div>
-                          ))}
+                                <img
+                                  src={URL.createObjectURL(image)}
+                                  alt={`Background ${index}`}
+                                  style={{
+                                    width: "80px",
+                                    height: "80px",
+                                    marginRight: "1px",
+                                  }}
+                                />
+                                <Button
+                                  variant="danger"
+                                  size="sm"
+                                  onClick={() => handleRemoveBackground(index)}
+                                  style={{ marginRight: "10px" }}
+                                >
+                                  Remove
+                                </Button>
+                              </div>
+                            ))}
+                            <Tooltip
+                              content="Upload background images related to the service"
+                              placement="top"
+                              className="custom-tooltip bg-primary text-white"
+                              style={{ minWidth: "150px" }}
+                            >
+                              <FaEye className="ms-2 cursor-pointer" />
+                            </Tooltip>
+                          </div>
                         </div>
                       </Col>
                     </Form.Group>
@@ -473,7 +620,7 @@ const PostService = () => {
                       </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3"></Form.Group>
-                    {pricingPlan === "starter" ? (
+                    {pricingPlan === "starter" && (
                       <div>
                         <h2
                           className="text-center"
@@ -481,22 +628,24 @@ const PostService = () => {
                         >
                           Starter Plan
                         </h2>
+                        {/* First Package */}
                         <Form.Group
                           as={Row}
                           className="mb-3 justify-content-center"
                         >
-                          <Col md={5} className="mb-3">
-                            <Form.Label md={4} htmlFor="starterHeader">
-                              Header<span className="text-danger">*</span>
+                          <Col md={5}>
+                            <Form.Label htmlFor={`starterHeader-0`}>
+                              Header <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              id="starterHeader"
+                              id={`starterHeader-0`}
                               placeholder="Enter header"
                               value={pricingPackages.starter.header}
                               onChange={(e) =>
                                 handlePricingPackageChange(
                                   "starter",
+                                  0,
                                   "header",
                                   e.target.value
                                 )
@@ -504,22 +653,22 @@ const PostService = () => {
                               required
                             />
                           </Col>
-                          <Col md={5} className="mb-3">
-                            <Form.Label
-                              md={4}
-                              htmlFor="starterShortDescription"
-                            >
-                              Short Description
+                          <Col md={5}>
+                            <Form.Label htmlFor={`starterShortDescription-0`}>
+                              Short Description{" "}
                               <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              id="starterShortDescription"
+                              id={`starterShortDescription-0`}
                               placeholder="Enter short description"
-                              value={pricingPackages.starter.shortDescription}
+                              value={
+                                pricingPackages.starter.shortDescription
+                              }
                               onChange={(e) =>
                                 handlePricingPackageChange(
                                   "starter",
+                                  0,
                                   "shortDescription",
                                   e.target.value
                                 )
@@ -527,18 +676,19 @@ const PostService = () => {
                               required
                             />
                           </Col>
-                          <Col md={5} className="mb-3">
-                            <Form.Label md={4} htmlFor="starterPrice">
-                              Price<span className="text-danger">*</span>
+                          <Col md={5}>
+                            <Form.Label htmlFor={`starterPrice-0`}>
+                              Price <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              id="starterPrice"
+                              id={`starterPrice-0`}
                               placeholder="Enter price"
                               value={pricingPackages.starter.price}
                               onChange={(e) =>
                                 handlePricingPackageChange(
                                   "starter",
+                                  0,
                                   "price",
                                   e.target.value
                                 )
@@ -546,19 +696,20 @@ const PostService = () => {
                               required
                             />
                           </Col>
-                          <Col md={5} className="mb-3">
-                            <Form.Label md={4} htmlFor="starterDeliveryTime">
-                              Delivery Time
+                          <Col md={5}>
+                            <Form.Label htmlFor={`starterDeliveryTime-0`}>
+                              Delivery Time{" "}
                               <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                               type="text"
-                              id="starterDeliveryTime"
+                              id={`starterDeliveryTime-0`}
                               placeholder="Enter delivery time"
                               value={pricingPackages.starter.deliveryTime}
                               onChange={(e) =>
                                 handlePricingPackageChange(
                                   "starter",
+                                  0,
                                   "deliveryTime",
                                   e.target.value
                                 )
@@ -566,103 +717,154 @@ const PostService = () => {
                               required
                             />
                           </Col>
-                          <Col md={6}>
-                            <Form.Label md={2} htmlFor="package type">
-                              Package Type
-                              <small className="text-muted">
-                                <em>
-                                  (Allow single/multiple services per plan.)
-                                </em>
-                              </small>
-                              <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Select
-                              as="select"
-                              id="packageType"
-                              placeholder="Enter Package type"
-                              value={pricingPackages.starter.packageType}
-                              onChange={(e) =>
-                                handlePricingPackageChange(
-                                  "starter",
-                                  "packageType",
-                                  e.target.value
-                                )
-                              }
-                              required
-                            >
-                              {packageOption.map((packageV, index) => (
-                                <option key={index} value={packageV.value}>
-                                  {packageV.label}
-                                </option>
-                              ))}
-                            </Form.Select>
-                          </Col>
-                          <Col md={4} className="mb-3">
-                            <Form.Label md={4} htmlFor="CopyrightPrice">
-                              Copyright Price
-                              <small className="text-muted">
-                                <em>(optional)</em>
-                              </small>
-                            </Form.Label>
-                            <Form.Control
-                              type="number"
-                              id="CopyrightPrice"
-                              placeholder="Enter Copyright price"
-                              value={pricingPackages.starter.copyright}
-                              onChange={(e) =>
-                                handlePricingPackageChange(
-                                  "starter",
-                                  "copyright",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Col>
-                          <Col md={5} className="mb-3">
-                            <Form.Label md={4} htmlFor="Fdd">
-                              Fast-1-day delivery price
-                              <small className="text-muted">
-                                <em>(optional)</em>
-                              </small>
-                            </Form.Label>
-                            <Form.Control
-                              type="number"
-                              id="Fast-1-day"
-                              placeholder="Enter price"
-                              value={pricingPackages.starter.fdd}
-                              onChange={(e) =>
-                                handlePricingPackageChange(
-                                  "starter",
-                                  "fdd",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Col>
-                          <Col md={5} className="mb-3">
-                            <Form.Label md={4} htmlFor="additionalRevision">
-                              Additional Revision Price
-                              <small className="text-muted">
-                                <em>(optional)</em>
-                              </small>
-                            </Form.Label>
-                            <Form.Control
-                              type="number"
-                              id="Additional-revision"
-                              placeholder="Enter price"
-                              value={pricingPackages.starter.additionalRevision}
-                              onChange={(e) =>
-                                handlePricingPackageChange(
-                                  "starter",
-                                  "additionalRevision",
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </Col>
                         </Form.Group>
+
+                        {/* Additional Packages */}
+                        {pricingPackages.starter && pricingPackages.starter.length > 0 &&
+                          pricingPackages.starter
+                            .slice(1)
+                            .map((packages, index) => (
+                              <Card key={index + 1} className="mb-3">
+                                <Card.Body>
+                                  <Form.Group as={Row} className="mb-3">
+                                    <Col md={5}>
+                                      <Form.Label
+                                        htmlFor={`starterHeader-${index + 1}`}
+                                      >
+                                        Header{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        id={`starterHeader-${index + 1}`}
+                                        placeholder="Enter header"
+                                        value={packages.header}
+                                        onChange={(e) =>
+                                          handlePricingPackageChange(
+                                            "starter",
+                                            index + 1,
+                                            "header",
+                                            e.target.value
+                                          )
+                                        }
+                                        required
+                                      />
+                                    </Col>
+                                    <Col md={5}>
+                                      <Form.Label
+                                        htmlFor={`starterShortDescription-${
+                                          index + 1
+                                        }`}
+                                      >
+                                        Short Description{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        id={`starterShortDescription-${
+                                          index + 1
+                                        }`}
+                                        placeholder="Enter short description"
+                                        value={packages.shortDescription}
+                                        onChange={(e) =>
+                                          handlePricingPackageChange(
+                                            "starter",
+                                            index + 1,
+                                            "shortDescription",
+                                            e.target.value
+                                          )
+                                        }
+                                        required
+                                      />
+                                    </Col>
+                                  </Form.Group>
+                                  <Form.Group as={Row} className="mb-3">
+                                    <Col md={5}>
+                                      <Form.Label
+                                        htmlFor={`starterPrice-${index + 1}`}
+                                      >
+                                        Price{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        id={`starterPrice-${index + 1}`}
+                                        placeholder="Enter price"
+                                        value={packages.price}
+                                        onChange={(e) =>
+                                          handlePricingPackageChange(
+                                            "starter",
+                                            index + 1,
+                                            "price",
+                                            e.target.value
+                                          )
+                                        }
+                                        required
+                                      />
+                                    </Col>
+                                    <Col md={5}>
+                                      <Form.Label
+                                        htmlFor={`starterDeliveryTime-${
+                                          index + 1
+                                        }`}
+                                      >
+                                        Delivery Time{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        id={`starterDeliveryTime-${index + 1}`}
+                                        placeholder="Enter delivery time"
+                                        value={packages.deliveryTime}
+                                        onChange={(e) =>
+                                          handlePricingPackageChange(
+                                            "starter",
+                                            index + 1,
+                                            "deliveryTime",
+                                            e.target.value
+                                          )
+                                        }
+                                        required
+                                      />
+                                    </Col>
+                                    {/* Remove button */}
+                                    <Col
+                                      md={1}
+                                      className="d-flex align-items-end"
+                                    >
+                                      <Button
+                                        variant="danger"
+                                        size="sm"
+                                        className="mt-2"
+                                        onClick={() =>
+                                          handleRemovePricingPackage(
+                                            "starter",
+                                            index + 1
+                                          )
+                                        }
+                                      >
+                                        Remove
+                                      </Button>
+                                    </Col>
+                                  </Form.Group>
+                                </Card.Body>
+                              </Card>
+                            ))}
+
+                        {/* Add button */}
+                        <div className="text-center">
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleAddPricingPackage("starter")}
+                          >
+                            Add More
+                          </Button>
+                        </div>
                       </div>
-                    ) : (
+                    )}
+
+                    {pricingPlan === "professional" && (
                       <>
                         <h2
                           className="text-center"

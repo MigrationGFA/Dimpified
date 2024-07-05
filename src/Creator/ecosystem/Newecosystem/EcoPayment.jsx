@@ -158,23 +158,42 @@ const EcoPayment = () => {
   const getPlanFeatures = (plan) => {
     const features = {
       Lite: {
+        Website: [
+          { feature: "Access to templates", available: true },
+          { feature: "No code web page edit mode", available: true },
+        ],
         "Website and Landing Pages": [
           { feature: "Access to templates", available: true },
           { feature: "No code web page edit mode", available: true },
+          { feature: "Add logo to page", available: false },
+          { feature: "Custom domain", available: false },
+          { feature: "Remove GFA brand from landing page", available: false },
         ],
         "Forms Design & Development": [
           { feature: "1 form per ecosystem project", available: true },
           { feature: "3 Usecase form templates", available: true },
           { feature: "10 questions per form", available: true },
+          { feature: "Premium form templates", available: false },
+
+          { feature: "Remove GFA brand from form", available: false },
         ],
         "Course Management and Automation": [
           { feature: "Course builder module", available: true },
           { feature: "1 courses per ecosystem deployment", available: true },
+
+          { feature: "Assessment builder module", available: false },
+          { feature: "Statistics & visualization", available: false },
+
+          { feature: "Exams & Quizzes", available: false },
+          { feature: "Zoom, Teams or Webex Integration", available: false },
         ],
         "Payment and Subscriptions": [
           { feature: "1 payment gateway", available: true },
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
+
+          { feature: "Multi-currency module", available: false },
+          { feature: "Flexible pricing module", available: false },
         ],
         Emails: [
           { feature: "Up to 15000 emails per month", available: true },
@@ -190,6 +209,7 @@ const EcoPayment = () => {
           { feature: "Access to templates", available: true },
           { feature: "No code web page edit mode", available: true },
           { feature: "Add logo to page", available: true },
+          { feature: "Custom domain", available: false },
           { feature: "Remove GFA brand from landing page", available: true },
         ],
         "Forms Design & Development": [
@@ -197,11 +217,13 @@ const EcoPayment = () => {
           { feature: "10 Usecase form templates", available: true },
           { feature: "10 Premium form templates", available: true },
           { feature: "10 questions per form", available: true },
+          { feature: "Remove GFA brand from form", available: false },
         ],
         "Course Management and Automation": [
           { feature: "Course builder module", available: true },
           { feature: "Assessment builder module", available: true },
           { feature: "10 courses per ecosystem deployment", available: true },
+          { feature: "Statistics & visualization", available: false },
           { feature: "Exams & Quizzes", available: true },
           { feature: "Zoom, Teams or Webex Integration", available: true },
         ],
@@ -210,6 +232,7 @@ const EcoPayment = () => {
           { feature: "Payment management module", available: true },
           { feature: "Customer payment summary", available: true },
           { feature: "Multi-currency module", available: true },
+          { feature: "Flexible pricing module", available: false },
         ],
         Emails: [
           { feature: "Unlimited number of emails per month", available: true },
@@ -342,85 +365,99 @@ const EcoPayment = () => {
   };
 
   const renderPlanCard = (plan) => {
-    if (plan.name === "Lite") {
-      const liteFeatures = getPlanFeatures(plan.name);
-      const firstFourFeatures = liteFeatures.props.children.slice(0, 1);
-      const remainingFeatures = liteFeatures.props.children.slice(1);
-
-      return (
-        <Col md={3} className="mb-4" key={plan.name}>
-          <Card style={{ height: "1100px", overflow: "hidden" }}>
-            <Card.Body>
-              <Card.Title style={{ fontSize: "1.5rem", height: "40px" }}>
-                Lite
-              </Card.Title>
-              <Card.Text style={{ height: "80px" }}>
-                {getPlanDescription(plan.name)}
-              </Card.Text>
-              <h2>Free</h2>
-              <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
-                {firstFourFeatures}
-              </ul>
-
-              <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
-                {remainingFeatures}
-              </ul>
-            </Card.Body>
-          </Card>
-        </Col>
-      );
-    }
+    
+  if (plan.name === "Lite") {
+    const liteFeatures = getPlanFeatures(plan.name);
+    const firstFourFeatures = liteFeatures.props.children.slice(0, 1);
+    const remainingFeatures = liteFeatures.props.children.slice(1);
 
     return (
       <Col md={3} className="mb-4" key={plan.name}>
-        <Card
-          className="border-0 mb-3"
-          style={{ height: "1850px", overflow: "hidden" }}
-        >
+        <Card style={{ height: "1870px", overflow: "hidden" }}>
           <Card.Body>
-            <Card.Title style={{ fontSize: "1.5rem", height: "40px" }}>
-              {plan.name}
-            </Card.Title>
-            <Card.Text style={{ height: "80px" }}>
-              {getPlanDescription(plan.name)}
-            </Card.Text>
-            <>
-              <Form.Label>Choose the size of your list</Form.Label>
-              <SizeSelect
-                value={selectedSize}
-                onChange={handleSizeChange}
-                style={{ zIndex: 20 }}
-                options={options}
-              />
-            </>
-            {pricingData.plans.map((pricingPlan) => {
-              if (pricingPlan.name === plan.name) {
-                return (
-                  <p
-                    key={`${plan.name}-${selectedPlan}-${selectedSize}`}
-                    className=" mt-5"
-                  >
-                    $
-                    <span className="mx-1 h2">
-                      {pricingPlan.prices[selectedSize]?.[selectedPlan] ||
-                        "N/A"}
-                    </span>{" "}
-                    / {selectedPlan}
-                  </p>
-                );
-              }
-              return null;
-            })}
+            <Card.Title style={{ fontSize: "1.5rem" }}>Lite</Card.Title>
+            <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
+            <h2>Free</h2>
+            <ul
+              style={{
+                listStyleType: "none",
+                paddingLeft: 0,
+                visibility: "hidden",
+              }}
+            >
+              {firstFourFeatures}
+            </ul>
+
             <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
-              Select Plan
+              Sign Up
             </Button>
-            <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
+
+            <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+              {remainingFeatures}
+            </ul>
+            <Button
+              variant="outline-primary"
+              className="mt-3 w-100 btn-lg  mb-3"
+            >
+              Sign Up Now
+            </Button>
           </Card.Body>
         </Card>
       </Col>
     );
-  };
+  }
 
+  return (
+    <Col md={3} className="mb-4" key={plan.name}>
+      <Card
+        className="border-0 mb-3"
+        style={{ height: "1870px", overflow: "hidden" }}
+      >
+        <Card.Body>
+          <Card.Title style={{ fontSize: "1.5rem" }}>{plan.name}</Card.Title>
+          <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
+          <>
+            <Form.Label>Choose the size of your list</Form.Label>
+            <SizeSelect
+              value={selectedSize}
+              onChange={handleSizeChange}
+              style={{ zIndex: 20 }}
+              options={options}
+            />
+          </>
+          {pricingData.plans.map((pricingPlan) => {
+            if (pricingPlan.name === plan.name) {
+              const price = pricingPlan.prices[selectedSize]?.[selectedPlan] || "N/A";
+              return (
+                <p
+                  key={`${plan.name}-${selectedPlan}-${selectedSize}`}
+                  className=" mt-5"
+                >
+                  ₦
+                  <span className="mx-1 h2">
+                    {price}
+                  </span>{" "}
+                  / {selectedPlan}
+                </p>
+              );
+            }
+            return null;
+          })}
+          <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
+            Sign Up Now
+          </Button>
+          <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
+          <Button
+            variant="outline-primary"
+            className="mt-3 w-100 btn-lg  mb-3"
+          >
+            Sign Up Now
+          </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+};
   return (
     <Fragment>
       <EcoHeader />
@@ -487,15 +524,15 @@ const EcoPayment = () => {
           </Button>
         </Container>
       </div>
-      <section className="bg-white py-lg-10 py-5">
-        <Container>
+      {/* <section className="bg-white py-lg-10 py-5"> */}
+        {/* <Container>
           <Row>
             <Col md={12} sm={12}>
               <div className="mb-8 text-center">
                 <h2 className="h1">Frequently Asked Questions</h2>
               </div>
             </Col>
-          </Row>
+          </Row> */}
           {/* <Row>
             {FAQsData.map((item, index) => (
               <Col lg={4} md={6} sm={12} className="mb-3" key={index}>
@@ -519,8 +556,8 @@ const EcoPayment = () => {
               </Card>
             </Col>
           </Row> */}
-        </Container>
-      </section>
+        {/* </Container> */}
+      {/* </section> */}
     </Fragment>
   );
 };
