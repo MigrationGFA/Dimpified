@@ -5,9 +5,9 @@ import authReducer from './features/login';
 import temPlate1Reducer from './features/Template/Template1';
 import activeSectionReducer from './features/Template/activeTemplateSection';
 import courseReducer from './features/course';
+import serviceReducer from './features/service';
 import ecosystemReducer from './features/ecosystem'; 
 import form1Reducer from "./features/Template/Form1"
-
 
 const persistConfig = {
   key: 'root',
@@ -21,12 +21,24 @@ const rootReducer = combineReducers({
   activeSection: activeSectionReducer,
   course: courseReducer,
   ecosystem: ecosystemReducer, 
+  service: serviceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredPaths: ['service.serviceBackground'],
+        ignoredActions: [
+          'service/addServiceBackground',
+          'service/removeServiceBackground',
+          'service/updateServiceData',
+        ],
+      },
+    }),
 });
 
 const persistor = persistStore(store);
