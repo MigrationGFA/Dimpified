@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
+import {
+  updateServiceData,
+  addServiceBackground,
+  removeServiceBackground,
+} from "../../../../../features/service";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
-  const [prefix, setPrefix] = useState("I will");
-  const [header, setHeader] = useState("");
-  const [description, setDescription] = useState("");
-  const [format, setFormat] = useState("");
-  const [serviceBackground, setServiceBackground] = useState([]);
+  const service = useSelector((state) => state.service) || {};
 
   const formatType = [
     { label: "Select Format" },
@@ -20,20 +21,36 @@ const Settings = ({ onNext, onPrevious }) => {
   ];
 
   const handleBackgroundChange = (files) => {
-    setServiceBackground(Array.from(files));
+    dispatch(addServiceBackground(Array.from(files)));
   };
 
   const handleRemoveBackground = (index) => {
-    const newServiceBackground = serviceBackground.filter(
-      (_, i) => i !== index
-    );
-    setServiceBackground(newServiceBackground);
+    dispatch(removeServiceBackground(index));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext();
   };
+
+  useEffect(() => {
+    // Revoke object URLs on component unmount
+    return () => {
+      service.serviceBackground.forEach((image) => {
+        if (image instanceof File || image instanceof Blob) {
+          URL.revokeObjectURL(image.preview);
+        }
+      });
+    };
+  }, [service.serviceBackground]);
+
+  // Add preview URLs to images in serviceBackground
+  const serviceBackgroundWithPreviews = service.serviceBackground.map((image) => {
+    if (image instanceof File || image instanceof Blob) {
+      return { ...image, preview: URL.createObjectURL(image) };
+    }
+    return image;
+  });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -52,8 +69,10 @@ const Settings = ({ onNext, onPrevious }) => {
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Select
-                    value={prefix}
-                    onChange={(e) => setPrefix(e.target.value)}
+                    value={service.prefix}
+                    onChange={(e) =>
+                      dispatch(updateServiceData({ prefix: e.target.value }))
+                    }
                     className="flex-shrink-0"
                     style={{
                       maxWidth: "150px",
@@ -68,8 +87,10 @@ const Settings = ({ onNext, onPrevious }) => {
                     type="text"
                     id="header"
                     placeholder="Give a professional Haircut"
-                    value={header}
-                    onChange={(e) => setHeader(e.target.value)}
+                    value={service.header}
+                    onChange={(e) =>
+                      dispatch(updateServiceData({ header: e.target.value }))
+                    }
                     required
                     className="flex-grow-1"
                     style={{
@@ -99,8 +120,10 @@ const Settings = ({ onNext, onPrevious }) => {
                     id="description"
                     rows={4}
                     placeholder="e.g Experience top-notch grooming with our professional barber service. We offer precision haircuts, classic shaves, and personalized styles in a relaxing atmosphere. Our skilled barbers use premium products to ensure you leave looking and feeling your best. Book your appointment today for a tailored grooming experience"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={service.description}
+                    onChange={(e) =>
+                      dispatch(updateServiceData({ description: e.target.value }))
+                    }
                     required
                   />
                   <Tooltip
@@ -122,8 +145,10 @@ const Settings = ({ onNext, onPrevious }) => {
                 <div className="d-flex">
                   <Form.Select
                     id="format"
-                    value={format}
-                    onChange={(e) => setFormat(e.target.value)}
+                    value={service.format}
+                    onChange={(e) =>
+                      dispatch(updateServiceData({ format: e.target.value }))
+                    }
                     required
                   >
                     {formatType.map((dept, index) => (
@@ -171,7 +196,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
                 <div style={{ marginTop: "0.5rem" }}>
-                  {serviceBackground.map((image, index) => (
+                  {serviceBackgroundWithPreviews.map((image, index) => (
                     <div
                       key={index}
                       style={{
@@ -182,7 +207,7 @@ const Settings = ({ onNext, onPrevious }) => {
                       className="d-inline-flex"
                     >
                       <img
-                        src={URL.createObjectURL(image)}
+                        src={image.preview}
                         alt={`Background ${index}`}
                         style={{
                           width: "80px",

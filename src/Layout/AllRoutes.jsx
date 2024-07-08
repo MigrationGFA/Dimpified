@@ -131,7 +131,7 @@ const AllRoutes = () => {
         element={<EditTemplate />}
       />
       <Route path="/creator/dashboard/Create-Form" element={<CreateForm />} />
-      <Route path="/creator/dashboard/Courses" element={<Courses />} />
+      <Route path="/creator/dashboard/Products" element={<Courses />} />
       <Route
         path="/creator/dashboard/Preview-and-Send"
         element={<PreviewAndSend />}

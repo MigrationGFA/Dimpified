@@ -36,7 +36,7 @@ const Settings = ({ onNext, onPrevious }) => {
     <Form onSubmit={handleSubmit}>
       <Card className="mb-3 border-0">
         <Card.Header className="border-bottom px-4 py-3">
-          <h4 className="mb-0">Requirements</h4>
+          <h4 className="mb-0">Requirements (For people to take this course, enter the information required)</h4>
         </Card.Header>
         <Card.Body>
           <GKTagsInput
