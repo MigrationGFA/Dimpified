@@ -1,13 +1,13 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import GKStepper from "../../Components/elements/stepper/GKStepper";
-import BasicInformation from "../ecosystem/steps/BasicInformation";
-import CoursesMedia from "../ecosystem/steps/CoursesMedia";
-import Curriculum from "../ecosystem/steps/Curriculum";
-import Settings from "../ecosystem/steps/Settings";
+import GKStepper from "../../../../Components/elements/stepper/GKStepper";
+import BasicInformation from "../PostAService/steps/BasicInformation";
+import CoursesMedia from "../PostAService/steps/CoursesMedia";
+import Curriculum from "../PostAService/steps/Curriculum";
+import Settings from "../PostAService/steps/Settings";
 
-const AddNewCourse = () => {
+const PostAService = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     course_title: "",
@@ -36,7 +36,7 @@ const AddNewCourse = () => {
   const steps = [
     {
       id: 1,
-      title: "Basic Information",
+      title: "Category Information",
       content: (
         <BasicInformation
           data={formData}
@@ -47,19 +47,7 @@ const AddNewCourse = () => {
     },
     {
       id: 2,
-      title: "Curriculum",
-      content: (
-        <Curriculum
-          data={formData}
-          handleChange={handleChange}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-        />
-      ),
-    },
-    {
-      id: 3,
-      title: "Settings",
+      title: "Service Details",
       content: (
         <Settings
           data={formData}
@@ -70,29 +58,30 @@ const AddNewCourse = () => {
       ),
     },
     {
-      id: 4,
-      title: "Courses Media",
+      id: 3,
+      title: "Service Creation",
       content: (
-        <CoursesMedia
+        <Curriculum
           data={formData}
           handleChange={handleChange}
-          previous={handlePrevious}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
         />
       ),
     },
+   
+    // {
+    //   id: 4,
+    //   title: "Courses Media",
+    //   content: (
+    //     <CoursesMedia
+    //       data={formData}
+    //       handleChange={handleChange}
+    //       previous={handlePrevious}
+    //     />
+    //   ),
+    // },
   ];
-
-  const clearStorage = async () => {
-    sessionStorage.removeItem("category");
-    sessionStorage.removeItem("courseTitle");
-    sessionStorage.removeItem("requirements");
-    sessionStorage.removeItem("description");
-    sessionStorage.removeItem("level");
-    sessionStorage.removeItem("type");
-    sessionStorage.removeItem("price");
-    sessionStorage.removeItem("curriculum");
-    sessionStorage.removeItem("category");
-  };
 
   const handleBackToCourse = () => {
     clearStorage();
@@ -107,9 +96,9 @@ const AddNewCourse = () => {
             <Col lg={{ span: 10, offset: 1 }} md={12} sm={12}>
               <div className="d-lg-flex align-items-center justify-content-between">
                 <div className="mb-4 mb-lg-0">
-                  <h1 className="text-white mb-1">Add New Course</h1>
+                  <h1 className="text-white mb-1">Add A Service</h1>
                   <p className="mb-0 text-white lead">
-                    Just fill the form and create your courses.
+                    Just fill the form and create your Service.
                   </p>
                 </div>
                 <div>
@@ -131,4 +120,4 @@ const AddNewCourse = () => {
   );
 };
 
-export default AddNewCourse;
+export default PostAService;
