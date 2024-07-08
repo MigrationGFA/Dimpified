@@ -99,6 +99,9 @@ import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/Delete
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 
+// Import Community Chat
+import SocialMediaPage from "../Components/CommunityChat/Page";
+
 const AllRoutes = () => {
   return (
     <Routes>
@@ -260,6 +263,9 @@ const AllRoutes = () => {
           element={<EcosystemAddEditCourse />}
         />
       </Route>
+
+      {/* Add Social Media Page Route */}
+      <Route path="/social-media" element={<SocialMediaPage />} />
     </Routes>
   );
 };
