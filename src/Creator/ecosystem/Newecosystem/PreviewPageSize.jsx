@@ -49,7 +49,7 @@ const PreviewPageSize = ({ setView }) => {
           </Tooltip>
         </Col>
         <Col xs="auto" className="text-end">
-          <Button variant="success">Check Screen Size</Button>
+          <Button variant="success">Preview Screen Size</Button>
         </Col>
       </Row>
     </Container>

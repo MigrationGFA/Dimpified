@@ -14,10 +14,14 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
 import template1 from "../../../assets/template/form1.png";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { showToast } from "../../../Components/Showtoast";
 
 import EcoHeader from "./ecoHeader";
 import EcoForm from "../../../EditTemplate/EcoForm";
 import EcoFormPreview from "../../../EditTemplate/EcoFormPreview";
+import PreviewPageSize from "./PreviewPageSize";
 
 const templates = [
   {
@@ -44,6 +48,10 @@ const templateSections = [
 const CreateForm = () => {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showSubmitModal, setSubmitShowModal] = useState(false);
+  const handleShowModal = () => setSubmitShowModal(true);
+  const handleCloseModal = () => setSubmitShowModal(false);
 
   const [step, setStep] = useState(1);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -52,36 +60,94 @@ const CreateForm = () => {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [content, setContent] = useState({
-    logo: "Your Logo",
-    header: "Welcome to Our Website",
-    mainText:
-      "This is the main content of your landing page. You can edit this text.",
-    footer: "© 2024 Your Company. All rights reserved.",
-  });
+
   const navigate = useNavigate();
+  const content = useSelector((state) => state.form1);
+  const userId = useSelector(
+    (state) => state.authentication.user.data.CreatorId
+  );
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
     setStep(2);
   };
 
-  const handleContentChange = (field, value) => {
-    setContent({ ...content, [field]: value });
-  };
-
-  const handleAnswerChange = (questionId, answer) => {
-    setAnswers({ ...answers, [questionId]: answer });
-  };
-
   const handlePrevious = () => {
     navigate("/creator/dashboard/Edit-Template");
   };
-  const handleSubmit = () => {
-    alert("Form submitted!");
-    console.log("Selected Template:", selectedTemplate);
-    console.log("Answers:", answers);
-    navigate("/creator/dashboard/Courses");
+
+  // to convert to file type
+  const convertBase64ToFile = (base64String, filename) => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const formData = new FormData();
+
+    // Add template details to FormData
+    formData.append("creatorId", userId);
+    formData.append("ecosystemId", ecosystemId);
+    // formData.append("templateNumber", localStorage.getItem("templateId"));
+
+    // Convert nested objects to JSON and append to FormData
+    formData.append("sidebar", JSON.stringify(content.sidebar));
+    formData.append("logo", JSON.stringify(content.logo));
+    formData.append("Page1", JSON.stringify(content.Page1));
+    formData.append("Page2", JSON.stringify(content.Page2));
+    formData.append("Page3", JSON.stringify(content.Page3));
+
+    // Convert and append base64 images directly to FormData
+    const imageProperties = {
+      "sidebar.image": "sidebarImage.png",
+      "logo.image": "logoImage.png",
+    };
+    for (const [key, filename] of Object.entries(imageProperties)) {
+      const keys = key.split(".");
+      let imageProp = content;
+      try {
+        for (const k of keys) {
+          imageProp = imageProp[k];
+          if (imageProp === undefined) break; // Exit loop if property is undefined
+        }
+        if (
+          typeof imageProp === "string" &&
+          imageProp.startsWith("data:image")
+        ) {
+          const convertedFile = convertBase64ToFile(imageProp, filename);
+          formData.append(key, convertedFile);
+        }
+      } catch (error) {
+        console.error(`Error accessing property ${key}:`, error);
+      }
+    }
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-form`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setLoading(false);
+      navigate("/creator/dashboard/Create-Form");
+      showToast(response.data.message);
+      console.log("Template created successfully", response.data);
+    } catch (error) {
+      setLoading(false);
+      showToast("Form creation Failed");
+    }
   };
 
   const scroll = (scrollOffset) => {
@@ -108,11 +174,13 @@ const CreateForm = () => {
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
+          <p>Step 3 of 7</p>
           <h2>Select Form Template</h2>
           <p>Select and Edit your ecosystem form template</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
             <ProgressBar now={(step / 3) * 100} />
           </div>
+          <p>{`Step 3.${step} of 3.3`}</p>
         </div>
 
         <div>
@@ -231,13 +299,16 @@ const CreateForm = () => {
           )}
           {step === 3 && (
             <div>
-              <h3>Preview Form</h3>
+              <PreviewPageSize />
               <EcoFormPreview />
-              <div className="d-flex justify-content-between mt-3">
+              <div
+                className="d-flex justify-content-between mt-3"
+                style={{ marginTop: "200px" }}
+              >
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back
                 </Button>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" onClick={handleShowModal}>
                   Submit
                 </Button>
               </div>
@@ -255,11 +326,37 @@ const CreateForm = () => {
         </Modal.Header>
         <Modal.Body>
           <EcoForm />
-          {/* <img src={template1} alt="template" />
-          <img src={template2} alt="template2" className="mt-5" />
-          <img src={template3} alt="template3" className="mt-5" /> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
+      </Modal>
+
+      {/* submit template modal */}
+      <Modal show={showSubmitModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Please cross check for spelling or any error before submiting
+          <br />
+          <p className="mt-5">
+            <strong>Note:</strong> <br />
+            If you click on No, you can still edit the form by clicking on the
+            previous button bellow the form
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            disabled={loading}
+            variant="secondary"
+            onClick={handleCloseModal}
+          >
+            No
+          </Button>
+
+          <Button variant="primary" disabled={loading} onClick={handleSubmit}>
+            {loading ? "Processing" : "Yes"}
+          </Button>
+        </Modal.Footer>
       </Modal>
     </Container>
   );

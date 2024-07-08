@@ -16,8 +16,16 @@ const EditableBlock = ({
   }, [initialContent]);
 
   const handleChange = (value) => {
+    // const sanitizedContent = sanitizeHtml(value, {
+    //   allowedTags: ["b", "i", "em", "strong", "a"], // Add allowed tags here
+    //   allowedAttributes: {
+    //     a: ["href"],
+    //   },
+    // });
     setContent(value);
     onContentChange(value);
+    // setContent(sanitizedContent);
+    // onContentChange(sanitizedContent);
   };
 
   return (
