@@ -141,9 +141,8 @@ const CreateForm = () => {
         }
       );
       setLoading(false);
-      navigate("/creator/dashboard/Create-Form");
       showToast(response.data.message);
-      console.log("Template created successfully", response.data);
+      navigate("/creator/dashboard/Products");
     } catch (error) {
       setLoading(false);
       showToast("Form creation Failed");
