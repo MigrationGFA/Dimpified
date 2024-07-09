@@ -6,24 +6,19 @@ import { Link } from "react-router-dom";
 import SectionHeadingLeftBold from "./SectionHeadingLeftBold";
 
 // import media files
-import FeaturedImg2 from "./images/marketing.jpg";
+import FeaturedImg2 from "./images/revenue.jpg";
 
 // import MDI icons
 // import Icon from "@mdi/react";
 // import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 const HeroRightImage = () => {
-  const title = "Profitable Marketing Startegies designed to boost your Return on investment";
+  const title =
+    "Profitable Marketing Startegies designed to boost your Return on investment";
   const subtitle = "Benefits of DIMP";
 
   const features = [
-    {
-      id: 1,
-
-      title: "Offer educational courses, package deals, and subscription services",
-      description:
-        "A robust sales system equipped with sophisticated pricing features suitable for various digital offerings",
-    },
+   
     {
       id: 2,
 
@@ -79,7 +74,7 @@ const HeroRightImage = () => {
               href=""
               className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
             >
-              Watch Demo
+              Schedule a demo
             </Link>{" "}
           </div>
         </div>

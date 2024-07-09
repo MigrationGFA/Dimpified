@@ -1,48 +1,38 @@
 // import node module libraries
 import { Col, Container, Row, Image, ListGroup } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // import custom components
-
 
 // import MDI icons
 import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import FeaturedImg1 from "../images/customer-sec4.jpg";
+import FeaturedImg1 from "./images/program-manager.png";
 
 const HeroLeftImage = () => {
-  const title =
-    "Afraid that you bore your users? Challenge accepted…and problem solved!";
-  const subtitle = "Use Cases of DIMP";
-
   const featurescol1 = [
     {
       id: 1,
       icon: mdiStar,
-      title: "Offer rich and interactive learning experiences",
+      title: "Tailored Program Development",
       description:
-        "Create your courses in no time. Build a powerful ecosystem of learning activities ranging from videos and SCORM files to ebooks, assessments, 1:1 and group sessions.",
+        "Utilize our no-code templates to create and manage your programs effortlessly. Customize content and structure to meet the unique needs of your initiatives, ensuring each program is effective and impactful.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Drive customer engagement",
+      title: "Easy Course Administration",
       description:
-        "Trigger customer involvement with self assessments, exams, and forms. Take advantage of 18 different question types and a powerful question builder.",
+        "Our course builder feature allows you to develop educational programs and resources efficiently. Organize content, monitor progress, and provide support, all within an intuitive platform.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Develop training programs for all segments`,
-      description: "Design personalized customer education programs based on product type or complexity level, dividing learners into User Groups. Track everything in one dashboard.",
-    },
-    {
-      id: 3,
-      icon: mdiFileDocument,
-      title: `Issue online certificates`,
-      description: "Reward your customers, partners, and resellers with branded online certificates. Auto-generate certificates on course completion and enable LinkedIn certification sharing to promote your brand.",
+      title: `User-Friendly Onboarding and Participation`,
+      description:
+        "Enhance participant experience with our seamless user onboarding tools. Automate registration, track involvement, and manage access, ensuring a welcoming and organized process for all users.",
     },
   ];
 
@@ -52,8 +42,8 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-              Afraid that you bore your users? Challenge accepted…and problem
-              solved!
+              Drive your Organization's Mission and Success with Efficient
+              Program Management
             </h2>
           </div>
         </Col>
@@ -61,8 +51,12 @@ const HeroLeftImage = () => {
       <Row className="align-items-center">
         <Col lg={6} md={12} xs={12}>
           {/* image */}
-          <div className="mb-4 mb-lg-0 bg-gray-200 rounded-4 ">
-            <Image src={FeaturedImg1} alt="..." className="img-fluid w-100" />
+          <div className="mb-4 mb-lg-0 bg-gray-200 rounded rounded-4 ">
+            <Image
+              src={FeaturedImg1}
+              alt="..."
+              className="img-fluid w-100 rounded rounded-4 "
+            />
           </div>
         </Col>
         <Col lg={6} md={12} xs={12} className="mt-4 mt-lg-0">
@@ -79,7 +73,6 @@ const HeroLeftImage = () => {
                         bsPrefix="mb-2"
                         className="d-flex"
                       >
-                        <div></div>
                         <div className="ms-3">
                           <h3
                             className="mb-2"
@@ -101,11 +94,10 @@ const HeroLeftImage = () => {
                 href=""
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
-                Watch Demo
+                Schedule a demo
               </Link>{" "}
             </div>
           </div>
-          
         </Col>
       </Row>
     </Container>

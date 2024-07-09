@@ -8,7 +8,7 @@ import { Col, Row, Container } from "react-bootstrap";
 const CTA2Buttons = ({ title, description, btntext1, btnlink1, btntext2, btnlink2 }) => {
   return (
     <section
-      className="py-lg-16 py-10 bg-gray"
+      className="py-lg-16 py-10 bg-primary"
       style={{
         
         backgroundRepeat: "no-repeat",
@@ -21,14 +21,14 @@ const CTA2Buttons = ({ title, description, btntext1, btnlink1, btntext2, btnlink
         <Row className="justify-content-center text-center">
           <Col md={9} sm={12}>
             {/* heading  */}
-            <h2 className="display-4"> {title}</h2>
-            <p className="lead px-lg-12 mb-6">{description}</p>
+            <h2 className="display-4 text-white"> {title}</h2>
+            <p className="lead px-lg-12 mb-6 text-white">{description}</p>
             {/* button */}
             <div className="d-grid d-md-block">
-              <Link to={btnlink1} className="btn btn-primary btn-lg mb-2 mb-md-0">
+              <Link to={btnlink1} className="btn btn-white btn-lg mb-2 mb-md-0">
                 {btntext1}
               </Link>{" "}
-              <Link to={btnlink2} className="btn btn-outline-primary btn-lg mb-2 mb-md-0">
+              <Link to={btnlink2} className="btn btn-outline-white btn-lg mb-2 mb-md-0">
                 {btntext2}
               </Link>{" "}
             </div>

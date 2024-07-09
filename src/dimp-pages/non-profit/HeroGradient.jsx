@@ -4,7 +4,7 @@ import { Col, Row, Container, Image, ListGroup } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 
 // import custom components
-import LogosTopHeading2 from "../../Components/marketing/common/clientlogos/LogosTopHeading2";
+import LogosTopHeading2 from "./LogosTopHeading2";
 
 // import MDI icons
 import Icon from "@mdi/react";
@@ -15,7 +15,7 @@ import GradientBG from "../../assets/images/background/gradient-bg.png";
 import Graphics from "./images/ngo.jpg";
 
 // import data files
-import LogoList1 from "../../data/marketing/clientlogos/LogoList2";
+import LogoList2 from "./LogoList2";
 
 const HeroGradient = () => {
   const isLaptop = useMediaQuery({ maxWidth: 1024 });
@@ -37,22 +37,23 @@ const HeroGradient = () => {
               />
             </div>
           </Col>
-          <Col lg={6} xs={12} className="order-md-1">
+          <Col lg={6} xs={12} className="order-md-1 px-3">
             {/* Heading */}
-            <h3 className="display-3 mb-5 fw-bold">
-              Discover the power of online learning for{" "}<br/>
-              <u className="text-warning">
-                <span className="text-primary">Non-Profits.</span>
+            <h3 className="display-4 mb-5 fw-bold">
+              Empower Your Non-Profit organization with
+              <u className="text-primary">
+                {" "}
+                Comprehensive Management Solutions
               </u>
             </h3>
-            <p className="display-7">
-              Educate, inspire, and foster growth among your members, donors,
-              and volunteers at an unparalleled value. Align them with your
-              mission and equip them with the necessary training to truly enrich
-              your organization.
+            <p className="fs-4">
+              Transform your non-profit organization with our all-in-one
+              ecosystem management platform. From program management and event
+              organization to volunteer coordination and donation tracking, our
+              tools streamline operations to maximize your impact.
             </p>
 
-            {/* list */}
+            {/* list
             <ListGroup
               bsPrefix="list-unstyled"
               className="fs-3 text-dark mb-6 fw-medium"
@@ -63,7 +64,7 @@ const HeroGradient = () => {
                   size={0.9}
                   className="text-success mt-1 me-2"
                 />{" "}
-                Access a 30-day trial
+                Organize Upskilling, Accelerator and Incubator programs.
               </ListGroup.Item>
               <ListGroup.Item bsPrefix="mb-1" className="d-flex">
                 <Icon
@@ -71,7 +72,7 @@ const HeroGradient = () => {
                   size={0.9}
                   className="text-success mt-1 me-2"
                 />{" "}
-                Utilize free nonprofit course templates
+                Interact with promising startups through these programs.
               </ListGroup.Item>
               <ListGroup.Item bsPrefix="mb-1" className="d-flex">
                 <Icon
@@ -79,17 +80,17 @@ const HeroGradient = () => {
                   size={0.9}
                   className="text-success mt-1 me-2"
                 />{" "}
-                Experience a demo
+                Have access top entrepreneurial talents.
               </ListGroup.Item>
-            </ListGroup>
+            </ListGroup> */}
 
             {/* Buttons */}
             <div className="mb-8 mb-lg-0">
               <Link to="#" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
-			  Get Started Now
+                Get Started Now
               </Link>
               <Link to="#" className="btn btn-lg btn-outline-primary">
-                View Demo
+                Scedule a Demo
               </Link>
             </div>
           </Col>
@@ -97,8 +98,8 @@ const HeroGradient = () => {
 
         {/* Trusted By logo */}
         <LogosTopHeading2
-          title="TRUSTED BY MILLIONS OF DEVELOPERS & THOUSANDS OF ENTERPRISE TEAMS"
-          logos={LogoList1}
+          title="TRUSTED BY TOP CORPORATE ORGANIZATIONS."
+          logos={LogoList2}
           limit={5}
           inverse={false}
         />

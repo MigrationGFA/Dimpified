@@ -1,16 +1,14 @@
 import { v4 as uuid } from "uuid";
-import Template from "../icons/template.png";
-import Builder from "../icons/add-image.png";
-import Domain from "../icons/domain.png";
-import App from "../icons/user-interface.png";
-import Module from "../icons/course.png";
-import Sync from "../icons/syncing.png";
-import Interactive from "../icons/online-learning (1).png";
-import Certificate from "../icons/certificate.png";
-import Live from "../icons/online-class.png";
-import Analytics from "../icons/analytics.png";
-import Subscription from "../icons/subscription.png";
-import Payment from "../icons/payment-gateway.png";
+import School from "../icons/online-learning.png";
+import Help from "../icons/customer-care.png";
+import Webinars from "../icons/webinar.png";
+
+import Blog from "../icons/blog.png";
+import Dev from "../icons/coding.png";
+import Builder from "../icons/website-builder.png";
+import Affliate from "../icons/money.png";
+import Team from "../icons/team.png";
+import Careers from "../icons/promotion.png";
 
 const NavbarMegaMenuRoutes = [
   {
@@ -20,7 +18,7 @@ const NavbarMegaMenuRoutes = [
       {
         id: uuid(),
         menuitem: "DIMP Ecosystem School",
-        image: Template,
+        image: School,
         subtitle1:
           "Choose from wide variety of template in relation to your need",
 
@@ -35,7 +33,7 @@ const NavbarMegaMenuRoutes = [
       {
         id: uuid(),
         menuitem: "Help Centre",
-        image: Builder,
+        image: Help,
         subtitle1: "Hackathons",
 
         link: "#",
@@ -45,12 +43,12 @@ const NavbarMegaMenuRoutes = [
   {
     id: uuid(),
     menuitem: "Foundations / NG0s",
-    link: "#",
+    
     children: [
       {
         id: uuid(),
         menuitem: "Webinars",
-        image: Domain,
+        image: Webinars,
         subtitle1: "University of Michigan",
 
         link: "#",
@@ -63,8 +61,8 @@ const NavbarMegaMenuRoutes = [
     children: [
       {
         id: uuid(),
-        menuitem: "Resources",
-        image: App,
+        menuitem: "Developer Program",
+        image: Dev,
         subtitle1: "University of Michigan",
 
         link: "#",
@@ -77,8 +75,8 @@ const NavbarMegaMenuRoutes = [
     children: [
       {
         id: uuid(),
-        menuitem: "Contact",
-        image: App,
+        menuitem: "Builder Program",
+        image: Builder,
         subtitle1: "University of Michigan",
 
         link: "#",
@@ -91,14 +89,57 @@ const NavbarMegaMenuRoutes = [
     children: [
       {
         id: uuid(),
-        menuitem: "Team",
-        image: App,
+        menuitem: "Affliate Program",
+        image: Affliate,
         subtitle1: "University of Michigan",
 
         link: "#",
       },
     ],
   },
+  {
+    id: uuid(),
+    menuitem: "Professional Services",
+    children: [
+      {
+        id: uuid(),
+        menuitem: "Resources/Blog",
+        image: Blog,
+        subtitle1: "University of Michigan",
+
+        link: "#",
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    menuitem: "Professional Services",
+    children: [
+      {
+        id: uuid(),
+        menuitem: "Careers",
+        image: Careers,
+        subtitle1: "University of Michigan",
+
+        link: "#",
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    menuitem: "Professional Services",
+    children: [
+      {
+        id: uuid(),
+        menuitem: "Our Team",
+        image: Team,
+        subtitle1: "University of Michigan",
+
+        link: "#",
+      },
+    ],
+  },
+  
 ];
 
 export default NavbarMegaMenuRoutes;
