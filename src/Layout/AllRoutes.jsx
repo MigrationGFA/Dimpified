@@ -57,7 +57,6 @@ import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
 import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
 import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
 import Courses from "../Creator/ecosystem/Newecosystem/Courses";
-import PostService from "../Creator/ecosystem/Newecosystem/PostService";
 import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
 import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
@@ -139,10 +138,6 @@ const AllRoutes = () => {
       <Route
         path="/creator/dashboard/Add-New-Course"
         element={<AddNewCourse />}
-      />
-      <Route
-        path="/creator/dashboard/Post-Service"
-        element={<PostService />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />

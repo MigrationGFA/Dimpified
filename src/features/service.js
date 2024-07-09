@@ -7,6 +7,7 @@ const initialState = {
   header: "",
   description: "",
   format: "",
+  currency: "",
   serviceBackground: [],
   services: [],
 };
@@ -23,15 +24,9 @@ const serviceSlice = createSlice({
     },
     resetServiceData: () => initialState,
     addServiceBackground(state, action) {
-      const fileMetadata = action.payload.map(file => ({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: file.lastModified,
-      }));
       return {
         ...state,
-        serviceBackground: [...state.serviceBackground, ...fileMetadata],
+        serviceBackground: [...state.serviceBackground, action.payload],
       };
     },
     removeServiceBackground(state, action) {

@@ -663,7 +663,7 @@ const AddService = () => {
   const [price, setPrice] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
   const [jobSalaryFormat, setJobSalaryFormat] = useState("");
-
+  const [currency, setCurrency] = useState("");
 
   const dispatch = useDispatch();
 
@@ -696,11 +696,17 @@ const AddService = () => {
         price,
         deliveryTime,
         jobSalaryFormat,
-
+        currency,
       })
     );
     handleClose();
   };
+  const currencyType = [
+    { value: "NGN", label: "Naira" },
+    { value: "USD", label: "Dollars" },
+    { value: "EUR", label: "Euros" },
+    { value: "GBP", label: "Pounds" },
+  ];
 
   return (
     <>
@@ -775,6 +781,24 @@ const AddService = () => {
               ))}
             </Form.Select>
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="currency">
+              Currency<span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Select
+              id="currency"
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              required
+            >
+              <option value="">Select Currency</option>
+              {currencyType.map((currency, index) => (
+                <option key={index} value={currency.value}>
+                  {currency.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline">
           <Button variant="primary" onClick={handleAddService}>
@@ -798,6 +822,7 @@ const Service = ({ onNext, onPrevious }) => {
   const [editPrice, setEditPrice] = useState("");
   const [editDeliveryTime, setEditDeliveryTime] = useState("");
   const [editJobSalaryFormat, setEditJobSalaryFormat] = useState("");
+  const [editCurrency, setEditCurrency] = useState("");
 
   useEffect(() => {
     if (editIndex !== null) {
@@ -807,12 +832,14 @@ const Service = ({ onNext, onPrevious }) => {
         price,
         deliveryTime,
         jobSalaryFormat,
+        currency,
       } = sections[editIndex];
       setEditServiceName(serviceName);
       setEditShortDescription(shortDescription);
       setEditPrice(price);
       setEditDeliveryTime(deliveryTime);
       setEditJobSalaryFormat(jobSalaryFormat);
+      setEditCurrency(currency);
     }
   }, [editIndex, sections]);
 
@@ -828,14 +855,22 @@ const Service = ({ onNext, onPrevious }) => {
       price,
       deliveryTime,
       jobSalaryFormat,
+      currency,
     } = sections[index];
     setEditServiceName(serviceName);
     setEditShortDescription(shortDescription);
     setEditPrice(price);
     setEditDeliveryTime(deliveryTime);
     setEditJobSalaryFormat(jobSalaryFormat);
+    setEditCurrency(currency);
   };
 
+  const currencyType = [
+    { value: "NGN", label: "Naira" },
+    { value: "USD", label: "Dollars" },
+    { value: "EUR", label: "Euros" },
+    { value: "GBP", label: "Pounds" },
+  ];
 
   const handleFieldChange = (field, value) => {
     switch (field) {
@@ -847,6 +882,9 @@ const Service = ({ onNext, onPrevious }) => {
         break;
       case "price":
         setEditPrice(value);
+        break;
+      case "currency":
+        setEditCurrency(value);
         break;
       case "deliveryTime":
         setEditDeliveryTime(value);
@@ -867,6 +905,7 @@ const Service = ({ onNext, onPrevious }) => {
           serviceName: editServiceName,
           shortDescription: editShortDescription,
           price: editPrice,
+          currency: editCurrency,
           deliveryTime: editDeliveryTime,
           jobSalaryFormat: editJobSalaryFormat,
         },
@@ -936,6 +975,23 @@ const Service = ({ onNext, onPrevious }) => {
                         handleFieldChange("deliveryTime", e.target.value)
                       }
                     />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Currency</Form.Label>
+                    <Form.Select
+                      id="currency"
+                      value={editCurrency}
+                      onChange={(e) =>
+                        handleFieldChange("currency", e.target.value)
+                      }
+                    >
+                      <option value="">Select Currency</option>
+                      {currencyType.map((currency, index) => (
+                        <option key={index} value={currency.value}>
+                          {currency.label}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Pricing Format</Form.Label>
@@ -1016,6 +1072,16 @@ const Service = ({ onNext, onPrevious }) => {
                     }}
                   >
                     {service.deliveryTime}
+                  </p>
+                  <p
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid #ced4da",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {service.currency}
                   </p>
                   <p
                     style={{
