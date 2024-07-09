@@ -1,7 +1,7 @@
 // GDGNav.jsx
 import React, { useState } from 'react';
 import { Container, Nav } from 'react-bootstrap';
-import GDGPosts from '../CommunityChat/PostFeed';  
+// import GDGPosts from '../CommunityChat/PostFeed';  
 
 const GDGNav = () => {
   const [activeTab, setActiveTab] = useState('posts');
@@ -14,11 +14,11 @@ const GDGNav = () => {
   return (
     <Container>
       <Nav variant="tabs" activeKey={activeTab} onSelect={handleSelect}>
-        <Nav.Item>
+        {/* <Nav.Item>
           <Nav.Link eventKey="posts">Posts</Nav.Link>
-        </Nav.Item>
+        </Nav.Item> */}
       </Nav>
-      {activeTab === 'posts' && <GDGPosts />}
+      {/* {activeTab === 'posts' && <GDGPosts />} */}
     </Container>
   );
 };
