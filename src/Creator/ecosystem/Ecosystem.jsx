@@ -169,12 +169,21 @@ const Ecosystem = () => {
             <Card.Body>
               <div>
                 <div className="d-md-flex">
-                  <div className="">
+                  <div
+                    className=""
+                    style={{
+                      width: "200px",
+                    }}
+                  >
                     <Image
-                      src={Ecosystem1}
+                      src={
+                        eco.templateLogos && eco.templateLogos.length > 0
+                          ? eco.templateLogos[0].logoPath
+                          : null
+                      }
                       alt="Ecosystem"
                       className="img-fluid"
-                      style={{ maxHeight: "100px", maxWidth: "100%" }}
+                      style={{ maxHeight: "100px", width: "150px" }}
                     />
                   </div>
                   <div className="ms-md-3 w-100 mt-3 mt-xl-1">
@@ -227,12 +236,18 @@ const Ecosystem = () => {
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         {/* Button group */}
                         <div>
-                          <Button
-                            variant="primary"
-                            className="me-2 mb-2 mb-md-0"
+                          <a
+                            href={`http://localhost:5173/show=true/${eco.ecosystemDomain}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
-                            Dashboard
-                          </Button>
+                            <Button
+                              variant="primary"
+                              className="me-2 mb-2 mb-md-0"
+                            >
+                              Dashboard
+                            </Button>
+                          </a>
                           <Button
                             variant="outline-primary"
                             className="me-2 mb-2 mb-md-0"

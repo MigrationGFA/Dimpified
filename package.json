@@ -79,6 +79,7 @@
     "react-toastify": "^10.0.4",
     "react-youtube": "^10.1.0",
     "redux-persist": "^6.0.0",
+    "sanitize-html": "^2.13.0",
     "sass-loader": "^14.0.0",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
