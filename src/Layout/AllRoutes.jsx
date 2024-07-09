@@ -3,11 +3,13 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
-
 import DimpHome from "../dimp-home/DimpHome";
-import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
+import CustomerTraining from "../dimp-pages/education/CustomerTraining";
 import Pricing from "../dimp-pages/pricing/Pricing";
+import Government from "../dimp-pages/government/Government";
+import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
+
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -98,6 +100,7 @@ import EcosystemSocialProfiles from "../DashboardsPeerComponents/Ecosystem/Socia
 import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/DeleteProfile";
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
+import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 
 
 const AllRoutes = () => {
@@ -106,6 +109,8 @@ const AllRoutes = () => {
       <Route path="/" element={<DimpHome />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/government" element={<Government />} />
+      <Route path="/corporation" element={<Corporation />} />
       <Route path="/non-profit" element={<NonProfit />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
@@ -180,87 +185,91 @@ const AllRoutes = () => {
           path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
-        <Route path="/User" element={<UserLandingPage />} />
-        <Route path="/User-My-Course" element={<UserMyCourse />} />
-        <Route path="/Userdashboard" element={<UserDashboard />} />
-        <Route path="/User-Reviews" element={<UserReviews />} />
-        <Route path="/User-My-Course/Bookmarked" element={<UserBookmarked />} />
-        <Route path="/User-My-Course/Learning" element={<UserLearning />} />
-        <Route path="/User-quiz-result" element={<UserQiuzResult />} />
-        <Route path="/User-edit-profile" element={<UserEditProfile />} />
-        <Route path="/User-payout" element={<UserPayouts />} />
-        <Route path="/User-social-profile" element={<UserSocialProfile />} />
-        <Route path="/User-notifications" element={<UserNotification />} />
-
-        <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
-        <Route path="/User-Resolution" element={<UserResolution />} />
-        <Route path="/User/browse-course" element={<UserBrowseCourse />} />
-        <Route path="/User/single-course" element={<UserSingleCourse />} />
-        <Route
-          path="/User/single/learning/single-course"
-          element={<UserLearningCourse />}
-        />
-        <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
-
-        <Route path="/Ecosystemdashboard" element={<EcosystemDashboard />} />
-        <Route
-          path="/Ecosystemdashboard/My-Courses"
-          element={<EcosystemCourses />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-reviews"
-          element={<EcosystemReviews />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-earning"
-          element={<EcosystemEarning />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-orders"
-          element={<EcosystemOrders />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-students"
-          element={<EcosystemStudents />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-payouts"
-          element={<EcosystemPayouts />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-quiz"
-          element={<EcosystemQuiz />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-quiz-single"
-          element={<EcosystemQuizSingle />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-quiz-result"
-          element={<EcosystemQuizResult />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-edit-profile"
-          element={<EcosystemEditProfile />}
-        />
-
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-social-profiles"
-          element={<EcosystemSocialProfiles />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-delete-profile"
-          element={<EcosystemDeleteProfile />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-add-new-course"
-          element={<EcosystemAddNewCourse />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-edit-course"
-          element={<EcosystemAddEditCourse />}
-        />
       </Route>
+
+      <Route path="/User" element={<UserLandingPage />} />
+      <Route path="/User-My-Course" element={<UserMyCourse />} />
+      <Route path="/Userdashboard" element={<UserDashboard />} />
+      <Route path="/User-Reviews" element={<UserReviews />} />
+      <Route path="/User-My-Course/Bookmarked" element={<UserBookmarked />} />
+      <Route path="/User-My-Course/Learning" element={<UserLearning />} />
+      <Route path="/User-quiz-result" element={<UserQiuzResult />} />
+      <Route path="/User-edit-profile" element={<UserEditProfile />} />
+      <Route path="/User-payout" element={<UserPayouts />} />
+      <Route path="/User-social-profile" element={<UserSocialProfile />} />
+      <Route path="/User-notifications" element={<UserNotification />} />
+
+      <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
+      <Route path="/User-Resolution" element={<UserResolution />} />
+      <Route path="/User/browse-course" element={<UserBrowseCourse />} />
+      <Route path="/User/single-course" element={<UserSingleCourse />} />
+      <Route
+        path="/User/single/learning/single-course"
+        element={<UserLearningCourse />}
+      />
+      <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
+
+      <Route path="/Ecosystemdashboard" element={<EcosystemDashboard />} />
+      <Route
+        path="/Ecosystemdashboard/My-Courses"
+        element={<EcosystemCourses />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-reviews"
+        element={<EcosystemReviews />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-earning"
+        element={<EcosystemEarning />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-orders"
+        element={<EcosystemOrders />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-students"
+        element={<EcosystemStudents />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-payouts"
+        element={<EcosystemPayouts />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz"
+        element={<EcosystemQuiz />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz-single"
+        element={<EcosystemQuizSingle />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-quiz-result"
+        element={<EcosystemQuizResult />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-edit-profile"
+        element={<EcosystemEditProfile />}
+      />
+
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-social-profiles"
+        element={<EcosystemSocialProfiles />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-delete-profile"
+        element={<EcosystemDeleteProfile />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-add-new-course"
+        element={<EcosystemAddNewCourse />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-edit-course"
+        element={<EcosystemAddEditCourse />}
+      />
+
+      {/* End user ecosystem routes */}
+      <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
     </Routes>
   );
 };

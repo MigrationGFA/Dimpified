@@ -17,7 +17,6 @@ import "./Steps.css";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
 import Template2 from "../../../EditTemplate/Template2";
-import TemplateOne from "../../../EditTemplate/TemplateOneV1";
 import PreviewPage from "../../../EditTemplate/Preview";
 import Templates from "../../../data/Template/LandingPageTemplate";
 import { useSelector } from "react-redux";
@@ -176,7 +175,6 @@ const EditTemplate = () => {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
   };
-  
 
   useEffect(() => {
     checkScroll();
@@ -192,11 +190,13 @@ const EditTemplate = () => {
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
+          <p>Step 2 of 7</p>
           <h2>Select Template</h2>
           <p>Select and Edit your ecosystem template</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
             <ProgressBar now={(step / 3) * 100} />
           </div>
+          <p>{`Step 2.${step} of 2.3`}</p>
         </div>
 
         <div>
@@ -295,16 +295,13 @@ const EditTemplate = () => {
                   </Col>
                 ))}
               </Row>
-
-              
             </div>
           )}
           {step === 2 && (
             <div>
               <h3>Edit Template Content</h3>
-              {/* <Template1 /> */}
+
               {renderTemplate(selectedTemplate)}
-              {/* <TemplateOne /> */}
               <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
                   Backs
@@ -345,7 +342,7 @@ const EditTemplate = () => {
           <Modal.Title>Preview Template</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TemplateOne />
+          <Template1 />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
@@ -360,8 +357,8 @@ const EditTemplate = () => {
           <br />
           <p className="mt-5">
             <strong>Note:</strong> <br />
-            If you click on No, you can still edit the ecosystem by clicking on
-            previous page
+            If you click on No, you can still edit the template by clicking on
+            the previous button bellow the template
           </p>
         </Modal.Body>
         <Modal.Footer>

@@ -21,7 +21,7 @@ const initialState = {
     topic3: `Email`,
     topic4: `Phone`,
      buttonText1: "Next",
-     footer: "Already have an account?",
+     footer: "Already have an account? Sign-in",
     styles: {
       backgroundColor: "#FCFCFC",
       color: "#000000",
@@ -54,6 +54,7 @@ const initialState = {
     topic3: `City`,
     topic4: `Country`,
      buttonText1: "Next",
+     buttonText2: "Next",
     styles: {
       backgroundColor: "#FCFCFC",
       color: "#000000",
@@ -73,8 +74,6 @@ const FormSlice1 = createSlice({
       if (typeof index === 'number') {
         state[section][index][field] = value;
       } else {
-        console.log("this is state and action", state)
-        console.log("this is  action", action)
         state[section][field] = value;
       }
     },
@@ -82,15 +81,11 @@ const FormSlice1 = createSlice({
       const { section, styles } = action.payload;
       state[section].styles = { ...state[section].styles, ...styles };
     },
-    updateFAQ(state, action) {
-      const { index, field, value } = action.payload;
-      state.faq[index][field] = value;
-    },
   },
 });
 
 
 
-export const { updateContent, updateStyles, updateFAQ } = FormSlice1.actions;
+export const { updateContent, updateStyles, } = FormSlice1.actions;
 export default FormSlice1.reducer;
 
