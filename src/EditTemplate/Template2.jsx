@@ -36,8 +36,8 @@ const Template2 = () => {
   const activeSection = useSelector(
     (state) => state.activeSection.activeSection
   );
+  const myLogo = useSelector((state) => state.template1.navbar.logo);
   const faqStyles = useSelector((state) => state.template1.faqStyles);
-
   const handleContentChange = (section, field, value, index = null) => {
     dispatch(updateContent({ section, field, value, index }));
   };
@@ -242,10 +242,6 @@ const Template2 = () => {
               />
             )}
 
-            {/* <Contact /> */}
-
-            {/* <FAQ /> */}
-
             <section className="py-lg-5 py-5 bg-white">
               <Container id="hero" className="py-lg-16 py-6">
                 <Row>
@@ -255,7 +251,7 @@ const Template2 = () => {
                       <FAQ
                         faqs={content.faq}
                         handleContentChange={handleFaqContentChange}
-                        styles={content.faq.styles}
+                        styles={faqStyles}
                       />
                     )}
                   </Col>
@@ -1008,7 +1004,7 @@ export const FAQ = ({ faqs, handleContentChange }) => (
     <Row className="justify-content-center">
       <Col lg={12} md={12} sm={12}>
         <h2 className="text-center">Frequently Asked Questions</h2>
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey="0" styles={{}}>
           {faqs.map((faq, index) => (
             <Accordion.Item eventKey={index.toString()} key={index}>
               <Accordion.Header>

@@ -17,6 +17,7 @@ import template1 from "../../../assets/template/form1.png";
 
 import EcoHeader from "./ecoHeader";
 import EcoForm from "../../../EditTemplate/EcoForm";
+import EcoFormPreview from "../../../EditTemplate/EcoFormPreview";
 
 const templates = [
   {
@@ -217,50 +218,8 @@ const CreateForm = () => {
             <div>
               <h3>Edit Form Content</h3>
               <EcoForm />
-              {/* <Form>
-                <Form.Group>
-                  <Form.Label>Logo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.logo}
-                    onChange={(e) =>
-                      handleContentChange("logo", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Header</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.header}
-                    onChange={(e) =>
-                      handleContentChange("header", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Main Text</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={content.mainText}
-                    onChange={(e) =>
-                      handleContentChange("mainText", e.target.value)
-                    }
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Footer</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={content.footer}
-                    onChange={(e) =>
-                      handleContentChange("footer", e.target.value)
-                    }
-                  />
-                </Form.Group>
-              </Form> */}
-              <div className="d-flex justify-content-between mt-3">
+
+              <div className="d-flex justify-content-between mt-3 w-75">
                 <Button variant="secondary" onClick={() => setStep(1)}>
                   Back
                 </Button>
@@ -273,25 +232,7 @@ const CreateForm = () => {
           {step === 3 && (
             <div>
               <h3>Preview Form</h3>
-              <EcoForm />
-              {/* <div
-                className="template-preview p-3"
-                style={{
-                  backgroundColor: "#f8f9fa",
-                  border: "1px solid #ddd",
-                }}
-              >
-                <header className="text-center">
-                  <h1>{content.logo}</h1>
-                  <h2>{content.header}</h2>
-                </header>
-                <main className="mt-4">
-                  <p>{content.mainText}</p>
-                </main>
-                <footer className="text-center mt-4">
-                  <p>{content.footer}</p>
-                </footer>
-              </div> */}
+              <EcoFormPreview />
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back

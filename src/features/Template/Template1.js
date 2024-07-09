@@ -146,37 +146,37 @@ const initialState = {
       question: "What services do you offer?",
       answer: "We offer a variety of services tailored to your needs.",
       styles: {
-        backgroundColor: "#ffffff",
-        color: "#000000",
-        fontFamily: "Arial, sans-serif",
-      },
+      backgroundColor: "#0F172A",
+      color: "#FFFFFF",
+      fontFamily: "Arial, sans-serif",
+    },
     },
     {
       question: "How can we contact you?",
       answer: "You can contact us via phone or email.",
       styles: {
-        backgroundColor: "#ffffff",
-        color: "#000000",
-        fontFamily: "Arial, sans-serif",
-      },
+      backgroundColor: "#0F172A",
+      color: "#FFFFFF",
+      fontFamily: "Arial, sans-serif",
+    },
     },
     {
       question: "What are your pricing plan?",
       answer: "We offer flexible pricing plans to meet the needs of different types of businesses. Please visit our pricing page for more details.",
-       styles: {
-        backgroundColor: "#ffffff",
-        color: "#000000",
-        fontFamily: "Arial, sans-serif",
-      },
+      styles: {
+      backgroundColor: "#0F172A",
+      color: "#FFFFFF",
+      fontFamily: "Arial, sans-serif",
+    },
     },
      {
       question: "Can i customize my service?",
       answer: "Yes, we offer customizable service packages to ensure you get exactly what you need for your business.",
-       styles: {
-        backgroundColor: "#ffffff",
-        color: "#000000",
-        fontFamily: "Arial, sans-serif",
-      },
+      styles: {
+      backgroundColor: "#0F172A",
+      color: "#FFFFFF",
+      fontFamily: "Arial, sans-serif",
+    },
     }
   ],
    faqStyles: {
@@ -199,7 +199,7 @@ const initialState = {
      body3name1: `Your Address: put your address address`,
     body3name2: `Email: @email@youremail-tech.com`,
     body3name3: `Phone: 090000000000`,
-    footerTage: "© 2024 GFA-Tech, Inc. All Rights Reserved",
+    footerTags: "© 2024 GFA-Tech, Inc. All Rights Reserved",
     styles: {
       backgroundColor: "#0F172A",
       color: "#FFFFFF",
@@ -217,6 +217,7 @@ const templateSlice = createSlice({
       if (typeof index === 'number') {
         state[section][index][field] = value;
       } else {
+
         state[section][field] = value;
       }
     },

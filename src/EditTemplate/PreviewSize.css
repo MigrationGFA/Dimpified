@@ -1,0 +1,21 @@
+.preview-page {
+    /* Common styles for the preview page */
+}
+
+.desktop-view {
+    width: 100%;
+    /* Full width for desktop */
+    height: auto;
+}
+
+.tablet-view {
+    width: 768px;
+    /* Typical width for tablets */
+    height: auto;
+}
+
+.mobile-view {
+    width: 375px;
+    /* Typical width for mobile */
+    height: auto;
+}
