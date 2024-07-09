@@ -134,24 +134,19 @@ const NewEcosystem = () => {
   };
 
   const departments = [
-    { value: "Graphics and Design", label: "Graphics and Design" },
-    { value: "Digital Marketing", label: "Digital Marketing" },
-    { value: "Video and Animation", label: "Video and Animation" },
-    { value: "Music and Audio", label: "Music and Audio" },
-    { value: "Programming and Tech", label: "Programming and Tech" },
-    { value: "Business Development", label: "Business Development" },
-    { value: "Photography", label: "Photography" },
-    { value: "Catering", label: "Catering" },
-    { value: "Lifestyle and Health", label: "Lifestyle and Health" },
-    { value: "Logo Making", label: "Logo Making" },
-    { value: "Mobile Developer", label: "Mobile Developer" },
-    { value: "Data Analytics", label: "Data Analytics" },
-    { value: "Product Manager", label: "Product Manager" },
-    { value: "UI / UX Design", label: "UI / UX Design" },
-    { value: "SEO", label: "SEO" },
-    { value: "Finance", label: "Finance" },
-    { value: "End-to-End Projects", label: "End-to-End Projects" },
-    { value: "SEO", label: "SEO" },
+    { value: "Government", label: "Government" },
+    { value: "Corporations", label: "Corporations" },
+    { value: "Foundations/NGO's", label: "Foundations/NGO's" },
+    { value: "Professional Services", label: "Professional Services" },
+    { value: "Creative Services", label: "Creative Services" },
+    { value: "Home Services", label: "Home Services" },
+    {
+      value: "Health and Wellness Services",
+      label: "Health and Wellness Services",
+    },
+    { value: "Educational Services", label: "Educational Services" },
+    { value: "Event Services", label: "Event Services" },
+    { value: "Technical Services", label: "Technical Services" },
   ];
 
   const audienceNumber = [
@@ -205,6 +200,7 @@ const NewEcosystem = () => {
                   <h3 className="mb-0 h3 fw-bold">
                     Basic Ecosystem Information
                   </h3>
+                  <p>Step 1 of 7</p>
                 </div>
               </div>
               <div>
@@ -259,11 +255,9 @@ const NewEcosystem = () => {
                             <div className="mt-2">
                               <strong>Suggestions:</strong>
                               <ul>
-                                {domainSuggestions.map(
-                                  (suggestion, index) => (
-                                    <li key={index}>{suggestion}</li>
-                                  )
-                                )}
+                                {domainSuggestions.map((suggestion, index) => (
+                                  <li key={index}>{suggestion}</li>
+                                ))}
                               </ul>
                             </div>
                           )}
@@ -443,8 +437,9 @@ const NewEcosystem = () => {
           access to?
           <br />
           <strong>Note:</strong> <br />
-          If you click on No, you can still edit the ecosystem information
-          and If you click on Next you will be creating your ecosystem but you won't be able to edit the ecosystem information 
+          If you click on No, you can still edit the ecosystem information and
+          If you click on Next you will be creating your ecosystem but you won't
+          be able to edit the ecosystem information
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setConfirmModal(false)}>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ModalVideo from 'react-modal-video';
 
 // import media files
-import EducationVideoImage from '../images/education/edu-video-img.jpg';
+import EducationVideoImage from './images/data.jpeg';
 
 const LearnLatestSkills = () => {
   const [isOpen, setOpen] = useState(false);
@@ -18,10 +18,10 @@ const LearnLatestSkills = () => {
             <Row className="align-items-center">
               <Col lg={5} md={12} xs={12}>
                 <div className="mb-5 mb-lg-0">
-                  <h2 className="display-4 fw-bold mb-3">Leverage on our <u className="text-warning"><span
-                    className="text-primary">one-on-one session
-                  </span></u> feature</h2>
-                  <p className="mb-5 lead">Schedule interactive sessions with your students and make the learning process more fun.</p>
+                  <h2 className="display-4 fw-bold mb-3">Leverage our <u className="text-warning"><span
+                    className="text-primary">visualization feature
+                  </span></u> to make better decisions.</h2>
+                  <p className="mb-5 lead">Get access to real-time data of the user that onboard on your ecosystem.</p>
                   <Link href="#!" className="btn btn-outline-secondary">Get Started Now</Link>
                 </div>
               </Col>

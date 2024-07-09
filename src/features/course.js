@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     courseTitle: "",
     category: "",
+    subCategory: "",
     level: "",
     type: "",
     price: "",
