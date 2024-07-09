@@ -3,10 +3,11 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
-
 import DimpHome from "../dimp-home/DimpHome";
-import CustomerTraining from "../dimp-pages/customer-training/CustomerTraining";
+import CustomerTraining from "../dimp-pages/education/CustomerTraining";
 import Pricing from "../dimp-pages/pricing/Pricing";
+import Government from "../dimp-pages/government/Government";
+import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
 // ** Import Dahbaord Menu Pages
@@ -105,6 +106,8 @@ const AllRoutes = () => {
       <Route path="/" element={<DimpHome />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/government" element={<Government />} />
+      <Route path="/corporation" element={<Corporation />} />
       <Route path="/non-profit" element={<NonProfit />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
