@@ -124,7 +124,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
               <DarkLightMode className="mt-2 me-2" />
 
               {/* If user is logged in, show Dashboard link */}
-              {/* {user ? (
+               {/* {user ? ( */}
                 <Nav.Link
                   as={Link}
                   to="/Userdashboard"
@@ -133,7 +133,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
                   // onClick={redirect}
                 >
                   Dashboard
-                </Nav.Link> */}
+                </Nav.Link> 
               {/* ) : (
                 // If user is not logged in, show Sign In and Sign Up links
                 <span className={`ms-auto mt-1`}>

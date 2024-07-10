@@ -101,6 +101,8 @@ import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/Delete
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
+import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
+import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
 
 
 const AllRoutes = () => {
@@ -141,8 +143,16 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route
-        path="/creator/dashboard/Add-New-Course"
+        path="/Ecosystemdashboard/Add-New-Course"
         element={<AddNewCourse />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Add-New-Service"
+        element={<PostAService />}
+      />
+       <Route
+        path="/creator/dashboard/Add-New-Product"
+        element={<PostAProduct/>}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />

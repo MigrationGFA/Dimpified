@@ -1,88 +1,49 @@
 const Categories = [
   {
     id: 1,
-    name: "FITNESS",
+    name: "GOVERNMENT",
   },
   {
     id: 2,
-    name: "UP-SKILLING",
+    name: "CORPORATIONS",
   },
   {
     id: 3,
-    name: "ENTERPRISE-LMS",
+    name: "FOUNDATION/NGO's",
   },
   {
     id: 4,
-    name: "FINANCE",
+    name: "RELIGIOUS BODIES",
   },
   {
     id: 5,
-    name: "EMPLOYEE-TRAINING",
+    name: "PROFESSIONAL SERVICES",
   },
   {
     id: 6,
-    name: "CUSTOMER-TRAINIG",
+    name: "CREATIVE SERVICES",
   },
   {
     id: 7,
-    name: "INFLUENCER/CREATOR",
+    name: "TRADE SERVICES",
   },
   {
     id: 8,
-    name: "COACHING/ONLINE -TRAINING",
+    name: "PERSONAL CARE SERVICES",
   },
   {
     id: 9,
-    name: "MUSIC",
+    name: "EDUCATIONAL SERVICES",
   },
   {
     id: 10,
-    name: "HEALTH",
+    name: "EVENT SERVICES",
   },
   {
     id: 11,
-    name: "NON-PROFIT",
+    name: "TECHNOLOGY SERVICES",
   },
-  {
-    id: 12,
-    name: "PITCH-COMPETITION",
-  },
-  {
-    id: 13,
-    name: "INCUBATOR AND ACCELERATOR PROGRAM",
-  },
-  {
-    id: 14,
-    name: "CHALLENGES AND HACKATHONS",
-  },
-  {
-    id: 15,
-    name: "ECOMMERCE AND MARKETING",
-  },
-  {
-    id: 16,
-    name: "EVENTS",
-  },
-  {
-    id: 17,
-    name: "LICENSING",
-  },
-  {
-    id: 18,
-    name: "ALUMNI",
-  },
-  {
-    id: 19,
-    name: "CO-OPERATIVE",
-  },
-  {
-    id: 20,
-    name: "PTA",
-  },
-  {
-    id: 21,
-    name: "RELIGION-ACTIVITIES",
-  },
+  
 ];
 
 export default Categories;

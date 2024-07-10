@@ -5,8 +5,8 @@ import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
   updateServiceData,
-  addServiceBackground,
-  removeServiceBackground,
+  addBackgroundCover,
+  removeBackgroundCover,
 } from "../../../../../features/service";
 
 const Settings = ({ onNext, onPrevious }) => {
@@ -26,14 +26,14 @@ const Settings = ({ onNext, onPrevious }) => {
     const filesArray = Array.from(event.target.files).map((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(addServiceBackground({ file, preview: e.target.result }));
+        dispatch(addBackgroundCover({ file, preview: e.target.result }));
       };
       reader.readAsDataURL(file);
     });
   };
 
   const handleRemoveBackground = (index) => {
-    dispatch(removeServiceBackground(index));
+    dispatch(removeBackgroundCover(index));
   };
 
   const handleSubmit = (e) => {

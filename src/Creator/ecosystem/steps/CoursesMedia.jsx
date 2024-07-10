@@ -75,7 +75,7 @@ const CoursesMedia = ({ submit, previous }) => {
     formData.append("ecosystemId", ecosystemId);
 
     axios
-      .post("https://dimpified-backend.azurewebsites.net/api/v1/create-course", formData)
+      .post(`${import.meta.env.VITE_API_URL}/create-course`, formData)
       .then((response) => {
         setLoading(false);
         showToast(response.data.message);

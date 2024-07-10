@@ -25,17 +25,17 @@ import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
 
 const templateSections = [
-  { id: 1, name: "All" },
-  { id: 2, name: "Up-Skilling" },
-  { id: 3, name: "Art & Designing" },
-  { id: 4, name: "Fashion" },
-  { id: 5, name: "Religion" },
-  { id: 6, name: "Health" },
-  { id: 7, name: "Fitness" },
-  { id: 8, name: "NGOs" },
-  { id: 9, name: "Training" },
-  { id: 10, name: "Training-1" },
-  { id: 11, name: "Training-2" },
+  { id: 1, name: "Government" },
+  { id: 2, name: "Corporations" },
+  { id: 3, name: "Foundation/NGO's" },
+  { id: 4, name: "Religious Bodies" },
+  { id: 5, name: "Professional Services" },
+  { id: 6, name: "Creative Services" },
+  { id: 7, name: "Trade Services" },
+{ id: 8, name: "Personal Care Services" },
+  { id: 9, name: "Educational Services" },
+  { id: 10, name: "Event Services" },
+  { id: 11, name: "Technology Services" },
 ];
 
 const EditTemplate = () => {

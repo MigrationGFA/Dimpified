@@ -7,7 +7,7 @@ export const DashboardMenu = [
   },
   {
     id: 1,
-    title: "My Courses",
+    title: "My Products",
     link: "/User-My-Course",
     icon: "book",
     children: [
@@ -62,12 +62,12 @@ export const DashboardMenu = [
   // 	link: '/marketing/instructor/quiz/',
   // 	icon: 'help-circle'
   // },
-  {
-    id: 5,
-    title: "Quiz Result",
-    link: "/User-quiz-result",
-    icon: "help-circle",
-  },
+  // {
+  //   id: 5,
+  //   title: "Quiz Result",
+  //   link: "/User-quiz-result",
+  //   icon: "help-circle",
+  // },
 ];
 
 export const AccountSettingsMenu = [

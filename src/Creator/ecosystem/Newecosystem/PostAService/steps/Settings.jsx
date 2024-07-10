@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
   updateServiceData,
-  addServiceBackground,
-  removeServiceBackground,
+  addBackgroundCover,
+  removeBackgroundCover,
 } from "../../../../../features/service";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state.service) || {};
-  const [currency, setCurrency] = useState("");
 
   const currencyType = [
     { value: "NGN", label: "Naira" },
@@ -31,17 +30,20 @@ const Settings = ({ onNext, onPrevious }) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    const filesArray = Array.from(event.target.files).map((file) => {
+    const filesArray = Array.from(event.target.files);
+    filesArray.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(addServiceBackground({ file, preview: e.target.result }));
+        dispatch(addBackgroundCover({ name: file.name, preview: e.target.result }));
       };
       reader.readAsDataURL(file);
     });
   };
+  
+  
 
   const handleRemoveBackground = (index) => {
-    dispatch(removeServiceBackground(index));
+    dispatch(removeBackgroundCover(index));
   };
 
   const handleSubmit = (e) => {
@@ -51,11 +53,11 @@ const Settings = ({ onNext, onPrevious }) => {
 
   useEffect(() => {
     return () => {
-      service.serviceBackground.forEach((image) => {
+      service.backgroundCover.forEach((image) => {
         URL.revokeObjectURL(image.preview);
       });
     };
-  }, [service.serviceBackground]);
+  }, [service.backgroundCover]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -174,6 +176,8 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
               </Col>
+
+              {/* Currency */}
               <Col md={12} className="mb-3">
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="currency">
@@ -183,10 +187,12 @@ const Settings = ({ onNext, onPrevious }) => {
                     <Form.Select
                       id="currency"
                       value={service.currency}
-                    onChange={(e) =>
-                      dispatch(updateServiceData({ currency: e.target.value }))
-                    }
-                    required
+                      onChange={(e) =>
+                        dispatch(
+                          updateServiceData({ currency: e.target.value })
+                        )
+                      }
+                      required
                     >
                       <option value="">Select Currency</option>
                       {currencyType.map((currency, index) => (
@@ -209,7 +215,7 @@ const Settings = ({ onNext, onPrevious }) => {
 
               {/* Service Background */}
               <Col md={12} className="mb-3">
-                <Form.Label md={4} htmlFor="serviceBackground">
+                <Form.Label htmlFor="backgroundCover">
                   Service Background{" "}
                   <small className="text-muted">
                     <em className="text-sm">
@@ -236,7 +242,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
                 <div style={{ marginTop: "0.5rem" }}>
-                  {service.serviceBackground.map((image, index) => (
+                  {service.backgroundCover.map((image, index) => (
                     <div
                       key={index}
                       style={{
