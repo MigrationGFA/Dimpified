@@ -98,9 +98,11 @@ const TemplateV1 = () => {
       >
         <Vision content={details} sanitizeContent={sanitizeContent} />
       </section>
-      <section className=" pt-5">
-        <AllCourse coursesData={courses} />
-      </section>
+      {courses && courses.length > 0 ? (
+        <section className=" pt-5">
+          <AllCourse coursesData={courses} />
+        </section>
+      ) : null}
 
       <section
         className="py-lg-5 py-5"
