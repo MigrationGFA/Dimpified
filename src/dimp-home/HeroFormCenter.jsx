@@ -30,18 +30,17 @@ const HeroFormCenter = () => {
                 <span className="text-primary ms-2">
                   <Typewriter
                     words={[
-                      "Fundraising",
-                      "Upskilling",
-                      "Enterprise LMS",
-                      "Employee Training",
-                      "Fitness",
-                      "Finance",
-                      "Hackathons",
+                      "Governments",
+                      "Corporations",
+                      "Professionals",
+                      "Creatives",
+                      "Foundations",
+                      "Educators",
+                      "Events",
                       "Religious Bodies",
                       "Incubator",
                       "Accelerator",
                       "Licensing",
-                      "Events",
                     ]}
                     loop
                     cursor
@@ -70,7 +69,7 @@ const HeroFormCenter = () => {
                   to=""
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
-                  Watch Demo
+                  Schedule a demo
                 </Link>{" "}
               </div>
             </Col>

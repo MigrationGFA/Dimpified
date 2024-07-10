@@ -1,5 +1,5 @@
 // import media files
-import Avatar1 from '../assets/images/avatar/avatar-1.jpg';
+import Avatar9 from '../assets/images/avatar/avatar-1.jpg';
 import Avatar2 from '../assets/images/avatar/avatar-2.jpg';
 import Avatar3 from '../assets/images/avatar/avatar-3.jpg';
 import Avatar4 from '../assets/images/avatar/avatar-4.jpg';
@@ -13,7 +13,7 @@ export const TestimonialsList = [
 		id: 1,
 		name: 'Tunde A.',
 		designation: 'Fitness Trainer, Lagos',
-		image: Avatar1,
+		image: Avatar9,
 		content:
 			'This ecosystem management platform transformed my business! With its no-code website builder, I launched my online fitness community in no time. The pre-built templates are a lifesaver, and managing my content and clients has never been easier. Highly recommend!',
 		rating: 5.0,

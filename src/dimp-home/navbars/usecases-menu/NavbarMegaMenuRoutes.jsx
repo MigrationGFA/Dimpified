@@ -25,7 +25,9 @@ const NavbarMegaMenuRoutes = [
         subtitle2: "e-Governance,",
         subtitle3: "Licensing,",
         subtitle4: "Tax Mangement",
-        link: "#",
+
+        link: "/government",
+
       },
     ],
   },
@@ -42,7 +44,7 @@ const NavbarMegaMenuRoutes = [
         subtitle3: "Incubation Programs,",
         subtitle4: "Accelerator Programs.",
 
-        link: "#",
+        link: "/corporation",
       },
     ],
   },
@@ -59,7 +61,7 @@ const NavbarMegaMenuRoutes = [
         subtitle2: "Event Management,",
         subtitle3: "Hackathons,",
         subtitle4: "Upskilling Programs.",
-        link: "#",
+        link: "/non-profit",
       },
     ],
   },
@@ -75,7 +77,7 @@ const NavbarMegaMenuRoutes = [
         subtitle2: "Volunteer management,",
         subtitle3: "Study Management,",
         subtitle4: "Surveys.",
-        link: "#",
+        link: "/religious-bodies",
       },
     ],
   },
@@ -91,7 +93,7 @@ const NavbarMegaMenuRoutes = [
         subtitle2: "Accounting Services,",
         subtitle3: " Project Management,",
         subtitle4: "Business Consulting.",
-        link: "#",
+        link: "/professionals",
       },
     ],
   },
@@ -107,7 +109,7 @@ const NavbarMegaMenuRoutes = [
         subtitle2: "Photgraphy and Videography,",
         subtitle3: "Content Creation,",
         subtitle4: "Branding Services.",
-        link: "#",
+        link: "/creatives",
       },
     ],
   },
@@ -117,7 +119,7 @@ const NavbarMegaMenuRoutes = [
     children: [
       {
         id: uuid(),
-        menuitem: "Home Services",
+        menuitem: "Trade Services",
         image: Home,
         subtitle1: "House Cleaning,",
         subtitle2: "Handyman Services,",
@@ -133,7 +135,7 @@ const NavbarMegaMenuRoutes = [
     children: [
       {
         id: uuid(),
-        menuitem: "Health and Wellness Services",
+        menuitem: "Personal Care Services",
         image: Health,
         subtitle1: "Massage Therapy,",
         subtitle2: "Physical Therapy,",
@@ -178,11 +180,11 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-    menuitem: "Technical Services",
+    menuitem: "Technology Services",
     children: [
       {
         id: uuid(),
-        menuitem: "Technical Services",
+        menuitem: "Technology Services",
         image: Technical,
         subtitle1: "Software Development,",
         subtitle2: "Database Management,",
