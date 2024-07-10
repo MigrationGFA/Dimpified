@@ -53,23 +53,29 @@ const Ecosystem = () => {
   const [currentPage, setCurrentPage] = useState(1); // Pagination state
   const itemsPerPage = 10; // Number of items per page
 
-  const user = useSelector((state) => state.authentication.user);
-  const userId = user?.data?.CreatorId || "Unknown User";
+  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId || "Unknown User");
 
   const getMyEcosystems = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/creator-ecosystems/${userId}`
+        `${import.meta.env.VITE_API_URL}/creator/my-ecosystem/${creatorId}`
       );
-      setEcosystem(response.data.ecosystem);
+      if (response.data && Array.isArray(response.data)) {
+        setEcosystem(response.data);
+      } else {
+        setEcosystem([]);
+      }
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getMyEcosystems();
-  }, []);
+  }, [creatorId]);
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -102,9 +108,9 @@ const Ecosystem = () => {
       <Row>
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Total "
-            value="30"
-            summary="Number of sales"
+            title="Total Live"
+            value={ecosystem.totalLive || 0}
+            summary="Number of live ecosystems"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -114,9 +120,9 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Private"
-            value="5"
-            summary="Number of pending"
+            title="Total Private"
+            value={ecosystem.totalPrivate || 0}
+            summary="Number of private ecosystems"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -126,9 +132,9 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Draft"
-            value="5"
-            summary="Students"
+            title="Total Draft"
+            value={ecosystem.totalDrafts || 0}
+            summary="Number of draft ecosystems"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -140,7 +146,7 @@ const Ecosystem = () => {
           <StatRightChart
             title="Total Users"
             value="20,000"
-            summary="Instructor"
+            summary="Total users in ecosystems"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"

@@ -10,7 +10,6 @@ import Government from "../dimp-pages/government/Government";
 import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
-
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
 import Analytics from "../Creator/analytics/Analytics";
@@ -47,6 +46,8 @@ import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
 import Chat from "../Admin/chat/Chat";
 import ChatLayout from "./Dashboard/ChatLayout";
+import EditProfile from "../Creator/AccountSettings/EditProfile";
+import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
 
 // import Feature Update components
 import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
@@ -103,6 +104,12 @@ import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 
+// ** Import Ecosystem Authentication components
+import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
+import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
+import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
+import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemrEmailVerification";
+import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 
 const AllRoutes = () => {
   return (
@@ -145,10 +152,7 @@ const AllRoutes = () => {
         path="/creator/dashboard/Add-New-Course"
         element={<AddNewCourse />}
       />
-      <Route
-        path="/creator/dashboard/Post-Service"
-        element={<PostService />}
-      />
+      <Route path="/creator/dashboard/Post-Service" element={<PostService />} />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       <Route element={<ChatLayout />}>
@@ -185,6 +189,8 @@ const AllRoutes = () => {
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
+        <Route path="/creator/edit-profile" element={<EditProfile />} />
+        <Route path="/creator/social-profile" element={<SocialProfile />} />
         <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="creator/dashboard/layouts/layout-vertical"
@@ -203,7 +209,6 @@ const AllRoutes = () => {
       <Route path="/User-payout" element={<UserPayouts />} />
       <Route path="/User-social-profile" element={<UserSocialProfile />} />
       <Route path="/User-notifications" element={<UserNotification />} />
-
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/User-Resolution" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
@@ -227,6 +232,11 @@ const AllRoutes = () => {
         path="/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
+      <Route path="/Ecosystem/signin" element={<EcosystemSignIn />} />
+      <Route path="/Ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route path="/Ecosystem/forget-password" element={<EcosystemForgetPassword />} />
+      <Route path="/Ecosystem/verify-email" element={<EcosystemEmailVerification />} />
+      <Route path="/Ecosystem/verification" element={<EcosystemVerifyEmail />} />
       <Route
         path="/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
@@ -256,23 +266,22 @@ const AllRoutes = () => {
         element={<EcosystemEditProfile />}
       />
 
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-social-profiles"
-          element={<EcosystemSocialProfiles />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-delete-profile"
-          element={<EcosystemDeleteProfile />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-add-new-course"
-          element={<EcosystemAddNewCourse />}
-        />
-        <Route
-          path="/Ecosystemdashboard/Ecosystem-edit-course"
-          element={<EcosystemAddEditCourse />}
-        />
-      </Route>
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-social-profiles"
+        element={<EcosystemSocialProfiles />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-delete-profile"
+        element={<EcosystemDeleteProfile />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-add-new-course"
+        element={<EcosystemAddNewCourse />}
+      />
+      <Route
+        path="/Ecosystemdashboard/Ecosystem-edit-course"
+        element={<EcosystemAddEditCourse />}
+      />
     </Routes>
   );
 };
