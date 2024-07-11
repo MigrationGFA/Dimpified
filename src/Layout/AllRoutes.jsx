@@ -111,6 +111,7 @@ import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignU
 import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
+import DeveloperProgram from "../developer-program/DeveloperProgram";
 
 const AllRoutes = () => {
   return (
