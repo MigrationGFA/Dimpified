@@ -210,6 +210,7 @@ const NewEcosystem = () => {
                       <Form.Label htmlFor="ecosystem-name">
                         EcoSystem Name<span className="text-danger">*</span>
                       </Form.Label>
+
                       <Form.Control
                         type="text"
                         id="ecosystem-name"
@@ -220,12 +221,20 @@ const NewEcosystem = () => {
                           handleFieldChange("ecosystemName", e.target.value)
                         }
                       />
+                      <Form.Text className="text-muted fst-italic">
+                        note: this is the name your users will see on email
+                        received
+                      </Form.Text>
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
                         Ecosystem Domain<span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
+                        <span className="input-group-text">
+                          www.dimpified.com/
+                        </span>
+
                         <Form.Control
                           type="text"
                           id="ecosystem-domain"
@@ -237,7 +246,6 @@ const NewEcosystem = () => {
                           }
                           isInvalid={domainErrorMessage !== ""}
                         />
-                        <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
@@ -266,12 +274,21 @@ const NewEcosystem = () => {
                       <p className="text-danger text-uppercase fs-5 fw-bold">
                         Or
                       </p>
-                      <Button
-                        style={{ backgroundColor: "#00008B" }}
-                        onClick={() => setShowModal(true)}
-                      >
-                        Purchase New Domain
-                      </Button>
+                      <div className="d-flex ">
+                        <Button
+                          style={{ backgroundColor: "#00008B" }}
+                          onClick={() => setShowModal(true)}
+                          className="me-3"
+                        >
+                          Purchase New Domain
+                        </Button>
+                        <Button
+                          style={{ backgroundColor: "#00008B" }}
+                          onClick={() => setShowModal(true)}
+                        >
+                          Transfer Domain
+                        </Button>
+                      </div>
                     </Col>
                     <Modal show={showModal} onHide={() => setShowModal(false)}>
                       <Modal.Header closeButton>
