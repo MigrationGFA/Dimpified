@@ -212,7 +212,7 @@ const AllRoutes = () => {
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/User-Resolution" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
-      <Route path="/User/single-course" element={<UserSingleCourse />} />
+     
       <Route
         path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
@@ -280,6 +280,7 @@ const AllRoutes = () => {
 
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
     </Routes>
   );
 };

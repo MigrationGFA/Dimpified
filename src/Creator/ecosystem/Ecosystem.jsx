@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+
+import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
 
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
@@ -39,34 +39,23 @@ function formatDateWithOrdinal(date) {
 }
 
 function getTimeDifference(updatedAt) {
-  // Parse the updatedAt string to a Date object
   const updatedAtDate = new Date(updatedAt);
-
-  // Get the current time
   const currentTime = new Date();
-
-  // Calculate the time difference in milliseconds
   const timeDifference = currentTime - updatedAtDate;
-
-  // Convert milliseconds to minutes
   const minutes = Math.floor(timeDifference / (1000 * 60));
-
-  // Convert minutes to hours
   const hours = Math.floor(minutes / 60);
-
-  // Convert hours to days
   const days = Math.floor(hours / 24);
-
-  // Format the updatedAt date
   const formattedDate = formatDateWithOrdinal(updatedAtDate);
 
-  // Return combined string
   return `${formattedDate}`;
 }
 
 const Ecosystem = () => {
   const [ecosystem, setEcosystem] = useState([]);
+  const [ecosystemData, setEcosystemData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
@@ -77,7 +66,17 @@ const Ecosystem = () => {
         `${import.meta.env.VITE_API_URL}/creator-ecosystems/${userId}`
       );
       setEcosystem(response.data.ecosystem);
-      console.log("this is ecosystem", ecosystem);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getMyEcosystemData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/creator/my-ecosystem/${userId}`
+      );
+      setEcosystemData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +84,26 @@ const Ecosystem = () => {
 
   useEffect(() => {
     getMyEcosystems();
+    getMyEcosystemData();
   }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEcosystem = ecosystem.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(ecosystem.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div>
@@ -110,10 +128,9 @@ const Ecosystem = () => {
       <Row>
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Total "
-            value="30"
+            title="Total Live"
+            value={ecosystemData.totalLive}
             summary="Number of sales"
-            // summaryValue="+20.9$"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -123,10 +140,9 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Private"
-            value="5"
+            title="Total Private"
+            value={ecosystemData.totalPrivate}
             summary="Number of pending"
-            // summaryValue="5%"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -136,10 +152,9 @@ const Ecosystem = () => {
 
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
-            title="Draft"
-            value="5"
+            title="Total Draft"
+            value={ecosystemData.totalDrafts}
             summary="Students"
-            // summaryValue="+1200"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -152,7 +167,6 @@ const Ecosystem = () => {
             title="Total Users"
             value="20,000"
             summary="Instructor"
-            // summaryValue="12%"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -160,8 +174,8 @@ const Ecosystem = () => {
           />
         </Col>
       </Row>
-      {ecosystem && ecosystem.length > 0 ? (
-        ecosystem.map((eco) => (
+      {currentEcosystem.length > 0 ? (
+        currentEcosystem.map((eco) => (
           <Card
             key={eco._id}
             className="card-bordered mb-4 card-hover cursor-pointer"
@@ -169,12 +183,7 @@ const Ecosystem = () => {
             <Card.Body>
               <div>
                 <div className="d-md-flex">
-                  <div
-                    className=""
-                    style={{
-                      width: "200px",
-                    }}
-                  >
+                  <div className="" style={{ width: "200px" }}>
                     <Image
                       src={
                         eco.templateLogos && eco.templateLogos.length > 0
@@ -190,7 +199,6 @@ const Ecosystem = () => {
                     <div className="d-md-flex justify-content-between ">
                       <div>
                         <i className="fe fe-clock text-muted"></i>
-                        {/* <span>{timeString}</span> */}
                         <span>{getTimeDifference(eco.createdAt)}</span>
                       </div>
                     </div>
@@ -234,7 +242,6 @@ const Ecosystem = () => {
                       </div>
 
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
-                        {/* Button group */}
                         <div>
                           <a
                             href={`http://localhost:5173/show=true/${eco.ecosystemDomain}`}
@@ -268,8 +275,26 @@ const Ecosystem = () => {
           </Card>
         ))
       ) : (
-        <div>You have not create any Ecosystem</div>
+        <div>You have not created any Ecosystem</div>
       )}
+
+      <div className="d-flex justify-content-between">
+        <Button
+          variant="secondary"
+          disabled={currentPage === 1}
+          onClick={handlePreviousPage}
+        >
+          Previous
+        </Button>
+        <div>Page {currentPage} of {totalPages}</div>
+        <Button
+          variant="secondary"
+          disabled={currentPage === totalPages}
+          onClick={handleNextPage}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };
