@@ -89,13 +89,29 @@ const InstructorsListItems = ({ userDetails }) => {
               alt=""
               className="rounded-circle avatar-md me-2"
             />
-            <h5 className="mb-0">{getValue()}</h5>
+            <h5 className="mb-0">
+              {getValue()} {row.original.lastName} {row.original.firstName}
+            </h5>
           </div>
         ),
       },
       // { accessorKey: 'topic', header: 'Topic' },
-      { accessorKey: "courses", header: "Courses" },
-      { accessorKey: "joined", header: "Joined" },
+      {
+        accessorKey: "courses",
+        header: "Courses",
+        cell: ({ getValue, row }) => (
+          <div className="d-flex align-items-center">
+            <h5 className="mb-0">
+              {row.original.courses == null ? 0 : row.original.courses}
+            </h5>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "joined",
+        header: "Joined",
+        cell: ({ getValue, row }) => formatDate(row.original.createdAt),
+      },
       {
         accessorKey: "Ecosystem",
         header: "Ecosystem",

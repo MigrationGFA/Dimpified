@@ -59,7 +59,7 @@ function InstructorsGridCard({ userDetails }) {
 
               <div className="d-flex justify-content-between pt-2">
                 <span>Courses</span>
-                <span className="text-dark"> {instructor.courses ? 0 : instructor.courses} </span>
+                <span className="text-dark"> {instructor.courses == null ? 0 : instructor.courses} </span>
               </div>
             </Card.Body>
           </Card>

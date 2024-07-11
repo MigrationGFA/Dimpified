@@ -23,6 +23,7 @@ const Instructor = () => {
 
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
+  const ecosystemId = user?.data?.ecosystemId || "Unknown Ecosystem"
 
   const getMyUser = async () => {
     try {
@@ -38,19 +39,19 @@ const Instructor = () => {
   };
 
   // Get the IDs of the users
-  const ecoIds = userDetails.map((item) => item.id);
+  // const ecoIds = userDetails.map((item) => item.id);
 
   // Fetch the ecosystem data
   const getMyEcosystem = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-users`,
-        {
-          params: {
+         {
+          params:{
             creatorId: userId,
-            ecosystemId: ecoIds,
+            ecosystemId: ecosystemId,
           },
-        }
+         }
       );
       setMyEcosystem(response.data);
       console.log(response.data);
