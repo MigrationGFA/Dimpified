@@ -109,7 +109,7 @@ import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
 import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
 import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
-import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemrEmailVerification";
+import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 
 const AllRoutes = () => {
@@ -236,8 +236,8 @@ const AllRoutes = () => {
       <Route path="/ecosystem/signin" element={<EcosystemSignIn />} />
       <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
       <Route path="/ecosystem/forget-password" element={<EcosystemForgetPassword />} />
-      <Route path="/ecosystem/verification" element={<EcosystemEmailVerification />} />
-      <Route path="/ecosystem/verify-email" element={<EcosystemVerifyEmail />} />
+      <Route path="/ecosystem/verify-email" element={<EcosystemEmailVerification />} />
+      <Route path="/ecosystem/verification" element={<EcosystemVerifyEmail />} />
       <Route 
         path="/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
@@ -286,7 +286,7 @@ const AllRoutes = () => {
 
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
-      <Route path="/show=true/:ecosystemDomain/login" element={<RegisterEcosystem />} />
+      <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
     </Routes>
   );
 };

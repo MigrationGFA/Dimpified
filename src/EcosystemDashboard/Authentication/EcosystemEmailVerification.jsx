@@ -1,29 +1,29 @@
 import { useState, useEffect } from "react";
-import { Button, Col, Row, Card, Image, Navbar } from "react-bootstrap";
+import { Button, Col, Row, Card } from "react-bootstrap";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
-const UserEmailVerification = () => {
+const EcosystemEmailVerification = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
 
   const location = useLocation();
   const queryParam = new URLSearchParams(location.search);
-  // const baseUrl = import.meta.env.EASEREADS_BASE_URL;
 
   const verifyUserToken = async () => {
     setLoading(true);
     try {
+      console.log("Making verification request...");
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/creator/verify-email`,
+        `${import.meta.env.VITE_API_URL}/ecosystem-user/verify-email`,
         {
-          verificationToken: queryParam.get("token"),
           email: queryParam.get("email"),
+          verificationToken: queryParam.get("token"),
         }
       );
+      console.log("Verification response:", response.data);
       if (
         response.data.msg === "Email verified successfully" ||
         response.data.msg === "Email has been verified" ||
@@ -39,33 +39,35 @@ const UserEmailVerification = () => {
       }
     } catch (error) {
       setError(true);
+      console.error("Verification error:", error.response.data);
       showToast(error.response.data.msg);
     }
     setLoading(false);
   };
 
-  // resend email verification
-  const resendEmail = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `https://dimpified-backend.azurewebsites.net/api/v1/creator/resend-email`,
-        {
-          email: queryParam.get("email"),
-        }
-      );
-      if (response.data.msg === "Email address have been verified") {
-        setError(false);
-        setLoading(false);
-        showToast("Email address have been verified");
-      }
-    } catch (error) {
-      setLoading(false);
-      showToast(error.response.data.message);
-    }
-  };
+  // const resendEmail = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.post(
+  //       `https://dimpified-backend.azurewebsites.net/api/v1/creator/resend-email`,
+  //       {
+  //         email: queryParam.get("email"),
+  //       }
+  //     );
+  //     if (response.data.msg === "Email address have been verified") {
+  //       setError(false);
+  //       setLoading(false);
+  //       showToast("Email address have been verified");
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //     showToast(error.response.data.message);
+  //   }
+  // };
 
   useEffect(() => {
+    console.log("Component mounted");
+    console.log("Query parameters:", queryParam.get("email"), queryParam.get("token"));
     verifyUserToken();
   }, []);
 
@@ -78,6 +80,7 @@ const UserEmailVerification = () => {
       </div>
     );
   }
+
   if (error) {
     return (
       <Row className="align-items-center justify-content-center g-0 min-vh-100">
@@ -87,16 +90,10 @@ const UserEmailVerification = () => {
           className="d-flex align-items-center justify-content-center"
         >
           <Card className="shadow-sm p-5">
-            {" "}
-            {/* Increased padding from p-4 to p-5 */}
             <Row className="align-items-center justify-content-center">
-              {/* Left arrow */}
-
-              {/* Center Logo */}
               <Col lg={10} md={9} className="text-center">
                 <h1 className="fs-4">
-                  An error occur while verifying your account please click on
-                  the button below to request for a new verification link
+                  An error occurred while verifying your account. Please click the button below to request a new verification link.
                 </h1>
               </Col>
               <Col lg={10} md={9} className="text-center">
@@ -105,7 +102,6 @@ const UserEmailVerification = () => {
                 </Button>
               </Col>
             </Row>
-            <Row className="align-items-center justify-content-center mt-5 "></Row>
           </Card>
         </Col>
       </Row>
@@ -121,8 +117,6 @@ const UserEmailVerification = () => {
           className="d-flex align-items-center justify-content-center"
         >
           <Card className="shadow-sm p-5">
-            {" "}
-            {/* Increased padding from p-4 to p-5 */}
             <Row className="align-items-center justify-content-center">
               <Col lg={10} md={9} className="text-center">
                 <h1 className="fs-3 mb-4">Your Email has been verified</h1>
@@ -133,7 +127,6 @@ const UserEmailVerification = () => {
                 </Button>
               </Col>
             </Row>
-            <Row className="align-items-center justify-content-center mt-5 "></Row>
           </Card>
         </Col>
       </Row>
@@ -142,4 +135,4 @@ const UserEmailVerification = () => {
   return null;
 };
 
-export default UserEmailVerification;
+export default EcosystemEmailVerification;

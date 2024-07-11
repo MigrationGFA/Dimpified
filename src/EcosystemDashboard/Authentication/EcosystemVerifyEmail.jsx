@@ -46,7 +46,7 @@ const VerifyEmail = () => {
           {/* Increased padding from p-4 to p-5 */}
           <Row className="align-items-center justify-content-center">
             {/* Left arrow */}
-            <Col
+            {/* <Col
               lg={1}
               md={1}
               className=" align-items-center justify-content-center"
@@ -54,9 +54,9 @@ const VerifyEmail = () => {
               <Link to="/">
                 <FontAwesomeIcon icon={faArrowLeft} size="lg" />
               </Link>
-            </Col>
+            </Col> */}
             {/* Center Logo */}
-            <Col
+            {/* <Col
               lg={10}
               md={9}
               className="d-flex align-items-center justify-content-center"
@@ -69,7 +69,7 @@ const VerifyEmail = () => {
                   style={{ height: "100px" }}
                 />
               </Navbar.Brand>
-            </Col>
+            </Col> */}
           </Row>
           <Row className="align-items-center justify-content-center mt-5 ">
             {/* Message icon and container */}
@@ -100,6 +100,7 @@ const VerifyEmail = () => {
                   // >
                   //   Resend link
                   // </span>
+                  <></>
                 )}
               </p>
             </Col>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import sanitizeHtml from "sanitize-html";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
@@ -9,6 +9,7 @@ const RegisterEcosystem = () => {
   const [step, setStep] = useState(1);
   const [details, setDetails] = useState(null);
   let { ecosystemDomain } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -80,6 +81,8 @@ const RegisterEcosystem = () => {
         confirmPassword: "",
         ecosystemDomain: ecosystemDomain,
       });
+      // Navigate to verify email page
+      navigate(`/ecosystem/verification`);
     } catch (error) {
       showToast(error.response.data.message);
       console.error("Registration failed:", error);
@@ -294,7 +297,6 @@ const FormStep2 = ({
           </Col>
         </Row>
       </Form.Group>
-
       <Form.Group className="mb-4" controlId="formCountry">
         <Form.Label>{sanitizeContent(content.Page2.topic4)}</Form.Label>
         <Form.Control
@@ -517,7 +519,6 @@ const FormStep2 = ({
           <option value="ZW">Zimbabwe</option>
         </Form.Control>
       </Form.Group>
-
       <Button className="mx-2 w-40" variant="secondary" onClick={prevStep}>
         {sanitizeContent(content.Page2.buttonText1)}
       </Button>
