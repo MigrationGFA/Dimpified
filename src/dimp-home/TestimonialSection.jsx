@@ -20,7 +20,7 @@ const TestimonialSection = () => {
         description={description}
       />
 
-      <Row className="mb-8 ">
+      <Row className="pb-5">
         <Col md={12}>
           {/*  Testimonial slider */}
           <TestimonialsSlider />

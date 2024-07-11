@@ -143,7 +143,7 @@ const NavbarMegaMenuRoutes = [
   },
   {
     id: uuid(),
-    menuitem: "Technical Services",
+    menuitem: "Technology Services",
     children: [
       {
         id: uuid(),
@@ -163,7 +163,7 @@ const NavbarMegaMenuRoutes = [
         menuitem: "Bundles & Subscriptions",
         image: Subscription,
         subtitle1: "University of Michigan",
-       
+
         link: "#",
       },
     ],

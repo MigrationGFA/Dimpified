@@ -118,7 +118,7 @@ const AddNewCourse = () => {
                     className="btn btn-white"
                     onClick={handleBackToCourse}
                   >
-                    Back to Course
+                    Back to Product
                   </Link>
                 </div>
               </div>

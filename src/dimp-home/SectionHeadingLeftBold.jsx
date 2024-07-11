@@ -12,7 +12,7 @@ const SectionHeadingLeftBold = ({ title, subtitle, description }) => {
 					{subtitle}
 				</span>
 			)}
-			<h2 className="display-4 mt-4 mb-3 fw-bold">{title}</h2>
+			<h2 className="display-5 mt-4 mb-3 fw-bold">{title}</h2>
 			<h3>{description}</h3>
 		</Fragment>
 	);

@@ -485,7 +485,7 @@ export const About = ({
           <EditableBlock
             initialContent={summary1}
             onContentChange={(value) =>
-              handleContentChange("aboutUs", "summary1", value)
+              handleContentChange("aboutUs", "text1", value)
             }
           />
         </p>
@@ -493,7 +493,7 @@ export const About = ({
           <EditableBlock
             initialContent={summary2}
             onContentChange={(value) =>
-              handleContentChange("aboutUs", "summary2", value)
+              handleContentChange("aboutUs", "text2", value)
             }
           />
         </p>
@@ -586,7 +586,7 @@ export const Vision = ({
             <EditableBlock
               initialContent={summary1}
               onContentChange={(value) =>
-                handleContentChange("Vision", "summary1", value)
+                handleContentChange("Vision", "text1", value)
               }
             />
           </p>
@@ -594,7 +594,7 @@ export const Vision = ({
             <EditableBlock
               initialContent={summary2}
               onContentChange={(value) =>
-                handleContentChange("Vision", "summary2", value)
+                handleContentChange("Vision", "text2", value)
               }
             />
           </p>
@@ -1083,7 +1083,7 @@ export const CTASection = ({
           <EditableBlock
             initialContent={header}
             onContentChange={(value) =>
-              handleContentChange("Audience", "header", value)
+              handleContentChange("Audience", "heading", value)
             }
           />
         </h1>
@@ -1091,7 +1091,7 @@ export const CTASection = ({
           <EditableBlock
             initialContent={text}
             onContentChange={(value) =>
-              handleContentChange("Audience", "text", value)
+              handleContentChange("Audience", "text1", value)
             }
           />
         </p>
