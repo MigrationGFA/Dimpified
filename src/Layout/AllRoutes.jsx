@@ -232,12 +232,12 @@ const AllRoutes = () => {
         path="/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
-      <Route path="/Ecosystem/signin" element={<EcosystemSignIn />} />
-      <Route path="/Ecosystem/signup" element={<EcosystemSignUp />} />
-      <Route path="/Ecosystem/forget-password" element={<EcosystemForgetPassword />} />
-      <Route path="/Ecosystem/verify-email" element={<EcosystemEmailVerification />} />
-      <Route path="/Ecosystem/verification" element={<EcosystemVerifyEmail />} />
-      <Route
+      <Route path="/ecosystem/signin" element={<EcosystemSignIn />} />
+      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route path="/ecosystem/forget-password" element={<EcosystemForgetPassword />} />
+      <Route path="/ecosystem/verification" element={<EcosystemEmailVerification />} />
+      <Route path="/ecosystem/verify-email" element={<EcosystemVerifyEmail />} />
+      <Route 
         path="/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
       />

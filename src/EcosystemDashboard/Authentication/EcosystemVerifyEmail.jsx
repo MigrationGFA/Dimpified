@@ -93,13 +93,13 @@ const VerifyEmail = () => {
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 ) : (
-                  <span
-                    className="text-primary ml-5"
-                    style={{ cursor: "pointer" }}
-                    onClick={onSubmit}
-                  >
-                    Resend link
-                  </span>
+                  // <span
+                  //   className="text-primary ml-5"
+                  //   style={{ cursor: "pointer" }}
+                  //   onClick={onSubmit}
+                  // >
+                  //   Resend link
+                  // </span>
                 )}
               </p>
             </Col>
