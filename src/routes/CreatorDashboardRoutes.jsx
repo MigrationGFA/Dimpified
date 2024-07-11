@@ -72,14 +72,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Notification",
     icon: "help-circle",
-<<<<<<< HEAD:src/routes/AdminDashboardRoutes.jsx
-    children: [
-      {id: uuid(), link:"/user/notifications", name: "Notification"},
-      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},
-    ]
-=======
     link: "/creator/notifications",
->>>>>>> 2d49ee360266f570ae9e2310d821f4c2df4ec7b2:src/routes/CreatorDashboardRoutes.jsx
   },
 
   {

@@ -98,6 +98,7 @@ import EcosystemSocialProfiles from "../DashboardsPeerComponents/Ecosystem/Socia
 import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/DeleteProfile";
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
+import DeveloperProgram from "../developer-program/DeveloperProgram";
 
 const AllRoutes = () => {
   return (
@@ -260,6 +261,9 @@ const AllRoutes = () => {
           element={<EcosystemAddEditCourse />}
         />
       </Route>
+
+      {/* dimp developer program */}
+      <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
     </Routes>
   );
 };
