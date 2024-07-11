@@ -102,6 +102,7 @@ import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/Delete
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
+import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 
 
 const AllRoutes = () => {
@@ -275,6 +276,7 @@ const AllRoutes = () => {
 
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
+      <Route path="/show=true/:ecosystemDomain/login" element={<RegisterEcosystem />} />
     </Routes>
   );
 };

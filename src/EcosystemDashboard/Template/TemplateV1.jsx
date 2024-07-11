@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiFacebook, mdiTwitter, mdiInstagram, mdiLinkedin } from "@mdi/js";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import avatar from "../../assets/images/avatar/person.png";
 import sanitizeHtml from "sanitize-html";
 import GetEnrolledCourseCard from "../../Components/marketing/common/cards/GetEnrolledCourseCard";
@@ -26,10 +26,25 @@ import axios from "axios";
 const TemplateV1 = () => {
   const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
+const [navigatePage, setNavigatePage] = useState(false)
 
   let { ecosystemDomain } = useParams();
 
   const [loading, setLoading] = useState(true);
+const navigate = useNavigate()
+  useEffect(() => {
+    if (ecosystemDomain) {
+      setNavigatePage(true);
+    }
+  }, [ecosystemDomain]);
+  const HandleNavigate= () =>{
+if (navigatePage) {
+  navigate(`/show=true/${ecosystemDomain}/login`)
+} else {
+  navigate(`/show=true/${ecosystemDomain}`)
+}
+
+  }
 
   useEffect(() => {
     const getDetails = async () => {
@@ -80,7 +95,7 @@ const TemplateV1 = () => {
 
   return (
     <Fragment>
-      <SiteNavbar content={details} sanitizeContent={sanitizeContent} />
+      <SiteNavbar content={details} sanitizeContent={sanitizeContent} HandleNavigate={HandleNavigate}/>
       <Hero content={details} sanitizeContent={sanitizeContent} />
       <section
         className="py-lg-5 py-5 "
@@ -140,7 +155,7 @@ const TemplateV1 = () => {
   );
 };
 
-const SiteNavbar = ({ content, sanitizeContent }) => (
+const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
   <Navbar
     // bg="dark"
     // variant="dark"
@@ -179,10 +194,13 @@ const SiteNavbar = ({ content, sanitizeContent }) => (
           <Button variant="outline-light" className="me-2">
             {sanitizeContent(content.navbar.buttonText1)}
           </Button>
-          <Button variant="primary">
+           {/* <Link to={`/show=true/${ecosystemDomain}/login`}>  */}
+          
+          <Button variant="primary" onClick={HandleNavigate}>
             {" "}
             {sanitizeContent(content.navbar.buttonText2)}
           </Button>
+          {/* </Link> */}
         </div>
       </Navbar.Collapse>
     </Container>
