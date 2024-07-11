@@ -1,0 +1,58 @@
+/* src/components/CommunityChat/GDGHeader.css */
+
+.gdg-header {
+  background-color: white;
+  padding: 3rem 1rem 1rem;
+  position: relative;
+  text-align: left;
+  margin-top: 10rem; 
+  min-height: 19rem; 
+  width: 100%; 
+  left: 0; 
+}
+
+.gdg-header::before {
+  content: '';
+  display: block;
+  background-color: #002A8F; 
+  height: 12rem;
+  position: absolute;
+  top: -12rem;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.gdg-logo {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -50px;
+  left: 10%;
+  transform: translateX(-50%);
+  border: 3px solid white; 
+}
+
+.gdg-text-container {
+  text-align: left; 
+  margin-top: 2rem;
+}
+
+@media (max-width: 576px) {
+  .gdg-header {
+    padding: 3rem 0.5rem 1rem;
+    margin-top: 2rem; 
+    min-height: 22rem; 
+  }
+
+  .gdg-header::before {
+    height: 10rem; 
+    top: -10rem; 
+  }
+
+  .gdg-logo {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+  }
+}

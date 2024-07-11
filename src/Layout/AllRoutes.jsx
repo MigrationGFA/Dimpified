@@ -10,7 +10,6 @@ import Government from "../dimp-pages/government/Government";
 import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
 
-
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
 import Analytics from "../Creator/analytics/Analytics";
@@ -47,6 +46,8 @@ import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
 import Chat from "../Admin/chat/Chat";
 import ChatLayout from "./Dashboard/ChatLayout";
+import EditProfile from "../Creator/AccountSettings/EditProfile";
+import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
 
 // import Feature Update components
 import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
@@ -105,6 +106,12 @@ import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostASe
 import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
 import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 
+// ** Import Ecosystem Authentication components
+import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
+import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
+import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
+import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
+import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 
 const AllRoutes = () => {
   return (
@@ -191,6 +198,8 @@ const AllRoutes = () => {
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
+        <Route path="/creator/edit-profile" element={<EditProfile />} />
+        <Route path="/creator/social-profile" element={<SocialProfile />} />
         <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
           path="creator/dashboard/layouts/layout-vertical"
@@ -209,7 +218,6 @@ const AllRoutes = () => {
       <Route path="/User-payout" element={<UserPayouts />} />
       <Route path="/User-social-profile" element={<UserSocialProfile />} />
       <Route path="/User-notifications" element={<UserNotification />} />
-
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/User-Resolution" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
@@ -233,7 +241,12 @@ const AllRoutes = () => {
         path="/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
-      <Route
+      <Route path="/ecosystem/signin" element={<EcosystemSignIn />} />
+      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route path="/ecosystem/forget-password" element={<EcosystemForgetPassword />} />
+      <Route path="/ecosystem/verify-email" element={<EcosystemEmailVerification />} />
+      <Route path="/ecosystem/verification" element={<EcosystemVerifyEmail />} />
+      <Route 
         path="/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
       />
@@ -282,7 +295,7 @@ const AllRoutes = () => {
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-      <Route path="/show=true/:ecosystemDomain/login" element={<RegisterEcosystem />} />
+      <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
     </Routes>
   );
 };

@@ -2,18 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Dropdown, Spinner, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { FlatPickr } from "../../Components/elements/flat-pickr/FlatPickr";
+import { useSelector } from "react-redux";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
-import StatRightIcon from "../../Creator/analytics/stats/StatRightIcon";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import PopularInstructor from "./PopularJobCategory";
 import RecentCourses from "./RecentJobs";
-import Activity from "./Activity";
 import {
   TrafficChartSeries,
   TrafficChartOptions,
-  EarningsChartSeries,
-  EarningsChartOptions,
   OrderColumnChartSeries,
   OrderColumnChartOptions,
 } from "../../data/charts/AdminChartData";
@@ -57,31 +53,31 @@ const ChartActionMenu = () => {
 };
 
 const Overview = () => {
-  const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 1,
-    totalSeeker: 1,
-    monthlyProvider: 1,
-    totalProvider: 1,
-  });
+  const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // fetchDashboardData();
-    setLoading(false);
-  }, []);
+  // Get the creator ID from the Redux store
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
 
-  // const fetchDashboardData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview"
-  //     );
-  //     setDashboardData(response.data.dashboardData);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching dashboard data:", error);
-  //     setLoading(false);
-  //   }
-  // };
+  useEffect(() => {
+    if (creatorId) {
+      fetchDashboardData();
+    }
+  }, [creatorId]);
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/creator/my-dashboard-overview/${creatorId}`
+      );
+      setDashboardData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -115,9 +111,8 @@ const Overview = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total Ecosystem"
-                value="1"
+                value={dashboardData?.totalEcosystems || "0"}
                 summary="Number of sales"
-                // summaryValue="1 Monthly"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -128,9 +123,8 @@ const Overview = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total Users"
-                value="1"
+                value={dashboardData?.totalUsers || "0"}
                 summary="Number of pending"
-                // summaryValue="1 Monthly"
                 summaryIcon="down"
                 showSummaryIcon
                 classValue="mb-4"
@@ -140,10 +134,9 @@ const Overview = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Support"
-                value="0"
+                title="Total Support Requests"
+                value={dashboardData?.totalSupportRequests || "0"}
                 summary="Students"
-                // summaryValue="Monthly "
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -154,9 +147,8 @@ const Overview = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total Paid Users"
-                value="0"
+                value={dashboardData?.totalPaidUsers || "0"}
                 summary="Instructor"
-                // summaryValue="1 Monthly "
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -184,13 +176,6 @@ const Overview = () => {
                     type="bar"
                   />
                 </Card.Body>
-                {/* <Card.Body>
-                                    <ApexCharts
-                                        options={EarningsChartOptions}
-                                        series={EarningsChartSeries}
-                                        type="line"
-                                    />
-                                </Card.Body> */}
               </Card>
             </Col>
             <Col xl={4} lg={12} md={12} className="mb-4">
