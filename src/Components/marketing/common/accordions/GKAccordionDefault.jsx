@@ -83,7 +83,7 @@ const GKAccordionDefault = ({ itemClass, courseData }) => {
                         {item && item.section && Array.isArray(item.section)
                           ? item.section.map((section, index) => (
                             <Row className="mt-3"> 
-                               <Col className="font-weight-bold text-primary fs-5">Topics</Col>
+                               <Col className="font-weight-bold text-primary fs-5">Sections</Col>
                               <Row key={index} className="mt-1">
                                 
                                 <Col>{section.title ? section.title : ""}</Col>

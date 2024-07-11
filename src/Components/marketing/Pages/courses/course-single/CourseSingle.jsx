@@ -15,7 +15,6 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ModalVideo from "react-modal-video";
 import axios from "axios";
 
-
 import GKAccordionDefault from "../../../../../Components/marketing/common/accordions/GKAccordionDefault";
 import Ratings from "../../../../../Components/marketing/common/ratings/Ratings";
 import GKTippy from "../../../../../Components/elements/tooltips/GKTippy";
@@ -46,18 +45,17 @@ const CourseSingle = () => {
   const location = useLocation();
   let { ecosystemDomain, id } = useParams();
 
-
   // flutterwave payment
   const generateTxRef = () => {
-    const randomString = Math.random().toString(36).substring(7); // Generate a random string
-    const timestamp = Date.now(); // Get the current timestamp
-    return `${timestamp}-${randomString}`; // Combine timestamp and random string
+    const randomString = Math.random().toString(36).substring(7);
+    const timestamp = Date.now();
+    return `${timestamp}-${randomString}`;
   };
 
   const handleFlutterPayment = useFlutterwave({
     public_key: "FLWPUBK_TEST-d99e582b1f593f250ea49b53385f5cce-X",
     tx_ref: generateTxRef(),
-    amount: parseInt(sessionStorage.getItem("price")), // Default value, will be overwritten
+    amount: parseInt(sessionStorage.getItem("price")),
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
@@ -76,15 +74,15 @@ const CourseSingle = () => {
     sessionStorage.removeItem("totalAmount");
     try {
       const response = await axios.post(
-        "https://unleashified-backend.azurewebsites.net/api/v1/provider-payment",
+        `${import.meta.env.VITE_API_URL}/verify-payment`,
         {
           reference: tx_ref,
-          email: emailUser,
-          jobId: sessionStorage.getItem("jobId"),
-          userId: sessionStorage.getItem("UserId"),
-          type: "JOB",
-          currency: sessionStorage.getItem("currencyValue"),
+          email: "samuelmakinde19@gmail",
+          itemType: "Course",
+          userId: 2,
           provider: "flutterwave",
+          itemId: id,
+          ecosystemDomain: ecosystemDomain,
         }
       );
       setLoading(false);
@@ -155,7 +153,9 @@ const CourseSingle = () => {
   const fetchCourseData = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/ecosystem-single-course/${ecosystemDomain}/${id}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/ecosystem-single-course/${ecosystemDomain}/${id}`
       );
       setCourseData(response.data.course);
       sessionStorage.setItem("price", response.data.course.price);
@@ -172,8 +172,9 @@ const CourseSingle = () => {
     showToast("Course added to cart!");
   };
 
-  const imageUrl = courseData && courseData.image ? courseData.image.replace(/\\/g, '/') : '';
-console.log(imageUrl); 
+  const imageUrl =
+    courseData && courseData.image ? courseData.image.replace(/\\/g, "/") : "";
+  console.log(imageUrl);
   return (
     <Fragment>
       <NavbarDefault />
@@ -275,20 +276,18 @@ console.log(imageUrl);
               <Tab.Container defaultActiveKey="contents">
                 <Card>
                   <Nav className="nav-lb-tab">
-                  {/* "Reviews" */}
-                    {["Contents", "Description",].map(
-                      (item, index) => (
-                        <Nav.Item key={index}>
-                          <Nav.Link
-                            href={`#${item.toLowerCase()}`}
-                            eventKey={item.toLowerCase()}
-                            className="mb-sm-3 mb-md-0"
-                          >
-                            {item}
-                          </Nav.Link>
-                        </Nav.Item>
-                      )
-                    )}
+                    {/* "Reviews" */}
+                    {["Contents", "Description"].map((item, index) => (
+                      <Nav.Item key={index}>
+                        <Nav.Link
+                          href={`#${item.toLowerCase()}`}
+                          eventKey={item.toLowerCase()}
+                          className="mb-sm-3 mb-md-0"
+                        >
+                          {item}
+                        </Nav.Link>
+                      </Nav.Item>
+                    ))}
                   </Nav>
                   <Card.Body className="p-0">
                     <Tab.Content>
@@ -309,7 +308,7 @@ console.log(imageUrl);
                       </Tab.Pane>
                       {/* <Tab.Pane eventKey="reviews" className="pb-4 p-4">
                         {/* Reviews */}
-                        {/* <ReviewsTab />
+                      {/* <ReviewsTab />
                       </Tab.Pane>  */}
                     </Tab.Content>
                   </Card.Body>
@@ -322,7 +321,6 @@ console.log(imageUrl);
                 <div
                   className="rounded-3 position-relative w-100 d-block overflow-hidden p-0"
                   style={{
-                    
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -330,11 +328,11 @@ console.log(imageUrl);
                     width: "100%",
                   }}
                 >
-                   <Image
-                        src={courseData && courseData.image}
-                        alt=""
-                        className="w-100 "
-                      />
+                  <Image
+                    src={courseData && courseData.image}
+                    alt=""
+                    className="w-100 "
+                  />
                 </div>
 
                 {/* Card body */}
@@ -356,10 +354,17 @@ console.log(imageUrl);
                       Add to Cart
                     </Button>
                   </div> */}
-                  <div className="d-grid " style={{ height: "50px" }}>
+                  <div className="d-grid" style={{ height: "50px" }}>
                     <Button
                       variant="primary"
-                      onClick={handleFlutterPayment}
+                      onClick={() =>
+                        handleFlutterPayment({
+                          callback: (response) => {
+                            verifyFlutterwave(response.transaction_id);
+                            closePaymentModal(); // this will close the modal programmatically
+                          },
+                        })
+                      }
                     >
                       Purchase Course
                     </Button>
@@ -391,8 +396,8 @@ mb-0"
               </Card>
               {/* Card */}
               {/* <Card> */}
-                {/* Card body */}
-                {/* <Card.Body>
+              {/* Card body */}
+              {/* <Card.Body>
                   <div className="d-flex align-items-center">
                     <div className="position-relative">
                       <Image
