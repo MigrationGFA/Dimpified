@@ -39,7 +39,7 @@ const navigate = useNavigate()
   }, [ecosystemDomain]);
   const HandleNavigate= () =>{
 if (navigatePage) {
-  navigate(`/show=true/${ecosystemDomain}/login`)
+  navigate(`/show=true/${ecosystemDomain}/signup`)
 } else {
   navigate(`/show=true/${ecosystemDomain}`)
 }
@@ -194,7 +194,7 @@ const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
           <Button variant="outline-light" className="me-2">
             {sanitizeContent(content.navbar.buttonText1)}
           </Button>
-           {/* <Link to={`/show=true/${ecosystemDomain}/login`}>  */}
+           {/* <Link to={`/show=true/${ecosystemDomain}/signup`}>  */}
           
           <Button variant="primary" onClick={HandleNavigate}>
             {" "}

@@ -74,6 +74,18 @@ export const DashboardMenu = [
     icon: "help-circle",
     link: "/creator/notifications",
   },
+  {
+    id: uuid(),
+    title: "Edit Profile",
+    icon: "settings",
+    link: "/creator/edit-profile",
+  },
+  {
+    id: uuid(),
+    title: "Social Profile",
+    icon: "settings",
+    link: "/creator/social-profile",
+  },
 
   {
     id: uuid(),
