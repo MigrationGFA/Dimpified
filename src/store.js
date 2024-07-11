@@ -5,6 +5,7 @@ import authReducer from './features/login';
 import temPlate1Reducer from './features/Template/Template1';
 import activeSectionReducer from './features/Template/activeTemplateSection';
 import courseReducer from './features/course';
+import registerReducer from "./features/Register"
 import serviceReducer from './features/service';
 import ecosystemReducer from './features/ecosystem'; 
 import form1Reducer from "./features/Template/Form1"
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   course: courseReducer,
   ecosystem: ecosystemReducer, 
   service: serviceReducer,
+  register: registerReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
