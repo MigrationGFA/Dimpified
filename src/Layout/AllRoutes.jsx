@@ -103,6 +103,7 @@ import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
 import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
+import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 
 
 const AllRoutes = () => {
@@ -281,6 +282,7 @@ const AllRoutes = () => {
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+      <Route path="/show=true/:ecosystemDomain/login" element={<RegisterEcosystem />} />
     </Routes>
   );
 };
