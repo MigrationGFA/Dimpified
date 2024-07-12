@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/login";
 import { showToast } from "../../Components/Showtoast";
 
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
+import Logo from "../../assets/DIMP logo.png";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -135,7 +135,7 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Link to="/user/Forget-password" className="ms-1 text-bold">
+                  <Link to="/creator/forget-password" className="ms-1 text-bold">
                     Forgot Password
                   </Link>
 
