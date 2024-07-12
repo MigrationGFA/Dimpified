@@ -238,7 +238,7 @@ const Ecosystem = () => {
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         <div>
                           <a
-                            href={`http://localhost:5173/show=true/${eco.ecosystemDomain}`}
+                            href={`https://dimpified-frontend-testing.azurewebsites.net/show=true/${eco.ecosystemDomain}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
