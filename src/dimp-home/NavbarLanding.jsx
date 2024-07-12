@@ -12,7 +12,7 @@ import FeaturesMenu from "./navbars/features-menu/FeaturesMenu";
 import SupportMenu from "./navbars/support-menu/SupportMenu";
 
 // import media files
-import Logo from "./images/gfa-blue.png";
+import Logo from "./images/dimp-blue.png";
 
 // import data files
 
@@ -49,7 +49,7 @@ const NavbarLanding = (props) => {
       >
         <Container className="px-6">
           <Navbar.Brand as={Link} to="/">
-            <Image src={Logo} alt="" height={50} />
+            <Image src={Logo} alt="" height={30} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav">
             <span className="icon-bar top-bar mt-0"></span>
@@ -58,8 +58,8 @@ const NavbarLanding = (props) => {
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={`${"mx-auto"}`}>
-              <FeaturesMenu style={linkStyle}/>
-              <UseCaseMenu style={linkStyle}/>
+              <FeaturesMenu style={linkStyle} />
+              <UseCaseMenu style={linkStyle} />
               <Nav.Link
                 href="/pricing"
                 className="dropdown-arrow d-block nav-link lh-1 pt-2"
@@ -68,7 +68,7 @@ const NavbarLanding = (props) => {
                 Pricing
               </Nav.Link>
 
-              <SupportMenu style={linkStyle}/>
+              <SupportMenu style={linkStyle} />
             </Nav>
             <Nav
               className={`${
