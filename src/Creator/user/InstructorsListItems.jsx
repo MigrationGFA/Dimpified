@@ -17,7 +17,7 @@ import TanstackTable from "../../Components/elements/advance-table/TanstackTable
 import { numberWithCommas } from "../../helper/utils";
 import { InstructorData } from "./InstructorData";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import avatar from "../../assets/images/avatar/avatar-1.jpg";
+import avatar from "../../assets/images/avatar/person.png";
 
 const InstructorsListItems = ({ userDetails }) => {
   const [loading, setLoading] = useState(true);
@@ -97,8 +97,8 @@ const InstructorsListItems = ({ userDetails }) => {
       },
       // { accessorKey: 'topic', header: 'Topic' },
       {
-        accessorKey: "courses",
-        header: "Courses",
+        accessorKey: "products",
+        header: "Products",
         cell: ({ getValue, row }) => (
           <div className="d-flex align-items-center">
             <h5 className="mb-0">
@@ -115,7 +115,7 @@ const InstructorsListItems = ({ userDetails }) => {
       {
         accessorKey: "Ecosystem",
         header: "Ecosystem",
-        cell: ({ getValue }) => numberWithCommas(12345),
+        cell: ({ getValue, row }) => row.original.ecosystemDomain,
       },
       // {
       //     accessorKey: 'rating',
@@ -126,40 +126,40 @@ const InstructorsListItems = ({ userDetails }) => {
       //         </div>
       //     )
       // },
-      {
-        accessorKey: "message",
-        header: "",
-        cell: () => (
-          <div className="align-middle border-top-0">
-            <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={<Tooltip id={`tooltip-top`}>Message</Tooltip>}
-            >
-              <Link href="#">
-                <Mail size="15px" className="dropdown-item-icon" />
-              </Link>
-            </OverlayTrigger>
-          </div>
-        ),
-      },
-      {
-        accessorKey: "delete",
-        header: "",
-        cell: () => (
-          <div className="align-middle border-top-0">
-            <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}
-            >
-              <Link href="#">
-                <Trash size="15px" className="dropdown-item-icon" />
-              </Link>
-            </OverlayTrigger>
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "message",
+      //   header: "",
+      //   cell: () => (
+      //     <div className="align-middle border-top-0">
+      //       <OverlayTrigger
+      //         key="top"
+      //         placement="top"
+      //         overlay={<Tooltip id={`tooltip-top`}>Message</Tooltip>}
+      //       >
+      //         <Link href="#">
+      //           <Mail size="15px" className="dropdown-item-icon" />
+      //         </Link>
+      //       </OverlayTrigger>
+      //     </div>
+      //   ),
+      // },
+      // {
+      //   accessorKey: "delete",
+      //   header: "",
+      //   cell: () => (
+      //     <div className="align-middle border-top-0">
+      //       <OverlayTrigger
+      //         key="top"
+      //         placement="top"
+      //         overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}
+      //       >
+      //         <Link href="#">
+      //           <Trash size="15px" className="dropdown-item-icon" />
+      //         </Link>
+      //       </OverlayTrigger>
+      //     </div>
+      //   ),
+      // },
       {
         accessorKey: "shortcutmenu",
         header: "",
