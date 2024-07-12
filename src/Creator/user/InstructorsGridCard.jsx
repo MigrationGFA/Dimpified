@@ -5,13 +5,11 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import Icon from "@mdi/react";
 import { mdiStar } from "@mdi/js";
 import { numberWithCommas } from "../../helper/utils";
-import { InstructorData } from "./InstructorData";
+// import { InstructorData } from "./InstructorData";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-
-function InstructorsGridCard() {
-  const [instructors, setInstructorsList] = useState(
-    InstructorData.slice(0, 500)
-  );
+import avatar from "../../assets/images/avatar/person.png";
+function InstructorsGridCard({ userDetails }) {
+  const [instructors, setInstructorsList] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const instructorsPerPage = 8;
   const pagesVisited = pageNumber * instructorsPerPage;
@@ -22,38 +20,55 @@ function InstructorsGridCard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (Array.isArray(userDetails)) {
+      setInstructorsList(userDetails.slice(0, 500));
+    }
     setLoading(false);
-  }, []);
+  }, [userDetails]);
+
+  // Utility function to format the date
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   const displayInstructors = instructors
     .slice(pagesVisited, pagesVisited + instructorsPerPage)
-    .map((instructors) => {
+    .map((instructor) => {
       return (
-        <Col xl={3} lg={6} md={6} sm={12} key={instructors.id}>
+        <Col xl={3} lg={6} md={6} sm={12} key={instructor.id}>
           <Card className="mb-5">
             <Card.Body>
               <div className="text-center">
                 <Image
-                  src={instructors.image}
+                  src={
+                    instructor.imageUrl == null ? avatar : instructor.imageUrl
+                  }
                   className="rounded-circle avatar-xl mb-3"
                   alt=""
                 />
-                <h4 className="mb-0">{instructors.name}</h4>
-                {/* <p className="mb-0">{instructors.topic}</p> */}
+                <h4 className="mb-0">
+                  {instructor.lastName} {instructor.firstName}
+                </h4>
               </div>
               <div className="d-flex justify-content-between border-bottom py-2 mt-4">
                 <span>Ecosystem</span>
-                <span className="text-dark">{numberWithCommas(12345)}</span>
+                <span className="text-dark">{instructor.ecosystemDomain}</span>
               </div>
 
               <div className="d-flex justify-content-between border-bottom py-2">
                 <span>Date Joined</span>
-                <span className="text-dark">June 1, 2023</span>
+                <span className="text-dark">
+                  {formatDate(instructor.createdAt)}
+                </span>
               </div>
 
               <div className="d-flex justify-content-between pt-2">
-                <span>Courses</span>
-                <span className="text-dark"> {instructors.courses} </span>
+                <span>Products</span>
+                <span className="text-dark">
+                  {" "}
+                  {instructor.products == null ? 0 : instructor.products}{" "}
+                </span>
               </div>
             </Card.Body>
           </Card>
@@ -84,7 +99,7 @@ function InstructorsGridCard() {
   };
 
   const filterInstructors = (searchTerm, ecosystem) => {
-    let filteredInstructors = InstructorData.filter((instructor) => {
+    let filteredInstructors = userDetails.filter((instructor) => {
       const matchesSearchTerm = Object.values(instructor)
         .join(" ")
         .toLowerCase()

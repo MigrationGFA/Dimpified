@@ -112,6 +112,7 @@ import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignU
 import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
+import DeveloperProgram from "../developer-program/DeveloperProgram";
 
 const AllRoutes = () => {
   return (
@@ -296,6 +297,9 @@ const AllRoutes = () => {
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+
+      {/* dimp developer program */}
+      <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
     </Routes>
   );
 };
