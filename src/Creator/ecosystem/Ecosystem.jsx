@@ -66,7 +66,7 @@ const Ecosystem = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/creator-ecosystems/${creatorId}`
       );
-      setEcosystems(response.data.ecosystem || []);
+      setEcosystems(response.data.ecosystem);
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,7 +79,7 @@ const Ecosystem = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/creator/my-ecosystem/${creatorId}`
       );
-      setEcosystemData(response.data || {});
+      setEcosystemData(response.data);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -94,7 +94,7 @@ const Ecosystem = () => {
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = ecosystems?.slice(indexOfFirstItem, indexOfLastItem) || [];
+  const currentItems = ecosystems?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
