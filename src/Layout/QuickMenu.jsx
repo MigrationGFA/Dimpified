@@ -92,7 +92,7 @@ const QuickMenu = () => {
       <div style={{ marginRight: "10px" }}>
         <DarkLightMode />
       </div>
-      <Dropdown as="li">
+      {/* <Dropdown as="li">
         <Dropdown.Toggle
           as="a"
           bsPrefix=" "
@@ -110,9 +110,9 @@ const QuickMenu = () => {
           <div className="border-bottom px-3 pt-3 pb-3 d-flex justify-content-between align-items-end">
             <span className="h4 mb-0">Notifications</span>
             <Link to="# " className="text-muted">
-              {/* <span className="align-middle">
+              <span className="align-middle">
                 <i className="fe fe-settings me-1"></i>
-              </span> */}
+              </span>
             </Link>
           </div>
           <Notifications />
@@ -125,7 +125,7 @@ const QuickMenu = () => {
             </Link>
           </div>
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
       <Dropdown as="li" className="ms-1">
         <Dropdown.Toggle
           as="a"
