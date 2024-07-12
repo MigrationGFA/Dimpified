@@ -19,7 +19,7 @@ import "simplebar/dist/simplebar.min.css";
 
 // import media files
 // import InverseLogo from '../../assets/images/brand/logo/logo-inverse.svg';
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
+import Logo from "../../assets/DIMP logo.png";
 import GiftBox from "../../assets/images/avatar/giftbox.png";
 
 // import routes file

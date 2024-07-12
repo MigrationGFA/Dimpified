@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -19,12 +19,13 @@ import QuickMenu from "../../../../Layout/QuickMenu";
 import DarkLightMode from "../../../../Layout/DarkLightMode";
 import { useNavigate } from "react-router-dom";
 
+// import media files
+import Logo from "../../../../assets/images/brand/logo/logo.png";
 
 // import data files
 import NavbarDefaultRoutes from "../../../../routes/NavbarDefault";
 
 const NavbarDefault = ({ headerstyle, login }) => {
-  const [logo, setLogo] = useState(null);
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -45,11 +46,6 @@ const NavbarDefault = ({ headerstyle, login }) => {
   //     navigate("/Instructordashboard");
   //   }
   // };
-useEffect(() => {
-const logoImage = sessionStorage.getItem('Logo');
-setLogo(logoImage);
-}, []) 
-
 
   return (
     <Fragment>
@@ -63,9 +59,9 @@ setLogo(logoImage);
           {/* <Navbar.Brand as={Link} to="/"> */}
           <Link to="" onClick="">
             <Image
-              src={logo}
+              src={Logo}
               alt="logo"
-              style={{ height: "56px", cursor: "pointer" }}
+              style={{ height: "56px", width: "58px", cursor: "pointer" }}
               // onClick={redirect}
             />
           </Link>
@@ -128,7 +124,7 @@ setLogo(logoImage);
               <DarkLightMode className="mt-2 me-2" />
 
               {/* If user is logged in, show Dashboard link */}
-              {/* {user ? (
+               {/* {user ? ( */}
                 <Nav.Link
                   as={Link}
                   to="/Userdashboard"
@@ -137,7 +133,7 @@ setLogo(logoImage);
                   // onClick={redirect}
                 >
                   Dashboard
-                </Nav.Link> */}
+                </Nav.Link> 
               {/* ) : (
                 // If user is not logged in, show Sign In and Sign Up links
                 <span className={`ms-auto mt-1`}>

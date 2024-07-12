@@ -7,7 +7,7 @@ export const DashboardMenu = [
 	},
 	{
 		id: 2,
-		title: 'My Courses',
+		title: 'My Product',
 		link: '/Ecosystemdashboard/My-Courses',
 		icon: 'book'
 	},
@@ -41,60 +41,61 @@ export const DashboardMenu = [
 		link: '/Ecosystemdashboard/Ecosystem-payouts',
 		icon: 'dollar-sign'
 	},
-	{
-		id: 8,
-		title: 'Quiz',
-		link: '/Ecosystemdashboard/Ecosystem-quiz',
-		icon: 'help-circle'
-	},
-	{
-		id: 9,
-		title: 'Quiz Result',
-		link: '/Ecosystemdashboard/Ecosystem-quiz-result',
-		icon: 'help-circle'
-	}
+	// {
+	// 	id: 8,
+	// 	title: 'Quiz',
+	// 	link: '/Ecosystemdashboard/Ecosystem-quiz',
+	// 	icon: 'help-circle'
+	// },
+	// {
+	// 	id: 9,
+	// 	title: 'Quiz Result',
+	// 	link: '/Ecosystemdashboard/Ecosystem-quiz-result',
+	// 	icon: 'help-circle'
+	// }
 ];
 
-export const AccountSettingsMenu = [
-	{
-		id: 1,
-		title: 'Edit Profile',
-		link: '/Ecosystemdashboard/Ecosystem-edit-profile',
-		icon: 'settings'
-	},
+// export const AccountSettingsMenu = [
+// 	{
+// 		id: 1,
+// 		title: 'Edit Profile',
+// 		link: '/Ecosystemdashboard/Ecosystem-edit-profile',
+// 		icon: 'settings'
+// 	},
 	
-	{
-		id: 2,
-		title: 'Social Profiles',
-		link: '/Ecosystemdashboard/Ecosystem-social-profiles',
-		icon: 'refresh-cw'
-	},
-	// {
-	// 	id: 3,
-	// 	title: 'Notifications',
-	// 	link: '/marketing/instructor/instructor-notifications/',
-	// 	icon: 'bell'
-	// },
-	// {
-	// 	id: 4,
-	// 	title: 'Profile Privacy',
-	// 	link: '/marketing/instructor/instructor-profile-privacy/',
-	// 	icon: 'lock'
-	// },
-	{
-		id: 5,
-		title: 'Delete Profile',
-		link: '/Ecosystemdashboard/Ecosystem-delete-profile',
-		icon: 'trash'
-	},
-	{
-		id: 6,
-		title: 'Sign Out',
-		link: '/',
-		icon: 'power'
-	}
-];
+// 	{
+// 		id: 2,
+// 		title: 'Social Profiles',
+// 		link: '/Ecosystemdashboard/Ecosystem-social-profiles',
+// 		icon: 'refresh-cw'
+// 	},
+// 	// {
+// 	// 	id: 3,
+// 	// 	title: 'Notifications',
+// 	// 	link: '/marketing/instructor/instructor-notifications/',
+// 	// 	icon: 'bell'
+// 	// },
+// 	// {
+// 	// 	id: 4,
+// 	// 	title: 'Profile Privacy',
+// 	// 	link: '/marketing/instructor/instructor-profile-privacy/',
+// 	// 	icon: 'lock'
+// 	// },
+// 	{
+// 		id: 5,
+// 		title: 'Delete Profile',
+// 		link: '/Ecosystemdashboard/Ecosystem-delete-profile',
+// 		icon: 'trash'
+// 	},
+// 	{
+// 		id: 6,
+// 		title: 'Sign Out',
+// 		link: '/',
+// 		icon: 'power'
+// 	}
+// ];
 
-export const StudentDashboardMenu = [DashboardMenu, AccountSettingsMenu];
+export const StudentDashboardMenu = [DashboardMenu, ];
+//AccountSettingsMenu
 
 export default StudentDashboardMenu;

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   category: "",
@@ -7,12 +7,13 @@ const initialState = {
   header: "",
   description: "",
   format: "",
-  serviceBackground: [],
+  currency: "",
+  backgroundCover: [],
   services: [],
 };
 
 const serviceSlice = createSlice({
-  name: 'service',
+  name: "service",
   initialState,
   reducers: {
     updateServiceData(state, action) {
@@ -21,24 +22,26 @@ const serviceSlice = createSlice({
         ...action.payload,
       };
     },
-    resetServiceData: () => initialState,
-    addServiceBackground(state, action) {
-      const fileMetadata = action.payload.map(file => ({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: file.lastModified,
-      }));
-      return {
-        ...state,
-        serviceBackground: [...state.serviceBackground, ...fileMetadata],
-      };
+    resetServiceData() {
+      return initialState;
     },
-    removeServiceBackground(state, action) {
-      const newServiceBackground = state.serviceBackground.filter((_, i) => i !== action.payload);
+    addBackgroundCover(state, action) {
+        const newBackgroundCover = {
+          name: action.payload.name,
+          preview: action.payload.preview,
+        };
+        return {
+          ...state,
+          backgroundCover: [...state.backgroundCover, newBackgroundCover],
+        };
+      },
+    removeBackgroundCover(state, action) {
+      const newBackgroundCover = state.backgroundCover.filter(
+        (_, i) => i !== action.payload
+      );
       return {
         ...state,
-        serviceBackground: newServiceBackground,
+        backgroundCover: newBackgroundCover,
       };
     },
     addService(state, action) {
@@ -57,7 +60,9 @@ const serviceSlice = createSlice({
       };
     },
     deleteService(state, action) {
-      const filteredServices = state.services.filter((_, index) => index !== action.payload);
+      const filteredServices = state.services.filter(
+        (_, index) => index !== action.payload
+      );
       return {
         ...state,
         services: filteredServices,
@@ -69,8 +74,8 @@ const serviceSlice = createSlice({
 export const {
   updateServiceData,
   resetServiceData,
-  addServiceBackground,
-  removeServiceBackground,
+  addBackgroundCover,
+  removeBackgroundCover,
   addService,
   updateService,
   deleteService,

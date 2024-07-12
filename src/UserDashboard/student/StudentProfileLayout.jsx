@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Col, Row, Nav, Container, Navbar } from "react-bootstrap";
-import NavBar from "../../Pages/Pages/home-academy/navbars/NavbarDefault";
+import NavBar from "../../Pages/Pages/home-academy/navbars/UserNavbar";
 import "./StudentProfileLayout.css";
 import {
   DashboardMenu,
@@ -54,14 +54,21 @@ const StudentProfileLayout = (props) => {
     outlinebutton: false,
     level: "Beginner",
   };
-
+  const ServiceButton = {
+    linkname: "Browse Services",
+    link: "/creator/dashboard/Add-New-Service",
+  };
+  const ProductButton = {
+    linkname: "Browse Product",
+    link: "/creator/dashboard/Add-New-Product",
+  };
   return (
     <Fragment>
       <NavBar />
       <section className="pt-5 pb-5">
         <Container>
           {/* User info */}
-          <ProfileCover dashboardData={dashboardData} />
+          <ProfileCover dashboardData={dashboardData} ServiceButton={ServiceButton} ProductButton={ProductButton}/>
 
           {/* Content */}
           <Row className="mt-0 mt-md-4 ">
