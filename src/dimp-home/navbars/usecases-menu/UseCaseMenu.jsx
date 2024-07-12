@@ -32,7 +32,7 @@ const UseCaseMenu = () => {
                 <div className="lh-1 mb-5 border-bottom">
                   <h3 className="mb-1">Perfect for your Industry.</h3>
                   <p>
-                    Leverage DIMP in any industry of yours, be it enterprise or
+                    Leverage DIMP in any induxtry of yours, be it enterprise or
                     consumer.
                   </p>
                 </div>
@@ -60,6 +60,7 @@ const UseCaseMenu = () => {
                                 style={{
                                   height: "2.5rem",
                                   width: "auto",
+                                  
                                 }}
                               />
                               <div className="ms-2">
@@ -108,7 +109,7 @@ const UseCaseMenu = () => {
             <Col lg={12} md={12} xs={12} className="lh-1 mb-1">
               <h3 className="mb-1">Perfect for your Industry.</h3>
               <p>
-                Leverage DIMP in any industry of yours, <br /> be it enterprise
+                Leverage DIMP in any induxtry of yours, <br /> be it enterprise
                 or consumer.
               </p>
             </Col>
