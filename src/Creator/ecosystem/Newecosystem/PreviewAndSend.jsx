@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Container, Row, Col, Nav, Button, Card, Modal } from "react-bootstrap";
-import Ecosystem from "../../../assets/ecosystem.png";
 import EcoHeader from "./ecoHeader";
 import { useNavigate } from "react-router-dom";
 import { resetState } from "../../../features/ecosystem";
 import { useDispatch, useSelector } from "react-redux";
 import PreviewPage from "../../../EditTemplate/Preview";
+import EcoFormPreview from "../../../EditTemplate/EcoFormPreview";
 
 const PreviewAndSend = () => {
   const location = useLocation();
@@ -127,13 +127,7 @@ const PreviewAndSend = () => {
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Create Form</Card.Title>
-            <div>
-              <img
-                src={Ecosystem}
-                alt="Onboarding"
-                className="img-fluid vh-100 vw-100"
-              />
-            </div>
+            <EcoFormPreview />
           </Card.Body>
         </Card>
         <div className="d-flex justify-content-between">

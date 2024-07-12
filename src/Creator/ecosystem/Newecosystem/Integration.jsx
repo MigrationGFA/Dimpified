@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Container, Row, Button, Card, Col, Form } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import EcoHeader from "./ecoHeader";
+import comingSoon from '../../../assets/coming-soon.jpeg'
 
 const templateSections = [
   { id: 1, name: "Live Section" },
@@ -177,7 +178,7 @@ const Integration = () => {
           <div className="mt-5">
             <h3>Integration Companies</h3>
             <Row xs={2} md={4} lg={5} className="g-4">
-              {integrationCompanies[activeSection].map((company) => (
+              {/* {integrationCompanies[activeSection].map((company) => (
                 <Col key={company.id}>
                   <Card>
                     <Card.Body>
@@ -189,7 +190,8 @@ const Integration = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-              ))}
+              ))} */}
+              <img src={comingSoon} alt="" />
             </Row>
           </div>
 <div className="d-flex justify-content-between mt-5">
