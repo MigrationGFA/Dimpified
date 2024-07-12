@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { Image, Card, Badge, Row, Col } from "react-bootstrap";
 import Ratings from "../../common/ratings/Ratings";
+import { useParams } from "react-router-dom";
 import { numberWithCommas } from "../../../../helper/utils";
 import "./GetEnrollCourseCard.css";
 
 const GetEnrolledCourseCard = ({ item }) => {
+  let { ecosystemDomain } = useParams();
   const badgeBG = () => {
     switch (item.level) {
       case "Intermediate":
@@ -20,7 +22,7 @@ const GetEnrolledCourseCard = ({ item }) => {
 
   return (
     <Card className="mb-4 card-hover shadow-lg course-card ">
-      <Link to="#" className="card-img-top">
+      <Link to={`/${ecosystemDomain}/${item._id}`} className="card-img-top">
         <div className="h-25">
           <Image
             src={item.image}
@@ -38,7 +40,7 @@ const GetEnrolledCourseCard = ({ item }) => {
           </Link>
         </div>
         <h4 className="mb-2 text-truncate-line-2">
-          <Link to="/student/single-course" className="text-inherit">
+          <Link to={`/${ecosystemDomain}/${item._id}`} className="text-inherit">
             {item.title}
           </Link>
         </h4>

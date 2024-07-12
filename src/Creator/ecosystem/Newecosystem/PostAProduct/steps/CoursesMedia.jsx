@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import axios from "axios";
-import { showToast } from "../../../Components/Showtoast";
+import { showToast } from "../../../../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,7 +11,7 @@ import {
   setIncludedOptions,
   updateCourseData,
   resetCourseData,
-} from "../../../features/course";
+} from "../../../../../features/course";
 
 const CoursesMedia = ({ submit, previous }) => {
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ const CoursesMedia = ({ submit, previous }) => {
     formData.append("ecosystemId", ecosystemId);
 
     axios
-      .post(`${import.meta.env.VITE_API_URL}/create-course`, formData)
+      .post("https://dimpified-backend.azurewebsites.net/api/v1/create-course", formData)
       .then((response) => {
         setLoading(false);
         showToast(response.data.message);

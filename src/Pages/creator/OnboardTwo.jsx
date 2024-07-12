@@ -50,7 +50,7 @@ const OnboardTwo = () => {
                 </div>
               </div>
               <div className="mb-4">
-                <h2 className="mb-3">DO YOU WANT TO SET UP AN/A ECOSYSTEM</h2>
+                <h2 className="mb-3">DO YOU WANT TO SET UP AN/A ECOSYSTEM WEBSITE</h2>
                 <div className="d-flex justify-content-center">
                   <Button
                     variant={

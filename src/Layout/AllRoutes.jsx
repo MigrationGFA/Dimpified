@@ -60,7 +60,6 @@ import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
 import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
 import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
 import Courses from "../Creator/ecosystem/Newecosystem/Courses";
-import PostService from "../Creator/ecosystem/Newecosystem/PostService";
 import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
 import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
@@ -103,6 +102,8 @@ import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/Delete
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
+import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
+import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
 import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 
 // ** Import Ecosystem Authentication components
@@ -151,10 +152,17 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route
-        path="/creator/dashboard/Add-New-Course"
+        path="/Ecosystemdashboard/Add-New-Course"
         element={<AddNewCourse />}
       />
-      <Route path="/creator/dashboard/Post-Service" element={<PostService />} />
+      <Route
+        path="/Ecosystemdashboard/Add-New-Service"
+        element={<PostAService />}
+      />
+       <Route
+        path="/creator/dashboard/Add-New-Product"
+        element={<PostAProduct/>}
+      />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       <Route element={<ChatLayout />}>
@@ -214,7 +222,7 @@ const AllRoutes = () => {
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/User-Resolution" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
-      <Route path="/User/single-course" element={<UserSingleCourse />} />
+     
       <Route
         path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
@@ -287,6 +295,7 @@ const AllRoutes = () => {
 
       {/* End user ecosystem routes */}
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
 
       {/* dimp developer program */}

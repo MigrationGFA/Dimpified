@@ -53,6 +53,7 @@ if (navigatePage) {
           `${import.meta.env.VITE_API_URL}/getTemplate/${ecosystemDomain}`
         );
         setDetails(response.data.templateDetails);
+        sessionStorage.setItem("Logo",response.data.templateDetails.navbar.logo);
       } catch (error) {
         console.log("not working", error);
       } finally {

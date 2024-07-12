@@ -1,671 +1,19 @@
-// import React, { useState } from "react";
-// import { Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
-// import { useDispatch, useSelector } from "react-redux";
-// // import { addService, updateService, removeService } from "../../../../../features/services";
-
-// const AddService = () => {
-//   const [show, setShow] = useState(false);
-//   const [serviceName, setServiceName] = useState("");
-//   const [shortDescription, setShortDescription] = useState("");
-//   const [price, setPrice] = useState("");
-//   const [deliveryTime, setDeliveryTime] = useState("");
-//   const [jobSalaryFormat, setJobSalaryFormat] = useState("");
-//   const [currency, setCurrency] = useState("");
-//   const [pricingPlan, setPricingPlan] = useState("");
-//   const [editData, setEditData] = useState(null);
-
-//   const dispatch = useDispatch();
-//   const services = useSelector((state) => state.services);
-
-//    const [pricingPackages, setPricingPackages] = useState({
-//     professional: {
-//       basic: {
-//         serviceName: "",
-//         shortDescription: "",
-//         price: "",
-//         deliveryTime: "",
-//         jobSalaryFormat: "",
-//       },
-//       standard: {
-//         serviceName: "",
-//         shortDescription: "",
-//         price: "",
-//         deliveryTime: "",
-//         jobSalaryFormat: "",
-//       },
-//       premium: {
-//         serviceName: "",
-//         shortDescription: "",
-//         price: "",
-//         deliveryTime: "",
-//         jobSalaryFormat: "",
-//       },
-//     },
-//   });
-
-//   const handleServicePackageChange = (packageType, field, value, planType) => {
-//     setPricingPackages((prevPackages) => ({
-//       ...prevPackages,
-//       [planType]: {
-//         ...prevPackages[planType],
-//         [packageType]: {
-//           ...prevPackages[planType][packageType],
-//           [field]: value,
-//         },
-//       },
-//     }));
-//   };
-
-//   const handleClose = () => {
-//     setShow(false);
-//     resetForm();
-//   };
-
-//   const handleShow = () => setShow(true);
-
-//   const resetForm = () => {
-//     setServiceName("");
-//     setShortDescription("");
-//     setPrice("");
-//     setDeliveryTime("");
-//     setJobSalaryFormat("");
-//     setCurrency("");
-//     setPricingPlan("");
-//     setEditData(null);
-//   };
-
-//   const handleAddService = () => {
-//     const newService = {
-//       serviceName,
-//       shortDescription,
-//       price,
-//       deliveryTime,
-//       jobSalaryFormat,
-//       currency,
-//       pricingPlan,
-//     };
-
-//     // Dispatch addService or updateService based on editData
-//     if (editData) {
-//       dispatch(updateService({ ...editData, ...newService }));
-//     } else {
-//       dispatch(addService(newService));
-//     }
-
-//     handleClose();
-//   };
-
-//   const handleEditService = (service) => {
-//     setEditData(service);
-//     setServiceName(service.serviceName);
-//     setShortDescription(service.shortDescription);
-//     setPrice(service.price);
-//     setDeliveryTime(service.deliveryTime);
-//     setJobSalaryFormat(service.jobSalaryFormat);
-//     setCurrency(service.currency);
-//     setPricingPlan(service.pricingPlan);
-//     handleShow();
-//   };
-
-//   const handleDeleteService = (serviceId) => {
-//     dispatch(removeService(serviceId));
-//   };
-
-//   const currencyType = [
-//     { value: "NGN", label: "Naira" },
-//     { value: "USD", label: "Dollars" },
-//     { value: "EUR", label: "Euros" },
-//     { value: "GBP", label: "Pounds" },
-//   ];
-
-//   const pricingTypes = [
-//     { value: "", label: "Select your Pricing Plan" },
-//     { value: "starter", label: "Starter" },
-//     { value: "professional", label: "Professional" },
-//   ];
-
-//   const jobSalaryFormats = [
-//     { value: "hourly", label: "Hourly" },
-//     { value: "daily", label: "Daily" },
-//     { value: "weekly", label: "Weekly" },
-//     { value: "monthly", label: "Monthly" },
-//   ];
-
-//   return (
-//     <>
-//       <Card className="p-4">
-//         <Row>
-//           <Col md={12}>
-//             <Form.Group as={Row} className="mb-3 mt-4 justify-content-center">
-//               <Col md={6}>
-//                 <Form.Label htmlFor="currency">
-//                   Currency<span className="text-danger">*</span>
-//                 </Form.Label>
-//                 <Form.Select
-//                   id="currency"
-//                   value={currency}
-//                   onChange={(e) => setCurrency(e.target.value)}
-//                   required
-//                 >
-//                   {currencyType.map((currency, index) => (
-//                     <option key={index} value={currency.value}>
-//                       {currency.label}
-//                     </option>
-//                   ))}
-//                 </Form.Select>
-//               </Col>
-//               <Col md={6}>
-//                 <Form.Label htmlFor="pricingPlan">
-//                   Pricing Plan<span className="text-danger">*</span>
-//                 </Form.Label>
-//                 <Form.Select
-//                   id="pricingPlan"
-//                   value={pricingPlan}
-//                   onChange={(e) => setPricingPlan(e.target.value)}
-//                   required
-//                 >
-//                   {pricingTypes.map((plan, index) => (
-//                     <option key={index} value={plan.value}>
-//                       {plan.label}
-//                     </option>
-//                   ))}
-//                 </Form.Select>
-//               </Col>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-//         <Col md={3}>
-//           <Button
-//             variant="outline-primary"
-//             className="btn btn-outline-primary btn-sm mt-3"
-//             onClick={handleShow}
-//           >
-//             Add Pricing Plan
-//           </Button>
-//         </Col>
-//       </Card>
-//       <Modal
-//         show={show}
-//         onHide={handleClose}
-//         backdrop="static"
-//         keyboard={false}
-//         size="lg"
-//       >
-//         <Modal.Header closeButton>
-//           <Modal.Title>{editData ? "Edit Service" : "Add Service"}</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body className="pb-0">
-//           {pricingPlan === "starter" && (
-//             <>
-//               <h2 className="text-center" style={{ color: "#754ffe" }}>
-//                 Starter Plan
-//               </h2>
-//               <Form.Group className="mb-3" controlId="formServiceName">
-//                 <Form.Control
-//                   type="text"
-//                   placeholder="Service Name"
-//                   value={serviceName}
-//                   onChange={(e) => setServiceName(e.target.value)}
-//                 />
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="formServiceDescription">
-//                 <Form.Control
-//                   as="textarea"
-//                   placeholder="Short Description"
-//                   value={shortDescription}
-//                   onChange={(e) => setShortDescription(e.target.value)}
-//                 />
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="formServicePrice">
-//                 <Form.Control
-//                   type="text"
-//                   placeholder="Price"
-//                   value={price}
-//                   onChange={(e) => setPrice(e.target.value)}
-//                 />
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="formServiceDeliveryTime">
-//                 <Form.Control
-//                   type="text"
-//                   placeholder="Delivery Time"
-//                   value={deliveryTime}
-//                   onChange={(e) => setDeliveryTime(e.target.value)}
-//                 />
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="formJobSalaryFormat">
-//                 <Form.Control
-//                   as="select"
-//                   placeholder="Job Salary Format"
-//                   value={jobSalaryFormat}
-//                   onChange={(e) => setJobSalaryFormat(e.target.value)}
-//                 >
-//                   <option value="">Select Job Salary Format</option>
-//                   {jobSalaryFormats.map((format) => (
-//                     <option key={format.value} value={format.value}>
-//                       {format.label}
-//                     </option>
-//                   ))}
-//                 </Form.Control>
-//               </Form.Group>
-//             </>
-//           )}
-
-//           {pricingPlan === "professional" && (
-//             <>
-//               <h2 className="text-center" style={{ color: "#754ffe" }}>
-//                 Professional Plan
-//               </h2>
-
-//               {/* BASIC SECTION */}
-//               <Form.Group as={Row} className="mb-3 mt-4 justify-content-center">
-//                 <h3 className="text-center mb-2" style={{ color: "#754ffe" }}>
-//                   BASIC
-//                 </h3>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="basicServiceName">
-//                     Service Name<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="basicServiceName"
-//                     placeholder="Enter service name"
-//                     value={pricingPackages.professional.basic.serviceName}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "basic",
-//                         "serviceName",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="basicShortDescription">
-//                     Short Description<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="basicShortDescription"
-//                     placeholder="Enter short description"
-//                     value={pricingPackages.professional.basic.shortDescription}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "basic",
-//                         "shortDescription",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="basicPrice">
-//                     Price<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="basicPrice"
-//                     placeholder="Enter price"
-//                     value={pricingPackages.professional.basic.price}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "basic",
-//                         "price",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="basicDeliveryTime">
-//                     Delivery Time<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="basicDeliveryTime"
-//                     placeholder="Enter delivery time"
-//                     value={pricingPackages.professional.basic.deliveryTime}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "basic",
-//                         "deliveryTime",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="basicJobSalaryFormat">
-//                     Job Salary Format<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     as="select"
-//                     id="basicJobSalaryFormat"
-//                     value={pricingPackages.professional.basic.jobSalaryFormat}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "basic",
-//                         "jobSalaryFormat",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   >
-//                     <option value="">Select job salary format</option>
-//                     {jobSalaryFormats.map((format) => (
-//                       <option key={format.value} value={format.value}>
-//                         {format.label}
-//                       </option>
-//                     ))}
-//                   </Form.Control>
-//                 </Col>
-//               </Form.Group>
-
-//               {/* STANDARD SECTION */}
-//               <Form.Group as={Row} className="mb-3 mt-4 justify-content-center">
-//                 <h3 className="text-center mb-2" style={{ color: "#754ffe" }}>
-//                   STANDARD
-//                 </h3>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="standardServiceName">
-//                     Service Name<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="standardServiceName"
-//                     placeholder="Enter service name"
-//                     value={pricingPackages.professional.standard.serviceName}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "standard",
-//                         "serviceName",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="standardShortDescription">
-//                     Short Description<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="standardShortDescription"
-//                     placeholder="Enter short description"
-//                     value={
-//                       pricingPackages.professional.standard.shortDescription
-//                     }
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "standard",
-//                         "shortDescription",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="standardPrice">
-//                     Price<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="standardPrice"
-//                     placeholder="Enter price"
-//                     value={pricingPackages.professional.standard.price}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "standard",
-//                         "price",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="standardDeliveryTime">
-//                     Delivery Time<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="standardDeliveryTime"
-//                     placeholder="Enter delivery time"
-//                     value={pricingPackages.professional.standard.deliveryTime}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "standard",
-//                         "deliveryTime",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="standardJobSalaryFormat">
-//                     Job Salary Format<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     as="select"
-//                     id="standardJobSalaryFormat"
-//                     value={
-//                       pricingPackages.professional.standard.jobSalaryFormat
-//                     }
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "standard",
-//                         "jobSalaryFormat",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   >
-//                     <option value="">Select job salary format</option>
-//                     {jobSalaryFormats.map((format) => (
-//                       <option key={format.value} value={format.value}>
-//                         {format.label}
-//                       </option>
-//                     ))}
-//                   </Form.Control>
-//                 </Col>
-//               </Form.Group>
-
-//               {/* PREMIUM SECTION */}
-//               <Form.Group as={Row} className="mb-3 mt-4 justify-content-center">
-//                 <h3 className="text-center mb-2" style={{ color: "#754ffe" }}>
-//                   PREMIUM
-//                 </h3>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="premiumServiceName">
-//                     Service Name<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="premiumServiceName"
-//                     placeholder="Enter service name"
-//                     value={pricingPackages.professional.premium.serviceName}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "premium",
-//                         "serviceName",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="premiumShortDescription">
-//                     Short Description<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="premiumShortDescription"
-//                     placeholder="Enter short description"
-//                     value={
-//                       pricingPackages.professional.premium.shortDescription
-//                     }
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "premium",
-//                         "shortDescription",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="premiumPrice">
-//                     Price<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="premiumPrice"
-//                     placeholder="Enter price"
-//                     value={pricingPackages.professional.premium.price}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "premium",
-//                         "price",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="premiumDeliveryTime">
-//                     Delivery Time<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     type="text"
-//                     id="premiumDeliveryTime"
-//                     placeholder="Enter delivery time"
-//                     value={pricingPackages.professional.premium.deliveryTime}
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "premium",
-//                         "deliveryTime",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   />
-//                 </Col>
-//                 <Col md={5} className="mb-3">
-//                   <Form.Label htmlFor="premiumJobSalaryFormat">
-//                     Job Salary Format<span className="text-danger">*</span>
-//                   </Form.Label>
-//                   <Form.Control
-//                     as="select"
-//                     id="premiumJobSalaryFormat"
-//                     value={
-//                       pricingPackages.professional.premium.jobSalaryFormat
-//                     }
-//                     onChange={(e) =>
-//                       handleServicePackageChange(
-//                         "premium",
-//                         "jobSalaryFormat",
-//                         e.target.value,
-//                         "professional"
-//                       )
-//                     }
-//                     required
-//                   >
-//                     <option value="">Select job salary format</option>
-//                     {jobSalaryFormats.map((format) => (
-//                       <option key={format.value} value={format.value}>
-//                         {format.label}
-//                       </option>
-//                     ))}
-//                   </Form.Control>
-//                 </Col>
-//               </Form.Group>
-//             </>
-//           )}
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <Button variant="secondary" onClick={handleClose}>
-//             Close
-//           </Button>
-//           <Button variant="primary" onClick={handleAddService}>
-//             {editData ? "Update Service" : "Add Service"}
-//           </Button>
-//         </Modal.Footer>
-//       </Modal>
-//       <div className="mt-3">
-//         <h3>Services List</h3>
-//         {services && services.map((service) => (
-//           <Card key={service.id} className="mb-2">
-//             <Card.Body>
-//               <Card.Title>{service.serviceName}</Card.Title>
-//               <Card.Text>{service.shortDescription}</Card.Text>
-//               <Card.Text>Price: {service.price}</Card.Text>
-//               <Card.Text>Delivery Time: {service.deliveryTime}</Card.Text>
-//               <Card.Text>Job Salary Format: {service.jobSalaryFormat}</Card.Text>
-//               <Button
-//                 variant="outline-secondary"
-//                 onClick={() => handleEditService(service)}
-//               >
-//                 Edit
-//               </Button>
-//               <Button
-//                 variant="outline-danger"
-//                 className="ml-2"
-//                 onClick={() => handleDeleteService(service.id)}
-//               >
-//                 Delete
-//               </Button>
-//             </Card.Body>
-//           </Card>
-//         ))}
-//       </div>
-//     </>
-//   );
-// };
-
-// export default AddService;
-
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form, Col, Card } from "react-bootstrap";
+import { Button, Modal, Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addService,
-  updateService,
-  deleteService,
-} from "../../../../../features/service";
+import { addService, updateService, deleteService, resetServiceData } from "../../../../../features/service";
+import { useNavigate } from "react-router-dom";
+import { showToast } from "../../../../../Components/Showtoast";
+import axios from 'axios';
 
 const AddService = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [serviceName, setServiceName] = useState("");
+  const [name, setName] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [price, setPrice] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
-  const [jobSalaryFormat, setJobSalaryFormat] = useState("");
-  const [currency, setCurrency] = useState("");
-
-  const dispatch = useDispatch();
+  const [priceFormat, setPriceFormat] = useState("");
 
   const jobSalaryFormats = [
     { value: "Fixed", label: "Fixed" },
@@ -678,12 +26,11 @@ const AddService = () => {
 
   const handleClose = () => {
     setShow(false);
-    setServiceName("");
+    setName("");
     setShortDescription("");
     setPrice("");
     setDeliveryTime("");
-    setJobSalaryFormat("");
-    setCurrency("");
+    setPriceFormat("");
   };
 
   const handleShow = () => setShow(true);
@@ -691,22 +38,15 @@ const AddService = () => {
   const handleAddService = () => {
     dispatch(
       addService({
-        serviceName,
+        name,
         shortDescription,
         price,
         deliveryTime,
-        jobSalaryFormat,
-        currency,
+        priceFormat,
       })
     );
     handleClose();
   };
-  const currencyType = [
-    { value: "NGN", label: "Naira" },
-    { value: "USD", label: "Dollars" },
-    { value: "EUR", label: "Euros" },
-    { value: "GBP", label: "Pounds" },
-  ];
 
   return (
     <>
@@ -733,8 +73,8 @@ const AddService = () => {
             <Form.Control
               type="text"
               placeholder="Service Name"
-              value={serviceName}
-              onChange={(e) => setServiceName(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -770,8 +110,8 @@ const AddService = () => {
             <Form.Select
               type="text"
               placeholder="Job Salary Format"
-              value={jobSalaryFormat}
-              onChange={(e) => setJobSalaryFormat(e.target.value)}
+              value={priceFormat}
+              onChange={(e) => setPriceFormat(e.target.value)}
             >
               <option value="">Select Pricing Format</option>
               {jobSalaryFormats.map((jobSalaryFormat, index) => (
@@ -781,28 +121,10 @@ const AddService = () => {
               ))}
             </Form.Select>
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="currency">
-              Currency<span className="text-danger">*</span>
-            </Form.Label>
-            <Form.Select
-              id="currency"
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              required
-            >
-              <option value="">Select Currency</option>
-              {currencyType.map((currency, index) => (
-                <option key={index} value={currency.value}>
-                  {currency.label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline">
           <Button variant="primary" onClick={handleAddService}>
-            save Service
+            Save Service
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
             Close
@@ -813,33 +135,159 @@ const AddService = () => {
   );
 };
 
-const Service = ({ onNext, onPrevious }) => {
+const Service = ({ submit, onPrevious }) => {
+  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false);
   const sections = useSelector((state) => state.service.services) || [];
   const dispatch = useDispatch();
   const [editIndex, setEditIndex] = useState(null);
-  const [editServiceName, setEditServiceName] = useState("");
+  const [editName, setEditName] = useState("");
   const [editShortDescription, setEditShortDescription] = useState("");
   const [editPrice, setEditPrice] = useState("");
   const [editDeliveryTime, setEditDeliveryTime] = useState("");
-  const [editJobSalaryFormat, setEditJobSalaryFormat] = useState("");
-  const [editCurrency, setEditCurrency] = useState("");
+  const [editPriceFormat, setEditPriceFormat] = useState("");
+
+  const jobSalaryFormats = [
+    { value: "Fixed", label: "Fixed" },
+    { value: "Hourly", label: "Hourly" },
+    { value: "Daily", label: "Daily" },
+    { value: "Weekly", label: "Weekly" },
+    { value: "Monthly", label: "Monthly" },
+    { value: "Yearly", label: "Yearly" },
+  ];
+
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+
+  const serviceData = useSelector((state) => state.service);
+  const {
+    category,
+    subCategory,
+    prefix,
+    header,
+    description,
+    format,
+    currency,
+    backgroundCover,
+    services,
+  } = serviceData;
+
+  const convertBase64ToFile = (base64String, filename) => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
+  
+    const formData = new FormData();
+    formData.append("category", category);
+    formData.append("subCategory", subCategory);
+    formData.append("header", `${prefix} ${header}`);
+    formData.append("description", description);
+    formData.append("format", format);
+    formData.append("currency", currency);
+    formData.append("services", JSON.stringify(services));
+  
+    // Convert and append base64 images directly to FormData
+    const imageProperties = {
+      "product.mainImage": "mainImage.png",
+      "product.thumbnailImage": "thumbnailImage.png",
+      "gallery.image1": "galleryImage1.png",
+      "gallery.image2": "galleryImage2.png",
+      "gallery.image3": "galleryImage3.png",
+      "gallery.image4": "galleryImage4.png",
+      "details.coverImage": "coverImage.png",
+    };
+  
+    // Assuming image data is within the serviceData object
+    for (const [key, filename] of Object.entries(imageProperties)) {
+      const keys = key.split(".");
+      let imageProp = serviceData;
+      try {
+        for (const k of keys) {
+          imageProp = imageProp[k];
+          if (imageProp === undefined) break; // Exit loop if property is undefined
+        }
+        if (typeof imageProp === "string" && imageProp.startsWith("data:image")) {
+          const convertedFile = convertBase64ToFile(imageProp, filename);
+          formData.append(key, convertedFile);
+        }
+      } catch (error) {
+        console.error(`Error accessing property ${key}:`, error);
+      }
+    }
+  
+    // Convert backgroundCover images from base64 to binary and append to formData as separate fields under the same key
+    if (Array.isArray(backgroundCover)) {
+      backgroundCover.forEach((image, index) => {
+        if (typeof image.preview === "string" && image.preview.startsWith("data:image")) {
+          const convertedFile = convertBase64ToFile(image.preview, `backgroundCover${index}.png`);
+          formData.append("backgroundCover", convertedFile);
+        }
+      });
+    } else {
+      console.error("Invalid backgroundCover data:", backgroundCover);
+    }
+  
+    formData.append("creatorId", creatorId);
+    formData.append("ecosystemId", ecosystemId);
+  
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setLoading(false);
+        if (response.data) {
+          showToast(response.data.message);
+        }
+        dispatch(resetServiceData());
+        navigate("/creator/dashboard/Products");
+        submit();
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+  
+  useEffect(() => {
+    if (submit && typeof submit !== 'function') {
+      console.error('submit is not a function');
+    }
+  }, [submit]);
+
+  const handlePrevious = () => {
+    if (onPrevious) {
+      onPrevious();
+    }
+  };
 
   useEffect(() => {
     if (editIndex !== null) {
       const {
-        serviceName,
+        name,
         shortDescription,
         price,
         deliveryTime,
-        jobSalaryFormat,
-        currency,
+        priceFormat,
       } = sections[editIndex];
-      setEditServiceName(serviceName);
+      setEditName(name);
       setEditShortDescription(shortDescription);
       setEditPrice(price);
       setEditDeliveryTime(deliveryTime);
-      setEditJobSalaryFormat(jobSalaryFormat);
-      setEditCurrency(currency);
+      setEditPriceFormat(priceFormat);
     }
   }, [editIndex, sections]);
 
@@ -850,32 +298,23 @@ const Service = ({ onNext, onPrevious }) => {
   const handleEditService = (index) => {
     setEditIndex(index);
     const {
-      serviceName,
+      name,
       shortDescription,
       price,
       deliveryTime,
-      jobSalaryFormat,
-      currency,
+      priceFormat,
     } = sections[index];
-    setEditServiceName(serviceName);
+    setEditName(name);
     setEditShortDescription(shortDescription);
     setEditPrice(price);
     setEditDeliveryTime(deliveryTime);
-    setEditJobSalaryFormat(jobSalaryFormat);
-    setEditCurrency(currency);
+    setEditPriceFormat(priceFormat);
   };
-
-  const currencyType = [
-    { value: "NGN", label: "Naira" },
-    { value: "USD", label: "Dollars" },
-    { value: "EUR", label: "Euros" },
-    { value: "GBP", label: "Pounds" },
-  ];
 
   const handleFieldChange = (field, value) => {
     switch (field) {
       case "serviceName":
-        setEditServiceName(value);
+        setEditName(value);
         break;
       case "shortDescription":
         setEditShortDescription(value);
@@ -883,14 +322,11 @@ const Service = ({ onNext, onPrevious }) => {
       case "price":
         setEditPrice(value);
         break;
-      case "currency":
-        setEditCurrency(value);
-        break;
       case "deliveryTime":
         setEditDeliveryTime(value);
         break;
       case "jobSalaryFormat":
-        setEditJobSalaryFormat(value);
+        setEditPriceFormat(value);
         break;
       default:
         break;
@@ -902,25 +338,16 @@ const Service = ({ onNext, onPrevious }) => {
       updateService({
         index: editIndex,
         service: {
-          serviceName: editServiceName,
+          name: editName,
           shortDescription: editShortDescription,
           price: editPrice,
-          currency: editCurrency,
           deliveryTime: editDeliveryTime,
-          jobSalaryFormat: editJobSalaryFormat,
+         priceFormat: editPriceFormat,
         },
       })
     );
     setEditIndex(null);
   };
-  const jobSalaryFormats = [
-    { value: "Fixed", label: "Fixed" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Monthly", label: "Monthly" },
-    { value: "Yearly", label: "Yearly" },
-  ];
 
   return (
     <Form>
@@ -940,9 +367,9 @@ const Service = ({ onNext, onPrevious }) => {
                     <Form.Label>Service Name</Form.Label>
                     <Form.Control
                       type="text"
-                      value={editServiceName}
+                      value={editName}
                       onChange={(e) =>
-                        handleFieldChange("serviceName", e.target.value)
+                        handleFieldChange("name", e.target.value)
                       }
                     />
                   </Form.Group>
@@ -977,30 +404,13 @@ const Service = ({ onNext, onPrevious }) => {
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Currency</Form.Label>
-                    <Form.Select
-                      id="currency"
-                      value={editCurrency}
-                      onChange={(e) =>
-                        handleFieldChange("currency", e.target.value)
-                      }
-                    >
-                      <option value="">Select Currency</option>
-                      {currencyType.map((currency, index) => (
-                        <option key={index} value={currency.value}>
-                          {currency.label}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group>
                     <Form.Label>Pricing Format</Form.Label>
                     <Form.Select
                       type="text"
                       placeholder="Job Salary Format"
-                      value={editJobSalaryFormat}
+                      value={editPriceFormat}
                       onChange={(e) =>
-                        handleFieldChange("jobSalaryFormat", e.target.value)
+                        handleFieldChange("priceFormat", e.target.value)
                       }
                     >
                       <option value="">Select Pricing Format</option>
@@ -1011,7 +421,6 @@ const Service = ({ onNext, onPrevious }) => {
                       ))}
                     </Form.Select>
                   </Form.Group>
-                  
                   <div className="mt-5">
                     <Button onClick={handleSaveEdit}>Save</Button>
                     <Button
@@ -1040,7 +449,7 @@ const Service = ({ onNext, onPrevious }) => {
                   >
                     Edit
                   </Button>
-                  <h4>{service.serviceName}</h4>
+                  <h4>{service.name}</h4>
                   <p
                     style={{
                       backgroundColor: "white",
@@ -1081,17 +490,7 @@ const Service = ({ onNext, onPrevious }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {service.currency}
-                  </p>
-                  <p
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid #ced4da",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {service.jobSalaryFormat}
+                    {service.priceFormat}
                   </p>
                 </div>
               )}
@@ -1101,16 +500,16 @@ const Service = ({ onNext, onPrevious }) => {
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between">
-        <Button variant="secondary" onClick={onPrevious}>
-          Previous
-        </Button>
-        <Button
-          variant="primary"
-          onClick={onNext}
-          disabled={sections.length === 0}
-        >
-          Next
-        </Button>
+      <Button
+            variant="outline-secondary"
+            className="mr-2"
+            onClick={handlePrevious}
+          >
+            Previous
+          </Button>
+          <Button variant="primary" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
       </div>
     </Form>
   );
