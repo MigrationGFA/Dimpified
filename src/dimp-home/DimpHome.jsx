@@ -9,6 +9,7 @@ import CTA2Buttons from "./CTA2Buttons";
 // import sub components
 import HeroFormCenter from "./HeroFormCenter";
 import HeroRightImage from "./HeroRightImage";
+import HeroRightImage2 from "./HeroRightImage2";
 import HeroLeftImage from "./HeroLeftImage";
 import TemplatesNoPlay from "./TemplatesNoPlay";
 import Template4Columns from "./Template4Columns";
@@ -60,9 +61,12 @@ const DimpHome = () => {
         <section className="px-lg-20 px-6 py-8 py-lg-6 bg-white">
           <HeroRightImage />
         </section>
+        <section className="px-lg-20 px-6 py-8 py-lg-6 bg-white">
+          <HeroRightImage2 />
+        </section>
         <AppIntegration />
 
-        <section className="bg-white">
+        <section className="px-lg-20 px-6 py-8 py-lg-6 bg-white">
           <TestimonialSection />
         </section>
 

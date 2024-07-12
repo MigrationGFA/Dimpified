@@ -9,6 +9,13 @@ import Pricing from "../dimp-pages/pricing/Pricing";
 import Government from "../dimp-pages/government/Government";
 import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
+import Professional from "../dimp-pages/professional/Professional";
+import ReligiousBodies from "../dimp-pages/religious-bodies/ReligiousBodies";
+import Creatives from "../dimp-pages/creatives/Creatives";
+import TradeServices from "../dimp-pages/trade-services/TradeServices";
+import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
+import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
+import EventServices from "../dimp-pages/event-services/EventServices";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -123,6 +130,13 @@ const AllRoutes = () => {
       <Route path="/government" element={<Government />} />
       <Route path="/corporation" element={<Corporation />} />
       <Route path="/non-profit" element={<NonProfit />} />
+      <Route path="/professional-services" element={<Professional />} />
+      <Route path="/religious-bodies" element={<ReligiousBodies />} />
+      <Route path="/creative-services" element={<Creatives />} />
+      <Route path="/trade-services" element={<TradeServices />} />
+      <Route path="/personal-care-services" element={<PersonalCare />} />
+      <Route path="/technology-services" element={<TechnologyServices />} />
+      <Route path="/event-services" element={<EventServices />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />

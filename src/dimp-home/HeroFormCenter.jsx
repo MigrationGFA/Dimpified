@@ -14,7 +14,7 @@ import { Typewriter } from "react-simple-typewriter";
 import { Link } from "react-router-dom";
 
 // import media files
-import Dashboard from "./images/dashboard.png";
+import Dashboard from "./images/ecosystem.png";
 
 const HeroFormCenter = () => {
   return (
@@ -25,7 +25,7 @@ const HeroFormCenter = () => {
             <div className="py-8 py-lg-0 text-center">
               <h1 className="display-3 fw-bold mb-3 text-primary">
                 <span className="text-dark px-3 px-md-0">
-                  Ecosystem Management Platform for
+                  Ecosystem Management Platform For
                 </span>
                 <span className="text-primary ms-2">
                   <Typewriter
@@ -38,9 +38,9 @@ const HeroFormCenter = () => {
                       "Educators",
                       "Events",
                       "Religious Bodies",
-                      "Incubator",
-                      "Accelerator",
-                      "Licensing",
+                      "Designers",
+                      "Trader",
+                      "Consultants",
                     ]}
                     loop
                     cursor
