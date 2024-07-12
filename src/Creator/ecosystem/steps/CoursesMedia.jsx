@@ -87,7 +87,7 @@ const CoursesMedia = ({ submit, previous }) => {
         setLoading(false);
         console.error("Error:", error);
         showToast(error.response.data.message);
-        navigate("/Instructordashboard/My-Courses");
+        navigate("/creator/dashboard/Courses");
       });
   };
 
