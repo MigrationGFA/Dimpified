@@ -134,24 +134,19 @@ const NewEcosystem = () => {
   };
 
   const departments = [
-    { value: "Graphics and Design", label: "Graphics and Design" },
-    { value: "Digital Marketing", label: "Digital Marketing" },
-    { value: "Video and Animation", label: "Video and Animation" },
-    { value: "Music and Audio", label: "Music and Audio" },
-    { value: "Programming and Tech", label: "Programming and Tech" },
-    { value: "Business Development", label: "Business Development" },
-    { value: "Photography", label: "Photography" },
-    { value: "Catering", label: "Catering" },
-    { value: "Lifestyle and Health", label: "Lifestyle and Health" },
-    { value: "Logo Making", label: "Logo Making" },
-    { value: "Mobile Developer", label: "Mobile Developer" },
-    { value: "Data Analytics", label: "Data Analytics" },
-    { value: "Product Manager", label: "Product Manager" },
-    { value: "UI / UX Design", label: "UI / UX Design" },
-    { value: "SEO", label: "SEO" },
-    { value: "Finance", label: "Finance" },
-    { value: "End-to-End Projects", label: "End-to-End Projects" },
-    { value: "SEO", label: "SEO" },
+    { value: "Government", label: "Government" },
+    { value: "Corporations", label: "Corporations" },
+    { value: "Foundations/NGO's", label: "Foundations/NGO's" },
+    { value: "Professional Services", label: "Professional Services" },
+    { value: "Creative Services", label: "Creative Services" },
+    { value: "Home Services", label: "Home Services" },
+    {
+      value: "Health and Wellness Services",
+      label: "Health and Wellness Services",
+    },
+    { value: "Educational Services", label: "Educational Services" },
+    { value: "Event Services", label: "Event Services" },
+    { value: "Technical Services", label: "Technical Services" },
   ];
 
   const audienceNumber = [
@@ -205,6 +200,7 @@ const NewEcosystem = () => {
                   <h3 className="mb-0 h3 fw-bold">
                     Basic Ecosystem Information
                   </h3>
+                  <p>Step 1 of 7</p>
                 </div>
               </div>
               <div>
@@ -214,6 +210,7 @@ const NewEcosystem = () => {
                       <Form.Label htmlFor="ecosystem-name">
                         EcoSystem Name<span className="text-danger">*</span>
                       </Form.Label>
+
                       <Form.Control
                         type="text"
                         id="ecosystem-name"
@@ -224,12 +221,20 @@ const NewEcosystem = () => {
                           handleFieldChange("ecosystemName", e.target.value)
                         }
                       />
+                      <Form.Text className="text-muted fst-italic">
+                        note: this is the name your users will see on email
+                        received
+                      </Form.Text>
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
                         Ecosystem Domain<span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
+                        <span className="input-group-text">
+                          www.dimpified.com/
+                        </span>
+
                         <Form.Control
                           type="text"
                           id="ecosystem-domain"
@@ -241,7 +246,6 @@ const NewEcosystem = () => {
                           }
                           isInvalid={domainErrorMessage !== ""}
                         />
-                        <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
@@ -259,11 +263,9 @@ const NewEcosystem = () => {
                             <div className="mt-2">
                               <strong>Suggestions:</strong>
                               <ul>
-                                {domainSuggestions.map(
-                                  (suggestion, index) => (
-                                    <li key={index}>{suggestion}</li>
-                                  )
-                                )}
+                                {domainSuggestions.map((suggestion, index) => (
+                                  <li key={index}>{suggestion}</li>
+                                ))}
                               </ul>
                             </div>
                           )}
@@ -272,12 +274,21 @@ const NewEcosystem = () => {
                       <p className="text-danger text-uppercase fs-5 fw-bold">
                         Or
                       </p>
-                      <Button
-                        style={{ backgroundColor: "#00008B" }}
-                        onClick={() => setShowModal(true)}
-                      >
-                        Purchase New Domain
-                      </Button>
+                      <div className="d-flex ">
+                        <Button
+                          style={{ backgroundColor: "#00008B" }}
+                          onClick={() => setShowModal(true)}
+                          className="me-3"
+                        >
+                          Purchase New Domain
+                        </Button>
+                        <Button
+                          style={{ backgroundColor: "#00008B" }}
+                          onClick={() => setShowModal(true)}
+                        >
+                          Transfer Domain
+                        </Button>
+                      </div>
                     </Col>
                     <Modal show={showModal} onHide={() => setShowModal(false)}>
                       <Modal.Header closeButton>
@@ -443,8 +454,9 @@ const NewEcosystem = () => {
           access to?
           <br />
           <strong>Note:</strong> <br />
-          If you click on No, you can still edit the ecosystem information
-          and If you click on Next you will be creating your ecosystem but you won't be able to edit the ecosystem information 
+          If you click on No, you can still edit the ecosystem information and
+          If you click on Next you will be creating your ecosystem but you won't
+          be able to edit the ecosystem information
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setConfirmModal(false)}>

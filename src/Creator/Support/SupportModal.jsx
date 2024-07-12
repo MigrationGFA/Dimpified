@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
-import axios from "axios";
+import { Button, Offcanvas, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const SupportModal = ({
@@ -17,14 +16,13 @@ const SupportModal = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const authToken = sessionStorage.getItem("authToken");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-      ["support_id"]: supportID,
+      support_id: supportID,
     });
   };
 
@@ -45,75 +43,70 @@ const SupportModal = ({
   };
 
   return (
-    <Modal
-  show={openModal}
-  onHide={() => setOpenModal(false)}
-  size="md"
-  dialogClassName="modal-right"
-  style={{
-    position: "fixed",
-    right: 0,
-    top: 0,
-    bottom: 0,
-    height: "100vh",
-    width: "2500px", // Adjust width as needed
-    margin: 0,
-    zIndex: 1050, // Ensure modal is above other content
-  }}
-  backdrop={false}
->
-      <Modal.Header closeButton>
-        <Modal.Title>Response Message</Modal.Title>
-      </Modal.Header>
-      <form onSubmit={handleSubmit}>
-        <Modal.Body>
-          <div className="space-y-6 p-6">
-            <div className="form-group">
-              <label>User Message</label>
-              <textarea
-                name="user"
-                id="user"
-                rows="5"
-                defaultValue={userMessage}
-                className="form-control"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Subject</label>
-              <textarea
-                type="text"
-                name="subject"
-                value={formData.subject}
-                className="form-control"
-                onChange={handleChange}
-              />
-              <input type="hidden" name="" id="" value={supportID} />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea
-                name="message"
-                id="message"
-                rows="7"
-                value={formData.message}
-                className="form-control"
-                onChange={handleChange}
-                placeholder="Leave a message..."
-              ></textarea>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => onClose()}>
+    <Offcanvas
+      show={openModal}
+      onHide={() => setOpenModal(false)}
+      placement="end"
+      style={{ width: "550px" }} 
+    >
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Response Message</Offcanvas.Title>
+      </Offcanvas.Header>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "90%", 
+        }}
+      >
+        <Offcanvas.Body style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <Form.Group className="mb-3" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Form.Label>User Message</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="user"
+              id="user"
+              rows={3}
+              value={userMessage}
+              readOnly
+              style={{ flex: 1 }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Subject</Form.Label>
+            <Form.Control
+              type="text"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+            />
+            <Form.Control type="hidden" value={supportID} />
+          </Form.Group>
+          <Form.Group className="mb-3" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Form.Label>Message</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="message"
+              id="message"
+              rows={5}
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Leave a message..."
+              style={{ flex: 1 }}
+            />
+          </Form.Group>
+        </Offcanvas.Body>
+        <div className="d-flex justify-content-end p-3 border-top">
+          <Button variant="secondary" onClick={() => onClose()} className="me-2">
             Close
           </Button>
           <Button variant="primary" type="submit" disabled={loading}>
             {loading ? "Sending..." : "Send Message"}
           </Button>
-        </Modal.Footer>
+        </div>
       </form>
-    </Modal>
+    </Offcanvas>
   );
 };
 

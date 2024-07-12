@@ -37,12 +37,8 @@ const initialState = {
     title: "About Us",
     header: `Providing Comprehensive Upskilling
               To Youths And SMEs`,
-    text1: `We are a company dedicated to providing the best solutions for your
-          business needs. Our team of experts is here to support you every step
-          of the way.`,
-    text2: `We are a company dedicated to providing the best solutions for your
-          business needs. Our team of experts is here to support you every step
-          of the way.`,
+    text1: `We are heare to helpyou.`,
+    text2: `We want to take youto the next level.`,
     styles: {
       backgroundColor: "#FFFFFF",
       color: "#000000",
@@ -52,12 +48,8 @@ const initialState = {
   },
    Vision: {
     heading: "Our Vision and Mission",
-    text1: ` We are a company dedicated to providing the best solutions for your
-          business needs. Our team of experts is here to support you every step
-          of the way.`,
-    text2: ` We are a company dedicated to providing the best solutions for your
-          business needs. Our team of experts is here to support you every step
-          of the way.`,
+    text1: `Our vision is to help you grow.`,
+    text2: `Join us to multiple your customer base.`,
      buttonText1: "Join Us",
      image: "https://via.placeholder.com/1200x800",
     styles: {
@@ -131,9 +123,9 @@ const initialState = {
 
   contactUs: {
     heading: "Contact Us",
-    Name: "Full-Name",
-    Email: "Email",
-    Message: "Message",
+    name: "Full-Name",
+    email: "Email",
+    message: "Message",
     buttonText1: "Submit",
     styles: {
       backgroundColor: "#FFFFFF",
@@ -217,7 +209,6 @@ const templateSlice = createSlice({
       if (typeof index === 'number') {
         state[section][index][field] = value;
       } else {
-
         state[section][field] = value;
       }
     },
@@ -225,7 +216,7 @@ const templateSlice = createSlice({
       const { section, styles } = action.payload;
       state[section].styles = { ...state[section].styles, ...styles };
     },
-    updateFAQ(state, action) {
+     updateFAQ(state, action) {
       const { index, field, value } = action.payload;
       state.faq[index][field] = value;
     },
@@ -234,6 +225,6 @@ const templateSlice = createSlice({
 
 
 
-export const { updateContent, updateStyles, updateFAQ } = templateSlice.actions;
+export const { updateContent, updateStyles, updateFAQ} = templateSlice.actions;
 export default templateSlice.reducer;
 

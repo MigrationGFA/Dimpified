@@ -34,10 +34,6 @@ const EcoForm = () => {
     (state) => state.activeSection.activeSection
   );
 
-  // const handleContentChange = (section, field, value, index = null) => {
-  //   dispatch(updateContent({ section, field, value, index }));
-  // };
-
   const renderSection = (id, children) => {
     return (
       <section
@@ -126,7 +122,7 @@ const EcoForm = () => {
                 renderSection(
                   "Page1",
                   <FormStep1
-                    value={content.Page1}
+                    text={content.Page1}
                     nextStep={nextStep}
                     handleContentChange={handleContentChange}
                     style={content.Page1.styles}
@@ -138,7 +134,7 @@ const EcoForm = () => {
                 renderSection(
                   "Page2",
                   <FormStep2
-                    value={content.Page2}
+                    text={content.Page2}
                     nextStep={nextStep}
                     prevStep={prevStep}
                     handleContentChange={handleContentChange}
@@ -152,7 +148,7 @@ const EcoForm = () => {
                   "Page3",
                   <FormStep3
                     prevStep={prevStep}
-                    value={content.Page3}
+                    text={content.Page3}
                     handleContentChange={handleContentChange}
                     style={content.Page3.styles}
                     onLogoChange={handleLogoChange}
@@ -181,7 +177,7 @@ const EcoForm = () => {
 const FormStep1 = ({
   nextStep,
   handleContentChange,
-  value,
+  text,
   style,
   onLogoChange,
   logo,
@@ -202,7 +198,7 @@ const FormStep1 = ({
     />
     <h3 className="mb-1 mt-5">
       <EditableBlock
-        initialContent={value.heading}
+        initialContent={text.heading}
         onContentChange={(value) =>
           handleContentChange("Page1", "heading", value)
         }
@@ -210,7 +206,7 @@ const FormStep1 = ({
     </h3>
     <p className="mb-4">
       <EditableBlock
-        initialContent={value.sub}
+        initialContent={text.sub}
         onContentChange={(value) => handleContentChange("Page1", "sub", value)}
       />
     </p>
@@ -222,22 +218,24 @@ const FormStep1 = ({
         fontFamily: style.fontFamily,
       }}
     >
-      <Form.Group className="mb-3" controlId="formName">
+      <Form.Group
+        className="mb-3"
+        controlId="formName"
+        style={{
+          color: style.color,
+          fontFamily: style.fontFamily,
+        }}
+      >
         <Row className="">
           <Col md={6} lg={6}>
-            <Form.Label
-              style={{
-                color: style.color,
-                fontFamily: style.fontFamily,
-              }}
-            >
-              <EditableBlock
-                initialContent={value.topic1}
-                onContentChange={(value) =>
-                  handleContentChange("Page1", "topic1", value)
-                }
-              />
-            </Form.Label>
+            {/* <p> */}
+            <EditableBlock
+              initialContent={text.topic1}
+              onContentChange={(value) =>
+                handleContentChange("Page1", "topic1", value)
+              }
+            />
+            {/* </p> */}
             <Form.Control
               disabled
               type="text"
@@ -252,7 +250,7 @@ const FormStep1 = ({
               }}
             >
               <EditableBlock
-                initialContent={value.topic2}
+                initialContent={text.topic2}
                 onContentChange={(value) =>
                   handleContentChange("Page1", "topic2", value)
                 }
@@ -266,6 +264,7 @@ const FormStep1 = ({
           </Col>
         </Row>
       </Form.Group>
+
       <Form.Group className="mb-3" controlId="formEmail">
         <Form.Label
           style={{
@@ -274,7 +273,7 @@ const FormStep1 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic3}
+            initialContent={text.topic3}
             onContentChange={(value) =>
               handleContentChange("Page1", "topic3", value)
             }
@@ -296,7 +295,7 @@ const FormStep1 = ({
         >
           {" "}
           <EditableBlock
-            initialContent={value.topic4}
+            initialContent={text.topic4}
             onContentChange={(value) =>
               handleContentChange("Page1", "topic4", value)
             }
@@ -311,7 +310,7 @@ const FormStep1 = ({
       </Form.Group>
       <Button variant="primary" className="d-grid w-100" onClick={nextStep}>
         <EditableBlock
-          initialContent={value.buttonText1}
+          initialContent={text.buttonText1}
           onContentChange={(value) =>
             handleContentChange("Page1", "buttonText1", value)
           }
@@ -321,7 +320,7 @@ const FormStep1 = ({
     <p className="text-center mt-4">
       <span>
         <EditableBlock
-          initialContent={value.footer}
+          initialContent={text.footer}
           onContentChange={(value) =>
             handleContentChange("Page1", "footer", value)
           }
@@ -338,7 +337,7 @@ const FormStep2 = ({
   nextStep,
   prevStep,
   handleContentChange,
-  value,
+  text,
   style,
   onLogoChange,
   logo,
@@ -357,16 +356,16 @@ const FormStep2 = ({
     />
     <h3 className="mb-1 mt-5">
       <EditableBlock
-        initialContent={value.heading}
+        initialContent={text.heading}
         onContentChange={(value) =>
-          handleContentChange("Page1", "heading", value)
+          handleContentChange("Page2", "heading", value)
         }
       />
     </h3>
     <p className="mb-4">
       <EditableBlock
-        initialContent={value.sub}
-        onContentChange={(value) => handleContentChange("Page1", "sub", value)}
+        initialContent={text.sub}
+        onContentChange={(value) => handleContentChange("Page2", "sub", value)}
       />
     </p>
 
@@ -385,9 +384,9 @@ const FormStep2 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic1}
+            initialContent={text.topic1}
             onContentChange={(value) =>
-              handleContentChange("Page1", "topic1", value)
+              handleContentChange("Page2", "topic1", value)
             }
           />
         </Form.Label>
@@ -403,9 +402,9 @@ const FormStep2 = ({
               }}
             >
               <EditableBlock
-                initialContent={value.topic2}
+                initialContent={text.topic2}
                 onContentChange={(value) =>
-                  handleContentChange("Page1", "topic2", value)
+                  handleContentChange("Page2", "topic2", value)
                 }
               />
             </Form.Label>
@@ -423,9 +422,9 @@ const FormStep2 = ({
               }}
             >
               <EditableBlock
-                initialContent={value.topic3}
+                initialContent={text.topic3}
                 onContentChange={(value) =>
-                  handleContentChange("Page1", "topic3", value)
+                  handleContentChange("Page2", "topic3", value)
                 }
               />
             </Form.Label>
@@ -442,9 +441,9 @@ const FormStep2 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic4}
+            initialContent={text.topic4}
             onContentChange={(value) =>
-              handleContentChange("Page1", "topic4", value)
+              handleContentChange("Page2", "topic4", value)
             }
           />
         </Form.Label>
@@ -467,7 +466,7 @@ const FormStep2 = ({
 const FormStep3 = ({
   prevStep,
   handleContentChange,
-  value,
+  text,
   style,
   onLogoChange,
   logo,
@@ -486,16 +485,16 @@ const FormStep3 = ({
     />
     <h3 className="mb-1 mt-5">
       <EditableBlock
-        initialContent={value.heading}
+        initialContent={text.heading}
         onContentChange={(value) =>
-          handleContentChange("Page1", "heading", value)
+          handleContentChange("Page3", "heading", value)
         }
       />
     </h3>
     <p className="mb-4">
       <EditableBlock
-        initialContent={value.sub}
-        onContentChange={(value) => handleContentChange("Page1", "sub", value)}
+        initialContent={text.sub}
+        onContentChange={(value) => handleContentChange("Page3", "sub", value)}
       />
     </p>
 
@@ -513,9 +512,9 @@ const FormStep3 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic1}
+            initialContent={text.topic1}
             onContentChange={(value) =>
-              handleContentChange("Page1", "topic1", value)
+              handleContentChange("Page3", "topic1", value)
             }
           />
         </Form.Label>
@@ -529,9 +528,9 @@ const FormStep3 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic2}
+            initialContent={text.topic2}
             onContentChange={(value) =>
-              handleContentChange("Page1", "topic2", value)
+              handleContentChange("Page3", "topic2", value)
             }
           />
         </Form.Label>
@@ -549,9 +548,9 @@ const FormStep3 = ({
           }}
         >
           <EditableBlock
-            initialContent={value.topic3}
+            initialContent={text.topic3}
             onContentChange={(value) =>
-              handleContentChange("Page1", "topic2", value)
+              handleContentChange("Page3", "topic2", value)
             }
           />
         </Form.Label>
