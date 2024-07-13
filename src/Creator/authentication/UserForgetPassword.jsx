@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 
-import Logo from "../../assets/DIMP logo.png";
+import Logo from "../../assets/DIMP logo colored.png";
 // import Logo2 from "../assets/LogoList/cote-logo.png";
 
 import { useForm } from "react-hook-form";
