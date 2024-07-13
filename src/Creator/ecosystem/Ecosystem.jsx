@@ -159,7 +159,7 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Users"
-            value="20,000"
+            value="0"
             summary="Total users in ecosystems"
             summaryIcon="up"
             showSummaryIcon
@@ -238,7 +238,7 @@ const Ecosystem = () => {
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         <div>
                           <a
-                            href={`https://dimpified-frontend-testing.azurewebsites.net/show=true/${eco.ecosystemDomain}`}
+                            href={`https://dimpified.com/show=true/${eco.ecosystemDomain}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >

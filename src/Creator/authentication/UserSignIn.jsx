@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/login";
 import { showToast } from "../../Components/Showtoast";
 
-import Logo from "../../assets/DIMP logo.png";
+import Logo from "../../assets/DIMP logo colored.png";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
