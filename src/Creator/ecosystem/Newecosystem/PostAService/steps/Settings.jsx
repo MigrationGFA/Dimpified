@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
   updateServiceData,
-  addServiceBackground,
-  removeServiceBackground,
+  addBackgroundCover,
+  removeBackgroundCover,
 } from "../../../../../features/service";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state.service) || {};
+
+  const currencyType = [
+    { value: "NGN", label: "Naira" },
+    { value: "USD", label: "Dollars" },
+    { value: "EUR", label: "Euros" },
+    { value: "GBP", label: "Pounds" },
+  ];
 
   const formatType = [
     { label: "Select Format" },
@@ -20,12 +27,23 @@ const Settings = ({ onNext, onPrevious }) => {
     { value: "hybrid", label: "Hybrid" },
   ];
 
-  const handleBackgroundChange = (files) => {
-    dispatch(addServiceBackground(Array.from(files)));
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const filesArray = Array.from(event.target.files);
+    filesArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        dispatch(addBackgroundCover({ name: file.name, preview: e.target.result }));
+      };
+      reader.readAsDataURL(file);
+    });
   };
+  
+  
 
   const handleRemoveBackground = (index) => {
-    dispatch(removeServiceBackground(index));
+    dispatch(removeBackgroundCover(index));
   };
 
   const handleSubmit = (e) => {
@@ -34,23 +52,12 @@ const Settings = ({ onNext, onPrevious }) => {
   };
 
   useEffect(() => {
-    // Revoke object URLs on component unmount
     return () => {
-      service.serviceBackground.forEach((image) => {
-        if (image instanceof File || image instanceof Blob) {
-          URL.revokeObjectURL(image.preview);
-        }
+      service.backgroundCover.forEach((image) => {
+        URL.revokeObjectURL(image.preview);
       });
     };
-  }, [service.serviceBackground]);
-
-  // Add preview URLs to images in serviceBackground
-  const serviceBackgroundWithPreviews = service.serviceBackground.map((image) => {
-    if (image instanceof File || image instanceof Blob) {
-      return { ...image, preview: URL.createObjectURL(image) };
-    }
-    return image;
-  });
+  }, [service.backgroundCover]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -122,7 +129,9 @@ const Settings = ({ onNext, onPrevious }) => {
                     placeholder="e.g Experience top-notch grooming with our professional barber service. We offer precision haircuts, classic shaves, and personalized styles in a relaxing atmosphere. Our skilled barbers use premium products to ensure you leave looking and feeling your best. Book your appointment today for a tailored grooming experience"
                     value={service.description}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ description: e.target.value }))
+                      dispatch(
+                        updateServiceData({ description: e.target.value })
+                      )
                     }
                     required
                   />
@@ -168,9 +177,45 @@ const Settings = ({ onNext, onPrevious }) => {
                 </div>
               </Col>
 
+              {/* Currency */}
+              <Col md={12} className="mb-3">
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="currency">
+                    Currency<span className="text-danger">*</span>
+                  </Form.Label>
+                  <div className="d-flex align-items-center">
+                    <Form.Select
+                      id="currency"
+                      value={service.currency}
+                      onChange={(e) =>
+                        dispatch(
+                          updateServiceData({ currency: e.target.value })
+                        )
+                      }
+                      required
+                    >
+                      <option value="">Select Currency</option>
+                      {currencyType.map((currency, index) => (
+                        <option key={index} value={currency.value}>
+                          {currency.label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    <Tooltip
+                      content="Choose your Currency according to you locality"
+                      placement="left"
+                      className="bg-primary text-white"
+                      style={{ minWidth: "150px" }}
+                    >
+                      <FaEye className="ms-2 cursor-pointer" />
+                    </Tooltip>
+                  </div>
+                </Form.Group>
+              </Col>
+
               {/* Service Background */}
               <Col md={12} className="mb-3">
-                <Form.Label md={4} htmlFor="serviceBackground">
+                <Form.Label htmlFor="backgroundCover">
                   Service Background{" "}
                   <small className="text-muted">
                     <em className="text-sm">
@@ -184,7 +229,8 @@ const Settings = ({ onNext, onPrevious }) => {
                     type="file"
                     multiple
                     accept="image/*"
-                    onChange={(e) => handleBackgroundChange(e.target.files)}
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
                   />
                   <Tooltip
                     content="Upload background images related to the service"
@@ -196,7 +242,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
                 <div style={{ marginTop: "0.5rem" }}>
-                  {serviceBackgroundWithPreviews.map((image, index) => (
+                  {service.backgroundCover.map((image, index) => (
                     <div
                       key={index}
                       style={{

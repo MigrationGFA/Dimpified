@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Col, Row, Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import Ecosystem1 from "../../assets/GFA logo Rebrand Blue.png";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Pagination from "../../Components/elements/advance-table/Pagination"; 
+import Pagination from "../../Components/elements/advance-table/Pagination";
 
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
@@ -41,32 +40,46 @@ function formatDateWithOrdinal(date) {
 function getTimeDifference(updatedAt) {
   const updatedAtDate = new Date(updatedAt);
   const currentTime = new Date();
+  const timeDifference = currentTime - updatedAtDate;
+  const minutes = Math.floor(timeDifference / (1000 * 60));
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
   const formattedDate = formatDateWithOrdinal(updatedAtDate);
 
   return `${formattedDate}`;
 }
 
 const Ecosystem = () => {
-  const [ecosystem, setEcosystem] = useState([]);
+  const [ecosystems, setEcosystems] = useState([]);
+  const [ecosystemData, setEcosystemData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const [currentPage, setCurrentPage] = useState(1); // Pagination state
-  const itemsPerPage = 10; // Number of items per page
-
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId || "Unknown User");
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
+  );
 
   const getMyEcosystems = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/creator-ecosystems/${creatorId}`
+      );
+      setEcosystems(response.data.ecosystem);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getMyEcosystemData = async () => {
+    try {
+      const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/creator/my-ecosystem/${creatorId}`
       );
-      if (response.data && Array.isArray(response.data)) {
-        setEcosystem(response.data);
-      } else {
-        setEcosystem([]);
-      }
-      setLoading(false);
+      setEcosystemData(response.data);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -75,12 +88,13 @@ const Ecosystem = () => {
 
   useEffect(() => {
     getMyEcosystems();
+    getMyEcosystemData();
   }, [creatorId]);
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = ecosystem.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = ecosystems?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -109,8 +123,8 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Live"
-            value={ecosystem.totalLive || 0}
-            summary="Number of live ecosystems"
+            value={ecosystemData.totalLive}
+            summary="Number of sales"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -121,8 +135,8 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Private"
-            value={ecosystem.totalPrivate || 0}
-            summary="Number of private ecosystems"
+            value={ecosystemData.totalPrivate}
+            summary="Number of pending"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -133,8 +147,8 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Draft"
-            value={ecosystem.totalDrafts || 0}
-            summary="Number of draft ecosystems"
+            value={ecosystemData.totalDrafts}
+            summary="Students"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -145,7 +159,7 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Users"
-            value="20,000"
+            value="0"
             summary="Total users in ecosystems"
             summaryIcon="up"
             showSummaryIcon
@@ -163,12 +177,7 @@ const Ecosystem = () => {
             <Card.Body>
               <div>
                 <div className="d-md-flex">
-                  <div
-                    className=""
-                    style={{
-                      width: "200px",
-                    }}
-                  >
+                  <div className="" style={{ width: "200px" }}>
                     <Image
                       src={
                         eco.templateLogos && eco.templateLogos.length > 0
@@ -209,11 +218,6 @@ const Ecosystem = () => {
                                 {eco.status.toUpperCase()}
                               </span>
                             </span>
-
-                            <span className="me-2">
-                              <i className="fe fe-briefcase text-muted"></i>
-                              <span className="ms-1 ">Adefemi Omotayo</span>
-                            </span>
                           </div>
                         </div>
                       </div>
@@ -227,30 +231,42 @@ const Ecosystem = () => {
                       </div>
 
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
-                        {/* Button group */}
                         <div>
-                          <a
-                            href={`http://localhost:5173/show=true/${eco.ecosystemDomain}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                          {eco.steps && eco.steps === 3 ? (
+                            <div>
+                              <a
+                                href={`https://dimpified.com/${eco.ecosystemDomain}/Ecosystemdashboard`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button
+                                  variant="primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                >
+                                  Dashboard
+                                </Button>
+                              </a>
+                              <a
+                                href={`https://dimpified.com/${eco.ecosystemDomain}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button
+                                  variant="primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                >
+                                  View Site
+                                </Button>
+                              </a>
+                            </div>
+                          ) : (
                             <Button
-                              variant="primary"
+                              variant="outline-primary"
                               className="me-2 mb-2 mb-md-0"
                             >
-                              Dashboard
+                              Continue
                             </Button>
-                          </a>
-                          <Button
-                            variant="outline-primary"
-                            className="me-2 mb-2 mb-md-0"
-                          >
-                            Continue
-                          </Button>
-
-                          <Button variant="outline-danger" className="md-mt-4">
-                            Delete
-                          </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -261,14 +277,13 @@ const Ecosystem = () => {
           </Card>
         ))
       ) : (
-        <div>You have not created any Ecosystem</div>
+        <p>No ecosystems available.</p>
       )}
-
       <Pagination
         itemsPerPage={itemsPerPage}
-        totalItems={ecosystem.length}
-        paginate={paginate}
+        totalItems={ecosystems.length}
         currentPage={currentPage}
+        paginate={paginate}
       />
     </div>
   );

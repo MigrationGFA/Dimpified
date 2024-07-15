@@ -26,25 +26,24 @@ import axios from "axios";
 const TemplateV1 = () => {
   const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
-const [navigatePage, setNavigatePage] = useState(false)
+  const [navigatePage, setNavigatePage] = useState(false);
 
   let { ecosystemDomain } = useParams();
 
   const [loading, setLoading] = useState(true);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     if (ecosystemDomain) {
       setNavigatePage(true);
     }
   }, [ecosystemDomain]);
-  const HandleNavigate= () =>{
-if (navigatePage) {
-  navigate(`/show=true/${ecosystemDomain}/signup`)
-} else {
-  navigate(`/show=true/${ecosystemDomain}`)
-}
-
-  }
+  const HandleNavigate = () => {
+    if (navigatePage) {
+      navigate(`/${ecosystemDomain}/signup`);
+    } else {
+      navigate(`/show=true/${ecosystemDomain}`);
+    }
+  };
 
   useEffect(() => {
     const getDetails = async () => {
@@ -53,6 +52,10 @@ if (navigatePage) {
           `${import.meta.env.VITE_API_URL}/getTemplate/${ecosystemDomain}`
         );
         setDetails(response.data.templateDetails);
+        sessionStorage.setItem(
+          "Logo",
+          response.data.templateDetails.navbar.logo
+        );
       } catch (error) {
         console.log("not working", error);
       } finally {
@@ -95,7 +98,11 @@ if (navigatePage) {
 
   return (
     <Fragment>
-      <SiteNavbar content={details} sanitizeContent={sanitizeContent} HandleNavigate={HandleNavigate}/>
+      <SiteNavbar
+        content={details}
+        sanitizeContent={sanitizeContent}
+        HandleNavigate={HandleNavigate}
+      />
       <Hero content={details} sanitizeContent={sanitizeContent} />
       <section
         className="py-lg-5 py-5 "
@@ -194,8 +201,7 @@ const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
           <Button variant="outline-light" className="me-2">
             {sanitizeContent(content.navbar.buttonText1)}
           </Button>
-           {/* <Link to={`/show=true/${ecosystemDomain}/signup`}>  */}
-          
+
           <Button variant="primary" onClick={HandleNavigate}>
             {" "}
             {sanitizeContent(content.navbar.buttonText2)}

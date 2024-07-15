@@ -7,12 +7,12 @@ import axios from "axios";
 import { showToast } from "../Components/Showtoast";
 
 // import custom components
-import ProfileCover from "../Components/marketing/common/headers/ProfileCover";
+import ProfileCover from "../Components/marketing/common/headers/EcosystemProfileCover";
 
 // import routes file
 import {
   DashboardMenu,
-  AccountSettingsMenu,
+  // AccountSettingsMenu,
 } from "../routes/marketing/InstructorDashboard";
 
 import NavbarDefault from "../Pages/Pages/home-academy/navbars/NavbarDefault";
@@ -49,10 +49,18 @@ const ProfileLayout = (props) => {
     name: user,
     username: `@${user}`,
     linkname: "Create New Course",
-    link: "/Instructordashboard/instructor-add-new-course",
+    link: "/creator/dashboard/Add-New-Course",
     verified: true,
     outlinebutton: false,
     level: "Beginner",
+  };
+  const ServiceButton = {
+    linkname: "Create New Services",
+    link: "/creator/dashboard/Add-New-Service",
+  };
+  const ProductButton = {
+    linkname: "Create New Product",
+    link: "/creator/dashboard/Add-New-Product",
   };
 
   return (
@@ -61,7 +69,7 @@ const ProfileLayout = (props) => {
       <section className="pt-5 pb-5">
         <Container>
           {/* User info */}
-          <ProfileCover dashboardData={dashboardData} />
+          <ProfileCover dashboardData={dashboardData} ServiceButton={ServiceButton} ProductButton={ProductButton}/>
 
           {/* Content */}
           <Row className="mt-0 mt-md-4">
@@ -70,12 +78,16 @@ const ProfileLayout = (props) => {
                 expand="lg"
                 className="navbar navbar-expand-md navbar-light shadow-sm mb-4 mb-lg-0 sidenav"
               >
+                <div className="d-flex">
+                
                 <Link
                   className="btn btn-primary d-xl-none d-lg-none d-md-none text-inherit fw-bold fs-5 float-start py-1"
                   to="/Instructordashboard/instructor-add-new-course"
                 >
                   Create New Course
                 </Link>
+
+                </div>
                 <Navbar.Toggle
                   aria-controls="basic-navbar-nav"
                   className="p-0 focus-none border-0"
@@ -112,7 +124,7 @@ const ProfileLayout = (props) => {
                         </Link>
                       </Nav.Item>
                     ))}
-                    <Nav.Item className="navbar-header mt-4" as="li">
+                    {/* <Nav.Item className="navbar-header mt-4" as="li">
                       ACCOUNT SETTINGS
                     </Nav.Item>
                     {AccountSettingsMenu.map((item, index) => (
@@ -135,7 +147,7 @@ const ProfileLayout = (props) => {
                           </Link>
                         )}
                       </Nav.Item>
-                    ))}
+                    ))} */}
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>

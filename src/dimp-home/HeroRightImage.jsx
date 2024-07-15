@@ -81,11 +81,12 @@ const HeroRightImage = () => {
       </Col>
       <Col lg={6} md={12} xs={12}>
         {/* image */}
-        <div className="mt-4 mt-lg-0 bg-gray-200 rounded rounded-4">
+        <div className="mt-4 mt-lg-0">
           <Image
             src={FeaturedImg2}
             alt="..."
             className="img-fluid w-100 rounded-4"
+            height={20}
           />
         </div>
       </Col>

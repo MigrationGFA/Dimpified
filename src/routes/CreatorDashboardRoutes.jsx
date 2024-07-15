@@ -36,7 +36,7 @@ export const DashboardMenu = [
     icon: "home",
     children: [
       { id: uuid(), link: "creator/dashboard/overview", name: "Overview" },
-      { id: uuid(), link: "creator/dashboard/analytics", name: "Analytics" },
+      // { id: uuid(), link: "creator/dashboard/analytics", name: "Analytics" },
     ],
   },
 
@@ -68,12 +68,12 @@ export const DashboardMenu = [
     icon: "help-circle",
     link: "/creator/help-center",
   },
-  {
-    id: uuid(),
-    title: "Notification",
-    icon: "help-circle",
-    link: "/creator/notifications",
-  },
+  // {
+  //   id: uuid(),
+  //   title: "Notification",
+  //   icon: "help-circle",
+  //   link: "/creator/notifications",
+  // },
   {
     id: uuid(),
     title: "Edit Profile",
@@ -103,6 +103,12 @@ export const DashboardMenu = [
     //   { id: uuid(), link: "/creator/feedback", name: " Feedbacks" },
     // ],
   },
+  // {
+  //   id: uuid(),
+  //   title: "Chat",
+  //   icon: "message-square",
+  //   link: "/creator/dashboard/chat",
+  // },
   // {
   // 	id: uuid(),
   // 	title: 'CMS',
@@ -239,12 +245,7 @@ export const DashboardMenu = [
   // },
 
   // -- Apps -> Chat and Task - v1.4.0
-  {
-    id: uuid(),
-    title: "Chat",
-    icon: "message-square",
-    link: "/creator/dashboard/chat",
-  },
+  
   //   {
   //     id: uuid(),
   //     title: "Task",

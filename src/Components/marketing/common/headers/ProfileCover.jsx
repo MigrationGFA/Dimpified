@@ -9,7 +9,7 @@ import LevelIconWithTooltip from "../../../../Components/elements/miscellaneous/
 import CheckedMark from "../../../../assets/images/svg/checked-mark.svg";
 import ProfileBackground from "../../../../assets/images/background/profile-bg.jpg";
 
-const ProfileCover = ({ dashboardData }) => {
+const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
   return (
     <Row className="align-items-center">
       <Col xl={12} lg={12} md={12} sm={12}>
@@ -55,7 +55,7 @@ const ProfileCover = ({ dashboardData }) => {
                 <p className="mb-0 d-block">{dashboardData.username}</p>
               </div>
             </div>
-            <div>
+            <div className="d-flex gap-2">
               <Link
                 to={dashboardData.link}
                 className={`btn btn${
@@ -64,6 +64,23 @@ const ProfileCover = ({ dashboardData }) => {
               >
                 {dashboardData.linkname}
               </Link>
+              <Link
+                to={ServiceButton.link}
+                className={`btn btn${
+                  ServiceButton.outlinebutton ? "-outline" : ""
+                }-primary btn-sm d-none d-md-block`}
+              >
+                {ServiceButton.linkname}
+              </Link>
+              {/* <Link
+                to={ProductButton.link}
+                className={`btn btn${
+                  ProductButton.outlinebutton ? "-outline" : ""
+                }-primary btn-sm d-none d-md-block`}
+              >
+                {ProductButton.linkname}
+              </Link> */}
+              
             </div>
           </div>
         </Card>

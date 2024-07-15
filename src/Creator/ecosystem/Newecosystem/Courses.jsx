@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  ProgressBar,
-  Card,
-  Button,
-} from "react-bootstrap";
+import { Container, Row, Col, ProgressBar, Card, Button } from "react-bootstrap";
 import EcoHeader from "./ecoHeader";
 import AddNewCourse from "../AddNewCourse";
 import PostAService from "./PostAService/PostAService";
+import PostAProduct from "./PostAProduct/PostAProduct";
 import "./Course.css";
-import ServiceImg from '../../../assets/services-img.jpg';
-import DigitalImg from '../../../assets/digital-img.jpg';
-import CourseImg from '../../../assets/create-course.jpg';
+import ServiceImg from "../../../assets/services-img.jpg";
+import DigitalImg from "../../../assets/digital-img.jpg";
+import CourseImg from "../../../assets/create-course.jpg";
 
 const Courses = () => {
   const location = useLocation();
   const [step, setStep] = useState(1);
   const [showPostService, setShowPostService] = useState(false);
+  const [showPostProduct, setShowPostProduct] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateNewCourse = () => {
     setStep(2);
-    setShowPostService();
+    setShowPostService(false);
+    setShowPostProduct(false);
   };
 
   const handleSkipAndContinue = () => {
@@ -38,6 +34,13 @@ const Courses = () => {
   const handleService = () => {
     setStep(2);
     setShowPostService(true);
+    setShowPostProduct(false);
+  };
+
+  const handleProduct = () => {
+    setStep(2);
+    setShowPostProduct(true);
+    setShowPostService(false);
   };
 
   const handleContinue = () => {
@@ -93,20 +96,17 @@ const Courses = () => {
                       >
                         Add Service
                       </Card.Title>
-                      <Card.Img
-                        variant="top"
-                        src={ServiceImg}
-                      />
+                      <Card.Img variant="top" src={ServiceImg} />
                       <Card.Text className="text-white mt-3">
                         Create and manage your services easily.
                       </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} className="mt-1 md-mt-0">
+                {/* <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
-                    onClick={() => alert("Upload Product")}
+                    onClick={handleProduct}
                     style={{ cursor: "pointer", backgroundColor: "#f75990" }}
                   >
                     <Card.Body className="text-center">
@@ -117,19 +117,15 @@ const Courses = () => {
                         Add Digital Product
                       </Card.Title>
                       <div style={{ height: "150px" }}>
-                      <Card.Img
-                        variant="top"
-                        src={DigitalImg}
-                       
-                      />
+                        <Card.Img variant="top" src={DigitalImg} />
                       </div>
-                      
+
                       <Card.Text className="text-white mt-3">
                         Upload and sell your digital products.
                       </Card.Text>
                     </Card.Body>
                   </Card>
-                </Col>
+                </Col> */}
                 <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
@@ -143,10 +139,7 @@ const Courses = () => {
                       >
                         Add Course
                       </Card.Title>
-                      <Card.Img
-                        variant="top"
-                        src={CourseImg}
-                      />
+                      <Card.Img variant="top" src={CourseImg} />
                       <Card.Text className="text-white mt-3">
                         Create and publish your courses.
                       </Card.Text>
@@ -195,7 +188,22 @@ const Courses = () => {
             </div>
           )}
 
-          {step === 2 && !showPostService && (
+          {step === 2 && showPostProduct && (
+            <div>
+              <h3>Create Your Product</h3>
+              <PostAProduct />
+              <div className="d-flex justify-content-between w-100 mt-4">
+                <Button variant="primary" onClick={() => setStep(1)}>
+                  Previous
+                </Button>
+                <Button variant="primary" onClick={() => setStep(3)}>
+                  Continue
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 2 && !showPostService && !showPostProduct && (
             <div>
               <h3>Create Your Course</h3>
               <AddNewCourse />
