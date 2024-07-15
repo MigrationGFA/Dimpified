@@ -22,13 +22,9 @@ export const login = createAsyncThunk('authentication/login', async ({ email, pa
             password,
         });
 
-        // Check the response status code
         if (response.status === 200) {
             // Login successful
             const user = response.data;
-            // const username = response.data.data.user.username
-            // sessionStorage.setItem("Luser", username)
-            // sessionStorage.setItem("username", username)
             return user;
         }
     }
@@ -55,9 +51,6 @@ export const authenticationSlice = createSlice({
             state.user = null;
             state.isLoading = false;
             state.error = null;
-            // sessionStorage.removeItem('username');
-            // localStorage.removeItem('phone');
-            // sessionStorage.removeItem('authToken');
         },
     },
     extraReducers: (builder) => {

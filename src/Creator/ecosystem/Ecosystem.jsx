@@ -218,11 +218,6 @@ const Ecosystem = () => {
                                 {eco.status.toUpperCase()}
                               </span>
                             </span>
-
-                            <span className="me-2">
-                              <i className="fe fe-briefcase text-muted"></i>
-                              <span className="ms-1 ">Adefemi Omotayo</span>
-                            </span>
                           </div>
                         </div>
                       </div>
@@ -237,24 +232,41 @@ const Ecosystem = () => {
 
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         <div>
-                          <a
-                            href={`https://dimpified.com/show=true/${eco.ecosystemDomain}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                          {eco.steps && eco.steps === 3 ? (
+                            <div>
+                              <a
+                                href={`https://dimpified.com/${eco.ecosystemDomain}/Ecosystemdashboard`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button
+                                  variant="primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                >
+                                  Dashboard
+                                </Button>
+                              </a>
+                              <a
+                                href={`https://dimpified.com/${eco.ecosystemDomain}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button
+                                  variant="primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                >
+                                  View Site
+                                </Button>
+                              </a>
+                            </div>
+                          ) : (
                             <Button
-                              variant="primary"
+                              variant="outline-primary"
                               className="me-2 mb-2 mb-md-0"
                             >
-                              Dashboard
+                              Continue
                             </Button>
-                          </a>
-                          <Button
-                            variant="outline-primary"
-                            className="me-2 mb-2 mb-md-0"
-                          >
-                            Continue
-                          </Button>
+                          )}
                         </div>
                       </div>
                     </div>
