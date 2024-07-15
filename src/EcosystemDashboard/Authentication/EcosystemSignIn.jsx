@@ -1,22 +1,21 @@
 import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useGlobalContext } from "../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/login";
+import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 
 import Logo from "../../assets/GFA logo Rebrand Blue.png";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { Login, loading } = useGlobalContext();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
+  let { ecosystemDomain } = useParams();
   const { isLoading, error, user } = useSelector(
     (state) => state.authentication
   );
@@ -41,43 +40,27 @@ const UserSignIn = () => {
     resolver: yupResolver(formSchema),
   });
 
-  // const onSubmit = async (data, e) => {
-  //   try {
-  //     await Login(data, e); // Pass the event object to the Login function
-  //   } catch (error) {
-  //     console.error("Error logging in:", error);
-  //   }
-  // };
-
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
     try {
-      // Dispatch the login action
-      const resultAction = await dispatch(
-        login({
+      const response = await axios.post(
+        "https://dimpified-backend-development.azurewebsites.net/api/v1/ecosystem-user/login",
+        {
           email: data.email,
           password: data.password,
-        })
+        }
       );
 
-      if (login.rejected.match(resultAction)) {
-        // Login failed, access the payload from the rejected action
-        const errorPayload = resultAction.payload;
-        showToast(errorPayload);
-      } else if (login.fulfilled.match(resultAction)) {
-        // Login was successful
-        showToast(resultAction.payload.message);
+      // Handle successful login
+      showToast(response.data.message);
 
-        if (resultAction.payload.data.interest === "no") {
-          navigate("/creator/onboard");
-        } else {
-          navigate("/creator/dashboard/overview");
-        }
-      }
+      // Navigate to Userdashboard after successful login
+      navigate(`/${ecosystemDomain}/Userdashboard`);
+
     } catch (error) {
-      // Handle unexpected errors, such as network issues
-      showToast("An unexpected error occurred. Please try again.");
+      // Handle login error
+      showToast("Invalid credentials. Please try again.");
     }
   };
 
@@ -97,7 +80,7 @@ const UserSignIn = () => {
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to="/Ecosystem/signup" className="ms-1">
+                  <Link to={`/show=true/${ecosystemDomain}/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>
