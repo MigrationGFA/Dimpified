@@ -9,6 +9,13 @@ import Pricing from "../dimp-pages/pricing/Pricing";
 import Government from "../dimp-pages/government/Government";
 import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
+import Professional from "../dimp-pages/professional/Professional";
+import ReligiousBodies from "../dimp-pages/religious-bodies/ReligiousBodies";
+import Creatives from "../dimp-pages/creatives/Creatives";
+import TradeServices from "../dimp-pages/trade-services/TradeServices";
+import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
+import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
+import EventServices from "../dimp-pages/event-services/EventServices";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -101,9 +108,9 @@ import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
 import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
-import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register"
 
 // ** Import Ecosystem Authentication components
+import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register";
 import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
 import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
 import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
@@ -120,6 +127,13 @@ const AllRoutes = () => {
       <Route path="/government" element={<Government />} />
       <Route path="/corporation" element={<Corporation />} />
       <Route path="/non-profit" element={<NonProfit />} />
+      <Route path="/professional-services" element={<Professional />} />
+      <Route path="/religious-bodies" element={<ReligiousBodies />} />
+      <Route path="/creative-services" element={<Creatives />} />
+      <Route path="/trade-services" element={<TradeServices />} />
+      <Route path="/personal-care-services" element={<PersonalCare />} />
+      <Route path="/technology-services" element={<TechnologyServices />} />
+      <Route path="/event-services" element={<EventServices />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
@@ -156,9 +170,9 @@ const AllRoutes = () => {
         path="/Ecosystemdashboard/Add-New-Service"
         element={<PostAService />}
       />
-       <Route
+      <Route
         path="/creator/dashboard/Add-New-Product"
-        element={<PostAProduct/>}
+        element={<PostAProduct />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
@@ -205,82 +219,129 @@ const AllRoutes = () => {
         />
       </Route>
 
-      <Route path="/User" element={<UserLandingPage />} />
-      <Route path="/User-My-Course" element={<UserMyCourse />} />
-      <Route path="/Userdashboard" element={<UserDashboard />} />
-      <Route path="/User-Reviews" element={<UserReviews />} />
-      <Route path="/User-My-Course/Bookmarked" element={<UserBookmarked />} />
-      <Route path="/User-My-Course/Learning" element={<UserLearning />} />
-      <Route path="/User-quiz-result" element={<UserQiuzResult />} />
-      <Route path="/User-edit-profile" element={<UserEditProfile />} />
-      <Route path="/User-payout" element={<UserPayouts />} />
-      <Route path="/User-social-profile" element={<UserSocialProfile />} />
-      <Route path="/User-notifications" element={<UserNotification />} />
-      <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
-      <Route path="/User-Resolution" element={<UserResolution />} />
-      <Route path="/User/browse-course" element={<UserBrowseCourse />} />
-     
+      {/* Creator Ecosystem Dashboard */}
       <Route
-        path="/User/single/learning/single-course"
-        element={<UserLearningCourse />}
+        path="/:ecosystemDomain/Ecosystemdashboard"
+        element={<EcosystemDashboard />}
       />
-      <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
-
-      <Route path="/Ecosystemdashboard" element={<EcosystemDashboard />} />
       <Route
-        path="/Ecosystemdashboard/My-Courses"
+        path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
         element={<EcosystemCourses />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-reviews"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
         element={<EcosystemReviews />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-earning"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
-      <Route path="/ecosystem/signin" element={<EcosystemSignIn />} />
-      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
-      <Route path="/ecosystem/forget-password" element={<EcosystemForgetPassword />} />
-      <Route path="/ecosystem/verify-email" element={<EcosystemEmailVerification />} />
-      <Route path="/ecosystem/verification" element={<EcosystemVerifyEmail />} />
-      <Route 
+
+      <Route
         path="/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-students"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-students"
         element={<EcosystemStudents />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-payouts"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-quiz"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
         element={<EcosystemQuiz />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-quiz-single"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-single"
         element={<EcosystemQuizSingle />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-quiz-result"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result"
         element={<EcosystemQuizResult />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-add-new-course"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-add-new-course"
         element={<EcosystemAddNewCourse />}
       />
       <Route
-        path="/Ecosystemdashboard/Ecosystem-edit-course"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-edit-course"
         element={<EcosystemAddEditCourse />}
       />
 
       {/* End user ecosystem routes */}
-      <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
+      <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-      <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+      <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+      <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
+      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route
+        path="/ecosystem/forget-password"
+        element={<EcosystemForgetPassword />}
+      />
+      <Route
+        path="/ecosystem/verify-email"
+        element={<EcosystemEmailVerification />}
+      />
+      <Route
+        path="/ecosystem/verification"
+        element={<EcosystemVerifyEmail />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-My-Course"
+        element={<UserMyCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/Userdashboard"
+        element={<UserDashboard />}
+      />
+      <Route path="/:ecosystemDomain/User-Reviews" element={<UserReviews />} />
+      <Route
+        path="/:ecosystemDomain/User-My-Course/Bookmarked"
+        element={<UserBookmarked />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-My-Course/Learning"
+        element={<UserLearning />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-quiz-result"
+        element={<UserQiuzResult />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-edit-profile"
+        element={<UserEditProfile />}
+      />
+      <Route path="/:ecosystemDomain/User-payout" element={<UserPayouts />} />
+      <Route
+        path="/:ecosystemDomain/User-social-profile"
+        element={<UserSocialProfile />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-notifications"
+        element={<UserNotification />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-Resolution"
+        element={<UserResolution />}
+      />
+      <Route
+        path="/:ecosystemDomain/User/browse-course"
+        element={<UserBrowseCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/User/single/learning/single-course"
+        element={<UserLearningCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />

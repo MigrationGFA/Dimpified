@@ -31,7 +31,7 @@ export const TestimonialsList = [
 	},
 	{
 		id: 3,
-		name: 'Emeka O.',
+		name: 'Joyce O.',
 		designation: 'Hackathon Organizer, Port Harcourt',
 		image: Avatar3,
 		content:
