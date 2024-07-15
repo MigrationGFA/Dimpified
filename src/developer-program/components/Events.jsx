@@ -11,7 +11,7 @@ const Events = () => {
             <Col md={4}>
               <Card className="mb-4 bg-primary text-white">
                 <Card.Body>
-                  <Card.Title>Dimp Connect 2023 - Powered by You</Card.Title>
+                  <Card.Title className="display-5">Dimp Connect 2023 - Powered by You</Card.Title>
                   <Button variant="secondary">Learn more</Button>
                 </Card.Body>
               </Card>
@@ -19,7 +19,7 @@ const Events = () => {
             <Col md={4}>
               <Card className="mb-4 bg-info text-white">
                 <Card.Body>
-                  <Card.Title>Dimp Connect 2022 - Powered by You</Card.Title>
+                  <Card.Title className="display-5">Dimp Connect 2022 - Powered by You</Card.Title>
                   <Button variant="primary">Learn more</Button>
                 </Card.Body>
               </Card>
@@ -27,7 +27,7 @@ const Events = () => {
             <Col md={4}>
               <Card className="mb-4 bg-secondary text-white">
                 <Card.Body>
-                  <Card.Title>Dimp Connect 2021 - Powered by You</Card.Title>
+                  <Card.Title className="display-5">Dimp Connect 2021 - Powered by You</Card.Title>
                   <Button variant="info">Learn more</Button>
                 </Card.Body>
               </Card>
