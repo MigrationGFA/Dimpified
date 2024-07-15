@@ -8,7 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { showToast } from "../../Components/Showtoast";
 import axios from "axios";
 
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
+import Logo from "../../assets/DIMP logo colored.png";
 
 const UserSignUp = () => {
   const [loading, setLoading] = useState(false);
