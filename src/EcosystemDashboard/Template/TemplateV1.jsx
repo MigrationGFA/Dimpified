@@ -4,7 +4,8 @@ import { mdiFacebook, mdiTwitter, mdiInstagram, mdiLinkedin } from "@mdi/js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import avatar from "../../assets/images/avatar/person.png";
 import sanitizeHtml from "sanitize-html";
-import GetEnrolledCourseCard from "../../Components/marketing/common/cards/GetEnrolledCourseCard";
+import AllCourse from "./Course";
+import AllService from "./Service";
 
 // import "../assets/scss/theme.scss";
 import {
@@ -26,6 +27,8 @@ import axios from "axios";
 const TemplateV1 = () => {
   const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [services, setServices] = useState([]);
+
   const [navigatePage, setNavigatePage] = useState(false);
 
   let { ecosystemDomain } = useParams();
@@ -37,6 +40,7 @@ const TemplateV1 = () => {
       setNavigatePage(true);
     }
   }, [ecosystemDomain]);
+
   const HandleNavigate = () => {
     if (navigatePage) {
       navigate(`/${ecosystemDomain}/signup`);
@@ -81,6 +85,23 @@ const TemplateV1 = () => {
     getCourseDetails();
   }, [ecosystemDomain]);
 
+  // services
+  useEffect(() => {
+    const getServiceeDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/get-all-services/${ecosystemDomain}`
+        );
+        setServices(response.data.services);
+      } catch (error) {
+        console.log("not working", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getServiceeDetails();
+  }, [ecosystemDomain]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -123,6 +144,12 @@ const TemplateV1 = () => {
       {courses && courses.length > 0 ? (
         <section className=" pt-5">
           <AllCourse coursesData={courses} />
+        </section>
+      ) : null}
+
+      {services && services.length > 0 ? (
+        <section className=" pt-5">
+          <AllService serviceData={services} />
         </section>
       ) : null}
 
@@ -666,138 +693,6 @@ const Footer = ({ content, sanitizeContent }) => {
       </footer>
     </Fragment>
   );
-};
-
-// course part
-
-// const AllCourse = ({ coursesData }) => {
-//   return (
-//     <Fragment>
-//       <section className="pb-lg-14 pb-8 bg-white">
-//         <Container>
-//           <Row>
-//             <Col xs={12}>
-//               <div className="mb-6">
-//                 <h2 className="mb-1 h1">Most Popular Courses</h2>
-//                 <p>
-//                   These are the most popular courses among REMSANA Courses
-//                   learners worldwide in year 2024
-//                 </p>
-//               </div>
-//             </Col>
-//           </Row>
-//           <Row>
-//             <Col md={12}>
-//               <Tab.Container defaultActiveKey={coursesData[0].category}>
-//                 <Nav className="nav-lb-tab  mb-6 bg-gray-200 px-5 rounded-3 ">
-//                   {coursesData.map((category, index) => (
-//                     <Nav.Item key={index}>
-//                       <Nav.Link
-//                         eventKey={category.category}
-//                         className="mb-sm-3 mb-md-0"
-//                       >
-//                         {category.category}
-//                       </Nav.Link>
-//                     </Nav.Item>
-//                   ))}
-//                 </Nav>
-//                 <Tab.Content>
-//                   {coursesData.map((category, index) => (
-//                     <Tab.Pane
-//                       eventKey={category.category}
-//                       className="pb-4 p-4 ps-0 pe-0"
-//                       key={index}
-//                     >
-//                       <Row>
-//                         {category.courses.map((course, index) => (
-//                           <Col
-//                             lg={3}
-//                             md={6}
-//                             sm={12}
-//                             key={index}
-//                             // onClick={handleClick}
-//                           >
-//                             <GetEnrolledCourseCard item={course} />
-//                           </Col>
-//                         ))}
-//                       </Row>
-//                     </Tab.Pane>
-//                   ))}
-//                 </Tab.Content>
-//               </Tab.Container>
-//             </Col>
-//           </Row>
-//         </Container>
-//       </section>
-//     </Fragment>
-//   );
-// };
-
-const AllCourse = ({ coursesData }) => {
-  // Group courses by category
-  const groupedCourses = groupCoursesByCategory(coursesData);
-  const categories = Object.keys(groupedCourses);
-
-  return (
-    <Fragment>
-      <section className="pb-lg-14 pt-5 pb-8 bg-white">
-        <Container>
-          <Row>
-            <Col xs={12}>
-              <div className="mb-6">
-                <h2 className="mb-1 h1">Available Courses</h2>
-                <p>Browse through all available courses</p>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12}>
-              <Tab.Container defaultActiveKey={categories[0]}>
-                <Nav className="nav-lb-tab mb-6 bg-gray-200 px-5 rounded-3">
-                  {categories.map((category, index) => (
-                    <Nav.Item key={index}>
-                      <Nav.Link eventKey={category} className="mb-sm-3 mb-md-0">
-                        {category}
-                      </Nav.Link>
-                    </Nav.Item>
-                  ))}
-                </Nav>
-                <Tab.Content>
-                  {categories.map((category, index) => (
-                    <Tab.Pane
-                      eventKey={category}
-                      className="pb-4 p-4 ps-0 pe-0"
-                      key={index}
-                    >
-                      <Row>
-                        {groupedCourses[category].map((course, idx) => (
-                          <Col lg={3} md={6} sm={12} key={idx}>
-                            <GetEnrolledCourseCard item={course} />
-                          </Col>
-                        ))}
-                      </Row>
-                    </Tab.Pane>
-                  ))}
-                </Tab.Content>
-              </Tab.Container>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </Fragment>
-  );
-};
-
-// Function to group courses by category
-const groupCoursesByCategory = (courses) => {
-  return courses.reduce((acc, course) => {
-    const { category } = course;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(course);
-    return acc;
-  }, {});
 };
 
 export default TemplateV1;
