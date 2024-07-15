@@ -1,92 +1,137 @@
 import React, { useState, useEffect } from "react";
+import {
+  Col,
+  Row,
+  Button,
+  Spinner,
+  Card,
+  Table,
+  Modal,
+} from "react-bootstrap";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { Col, Row, Card, ListGroup, Image, Dropdown } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { showToast } from "../../Components/Showtoast";
+import PaginationComponent from "../../Components/elements/advance-table/Pagination";
 
-const PopularJobCategory = ({ title }) => {
-  const [categories, setCategories] = useState([]);
+const PopularJobCategory = () => {
+  const [ecosystems, setEcosystems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [dashboardLoading, setDashboardLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
 
   useEffect(() => {
-    fetchPopularJobCategories();
+    const fetchData = async () => {
+      try {
+        setDashboardLoading(true);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/popular-job-categories`
+        );
+        setEcosystems(response.data.ecosystemsWithLogos || []);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      } finally {
+        setDashboardLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const fetchPopularJobCategories = async () => {
-    try {
-      const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview-most-popular"
-      );
-      setCategories(response.data.providers);
-    } catch (error) {
-      console.error("Error fetching popular job categories:", error);
-    }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <div
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </div>
-  ));
+  if (dashboardLoading) {
+    return (
+      <div className="text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   return (
-    <Card className="h-100">
-      <Card.Header className="d-flex align-items-center justify-content-between card-header-height">
-        <h4 className="mb-0">{title}</h4>
-        {/* <Link to="#" className="btn btn-outline-secondary btn-sm">
-                    View all
-                </Link> */}
-      </Card.Header>
-      <Card.Body>
-        <ListGroup variant="flush">
-          {categories.map((category, index) => (
-            <ListGroup.Item
-              className={`px-0 ${index === 0 ? "pt-0" : ""}`}
-              key={category.providerId}
-            >
-              <Row>
-                <Col xs="auto">
-                  <Image
-                    src={category.companyLogo}
-                    alt=""
-                    className="rounded-circle"
-                    style={{ width: "90px", height: "65px" }}
-                  />
-                </Col>
-                <Col className="ms-n3">
-                  <h4 className="mb-0 h5">{category.companyName}</h4>
-                  <span className="me-2 fs-6">
-                    <span className="text-dark  me-1 fw-semi-bold">
-                      {category.totalJobs} Subscriber
-                    </span>
-                  </span>
-                </Col>
-                {/* <Col xs="auto">
-                                    <Dropdown>
-                                        <Dropdown.Toggle as={CustomToggle}>
-                                            <i className="fe fe-more-vertical text-muted"></i>
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu align="end">
-                                            <Dropdown.Header>SETTINGS</Dropdown.Header>
-                                            <Dropdown.Item eventKey="1">
-                                                <i className="fe fe-edit dropdown-item-icon"></i> Edit
-                                            </Dropdown.Item>
-                                            <Dropdown.Item eventKey="2">
-                                                <i className="fe fe-trash dropdown-item-icon"></i> Remove
-                                            </Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                </Col> */}
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Card.Body>
-    </Card>
+    <div>
+      <Row>
+        <Col lg={12} md={12} sm={12}>
+          <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
+            <div className="mb-3 mb-lg-0">
+              <h1 className="mb-0 h2 fw-bold">Popular Job Categories</h1>
+              <p>
+                Explore popular job categories based on current trends.
+              </p>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col lg={12} md={12} sm={12}>
+          <Card className="border-0">
+            <Card.Body>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Ecosystem Name</th>
+                    <th>Ecosystem Domain</th>
+                    <th>Target Audience Sector</th>
+                    <th>Main Objective</th>
+                    <th>Expected Audience Number</th>
+                    <th>Experience</th>
+                    <th>Ecosystem Description</th>
+                    <th>Courses</th>
+                    <th>Users</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ecosystems.map((ecosystem) => (
+                    <tr key={ecosystem._id}>
+                      <td>{ecosystem._id}</td>
+                      <td>{ecosystem.ecosystemName}</td>
+                      <td>{ecosystem.ecosystemDomain}</td>
+                      <td>{ecosystem.targetAudienceSector}</td>
+                      <td>{ecosystem.mainObjective}</td>
+                      <td>{ecosystem.expectedAudienceNumber}</td>
+                      <td>{ecosystem.experience}</td>
+                      <td>{ecosystem.ecosystemDescription}</td>
+                      <td>
+                        {ecosystem.courses.map((course) => (
+                          <p key={course}>{course}</p>
+                        ))}
+                      </td>
+                      <td>{ecosystem.users}</td>
+                      <td>{ecosystem.status}</td>
+                      <td>{new Date(ecosystem.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+
+              {/* Pagination Component */}
+              <div className="d-flex justify-content-center mt-3">
+                <PaginationComponent
+                  totalItems={ecosystems.length}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
