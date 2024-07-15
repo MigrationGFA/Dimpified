@@ -49,7 +49,7 @@ const StudentProfileLayout = (props) => {
     name: user!== null ? user: "John Doe",
     // username: `@${user}` ,
     linkname: "Browse Course",
-    link: "/User/browse-course",
+    link: "/:ecosystemDomain/User/browse-course",
     verified: true,
     outlinebutton: false,
     level: "Beginner",
@@ -60,7 +60,7 @@ const StudentProfileLayout = (props) => {
   };
   const ProductButton = {
     linkname: "Browse Product",
-    link: "/creator/dashboard/Add-New-Product",
+    // link: "/creator/dashboard/Add-New-Product",
   };
   return (
     <Fragment>
