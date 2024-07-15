@@ -1,6 +1,6 @@
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Logo from "../../../src/assets/GFA logo Rebrand Blue.png";
-import "./NavbarComponent.css"; // Import the custom CSS file
+import './NavbarComponent.module.css'
 import { Link } from "react-router-dom";
 
 const NavbarComponent = () => {
