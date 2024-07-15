@@ -96,9 +96,6 @@ import EcosystemPayouts from "../DashboardsPeerComponents/account-settings/Payou
 import EcosystemQuiz from "../EcosystemDashboard/Quiz";
 import EcosystemQuizSingle from "../EcosystemDashboard/QuizSingle";
 import EcosystemQuizResult from "../EcosystemDashboard/QuizResult";
-import EcosystemEditProfile from "../DashboardsPeerComponents/Ecosystem/EditProfile";
-import EcosystemSocialProfiles from "../DashboardsPeerComponents/Ecosystem/SocialProfiles";
-import EcosystemDeleteProfile from "../DashboardsPeerComponents/Ecosystem/DeleteProfile";
 import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
 import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
@@ -270,19 +267,6 @@ const AllRoutes = () => {
       <Route
         path="/Ecosystemdashboard/Ecosystem-quiz-result"
         element={<EcosystemQuizResult />}
-      />
-      <Route
-        path="/Ecosystemdashboard/Ecosystem-edit-profile"
-        element={<EcosystemEditProfile />}
-      />
-
-      <Route
-        path="/Ecosystemdashboard/Ecosystem-social-profiles"
-        element={<EcosystemSocialProfiles />}
-      />
-      <Route
-        path="/Ecosystemdashboard/Ecosystem-delete-profile"
-        element={<EcosystemDeleteProfile />}
       />
       <Route
         path="/Ecosystemdashboard/Ecosystem-add-new-course"
