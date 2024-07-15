@@ -195,13 +195,12 @@ const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
           <Button variant="outline-light" className="me-2">
             {sanitizeContent(content.navbar.buttonText1)}
           </Button>
-           {/* <Link to={`/show=true/${ecosystemDomain}/signup`}>  */}
           
           <Button variant="primary" onClick={HandleNavigate}>
             {" "}
             {sanitizeContent(content.navbar.buttonText2)}
           </Button>
-          {/* </Link> */}
+        
         </div>
       </Navbar.Collapse>
     </Container>

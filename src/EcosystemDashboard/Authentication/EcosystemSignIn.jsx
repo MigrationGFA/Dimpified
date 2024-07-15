@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +15,7 @@ const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
+  let { ecosystemDomain } = useParams();
   const { isLoading, error, user } = useSelector(
     (state) => state.authentication
   );
@@ -55,7 +56,7 @@ const UserSignIn = () => {
       showToast(response.data.message);
 
       // Navigate to Userdashboard after successful login
-      navigate("/Userdashboard");
+      navigate(`/${ecosystemDomain}/Userdashboard`);
 
     } catch (error) {
       // Handle login error
@@ -79,7 +80,7 @@ const UserSignIn = () => {
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to="/show=true/:ecosystemDomain/signup" className="ms-1">
+                  <Link to={`/show=true/${ecosystemDomain}/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>

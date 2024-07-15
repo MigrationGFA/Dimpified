@@ -256,7 +256,7 @@ const AllRoutes = () => {
         path="/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
-      <Route path="/ecosystem/signin" element={<EcosystemSignIn />} />
+      {/* <Route path="/ecosystem/signin" element={<EcosystemSignIn />} /> */}
       <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
       <Route path="/ecosystem/forget-password" element={<EcosystemForgetPassword />} />
       <Route path="/ecosystem/verify-email" element={<EcosystemEmailVerification />} />
@@ -311,6 +311,7 @@ const AllRoutes = () => {
       <Route path="/show=true/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route path="/show=true/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+      <Route path="/ecosystemDomain/signin" element={<EcosystemSignIn />} />
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
