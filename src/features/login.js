@@ -42,12 +42,13 @@ export const login = createAsyncThunk('authentication/login', async ({ email, pa
 
 // enduser login
 
-export const ecosystemLogin = createAsyncThunk('ecosystemUser/login', async ({ email, password }, { rejectWithValue }) => {
+export const ecosystemLogin = createAsyncThunk('ecosystemUser/login', async ({ email, password, domainName }, { rejectWithValue }) => {
     // Make an API request to login the user with Axios
     try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/ecosystem-user/login`, {
             email,
             password,
+            domainName
         });
 
         if (response.status === 200) {

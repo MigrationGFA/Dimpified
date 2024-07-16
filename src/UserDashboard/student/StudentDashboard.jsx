@@ -11,8 +11,6 @@ import StudentProfileLayout from "../student/StudentProfileLayout";
 // Import chart options
 import { OrderColumnChartOptions } from "../../data/charts/ChartData";
 
-import { useSelector } from "react-redux";
-
 const StudentDashboard = () => {
   const [top4Courses, setTop4Courses] = useState([]);
   const [totalAmount, setTotalAmount] = useState(null);

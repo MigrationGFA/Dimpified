@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Col, Row, Nav, Container, Navbar } from "react-bootstrap";
 import NavBar from "../../Pages/Pages/home-academy/navbars/UserNavbar";
 import "./StudentProfileLayout.css";
@@ -13,7 +13,6 @@ import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 // import { useGlobalContext } from "../../context/AuthContext";
 
-
 const StudentProfileLayout = (props) => {
   const location = useLocation();
   const [showChildren, setShowChildren] = useState(false);
@@ -24,29 +23,18 @@ const StudentProfileLayout = (props) => {
     setShowChildren(!showChildren);
   };
 
-  // const handleLogout = async () => {
-  //   try {
-  //     const response = await axios.delete(
-  //       `https://remsana-backend-testing.azurewebsites.net/api/v1/logout/${userId}`
-  //     );
-  //     showToast(response.data.message);
-  //     sessionStorage.clear();
-  //     navigate("/");
-  //     setUser(null);
-  //     setUserRole(null);
-  //     setUserImage(null);
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //     showToast(error.response.message);
-  //   }
-  // };
+  const { ecosystemDomain } = useParams();
+
+  // Generate the menu arrays
+  // const dashboardMenu = DashboardMenu({ ecosystemDomain });
+  // const accountSettingsMenu = AccountSettingsMenu({ ecosystemDomain });
 
   const user = sessionStorage.getItem("username");
   const image = sessionStorage.getItem("image");
 
   const dashboardData = {
     avatar: image !== null ? image : Avatar3,
-    name: user!== null ? user: "John Doe",
+    name: user !== null ? user : "John Doe",
     // username: `@${user}` ,
     linkname: "Browse Course",
     link: "/:ecosystemDomain/User/browse-course",
@@ -68,7 +56,11 @@ const StudentProfileLayout = (props) => {
       <section className="pt-5 pb-5">
         <Container>
           {/* User info */}
-          <ProfileCover dashboardData={dashboardData} ServiceButton={ServiceButton} ProductButton={ProductButton}/>
+          <ProfileCover
+            dashboardData={dashboardData}
+            ServiceButton={ServiceButton}
+            ProductButton={ProductButton}
+          />
 
           {/* Content */}
           <Row className="mt-0 mt-md-4 ">
@@ -105,49 +97,89 @@ const StudentProfileLayout = (props) => {
                     <Nav.Item className="navbar-header" as="li">
                       Dashboard
                     </Nav.Item>
+                    {/* {dashboardMenu.map((item, index) => (
+                      <Nav.Item
+                        as="li"
+                        key={index}
+                        className={`${
+                          item.link === location.pathname ? "active" : ""
+                        }`}
+                      >
+                        <Nav.Link href={item.link}>
+                          <i className={`icon-${item.icon}`}></i>
+                          {item.title}
+                        </Nav.Link>
+                        {item.children && (
+                          <Nav as="ul" className="flex-column">
+                            {item.children.map((child, childIndex) => (
+                              <Nav.Item
+                                as="li"
+                                key={childIndex}
+                                className={`${
+                                  child.link === location.pathname
+                                    ? "active"
+                                    : ""
+                                }`}
+                              >
+                                <Nav.Link href={child.link}>
+                                  <i className={`icon-${child.icon}`}></i>
+                                  {child.title}
+                                </Nav.Link>
+                              </Nav.Item>
+                            ))}
+                          </Nav>
+                        )}
+                      </Nav.Item>
+                    ))} */}
                     {DashboardMenu.map((item, index) => (
-                     <Nav.Item
-                     as="li"
-                     key={index}
-                     className={`${
-                       item.link === location.pathname ? "active" : ""
-                     }`}
-                   >
-                     <Link
-                       className="nav-link d-flex justify-content-between align-items-center"
-                       to={item.link}
-                       onClick={item.children ? handleMyCoursesClick : undefined}
-                     >
-                       <div>
-                         <i className={`fe fe-${item.icon} nav-icon`}></i>
-                         {item.title}
-                       </div>
-                       {item.children && (
-                         <i
-                           className={`fe ${
-                             showChildren ? "fe-chevron-up" : "fe-chevron-down"
-                           }`}
-                         ></i>
-                       )}
-                     </Link>
-                     {item.children && showChildren && (
-                       <ul className="submenu">
-                         {item.children.map((childItem, childIndex) => (
-                           <li key={childIndex}>
-                             <Link
-                               to={childItem.link}
-                               className={`${
-                                 childItem.link === location.pathname ? "active" : ""
-                               }`}
-                             >
-                               <i className={`fe fe-${childItem.icon}`}></i>
-                               {childItem.title}
-                             </Link>
-                           </li>
-                         ))}
-                       </ul>
-                     )}
-                   </Nav.Item>
+                      <Nav.Item
+                        as="li"
+                        key={index}
+                        className={`${
+                          item.link === location.pathname ? "active" : ""
+                        }`}
+                      >
+                        <Link
+                          className="nav-link d-flex justify-content-between align-items-center"
+                          to={item.link}
+                          onClick={
+                            item.children ? handleMyCoursesClick : undefined
+                          }
+                        >
+                          <div>
+                            <i className={`fe fe-${item.icon} nav-icon`}></i>
+                            {item.title}
+                          </div>
+                          {item.children && (
+                            <i
+                              className={`fe ${
+                                showChildren
+                                  ? "fe-chevron-up"
+                                  : "fe-chevron-down"
+                              }`}
+                            ></i>
+                          )}
+                        </Link>
+                        {item.children && showChildren && (
+                          <ul className="submenu">
+                            {item.children.map((childItem, childIndex) => (
+                              <li key={childIndex}>
+                                <Link
+                                  to={childItem.link}
+                                  className={`${
+                                    childItem.link === location.pathname
+                                      ? "active"
+                                      : ""
+                                  }`}
+                                >
+                                  <i className={`fe fe-${childItem.icon}`}></i>
+                                  {childItem.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </Nav.Item>
                     ))}
 
                     <Nav.Item className="navbar-header mt-4" as="li">
@@ -162,8 +194,10 @@ const StudentProfileLayout = (props) => {
                         }`}
                       >
                         {item.title === "Sign Out" ? (
-                          <button className="nav-link" onClick=""
-                          // {handleLogout}
+                          <button
+                            className="nav-link"
+                            onClick=""
+                            // {handleLogout}
                           >
                             <i className={`fe fe-${item.icon} nav-icon`}></i>
                             {item.title}

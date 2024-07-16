@@ -8,8 +8,10 @@ import LevelIconWithTooltip from "../../../../Components/elements/miscellaneous/
 // import media files
 import CheckedMark from "../../../../assets/images/svg/checked-mark.svg";
 import ProfileBackground from "../../../../assets/images/background/profile-bg.jpg";
+import { useSelector } from "react-redux";
 
 const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
+  const user = useSelector((state) => state.authentication.user.data);
   return (
     <Row className="align-items-center">
       <Col xl={12} lg={12} md={12} sm={12}>
@@ -28,10 +30,11 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
             <div className="d-flex align-items-center">
               <div className="me-2 position-relative d-flex justify-content-end align-items-end mt-n5">
                 <Image
-                  src={dashboardData.avatar}
+                  src={user.image || dashboardData.avatar}
                   className="avatar-xl rounded-circle border border-4 border-white position-relative"
                   alt=""
                 />
+
                 {dashboardData.verified ? (
                   <Link
                     to="#"
@@ -49,10 +52,10 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               </div>
               <div className="lh-1">
                 <h2 className="mb-0">
-                  {dashboardData.name}{" "}
+                  {user.username}{" "}
                   <LevelIconWithTooltip level={dashboardData.level} />{" "}
                 </h2>
-                <p className="mb-0 d-block">{dashboardData.username}</p>
+                <p className="mb-0 d-block">@{user.email}</p>
               </div>
             </div>
             <div className="d-flex gap-2">
@@ -80,7 +83,6 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               >
                 {ProductButton.linkname}
               </Link> */}
-              
             </div>
           </div>
         </Card>

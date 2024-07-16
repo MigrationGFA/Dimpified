@@ -57,7 +57,7 @@ const CourseSingle = () => {
     tx_ref: generateTxRef(),
     amount: parseInt(sessionStorage.getItem("price")),
     currency: "NGN",
-    payment_options: "card,mobilemoney,ussd",
+    payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
     customer: {
       email: "samuelmakinde19@gmail.com",
       phone_number: "09064000000",

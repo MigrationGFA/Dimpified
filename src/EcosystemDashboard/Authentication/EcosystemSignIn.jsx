@@ -40,29 +40,6 @@ const UserSignIn = () => {
     resolver: yupResolver(formSchema),
   });
 
-  // const onSubmit = async (data, e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}/ecosystem-user/login`,
-  //       {
-  //         email: data.email,
-  //         password: data.password,
-  //       }
-  //     );
-
-  //     // Handle successful login
-  //     showToast(response.data.message);
-
-  //     // Navigate to Userdashboard after successful login
-  //     navigate(`/${ecosystemDomain}/Userdashboard`);
-  //   } catch (error) {
-  //     // Handle login error
-  //     showToast("Invalid credentials. Please try again.");
-  //   }
-  // };
-
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
@@ -72,6 +49,7 @@ const UserSignIn = () => {
         ecosystemLogin({
           email: data.email,
           password: data.password,
+          domainName: ecosystemDomain,
         })
       );
 
@@ -82,6 +60,7 @@ const UserSignIn = () => {
       } else if (ecosystemLogin.fulfilled.match(resultAction)) {
         // Login was successful
         showToast(resultAction.payload.message);
+        sessionStorage.setItem("ecosystemDomain", ecosystemDomain);
         navigate(`/${ecosystemDomain}/Userdashboard`);
       }
     } catch (error) {
