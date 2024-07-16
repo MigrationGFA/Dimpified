@@ -20,7 +20,7 @@ export const InstructorsList = [
 	{
 		id: 1,
 		image: InstructorImage1,
-		name: 'Upsilling Programs',
+		name: 'Upksilling Programs',
 		courses: 6,
 		students: 9692,
 		designation: 'Professional Web Developer',

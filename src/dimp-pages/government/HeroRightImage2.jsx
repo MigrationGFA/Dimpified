@@ -19,21 +19,21 @@ const HeroRightImage2 = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Unique User Logins",
+      title: "Unique user logins",
       description:
         "Experience the ease and security of personalized logins. Each user enjoys a distinct login credential, ensuring a secure and individualized entry point that fosters personal ownership.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Customized Dashboards",
+      title: "Customized dashboards",
       description:
         "Step into a dashboard designed just for you. Tailored to your specific needs and preferences, your dashboard offers an intuitive and engaging interface, putting your most-used tools and information at your fingertips.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `User-Centric Experience`,
+      title: `User-centric experience`,
       description:
         "Our commitment to a user-centric experience means you feel valued and empowered. With unique logins and customized dashboards, we provide a seamless, efficient, and satisfying user journey that boosts productivity.",
     },
@@ -45,7 +45,7 @@ const HeroRightImage2 = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center  mb-6">
             <h2 className="h1 fw-bold">
-              Personalized User Logins and Dashboards
+            Personalize your ecosystem with your own user authentication page
             </h2>
           </div>
         </Col>
