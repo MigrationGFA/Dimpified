@@ -2,25 +2,25 @@ export const DashboardMenu = [
   {
     id: 1,
     title: "My Dashboard",
-    link: "/Userdashboard",
+    link: "/:ecosystemDomain/Userdashboard",
     icon: "home",
   },
   {
     id: 1,
     title: "My Products",
-    link: "/User-My-Course",
+    link: "/:ecosystemDomain/User-My-Course",
     icon: "book",
     children: [
       {
         id: 2,
         title: "Bookmarked",
-        link: "/User-My-Course/Bookmarked",
+        link: "/:ecosystemDomain/User-My-Course/Bookmarked",
         icon: "bookmark",
       },
       {
         id: 3,
         title: "Learning",
-        link: "/User-My-Course/Learning",
+        link: "/:ecosystemDomain/User-My-Course/Learning",
         icon: "book",
       },
     ],
@@ -29,7 +29,7 @@ export const DashboardMenu = [
   {
     id: 4,
     title: "Reviews",
-    link: "/User-Reviews",
+    link: "/:ecosystemDomain/User-Reviews",
     icon: "star",
   },
   // {
@@ -53,7 +53,7 @@ export const DashboardMenu = [
    {
   	id: 7,
    	title: 'Payouts',
-   	link: '/User-payout',
+   	link: '/:ecosystemDomain/User-payout',
    	icon: 'dollar-sign'
    },
   // {
@@ -74,7 +74,7 @@ export const AccountSettingsMenu = [
   {
     id: 1,
     title: "Edit Profile",
-    link: "/User-edit-profile",
+    link: "/:ecosystemDomain/User-edit-profile",
     icon: "settings",
   },
   // {
@@ -86,7 +86,7 @@ export const AccountSettingsMenu = [
   {
     id: 2,
     title: "Social Profiles",
-    link: "/User-social-profile",
+    link: "/:ecosystemDomain/User-social-profile",
     icon: "refresh-cw",
   },
   // {
@@ -104,13 +104,13 @@ export const AccountSettingsMenu = [
   {
     id: 5,
     title: "Resolution",
-    link: "/User-Resolution",
+    link: "/:ecosystemDomain/User-Resolution",
     icon: "help-circle",
   },
   {
     id: 4,
     title: "Delete Profile",
-    link: "/User-delete-profile",
+    link: "/:ecosystemDomain/User-delete-profile",
     icon: "trash",
   },
   {

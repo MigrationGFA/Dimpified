@@ -49,18 +49,18 @@ const ProfileLayout = (props) => {
     name: user,
     username: `@${user}`,
     linkname: "Create New Course",
-    link: "/creator/dashboard/Add-New-Course",
+    link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Course",
     verified: true,
     outlinebutton: false,
     level: "Beginner",
   };
   const ServiceButton = {
     linkname: "Create New Services",
-    link: "/creator/dashboard/Add-New-Service",
+    link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Service",
   };
   const ProductButton = {
     linkname: "Create New Product",
-    link: "/creator/dashboard/Add-New-Product",
+    // link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Product",
   };
 
   return (

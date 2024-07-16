@@ -80,7 +80,7 @@ const Bookmarked = () => {
                             viewby="grid"
                             showprogressbar={false}
                             extraclass="mx-2"
-                            link={`/student/single-course?id=${item._id}`}
+                            link={`/:ecosystemDomain/:id}`}
                           />
                         </Col>
                       ))}

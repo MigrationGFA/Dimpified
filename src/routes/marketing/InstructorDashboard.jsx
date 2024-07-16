@@ -2,55 +2,55 @@ export const DashboardMenu = [
 	{
 		id: 1,
 		title: 'My Dashboard',
-		link: '/Ecosystemdashboard',
+		link: '/:ecosystemDomain/Ecosystemdashboard',
 		icon: 'home'
 	},
 	{
 		id: 2,
 		title: 'My Product',
-		link: '/Ecosystemdashboard/My-Courses',
+		link: '/:ecosystemDomain/Ecosystemdashboard/My-Courses',
 		icon: 'book'
 	},
 	{
 		id: 3,
 		title: 'Reviews',
-		link: '/Ecosystemdashboard/Ecosystem-reviews',
+		link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews',
 		icon: 'star'
 	},
 	{
 		id: 4,
 		title: 'Earnings',
-		link: '/Ecosystemdashboard/Ecosystem-earning',
+		link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning',
 		icon: 'pie-chart'
 	},
 	{
 		id: 5,
 		title: 'Orders',
-		link: '/Ecosystemdashboard/Ecosystem-orders',
+		link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders',
 		icon: 'shopping-bag'
 	},
 	{
 		id: 6,
 		title: 'Students',
-		link: '/Ecosystemdashboard/Ecosystem-students',
+		link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-students',
 		icon: 'users'
 	},
 	{
 		id: 7,
 		title: 'Payouts',
-		link: '/Ecosystemdashboard/Ecosystem-payouts',
+		link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts',
 		icon: 'dollar-sign'
 	},
 	// {
 	// 	id: 8,
 	// 	title: 'Quiz',
-	// 	link: '/Ecosystemdashboard/Ecosystem-quiz',
+	// 	link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz',
 	// 	icon: 'help-circle'
 	// },
 	// {
 	// 	id: 9,
 	// 	title: 'Quiz Result',
-	// 	link: '/Ecosystemdashboard/Ecosystem-quiz-result',
+	// 	link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result',
 	// 	icon: 'help-circle'
 	// }
 ];
