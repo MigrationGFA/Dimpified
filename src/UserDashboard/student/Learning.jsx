@@ -71,7 +71,7 @@ const Learning = () => {
                           viewby="grid"
                           showprogressbar={false}
                           extraclass="mx-2"
-                          link={`/student/single/learning/single-course?id=${item._id}`}
+                          link={`/:ecosystemDomain/User/single/learning/single-course?id=${item._id}`}
                           />
                         </Col>
                       ))}
