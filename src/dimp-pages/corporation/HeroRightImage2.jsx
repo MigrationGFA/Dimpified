@@ -19,21 +19,21 @@ const HeroRightImage2 = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Comprehensive Data Visualization",
+      title: "Comprehensive data visualization",
       description:
         "Gain a deeper understanding of your programs with our advanced visualization tools. Identify patterns, measure success, and make informed decisions to optimize your initiatives.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Detailed Reporting",
+      title: "Detailed reporting",
       description:
         "Generate detailed reports on program performance using our statistics feature. Track key metrics, evaluate outcomes, and share insights with stakeholders to demonstrate value.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Continuous Improvement`,
+      title: `Continuous improvement`,
       description:
         "Use our analytics to drive continuous improvement. Monitor trends, gather feedback, and adjust your strategies to ensure your programs remain relevant and effective.",
     },
