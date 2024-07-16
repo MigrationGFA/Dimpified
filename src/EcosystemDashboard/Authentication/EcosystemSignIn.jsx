@@ -1,22 +1,21 @@
 import React, { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useGlobalContext } from "../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/login";
+import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
+import { ecosystemLogin } from "../../features/login";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { Login, loading } = useGlobalContext();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
+  let { ecosystemDomain } = useParams();
   const { isLoading, error, user } = useSelector(
     (state) => state.authentication
   );
@@ -42,10 +41,25 @@ const UserSignIn = () => {
   });
 
   // const onSubmit = async (data, e) => {
+  //   e.preventDefault();
+
   //   try {
-  //     await Login(data, e); // Pass the event object to the Login function
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}/ecosystem-user/login`,
+  //       {
+  //         email: data.email,
+  //         password: data.password,
+  //       }
+  //     );
+
+  //     // Handle successful login
+  //     showToast(response.data.message);
+
+  //     // Navigate to Userdashboard after successful login
+  //     navigate(`/${ecosystemDomain}/Userdashboard`);
   //   } catch (error) {
-  //     console.error("Error logging in:", error);
+  //     // Handle login error
+  //     showToast("Invalid credentials. Please try again.");
   //   }
   // };
 
@@ -55,25 +69,20 @@ const UserSignIn = () => {
     try {
       // Dispatch the login action
       const resultAction = await dispatch(
-        login({
+        ecosystemLogin({
           email: data.email,
           password: data.password,
         })
       );
 
-      if (login.rejected.match(resultAction)) {
+      if (ecosystemLogin.rejected.match(resultAction)) {
         // Login failed, access the payload from the rejected action
         const errorPayload = resultAction.payload;
         showToast(errorPayload);
-      } else if (login.fulfilled.match(resultAction)) {
+      } else if (ecosystemLogin.fulfilled.match(resultAction)) {
         // Login was successful
         showToast(resultAction.payload.message);
-
-        if (resultAction.payload.data.interest === "no") {
-          navigate("/creator/onboard");
-        } else {
-          navigate("/creator/dashboard/overview");
-        }
+        navigate(`/${ecosystemDomain}/Userdashboard`);
       }
     } catch (error) {
       // Handle unexpected errors, such as network issues
@@ -89,15 +98,15 @@ const UserSignIn = () => {
             <Card.Body className="p-6">
               <div className="mb-4">
                 <Image
-                  src={Logo}
+                  src={sessionStorage.getItem("Logo")}
                   className="mb-4"
                   alt="logo"
-                  style={{ height: "100px" }}
+                  style={{ height: "50px" }}
                 />
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to="/Ecosystem/signup" className="ms-1">
+                  <Link to={`/${ecosystemDomain}/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>
@@ -135,9 +144,9 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Link to="/user/Forget-password" className="ms-1 text-bold">
+                  {/* <Link to="/user/Forget-password" className="ms-1 text-bold">
                     Forgot Password
-                  </Link>
+                  </Link> */}
 
                   <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
                     {isLoading ? (

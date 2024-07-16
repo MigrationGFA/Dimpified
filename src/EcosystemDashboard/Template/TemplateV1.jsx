@@ -30,22 +30,33 @@ const TemplateV1 = () => {
   const [services, setServices] = useState([]);
 
   const [navigatePage, setNavigatePage] = useState(false);
+  const [navigateLoginPage, setNavigateLoginPage] = useState(false);
 
   let { ecosystemDomain } = useParams();
 
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (ecosystemDomain) {
       setNavigatePage(true);
+      setNavigateLoginPage(true);
     }
   }, [ecosystemDomain]);
 
-  const HandleNavigate = () => {
+  const handleNavigate = () => {
     if (navigatePage) {
       navigate(`/${ecosystemDomain}/signup`);
     } else {
-      navigate(`/show=true/${ecosystemDomain}`);
+      navigate(`/${ecosystemDomain}`);
+    }
+  };
+  const handleLoginNavigate = () => {
+    if (navigateLoginPage) {
+      navigate(`/${ecosystemDomain}/signin`);
+    } else {
+      navigate(`/${ecosystemDomain}`);
     }
   };
 
@@ -122,7 +133,8 @@ const TemplateV1 = () => {
       <SiteNavbar
         content={details}
         sanitizeContent={sanitizeContent}
-        HandleNavigate={HandleNavigate}
+        handleNavigate={handleNavigate}
+        handleLoginNavigate={handleLoginNavigate}
       />
       <Hero content={details} sanitizeContent={sanitizeContent} />
       <section
@@ -189,7 +201,12 @@ const TemplateV1 = () => {
   );
 };
 
-const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
+const SiteNavbar = ({
+  content,
+  sanitizeContent,
+  handleNavigate,
+  handleLoginNavigate,
+}) => (
   <Navbar
     // bg="dark"
     // variant="dark"
@@ -225,15 +242,17 @@ const SiteNavbar = ({ content, sanitizeContent, HandleNavigate }) => (
             : ""}
         </Nav>
         <div className="d-flex">
-          <Button variant="outline-light" className="me-2">
+          <Button
+            variant="outline-light"
+            className="me-2"
+            onClick={handleLoginNavigate}
+          >
             {sanitizeContent(content.navbar.buttonText1)}
           </Button>
-
-          <Button variant="primary" onClick={HandleNavigate}>
+          <Button variant="primary" onClick={handleNavigate}>
             {" "}
             {sanitizeContent(content.navbar.buttonText2)}
           </Button>
-          {/* </Link> */}
         </div>
       </Navbar.Collapse>
     </Container>

@@ -206,7 +206,7 @@ const Overview = () => {
               <PopularInstructor title="Popular EcoSystems" />
             </Col>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <RecentCourses title="Recent Payments" />
+              <RecentCourses title="Last 4 Created Ecosystem" />
             </Col>
             {/* <Col xl={4} lg={6} md={12} className="mb-4">
                             <Activity title="Activity" />
