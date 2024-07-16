@@ -87,7 +87,7 @@ const HeroGradient = () => {
                 Get Started Now
               </Link>
               <Link to="#" className="btn btn-lg btn-outline-primary">
-                Scedule a Demo
+                Schedule a Demo
               </Link>
             </div>
           </Col>

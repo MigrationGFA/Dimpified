@@ -19,21 +19,21 @@ const HeroRightImage2 = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Unified Platform for Efficiency",
+      title: "Unified platform for efficiency",
       description:
         "Experience the convenience of managing all aspects of your programs from one platform. Our ecosystem management tools integrate website building, user onboarding, and payment handling, simplifying your workflow.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Enhanced User Engagement",
+      title: "Enhanced user engagement",
       description:
         "Boost engagement with interactive dashboards that provide real-time updates and insights. Keep participants informed, involved, and motivated throughout their journey.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Scalable Solutions for Growth`,
+      title: `Scalable solutions for growth`,
       description:
         "As your programs grow, our platform scales with you. Add new features, expand your offerings, and manage increasing user volumes without compromising on performance or user experience.",
     },
@@ -45,8 +45,8 @@ const HeroRightImage2 = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mt-3 mt-lg-3 mb-3">
             <h2 className="h1 fw-bold">
-              Seamlessly Integrate Tools and Take Control over your Program's
-              Management
+              Seamlessly integrate tools and take control over your program's
+              management
             </h2>
           </div>
         </Col>

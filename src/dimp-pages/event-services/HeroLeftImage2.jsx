@@ -9,7 +9,7 @@ import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import FeaturedImg1 from "./images/client.png";
+import FeaturedImg1 from "./images/client.jpg";
 
 const HeroLeftImage = () => {
   const featurescol1 = [

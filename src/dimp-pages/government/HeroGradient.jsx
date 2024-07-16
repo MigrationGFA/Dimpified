@@ -43,7 +43,7 @@ const HeroGradient = () => {
             <h3 className="display-3 mb-5 fw-bold">
               Create a higher level of trust among the citizens of your
               
-              <u className="text-primary"> Administration</u>
+              <u className="text-primary"> administration</u>
             </h3>
             <p className="display-7">
               Leverge DIMP for Upskilling programs, e-governance programs,

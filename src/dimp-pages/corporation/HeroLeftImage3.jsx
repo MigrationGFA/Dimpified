@@ -16,21 +16,21 @@ const HeroLeftImage = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Facilitate Strategic Partnerships",
+      title: "Facilitate strategic partnerships",
       description:
         "Tailor educational programs for various segments based on roles or complexity levels. Organize learners into User Groups and monitor their progress on a unified dashboard.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Access to Talent",
+      title: "Access to talents",
       description:
         "Recognize and reward your users with branded licensing certificates. Automatically generate certificates upon program completion and facilitate digital certification acquisition to enhance your government's reputation.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Innovation and Disruption`,
+      title: `Innovation and disruption`,
       description:
         "Gain early access to cutting-edge innovations that can potentially disrupt existing markets or create new ones.",
     },
