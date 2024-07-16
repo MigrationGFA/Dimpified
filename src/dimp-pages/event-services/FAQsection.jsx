@@ -88,7 +88,7 @@ const FAQsection = () => {
                   insights to help you make data-driven decisions.
                 </Accordion.Body>
               </Accordion.Item>
-              <Accordion.Item eventKey="5">
+              <Accordion.Item eventKey="6">
                 <Accordion.Header>
                   <h3>What kind of support is available if I need help?</h3>
                 </Accordion.Header>
@@ -103,7 +103,7 @@ const FAQsection = () => {
           </Col>
         </Row>
         <div className="mt-10 text-center">
-          <Link to="#" className="btn btn-lg btn-primary">
+          <Link to="/creator/signup" className="btn btn-lg btn-primary">
             Sold yet? Get Started Now!
           </Link>
         </div>

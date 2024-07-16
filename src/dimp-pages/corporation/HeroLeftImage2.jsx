@@ -16,21 +16,21 @@ const HeroLeftImage = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Idea Development Platform",
+      title: "Idea development platform",
       description:
         "Use our interactive dashboard to support idea development from inception to execution. Track milestones, collaborate with team members, and manage resources effectively.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Custom Domain for Professionalism",
+      title: "Custom domain for professionalism",
       description:
         "Give your incubator programs a professional edge with custom domains. Enhance credibility and attract top talent by showcasing your initiatives on a branded platform.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Comprehensive Resource Management`,
+      title: `Comprehensive resource management`,
       description:
         "Our platform's all-in-one management features allow you to oversee every aspect of your incubator programs. From user onboarding to payment handling, streamline your operations for maximum efficiency.",
     },
@@ -42,7 +42,7 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-              Cultivate the Next Big Idea through Incubator Programs
+              Cultivate the next big idea through incubator programs
             </h2>
           </div>
         </Col>

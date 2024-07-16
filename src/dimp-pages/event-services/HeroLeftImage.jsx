@@ -9,14 +9,14 @@ import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import FeaturedImg1 from "./images/program-manager.png";
+import FeaturedImg1 from "./images/booking.jpg";
 
 const HeroLeftImage = () => {
   const featurescol1 = [
     {
       id: 1,
       icon: mdiStar,
-      title: "Service features as a booking system",
+      title: "Leverage booking system",
       description:
         "Allow clients to book your services directly through your website, reducing administrative work and ensuring a seamless client experience.",
     },

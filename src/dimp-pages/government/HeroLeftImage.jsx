@@ -16,21 +16,21 @@ const HeroLeftImage = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Develop Targeted Upskilling Programs",
+      title: "Develop targeted upskilling programs",
       description:
         "Tailor educational programs for various segments based on roles or complexity levels. Organize learners into User Groups and monitor their progress on a unified dashboard.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Easily Approve Licensing",
+      title: "Easily approve licensing",
       description:
         "Recognize and reward your users with branded licensing certificates. Automatically generate certificates upon program completion and facilitate digital certification acquisition to enhance your government's reputation.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `Enhance Public Engagement`,
+      title: `Enhance public engagement`,
       description:
         "Notify your users about policies, laws, reforms and initiatives deepens connection and trust in your administration",
     },
