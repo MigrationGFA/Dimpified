@@ -9,7 +9,7 @@ import Icon from "@mdi/react";
 import { mdiStar, mdiLifebuoy, mdiFileDocument } from "@mdi/js";
 
 // import media files
-import AuthImg from "./images/data.jpeg";
+import AuthImg from "./images/analysis.jpg";
 
 const HeroRightImage2 = () => {
   const title =
