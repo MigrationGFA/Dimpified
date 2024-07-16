@@ -44,7 +44,7 @@ const HeroDoubleRight = () => {
                 </span>
               </h1>
               <p className="lead mb-4 pe-xl-12 ">
-                Transform your creative business with our comprehensive
+                Transform your event-related business with our comprehensive
                 ecosystem management platform. From web design to content
                 creation, our tool integrates everything you need to showcase
                 your talent, manage your projects, and grow your business

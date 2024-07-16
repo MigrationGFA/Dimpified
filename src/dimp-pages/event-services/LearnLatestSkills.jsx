@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ModalVideo from 'react-modal-video';
 
 // import media files
-import EducationVideoImage from './images/data.jpeg';
+import EducationVideoImage from './images/analysis.jpg';
 
 const LearnLatestSkills = () => {
   const [isOpen, setOpen] = useState(false);
