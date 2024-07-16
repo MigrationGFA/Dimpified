@@ -1,26 +1,28 @@
+const ecosystemDomain = sessionStorage.getItem("ecosystemDomain");
+
 export const DashboardMenu = [
   {
     id: 1,
     title: "My Dashboard",
-    link: "/:ecosystemDomain/Userdashboard",
+    link: `/${ecosystemDomain}/Userdashboard`,
     icon: "home",
   },
   {
     id: 1,
     title: "My Products",
-    link: "/:ecosystemDomain/User-My-Course",
+    link: `/${ecosystemDomain}/User-My-Course`,
     icon: "book",
     children: [
       {
         id: 2,
         title: "Bookmarked",
-        link: "/:ecosystemDomain/User-My-Course/Bookmarked",
+        link: `/${ecosystemDomain}/User-My-Course/Bookmarked`,
         icon: "bookmark",
       },
       {
         id: 3,
         title: "Learning",
-        link: "/:ecosystemDomain/User-My-Course/Learning",
+        link: `/${ecosystemDomain}/User-My-Course/Learning`,
         icon: "book",
       },
     ],
@@ -29,7 +31,7 @@ export const DashboardMenu = [
   {
     id: 4,
     title: "Reviews",
-    link: "/:ecosystemDomain/User-Reviews",
+    link: `/${ecosystemDomain}/User-Reviews`,
     icon: "star",
   },
   // {
@@ -50,12 +52,12 @@ export const DashboardMenu = [
   // 	link: '/marketing/instructor/instructor-students/',
   // 	icon: 'users'
   // },
-   {
-  	id: 7,
-   	title: 'Payouts',
-   	link: '/:ecosystemDomain/User-payout',
-   	icon: 'dollar-sign'
-   },
+  {
+    id: 7,
+    title: "Payouts",
+    link: `/${ecosystemDomain}/User-payout`,
+    icon: "dollar-sign",
+  },
   // {
   // 	id: 8,
   // 	title: 'Quiz',
@@ -74,7 +76,7 @@ export const AccountSettingsMenu = [
   {
     id: 1,
     title: "Edit Profile",
-    link: "/:ecosystemDomain/User-edit-profile",
+    link: `/${ecosystemDomain}/User-edit-profile`,
     icon: "settings",
   },
   // {
@@ -86,7 +88,7 @@ export const AccountSettingsMenu = [
   {
     id: 2,
     title: "Social Profiles",
-    link: "/:ecosystemDomain/User-social-profile",
+    link: `/${ecosystemDomain}/User-social-profile`,
     icon: "refresh-cw",
   },
   // {
@@ -104,13 +106,13 @@ export const AccountSettingsMenu = [
   {
     id: 5,
     title: "Resolution",
-    link: "/:ecosystemDomain/User-Resolution",
+    link: `/${ecosystemDomain}/User-Resolution`,
     icon: "help-circle",
   },
   {
     id: 4,
     title: "Delete Profile",
-    link: "/:ecosystemDomain/User-delete-profile",
+    link: `/${ecosystemDomain}/User-delete-profile`,
     icon: "trash",
   },
   {
