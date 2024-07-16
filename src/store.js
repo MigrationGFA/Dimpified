@@ -9,6 +9,7 @@ import registerReducer from "./features/Register"
 import serviceReducer from './features/service';
 import ecosystemReducer from './features/ecosystem'; 
 import form1Reducer from "./features/Template/Form1"
+import productReducer from './features/product';
 
 const persistConfig = {
   key: 'root',
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   course: courseReducer,
   ecosystem: ecosystemReducer, 
   service: serviceReducer,
-  register: registerReducer
+  register: registerReducer,
+  product: productReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

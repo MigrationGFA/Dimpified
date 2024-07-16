@@ -325,7 +325,7 @@ const Service = ({ submit, onPrevious }) => {
       case "deliveryTime":
         setEditDeliveryTime(value);
         break;
-      case "jobSalaryFormat":
+      case "priceFormat":
         setEditPriceFormat(value);
         break;
       default:
