@@ -25,25 +25,45 @@ import CheckedMark from "../../../../../assets/images/svg/checked-mark.svg";
 import ReviewsTab from "./ReviewsTab";
 import DescriptionTab from "./DescriptionTab";
 import NavbarDefault from "../../../../../Pages/Pages/home-academy/navbars/NavbarDefault";
-import PaystackPop from "@paystack/inline-js";
 import { showToast } from "../../../../../Components/Showtoast";
-// import { useGlobalContext } from "../../../../../context/AuthContext";
-import { toast } from "react-toastify";
-import { usePaystackPayment } from "react-paystack";
-import { PaystackButton } from "react-paystack";
+import { useSelector } from "react-redux";
 
 const CourseSingle = () => {
-  const [isOpen, setOpen] = useState(false);
   const [courseData, setCourseData] = useState(null);
-  // const [instructorDeatils, setInstructorDeatils] = useState(null);
-  // const [requirement, setRequirement] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+
   const [loading, setLoading] = useState(false);
-  const [blurBackground, setBlurBackground] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [notLogin, setNotLogin] = useState(false);
+  const [navigatePage, setNavigatePage] = useState(false);
+  const [navigateLoginPage, setNavigateLoginPage] = useState(false);
 
   const location = useLocation();
   let { ecosystemDomain, id } = useParams();
+
+  const user = useSelector((state) => state.authentication.user);
+
+  useEffect(() => {
+    if (user === null) {
+      setNotLogin(true);
+    }
+  }, [user]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ecosystemDomain) {
+      setNavigatePage(true);
+      setNavigateLoginPage(true);
+    }
+  }, [ecosystemDomain]);
+
+  const handleLoginNavigate = () => {
+    if (navigateLoginPage) {
+      navigate(`/${ecosystemDomain}/signin`);
+    } else {
+      navigate(`/${ecosystemDomain}`);
+    }
+  };
 
   // flutterwave payment
   const generateTxRef = () => {
@@ -59,14 +79,14 @@ const CourseSingle = () => {
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
     customer: {
-      email: "samuelmakinde19@gmail.com",
+      email: user.data.email,
       phone_number: "09064000000",
-      name: "username",
+      name: user.data.username,
     },
     customizations: {
       title: "Course Purchase Payment",
       description: "Course Purchase Payment",
-      logo: "https://res.cloudinary.com/djhnaee9k/image/upload/v1714038296/et5gicqtnuw4u1tqujjr.png",
+      logo: sessionStorage.getItem("ecoLogo"),
     },
   });
 
@@ -92,59 +112,6 @@ const CourseSingle = () => {
       showToast(error.response.data.message);
     }
   };
-
-  // // const { email, user } = useGlobalContext;
-  // const emailUser = sessionStorage.getItem("email");
-  // const UserId = sessionStorage.getItem("UserId");
-
-  // const coursePrice = sessionStorage.getItem("price");
-  // const amountValue = parseFloat(coursePrice);
-  // const componentProps = {
-  //   email: emailUser,
-  //   amount: amountValue * 100,
-  //   metadata: {
-  //     name: sessionStorage.getItem("username"),
-  //   },
-  //   publicKey: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
-  //   text: loading ? "Processing" : "Paystack",
-  //   onSuccess: (reference) => {
-  //     setLoading(true);
-  //     console.log("this is reference", reference.reference);
-  //     axios
-  //       .post(
-  //         "https://remsana-backend-testing.azurewebsites.net/api/v1/verify-payment",
-  //         {
-  //           reference: reference.reference,
-  //           email: emailUser,
-  //           courseId: courseId,
-  //           userId: UserId,
-  //         }
-  //       )
-  //       .then((response) => {
-  //         if (response.data.message === "Course Purchased Successfully") {
-  //           showToast(response.data.message);
-  //           navigate("/student-My-Course/Learning");
-  //           setOpenModal(true);
-  //           setBlurBackground(true); // Apply blur effect when modal is open
-  //         } else {
-  //           showToast("payment for course not verify");
-  //           // Handle other response statuses if needed
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         showToast("An error occurred during payment verification");
-  //       })
-  //       .finally(() => {
-  //         setLoading(false);
-  //       });
-  //   },
-  //   onClose: () => {
-  //     setLoading(false);
-  //     showToast("You have canceled the transaction");
-  //   },
-  // };
-
-  // const [relatedCourses, setRelatedCouses] = useState(null);
 
   useEffect(() => {
     fetchCourseData();
@@ -355,19 +322,25 @@ const CourseSingle = () => {
                     </Button>
                   </div> */}
                   <div className="d-grid" style={{ height: "50px" }}>
-                    <Button
-                      variant="primary"
-                      onClick={() =>
-                        handleFlutterPayment({
-                          callback: (response) => {
-                            verifyFlutterwave(response.transaction_id);
-                            closePaymentModal(); // this will close the modal programmatically
-                          },
-                        })
-                      }
-                    >
-                      Purchase Course
-                    </Button>
+                    {notLogin ? (
+                      <Button variant="primary" onClick={handleLoginNavigate}>
+                        Login
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          handleFlutterPayment({
+                            callback: (response) => {
+                              verifyFlutterwave(response.transaction_id);
+                              closePaymentModal(); // this will close the modal programmatically
+                            },
+                          })
+                        }
+                      >
+                        Purchase Course
+                      </Button>
+                    )}
                   </div>
                 </Card.Body>
               </Card>
