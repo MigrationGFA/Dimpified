@@ -20,7 +20,6 @@ import NavbarDefault from "../Pages/Pages/home-academy/navbars/NavbarDefault";
 // import media files
 import Avatar3 from "../assets/images/avatar/person.png";
 
-
 const ProfileLayout = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -69,7 +68,11 @@ const ProfileLayout = (props) => {
       <section className="pt-5 pb-5">
         <Container>
           {/* User info */}
-          <ProfileCover dashboardData={dashboardData} ServiceButton={ServiceButton} ProductButton={ProductButton}/>
+          <ProfileCover
+            dashboardData={dashboardData}
+            ServiceButton={ServiceButton}
+            ProductButton={ProductButton}
+          />
 
           {/* Content */}
           <Row className="mt-0 mt-md-4">
@@ -79,14 +82,12 @@ const ProfileLayout = (props) => {
                 className="navbar navbar-expand-md navbar-light shadow-sm mb-4 mb-lg-0 sidenav"
               >
                 <div className="d-flex">
-                
-                <Link
-                  className="btn btn-primary d-xl-none d-lg-none d-md-none text-inherit fw-bold fs-5 float-start py-1"
-                  to="/Instructordashboard/instructor-add-new-course"
-                >
-                  Create New Course
-                </Link>
-
+                  <Link
+                    className="btn btn-primary d-xl-none d-lg-none d-md-none text-inherit fw-bold fs-5 float-start py-1"
+                    to="/Instructordashboard/instructor-add-new-course"
+                  >
+                    Create New Course
+                  </Link>
                 </div>
                 <Navbar.Toggle
                   aria-controls="basic-navbar-nav"
@@ -110,44 +111,7 @@ const ProfileLayout = (props) => {
                     <Nav.Item className="navbar-header" as="li">
                       Dashboard
                     </Nav.Item>
-                    {DashboardMenu.map((item, index) => (
-                      <Nav.Item
-                        as="li"
-                        key={index}
-                        className={`${
-                          item.link === location.pathname ? "active" : ""
-                        }`}
-                      >
-                        <Link className="nav-link" to={item.link}>
-                          <i className={`fe fe-${item.icon} nav-icon`}></i>
-                          {item.title}
-                        </Link>
-                      </Nav.Item>
-                    ))}
-                    {/* <Nav.Item className="navbar-header mt-4" as="li">
-                      ACCOUNT SETTINGS
-                    </Nav.Item>
-                    {AccountSettingsMenu.map((item, index) => (
-                      <Nav.Item
-                        as="li"
-                        key={index}
-                        className={`${
-                          item.link === location.pathname ? "active" : ""
-                        }`}
-                      >
-                        {item.title === "Sign Out" ? (
-                          <button className="nav-link" onClick={handleLogout}>
-                            <i className={`fe fe-${item.icon} nav-icon`}></i>
-                            {item.title}
-                          </button>
-                        ) : (
-                          <Link className="nav-link" to={item.link}>
-                            <i className={`fe fe-${item.icon} nav-icon`}></i>
-                            {item.title}
-                          </Link>
-                        )}
-                      </Nav.Item>
-                    ))} */}
+                    <DashboardMenu />
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>

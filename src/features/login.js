@@ -58,9 +58,9 @@ export const ecosystemLogin = createAsyncThunk('ecosystemUser/login', async ({ e
         }
     }
     catch (error) {
-        if (error.response && error.response.data.message) {
+        if (error.response && error.response.data.msg) {
             console.log("this is if error")
-            return rejectWithValue(error.response.data.message)
+            return rejectWithValue(error.response.data.msg)
         } else {
             console.log("this is else error")
 

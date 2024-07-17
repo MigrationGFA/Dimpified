@@ -9,25 +9,9 @@ import {
 } from "../../routes/marketing/StudentDashboard";
 import Avatar3 from "../../assets/images/avatar/person.png";
 import ProfileCover from "../../Components/marketing/common/headers/ProfileCover";
-import axios from "axios";
-import { showToast } from "../../Components/Showtoast";
-// import { useGlobalContext } from "../../context/AuthContext";
 
 const StudentProfileLayout = (props) => {
   const location = useLocation();
-  const [showChildren, setShowChildren] = useState(false);
-  const navigate = useNavigate();
-  // const { userId, setUser, setUserRole, setUserImage } = useGlobalContext();
-
-  const handleMyCoursesClick = () => {
-    setShowChildren(!showChildren);
-  };
-
-  const { ecosystemDomain } = useParams();
-
-  // Generate the menu arrays
-  // const dashboardMenu = DashboardMenu({ ecosystemDomain });
-  // const accountSettingsMenu = AccountSettingsMenu({ ecosystemDomain });
 
   const user = sessionStorage.getItem("username");
   const image = sessionStorage.getItem("image");
@@ -97,119 +81,11 @@ const StudentProfileLayout = (props) => {
                     <Nav.Item className="navbar-header" as="li">
                       Dashboard
                     </Nav.Item>
-                    {/* {dashboardMenu.map((item, index) => (
-                      <Nav.Item
-                        as="li"
-                        key={index}
-                        className={`${
-                          item.link === location.pathname ? "active" : ""
-                        }`}
-                      >
-                        <Nav.Link href={item.link}>
-                          <i className={`icon-${item.icon}`}></i>
-                          {item.title}
-                        </Nav.Link>
-                        {item.children && (
-                          <Nav as="ul" className="flex-column">
-                            {item.children.map((child, childIndex) => (
-                              <Nav.Item
-                                as="li"
-                                key={childIndex}
-                                className={`${
-                                  child.link === location.pathname
-                                    ? "active"
-                                    : ""
-                                }`}
-                              >
-                                <Nav.Link href={child.link}>
-                                  <i className={`icon-${child.icon}`}></i>
-                                  {child.title}
-                                </Nav.Link>
-                              </Nav.Item>
-                            ))}
-                          </Nav>
-                        )}
-                      </Nav.Item>
-                    ))} */}
-                    {DashboardMenu.map((item, index) => (
-                      <Nav.Item
-                        as="li"
-                        key={index}
-                        className={`${
-                          item.link === location.pathname ? "active" : ""
-                        }`}
-                      >
-                        <Link
-                          className="nav-link d-flex justify-content-between align-items-center"
-                          to={item.link}
-                          onClick={
-                            item.children ? handleMyCoursesClick : undefined
-                          }
-                        >
-                          <div>
-                            <i className={`fe fe-${item.icon} nav-icon`}></i>
-                            {item.title}
-                          </div>
-                          {item.children && (
-                            <i
-                              className={`fe ${
-                                showChildren
-                                  ? "fe-chevron-up"
-                                  : "fe-chevron-down"
-                              }`}
-                            ></i>
-                          )}
-                        </Link>
-                        {item.children && showChildren && (
-                          <ul className="submenu">
-                            {item.children.map((childItem, childIndex) => (
-                              <li key={childIndex}>
-                                <Link
-                                  to={childItem.link}
-                                  className={`${
-                                    childItem.link === location.pathname
-                                      ? "active"
-                                      : ""
-                                  }`}
-                                >
-                                  <i className={`fe fe-${childItem.icon}`}></i>
-                                  {childItem.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </Nav.Item>
-                    ))}
-
+                    <DashboardMenu />
                     <Nav.Item className="navbar-header mt-4" as="li">
                       ACCOUNT SETTINGS
                     </Nav.Item>
-                    {AccountSettingsMenu.map((item, index) => (
-                      <Nav.Item
-                        as="li"
-                        key={index}
-                        className={`${
-                          item.link === location.pathname ? "active" : ""
-                        }`}
-                      >
-                        {item.title === "Sign Out" ? (
-                          <button
-                            className="nav-link"
-                            onClick=""
-                            // {handleLogout}
-                          >
-                            <i className={`fe fe-${item.icon} nav-icon`}></i>
-                            {item.title}
-                          </button>
-                        ) : (
-                          <Link className="nav-link" to={item.link}>
-                            <i className={`fe fe-${item.icon} nav-icon`}></i>
-                            {item.title}
-                          </Link>
-                        )}
-                      </Nav.Item>
-                    ))}
+                    <AccountSettingsMenu />
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
