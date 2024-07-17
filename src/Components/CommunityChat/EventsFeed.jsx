@@ -29,13 +29,19 @@ const events = [
     name: 'Event Four',
     date: 'October 15, 2024',
   },
+  {
+    id: 5,
+    image: '/images/event4.jpg', // Replace with actual image paths
+    name: 'Event Five',
+    date: 'May 5, 2024',
+  },
   // Add more events as needed
 ];
 
 const GDGRightside = () => {
   return (
     <div className="gdg-rightside">
-      <h5 className="gdg-rightside-heading">Events for you</h5>
+      <h3 className="gdg-rightside-heading font-text-bold text-center">Events for you</h3>
       {events.map(event => (
         <Card className="mb-3" key={event.id}>
           <Card.Body className="gdg-card-body">

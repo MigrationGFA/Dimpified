@@ -1,0 +1,85 @@
+.two-layered-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%; /* Adjust width as needed */
+  margin: 20px 0; /* Adjust to align with other content */
+}
+
+.upper-layer {
+  position: relative;
+  height:200px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  color: #888;
+  text-align: center;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  border-radius: 60%;
+  cursor: pointer;
+}
+/* 
+.divider {
+  position: relative;
+  height: 50px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+} */
+
+.logo-preview {
+  height: 40px;
+  object-fit: contain;
+}
+
+/* .placeholder-logo {
+  color: #888;
+  text-align: center;
+} */
+
+.logo-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.lower-layer {
+  height: 80px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.lower-layer p {
+  margin: 0;
+  text-align: center;
+  color: #333;
+}

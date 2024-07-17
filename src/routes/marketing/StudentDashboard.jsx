@@ -32,6 +32,12 @@ export const DashboardMenu = [
     link: "/User-Reviews",
     icon: "star",
   },
+  {
+		id: 5,
+		title: 'Community Chat',
+		link: '/dimp/community-chat',
+		icon: 'users'
+	},
   // {
   // 	id: 3,
   // 	title: 'Earnings',

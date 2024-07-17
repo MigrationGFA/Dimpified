@@ -117,6 +117,7 @@ import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/Ecosys
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
+import CommunityChat from "../Components/CommunityChat/Page";
 
 const AllRoutes = () => {
   return (
@@ -249,6 +250,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
+      <Route path="/dimp/community-chat" element={<CommunityChat />} />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
         element={<EcosystemQuiz />}
@@ -345,6 +347,7 @@ const AllRoutes = () => {
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+      {/* dimp Community Chat */}
     </Routes>
   );
 };

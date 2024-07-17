@@ -25,18 +25,24 @@ export const DashboardMenu = [
 	},
 	{
 		id: 5,
+		title: 'Community Chat',
+		link: '/dimp/community-chat',
+		icon: 'users'
+	},
+	{
+		id: 6,
 		title: 'Orders',
 		link: '/Ecosystemdashboard/Ecosystem-orders',
 		icon: 'shopping-bag'
 	},
 	{
-		id: 6,
+		id: 7,
 		title: 'Students',
 		link: '/Ecosystemdashboard/Ecosystem-students',
 		icon: 'users'
 	},
 	{
-		id: 7,
+		id: 8,
 		title: 'Payouts',
 		link: '/Ecosystemdashboard/Ecosystem-payouts',
 		icon: 'dollar-sign'
