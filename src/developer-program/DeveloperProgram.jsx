@@ -5,6 +5,7 @@ import Updates from "./components/Updates";
 import Events from "./components/Events";
 import Awards from "./components/Awards";
 import { Container } from "react-bootstrap";
+import Footer from "./components/Footer";
 
 const DeveloperProgram = () => {
   return (
@@ -31,6 +32,9 @@ const DeveloperProgram = () => {
         {/* Events Section */}
         <Events />
       </Container>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

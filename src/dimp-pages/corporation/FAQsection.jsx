@@ -34,10 +34,10 @@ const FAQsection = () => {
                   <h3>What support do you provide to ecosystem creators??</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  We offer comprehensive support to our ecosystem creators? including
-                  training on how to use our platform, access to our course
-                  resource library, marketing assistance, and ongoing technical
-                  support.
+                  We offer comprehensive support to our ecosystem creators?
+                  including training on how to use our platform, access to our
+                  course resource library, marketing assistance, and ongoing
+                  technical support.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="2">
@@ -54,54 +54,56 @@ const FAQsection = () => {
               </Accordion.Item>
               <Accordion.Item eventKey="3">
                 <Accordion.Header>
-                  <h3>How do I create and upload my course content?</h3>
+                  <h3>
+                    How do we create and upload our digital products like
+                    courses?
+                  </h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Once you are register as an instructor, you will receive
+                  Once you are register as an ecosystem creator, you will get
                   access to your ecosystem. You can upload video lectures,
                   documents, quizzes, and other materials through our
-                  easy-to-use content management system.
+                  products/service section
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="4">
                 <Accordion.Header>
-                  <h3>Can I set my own course prices?</h3>
+                  <h3>Can we set my own digital product prices?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Yes, as an instructor, you have the flexibility to set your
-                  own course prices. We also offer guidance on pricing
-                  strategies to help you maximize your earnings and reach a
-                  wider audience.
+                  Yes,you have the flexibility to set your own prices. We also
+                  offer guidance on pricing strategies to help you maximize your
+                  earnings and reach a wider audience.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="5">
                 <Accordion.Header>
-                  <h3>How are earnings calculated and paid out?</h3>
+                  <h3>How does the platform support corporate growth?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Earnings are calculated based on the number of enrollments and
-                  the course price. We offer several payout options, including
-                  direct bank transfers and Flutterwave. Payments are made on a
-                  monthly basis.
+                  Our platform scales with your corporate business. As you grow, you can
+                  add new features, expand your service offerings, and manage
+                  increasing client volumes without compromising performance or
+                  user experience. Our analytics tools also provide valuable
+                  insights to help you make data-driven decisions.
                 </Accordion.Body>
               </Accordion.Item>
-              <Accordion.Item eventKey="5">
+              <Accordion.Item eventKey="6">
                 <Accordion.Header>
-                  <h3>
-                    How do I get feedback on my teaching and course content?
-                  </h3>
+                  <h3>What kind of support is available if I need help?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Our platform provides various ways to receive feedback
-                  including student reviews, ratings, and direct feedback
-                  through Q&A sessions.
+                  We offer comprehensive support to our users. Whether you need
+                  technical assistance or have questions about using our
+                  features, our dedicated support team is here to help you every
+                  step of the way.
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
           </Col>
         </Row>
         <div className="mt-10 text-center">
-          <Link to="#" className="btn btn-lg btn-primary">
+          <Link to="/creator/signup" className="btn btn-lg btn-primary">
             Sold yet? Get Started Now!
           </Link>
         </div>

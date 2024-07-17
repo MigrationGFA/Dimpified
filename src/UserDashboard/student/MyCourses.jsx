@@ -93,8 +93,8 @@ const MyCourses = () => {
           const course = row.original;
           const link =
             course.status === "Learning"
-              ? `/student/single/learning/single-course?id=${course._id}`
-              : `/student/single-course?id=${course._id}`;
+              ? `/:ecosystemDomain/User/single/learning/single-course?id=${course._id}`
+              : `/:ecosystemDomain/:id`;
           return (
             <div className="d-lg-flex">
               <div>

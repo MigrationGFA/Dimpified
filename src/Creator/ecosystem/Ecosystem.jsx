@@ -91,6 +91,11 @@ const Ecosystem = () => {
     getMyEcosystemData();
   }, [creatorId]);
 
+  const saveEcoLogo = (ecoLogo) => {
+    console.log("this is the logo", ecoLogo);
+    sessionStorage.setItem("ecoLogo", ecoLogo);
+  };
+
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -238,6 +243,9 @@ const Ecosystem = () => {
                                 href={`https://dimpified.com/${eco.ecosystemDomain}/Ecosystemdashboard`}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() =>
+                                  saveEcoLogo(eco.templateLogos[0].logoPath)
+                                }
                               >
                                 <Button
                                   variant="primary"

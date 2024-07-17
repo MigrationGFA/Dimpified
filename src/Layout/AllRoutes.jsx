@@ -103,8 +103,6 @@ import EcosystemPayouts from "../DashboardsPeerComponents/account-settings/Payou
 import EcosystemQuiz from "../EcosystemDashboard/Quiz";
 import EcosystemQuizSingle from "../EcosystemDashboard/QuizSingle";
 import EcosystemQuizResult from "../EcosystemDashboard/QuizResult";
-import EcosystemAddNewCourse from "../EcosystemDashboard/AddNewCourse";
-import EcosystemAddEditCourse from "../EcosystemDashboard/EditAddNewCourse";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
 import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
@@ -163,18 +161,7 @@ const AllRoutes = () => {
         path="/creator/dashboard/Preview-and-Send"
         element={<PreviewAndSend />}
       />
-      <Route
-        path="/Ecosystemdashboard/Add-New-Course"
-        element={<AddNewCourse />}
-      />
-      <Route
-        path="/Ecosystemdashboard/Add-New-Service"
-        element={<PostAService />}
-      />
-      <Route
-        path="/creator/dashboard/Add-New-Product"
-        element={<PostAProduct />}
-      />
+
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       <Route element={<ChatLayout />}>
@@ -239,7 +226,7 @@ const AllRoutes = () => {
       />
 
       <Route
-        path="/Ecosystemdashboard/Ecosystem-orders"
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
       />
       <Route
@@ -264,12 +251,16 @@ const AllRoutes = () => {
         element={<EcosystemQuizResult />}
       />
       <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-add-new-course"
-        element={<EcosystemAddNewCourse />}
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Course"
+        element={<AddNewCourse />}
       />
       <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-edit-course"
-        element={<EcosystemAddEditCourse />}
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Service"
+        element={<PostAService />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Product"
+        element={<PostAProduct />}
       />
 
       {/* End user ecosystem routes */}
@@ -329,7 +320,7 @@ const AllRoutes = () => {
         element={<UserDeleteProfile />}
       />
       <Route
-        path="/:ecosystemDomain/User-Resolution"
+        path="/:ecosystemDomain/help-center"
         element={<UserResolution />}
       />
       <Route

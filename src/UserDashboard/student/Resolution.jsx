@@ -102,11 +102,8 @@ const Resolution = () => {
             <Card.Header>
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <h3 className="mb-0">Conflict Resolution</h3>
-                  <p className="mb-0">
-                    Manage your conflict resolutions and its update like
-                    pending, resolving, and finalized
-                  </p>
+                  <h3 className="mb-0">Help Center</h3>
+                  <p className="mb-0">Track your support ticket</p>
                 </div>
                 {/* <Button variant="primary" onClick={handleResolutionRequest}>
                   Resolution Request
@@ -116,7 +113,7 @@ const Resolution = () => {
                   onClick={handleResolutionRequest}
                   className="btn-sm btn-lg"
                 >
-                  Resolution Request
+                  Create Ticket
                 </Button>
               </div>
             </Card.Header>
