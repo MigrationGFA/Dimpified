@@ -160,7 +160,7 @@ const AllRoutes = () => {
         path="/creator/dashboard/Preview-and-Send"
         element={<PreviewAndSend />}
       />
-      
+
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       <Route element={<ChatLayout />}>
@@ -318,7 +318,7 @@ const AllRoutes = () => {
         element={<UserDeleteProfile />}
       />
       <Route
-        path="/:ecosystemDomain/User-Resolution"
+        path="/:ecosystemDomain/help-center"
         element={<UserResolution />}
       />
       <Route
