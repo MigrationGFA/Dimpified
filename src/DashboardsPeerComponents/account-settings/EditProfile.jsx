@@ -35,7 +35,7 @@ const EditProfile = () => {
       try {
         if (!userId) return; // Ensure userId is defined
         const response = await axios.get(
-          `https://dimpified-backend-development.azurewebsites.net/api/v1/ecosystem-profile/${userId}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-profile/${userId}`
         );
         const userData = response.data.userDetails;
         setFormData({
@@ -47,10 +47,7 @@ const EditProfile = () => {
           country: userData.country || "",
           address: userData.address || "",
           zipCode: userData.zipCode || "",
-          imageUrl: userData.imageUrl || null,
-          email: "", // Assuming email is not returned from the endpoint
-          portfolio: userData.portfolio || null, 
-          description: userData.description || null, 
+          imageUrl: userData.imageUrl || null, 
         });
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -70,7 +67,7 @@ const EditProfile = () => {
         formDataToSend.append(key, value);
       });
   
-      const response = await axios.post(
+      const response = await axios.put(
         `https://remsana-backend-testing.azurewebsites.net/api/v1/update-profile/${userId}`,
         formDataToSend
       );
@@ -208,7 +205,7 @@ const EditProfile = () => {
               <Row>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formFirstName">
-                    <Form.Label>First Name</Form.Label>
+                    <Form.Label>Profile 1</Form.Label>
                     <Form.Control
                       type="text"
                       name="firstName"
@@ -221,7 +218,7 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formLastName">
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Profile 2</Form.Label>
                     <Form.Control
                       type="text"
                       name="lastName"
@@ -234,7 +231,7 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formPhone">
-                    <Form.Label>Phone</Form.Label>
+                    <Form.Label>Profile 2</Form.Label>
                     <Form.Control
                       type="text"
                       name="contact"
@@ -247,11 +244,11 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formBirthday">
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label>Profile 4</Form.Label>
                     <Form.Control
                       type="text"
                       name="username"
-                      placeholder="Date of Birth"
+                      placeholder="Username"
                       required
                       value={formData.username}
                       onChange={handleChange}
@@ -261,26 +258,21 @@ const EditProfile = () => {
                
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formCity">
-                    <Form.Label>State</Form.Label>
-                    <Form.Select
+                    <Form.Label>Profile 5</Form.Label>
+                    <Form.Control
                       type="text"
                       name="city"
                       required
+                      placeholder="city"
                       value={formData.city}
                       onChange={handleChange}
-                    >
-                    <option value="">Select Your State</option>
-                    {stateList.map((states, index) => (
-                      <option key={index} value={states.value}>
-                        {states.label}
-                      </option>
-                    ))}
-                    </Form.Select>
+                    />
+                   
                   </Form.Group>
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formZipCode">
-                    <Form.Label>ZipCode</Form.Label>
+                    <Form.Label>Profile 6</Form.Label>
                     <Form.Control
                       type="text"
                       name="zipCode"
@@ -292,26 +284,19 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formCountry">
-                    <Form.Label>Country</Form.Label>
-                    <Form.Select
+                    <Form.Label>Profile 7</Form.Label>
+                    <Form.Control
                       type="text"
                       name="country"
                       required
                       value={formData.country}
                       onChange={handleChange}
-                    >
-                     <option value="">Select Your Country</option>
-                    {countryList.map((countries, index) => (
-                      <option key={index} value={countries.value}>
-                        {countries.label}
-                      </option>
-                    ))}
-                    </Form.Select>
+                    />
                   </Form.Group>
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formAddress">
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label>Profile 8</Form.Label>
                     <Form.Control
                       type="text"
                       name="address"

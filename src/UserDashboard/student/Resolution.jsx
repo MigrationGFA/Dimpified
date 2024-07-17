@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Spinner, Tab, Modal } from "react-bootstrap";
-import { FormSelect } from "../../Components/elements/form-select/FormSelect";
+import { Button, Card, Spinner, Tab, Modal, FormSelect, Form } from "react-bootstrap";
 import StudentProfileLayout from "./StudentProfileLayout";
 import ResolutionTable from "./ResolutionTable";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
-import { useGlobalContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 const Resolution = () => {
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+  const { ecosystemDomain } = useParams();
   const [resolution, setResolution] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showResolutionModal, setShowResolutionModal] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // const { userId, userRole } = useGlobalContext();
 
   const allJobsHeader = [
     { accessorKey: "id", header: "Id" },
@@ -52,13 +54,27 @@ const Resolution = () => {
     setMessage("");
   };
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Selected Contact:", selectedContact);
-    console.log("Message:", message);
-
-    // Reset state and close modal
-    handleCloseModal();
+  const handleResolutionSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/enduser-help-requests`,
+        {
+          userId,
+          reason: selectedContact,
+          message,
+          ecosystemDomain,
+        }
+      );
+      setLoading(false);
+      handleCloseModal();
+      showToast(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      showToast(error.response.data.message);
+    }
   };
 
   const contactOptions = [
@@ -68,31 +84,6 @@ const Resolution = () => {
     { value: "Payment Withdrawal", label: "Payment Withdrawal" },
     { value: "Non Payment", label: "Non Payment" },
   ];
-
-  const handleResolutionSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    console.log("this is submit");
-    console.log("Selected Contact:", selectedContact);
-    try {
-      const response = await axios.post(
-        "https://unleashified-backend.azurewebsites.net/api/v1/create-conflicts",
-        {
-          userId: userId,
-          role: userRole,
-          reason: selectedContact,
-          message: message,
-        }
-      );
-      setLoading(false);
-      handleCloseModal();
-      showToast(response.data.message);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      // showToast(error.response.data.message);
-    }
-  };
 
   return (
     <StudentProfileLayout>
@@ -105,9 +96,6 @@ const Resolution = () => {
                   <h3 className="mb-0">Help Center</h3>
                   <p className="mb-0">Track your support ticket</p>
                 </div>
-                {/* <Button variant="primary" onClick={handleResolutionRequest}>
-                  Resolution Request
-                </Button> */}
                 <Button
                   variant="primary"
                   onClick={handleResolutionRequest}
@@ -137,25 +125,36 @@ const Resolution = () => {
         </Tab.Container>
       </Card>
 
-      {/* Resolution Request Modal */}
       <Modal show={showResolutionModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Resolution Request</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormSelect
-            options={contactOptions}
-            value={selectedContact}
-            onChange={(event) => setSelectedContact(event.target.value)}
-            placeholder="Select Reason..."
-          />
-          <textarea
-            className="form-control mt-3"
-            rows="5"
-            placeholder="Enter your message..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
+          <Form.Group>
+            <Form.Label>Reason</Form.Label>
+            <Form.Select
+              value={selectedContact}
+              name="reason"
+              onChange={(e) => setSelectedContact(e.target.value)}
+              placeholder="Select Reason..."
+            >
+              {contactOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>Message</Form.Label>
+            <textarea
+              className="form-control"
+              rows="5"
+              placeholder="Enter your message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
