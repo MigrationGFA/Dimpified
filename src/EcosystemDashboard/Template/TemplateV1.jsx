@@ -68,7 +68,7 @@ const TemplateV1 = () => {
         );
         setDetails(response.data.templateDetails);
         sessionStorage.setItem(
-          "Logo",
+          "ecoLogo",
           response.data.templateDetails.navbar.logo
         );
       } catch (error) {
