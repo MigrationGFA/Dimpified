@@ -232,11 +232,11 @@ const Courses = () => {
             </p>
       
             <div>
-              {courses.length > 0 && (
+              {courses && courses.length > 0 && (
                 <div>
                   <h4>Courses</h4>
-                  {courses.map((course) => (
-                    <Card className="mb-3">
+                  {courses.map((course, item) => (
+                    <Card key={item} className="mb-3">
                       <Card.Body>
                         <Card.Title>{course.courseTitle}</Card.Title>
                         <Card.Text>{course.subCategory}</Card.Text>
@@ -247,11 +247,11 @@ const Courses = () => {
                 </div>
               )}
       
-              {services.length > 0 && (
+              { services && services.length > 0 && (
                 <div>
                   <h4>Services</h4>
-                  {services.map((service) => (
-                    <Card className="mb-3">
+                  {services.map((service, index) => (
+                    <Card key={index} className="mb-3">
                       <Card.Body>
                         <Card.Title>{service.header}</Card.Title>
                         <Card.Text>{service.category}</Card.Text>
@@ -262,7 +262,7 @@ const Courses = () => {
                 </div>
               )}
       
-              {digitalProducts.length > 0 && (
+              {digitalProducts && digitalProducts.length > 0 && (
                 <div>
                   <h4>Digital Products</h4>
                   {digitalProducts.map((product) => (

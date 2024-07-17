@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 
 const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
   const user = useSelector((state) => state.authentication.user.data);
+  
   return (
     <Row className="align-items-center">
       <Col xl={12} lg={12} md={12} sm={12}>
