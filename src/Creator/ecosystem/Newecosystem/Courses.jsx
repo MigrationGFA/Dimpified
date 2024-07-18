@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, ProgressBar, Card, Button } from "react-bootstrap";
 import EcoHeader from "./ecoHeader";
+import { useSelector } from "react-redux";
 import AddNewCourse from "../AddNewCourse";
 import PostAService from "./PostAService/PostAService";
 import PostAProduct from "./PostAProduct/PostAProduct";
@@ -16,6 +17,12 @@ const Courses = () => {
   const [showPostService, setShowPostService] = useState(false);
   const [showPostProduct, setShowPostProduct] = useState(false);
   const navigate = useNavigate();
+  const courses = useSelector((state) => state.course);
+  console.log(courses)
+  const services = useSelector((state) => state.service);
+  console.log(services)
+  const digitalProducts = useSelector((state) => state.product);
+  console.log(digitalProducts)
 
   const handleCreateNewCourse = () => {
     setStep(2);
@@ -103,7 +110,7 @@ const Courses = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-                {/* <Col md={3} className="mt-1 md-mt-0">
+                <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
                     onClick={handleProduct}
@@ -116,7 +123,7 @@ const Courses = () => {
                       >
                         Add Digital Product
                       </Card.Title>
-                      <div style={{ height: "150px" }}>
+                      <div style={{ height: "190px" }}>
                         <Card.Img variant="top" src={DigitalImg} />
                       </div>
 
@@ -125,7 +132,7 @@ const Courses = () => {
                       </Card.Text>
                     </Card.Body>
                   </Card>
-                </Col> */}
+                </Col>
                 <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
@@ -219,20 +226,67 @@ const Courses = () => {
           )}
           {step === 3 && (
             <div>
-              <h3>Preview Products</h3>
-              <p className="mt-4">
-                Drag the cards to rearrange your products as you like
-              </p>
-              {/* Render the selected courses here */}
-              <div className="d-flex justify-content-between mt-3">
-                <Button variant="secondary" onClick={() => setStep(2)}>
-                  Back
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-              </div>
+            <h3>Preview Products</h3>
+            <p className="mt-4">
+              Drag the cards to rearrange your products as you like
+            </p>
+      
+            <div>
+              {courses && courses.length > 0 && (
+                <div>
+                  <h4>Courses</h4>
+                  {courses.map((course, item) => (
+                    <Card key={item} className="mb-3">
+                      <Card.Body>
+                        <Card.Title>{course.courseTitle}</Card.Title>
+                        <Card.Text>{course.subCategory}</Card.Text>
+                        {/* Add more course details as needed */}
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              )}
+      
+              { services && services.length > 0 && (
+                <div>
+                  <h4>Services</h4>
+                  {services.map((service, index) => (
+                    <Card key={index} className="mb-3">
+                      <Card.Body>
+                        <Card.Title>{service.header}</Card.Title>
+                        <Card.Text>{service.category}</Card.Text>
+                        {/* Add more service details as needed */}
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              )}
+      
+              {digitalProducts && digitalProducts.length > 0 && (
+                <div>
+                  <h4>Digital Products</h4>
+                  {digitalProducts.map((product) => (
+                    <Card className="mb-3">
+                      <Card.Body>
+                        <Card.Title>{product.category}</Card.Title>
+                        <Card.Text>{product.subCategory}</Card.Text>
+                        {/* Add more digital product details as needed */}
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
+      
+            <div className="d-flex justify-content-between mt-3">
+              <Button variant="secondary" onClick={() => setStep(2)}>
+                Back
+              </Button>
+              <Button variant="primary" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </div>
+          </div>
           )}
         </div>
       </Container>

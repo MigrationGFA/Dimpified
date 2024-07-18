@@ -18,7 +18,7 @@ const ecoHeader = () => {
     { path: "/creator/dashboard/New-Ecosystem", label: "1. About Ecosystem" },
     { path: "/creator/dashboard/Edit-Template", label: "2. Select Template" },
     { path: "/creator/dashboard/Create-Form", label: "3. Select Form" },
-    { path: "/creator/dashboard/Courses", label: "4. Products" },
+    { path: "/creator/dashboard/Products", label: "4. Products" },
     { path: "/creator/dashboard/Integrations", label: "5. Integration" },
     { path: "/creator/dashboard/Payment", label: "6. Payments" },
     { path: "/creator/dashboard/Preview-and-Send", label: "7. Preview and Publish" },

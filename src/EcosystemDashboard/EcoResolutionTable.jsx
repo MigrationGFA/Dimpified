@@ -1,10 +1,10 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Modal, Row, Col, Form } from "react-bootstrap";
-import DotBadge from "../../Components/elements/bootstrap/DotBadge";
-import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
+import DotBadge from "../Components/elements/bootstrap/DotBadge";
+import TanstackTable from "../Components/elements/advance-table/TanstackTable";
 
-const resolutionTable = ({ data, header }) => {
+const ecoResolutionTable = ({ data, header }) => {
   const columns = useMemo(() => {
     return header.map(({ accessorKey, header }) => ({
       header: header,
@@ -84,4 +84,4 @@ const resolutionTable = ({ data, header }) => {
   );
 };
 
-export default resolutionTable;
+export default ecoResolutionTable;

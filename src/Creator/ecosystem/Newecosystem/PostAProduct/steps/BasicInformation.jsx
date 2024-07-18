@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { FormSelect } from "../../../../../Components/elements/form-select/FormSelect2";
 import { useDispatch, useSelector } from "react-redux";
-import { updateServiceData } from "../../../../../features/service";
+import { updateProductData } from "../../../../../features/product";
 import categorySubSection from '../SectionJson';
 
 const BasicInformation = ({ handleNext }) => {
   const dispatch = useDispatch();
-  const service = useSelector((state) => state.service);
+  const product = useSelector((state) => state.product);
 
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const [isOtherCategory, setIsOtherCategory] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(updateServiceData({ [name]: value }));
+    dispatch(updateProductData({ [name]: value }));
     
     if (name === "category") {
       if (value === "Other") {
@@ -29,13 +29,13 @@ const BasicInformation = ({ handleNext }) => {
   };
 
   useEffect(() => {
-    if (service.category && service.category !== "Other") {
-      const subCategories = categorySubSection[service.category] || [];
+    if (product.category && product.category !== "Other") {
+      const subCategories = categorySubSection[product.category] || [];
       setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
     }
-  }, [service.category]);
+  }, [product.category]);
 
-  useEffect(() => {}, [service]);
+  useEffect(() => {}, [product]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const BasicInformation = ({ handleNext }) => {
             <Form.Label>Category</Form.Label>
             <FormSelect
               placeholder="Select Category"
-              selectedValue={service.category}
+              selectedValue={product.category}
               options={categoryOptions}
               id="category"
               name="category"
@@ -74,7 +74,7 @@ const BasicInformation = ({ handleNext }) => {
                 placeholder="Enter SubCategory"
                 id="subCategory"
                 name="subCategory"
-                value={service.subCategory } 
+                value={product.subCategory } 
                 onChange={handleChange}
                 required
               />
@@ -84,7 +84,7 @@ const BasicInformation = ({ handleNext }) => {
               <Form.Label>SubCategory</Form.Label>
               <FormSelect
                 placeholder="Select SubCategory"
-                selectedValue={service.subCategory} 
+                selectedValue={product.subCategory} 
                 options={subCategoryOptions}
                 id="subCategory"
                 name="subCategory"

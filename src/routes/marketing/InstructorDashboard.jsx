@@ -55,6 +55,12 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-payouts`,
       icon: "dollar-sign",
     },
+    {
+      id: 8,
+      title: "Help Center",
+      link: `/${ecosystemDomain}/Ecosystemdashboard/Help-Center`,
+      icon: "help-circle",
+    },
     // {
     // 	id: 8,
     // 	title: 'Quiz',
