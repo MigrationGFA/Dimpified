@@ -13,7 +13,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { showToast } from "../../Components/Showtoast";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import PaginationComponent from "../../Components/elements/advance-table/Pagination"; // Importing PaginationComponent
+import PaginationComponent from "../../Components/elements/advance-table/Pagination";
 
 const FeatureUpdate = () => {
   const [featureName, setFeatureName] = useState("");
@@ -29,41 +29,39 @@ const FeatureUpdate = () => {
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviews, setReviews] = useState([]);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
+  console.log(creatorId);
 
   useEffect(() => {
-    if (creatorId) {
-      const fetchData = async () => {
-        try {
-          setDashboardLoading(true);
-          const [featureResponse, reviewResponse] = await Promise.all([
-            axios.get(
-              `${
-                import.meta.env.VITE_API_URL
-              }/get-a-creator-feature/${creatorId}`
-            ),
-            axios.get(
-              `${
-                import.meta.env.VITE_API_URL
-              }/get-reviews-by-creator/${creatorId}`
-            ),
-          ]);
-          setFeatures(featureResponse.data.featuresByCreator || []);
-          setReviews(reviewResponse.data.reviews || []);
-        } catch (error) {
-          console.error("Error fetching data", error);
-        } finally {
-          setDashboardLoading(false);
-        }
-      };
+    const fetchData = async () => {
+      if (!creatorId) return;
 
-      fetchData();
-    }
+      try {
+        setDashboardLoading(true);
+        const [featureResponse, reviewResponse] = await Promise.all([
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`
+          ),
+          axios.get(
+            `${
+              import.meta.env.VITE_API_URL
+            }/get-reviews-by-creator/${creatorId}`
+          ),
+        ]);
+        setFeatures(featureResponse.data.featuresByCreator || []);
+        setReviews(reviewResponse.data.reviews || []);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      } finally {
+        setDashboardLoading(false);
+      }
+    };
+
+    fetchData();
   }, [creatorId]);
 
   const handleSubmitReview = async () => {
@@ -83,22 +81,21 @@ const FeatureUpdate = () => {
         }
       );
 
-      const { message } = response.data;
-      showToast(message, "success");
+      showToast(response.data.message, "success");
       setRating(0);
       setReviewText("");
       setShowFeedbackModal(false);
 
-      // Refresh reviews
       const reviewResponse = await axios.get(
         `${import.meta.env.VITE_API_URL}/get-reviews-by-creator/${creatorId}`
       );
       setReviews(reviewResponse.data.reviews || []);
     } catch (error) {
-      const errorMessage =
+      showToast(
         error.response?.data?.message ||
-        "Error submitting review. Please try again.";
-      showToast(errorMessage, "error");
+          "Error submitting review. Please try again.",
+        "error"
+      );
     } finally {
       setReviewLoading(false);
     }
@@ -125,23 +122,22 @@ const FeatureUpdate = () => {
         }
       );
 
-      const { message } = response.data;
-      showToast(message, "success");
+      showToast(response.data.message, "success");
       setShowModal(false);
       setFeatureName("");
       setFeatureType("");
       setFeatureDescription("");
 
-      // Refresh features
       const featureResponse = await axios.get(
         `${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`
       );
       setFeatures(featureResponse.data.featuresByCreator || []);
     } catch (error) {
-      const errorMessage =
+      showToast(
         error.response?.data?.message ||
-        "Error submitting feature request. Please try again.";
-      showToast(errorMessage, "error");
+          "Error submitting feature request. Please try again.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -162,6 +158,11 @@ const FeatureUpdate = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const formatDate = (date) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-GB", options);
   };
 
   if (dashboardLoading) {
@@ -276,13 +277,12 @@ const FeatureUpdate = () => {
                   <td>{feature.featureName}</td>
                   <td>{feature.featureType}</td>
                   <td>{feature.featureDescription}</td>
-                  <td>{new Date(feature.createdAt).toLocaleDateString()}</td>
+                  <td>{formatDate(feature.createdAt)}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
 
-          {/* Pagination Component */}
           <div className="d-flex justify-content-center mt-3">
             <PaginationComponent
               totalItems={totalItems}
@@ -300,20 +300,20 @@ const FeatureUpdate = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmitFeature}>
-            <Form.Group controlId="featureName">
+            <Form.Group className="mb-3" controlId="featureName">
               <Form.Label>Feature Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter feature name"
                 value={featureName}
                 onChange={(e) => setFeatureName(e.target.value)}
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="featureType" className="mt-3">
+            <Form.Group className="mb-3" controlId="featureType">
               <Form.Label>Feature Type</Form.Label>
               <Form.Select
+                type="text"
                 value={featureType}
                 onChange={(e) => setFeatureType(e.target.value)}
                 required
@@ -327,33 +327,44 @@ const FeatureUpdate = () => {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group controlId="featureDescription" className="mt-3">
+            <Form.Group className="mb-3" controlId="featureDescription">
               <Form.Label>Feature Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder="Enter feature description"
                 value={featureDescription}
                 onChange={(e) => setFeatureDescription(e.target.value)}
                 required
               />
             </Form.Group>
 
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={loading}
-              className="mt-3"
-            >
-              {loading ? "Submitting..." : "Submit Feature"}
-            </Button>
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="secondary"
+                className="me-2"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />{" "}
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       <Modal
@@ -361,63 +372,63 @@ const FeatureUpdate = () => {
         onHide={() => setShowFeedbackModal(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Give Feedback</Modal.Title>
+          <Modal.Title>Submit Feedback</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="mb-3">
-            <h3 className="mb-4">Give Your Review on this Application</h3>
-            <Row className="align-items-center">
-              <Col xs="auto" className="text-center">
-                <h6>Press any of the stars for your star rating</h6>
-                {[1, 2, 3, 4, 5].map((value) => (
+          <Form onSubmit={handleSubmitReview}>
+            <Form.Group className="mb-3" controlId="rating">
+              <Form.Label>Rating</Form.Label>
+              <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((star) => (
                   <span
-                    key={value}
-                    className="text-warning"
-                    onClick={() => handleStarClick(value)}
+                    key={star}
+                    className={`star ${star <= rating ? "filled" : ""}`}
+                    onClick={() => handleStarClick(star)}
                   >
-                    <i
-                      className={`${value <= rating ? "fas" : "far"} fa-star`}
-                      style={{ cursor: "pointer", fontSize: "24px" }}
-                    />
+                    &#9733;
                   </span>
                 ))}
-                <span className="ms-2 fs-5">{rating}/5</span>
-              </Col>
-            </Row>
-          </div>
+              </div>
+            </Form.Group>
 
-          <div className="w-100 mb-3">
-            <h4 className="mb-3">Write Your Review</h4>
-            <Form className="position-relative">
-              <Form.Group className="mb-3">
-                <Form.Control
-                  as="textarea"
-                  rows={5}
-                  placeholder="Write your review here..."
-                  className="w-100"
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Form>
-          </div>
+            <Form.Group className="mb-3" controlId="reviewText">
+              <Form.Label>Review</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="secondary"
+                className="me-2"
+                onClick={() => setShowFeedbackModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit" disabled={reviewLoading}>
+                {reviewLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />{" "}
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </div>
+          </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="primary"
-            disabled={reviewLoading}
-            onClick={handleSubmitReview}
-          >
-            {reviewLoading ? "Processing..." : "Submit Review"}
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => setShowFeedbackModal(false)}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );

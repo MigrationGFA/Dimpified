@@ -158,7 +158,7 @@ const Service = ({ submit, onPrevious }) => {
 
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemDomain);
 
   const serviceData = useSelector((state) => state.service);
   const {
@@ -239,7 +239,7 @@ const Service = ({ submit, onPrevious }) => {
     }
   
     formData.append("creatorId", creatorId);
-    formData.append("ecosystemId", ecosystemId);
+    formData.append("ecosystemDomain", ecosystemId);
   
     axios
       .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {

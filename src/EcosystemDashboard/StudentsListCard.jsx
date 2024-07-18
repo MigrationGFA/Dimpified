@@ -19,42 +19,42 @@ const StudentsListCard = ({ students }) => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'name',
-                header: 'Name',
+                accessorKey: 'image',
+                header: 'Profile Picture',
                 filter: true, // Enable filtering for this column
                 cell: ({ getValue, row }) => {
                     return (
                         <div className="d-flex align-items-center">
-                            <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" />
+                            <Image src={row.original.imageUrl} alt="" className="rounded-circle avatar-md me-2" />
                             <h5 className="mb-0">{getValue()}</h5>
                         </div>
-                    );
+                    )
                 }
             },
             {
-                accessorKey: 'totalCourses',
-                header: 'Enrolled'
-            },
-            {
-                accessorKey: 'progress',
-                header: 'Progress',
-                cell: ({ row }) => {
-                    const courseTitlesTooltip = (
-                        <Tooltip id={`tooltip-${row.original.id}`}>
-                            {row.original.courseTitles.map((course, index) => (
-                                <span key={index}>{course}<br/></span>
-                            ))}
-                        </Tooltip>
-                    );
+                accessorKey: 'ecosystemDomain',
+                header: 'EcosystemDomain',
+                cell: ({ getValue, row }) => {
                     return (
-                        <OverlayTrigger placement="top" overlay={courseTitlesTooltip}>
-                            <button className="btn btn-sm btn-outline-primary mt-3">
-                                View
-                            </button>
-                        </OverlayTrigger>
+                        <span className="fs-6">
+                            <i className="fe fe-map-pin me-1"></i>
+                             {row.original.ecosystemDomain}
+                        </span>
                     );
                 }
             },
+            {
+                accessorKey: 'name',
+                header: 'Name',
+                cell: ({ getValue, row }) => {
+                    return (
+                        <span className="fs-6">
+                             {row.original.firstName} {row.original.lastName}
+                        </span>
+                    );
+                }
+            },
+           
             {
                 accessorKey: 'state',
                 header: 'Location',
@@ -62,7 +62,7 @@ const StudentsListCard = ({ students }) => {
                     return (
                         <span className="fs-6">
                             <i className="fe fe-map-pin me-1"></i>
-                            {getValue()}, {row.original.country}
+                            {getValue()}, {row.original.address}, {row.original.city}, {row.original.country},  {row.original.zipCode}.
                         </span>
                     );
                 }
@@ -77,7 +77,7 @@ const StudentsListCard = ({ students }) => {
 
     // Filter students based on search term
     const filteredStudents = students.filter(student =>
-        student.name.toLowerCase().includes(searchTerm.toLowerCase())
+        (student.firstName+''+student.lastName).toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (

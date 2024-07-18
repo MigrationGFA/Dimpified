@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
-  updateServiceData,
+  updateProductData,
   addBackgroundCover,
   removeBackgroundCover,
-} from "../../../../../features/service";
+} from "../../../../../features/product";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
-  const service = useSelector((state) => state.service) || {};
+  const product = useSelector((state) => state.product) || {};
 
   const currencyType = [
     { value: "NGN", label: "Naira" },
@@ -61,11 +61,11 @@ const Settings = ({ onNext, onPrevious }) => {
 
   useEffect(() => {
     return () => {
-      service.backgroundCover.forEach((image) => {
+      product.backgroundCover.forEach((image) => {
         URL.revokeObjectURL(image.preview);
       });
     };
-  }, [service.backgroundCover]);
+  }, [product.backgroundCover]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -87,9 +87,9 @@ const Settings = ({ onNext, onPrevious }) => {
                     type="text"
                     id="header"
                     placeholder="Enter your product Name"
-                    value={service.header}
+                    value={product.productName}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ header: e.target.value }))
+                      dispatch(updateProductData({ productName: e.target.value }))
                     }
                     required
                     className="flex-grow-1"
@@ -116,10 +116,10 @@ const Settings = ({ onNext, onPrevious }) => {
                     id="description"
                     rows={4}
                     placeholder="e.g Discover the ultimate eBook that transforms your understanding of [Topic]. Packed with insightful content, this digital product offers in-depth explanations, engaging visuals, and practical tips to help you master [Topic]. Whether you're a beginner or looking to refine your skills, this eBook is designed to cater to all levels. Download now and elevate your knowledge with this comprehensive guide."
-                    value={service.description}
+                    value={product.description}
                     onChange={(e) =>
                       dispatch(
-                        updateServiceData({ description: e.target.value })
+                        updateProductData({ description: e.target.value })
                       )
                     }
                     required
@@ -144,10 +144,10 @@ const Settings = ({ onNext, onPrevious }) => {
                   <div className="d-flex align-items-center">
                     <Form.Select
                       id="currency"
-                      value={service.currency}
+                      value={product.currency}
                       onChange={(e) =>
                         dispatch(
-                          updateServiceData({ currency: e.target.value })
+                          updateProductData({ currency: e.target.value })
                         )
                       }
                       required
@@ -178,10 +178,10 @@ const Settings = ({ onNext, onPrevious }) => {
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Select
-                    id="format"
-                    value={service.format}
+                    id="productType"
+                    value={product.productType}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ format: e.target.value }))
+                      dispatch(updateProductData({ productType: e.target.value }))
                     }
                     required
                   >
@@ -213,9 +213,9 @@ const Settings = ({ onNext, onPrevious }) => {
                     type="text"
                     id="header"
                     placeholder="Enter the Author of your digital product"
-                    value={service.header}
+                    value={product.author}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ header: e.target.value }))
+                      dispatch(updateProductData({ author: e.target.value }))
                     }
                     required
                     className="flex-grow-1"
@@ -231,7 +231,7 @@ const Settings = ({ onNext, onPrevious }) => {
                 </div>
               </Col>
 
-              {/* Service Background */}
+              {/* product Background */}
               <Col md={12} className="mb-3">
                 <Form.Label htmlFor="backgroundCover">
                   Digital Product Background{" "}
@@ -260,7 +260,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
                 <div style={{ marginTop: "0.5rem" }}>
-                  {service.backgroundCover.map((image, index) => (
+                  {product.backgroundCover.map((image, index) => (
                     <div
                       key={index}
                       style={{

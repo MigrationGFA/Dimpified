@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   category: "",
   subCategory: "",
-  header: "",
+  productName: "",
+  productType: "",
   description: "",
+  author: "",
   currency: "",
   backgroundCover: [],
-  products: [],
+  packAge: [], 
 };
 
 const productSlice = createSlice({
@@ -24,15 +26,15 @@ const productSlice = createSlice({
       return initialState;
     },
     addBackgroundCover(state, action) {
-        const newBackgroundCover = {
-          name: action.payload.name,
-          preview: action.payload.preview,
-        };
-        return {
-          ...state,
-          backgroundCover: [...state.backgroundCover, newBackgroundCover],
-        };
-      },
+      const newBackgroundCover = {
+        name: action.payload.name,
+        preview: action.payload.preview,
+      };
+      return {
+        ...state,
+        backgroundCover: [...state.backgroundCover, newBackgroundCover],
+      };
+    },
     removeBackgroundCover(state, action) {
       const newBackgroundCover = state.backgroundCover.filter(
         (_, i) => i !== action.payload
@@ -42,28 +44,28 @@ const productSlice = createSlice({
         backgroundCover: newBackgroundCover,
       };
     },
-    addProduct(state, action) {
+    addPackage(state, action) {
       return {
         ...state,
-        products: [...state.products, action.payload],
+        packAge: [...state.packAge, action.payload],
       };
     },
-    updateProduct(state, action) {
-      const updatedProducts = state.products.map((product, index) =>
+    updatePackage(state, action) {
+      const updatedPackAges = state.packAge.map((product, index) =>
         index === action.payload.index ? action.payload.product : product
       );
       return {
         ...state,
-        products: updatedProducts,
+        packAge: updatedPackAges,
       };
     },
-    deleteProduct(state, action) {
-      const filteredProducts = state.products.filter(
+    deletePackage(state, action) {
+      const filteredPackAges = state.packAge.filter(
         (_, index) => index !== action.payload
       );
       return {
         ...state,
-        products: filteredProducts,
+        packAge: filteredPackAges,
       };
     },
   },
@@ -74,9 +76,9 @@ export const {
   resetProductData,
   addBackgroundCover,
   removeBackgroundCover,
-  addProduct,
-  updateProduct,
-  deleteProduct,
+  addPackage,
+  updatePackage,
+  deletePackage,
 } = productSlice.actions;
 
 export default productSlice.reducer;

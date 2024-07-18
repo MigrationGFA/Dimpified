@@ -29,11 +29,10 @@ const Resolution = () => {
   useEffect(() => {
     const fetchAllResolutions = async () => {
       try {
-        const userId = sessionStorage.getItem("UserId");
         const response = await axios.get(
-          `https://unleashified-backend.azurewebsites.net/api/v1/get-my-conflict/${userId}`
+          `${import.meta.env.VITE_API_URL}/get-ecoysytem-user-help-request/${userId}/${ecosystemDomain}`
         );
-        setResolution(response.data.conflicts);
+        setResolution(response.data.ecosystemUserHelpRequest);
       } catch (error) {
         console.error("Error fetching all jobs:", error);
       } finally {

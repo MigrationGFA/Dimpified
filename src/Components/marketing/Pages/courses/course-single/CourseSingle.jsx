@@ -97,9 +97,9 @@ const CourseSingle = () => {
         `${import.meta.env.VITE_API_URL}/verify-payment`,
         {
           reference: tx_ref,
-          email: "samuelmakinde19@gmail",
+          email: user.data.email,
           itemType: "Course",
-          userId: 2,
+          userId: user.data.UserId,
           provider: "flutterwave",
           itemId: id,
           ecosystemDomain: ecosystemDomain,

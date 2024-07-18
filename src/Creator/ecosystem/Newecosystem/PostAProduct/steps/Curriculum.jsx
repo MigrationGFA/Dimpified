@@ -2,52 +2,41 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addService,
-  updateService,
-  deleteService,
-  resetServiceData,
-} from "../../../../../features/service";
+  addPackage,
+  updatePackage,
+  deletePackage,
+  resetProductData,
+} from "../../../../../features/product";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../../../../Components/Showtoast";
 import axios from "axios";
 
-const AddService = () => {
+const AddPackage = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [fileType, setFileType] = useState("");
   const [price, setPrice] = useState("");
-  const [deliveryTime, setDeliveryTime] = useState("");
-  const [priceFormat, setPriceFormat] = useState("");
-
-  const jobSalaryFormats = [
-    { value: "Fixed", label: "Fixed" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Monthly", label: "Monthly" },
-    { value: "Yearly", label: "Yearly" },
-  ];
+  const [downloadUrl, setDownloadUrl] = useState("");
+  
 
   const handleClose = () => {
     setShow(false);
-    setName("");
-    setShortDescription("");
+    setTitle("");
+    setFileType("");
     setPrice("");
-    setDeliveryTime("");
-    setPriceFormat("");
+    setDownloadUrl("");
   };
 
   const handleShow = () => setShow(true);
 
-  const handleAddService = () => {
+  const handleAddPackage = () => {
     dispatch(
-      addService({
-        name,
-        shortDescription,
+      addPackage({
+        title,
+        fileType,
         price,
-        deliveryTime,
-        priceFormat,
+        downloadUrl,
       })
     );
     handleClose();
@@ -78,28 +67,18 @@ const AddService = () => {
             <Form.Control
               type="text"
               placeholder="product title"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3">
-            <Form.Label>Short Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Short Description"
-              value={shortDescription}
-              onChange={(e) => setShortDescription(e.target.value)}
-            />
-          </Form.Group> */}
 
           <Form.Group className="mb-3">
             <Form.Label>File Type</Form.Label>
             <Form.Control
               type="text"
               placeholder="File Type e.g., PDF, MP3, MP4"
-              value={shortDescription}
-              onChange={(e) => setShortDescription(e.target.value)}
+              value={fileType}
+              onChange={(e) => setFileType(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -107,8 +86,8 @@ const AddService = () => {
             <Form.Control
               type="text"
               placeholder="enter downloading Link here"
-              value={deliveryTime}
-              onChange={(e) => setDeliveryTime(e.target.value)}
+              value={downloadUrl}
+              onChange={(e) => setDownloadUrl(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -120,26 +99,10 @@ const AddService = () => {
               onChange={(e) => setPrice(e.target.value)}
             />
           </Form.Group>
-         
-          {/* <Form.Group className="mb-3">
-            <Form.Label>Pricing Format</Form.Label>
-            <Form.Select
-              type="text"
-              placeholder="Job Salary Format"
-              value={priceFormat}
-              onChange={(e) => setPriceFormat(e.target.value)}
-            >
-              <option value="">Select Pricing Format</option>
-              {jobSalaryFormats.map((jobSalaryFormat, index) => (
-                <option key={index} value={jobSalaryFormat.value}>
-                  {jobSalaryFormat.label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group> */}
+
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline">
-          <Button variant="primary" onClick={handleAddService}>
+          <Button variant="primary" onClick={handleAddPackage}>
             Save Digital Product
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
@@ -151,43 +114,35 @@ const AddService = () => {
   );
 };
 
-const Service = ({ submit, onPrevious }) => {
+const Product = ({ submit, onPrevious }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const sections = useSelector((state) => state.service.services) || [];
+  const sections = useSelector((state) => state.product.packAge) || [];
   const dispatch = useDispatch();
   const [editIndex, setEditIndex] = useState(null);
-  const [editName, setEditName] = useState("");
-  const [editShortDescription, setEditShortDescription] = useState("");
+  const [ediTitle, setEditTitle] = useState("");
+  const [editFileType, setEditFileType] = useState("");
   const [editPrice, setEditPrice] = useState("");
-  const [editDeliveryTime, setEditDeliveryTime] = useState("");
-  const [editPriceFormat, setEditPriceFormat] = useState("");
-
-  const jobSalaryFormats = [
-    { value: "Fixed", label: "Fixed" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Monthly", label: "Monthly" },
-    { value: "Yearly", label: "Yearly" },
-  ];
+  const [editDownloadUrl, setEditDownloadUrl] = useState("");
+ 
 
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemDomain);
+  console.log(ecosystemId)
 
-  const serviceData = useSelector((state) => state.service);
+  const ProductData = useSelector((state) => state.product);
   const {
     category,
     subCategory,
-    prefix,
-    header,
+    productName,
+    author,
+    productType,
     description,
-    format,
     currency,
     backgroundCover,
-    services,
-  } = serviceData;
+    packAge,
+  } = ProductData;
 
   const convertBase64ToFile = (base64String, filename) => {
     const arr = base64String.split(",");
@@ -207,11 +162,12 @@ const Service = ({ submit, onPrevious }) => {
     const formData = new FormData();
     formData.append("category", category);
     formData.append("subCategory", subCategory);
-    formData.append("header", `${prefix} ${header}`);
+    formData.append("productName", productName);
     formData.append("description", description);
-    formData.append("format", format);
+    formData.append("author", author);
+    formData.append("productType", productType);
     formData.append("currency", currency);
-    formData.append("services", JSON.stringify(services));
+    formData.append("package", JSON.stringify(packAge));
 
     // Convert and append base64 images directly to FormData
     const imageProperties = {
@@ -227,11 +183,11 @@ const Service = ({ submit, onPrevious }) => {
     // Assuming image data is within the serviceData object
     for (const [key, filename] of Object.entries(imageProperties)) {
       const keys = key.split(".");
-      let imageProp = serviceData;
+      let imageProp = ProductData;
       try {
         for (const k of keys) {
           imageProp = imageProp[k];
-          if (imageProp === undefined) break; // Exit loop if property is undefined
+          if (imageProp === undefined) break; 
         }
         if (
           typeof imageProp === "string" &&
@@ -264,10 +220,10 @@ const Service = ({ submit, onPrevious }) => {
     }
 
     formData.append("creatorId", creatorId);
-    formData.append("ecosystemId", ecosystemId);
+    formData.append("ecosystemDomain", ecosystemId);
 
     axios
-      .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
+      .post(`${import.meta.env.VITE_API_URL}/create-digital-product`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -277,7 +233,7 @@ const Service = ({ submit, onPrevious }) => {
         if (response.data) {
           showToast(response.data.message);
         }
-        dispatch(resetServiceData());
+        dispatch(resetProductData());
         navigate("/creator/dashboard/Products");
         submit();
       })
@@ -301,48 +257,43 @@ const Service = ({ submit, onPrevious }) => {
 
   useEffect(() => {
     if (editIndex !== null) {
-      const { name, shortDescription, price, deliveryTime, priceFormat } =
+      const { title, fileType, price, downloadUrl } =
         sections[editIndex];
-      setEditName(name);
-      setEditShortDescription(shortDescription);
+      setEditTitle(title);
+      setEditFileType(fileType);
       setEditPrice(price);
-      setEditDeliveryTime(deliveryTime);
-      // setEditPriceFormat(priceFormat);
+      setEditDownloadUrl(downloadUrl);
     }
   }, [editIndex, sections]);
 
-  const handleRemoveService = (index) => {
-    dispatch(deleteService(index));
+  const handleRemovePackage = (index) => {
+    dispatch(deletePackage(index));
   };
 
-  const handleEditService = (index) => {
+  const handleEditPackage = (index) => {
     setEditIndex(index);
-    const { name, shortDescription, price, deliveryTime, priceFormat } =
+    const {title, fileType, price, downloadUrl  } =
       sections[index];
-    setEditName(name);
-    setEditShortDescription(shortDescription);
-    setEditPrice(price);
-    setEditDeliveryTime(deliveryTime);
-    // setEditPriceFormat(priceFormat);
+      setEditTitle(title);
+      setEditFileType(fileType);
+      setEditPrice(price);
+      setEditDownloadUrl(downloadUrl);
   };
 
   const handleFieldChange = (field, value) => {
     switch (field) {
-      case "name":
-        setEditName(value);
+      case "title":
+        setEditTitle(value);
         break;
-      case "shortDescription":
-        setEditShortDescription(value);
+      case "fileType":
+        setEditFileType(value);
         break;
       case "price":
         setEditPrice(value);
         break;
-      case "deliveryTime":
-        setEditDeliveryTime(value);
+      case "downloadUrl":
+        setEditDownloadUrl(value);
         break;
-      // case "jobSalaryFormat":
-      //   setEditPriceFormat(value);
-      //   break;
       default:
         break;
     }
@@ -350,14 +301,14 @@ const Service = ({ submit, onPrevious }) => {
 
   const handleSaveEdit = () => {
     dispatch(
-      updateService({
+      updatePackage({
         index: editIndex,
-        service: {
+        package: {
           name: editName,
           shortDescription: editShortDescription,
           price: editPrice,
           deliveryTime: editDeliveryTime,
-          // priceFormat: editPriceFormat,
+          
         },
       })
     );
@@ -371,7 +322,7 @@ const Service = ({ submit, onPrevious }) => {
           <h4 className="mb-0">Digital Product(s)</h4>
         </Card.Header>
         <Card.Body>
-          {sections.map((service, prIndex) => (
+          {sections.map((packages, prIndex) => (
             <div
               key={prIndex}
               className="bg-light rounded p-2 mb-4 position-relative"
@@ -382,9 +333,9 @@ const Service = ({ submit, onPrevious }) => {
                     <Form.Label>Digital Product Title</Form.Label>
                     <Form.Control
                       type="text"
-                      value={editName}
+                      value={ediTitle}
                       onChange={(e) =>
-                        handleFieldChange("name", e.target.value)
+                        handleFieldChange("title", e.target.value)
                       }
                     />
                   </Form.Group>
@@ -392,9 +343,9 @@ const Service = ({ submit, onPrevious }) => {
                     <Form.Label>File Type</Form.Label>
                     <Form.Control
                     type="text"
-                      value={editShortDescription}
+                      value={editFileType}
                       onChange={(e) =>
-                        handleFieldChange("shortDescription", e.target.value)
+                        handleFieldChange("fileType", e.target.value)
                       }
                     />
                   </Form.Group>
@@ -402,9 +353,9 @@ const Service = ({ submit, onPrevious }) => {
                     <Form.Label>Download Link </Form.Label>
                     <Form.Control
                       type="text"
-                      value={editDeliveryTime}
+                      value={editDownloadUrl}
                       onChange={(e) =>
-                        handleFieldChange("deliveryTime", e.target.value)
+                        handleFieldChange("downloadUrl", e.target.value)
                       }
                     />
                   </Form.Group>
@@ -418,25 +369,7 @@ const Service = ({ submit, onPrevious }) => {
                       }
                     />
                   </Form.Group>
-                  
-                  {/* <Form.Group>
-                    <Form.Label>Pricing Format</Form.Label>
-                    <Form.Select
-                      type="text"
-                      placeholder="Job Salary Format"
-                      value={editPriceFormat}
-                      onChange={(e) =>
-                        handleFieldChange("priceFormat", e.target.value)
-                      }
-                    >
-                      <option value="">Select Pricing Format</option>
-                      {jobSalaryFormats.map((jobSalaryFormat, index) => (
-                        <option key={index} value={jobSalaryFormat.value}>
-                          {jobSalaryFormat.label}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group> */}
+
                   <div className="mt-5">
                     <Button onClick={handleSaveEdit}>Save</Button>
                     <Button
@@ -453,19 +386,19 @@ const Service = ({ submit, onPrevious }) => {
                   <Button
                     variant="link"
                     className="position-absolute top-0 end-0 text-danger me-2"
-                    onClick={() => handleRemoveService(prIndex)}
+                    onClick={() => handleRemovePackage(prIndex)}
                   >
                     Delete
                   </Button>
                   <Button
                     variant="link"
                     className="position-absolute top-0 text-primary me-4"
-                    onClick={() => handleEditService(prIndex)}
+                    onClick={() => handleEditPackage(prIndex)}
                     style={{ right: "10%", maxWidth: "80%" }}
                   >
                     Edit
                   </Button>
-                  <h4>{service.name}</h4>
+                  <h4>{packages.title}</h4>
                   <p
                     style={{
                       backgroundColor: "white",
@@ -476,7 +409,7 @@ const Service = ({ submit, onPrevious }) => {
                       overflowY: "auto",
                     }}
                   >
-                    {service.shortDescription}
+                    {packages.fileType}
                   </p>
                   <p
                     style={{
@@ -486,7 +419,7 @@ const Service = ({ submit, onPrevious }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {service.price}
+                    {packages.price}
                   </p>
                   <p
                     style={{
@@ -496,23 +429,13 @@ const Service = ({ submit, onPrevious }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {service.deliveryTime}
+                    {packages.downloadUrl}
                   </p>
-                  {/* <p
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid #ced4da",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {service.priceFormat}
-                  </p> */}
                 </div>
               )}
             </div>
           ))}
-          <AddService />
+          <AddPackage />
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between">
@@ -531,4 +454,4 @@ const Service = ({ submit, onPrevious }) => {
   );
 };
 
-export default Service;
+export default Product;

@@ -68,7 +68,7 @@ const EditProfile = () => {
       });
   
       const response = await axios.put(
-        `https://remsana-backend-testing.azurewebsites.net/api/v1/update-profile/${userId}`,
+        `${import.meta.env.VITE_API_URL}/ecosystemUser-profile/${userId}`,
         formDataToSend
       );
       showToast(response.data.message);
@@ -84,8 +84,7 @@ const EditProfile = () => {
         address: "",
         zipCode: "",
         image: null,
-        portfolio: null,
-        description: null,
+       
       });
     } catch (error) {
       console.error("Error updating profile:", error);

@@ -4,8 +4,12 @@ import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import SupportModal from "../Support/SupportModal";
 import { showToast } from "../../Components/Showtoast";
+import { useSelector } from "react-redux";
 
 const HelpCenter = () => {
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
+  );
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
@@ -17,10 +21,13 @@ const HelpCenter = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/all-conflicts`
+          `${
+            import.meta.env.VITE_API_URL
+          }/get-creator-help-request/${creatorId}`
         );
-        setData(response.data.conflicts || []);
+        setData(response.data.creatorHelpRequest || []);
         setLoading(false);
+
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -51,8 +58,7 @@ const HelpCenter = () => {
           return "#" + row.id;
         },
       },
-      { accessorKey: "role", header: "Role" },
-      { accessorKey: "userDetails", header: "User Details" },
+      { accessorKey: "ecosystemDomain", header: "ecosystemDomain" },
       { accessorKey: "reason", header: "Reason" },
       { accessorKey: "message", header: "Message" },
       { accessorKey: "status", header: "Status" },
@@ -101,7 +107,7 @@ const HelpCenter = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total Help Center"
-                value="1"
+                value="0"
                 summary="Number of sales"
                 summaryIcon="up"
                 showSummaryIcon
@@ -113,7 +119,7 @@ const HelpCenter = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Completed Help Center"
-                value="1"
+                value="0"
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -206,12 +212,18 @@ const HelpCenter = () => {
                       <tr key={row.id}>
                         {columns.map((column) => (
                           <td key={column.accessorKey}>
-                            {column.accessorKey === "userDetails" ? (
+                            {column.accessorKey === "reason" ? (
                               <div>
-                                <span>{row.User.username}</span>
-                                <br />
-                                <span>{row.User.email}</span>
+                                <span>{row.reason}</span>
                               </div>
+                            ) : column.accessorKey === "ecosystemDomain" &&
+                              row.message.length > 30 ? (
+                              <span
+                                title={row.ecosystemDomain}
+                                className="mb-1 text-primary-hover cursor-pointer"
+                              >
+                                {row.message.slice(0, 30)}...
+                              </span>
                             ) : column.accessorKey === "message" &&
                               row.message.length > 30 ? (
                               <span
