@@ -263,7 +263,6 @@ const AllRoutes = () => {
 
       {/* End user ecosystem routes */}
       <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
-      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
       <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
       <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
@@ -279,6 +278,8 @@ const AllRoutes = () => {
         path="/ecosystem/verification"
         element={<EcosystemVerifyEmail />}
       />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+
       <Route
         path="/:ecosystemDomain/User-My-Course"
         element={<UserMyCourse />}

@@ -77,7 +77,7 @@ const UserSignIn = () => {
             <Card.Body className="p-6">
               <div className="mb-4">
                 <Image
-                  src={sessionStorage.getItem("Logo")}
+                  src={sessionStorage.getItem("ecoLogo")}
                   className="mb-4"
                   alt="logo"
                   style={{ height: "50px" }}
