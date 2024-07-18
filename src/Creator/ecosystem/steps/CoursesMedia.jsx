@@ -80,14 +80,14 @@ const CoursesMedia = ({ submit, previous }) => {
         setLoading(false);
         showToast(response.data.message);
         dispatch(resetCourseData());
-        navigate("/creator/dashboard/Courses");
+        navigate("/creator/dashboard/Products");
         submit();
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error:", error);
         showToast(error.response.data.message);
-        navigate("/creator/dashboard/Courses");
+        navigate("/creator/dashboard/Products");
       });
   };
 

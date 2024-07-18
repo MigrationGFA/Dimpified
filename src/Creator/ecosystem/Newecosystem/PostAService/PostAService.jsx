@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GKStepper from "../../../../Components/elements/stepper/GKStepper";
 import BasicInformation from "../PostAService/steps/BasicInformation";
 import CoursesMedia from "../PostAService/steps/CoursesMedia";
@@ -9,6 +9,7 @@ import Settings from "../PostAService/steps/Settings";
 
 const PostAService = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const { ecosystemDomain } = useParams();
   const [formData, setFormData] = useState({
     course_title: "",
     category_category: "",
@@ -102,13 +103,15 @@ const PostAService = () => {
                   </p>
                 </div>
                 <div>
-                  <Link
-                    to=""
-                    className="btn btn-white"
-                    onClick={handleBackToCourse}
-                  >
-                    Back to Product
-                  </Link>
+                {ecosystemDomain && (
+                    <Link
+                      to=""
+                      className="btn btn-white"
+                      onClick={handleBackToCourse}
+                    >
+                      Back to My Dashboard
+                    </Link>
+                  )}
                 </div>
               </div>
             </Col>

@@ -95,6 +95,7 @@ import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
 import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemResolution from "../EcosystemDashboard/EcoResolution"
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
 import EcosystemOrders from "../EcosystemDashboard/Orders";
@@ -235,6 +236,10 @@ const AllRoutes = () => {
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
+        element={<EcosystemResolution />}
       />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"

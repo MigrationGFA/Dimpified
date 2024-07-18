@@ -7,52 +7,56 @@ import { FormSelect } from "../../Components/elements/form-select/FormSelect";
 import { FlatPickr } from "../../Components/elements/flat-pickr/FlatPickr";
 import StudentProfileLayout from "../../UserDashboard/student/StudentProfileLayout";
 import Avatar3 from "../../assets/images/avatar/person.png";
-import { useGlobalContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+
 
 const EditProfile = () => {
-  // const { userId } = useGlobalContext();
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+
   const pathInfo = useLocation();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    contact: "",
-    birthday: new Date(),
-    state: "",
+    phoneNumber: "",
+    username: "",
+    city: "",
     country: "",
-    image: null, 
+    zipCode: "",
+    address:"",
+    imageUrl: null, 
     portfolio: null,
     description: null,
   });
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       if (!userId) return; // Ensure userId is defined
-  //       const response = await axios.get(
-  //         `https://remsana-backend-testing.azurewebsites.net/api/v1/get-user-details/${userId}`
-  //       );
-  //       const userData = response.data.userDetails;
-  //       setFormData({
-  //         firstName: userData.firstName || "",
-  //         lastName: userData.lastName || "",
-  //         contact: userData.contact || "",
-  //         birthday: new Date(userData.birthday) || new Date(),
-  //         state: userData.state || "",
-  //         country: userData.country || "",
-  //         image: userData.image || null,
-  //         email: "", // Assuming email is not returned from the endpoint
-  //         portfolio: userData.portfolio || null, 
-  //         description: userData.description || null, 
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching user details:", error);
-  //       showToast(error.response?.data?.message || "An error occurred.");
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (!userId) return; // Ensure userId is defined
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/ecosystem-profile/${userId}`
+        );
+        const userData = response.data.userDetails;
+        setFormData({
+          firstName: userData.firstName || "",
+          lastName: userData.lastName || "",
+          phoneNumber: userData.phoneNumber || "",
+          username: userData.username || "",
+          city: userData.city || "",
+          country: userData.country || "",
+          address: userData.address || "",
+          zipCode: userData.zipCode || "",
+          imageUrl: userData.imageUrl || null, 
+        });
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+        showToast(error.response?.data?.message || "An error occurred.");
+      }
+    };
 
-  //   fetchUserData();
-  // }, [userId]);
+    fetchUserData();
+  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,8 +67,8 @@ const EditProfile = () => {
         formDataToSend.append(key, value);
       });
   
-      const response = await axios.post(
-        `https://remsana-backend-testing.azurewebsites.net/api/v1/update-profile/${userId}`,
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/ecosystemUser-profile/${userId}`,
         formDataToSend
       );
       showToast(response.data.message);
@@ -73,13 +77,14 @@ const EditProfile = () => {
       setFormData({
         firstName: "",
         lastName: "",
-        contact: "",
-        birthday: new Date(),
-        state: "",
+        phoneNumber: "",
+        username: "",
+        city: "",
         country: "",
+        address: "",
+        zipCode: "",
         image: null,
-        portfolio: null,
-        description: null,
+       
       });
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -103,7 +108,7 @@ const EditProfile = () => {
     setFormData({ ...formData, image });
   };
 
-  const statelist = [
+  const stateList = [
     { value: "Abia", label: "Abia" },
     { value: "Adamawa", label: "Adamawa" },
     { value: "Akwa Ibom", label: "Akwa Ibom" },
@@ -142,9 +147,10 @@ const EditProfile = () => {
     { value: "Zamfara", label: "Zamfara" },
   ];
 
-  const countrylist = [
-    { value: "Nigeria", label: "Nigeria" },
+  const countryList = [
     { value: "Togo", label: "Togo" },
+    { value: "Nigeria", label: "Nigeria" },
+   
   ];
 
   return (
@@ -163,7 +169,7 @@ const EditProfile = () => {
             <Form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="d-flex align-items-center mb-4 mb-lg-0">
                 <Image
-                  src={formData.image || Avatar3}
+                  src={formData.imageUrl || Avatar3}
                   id="img-uploaded"
                   className="avatar-xl rounded-circle"
                   alt="User Avatar"
@@ -198,7 +204,7 @@ const EditProfile = () => {
               <Row>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formFirstName">
-                    <Form.Label>First Name</Form.Label>
+                    <Form.Label>Profile 1</Form.Label>
                     <Form.Control
                       type="text"
                       name="firstName"
@@ -211,7 +217,7 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formLastName">
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Profile 2</Form.Label>
                     <Form.Control
                       type="text"
                       name="lastName"
@@ -224,53 +230,77 @@ const EditProfile = () => {
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formPhone">
-                    <Form.Label>Phone</Form.Label>
+                    <Form.Label>Profile 2</Form.Label>
                     <Form.Control
                       type="text"
                       name="contact"
                       placeholder="Phone"
                       required
-                      value={formData.contact}
+                      value={formData.phoneNumber}
                       onChange={handleChange}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formBirthday">
-                    <Form.Label>Birthday</Form.Label>
+                    <Form.Label>Profile 4</Form.Label>
                     <Form.Control
-                      as={FlatPickr}
-                      name="birthday"
-                      placeholder="Date of Birth"
+                      type="text"
+                      name="username"
+                      placeholder="Username"
                       required
-                      value={formData.birthday}
+                      value={formData.username}
                       onChange={handleChange}
                     />
                   </Form.Group>
                 </Col>
                
                 <Col md={6} sm={12} className="mb-3">
-                  <Form.Group className="mb-3" controlId="formState">
-                    <Form.Label>State</Form.Label>
-                    <FormSelect
-                      options={statelist}
-                      type="state"
-                      name="state"
+                  <Form.Group className="mb-3" controlId="formCity">
+                    <Form.Label>Profile 5</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="city"
                       required
-                      value={formData.state}
+                      placeholder="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                   
+                  </Form.Group>
+                </Col>
+                <Col md={6} sm={12} className="mb-3">
+                  <Form.Group className="mb-3" controlId="formZipCode">
+                    <Form.Label>Profile 6</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="zipCode"
+                      required
+                      value={formData.zipCode}
                       onChange={handleChange}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={6} sm={12} className="mb-3">
                   <Form.Group className="mb-3" controlId="formCountry">
-                    <Form.Label>Country</Form.Label>
-                    <FormSelect
-                      options={countrylist}
+                    <Form.Label>Profile 7</Form.Label>
+                    <Form.Control
                       type="text"
                       name="country"
                       required
                       value={formData.country}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} sm={12} className="mb-3">
+                  <Form.Group className="mb-3" controlId="formAddress">
+                    <Form.Label>Profile 8</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="address"
+                      required
+                      value={formData.address}
                       onChange={handleChange}
                     />
                   </Form.Group>

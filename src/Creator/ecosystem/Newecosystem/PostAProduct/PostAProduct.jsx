@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import GKStepper from "../../../../Components/elements/stepper/GKStepper";
 import BasicInformation from "../PostAProduct/steps/BasicInformation";
 import CoursesMedia from "../PostAProduct/steps/CoursesMedia";
@@ -9,6 +9,7 @@ import Settings from "../PostAProduct/steps/Settings";
 
 const PostAProduct = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const {ecosystemDomain} = useParams()
   const [formData, setFormData] = useState({
     course_title: "",
     category_category: "",
@@ -47,7 +48,7 @@ const PostAProduct = () => {
     },
     {
       id: 2,
-      title: "Service Details",
+      title: "Digital Product Details",
       content: (
         <Settings
           data={formData}
@@ -59,7 +60,7 @@ const PostAProduct = () => {
     },
     {
       id: 3,
-      title: "Service Creation",
+      title: "Digital Product Creation",
       content: (
         <Curriculum
           data={formData}
@@ -102,13 +103,15 @@ const PostAProduct = () => {
                   </p>
                 </div>
                 <div>
-                  <Link
-                    to=""
-                    className="btn btn-white"
-                    onClick={handleBackToCourse}
-                  >
-                    Back to Product
-                  </Link>
+                {ecosystemDomain && (
+                    <Link
+                      to=""
+                      className="btn btn-white"
+                      onClick={handleBackToCourse}
+                    >
+                      Back to My Dashboard
+                    </Link>
+                  )}
                 </div>
               </div>
             </Col>

@@ -15,7 +15,7 @@ function shortenMessage(message, maxLength = 20) {
 }
 
 function getOrdinalSuffix(day) {
-  if (day > 3 && day < 21) return "th"; // Covers 11th to 20th
+  if (day > 3 && day < 21) return "th"; 
   switch (day % 10) {
     case 1:
       return "st";
