@@ -64,42 +64,59 @@ const Dashboard = () => {
   return (
     <InstructorProfileLayout>
       <Row>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Revenue"
             subtitle="Earning this month"
-            value={
-              (totalAmount / 100)
-                .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-                .slice(0, -3) +
-              "." +
-              (totalAmount % 100).toString().padStart(2, "0")
-            }
-            badgeValue={
-              (totalAmount / 100)
-                .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-                .slice(0, -3) +
-              "." +
-              (totalAmount % 100).toString().padStart(2, "0")
-            }
+            value="0"
+            // {
+            //   (totalAmount / 100)
+            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
+            //     .slice(0, -3) +
+            //   "." +
+            //   (totalAmount % 100).toString().padStart(2, "0")
+            // }
+            badgeValue="0"
+            // {
+            //   (totalAmount / 100)
+            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
+            //     .slice(0, -3) +
+            //   "." +
+            //   (totalAmount % 100).toString().padStart(2, "0")
+            // }
             colorVariant="success"
           />
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Students Enrollments"
+            title="Created Course"
             subtitle="New this month"
-            value={totalStudents}
-            badgeValue={totalStudents}
+            value="0"
+            //{totalStudents}
+            badgeValue="0"
+            //{totalStudents}
             colorVariant="info"
           />
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Courses Created"
+            title="Created Services"
             subtitle="For the month"
-            value={NumberOfCourse}
-            badgeValue={NumberOfCourse}
+            value="0"
+            //{NumberOfCourse}
+            badgeValue='0'
+            //{NumberOfCourse}
+            colorVariant="warning"
+          />
+        </Col>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Created Digital Product"
+            subtitle="For the month"
+            value='0'
+            //{NumberOfCourse}
+            badgeValue='0'
+            //{NumberOfCourse}
             colorVariant="warning"
           />
         </Col>
@@ -107,7 +124,7 @@ const Dashboard = () => {
       {/* Graph for purchased courses */}
       <Card className="my-4">
         <Card.Header>
-          <h3 className="h4 mb-0">Order</h3>
+          <h3 className="h4 mb-0">Product Order</h3>
         </Card.Header>
         <Card.Body>
           <ApexCharts
@@ -121,14 +138,14 @@ const Dashboard = () => {
       {/* Best Selling Courses table */}
       <Card className="mt-4">
         <Card.Header>
-          <h3 className="mb-0 h4">Best Selling Courses</h3>
+          <h3 className="mb-0 h4">Best Selling Products</h3>
         </Card.Header>
         <Card.Body className="p-0">
           <Table hover responsive className="mb-0 text-nowrap table-centered">
             <thead className="table-light">
               <tr>
                 <th scope="col" className="border-0">
-                  COURSES
+                  PRODUCTS
                 </th>
                 <th scope="col" className="border-0">
                   SALES
@@ -175,7 +192,7 @@ const Dashboard = () => {
                   </tr>
                 ))
               ) : (
-                <div className="px-4 py-12">No course have been purchased</div>
+                <div className="px-4 py-12">No product have been purchased</div>
               )}
             </tbody>
           </Table>
