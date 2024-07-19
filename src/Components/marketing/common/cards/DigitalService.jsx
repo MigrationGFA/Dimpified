@@ -59,10 +59,6 @@ const DigitalServiceCard = ({ item }) => {
               width: "100px",
               height: "110px",
               marginLeft: "10px",
-              // border: "5px white solid",
-              // borderRadius: "40px",
-              // position: "relative",
-              // bottom: "0px",
             }}
           >
             {/* {item.user && item.user.image && (
@@ -88,7 +84,7 @@ const DigitalServiceCard = ({ item }) => {
               </div>
               <h4 className="mb-1 fs-4">
                 <Link
-                  to={`/services/listing?id=${item._id}`}
+                  to={`/:ecosystemDomain/services/${item._id}`}
                   className="text-inherit me-1"
                 >
                   {item.header}
