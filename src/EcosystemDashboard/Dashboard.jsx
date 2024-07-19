@@ -67,7 +67,7 @@ const Dashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Revenue"
-            subtitle="Earning this month"
+            subtitle=" month"
             value="0"
             // {
             //   (totalAmount / 100)
@@ -90,7 +90,7 @@ const Dashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Created Course"
-            subtitle="New this month"
+            subtitle="month"
             value="0"
             //{totalStudents}
             badgeValue="0"
@@ -100,29 +100,29 @@ const Dashboard = () => {
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Created Services"
-            subtitle="For the month"
+            title="Digital Services"
+            subtitle="month"
             value="0"
             //{NumberOfCourse}
-            badgeValue='0'
+            badgeValue="0"
             //{NumberOfCourse}
             colorVariant="warning"
           />
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Created Digital Product"
+            title="Digital Product"
             subtitle="For the month"
-            value='0'
+            value="0"
             //{NumberOfCourse}
-            badgeValue='0'
+            badgeValue="0"
             //{NumberOfCourse}
             colorVariant="warning"
           />
         </Col>
       </Row>
       {/* Graph for purchased courses */}
-      <Card className="my-4">
+      <Card className="my-4 mt-10">
         <Card.Header>
           <h3 className="h4 mb-0">Product Order</h3>
         </Card.Header>
