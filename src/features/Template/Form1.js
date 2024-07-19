@@ -36,8 +36,8 @@ const initialState = {
     topic2: `Password`,
     topic3: `Confirm Password`,
     topic4: `Country`,
-     buttonText1: "Submit",
-     buttonText2: "Back",
+     buttonText1: "Back",
+     buttonText2: "Submit",
     styles: {
       backgroundColor: "#FCFCFC",
       color: "#000000",
@@ -53,7 +53,7 @@ const initialState = {
     topic2: `Zip Code`,
     topic3: `City`,
     topic4: `Country`,
-     buttonText1: "Next",
+     buttonText1: "Back",
      buttonText2: "Next",
     styles: {
       backgroundColor: "#FCFCFC",
