@@ -3,335 +3,344 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
+import DimpHome from "../dimp-home/DimpHome";
+import CustomerTraining from "../dimp-pages/education/CustomerTraining";
+import Pricing from "../dimp-pages/pricing/Pricing";
+import Government from "../dimp-pages/government/Government";
+import Corporation from "../dimp-pages/corporation/Corporation";
+import NonProfit from "../dimp-pages/non-profit/NonProfit";
+import Professional from "../dimp-pages/professional/Professional";
+import ReligiousBodies from "../dimp-pages/religious-bodies/ReligiousBodies";
+import Creatives from "../dimp-pages/creatives/Creatives";
+import TradeServices from "../dimp-pages/trade-services/TradeServices";
+import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
+import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
+import EventServices from "../dimp-pages/event-services/EventServices";
 
-// Student Dashboard Pages
+// ** Import Dahbaord Menu Pages
+import Overview from "../Creator/overview/Overview";
+import Analytics from "../Creator/analytics/Analytics";
 
-import LandingPage from "../landing-job/LandingJob";
-import About from "../Pages/about/About";
-import Pricing from "../Pages/pricing/Pricing";
-import Contact from "../Pages/contact/Contact";
-import FAQs from "../Pages/compare-plan/FAQs";
-import TermsOfUse from "../../src/Pages/home-academy/TermsOfUse";
-import PrivacyPolicy from "../../src/Pages/home-academy/PrivacyPolicy";
+// ** Import Courses Pages
+import AllJobs from "../Creator/courses/all-courses/AllJobs";
+import JobCategory from "../Creator/courses/JobCategory";
+import CategorySingle from "../Creator/courses/CategorySingle";
 
-// ** Import Admin Dahbaord Menu Pages
-import Overview from "../Admin/overview/Overview";
-import Analytics from "../Admin/analytics/Analytics";
-
-// ** Import Admin Courses Pages
-import AllJobs from "../Admin/courses/all-courses/AllJobs";
-import JobCategory from "../Admin/courses/JobCategory";
-import CategorySingle from "../Admin/courses/CategorySingle";
-
-// Import Admin Out-source
-import OutSource from "../Admin/Outsource/OutSource";
-import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
-
-// ** Import Admin Users Pages
-import JobProvider from "../Admin/user/JobProvider";
-import JobSeeker from "../Admin/user/JobSeeker";
-import AdminDashboardIndex from "../Admin/AdminDashboardIndex";
+// ** Import Users Pages
+import MyUser from "../Creator/user/MyUser";
+import JobProvider from "../Creator/user/JobProvider";
+import JobSeeker from "../Creator/user/JobSeeker";
+import AdminDashboardIndex from "../Creator/UserDashboardIndex";
 
 // Import Notification
-import Notification from "../Admin/authentication/Notifications";
-import NotificationSingle from "../Admin/Notification/NotificationSingle";
+import Notification from "../Creator/authentication/Notifications";
+import NotificationSingle from "../Creator/Notification/NotificationSingle";
 
-// ** Import Admin Payment components
-import AllPayment from "../Admin/Payment/AllPayment";
-import PendingPayment from "../Admin/Payment/PendingPayment";
-import ReceivedPayment from "../Admin/Payment/ReceivedPayment";
-import WithdrawPayment from "../Admin/Payment/WithdrawRequest";
-
-// ** Import Admin Authentication components
-import UserSignIn from "../Admin/authentication/UserSignIn";
-import UserSignUp from "../Admin/authentication/UserSignUp"
-import AdminForgetPassword from "../Admin/authentication/AdminForgetPassword";
-
-// ** Import Admin Support components
-import Support from "../Admin/Support/Support";
-import Resolution from "../Admin/Support/Resolution";
-
-// IMPORTS FOR HELP CENTER PAGES ( v1.3.0 )
-import HelpCenter from "../Components/marketing/pages/help-center/HelpCenter";
-import HelpCenterFAQ from "../Components/marketing/pages/help-center/HelpCenterFAQs";
-import HelpCenterGuide from "../Components/marketing/pages/help-center/help-center-guide/HelpCenterGuide";
-import HelpCenterGuideSingle from "../Components/marketing/pages/help-center/help-center-guide-single/HelpCenterGuideSingle";
-import HelpCenterSupport from "../Components/marketing/pages/help-center/help-center-support/HelpCenterSupport";
-import HelpCenterTransparentLayout from "../Components/marketing/pages/help-center/HelpCenterTransparentLayout";
-import HelpCenterSupportForm from "../Components/marketing/pages/help-center/help-center-support/SupportForm";
+// ** Import Payment components
+import PendingPayment from "../Creator/Payment/PendingPayment";
+import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
+import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
 // ** Import Authentication components
-import ForgetPassword from "../Authentications/ForgetPassword";
-import NewPassword from "../Authentications/NewPassword";
-import VerifyEmail from "../Authentications/VerifyEmail";
-import SignUp from "../Authentications/Signup";
-import SignIn from "../Authentications/Signin";
-import AuthLayout from "./Dashboard/AuthRoute";
-import UserEmailVerification from "../Authentications/UserEmailVerification";
+import UserSignIn from "../Creator/authentication/UserSignIn";
+import UserSignUp from "../Creator/authentication/UserSignUp";
+import UserForgetPassword from "../Creator/authentication/UserForgetPassword";
+import UserEmailVerification from "../Creator/authentication/UserEmailVerification";
+import VerifyEmail from "../Creator/authentication/VerifyEmail";
 
-import JobListingLayout from "../Layout/JobListingLayout";
-import JobsList from "../Components/marketing/pages/jobs/listing/JobsList";
-import JobSingle from "../Components/marketing/pages/jobs/listing/JobSingle";
-import DashboardJobSingle from "../Components/marketing/pages/jobs/listing/DashboardJobSingle";
-import ServiceSingle from "../Components/marketing/pages/jobs/listing/ServicesSingle";
-import ServicesList from "../Components/marketing/pages/jobs/company-list/ServicesList";
-import CompanyList from "../Components/marketing/pages/jobs/company-list/CompanyList";
-import CompanyAbout from "../Components/marketing/pages/jobs/company/About";
-import CompanyReviews from "../Components/marketing/pages/jobs/company/Reviews";
-import CompanyJobs from "../Components/marketing/pages/jobs/company/Jobs";
-import CompanyBenifits from "../Components/marketing/pages/jobs/company/Benifits";
-import CompanyPhotos from "../Components/marketing/pages/jobs/company/Photos";
-import PostAJob from "../Components/marketing/pages/jobs/post-a-job/PostAJob";
-import PostAService from "../Components/marketing/pages/jobs/post-a-service/PostAService";
-import EditAService from "../Components/marketing/pages/jobs/edit-a-service/EditAService";
-import ProviderProfile from "../Components/marketing/pages/jobs/post-a-job-profile/ProviderProfile";
-import UploadResume from "../Components/marketing/pages/jobs/upload-resume/UploadResume";
-import UpdateResume from "../Components/marketing/pages/jobs/update resume/UpdateResume";
-import ApplyForJob from "../Components/marketing/pages/jobs/listing/ApplyForJob";
+// ** Import Support components
+import HelpCenter from "../Creator/Support/HelpCenter";
+import Support from "../Creator/Support/Support";
+import Chat from "../Admin/chat/Chat";
+import ChatLayout from "./Dashboard/ChatLayout";
+import EditProfile from "../Creator/AccountSettings/EditProfile";
+import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
 
-import JobSeekerDashboard from "../Instructor/Dashboard";
-import JobSeekerService from "../Instructor/Services";
-import JobSeekerJob from "../Instructor/MyJob";
-import JobSeekerContract from "../Instructor/ContractPage";
-import JobSeekerOffer from "../Instructor/MyOffer";
-import JobSeekerReviews from "../Instructor/Reviews";
-import JobSeekerEarning from "../Instructor/Earnings";
-import JobSeekerStudents from "../Instructor/Students";
-import JobSeekerPayouts from "../Instructor/account-settings/Payouts";
-import JobSeekerResolution from "../Instructor/Resolution";
-import JobSeekerSocialProfiles from "../Instructor/account-settings/SocialProfiles";
-import JobSeekerDeleteProfile from "../Instructor/account-settings/DeleteProfile";
+// import Feature Update components
+import FeatureUpdate from "../Creator/Suggestion/FeatureUpdate";
 
-import ProviderLanding from "../Instructor/ProviderLandingPage/ProviderLanding";
-import UpdateProviderProfile from "../Components/marketing/pages/jobs/post-a-job-profile/UpdateProviderProfile";
-import ProviderInterestPage from "../Instructor/ProviderLandingPage/providerInterestPage";
-import ProviderDashboard from "../Providerdashboard/Dashboard";
-import ProviderJob from "../Providerdashboard/MyJob";
-import ProviderContract from "../Providerdashboard/ContractPage";
-import ProviderJobApplicants from "../Providerdashboard/JobApplicants";
-import ProviderReviews from "../Providerdashboard/Reviews";
-import ProviderEarning from "../Providerdashboard/Earnings";
-import ProviderStudents from "../Providerdashboard/Students";
-import ProviderPayouts from "../Providerdashboard/account-settings/Payouts";
-import ProviderResolution from "../Providerdashboard/Resolution";
-import ProviderSocialProfiles from "../Providerdashboard/account-settings/SocialProfiles";
-import ProviderDeleteProfile from "../Providerdashboard/account-settings/DeleteProfile";
-import ProtectedRoutes from "../Components/ProtectedRoute";
-import OutsourceJobs from "../Providerdashboard/OutsourceJobs";
-import OutsourceAJobs from "../Components/marketing/pages/jobs/outsource-a-job/OutsourceAJob";
-import Outsource from "../Pages/outsource/Outsource";
+// Import Onboard
+import Onboard from "../Pages/creator/Onboard";
+import OnboardTwo from "../Pages/creator/OnboardTwo";
+import Ecosystem from "../Creator/ecosystem/Ecosystem";
+import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
+import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
+import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
+import Courses from "../Creator/ecosystem/Newecosystem/Courses";
+import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
+import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
+import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
+import Integration from "../Creator/ecosystem/Newecosystem/Integration";
+import Template1 from "../EditTemplate/Template1";
+import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
+import ContractPage from "../Creator/Payment/ContractPage";
+import Payouts from "../Creator/Payment/Payouts";
+
+import UserLandingPage from "../UserDashboard/StudentLandingPage";
+import UserDashboard from "../UserDashboard/student/StudentDashboard";
+import UserMyCourse from "../UserDashboard/student/MyCourses";
+import UserReviews from "../UserDashboard/student/Reviews";
+import UserBookmarked from "../UserDashboard/student/Bookmarked";
+import UserLearning from "../UserDashboard/student/Learning";
+import UserQiuzResult from "../UserDashboard/student/QuizResult";
+import UserEditProfile from "../DashboardsPeerComponents/account-settings/EditProfile";
+import UserPayouts from "../DashboardsPeerComponents/account-settings/Payouts";
+import UserSocialProfile from "../DashboardsPeerComponents/account-settings/SocialProfiles";
+import UserNotification from "../DashboardsPeerComponents/account-settings/Notifications";
+import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
+import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
+import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
+import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
+import UserResolution from "../UserDashboard/student/Resolution";
+
+import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
+import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemResolution from "../EcosystemDashboard/EcoResolution"
+import EcosystemReviews from "../EcosystemDashboard/Reviews";
+import EcosystemEarning from "../EcosystemDashboard/Earnings";
+import EcosystemOrders from "../EcosystemDashboard/Orders";
+import EcosystemStudents from "../EcosystemDashboard/Students";
+import EcosystemPayouts from "../DashboardsPeerComponents/account-settings/Payouts";
+import EcosystemQuiz from "../EcosystemDashboard/Quiz";
+import EcosystemQuizSingle from "../EcosystemDashboard/QuizSingle";
+import EcosystemQuizResult from "../EcosystemDashboard/QuizResult";
+import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
+import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
+import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
+
+// ** Import Ecosystem Authentication components
+import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register";
+import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
+import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
+import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
+import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
+import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
+import DeveloperProgram from "../developer-program/DeveloperProgram";
 
 const AllRoutes = () => {
   return (
     <Routes>
-      {/* Auth Pages */}
-      <Route element={<AuthLayout />}>
-        <Route path="/authentication/signup" element={<SignUp />} />
-        <Route path="/authentication/signin" element={<SignIn />} />
-        <Route path="/" element={<UserSignIn />} />
-        <Route path="/user/signup" element={<UserSignUp />} />
-        <Route
-          path="/admin/forget-password"
-          element={<AdminForgetPassword />}
-        />
-        <Route
-          path="/authentication/Forget-password"
-          element={<ForgetPassword />}
-        />
-
-        <Route path="/user/verify-email" element={<UserEmailVerification />} />
-        <Route path="/authentication/Verify-email" element={<VerifyEmail />} />
-        <Route path="/user/reset-password" element={<NewPassword />} />
-      </Route>
-      {/* Landing Pages */}
-      <Route path="/landingpage" element={<LandingPage />} />
-      <Route path="/aboutus" element={<About />} />
+      <Route path="/" element={<DimpHome />} />
+      <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
-      <Route path="/contactUs" element={<Contact />} />
-      <Route path="/FAQs" element={<FAQs />} />
-      <Route path="/support" element={<HelpCenterSupportForm />} />
-      <Route path="/TermsOfUse" element={<TermsOfUse />} />
-      <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-      {/* Routes with HelpCenterTransparentLayout */}
-      <Route element={<HelpCenterTransparentLayout />}>
-        <Route path="/marketing/help-center/" element={<HelpCenter />} />
-      </Route>
-      {/* Routes with HelpCenterLayout */}
-      <Route element={<HelpCenterFAQ />}>
-        <Route path="/marketing/help-center/faq/" element={<HelpCenterFAQ />} />
-        <Route
-          path="/marketing/help-center/guide/"
-          element={<HelpCenterGuide />}
-        />
-        <Route
-          path="/marketing/help-center/guide-single/:categoryslug/:articleslug"
-          element={<HelpCenterGuideSingle />}
-        />
-        <Route
-          path="/marketing/help-center/support/"
-          element={<HelpCenterSupport />}
-        />
-      </Route>
-      {/* Routes with JobListingLayout */}
-      <Route element={<JobListingLayout />}>
-        <Route path="/jobs/listing/job-list/" element={<JobsList />} />
+      <Route path="/government" element={<Government />} />
+      <Route path="/corporation" element={<Corporation />} />
+      <Route path="/non-profit" element={<NonProfit />} />
+      <Route path="/professional-services" element={<Professional />} />
+      <Route path="/religious-bodies" element={<ReligiousBodies />} />
+      <Route path="/creative-services" element={<Creatives />} />
+      <Route path="/trade-services" element={<TradeServices />} />
+      <Route path="/personal-care-services" element={<PersonalCare />} />
+      <Route path="/technology-services" element={<TechnologyServices />} />
+      <Route path="/event-services" element={<EventServices />} />
 
-        <Route path="/jobs/listing" element={<JobSingle />} />
-        <Route path="/services/listing" element={<ServiceSingle />} />
-        <Route path="/jobs/company-list/" element={<CompanyList />} />
-        <Route path="/jobs/services-list/" element={<ServicesList />} />
-        <Route path="/jobs/outsource/" element={<Outsource />} />
-        <Route path="/jobs/company/about" element={<CompanyAbout />} />
-        <Route path="/jobs/company/reviews/" element={<CompanyReviews />} />
-        <Route path="/jobs/company/jobs/" element={<CompanyJobs />} />
-        <Route path="/jobs/company/benifits/" element={<CompanyBenifits />} />
-        <Route path="/jobs/company/photos/" element={<CompanyPhotos />} />
-        <Route path="/jobs/post-a-job" element={<PostAJob />} />
-        <Route path="/jobs/outsource-a-job/" element={<OutsourceAJobs />} />
-        <Route path="/jobs/post-a-service" element={<PostAService />} />
-        <Route path="/jobs/edit-a-service/:id" element={<EditAService />} />
-        <Route path="/jobs/apply-for-this-job" element={<ApplyForJob />} />
-        <Route path="/jobs/update-resume/" element={<UpdateResume />} />
+      <Route path="/creator/signin" element={<UserSignIn />} />
+      <Route path="/creator/signup" element={<UserSignUp />} />
+      <Route path="/creator/forget-password" element={<UserForgetPassword />} />
+      <Route path="/creator/Onboard" element={<Onboard />} />
+      <Route path="/creator/verify-email" element={<UserEmailVerification />} />
+      <Route path="/creator/verification" element={<VerifyEmail />} />
+      <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+      <Route
+        path="/creator/dashboard/New-Ecosystem"
+        element={<NewEcosystem />}
+      />
+      <Route path="/creator/dashboard/Template" element={<Template1 />} />
+      <Route
+        path="/creator/dashboard/new-template"
+        element={<NewSiteTemplate />}
+      />
+
+      <Route
+        path="/creator/dashboard/Edit-Template"
+        element={<EditTemplate />}
+      />
+      <Route path="/creator/dashboard/Create-Form" element={<CreateForm />} />
+      <Route path="/creator/dashboard/Products" element={<Courses />} />
+      <Route
+        path="/creator/dashboard/Preview-and-Send"
+        element={<PreviewAndSend />}
+      />
+
+      <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
+      <Route path="/creator/dashboard/Integrations" element={<Integration />} />
+      <Route element={<ChatLayout />}>
+        <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route>
-
-      {/* Protected Routes */}
-      <Route element={<ProtectedRoutes />}>
-        <Route
-          path="/jobs/listing/dashboard-job-list/"
-          element={<DashboardJobSingle />}
-        />
-        {/*seeker Pages */}
-        <Route path="/provider-profile" element={<ProviderProfile />} />
-        <Route
-          path="/Providerdashboard/update-provider-profile"
-          element={<UpdateProviderProfile />}
-        />
-        <Route path="/jobs/upload-resume/" element={<UploadResume />} />
-        <Route path="/JobSeeker" element={<ProviderLanding />} />
-        <Route
-          path="/JobSeeker/interest-page"
-          element={<ProviderInterestPage />}
-        />
-
-        <Route path="/JobSeekerdashboard" element={<JobSeekerDashboard />} />
-        <Route path="/JobSeekerdashboard/My-Job" element={<JobSeekerJob />} />
-        <Route
-          path="/JobSeekerdashboard/my-service"
-          element={<JobSeekerService />}
-        />
-        <Route
-          path="/JobSeekerdashboard/My-Contract"
-          element={<JobSeekerContract />}
-        />
-        <Route
-          path="/JobSeekerdashboard/My-Offer"
-          element={<JobSeekerOffer />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-reviews"
-          element={<JobSeekerReviews />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-earning"
-          element={<JobSeekerEarning />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-students"
-          element={<JobSeekerStudents />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-payouts"
-          element={<JobSeekerPayouts />}
-        />
-        <Route
-          path="/JobSeekerdashboard/conflict-resolution"
-          element={<JobSeekerResolution />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-social-profiles"
-          element={<JobSeekerSocialProfiles />}
-        />
-        <Route
-          path="/JobSeekerdashboard/seeker-delete-profile"
-          element={<JobSeekerDeleteProfile />}
-        />
-        {/* Provider Pages */}
-        <Route path="/Providerdashboard" element={<ProviderDashboard />} />
-        <Route path="/Providerdashboard/All-Job" element={<ProviderJob />} />
-        <Route
-          path="/Providerdashboard/My-Contract"
-          element={<ProviderContract />}
-        />
-        <Route
-          path="/Providerdashboard/Outsource-Jobs"
-          element={<OutsourceJobs />}
-        />
-        {/* <Route path="/Providerdashboard/Outsource-Single" element={<OutsourceSingle />} /> */}
-        <Route
-          path="/Providerdashboard/Job-Applicants"
-          element={<ProviderJobApplicants />}
-        />
-        <Route
-          path="/Providerdashboard/conflict-resolution"
-          element={<ProviderResolution />}
-        />
-        <Route
-          path="/Providerdashboard/provider-reviews"
-          element={<ProviderReviews />}
-        />
-        <Route
-          path="/Providerdashboard/provider-earning"
-          element={<ProviderEarning />}
-        />
-        <Route
-          path="/Providerdashboard/provider-students"
-          element={<ProviderStudents />}
-        />
-        <Route
-          path="/Providerdashboard/provider-payouts"
-          element={<ProviderPayouts />}
-        />
-        <Route
-          path="/Providerdashboard/provider-social-profiles"
-          element={<ProviderSocialProfiles />}
-        />
-        <Route
-          path="/Providerdashboard/provider-delete-profile"
-          element={<ProviderDeleteProfile />}
-        />
-      </Route>
-
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
-        <Route path="/user/dashboard/overview" element={<Overview />} />
-        <Route path="/user/dashboard/analytics" element={<Analytics />} />
-        <Route path="/user/notifications" element={<Notification />} />
-        <Route path="user/notification-single" element={<NotificationSingle />} />
-
-        <Route path="/admin/jobs/all-jobs" element={<AllJobs />} />
-        <Route path="/admin/out-source" element={<OutSource />} />
+        <Route path="/creator/dashboard/overview" element={<Overview />} />
+        <Route path="/creator/dashboard/analytics" element={<Analytics />} />
+        <Route path="/creator/notifications" element={<Notification />} />
         <Route
-          path="/admin/out-source/job-single"
-          element={<OutsourceJobSingle />}
+          path="/creator/notification-single"
+          element={<NotificationSingle />}
         />
-        <Route path="/admin/jobs/job-category" element={<JobCategory />} />
         <Route
-          path="/admin/jobs/category-single"
+          path="/creator/dashboard/All-Ecosystem"
+          element={<Ecosystem />}
+        />
+
+        <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+        <Route path="/creator/jobs/job-category" element={<JobCategory />} />
+        <Route
+          path="/creator/jobs/category-single"
           element={<CategorySingle />}
         />
-        <Route path="/admin/jobProvider" element={<JobProvider />} />
-        <Route path="/admin/jobSeeker" element={<JobSeeker />} />
-        <Route path="/admin/all-payment" element={<AllPayment />} />
-        <Route path="/admin/pending-payment" element={<PendingPayment />} />
-        <Route path="/admin/received-payment" element={<ReceivedPayment />} />
-        <Route path="/admin/withdraw-request" element={<WithdrawPayment />} />
-        <Route path="/admin/support" element={<Support />} />
-        <Route path="/admin/resolution" element={<Resolution />} />
+        <Route path="/creator/my-user" element={<MyUser />} />
+        <Route path="/creator/jobProvider" element={<JobProvider />} />
+        <Route path="/creator/jobSeeker" element={<JobSeeker />} />
+        <Route path="/creator/escrow-payment" element={<ContractPage />} />
+        <Route path="/creator/payout" element={<Payouts />} />
+        <Route path="/creator/pending-payment" element={<PendingPayment />} />
+        <Route path="/creator/received-payment" element={<ReceivedPayment />} />
+        <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+        <Route path="/creator/feature-update" element={<FeatureUpdate />} />
+        <Route path="/creator/help-center" element={<HelpCenter />} />
+        <Route path="/creator/support" element={<Support />} />
+        <Route path="/creator/edit-profile" element={<EditProfile />} />
+        <Route path="/creator/social-profile" element={<SocialProfile />} />
+        <Route path="/creator/Onboard" element={<Onboard />} />
         <Route
-          path="admin/dashboard/layouts/layout-vertical"
+          path="creator/dashboard/layouts/layout-vertical"
           element={<Overview />}
         />
       </Route>
+
+      {/* Creator Ecosystem Dashboard */}
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard"
+        element={<EcosystemDashboard />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
+        element={<EcosystemCourses />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
+        element={<EcosystemReviews />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning"
+        element={<EcosystemEarning />}
+      />
+
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders"
+        element={<EcosystemOrders />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-students"
+        element={<EcosystemStudents />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
+        element={<EcosystemPayouts />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
+        element={<EcosystemResolution />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
+        element={<EcosystemQuiz />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-single"
+        element={<EcosystemQuizSingle />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result"
+        element={<EcosystemQuizResult />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Course"
+        element={<AddNewCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Service"
+        element={<PostAService />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Product"
+        element={<PostAProduct />}
+      />
+
+      {/* End user ecosystem routes */}
+      <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+      <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+      <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
+      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route
+        path="/ecosystem/forget-password"
+        element={<EcosystemForgetPassword />}
+      />
+      <Route
+        path="/ecosystem/verify-email"
+        element={<EcosystemEmailVerification />}
+      />
+      <Route
+        path="/ecosystem/verification"
+        element={<EcosystemVerifyEmail />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-My-Course"
+        element={<UserMyCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/Userdashboard"
+        element={<UserDashboard />}
+      />
+      <Route path="/:ecosystemDomain/User-Reviews" element={<UserReviews />} />
+      <Route
+        path="/:ecosystemDomain/User-My-Course/Bookmarked"
+        element={<UserBookmarked />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-My-Course/Learning"
+        element={<UserLearning />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-quiz-result"
+        element={<UserQiuzResult />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-edit-profile"
+        element={<UserEditProfile />}
+      />
+      <Route path="/:ecosystemDomain/User-payout" element={<UserPayouts />} />
+      <Route
+        path="/:ecosystemDomain/User-social-profile"
+        element={<UserSocialProfile />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-notifications"
+        element={<UserNotification />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
+      <Route
+        path="/:ecosystemDomain/help-center"
+        element={<UserResolution />}
+      />
+      <Route
+        path="/:ecosystemDomain/User/browse-course"
+        element={<UserBrowseCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/User/single/learning/single-course"
+        element={<UserLearningCourse />}
+      />
+      <Route
+        path="/:ecosystemDomain/User-delete-profile"
+        element={<UserDeleteProfile />}
+      />
+
+      {/* dimp developer program */}
+      <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
     </Routes>
   );
 };
