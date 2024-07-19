@@ -38,6 +38,9 @@ const DigitalServiceCard = ({ item }) => {
     }
   };
 
+  let originalImgUrl = item?.backgroundCover?.[0] || '';
+  let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : '';
+
   return (
     <Card className="card-bordered card-hover cursor-pointer h-100 ">
       <Card.Body className="p-0">
@@ -45,7 +48,7 @@ const DigitalServiceCard = ({ item }) => {
           className="position-relative  top-0 start-0 w-100 "
           style={{
             height: "200px",
-            backgroundImage: `url(${item.backgroundCover[0]})`,
+            backgroundImage: `url(${updatedImgUrl})`,
             backgroundSize: "cover",
             borderRadius: "5px 5px 0 0",
             backgroundRepeat: "no-repeat",
