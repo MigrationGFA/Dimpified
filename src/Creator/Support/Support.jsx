@@ -150,25 +150,25 @@ const Support = () => {
         header: "Status",
         cell: ({ getValue }) => getValue() || "N/A",
       },
-      {
-        header: "Completed",
-        accessorKey: "completed",
-        cell: ({ row }) => (
-          <Button
-            variant="success"
-            onClick={() => row && handleAction(row.original.id)}
-            disabled={row && row.original.status === "completed"}
-            style={{
-              backgroundColor: "green",
-              borderColor: "#b8f7b2",
-              color: "white",
-              opacity: row && row.original.status === "completed" ? 0.5 : 1,
-            }}
-          >
-            Completed
-          </Button>
-        ),
-      },
+      // {
+      //   header: "Completed",
+      //   accessorKey: "completed",
+      //   cell: ({ row }) => (
+      //     <Button
+      //       variant="success"
+      //       onClick={() => row && handleAction(row.original.id)}
+      //       disabled={row && row.original.status === "completed"}
+      //       style={{
+      //         backgroundColor: "green",
+      //         borderColor: "#b8f7b2",
+      //         color: "white",
+      //         opacity: row && row.original.status === "completed" ? 0.5 : 1,
+      //       }}
+      //     >
+      //       Completed
+      //     </Button>
+      //   ),
+      // },
     ],
     [data]
   );
