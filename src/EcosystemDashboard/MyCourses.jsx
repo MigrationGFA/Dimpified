@@ -34,24 +34,26 @@ const MyJob = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [courses, setCourses] = useState([]);
   const [services, setServices] = useState([]);
-  const [Products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const ongoingJobsHeader = [
-    { accessorKey: "jobTitle", header: "Job Title" },
-    { accessorKey: "jobSalary", header: "Job Salary" },
-    { accessorKey: "deliveryDate", header: "Delivery Date" },
+  const serviceHeader = [
+    { accessorKey: "title", header: "Service Header" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "format", header: "Service Format" },
+    // { accessorKey: "price", header: "Price" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
     { accessorKey: "action", header: "Action" },
-    { accessorKey: "paymentStatus", header: "Payment Status" },
   ];
 
-  const completedJobsHeader = [
-    { accessorKey: "jobTitle", header: "Job Title" },
-    { accessorKey: "jobSalary", header: "Job Salary" },
-    { accessorKey: "userDetails", header: "User Name" },
-    { accessorKey: "review", header: "Review" },
-    { accessorKey: "completedDate", header: "Completed Date" },
-    { accessorKey: "paymentStatus", header: "Payment Status" },
+  const productHeader = [
+    { accessorKey: "title", header: "Product Name" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "productType", header: "Product Type" },
+    // { accessorKey: "price", header: "Price" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
+    { accessorKey: "action", header: "Action" },
+    
   ];
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const MyJob = () => {
         );
         setCourses(response.data.courses);
         setServices(response.data.services);
-        // setProducts(response.data.products);
+        setProducts(response.data.products);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -74,13 +76,13 @@ const MyJob = () => {
     fetchJobs();
   }, []);
 
-  const allJobsHeader = [
-    { accessorKey: "jobTitle", header: "Job Title" },
-    { accessorKey: "jobSalary", header: "Job Salary" },
-
-    { accessorKey: "deliveryDate", header: "Delivery Date" },
-    { accessorKey: "status", header: "Status" },
-    // { accessorKey: "paymentStatus", header: "Payment Status" },
+  const courseHeader = [
+    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "totalNumberOfEnrolledStudent", header: "No of Students" },
+    { accessorKey: "price", header: "Price" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
+    { accessorKey: "action", header: "Action" },
   ];
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -131,7 +133,7 @@ const MyJob = () => {
             </Card.Header>
             <Card.Body className="p-0">
               <Tab.Content>
-                <Tab.Pane eventKey="all" className="pb-4">
+                <Tab.Pane eventKey="course" className="pb-4">
                   {isLoading ? (
                     <div
                       className="d-flex justify-content-center align-items-center"
@@ -140,22 +142,22 @@ const MyJob = () => {
                       <Spinner animation="border" variant="primary" />
                     </div>
                   ) : (
-                    <JobTable header={allJobsHeader} data={courses} />
+                    <JobTable header={courseHeader} data={courses} />
                   )}
                 </Tab.Pane>
-                <Tab.Pane eventKey="ongoingjob" className="pb-4">
+                <Tab.Pane eventKey="service" className="pb-4">
                   <JobTable
-                    header={ongoingJobsHeader}
+                    header={serviceHeader}
                     data={services}
-                    jobId={services._id}
+                    serviceId={services._id}
                     price={services.price}
                   />
                 </Tab.Pane>
-                <Tab.Pane eventKey="completedjob" className="pb-4">
+                <Tab.Pane eventKey="product" className="pb-4">
                   <JobTable
-                    header={completedJobsHeader}
-                    data={Products}
-                    jobId={Products._id}
+                    header={productHeader}
+                    data={products}
+                    productId={products._id}
                   />
                 </Tab.Pane>
               </Tab.Content>
