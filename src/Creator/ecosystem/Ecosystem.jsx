@@ -257,24 +257,6 @@ const Ecosystem = () => {
                               >
                                 Dashboard
                               </Button>
-                              {/* <a
-                                href={`https://dimpified.com/${eco.ecosystemDomain}/Ecosystemdashboard`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={() =>
-                                  saveEcoLogo(
-                                    eco.templateLogos[0].logoPath,
-                                    eco.ecosystemDomain
-                                  )
-                                }
-                              >
-                                <Button
-                                  variant="primary"
-                                  className="me-2 mb-2 mb-md-0"
-                                >
-                                  Dashboard
-                                </Button>
-                              </a> */}
                               <a
                                 href={`https://dimpified.com/${eco.ecosystemDomain}`}
                                 target="_blank"

@@ -290,6 +290,8 @@ const AllRoutes = () => {
         path="/ecosystem/verification"
         element={<EcosystemVerifyEmail />}
       />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+
       <Route
         path="/:ecosystemDomain/User-My-Course"
         element={<UserMyCourse />}
