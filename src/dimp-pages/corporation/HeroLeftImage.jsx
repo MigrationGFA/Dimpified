@@ -16,21 +16,21 @@ const HeroLeftImage = () => {
     {
       id: 1,
       icon: mdiStar,
-      title: "Interactive Event Management",
+      title: "Interactive event management",
       description:
         "Organize engaging hackathons with our interactive dashboard. Facilitate participant collaboration, manage submissions, and showcase winning projects, all in one place.",
     },
     {
       id: 2,
       icon: mdiLifebuoy,
-      title: "Real-Time Analytics and Feedback",
+      title: "Real-time analytics and feedback",
       description:
         "Utilize our statistics and visualization features to provide real-time feedback during hackathons. Track participant progress, evaluate performance, and ensure a dynamic, responsive event.",
     },
     {
       id: 3,
       icon: mdiFileDocument,
-      title: `User-Friendly Onboarding and Participation`,
+      title: `User-friendly onboarding and participation`,
       description:
         "Simplify the participant experience with our seamless user onboarding tools. Automate registration, provide easy access to resources, and keep everyone informed with timely updates.",
     },
@@ -42,7 +42,7 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-            Spark Creativity Through Collaboration by organizing Dynamic Hackathons
+            Spark creativity through collaboration by organizing dynamic hackathons
             </h2>
           </div>
         </Col>

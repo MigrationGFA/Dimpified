@@ -71,63 +71,68 @@ const StudentDashboard = () => {
   return (
     <StudentProfileLayout>
       <Row>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-payout">
-            <StatRightBadge
-              title="Amount spent"
-              subtitle="Earning this month"
-              value={
-                (totalAmount / 100)
-                  .toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                  .slice(0, -3) +
-                "." +
-                (totalAmount % 100).toString().padStart(2, "0")
-              }
-              badgeValue={
-                (totalAmount / 100)
-                  .toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                  .slice(0, -3) +
-                "." +
-                (totalAmount % 100).toString().padStart(2, "0")
-              }
-              colorVariant="success"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Amount Spent"
+            subtitle="For the month"
+            value="0"
+            // {
+            //   (totalAmount / 100)
+            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
+            //     .slice(0, -3) +
+            //   "." +
+            //   (totalAmount % 100).toString().padStart(2, "0")
+            // }
+            badgeValue="0"
+            // {
+            //   (totalAmount / 100)
+            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
+            //     .slice(0, -3) +
+            //   "." +
+            //   (totalAmount % 100).toString().padStart(2, "0")
+            // }
+            colorVariant="success"
+          />
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-My-Course">
-            <StatRightBadge
-              title="Purchased Courses"
-              subtitle="New this month"
-              value={totalStudents}
-              badgeValue={totalStudents}
-              colorVariant="info"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Course"
+            subtitle="For the month"
+            value="0"
+            //{totalStudents}
+            badgeValue="0"
+            //{totalStudents}
+            colorVariant="info"
+          />
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-My-Course/Bookmarked">
-            <StatRightBadge
-              title="Bookmarked Courses"
-              subtitle="For the month"
-              value={numberOfCourse}
-              badgeValue={numberOfCourse}
-              colorVariant="warning"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Purchased Services"
+            subtitle="For the month"
+            value="0"
+            //{NumberOfCourse}
+            badgeValue="0"
+            //{NumberOfCourse}
+            colorVariant="warning"
+          />
+        </Col>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Digital Product"
+            subtitle="For the month"
+            value="0"
+            //{NumberOfCourse}
+            badgeValue="0"
+            //{NumberOfCourse}
+            colorVariant="warning"
+          />
         </Col>
       </Row>
 
       {/* Graph for purchased courses */}
-      <Card className="my-4">
+      <Card className="my-4 mt-10">
         <Card.Header>
-          <h3 className="h4 mb-0">Purchased Courses</h3>
+          <h3 className="h4 mb-0">Purchased Product</h3>
         </Card.Header>
         <Card.Body>
           <ApexCharts
@@ -142,14 +147,14 @@ const StudentDashboard = () => {
       {/* Last 4 Purchased Courses table */}
       <Card className="mt-4">
         <Card.Header>
-          <h3 className="mb-0 h4">Last 4 Purchased Courses</h3>
+          <h3 className="mb-0 h4">Last 4 Purchased Product</h3>
         </Card.Header>
         <Card.Body className="p-0 ">
           <Table hover responsive className="mb-0 text-nowrap table-centered">
             <thead className="table-light">
               <tr>
                 <th scope="col" className="border-0">
-                  COURSES
+                  PRODUCTS
                 </th>
                 <th scope="col" className="border-0">
                   AMOUNT

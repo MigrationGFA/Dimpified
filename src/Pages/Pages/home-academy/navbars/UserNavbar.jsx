@@ -59,9 +59,9 @@ const NavbarDefault = ({ headerstyle, login }) => {
           {/* <Navbar.Brand as={Link} to="/"> */}
           <Link to="" onClick="">
             <Image
-              src={Logo}
+              src={sessionStorage.getItem("ecoLogo")}
               alt="logo"
-              style={{ height: "56px", width: "58px", cursor: "pointer" }}
+              style={{ height: "40px", cursor: "pointer" }}
               // onClick={redirect}
             />
           </Link>
@@ -124,16 +124,16 @@ const NavbarDefault = ({ headerstyle, login }) => {
               <DarkLightMode className="mt-2 me-2" />
 
               {/* If user is logged in, show Dashboard link */}
-               {/* {user ? ( */}
-                <Nav.Link
-                  as={Link}
-                  to="/Userdashboard"
-                  bsPrefix="btn"
-                  className="btn btn-primary shadow-sm"
-                  // onClick={redirect}
-                >
-                  Dashboard
-                </Nav.Link> 
+              {/* {user ? ( */}
+              <Nav.Link
+                as={Link}
+                to="/Userdashboard"
+                bsPrefix="btn"
+                className="btn btn-primary shadow-sm"
+                // onClick={redirect}
+              >
+                Dashboard
+              </Nav.Link>
               {/* ) : (
                 // If user is not logged in, show Sign In and Sign Up links
                 <span className={`ms-auto mt-1`}>

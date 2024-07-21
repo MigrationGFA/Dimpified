@@ -4,9 +4,13 @@ import { useGlobalContext } from "../../context/AuthContext";
 import { showToast } from "../../Components/Showtoast";
 import axios from "axios";
 import StudentProfileLayout from "../../UserDashboard/student/StudentProfileLayout";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const SocialProfiles = () => {
-  // const { userId } = useGlobalContext();
+  let { ecosystemDomain } = useParams();
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
   const [formData, setFormData] = useState({
     twitter: "",
     youtube: "",
@@ -23,31 +27,31 @@ const SocialProfiles = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // useEffect(() => {
+  useEffect(() => {
   
-  //   const fetchSocialProfiles = async () => {
-  //     try {
-  //       if (!userId) return; 
-  //       const response = await axios.get(
-  //         `https://remsana-backend-testing.azurewebsites.net/api/v1/get-social-profile/${userId}`
-  //       );
-  //       const user = response.data.user;
-  //       // Set the retrieved social profile data into the form fields
-  //       setFormData({
-  //         twitter: user.twitter || "",
-  //         youtube: user.youtube || "",
-  //         instagram: user.instagram || "",
-  //         facebook: user.facebook || "",
-  //         LinkedIn: user.LinkedIn || "",
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching social profiles:", error);
-  //       showToast("Failed to fetch social profiles", "error");
-  //     }
-  //   };
+    const fetchSocialProfiles = async () => {
+      try {
+        if (!userId) return; 
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/get-ecosystemUser-social-profile/${userId}`
+        );
+        const user = response.data.user;
+        // Set the retrieved social profile data into the form fields
+        setFormData({
+          twitter: user.twitter || "",
+          youtube: user.youtube || "",
+          instagram: user.instagram || "",
+          facebook: user.facebook || "",
+          LinkedIn: user.LinkedIn || "",
+        });
+      } catch (error) {
+        console.error("Error fetching social profiles:", error);
+        showToast("Failed to fetch social profiles", "error");
+      }
+    };
 
-  //   fetchSocialProfiles();
-  // }, [userId]);
+    fetchSocialProfiles();
+  }, [userId]);
 
  
 
@@ -71,16 +75,17 @@ const SocialProfiles = () => {
     try {
       // Set unfilled inputs to "nil"
       const formDataToSend = {
-        userId,
+        userId: userId,
         twitter: formData.twitter || "nil",
         instagram: formData.instagram || "nil",
         facebook: formData.facebook || "nil",
         LinkedIn: formData.LinkedIn || "nil",
         youtube: formData.youtube || "nil",
+        ecosystemDomain: ecosystemDomain,
       };
 
       const response = await axios.post(
-        "https://remsana-backend-testing.azurewebsites.net/api/v1/update-social",
+        `${import.meta.env.VITE_API_URL}/ecosystem-update-social`,
         formDataToSend
       );
 

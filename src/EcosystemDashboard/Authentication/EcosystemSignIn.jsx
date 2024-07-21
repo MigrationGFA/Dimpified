@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
+import { ecosystemLogin } from "../../features/login";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -44,23 +44,28 @@ const UserSignIn = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://dimpified-backend-development.azurewebsites.net/api/v1/ecosystem-user/login",
-        {
+      // Dispatch the login action
+      const resultAction = await dispatch(
+        ecosystemLogin({
           email: data.email,
           password: data.password,
-        }
+          domainName: ecosystemDomain,
+        })
       );
 
-      // Handle successful login
-      showToast(response.data.message);
-
-      // Navigate to Userdashboard after successful login
-      navigate(`/${ecosystemDomain}/Userdashboard`);
-
+      if (ecosystemLogin.rejected.match(resultAction)) {
+        // Login failed, access the payload from the rejected action
+        const errorPayload = resultAction.payload;
+        showToast(errorPayload);
+      } else if (ecosystemLogin.fulfilled.match(resultAction)) {
+        // Login was successful
+        showToast(resultAction.payload.message);
+        sessionStorage.setItem("ecosystemDomain", ecosystemDomain);
+        navigate(`/${ecosystemDomain}/Userdashboard`);
+      }
     } catch (error) {
-      // Handle login error
-      showToast("Invalid credentials. Please try again.");
+      // Handle unexpected errors, such as network issues
+      showToast("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -72,15 +77,15 @@ const UserSignIn = () => {
             <Card.Body className="p-6">
               <div className="mb-4">
                 <Image
-                  src={Logo}
+                  src={sessionStorage.getItem("ecoLogo")}
                   className="mb-4"
                   alt="logo"
-                  style={{ height: "100px" }}
+                  style={{ height: "50px" }}
                 />
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to={`/show=true/${ecosystemDomain}/signup`} className="ms-1">
+                  <Link to={`/${ecosystemDomain}/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>
@@ -118,9 +123,9 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  <Link to="/user/Forget-password" className="ms-1 text-bold">
+                  {/* <Link to="/user/Forget-password" className="ms-1 text-bold">
                     Forgot Password
-                  </Link>
+                  </Link> */}
 
                   <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
                     {isLoading ? (

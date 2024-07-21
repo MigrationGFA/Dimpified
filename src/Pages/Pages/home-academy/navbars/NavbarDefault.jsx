@@ -19,7 +19,6 @@ import QuickMenu from "../../../../Layout/QuickMenu";
 import DarkLightMode from "../../../../Layout/DarkLightMode";
 import { useNavigate } from "react-router-dom";
 
-
 // import data files
 import NavbarDefaultRoutes from "../../../../routes/NavbarDefault";
 
@@ -37,19 +36,10 @@ const NavbarDefault = ({ headerstyle, login }) => {
   // const { user, userRole } = useGlobalContext();
   const navigate = useNavigate();
 
-  // const redirect = async () => {
-  //   if (userRole === "student") {
-  //     navigate("/student-My-Course");
-  //   }
-  //   if (userRole === "instructor") {
-  //     navigate("/Instructordashboard");
-  //   }
-  // };
-useEffect(() => {
-const logoImage = sessionStorage.getItem('Logo');
-setLogo(logoImage);
-}, []) 
-
+  useEffect(() => {
+    const logoImage = sessionStorage.getItem("ecoLogo");
+    setLogo(logoImage);
+  }, []);
 
   return (
     <Fragment>
@@ -65,7 +55,7 @@ setLogo(logoImage);
             <Image
               src={logo}
               alt="logo"
-              style={{ height: "56px", cursor: "pointer" }}
+              style={{ height: "46px", cursor: "pointer" }}
               // onClick={redirect}
             />
           </Link>

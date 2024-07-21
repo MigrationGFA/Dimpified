@@ -4,33 +4,51 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
-  updateServiceData,
+  updateProductData,
   addBackgroundCover,
   removeBackgroundCover,
-} from "../../../../../features/service";
+} from "../../../../../features/product";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
-  const service = useSelector((state) => state.service) || {};
+  const product = useSelector((state) => state.product) || {};
 
-  const formatType = [
-    { label: "Select Format" },
-    { value: "remote", label: "Remote" },
-    { value: "onsite", label: "Onsite" },
-    { value: "hybrid", label: "Hybrid" },
+  const currencyType = [
+    { value: "NGN", label: "Naira" },
+    { value: "USD", label: "Dollars" },
+    { value: "EUR", label: "Euros" },
+    { value: "GBP", label: "Pounds" },
   ];
+
+  const productType = [
+    { value: "music", label: "Music" },
+    { value: "software", label: "Software" },
+    { value: "art", label: "Art" },
+    { value: "graphics", label: "Graphics" },
+    { value: "ebook", label: "eBook" },
+    { value: "video", label: "Video" },
+    { value: "photography", label: "Photography" },
+    { value: "tutorial", label: "Tutorial" },
+    { value: "game", label: "Game" },
+    { value: "plugin", label: "Plugin" },
+    { value: "others", label: "Others" }
+  ];
+  
 
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    const filesArray = Array.from(event.target.files).map((file) => {
+    const filesArray = Array.from(event.target.files);
+    filesArray.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(addBackgroundCover({ file, preview: e.target.result }));
+        dispatch(addBackgroundCover({ name: file.name, preview: e.target.result }));
       };
       reader.readAsDataURL(file);
     });
   };
+  
+  
 
   const handleRemoveBackground = (index) => {
     dispatch(removeBackgroundCover(index));
@@ -43,60 +61,41 @@ const Settings = ({ onNext, onPrevious }) => {
 
   useEffect(() => {
     return () => {
-      service.serviceBackground.forEach((image) => {
+      product.backgroundCover.forEach((image) => {
         URL.revokeObjectURL(image.preview);
       });
     };
-  }, [service.serviceBackground]);
+  }, [product.backgroundCover]);
 
   return (
     <Form onSubmit={handleSubmit}>
       <Card className="mb-3 border-0 shadow-sm">
         <Card.Header className="border-bottom px-4 py-3 bg-light">
-          <h4 className="mb-0">Service Details</h4>
+          <h4 className="mb-0">Digital Product Details</h4>
         </Card.Header>
         <Card.Body>
-          <p className="text-muted">Provide the details of your service.</p>
+          <p className="text-muted">Provide the details of your digital product.</p>
           <Col md={12} className="mx-auto">
             <Form.Group as={Row} className="mb-4">
               {/* Header */}
               <Col md={12} className="mb-3">
                 <Form.Label htmlFor="header">
-                  Header<span className="text-danger">*</span>
+                  Product Name<span className="text-danger">*</span>
                 </Form.Label>
-                <div className="d-flex">
-                  <Form.Select
-                    value={service.prefix}
-                    onChange={(e) =>
-                      dispatch(updateServiceData({ prefix: e.target.value }))
-                    }
-                    className="flex-shrink-0"
-                    style={{
-                      maxWidth: "150px",
-                      borderTopRightRadius: "0",
-                      borderBottomRightRadius: "0",
-                    }}
-                  >
-                    <option value="I will">I will</option>
-                    <option value="Our Agency will">Our Agency will</option>
-                  </Form.Select>
+                <div className="d-flex ">
                   <Form.Control
                     type="text"
                     id="header"
-                    placeholder="Give a professional Haircut"
-                    value={service.header}
+                    placeholder="Enter your product Name"
+                    value={product.productName}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ header: e.target.value }))
+                      dispatch(updateProductData({ productName: e.target.value }))
                     }
                     required
                     className="flex-grow-1"
-                    style={{
-                      borderTopLeftRadius: "0",
-                      borderBottomLeftRadius: "0",
-                    }}
                   />
                   <Tooltip
-                    content="Describe briefly the service you are offering"
+                    content="Enter the product Name of what you are selling"
                     placement="left"
                     className="bg-primary text-white"
                     style={{ minWidth: "150px" }}
@@ -116,15 +115,17 @@ const Settings = ({ onNext, onPrevious }) => {
                     as="textarea"
                     id="description"
                     rows={4}
-                    placeholder="e.g Experience top-notch grooming with our professional barber service. We offer precision haircuts, classic shaves, and personalized styles in a relaxing atmosphere. Our skilled barbers use premium products to ensure you leave looking and feeling your best. Book your appointment today for a tailored grooming experience"
-                    value={service.description}
+                    placeholder="e.g Discover the ultimate eBook that transforms your understanding of [Topic]. Packed with insightful content, this digital product offers in-depth explanations, engaging visuals, and practical tips to help you master [Topic]. Whether you're a beginner or looking to refine your skills, this eBook is designed to cater to all levels. Download now and elevate your knowledge with this comprehensive guide."
+                    value={product.description}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ description: e.target.value }))
+                      dispatch(
+                        updateProductData({ description: e.target.value })
+                      )
                     }
                     required
                   />
                   <Tooltip
-                    content="Provide detailed information about the service like the e.g"
+                    content="Provide detailed information about your digital product like the e.g"
                     placement="left"
                     className="custom-tooltip bg-primary text-white"
                     style={{ minWidth: "150px" }}
@@ -134,28 +135,65 @@ const Settings = ({ onNext, onPrevious }) => {
                 </div>
               </Col>
 
-              {/* Format */}
+              {/* Currency */}
+              <Col md={12} className="mb-3">
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="currency">
+                    Currency<span className="text-danger">*</span>
+                  </Form.Label>
+                  <div className="d-flex align-items-center">
+                    <Form.Select
+                      id="currency"
+                      value={product.currency}
+                      onChange={(e) =>
+                        dispatch(
+                          updateProductData({ currency: e.target.value })
+                        )
+                      }
+                      required
+                    >
+                      <option value="">Select Currency</option>
+                      {currencyType.map((currency, index) => (
+                        <option key={index} value={currency.value}>
+                          {currency.label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    <Tooltip
+                      content="Choose your Currency according to you locality"
+                      placement="left"
+                      className="bg-primary text-white"
+                      style={{ minWidth: "150px" }}
+                    >
+                      <FaEye className="ms-2 cursor-pointer" />
+                    </Tooltip>
+                  </div>
+                </Form.Group>
+              </Col>
+
+              {/* Product Type */}
               <Col md={12} className="mb-3">
                 <Form.Label htmlFor="format">
-                  Format<span className="text-danger">*</span>
+                  Product Type<span className="text-danger">*</span>
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Select
-                    id="format"
-                    value={service.format}
+                    id="productType"
+                    value={product.productType}
                     onChange={(e) =>
-                      dispatch(updateServiceData({ format: e.target.value }))
+                      dispatch(updateProductData({ productType: e.target.value }))
                     }
                     required
                   >
-                    {formatType.map((dept, index) => (
+                    <option value="">Select Product Type</option>
+                    {productType.map((dept, index) => (
                       <option key={index} value={dept.value}>
                         {dept.label}
                       </option>
                     ))}
                   </Form.Select>
                   <Tooltip
-                    content="Choose the format of the service (e.g., online, in-person)"
+                    content="Choose the digital product type that fits your product"
                     placement="left"
                     className="custom-tooltip bg-primary text-white"
                     style={{ minWidth: "150px" }}
@@ -165,10 +203,38 @@ const Settings = ({ onNext, onPrevious }) => {
                 </div>
               </Col>
 
-              {/* Service Background */}
+              {/* Author */}
               <Col md={12} className="mb-3">
-                <Form.Label md={4} htmlFor="serviceBackground">
-                  Service Background{" "}
+                <Form.Label htmlFor="header">
+                  Author<span className="text-danger">*</span>
+                </Form.Label>
+                <div className="d-flex ">
+                  <Form.Control
+                    type="text"
+                    id="header"
+                    placeholder="Enter the Author of your digital product"
+                    value={product.author}
+                    onChange={(e) =>
+                      dispatch(updateProductData({ author: e.target.value }))
+                    }
+                    required
+                    className="flex-grow-1"
+                  />
+                  <Tooltip
+                    content="Enter the product Name of what you are selling"
+                    placement="left"
+                    className="bg-primary text-white"
+                    style={{ minWidth: "150px" }}
+                  >
+                    <FaEye className="ms-2 cursor-pointer" />
+                  </Tooltip>
+                </div>
+              </Col>
+
+              {/* product Background */}
+              <Col md={12} className="mb-3">
+                <Form.Label htmlFor="backgroundCover">
+                  Digital Product Background{" "}
                   <small className="text-muted">
                     <em className="text-sm">
                       (image files only: png, jpeg, jpg, etc....)
@@ -185,7 +251,7 @@ const Settings = ({ onNext, onPrevious }) => {
                     onChange={handleFileChange}
                   />
                   <Tooltip
-                    content="Upload background images related to the service"
+                    content="Upload images related to your digital product"
                     placement="left"
                     className="custom-tooltip bg-primary text-white"
                     style={{ minWidth: "150px" }}
@@ -194,7 +260,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   </Tooltip>
                 </div>
                 <div style={{ marginTop: "0.5rem" }}>
-                  {service.serviceBackground.map((image, index) => (
+                  {product.backgroundCover.map((image, index) => (
                     <div
                       key={index}
                       style={{

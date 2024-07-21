@@ -15,7 +15,7 @@ function shortenMessage(message, maxLength = 20) {
 }
 
 function getOrdinalSuffix(day) {
-  if (day > 3 && day < 21) return "th"; // Covers 11th to 20th
+  if (day > 3 && day < 21) return "th"; 
   switch (day % 10) {
     case 1:
       return "st";
@@ -90,6 +90,17 @@ const Ecosystem = () => {
     getMyEcosystems();
     getMyEcosystemData();
   }, [creatorId]);
+
+  const saveEcoLogo = (ecoLogo, ecosystemDomain) => {
+    console.log("this is the logo", ecoLogo);
+    sessionStorage.setItem("ecoLogo", ecoLogo);
+    sessionStorage.setItem("ecosystemDomain", ecosystemDomain);
+
+    const newUrl = `${window.location.origin}/${ecosystemDomain}/Ecosystemdashboard`;
+
+    // Open the URL in a new tab
+    window.open(newUrl, "_blank");
+  };
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -234,18 +245,18 @@ const Ecosystem = () => {
                         <div>
                           {eco.steps && eco.steps === 3 ? (
                             <div>
-                              <a
-                                href={`https://dimpified.com/${eco.ecosystemDomain}/Ecosystemdashboard`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                              <Button
+                                variant="primary"
+                                className="me-2 mb-2 mb-md-0"
+                                onClick={() =>
+                                  saveEcoLogo(
+                                    eco.templateLogos[0].logoPath,
+                                    eco.ecosystemDomain
+                                  )
+                                }
                               >
-                                <Button
-                                  variant="primary"
-                                  className="me-2 mb-2 mb-md-0"
-                                >
-                                  Dashboard
-                                </Button>
-                              </a>
+                                Dashboard
+                              </Button>
                               <a
                                 href={`https://dimpified.com/${eco.ecosystemDomain}`}
                                 target="_blank"
