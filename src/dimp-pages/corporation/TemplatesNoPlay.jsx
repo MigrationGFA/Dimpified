@@ -18,8 +18,8 @@ const TemplatesNoPlay = () => {
               <Col lg={12} md={12} xs={12}>
                 <div className="mb-5 mb-lg-0">
                   <h2 className="display-5 fw-bold mb-3 text-center">
-                    Design and Deploy with Ease by Effortlessly Customizing your
-                    Ecosystem with No-Code Templates
+                    Design and deploy with ease by effortlessly customizing your
+                    ecosystem with no-code templates
                   </h2>
                   <p className="display-8 text-center">
                     {" "}
