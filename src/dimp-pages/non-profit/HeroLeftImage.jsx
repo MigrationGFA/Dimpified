@@ -87,7 +87,7 @@ const HeroLeftImage = () => {
               </Col>
             </Row>
             <div className="d-grid d-md-block">
-              <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+              <Link href="/creator/signup" className="btn btn-primary btn-lg mb-2 mb-md-0">
                 Get started for free
               </Link>{" "}
               <Link
