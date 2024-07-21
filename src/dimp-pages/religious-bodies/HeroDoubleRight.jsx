@@ -81,6 +81,7 @@ const HeroDoubleRight = () => {
                 </Link>{" "}
               </div>
             </div>
+            
           </Col>
           <Col lg={6} xs={12}>
             <Row>
