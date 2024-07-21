@@ -97,7 +97,7 @@ const HeroGradient = () => {
         <LogosTopHeading2
           title="TRUSTED BY TOP CORPORATE ORGANIZATIONS."
           logos={LogoList2}
-          limit={5}
+          limit={6}
           inverse={false}
         />
       </Container>

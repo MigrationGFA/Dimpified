@@ -32,7 +32,7 @@ const LogosTopHeading2 = ({ logos, title, limit }) => {
   };
   const imageStyle = {
     width: "auto", // Adjust this value as per your requirement
-    height: "70%", // Adjust this value as per your requirement
+    height: "40%", // Adjust this value as per your requirement
     objectFit: "cover", // Ensures the image covers the specified dimensions
   };
 
