@@ -83,10 +83,10 @@ const HeroGradient = () => {
 
             {/* Buttons */}
             <div className="mb-8 mb-lg-0">
-              <Link to="#" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
+              <Link to="/creator/signup" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
                 Get Started Now
               </Link>
-              <Link to="#" className="btn btn-lg btn-outline-primary">
+              <Link to="https://calendly.com/jesutofunmi-ne2s" className="btn btn-lg btn-outline-primary">
                 Schedule a Demo
               </Link>
             </div>

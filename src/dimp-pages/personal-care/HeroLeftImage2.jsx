@@ -42,7 +42,8 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-10 mb-6">
             <h2 className="h1 fw-bold">
-            Grow your reach and impact to futher expand your personal care business
+              Grow your reach and impact to futher expand your personal care
+              business
             </h2>
           </div>
         </Col>
@@ -87,11 +88,14 @@ const HeroLeftImage = () => {
               </Col>
             </Row>
             <div className="d-grid d-md-block">
-              <Link href="" className="btn btn-primary btn-lg mb-2 mb-md-0">
+              <Link
+                href="/creator/signup"
+                className="btn btn-primary btn-lg mb-2 mb-md-0"
+              >
                 Get started for free
               </Link>{" "}
               <Link
-                href=""
+                href="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
                 Schedule a demo

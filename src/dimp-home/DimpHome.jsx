@@ -77,7 +77,7 @@ const DimpHome = () => {
           btntext1="Get started for Free"
           btnlink1="/creator/signup"
           btntext2="Schedule a demo"
-          btnlink2="#"
+          btnlink2="https://calendly.com/jesutofunmi-ne2s"
         />
       </main>
 

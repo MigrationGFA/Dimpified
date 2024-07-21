@@ -45,7 +45,7 @@ const HeroRightImage2 = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center  mb-6">
             <h2 className="h1 fw-bold">
-            Personalize your ecosystem with your own user authentication page
+              Personalize your ecosystem with your own user authentication page
             </h2>
           </div>
         </Col>
@@ -87,7 +87,7 @@ const HeroRightImage2 = () => {
                 Get started for free
               </Link>{" "}
               <Link
-                href=""
+                href="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
                 Schedule a demo
