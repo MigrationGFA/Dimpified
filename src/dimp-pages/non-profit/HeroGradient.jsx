@@ -97,12 +97,12 @@ const HeroGradient = () => {
         </Row>
 
         {/* Trusted By logo */}
-        <LogosTopHeading2
+        {/* <LogosTopHeading2
           title="TRUSTED BY TOP CORPORATE ORGANIZATIONS."
           logos={LogoList2}
           limit={5}
           inverse={false}
-        />
+        /> */}
       </Container>
     </section>
   );

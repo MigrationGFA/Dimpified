@@ -18,14 +18,13 @@ const TemplatesNoPlay = () => {
               <Col lg={12} md={12} xs={12}>
                 <div className="mb-5 mb-lg-0">
                   <h2 className="display-5 fw-bold mb-3 text-center">
-                    Design and Deploy with Ease by Effortlessly Customizing your
-                    Ecosystem with No-Code Templates
+                    Design and deploy with ease by effortlessly customizing your
+                    ecosystem with no-code templates
                   </h2>
                   <p className="display-8 text-center">
                     {" "}
-                    Adapt our templates to suit your unique needs. Whether
-                    you’re running an upskilling program, accelerator,
-                    incubator, or hackathon, our no-code templates allow you to
+                    Adapt our templates to suit your organization's needs. Whether
+                    you’re running a donation or organizing an event, our no-code templates allow you to
                     quickly set up and customize your programs without any
                     technical expertise.
                   </p>

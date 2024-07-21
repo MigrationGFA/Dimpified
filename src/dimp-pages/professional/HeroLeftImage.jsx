@@ -46,8 +46,8 @@ const HeroLeftImage = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mb-lg-6 mb-6">
             <h2 className="h1 fw-bold">
-              Design and Deploy your Ecosystem Website with Effortless
-              Customization
+              Design and deploy your ecosystem website with effortless
+              customization
             </h2>
           </div>
         </Col>
