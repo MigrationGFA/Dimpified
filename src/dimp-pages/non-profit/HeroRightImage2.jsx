@@ -85,7 +85,7 @@ const HeroRightImage2 = () => {
                 Get started for free
               </Link>{" "}
               <Link
-                href=""
+                href="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
                 Schedule a demo
