@@ -179,7 +179,7 @@ const FooterWithLinks = () => {
           <Row className="align-items-center g-0 border-top py-2 mt-6">
             {/* Desc  */}
             <Col lg={4} md={5} sm={12}>
-              <span>© 2024 GFA-Tech, Inc. All Rights Reserved</span>
+              <span>© 2024 GFA-Technologies. All Rights Reserved</span>
             </Col>
             {/*  Links  */}
             <Col lg={8} md={7} sm={6} className="d-md-flex justify-content-end">
