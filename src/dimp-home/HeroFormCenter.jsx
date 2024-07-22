@@ -66,7 +66,7 @@ const HeroFormCenter = () => {
                   Get started for free
                 </Link>{" "}
                 <Link
-                  to=""
+                  to="https://calendly.com/jesutofunmi-ne2s"
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   Schedule a demo

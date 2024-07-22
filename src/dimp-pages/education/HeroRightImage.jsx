@@ -14,7 +14,6 @@ import Coaches from "./images/coaches.jpg";
 import Councellors from "./images/councellors.jpg";
 import Trainers from "./images/trainers.jpeg";
 
-
 const HeroRightImage = () => {
   return (
     <section className="px-lg-12 px-4 py-lg-7 py-6">
@@ -83,7 +82,7 @@ const HeroRightImage = () => {
                   Get started for free
                 </Link>{" "}
                 <Link
-                  href=""
+                  to="https://calendly.com/jesutofunmi-ne2s"
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   Schedule a demo
@@ -92,41 +91,39 @@ const HeroRightImage = () => {
             </div>
           </Col>
           <Col lg={6} xs={12}>
-						<Row>
-							<Col md={4} xs={4} className="px-1">
-								<div
-									className="bg-cover rounded-3 mb-2 h-12rem"
-									style={{ backgroundImage: `url(${Teachers})` }}
-								></div>
-								<div
-									className="bg-cover rounded-3 mb-2 h-18rem"
-									style={{ backgroundImage: `url(${Tutors})` }}
-								></div>
-							</Col>
-							<Col md={4} xs={4} className="px-1">
-								<div
-									className="bg-cover rounded-3 mb-2 h-18rem"
-									style={{ backgroundImage: `url(${Councellors})` }}
-								></div>
-								<div
-									className="bg-cover rounded-3 mb-2 h-18rem"
-									style={{ backgroundImage: `url(${Mentors})` }}
-								></div>
-                
-							</Col>
-							<Col md={4} xs={4} className="px-1">
-								<div
-									className="bg-cover rounded-3 mb-2 h-13rem"
-									style={{ backgroundImage: `url(${Trainers})` }}
-								></div>
-								<div
-									className="bg-cover rounded-3 mb-2 h-13rem"
-									style={{ backgroundImage: `url(${Coaches})` }}
-								></div>
-								
-							</Col>
-						</Row>
-					</Col>
+            <Row>
+              <Col md={4} xs={4} className="px-1">
+                <div
+                  className="bg-cover rounded-3 mb-2 h-12rem"
+                  style={{ backgroundImage: `url(${Teachers})` }}
+                ></div>
+                <div
+                  className="bg-cover rounded-3 mb-2 h-18rem"
+                  style={{ backgroundImage: `url(${Tutors})` }}
+                ></div>
+              </Col>
+              <Col md={4} xs={4} className="px-1">
+                <div
+                  className="bg-cover rounded-3 mb-2 h-18rem"
+                  style={{ backgroundImage: `url(${Councellors})` }}
+                ></div>
+                <div
+                  className="bg-cover rounded-3 mb-2 h-18rem"
+                  style={{ backgroundImage: `url(${Mentors})` }}
+                ></div>
+              </Col>
+              <Col md={4} xs={4} className="px-1">
+                <div
+                  className="bg-cover rounded-3 mb-2 h-13rem"
+                  style={{ backgroundImage: `url(${Trainers})` }}
+                ></div>
+                <div
+                  className="bg-cover rounded-3 mb-2 h-13rem"
+                  style={{ backgroundImage: `url(${Coaches})` }}
+                ></div>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </Container>
     </section>

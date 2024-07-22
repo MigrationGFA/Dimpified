@@ -44,7 +44,6 @@ const HeroDoubleRight = () => {
                     delaySpeed={1000}
                   />
                 </span>
-                
               </h1>
               <p className="lead mb-4 pe-xl-12 ">
                 Transform your personal care service business with our
@@ -79,7 +78,7 @@ const HeroDoubleRight = () => {
                   Get started for free
                 </Link>{" "}
                 <Link
-                  href=""
+                  to="https://calendly.com/jesutofunmi-ne2s"
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   Schedule a demo
