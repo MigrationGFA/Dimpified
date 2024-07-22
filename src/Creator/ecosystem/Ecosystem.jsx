@@ -15,7 +15,7 @@ function shortenMessage(message, maxLength = 20) {
 }
 
 function getOrdinalSuffix(day) {
-  if (day > 3 && day < 21) return "th"; 
+  if (day > 3 && day < 21) return "th";
   switch (day % 10) {
     case 1:
       return "st";
@@ -258,7 +258,7 @@ const Ecosystem = () => {
                                 Dashboard
                               </Button>
                               <a
-                                href={`https://dimpified.com/${eco.ecosystemDomain}`}
+                                href={`${window.location.origin}/${eco.ecosystemDomain}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
