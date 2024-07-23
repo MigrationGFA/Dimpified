@@ -38,61 +38,41 @@ const DigitalServiceCard = ({ item }) => {
     }
   };
 
-  let originalImgUrl = item?.backgroundCover?.[0] || '';
-  let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : '';
+  let originalImgUrl = item?.backgroundCover?.[0] || "";
+  let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : "";
+
+  const handleClick = () => {};
 
   return (
     <Card className="card-bordered card-hover cursor-pointer h-100 ">
       <Card.Body className="p-0">
-        <div
-          className="position-relative  top-0 start-0 w-100 "
-          style={{
-            height: "200px",
-            backgroundImage: `url(${updatedImgUrl})`,
-            backgroundSize: "cover",
-            borderRadius: "5px 5px 0 0",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            objectFit: "contain",
-          }}
+        <Link
+          to={`/${ecosystemDomain}/service/${item._id}`}
+          className="text-inherit me-1"
         >
           <div
-            className="mb-3 mb-md-0  pt-13 "
+            className="position-relative  top-0 start-0 w-100 "
             style={{
-              width: "100px",
-              height: "110px",
-              marginLeft: "10px",
+              height: "200px",
+              backgroundImage: `url(${updatedImgUrl})`,
+              backgroundSize: "cover",
+              borderRadius: "5px 5px 0 0",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              objectFit: "contain",
             }}
-          >
-            {/* {item.user && item.user.image && (
-              <Image
-                src={item.user.image}
-                alt={item.user.name}
-                className="img-fluid user-image button-0"
-                style={{
-                  height: "100px",
-                  borderRadius: "10px",
-                }} */}
-            {/* /> )} */}
-          </div>
-        </div>
+          ></div>
+        </Link>
 
         <div className="content w-100 mt-2 px-3">
           <div className="d-flex justify-content-between mb-2">
             <div>
-              <div>
-                {/* {item.user && item.user.name && (
-                  <span>by {item.user.name}</span>
-                )} */}
-              </div>
-              <h4 className="mb-1 fs-4">
-                <Link
-                  to={`/:ecosystemDomain/services/${item._id}`}
-                  className="text-inherit me-1"
-                >
-                  {item.header}
-                </Link>
-              </h4>
+              <Link
+                to={`/${ecosystemDomain}/service/${item._id}`}
+                className="text-inherit me-1"
+              >
+                <h4 className="mb-1 fs-4">{item.header}</h4>
+              </Link>
             </div>
             <div>{/* Bookmark */}</div>
           </div>

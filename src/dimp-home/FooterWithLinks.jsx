@@ -8,14 +8,14 @@ import Icon from "@mdi/react";
 import { mdiFacebook, mdiTwitter, mdiInstagram, mdiLinkedin } from "@mdi/js";
 
 // import media files
-import FooterLogo from "./images/dimp-blue.png";
+import FooterLogo from "./images/DIMPwhitelogo.png";
 import AppStore from "./images/svg/appstore.svg";
 import PlayStore from "./images/svg/playstore.svg";
 
 const FooterWithLinks = () => {
   return (
     <Fragment>
-      <footer className="pt-lg-10 pt-5 px-4 footer bg-white">
+      <footer className="pt-lg-10 pt-5 px-4 footer">
         <Container>
           <Row>
             <Col lg={4} md={12} sm={12}>
@@ -34,63 +34,87 @@ const FooterWithLinks = () => {
                   </p>
                   {/* social media */}
                   <div className="fs-4 mt-4">
-                    <Link to="#" className="mdi mdi-facebook text-muted me-2">
-                      <Icon path={mdiLinkedin} size={0.7} />
+                    <Link
+                      to="https://www.linkedin.com/company/gfa-technologies/mycompany/"
+                      className="mdi mdi-facebook text-light me-2"
+                    >
+                      <Icon path={mdiLinkedin} size={1} />
                     </Link>
-                    <Link to="#" className="mdi mdi-facebook text-muted me-2">
-                      <Icon path={mdiFacebook} size={0.7} />
+                    <Link
+                      to="https://www.facebook.com/getfundedafricaoffical/"
+                      className="mdi mdi-facebook text-light me-2"
+                    >
+                      <Icon path={mdiFacebook} size={1} />
                     </Link>
-                    <Link to="#" className="mdi mdi-twitter text-muted me-2">
-                      <Icon path={mdiTwitter} size={0.7} />
+                    <Link
+                      to="https://x.com/gfunded_africa"
+                      className="mdi mdi-twitter text-light me-2"
+                    >
+                      <Icon path={mdiTwitter} size={1} />
                     </Link>
-                    <Link to="#" className="mdi mdi-instagram text-muted ">
-                      <Icon path={mdiInstagram} size={0.7} />
+                    <Link
+                      to="https://www.instagram.com/gfatechnologies/"
+                      className="mdi mdi-instagram text-light "
+                    >
+                      <Icon path={mdiInstagram} size={1} />
                     </Link>
                   </div>
                 </div>
               </div>
             </Col>
-            <Col lg={{ span: 2, offset: 1 }} md={6} sm={6}>
+            <Col lg={{ span: 2, offset: 1 }} md={12} sm={6}>
               <div className="mb-4">
                 {/* list */}
-                <h3 className="fw-bold mb-3">Company</h3>
+                <h6 className="mb-1 text-muted">COMPANY</h6>
                 <ListGroup
                   as="ul"
                   bsPrefix="list-unstyled"
                   className="nav nav-footer flex-column nav-x-0"
                 >
                   <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
-                      About
+                    <Link
+                      to="https://gfa-tech.com/company/about/index.html"
+                      className="nav-link"
+                    >
+                      About GFA-Tech
                     </Link>
                   </ListGroup.Item>
                   <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
-                      Pricing
+                    <Link to="/pricing" className="nav-link">
+                      DIMP Pricing
                     </Link>
                   </ListGroup.Item>
                   <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
-                      Blog
+                    <Link
+                      to="https://media.getfundedafrica.com/"
+                      className="nav-link"
+                    >
+                      Our Blog
                     </Link>
                   </ListGroup.Item>
                   <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
+                    <Link
+                      to="https://gfa-tech.com/company/team/index.html"
+                      className="nav-link"
+                    >
+                      Our Team
+                    </Link>
+                  </ListGroup.Item>
+                  <ListGroup.Item as="li" bsPrefix=" ">
+                    <Link
+                      to="https://gfa-tech.com/company/career/index.html"
+                      className="nav-link"
+                    >
                       Careers
-                    </Link>
-                  </ListGroup.Item>
-                  <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
-                      Team
                     </Link>
                   </ListGroup.Item>
                 </ListGroup>
               </div>
             </Col>
-            <Col lg={2} md={6} sm={6}>
+            <Col lg={2} md={12} sm={6}>
               <div className="mb-4">
                 {/* list  */}
-                <h3 className="fw-bold mb-3">Support</h3>
+                <h6 className="mb-1 text-muted">SUPPORT</h6>
                 <ListGroup
                   as="ul"
                   bsPrefix="list-unstyled"
@@ -98,27 +122,27 @@ const FooterWithLinks = () => {
                 >
                   <ListGroup.Item as="li" bsPrefix=" ">
                     <Link to="#" className="nav-link">
-                      Help desk
-                    </Link>
-                  </ListGroup.Item>
-                  {/* <ListGroup.Item as="li" bsPrefix=" ">
-										<Link to="#" className="nav-link">
-											Become Instructor
-										</Link>
-									</ListGroup.Item>
-									<ListGroup.Item as="li" bsPrefix=" ">
-										<Link to="#" className="nav-link">
-											Get the app
-										</Link>
-									</ListGroup.Item> */}
-                  <ListGroup.Item as="li" bsPrefix=" ">
-                    <Link to="#" className="nav-link">
-                      FAQ’s
+                      DIMP Ecosystem School
                     </Link>
                   </ListGroup.Item>
                   <ListGroup.Item as="li" bsPrefix=" ">
                     <Link to="#" className="nav-link">
-                      Contact Us
+                      Developer Program
+                    </Link>
+                  </ListGroup.Item>
+                  <ListGroup.Item as="li" bsPrefix=" ">
+                    <Link to="#" className="nav-link">
+                      Affliate Program
+                    </Link>
+                  </ListGroup.Item>
+                  <ListGroup.Item as="li" bsPrefix=" ">
+                    <Link to="#" className="nav-link">
+                      Builder Program
+                    </Link>
+                  </ListGroup.Item>
+                  <ListGroup.Item as="li" bsPrefix=" ">
+                    <Link to="#" className="nav-link">
+                      Help Center
                     </Link>
                   </ListGroup.Item>
                 </ListGroup>
@@ -127,14 +151,17 @@ const FooterWithLinks = () => {
             <Col lg={3} md={12} sm={12}>
               {/* contact info */}
               <div className="mb-4">
-                <h3 className="fw-bold mb-3">Get in touch</h3>
-                <p>Ogun Tech Hub, Abeokuta</p>
+                <h6 className="mb-1 text-muted">GET IN TOUCH</h6>
+                <p>2nd Floor, Wing-C, <br/>Ogun Tech Hub, Abeokuta</p>
                 <p className="mb-1">
-                  Email: <Link to="#">info@dimpified.com</Link>
+                  Email:{" "}
+                  <Link to="mailto:info@dimpified.com" className="text-light">
+                    info@dimpified.com
+                  </Link>
                 </p>
                 <p>
                   Phone:{" "}
-                  <span className="text-dark fw-semi-bold">
+                  <span className="text-light fw-semi-bold">
                     +234 808 009 4426
                   </span>
                 </p>
@@ -152,7 +179,7 @@ const FooterWithLinks = () => {
           <Row className="align-items-center g-0 border-top py-2 mt-6">
             {/* Desc  */}
             <Col lg={4} md={5} sm={12}>
-              <span>© 2024 GFA-Tech, Inc. All Rights Reserved</span>
+              <span>© 2024 GFA-Technologies. All Rights Reserved</span>
             </Col>
             {/*  Links  */}
             <Col lg={8} md={7} sm={6} className="d-md-flex justify-content-end">
@@ -164,7 +191,7 @@ const FooterWithLinks = () => {
                   Privacy Policy
                 </Link>
 
-                <Link className="nav-link" to="#">
+                <Link className="nav-link" to="https://gfa-tech.com/company/privacy-policy/">
                   Terms of Use
                 </Link>
               </nav>

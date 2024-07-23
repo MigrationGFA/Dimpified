@@ -1,7 +1,8 @@
 // Footer
 
 .footer {
-  color: var(--#{$prefix}gray-600);
+  color: #fbfbfb;
+  background-color: #181818;
 
 }
 
@@ -9,10 +10,10 @@
   .nav-link {
     font-size: 0.875rem;
     line-height: 1.5rem;
-    color: var(--#{$prefix}gray-600);
+    color: #fbfbfb;
     padding: 0.2rem 1rem;
     &:hover {
-      color: var(--#{$prefix}primary);
+      color: #f2f2f2;
     }
   }
 }

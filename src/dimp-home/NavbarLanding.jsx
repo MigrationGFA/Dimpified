@@ -29,12 +29,19 @@ const NavbarLanding = (props) => {
     fontWeight: "500",
     color: "black",
     fontSize: isDesktop
-      ? "1rem"
+      ? "0.875rem"
       : isIpadPro
-      ? "1rem" // Different value for iPad Pro
+      ? "0.875rem" // Different value for iPad Pro
       : isTablet || isMobile
-      ? "1rem"
-      : "1rem", // Default for other devices
+      ? "0.875rem"
+      : "0.875rem",
+      padding: isDesktop
+      ? "0.875rem"
+      : isIpadPro
+      ? "0.875rem" // Different value for iPad Pro
+      : isTablet || isMobile
+      ? "0.5rem 0rem"
+      : "0.5rem 0rem", // Default for other devices
   };
 
   return (

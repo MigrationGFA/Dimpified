@@ -1,65 +1,60 @@
 // import node module libraries
-import React, { Fragment, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Row, Col, Container, Nav, Navbar } from "react-bootstrap";
-import { useGlobalContext } from "../context/AuthContext";
-import axios from "axios";
-import { showToast } from "../Components/Showtoast";
-
 // import custom components
 import ProfileCover from "../Components/marketing/common/headers/EcosystemProfileCover";
-
 // import routes file
 import {
   DashboardMenu,
   // AccountSettingsMenu,
 } from "../routes/marketing/InstructorDashboard";
-
 import NavbarDefault from "../Pages/Pages/home-academy/navbars/NavbarDefault";
-
 // import media files
 import Avatar3 from "../assets/images/avatar/person.png";
 
 const ProfileLayout = (props) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user, userImage, userId, setUser, setUserRole, setUserImage } =
-    useGlobalContext();
+  const { ecosystemDomain } = useParams();
+  const [logo, setLogo] = useState(null);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axios.delete(
-        `https://remsana-backend-testing.azurewebsites.net/api/v1/logout/${userId}`
-      );
-      showToast(response.data.message);
-      sessionStorage.clear();
-      navigate("/");
-      setUser(null);
-      setUserRole(null);
-      setUserImage(null);
-    } catch (error) {
-      console.error("Error logging out:", error);
-      showToast(error.response.message);
-    }
-  };
+  useEffect(() => {
+    setLogo(sessionStorage.getItem("ecoLogo"));
+  }, []);
+
+  // const handleLogout = async () => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `https://remsana-backend-testing.azurewebsites.net/api/v1/logout/${userId}`
+  //     );
+  //     showToast(response.data.message);
+  //     sessionStorage.clear();
+  //     navigate("/");
+  //     setUser(null);
+  //     setUserRole(null);
+  //     setUserImage(null);
+  //   } catch (error) {
+  //     console.error("Error logging out:", error);
+  //     showToast(error.response.message);
+  //   }
+  // };
 
   const dashboardData = {
-    avatar: userImage || Avatar3,
-    name: user,
-    username: `@${user}`,
+    avatar: logo || Avatar3,
+    name: ecosystemDomain,
+    username: `@${ecosystemDomain}`,
     linkname: "Create New Course",
-    link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Course",
+    link: `/${ecosystemDomain}/Ecosystemdashboard/Add-New-Course`,
     verified: true,
     outlinebutton: false,
     level: "Beginner",
   };
   const ServiceButton = {
     linkname: "Create New Services",
-    link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Service",
+    link: `/${ecosystemDomain}/Ecosystemdashboard/Add-New-Service`,
   };
   const ProductButton = {
     linkname: "Create New Product",
-    // link: "/:ecosystemDomain/Ecosystemdashboard/Add-New-Product",
+    link: `/${ecosystemDomain}/Ecosystemdashboard/Add-New-Product`,
   };
 
   return (

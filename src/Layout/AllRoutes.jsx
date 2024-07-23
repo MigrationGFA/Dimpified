@@ -277,7 +277,7 @@ const AllRoutes = () => {
       <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route
-        path="/:ecosystemDomain/services/:id"
+        path="/:ecosystemDomain/service/:id"
         element={<UserSingleService />}
       />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
