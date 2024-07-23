@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addService, updateService, deleteService, resetServiceData } from "../../../../../features/service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { showToast } from "../../../../../Components/Showtoast";
 import axios from 'axios';
 
@@ -136,6 +136,11 @@ const AddService = () => {
 };
 
 const Service = ({ submit, onPrevious }) => {
+  const { ecosystemDomain } = useParams();
+  const location = useLocation();
+  const ecosystemFromState = useSelector((state) => state.ecosystem.ecosystemDomain);
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
   const navigate = useNavigate(); 
   const [loading, setLoading] = useState(false);
   const sections = useSelector((state) => state.service.services) || [];
@@ -156,9 +161,8 @@ const Service = ({ submit, onPrevious }) => {
     { value: "Yearly", label: "Yearly" },
   ];
 
-  const user = useSelector((state) => state.authentication.user);
-  const creatorId = user?.data?.CreatorId;
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemDomain);
+ 
+  
 
   const serviceData = useSelector((state) => state.service);
   const {
@@ -173,6 +177,17 @@ const Service = ({ submit, onPrevious }) => {
     services,
   } = serviceData;
 
+ 
+
+  let ecosystem;
+  if (ecosystemDomain) {
+    ecosystem = ecosystemDomain;
+  } else {
+    ecosystem = ecosystemFromState;
+  }
+  
+  console.log(ecosystem)
+
   const convertBase64ToFile = (base64String, filename) => {
     const arr = base64String.split(",");
     const mime = arr[0].match(/:(.*?);/)[1];
@@ -184,6 +199,8 @@ const Service = ({ submit, onPrevious }) => {
     }
     return new File([u8arr], filename, { type: mime });
   };
+
+  
 
   const handleSubmit = () => {
     setLoading(true);
@@ -239,7 +256,7 @@ const Service = ({ submit, onPrevious }) => {
     }
   
     formData.append("creatorId", creatorId);
-    formData.append("ecosystemDomain", ecosystemId);
+    formData.append("ecosystemDomain", ecosystem);
   
     axios
       .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
@@ -253,7 +270,11 @@ const Service = ({ submit, onPrevious }) => {
           showToast(response.data.message);
         }
         dispatch(resetServiceData());
-        navigate("/creator/dashboard/Products");
+      if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+        navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+      } else {
+        navigate('/creator/dashboard/Products');
+      }
         submit();
       })
       .catch((error) => {
@@ -313,7 +334,7 @@ const Service = ({ submit, onPrevious }) => {
 
   const handleFieldChange = (field, value) => {
     switch (field) {
-      case "serviceName":
+      case "name":
         setEditName(value);
         break;
       case "shortDescription":
