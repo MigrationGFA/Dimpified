@@ -9,7 +9,7 @@ import TestimonialsSlider from "./TestimonialsSlider";
 const TestimonialSection = () => {
   const title = "Don’t just take our word for it.";
   const subtitle = "Testimonials";
-  const description = `Users around the worldare creating and monetizing their ecosystem!`;
+  const description = `Users around the world are creating and monetizing their ecosystem!`;
 
   return (
     <Fragment className="bg-white">

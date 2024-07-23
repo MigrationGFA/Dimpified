@@ -211,7 +211,7 @@ const HeroLeftImage = () => {
                 Get Started For Free
               </Link>{" "}
               <Link
-                to="/creator/signup"
+                to="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
                 Schedule a demo

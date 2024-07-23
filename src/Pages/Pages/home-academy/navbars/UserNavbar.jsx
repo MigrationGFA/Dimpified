@@ -59,7 +59,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
           {/* <Navbar.Brand as={Link} to="/"> */}
           <Link to="" onClick="">
             <Image
-              src={sessionStorage.getItem("Logo")}
+              src={sessionStorage.getItem("ecoLogo")}
               alt="logo"
               style={{ height: "40px", cursor: "pointer" }}
               // onClick={redirect}

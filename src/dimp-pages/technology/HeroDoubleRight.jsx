@@ -43,12 +43,13 @@ const HeroDoubleRight = () => {
                     delaySpeed={1000}
                   />
                 </span>
-                
               </h1>
               <p className="lead mb-4 pe-xl-12 ">
                 Leverage DIMP to unlock the full potential of your tech
-                expertise. Build stunning portfolios to showcase your projects, get more freeance jobs, provide training using our LMS, manage payments and contracts seamlessly,
-                and build a strong online presence.
+                expertise. Build stunning portfolios to showcase your projects,
+                get more freeance jobs, provide training using our LMS, manage
+                payments and contracts seamlessly, and build a strong online
+                presence.
               </p>
               {/* <ListGroup as="ul" bsPrefix='list-unstyled' className="mb-5">
                 <ListGroup.Item as="li" bsPrefix="mb-2" >
@@ -76,7 +77,7 @@ const HeroDoubleRight = () => {
                   Get started for free
                 </Link>{" "}
                 <Link
-                  href=""
+                  to="https://calendly.com/jesutofunmi-ne2s"
                   className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
                 >
                   Schedule a demo

@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, Card, Table, Image, DropdownToggle, DropdownMenu, Dropdown, DropdownItem} from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Table,
+  Image,
+  DropdownToggle,
+  DropdownMenu,
+  Dropdown,
+  DropdownItem,
+} from "react-bootstrap";
 import ApexCharts from "react-apexcharts";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -42,7 +52,7 @@ const StudentDashboard = () => {
             import.meta.env.VITE_API_URL
           }/ecosystem-user-dashboard/${userId}/${ecosystemDomain}`
         );
-        
+
         const userDashboard = await dashboardData.data;
         console.log(userDashboard);
         setTotalUSDSpent(userDashboard.totalUSDSpent);
@@ -57,7 +67,6 @@ const StudentDashboard = () => {
         console.error("Error fetching data:", error);
       }
 
-     
       // // Fetch monthly orders data
       // const response = await axios.get(``);
       // const result = response.data;
@@ -84,11 +93,11 @@ const StudentDashboard = () => {
   };
 
   const formatCurrency = (amount, currency) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
       currency: currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount || 0);
   };
 
@@ -110,12 +119,18 @@ const StudentDashboard = () => {
   return (
     <StudentProfileLayout>
       <Row>
-      <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title={`Revenue (${selectedCurrency})`}
             subtitle="Earning this month"
-            value={formatCurrency(getTotalAmount(selectedCurrency), selectedCurrency)}
-            badgeValue={formatCurrency(getTotalAmount(selectedCurrency), selectedCurrency)}
+            value={formatCurrency(
+              getTotalAmount(selectedCurrency),
+              selectedCurrency
+            )}
+            badgeValue={formatCurrency(
+              getTotalAmount(selectedCurrency),
+              selectedCurrency
+            )}
             colorVariant="success"
           />
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
@@ -150,13 +165,13 @@ const StudentDashboard = () => {
             title="Purchased Services"
             subtitle="For the month"
             value={totalServices || 0}
-            badgeValue={newServices || 0 }
+            badgeValue={newServices || 0}
             colorVariant="warning"
           />
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Purchased Digital Product"
+            title="Digital Product"
             subtitle="For the month"
             value={totalProducts || 0}
             badgeValue={newProducts || 0}
@@ -164,9 +179,7 @@ const StudentDashboard = () => {
           />
         </Col>
       </Row>
-
-      {/* Graph for purchased courses */}
-      <Card className="my-4">
+      <Card>
         <Card.Header>
           <h3 className="h4 mb-0">Purchased Product</h3>
         </Card.Header>

@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -20,14 +20,15 @@ const CourseCard = ({
   extraclass,
   link,
 }) => {
-  /** Used in Course Index, Course Category, Course Filter Page, Student Dashboard etc...  */
+  const [showMore, setShowMore] = useState(false);
+
   const GridView = () => {
     return (
-      <Card className="mb-4 card-hover ">
+      <Card className="mb-4 card-hover">
         {/* Card body  */}
         <Card.Body className="">
-          <Link to={item.link} className="text-inherit">
-            <div className="d-flex">
+          <div className="d-flex">
+            <Link to={item.link} className="text-inherit">
               <Image
                 src={item.image}
                 alt=""
@@ -41,16 +42,55 @@ const CourseCard = ({
                   marginRight: "1rem",
                 }}
               />
-              <div className="ms-0">
-                <h4 className="mb-0 ">{item.title}</h4>
-                <p className="mb-0 fs-6">{item.subtitle1}</p>
-                <p className="mb-0 fs-6">{item.subtitle2}</p>
-                <p className="mb-0 fs-6">{item.subtitle3}</p>
-                <p className="mb-0 fs-6">{item.subtitle4}</p>
-                <br />
-              </div>
+            </Link>
+            <div className="ms-0">
+              <Link to={item.link} className="text-inherit">
+                <h5 className="mb-1">{item.title}</h5>
+              </Link>
+              <p className="mb-1 fs-6">{item.subtitle1}</p>
+              <p className="mb-1 fs-6">{item.subtitle2}</p>
+              <p className="mb-1 fs-6">{item.subtitle3}</p>
+
+              {showMore && (
+                <>
+                  <p className="mb-1 fs-6">{item.subtitle4}</p>
+                  <p className="mb-1 fs-6">{item.subtitle5}</p>
+                  <p className="mb-1 fs-6">{item.subtitle6}</p>
+                  <p className="mb-1 fs-6">{item.subtitle7}</p>
+                  <p className="mb-1 fs-6">{item.subtitle8}</p>
+                  <p className="mb-1 fs-6">{item.subtitle9}</p>
+                  <p className="mb-1 fs-6">{item.subtitle10}</p>
+                  <p className="mb-1 fs-6">{item.subtitle11}</p>
+                  <p className="mb-1 fs-6">{item.subtitle12}</p>
+                  <p className="mb-1 fs-6">{item.subtitle13}</p>
+                  <p className="mb-1 fs-6">{item.subtitle14}</p>
+                  <p className="mb-1 fs-6">{item.subtitle15}</p>
+                  <p className="mb-1 fs-6">{item.subtitle16}</p>
+                  <p className="mb-1 fs-6">{item.subtitle17}</p>
+                  <p className="mb-1 fs-6">{item.subtitle18}</p>
+                  <p className="mb-1 fs-6">{item.subtitle19}</p>
+                  <p className="mb-1 fs-6">{item.subtitle20}</p>
+                </>
+              )}
+              <button
+                onClick={() => setShowMore(!showMore)}
+                className="btn btn-link p-0"
+                style={{
+                  textTransform: "uppercase",
+                  fontSize: "0.7rem",
+                  fontWeight: 600,
+                  color: "gray",
+                  textDecoration: "underline",
+                  textDecorationThickness: "1px",
+                  textUnderlineOffset: "3px",
+                  marginTop: "5px",
+                }}
+              >
+                {showMore ? "View Less" : "View More"}
+              </button>
+              <br />
             </div>
-          </Link>
+          </div>
         </Card.Body>
         {/* Card Footer */}
       </Card>

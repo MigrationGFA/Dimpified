@@ -138,13 +138,12 @@ const Dashboard = () => {
             subtitle="For the month"
             value={totalServices.total || 0}
             badgeValue={totalServices.thisMonth || 0}
-            //{NumberOfCourse}
             colorVariant="warning"
           />
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Created Digital Product"
+            title="Digital Product"
             subtitle="For the month"
             value={totalProducts.total || 0}
             badgeValue={totalProducts.thisMonth || 0}
@@ -153,7 +152,7 @@ const Dashboard = () => {
         </Col>
       </Row>
       {/* Graph for purchased courses */}
-      <Card className="my-4">
+      <Card className="my-4 mt-10">
         <Card.Header>
           <h3 className="h4 mb-0">Product Order</h3>
         </Card.Header>

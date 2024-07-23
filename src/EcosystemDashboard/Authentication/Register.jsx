@@ -10,6 +10,7 @@ const RegisterEcosystem = () => {
   const [details, setDetails] = useState(null);
   let { ecosystemDomain } = useParams();
   const navigate = useNavigate();
+  const [loadingButton, setLoadingButton] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -55,6 +56,7 @@ const RegisterEcosystem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoadingButton(true);
     if (formData.password !== formData.confirmPassword) {
       showToast("Passwords do not match");
       return;
@@ -65,7 +67,7 @@ const RegisterEcosystem = () => {
         formData
       );
       showToast(response.data.message);
-      console.log("Registration successful:", response.data);
+      setLoadingButton(false);
       // Reset form data to initial values
       setFormData({
         firstName: "",
@@ -84,6 +86,7 @@ const RegisterEcosystem = () => {
       // Navigate to verify email page
       navigate(`/ecosystem/verification`);
     } catch (error) {
+      setLoadingButton(false);
       showToast(error.response.data.message);
       console.error("Registration failed:", error);
     }
@@ -157,6 +160,7 @@ const RegisterEcosystem = () => {
               handleInputChange={handleInputChange}
               formData={formData}
               handleSubmit={handleSubmit}
+              loadingButton={loadingButton}
             />
           )}
         </Col>
@@ -339,6 +343,7 @@ const FormStep3 = ({
   formData,
   handleInputChange,
   handleSubmit,
+  loadingButton,
 }) => (
   <div
     style={{
@@ -352,7 +357,7 @@ const FormStep3 = ({
   >
     <img src={content.logo.image} height={80} />
     <h3 className="mb-1 mt-5">{sanitizeContent(content.Page3.heading)} 👋</h3>
-    <p class="mb-4">{sanitizeContent(content.Page3.sub)} </p>
+    <p className="mb-4">{sanitizeContent(content.Page3.sub)} </p>
 
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formUsername">
@@ -388,9 +393,15 @@ const FormStep3 = ({
       <Button className="me-3 w-40" variant="secondary" onClick={prevStep}>
         {sanitizeContent(content.Page3.buttonText1)}
       </Button>
-      <Button variant="primary" className="w-40" onClick={handleSubmit}>
-        {sanitizeContent(content.Page3.buttonText2)}
-      </Button>
+      {loadingButton ? (
+        <Button variant="primary" className="w-40">
+          Processing
+        </Button>
+      ) : (
+        <Button variant="primary" className="w-40" onClick={handleSubmit}>
+          {sanitizeContent(content.Page3.buttonText2)}
+        </Button>
+      )}
     </Form>
   </div>
 );
