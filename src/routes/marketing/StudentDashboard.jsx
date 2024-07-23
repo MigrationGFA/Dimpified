@@ -62,6 +62,7 @@ export const DashboardMenu = () => {
     //   // 	link: '/marketing/instructor/quiz/',
     //   // 	icon: 'help-circle'
     //   // },
+    
     //   // {
     //   //   id: 5,
     //   //   title: "Quiz Result",

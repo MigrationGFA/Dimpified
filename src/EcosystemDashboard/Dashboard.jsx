@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col, Card, Table, Image } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { Row, Col, Card, Table, Image, DropdownToggle, DropdownMenu, Dropdown, DropdownItem } from "react-bootstrap";
 import axios from "axios";
+
 
 import StatRightBadge from "../Components/marketing/common/stats/StatRightBadge";
 import ApexCharts from "../Components/elements/charts/ApexCharts";
@@ -15,25 +16,31 @@ import {
 } from "../data/charts/ChartData";
 
 const Dashboard = () => {
-  const [top4Courses, setTop4Courses] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(null);
-  const [totalStudents, setTotalStudents] = useState(null);
-  const [NumberOfCourse, setNumberOfCourse] = useState(null);
+  let {ecosystemDomain} = useParams();
+  const [totalServices, setTotalServices] = useState("");
+  const [totalAmount, setTotalAmount] = useState({
+    totalNaira: 0,
+    totalDollar: 0,
+  });
+  const [totalProducts, setTotalProducts] = useState("");
+  const [totalCourses, setTotalCourses] = useState("");
   const [data, setData] = useState([]);
   const [orderChartData, setOrderChartData] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userId = sessionStorage.getItem("UserId");
-        const response = await fetch(
-          `https://remsana-backend-testing.azurewebsites.net/api/v1/instructorDashboard/${userId}`
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/ecosystem-dashboard/${ecosystemDomain}`
         );
-        const data = await response.json();
-        setTotalAmount(data.totalAmount);
-        setTotalStudents(data.totalStudents);
-        setNumberOfCourse(data.NumberOfCourse);
-        setTop4Courses(data.top4Courses);
+        const data = await response.data;
+        setTotalAmount(data.totalEarnings);
+        setTotalProducts(data.totalProducts);
+        setTotalCourses(data.totalCourses);
+        setTotalServices(data.totalServices);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,52 +67,77 @@ const Dashboard = () => {
 
     fetchMonthlyOrders();
   }, []);
+  const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
+
+  const handleCurrencyChange = (currency) => {
+    setSelectedCurrency(currency);
+  };
+
+  const formatCurrency = (amount, currency) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount || 0);
+  };
+
+  const getTotalAmount = (currency) => {
+    switch (currency) {
+      case "NGN":
+        return totalAmount.totalNaira;
+      case "USD":
+        return totalAmount.totalDollar;
+      default:
+        return 0;
+    }
+  };
+ 
 
   return (
     <InstructorProfileLayout>
       <Row>
-        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+      <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Revenue"
-            subtitle=" month"
-            value="0"
-            // {
-            //   (totalAmount / 100)
-            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-            //     .slice(0, -3) +
-            //   "." +
-            //   (totalAmount % 100).toString().padStart(2, "0")
-            // }
-            badgeValue="0"
-            // {
-            //   (totalAmount / 100)
-            //     .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-            //     .slice(0, -3) +
-            //   "." +
-            //   (totalAmount % 100).toString().padStart(2, "0")
-            // }
+            title={`Revenue (${selectedCurrency})`}
+            subtitle="Earning this month"
+            value={formatCurrency(getTotalAmount(selectedCurrency), selectedCurrency)}
+            badgeValue={formatCurrency(getTotalAmount(selectedCurrency), selectedCurrency)}
             colorVariant="success"
           />
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleCurrencyChange("NGN")}>
+                NGN
+              </DropdownItem>
+              <DropdownItem onClick={() => handleCurrencyChange("USD")}>
+                USD
+              </DropdownItem>
+              <DropdownItem onClick={() => handleCurrencyChange("EUR")}>
+                EUR
+              </DropdownItem>
+              <DropdownItem onClick={() => handleCurrencyChange("GBP")}>
+                GBP
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Created Course"
-            subtitle="month"
-            value="0"
-            //{totalStudents}
-            badgeValue="0"
-            //{totalStudents}
+            subtitle="New this month"
+            value={totalCourses.total || 0}
+            badgeValue={totalCourses.thisMonth || 0}
             colorVariant="info"
           />
         </Col>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title="Digital Services"
-            subtitle="month"
-            value="0"
-            //{NumberOfCourse}
-            badgeValue="0"
-            //{NumberOfCourse}
+            title="Created Services"
+            subtitle="For the month"
+            value={totalServices.total || 0}
+            badgeValue={totalServices.thisMonth || 0}
             colorVariant="warning"
           />
         </Col>
@@ -113,10 +145,8 @@ const Dashboard = () => {
           <StatRightBadge
             title="Digital Product"
             subtitle="For the month"
-            value="0"
-            //{NumberOfCourse}
-            badgeValue="0"
-            //{NumberOfCourse}
+            value={totalProducts.total || 0}
+            badgeValue={totalProducts.thisMonth || 0}
             colorVariant="warning"
           />
         </Col>
@@ -155,7 +185,7 @@ const Dashboard = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               {top4Courses && top4Courses.length > 0 ? (
                 top4Courses.map((course, index) => (
                   <tr key={index}>
@@ -189,12 +219,12 @@ const Dashboard = () => {
                     {/* <td className="align-middle border-top-0">
                     <ActionMenu />
                     </td> */}
-                  </tr>
+                  {/* </tr>
                 ))
               ) : (
                 <div className="px-4 py-12">No product have been purchased</div>
               )}
-            </tbody>
+            </tbody> */} 
           </Table>
         </Card.Body>
       </Card>
