@@ -170,7 +170,7 @@ const Ecosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Total Users"
-            value="0"
+            value={ecosystemData.totalUsers}
             summary="Total users in ecosystems"
             summaryIcon="up"
             showSummaryIcon
