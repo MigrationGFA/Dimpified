@@ -66,21 +66,6 @@ const StudentDashboard = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-
-      // // Fetch monthly orders data
-      // const response = await axios.get(``);
-      // const result = response.data;
-      // const monthlyData = result.map((item) => item.data);
-
-      // // Set data for the chart
-      // setData([{ data: monthlyData }]);
-
-      // // Extracting necessary data for the chart
-      // const chartData = result.map((item) => ({
-      //   x: item.month,
-      //   y: item.data,
-      // }));
-      // setOrderChartData(chartData);
     };
 
     fetchData();
@@ -122,7 +107,7 @@ const StudentDashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title={`Revenue (${selectedCurrency})`}
-            subtitle="Earning this month"
+            subtitle="Month"
             value={formatCurrency(
               getTotalAmount(selectedCurrency),
               selectedCurrency
@@ -141,12 +126,6 @@ const StudentDashboard = () => {
               </DropdownItem>
               <DropdownItem onClick={() => handleCurrencyChange("USD")}>
                 USD
-              </DropdownItem>
-              <DropdownItem onClick={() => handleCurrencyChange("EUR")}>
-                EUR
-              </DropdownItem>
-              <DropdownItem onClick={() => handleCurrencyChange("GBP")}>
-                GBP
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
@@ -179,9 +158,9 @@ const StudentDashboard = () => {
           />
         </Col>
       </Row>
-      <Card>
+      <Card className="mt-4">
         <Card.Header>
-          <h3 className="h4 mb-0">Purchased Product</h3>
+          <h3 className="h4 mb-0 ">Purchased Product</h3>
         </Card.Header>
         <Card.Body>
           <ApexCharts
