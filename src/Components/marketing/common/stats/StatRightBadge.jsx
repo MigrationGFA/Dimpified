@@ -15,7 +15,7 @@ export const StatRightBadge = (props) => {
 						{value}
 					</h2>
 					<span className="d-flex justify-content-between align-items-center">
-						<span>{subtitle}</span>
+						<span >{subtitle}</span>
 						<Badge bg={colorVariant} className="ms-2">
 							{badgeValue}
 						</Badge>

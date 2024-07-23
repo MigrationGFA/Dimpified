@@ -5,8 +5,10 @@ import StudentsGridCard from './StudentsGridCard';
 import StudentsListCard from './StudentsListCard';
 import InstructorProfileLayout from './InstructorProfileLayout';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Students = () => {
+    let {ecosystemDomain} =useParams()
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -15,8 +17,8 @@ const Students = () => {
         const fetchStudents = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('https://remsana-backend-testing.azurewebsites.net/api/v1/get-my-students/41');
-                setStudents(response.data);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/ecosystem-students/${ecosystemDomain}`);
+                setStudents(response.data.ecosystemUser);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching students:', error);
@@ -34,8 +36,8 @@ const Students = () => {
                 <Card className="mb-4 pb-1">
                     <Card.Header className="border-0 d-flex justify-content-between ">
                         <div className="mb-3 mb-lg-0">
-                            <h3 className="mb-0">Students</h3>
-                            <p className="mb-0">Meet people taking your course.</p>
+                            <h3 className="mb-0">Ecosytem Users</h3>
+                            <p className="mb-0">Meet people in your ecosystem.</p>
                         </div>
                         <GridListViewButton keyGrid="grid" keyList="list" />
                     </Card.Header>

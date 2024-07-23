@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col, Card, Table, Image } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import {
+  Row,
+  Col,
+  Card,
+  Table,
+  Image,
+  DropdownToggle,
+  DropdownMenu,
+  Dropdown,
+  DropdownItem,
+} from "react-bootstrap";
 import ApexCharts from "react-apexcharts";
-import axios from "axios"; // Added axios import
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 // Import custom components
 import StatRightBadge from "../../Components/marketing/common/stats/StatRightBadge";
@@ -12,50 +23,46 @@ import StudentProfileLayout from "../student/StudentProfileLayout";
 import { OrderColumnChartOptions } from "../../data/charts/ChartData";
 
 const StudentDashboard = () => {
-  const [top4Courses, setTop4Courses] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(null);
-  const [totalStudents, setTotalStudents] = useState(null);
-  const [numberOfCourse, setNumberOfCourse] = useState(null);
+  let { ecosystemDomain } = useParams();
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+  const [totalCourses, setTotalCourses] = useState("");
+  const [totalNairaSpent, setTotalNairaSpent] = useState({
+    totalNaira: 0,
+  });
+  const [totalUSDSpent, setTotalUSDSpent] = useState({
+    totalDollar: 0,
+  });
+  const [newCourses, setNewCourses] = useState("");
+  const [totalServices, setTotalServices] = useState("");
+  const [newServices, setNewServices] = useState("");
+  const [totalProducts, setTotalProducts] = useState("");
+  const [newProducts, setNewProducts] = useState("");
   const [orderChartData, setOrderChartData] = useState([]);
   const [data, setData] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userId = sessionStorage.getItem("UserId");
-
-        // Fetch data for top 4 purchased courses
-        const lastFourResponse = await fetch(
-          `https://remsana-backend-testing.azurewebsites.net/api/v1/student-last-four-purchase/${userId}`
-        );
-        const lastFourData = await lastFourResponse.json();
-        setTop4Courses(lastFourData);
-
-        // Fetch monthly orders data
-        const response = await axios.get(
-          `https://remsana-backend-testing.azurewebsites.net/api/v1/student-monthly-orders/${userId}`
-        );
-        const result = response.data;
-        const monthlyData = result.map((item) => item.data);
-
-        // Set data for the chart
-        setData([{ data: monthlyData }]);
-
-        // Extracting necessary data for the chart
-        const chartData = result.map((item) => ({
-          x: item.month,
-          y: item.data,
-        }));
-        setOrderChartData(chartData);
-
         // Fetch other dashboard statistics
-        const dashboardResponse = await fetch(
-          `https://remsana-backend-testing.azurewebsites.net/api/v1/instructorDashboard/${userId}`
+        const dashboardData = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-dashboard/${userId}/${ecosystemDomain}`
         );
-        const dashboardData = await dashboardResponse.json();
-        setTotalAmount(dashboardData.totalAmount);
-        setTotalStudents(dashboardData.totalStudents);
-        setNumberOfCourse(dashboardData.numberOfCourse);
+
+        const userDashboard = await dashboardData.data;
+        console.log(userDashboard);
+        setTotalUSDSpent(userDashboard.totalUSDSpent);
+        setTotalNairaSpent(userDashboard.totalNairaSpent);
+        setTotalCourses(userDashboard.totalCourses);
+        setNewCourses(userDashboard.newCourses);
+        setTotalServices(userDashboard.totalServices);
+        setNewServices(userDashboard.newServices);
+        setTotalProducts(userDashboard.totalProducts);
+        setNewProducts(userDashboard.newProducts);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,6 +71,32 @@ const StudentDashboard = () => {
     fetchData();
   }, []);
 
+  const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
+
+  const handleCurrencyChange = (currency) => {
+    setSelectedCurrency(currency);
+  };
+
+  const formatCurrency = (amount, currency) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount || 0);
+  };
+
+  const getTotalAmount = (currency) => {
+    switch (currency) {
+      case "NGN":
+        return totalNairaSpent;
+      case "USD":
+        return totalUSDSpent;
+      default:
+        return 0;
+    }
+  };
+
   const ActionMenu = () => {
     return null;
   };
@@ -71,63 +104,63 @@ const StudentDashboard = () => {
   return (
     <StudentProfileLayout>
       <Row>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-payout">
-            <StatRightBadge
-              title="Amount spent"
-              subtitle="Earning this month"
-              value={
-                (totalAmount / 100)
-                  .toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                  .slice(0, -3) +
-                "." +
-                (totalAmount % 100).toString().padStart(2, "0")
-              }
-              badgeValue={
-                (totalAmount / 100)
-                  .toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                  .slice(0, -3) +
-                "." +
-                (totalAmount % 100).toString().padStart(2, "0")
-              }
-              colorVariant="success"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title={`Revenue (${selectedCurrency})`}
+            subtitle="Month"
+            value={formatCurrency(
+              getTotalAmount(selectedCurrency),
+              selectedCurrency
+            )}
+            badgeValue={formatCurrency(
+              getTotalAmount(selectedCurrency),
+              selectedCurrency
+            )}
+            colorVariant="success"
+          />
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleCurrencyChange("NGN")}>
+                NGN
+              </DropdownItem>
+              <DropdownItem onClick={() => handleCurrencyChange("USD")}>
+                USD
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-My-Course">
-            <StatRightBadge
-              title="Purchased Courses"
-              subtitle="New this month"
-              value={totalStudents}
-              badgeValue={totalStudents}
-              colorVariant="info"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Purchased Course"
+            subtitle="New this month"
+            value={totalCourses || 0}
+            badgeValue={newCourses || 0}
+            colorVariant="info"
+          />
         </Col>
-        <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-          <Link to="/student-My-Course/Bookmarked">
-            <StatRightBadge
-              title="Bookmarked Courses"
-              subtitle="For the month"
-              value={numberOfCourse}
-              badgeValue={numberOfCourse}
-              colorVariant="warning"
-            />
-          </Link>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Purchased Services"
+            subtitle="For the month"
+            value={totalServices || 0}
+            badgeValue={newServices || 0}
+            colorVariant="warning"
+          />
+        </Col>
+        <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
+          <StatRightBadge
+            title="Digital Product"
+            subtitle="For the month"
+            value={totalProducts || 0}
+            badgeValue={newProducts || 0}
+            colorVariant="warning"
+          />
         </Col>
       </Row>
-
-      {/* Graph for purchased courses */}
-      <Card className="my-4">
+      <Card className="mt-4">
         <Card.Header>
-          <h3 className="h4 mb-0">Purchased Courses</h3>
+          <h3 className="h4 mb-0 ">Purchased Product</h3>
         </Card.Header>
         <Card.Body>
           <ApexCharts
@@ -142,14 +175,14 @@ const StudentDashboard = () => {
       {/* Last 4 Purchased Courses table */}
       <Card className="mt-4">
         <Card.Header>
-          <h3 className="mb-0 h4">Last 4 Purchased Courses</h3>
+          <h3 className="mb-0 h4">Last 4 Purchased Product</h3>
         </Card.Header>
         <Card.Body className="p-0 ">
           <Table hover responsive className="mb-0 text-nowrap table-centered">
             <thead className="table-light">
               <tr>
                 <th scope="col" className="border-0">
-                  COURSES
+                  PRODUCTS
                 </th>
                 <th scope="col" className="border-0">
                   AMOUNT
@@ -157,8 +190,8 @@ const StudentDashboard = () => {
                 <th scope="col" className="border-0"></th>
               </tr>
             </thead>
-            <tbody>
-              {top4Courses &&
+            {/* <tbody> */}
+            {/* {top4Courses &&
                 top4Courses.map((course, index) => (
                   <tr key={index}>
                     <td className="align-middle border-top-0">
@@ -183,7 +216,7 @@ const StudentDashboard = () => {
                     </td>
                   </tr>
                 ))}
-            </tbody>
+            </tbody> */}
           </Table>
         </Card.Body>
       </Card>

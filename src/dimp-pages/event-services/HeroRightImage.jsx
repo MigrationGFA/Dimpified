@@ -45,7 +45,7 @@ const HeroRightImage2 = () => {
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mt-3 mt-lg-3 mb-3">
             <h2 className="h1 fw-bold">
-            Manage payments securely and efficiently
+              Manage payments securely and efficiently
             </h2>
           </div>
         </Col>
@@ -87,7 +87,7 @@ const HeroRightImage2 = () => {
                 Get started for free
               </Link>{" "}
               <Link
-                href=""
+                to="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"
               >
                 Schedule a demo

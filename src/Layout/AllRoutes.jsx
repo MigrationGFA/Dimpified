@@ -90,11 +90,13 @@ import UserNotification from "../DashboardsPeerComponents/account-settings/Notif
 import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
 import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
+import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
 import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemResolution from "../EcosystemDashboard/EcoResolution";
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
 import EcosystemOrders from "../EcosystemDashboard/Orders";
@@ -241,6 +243,10 @@ const AllRoutes = () => {
       />
       
       <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
+        element={<EcosystemResolution />}
+      />
+      <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
         element={<EcosystemQuiz />}
       />
@@ -268,7 +274,12 @@ const AllRoutes = () => {
       {/* End user ecosystem routes */}
       <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+      <Route
+        path="/:ecosystemDomain/service/:id"
+        element={<UserSingleService />}
+      />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
+
       <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
       <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
       <Route
@@ -283,6 +294,8 @@ const AllRoutes = () => {
         path="/ecosystem/verification"
         element={<EcosystemVerifyEmail />}
       />
+      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+
       <Route
         path="/:ecosystemDomain/User-My-Course"
         element={<UserMyCourse />}

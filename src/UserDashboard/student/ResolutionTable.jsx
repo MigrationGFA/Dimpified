@@ -4,7 +4,7 @@ import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import DotBadge from "../../Components/elements/bootstrap/DotBadge";
 import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
 
-const resolutionTable = ({ data, datas, dataes, header }) => {
+const resolutionTable = ({ data, header }) => {
   const columns = useMemo(() => {
     return header.map(({ accessorKey, header }) => ({
       header: header,
