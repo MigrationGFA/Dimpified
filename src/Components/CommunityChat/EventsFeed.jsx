@@ -1,58 +1,60 @@
-// src/components/CommunityChat/GDGRightside.js
-
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import '../CommunityChat/EventsFeed.css'; // Import custom styles
+import '../CommunityChat/EventsFeed.css';
+
+import event1 from '../../assets/LogoList/wema Bank Logo.jpg';
+import event2 from '../../assets/LogoList/wema Bank Logo.jpg';
+import event3 from '../../assets/LogoList/wema Bank Logo.jpg';
+import event4 from '../../assets/LogoList/wema Bank Logo.jpg';
 
 const events = [
   {
     id: 1,
-    image: '/images/event1.jpg', // Replace with actual image paths
-    name: 'Event One',
+    image: event1, 
+    name: 'Wema Plc',
     date: 'July 20, 2024',
   },
   {
     id: 2,
-    image: '/images/event2.jpg', // Replace with actual image paths
-    name: 'Event Two',
-    date: 'August 15, 2024',
+    image: event2, 
+    name: 'Wema Plc',
+    date: 'June 15, 2024',
   },
   {
     id: 3,
-    image: '/images/event3.jpg', // Replace with actual image paths
-    name: 'Event Three',
-    date: 'August 30, 2024',
+    image: event3,
+    name: 'Wema Plc',
+    date: 'May 30, 2024',
   },
   {
     id: 4,
-    image: '/images/event4.jpg', // Replace with actual image paths
-    name: 'Event Four',
-    date: 'October 15, 2024',
+    image: event4, 
+    name: 'Wema Plc',
+    date: 'July 5, 2024',
   },
   {
     id: 5,
-    image: '/images/event4.jpg', // Replace with actual image paths
-    name: 'Event Five',
+    image: event4, 
+    name: 'Wema Plc',
     date: 'May 5, 2024',
   },
-  // Add more events as needed
 ];
 
-const GDGRightside = () => {
+const EventsFeed = () => {
   return (
     <div className="gdg-rightside">
       <h3 className="gdg-rightside-heading font-text-bold text-center">Events for you</h3>
       {events.map(event => (
-        <Card className="mb-3" key={event.id}>
+        <Card className="mb-3 gdg-event-card" key={event.id}>
           <Card.Body className="gdg-card-body">
-            <div className="gdg-event">
+            <div className="gdg-event-info">
               <img src={event.image} alt={event.name} className="gdg-event-image" />
-              <div className="gdg-event-info">
-                <Card.Title>{event.name}</Card.Title>
-                <Card.Text>{event.date}</Card.Text>
+              <div className="gdg-event-details">
+                <Card.Title className="gdg-event-title">{event.name}</Card.Title>
+                <Card.Text className="gdg-event-date">{event.date}</Card.Text>
               </div>
             </div>
-            <Button variant="primary" className="gdg-view-details-btn">View details</Button>
+            <Button variant="primary" className="gdg-view-details-btn">Details</Button>
           </Card.Body>
         </Card>
       ))}
@@ -60,4 +62,4 @@ const GDGRightside = () => {
   );
 };
 
-export default GDGRightside;
+export default EventsFeed;

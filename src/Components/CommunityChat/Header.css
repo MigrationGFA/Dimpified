@@ -1,3 +1,4 @@
+/* Styles for the two-layered box */
 .two-layered-box {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -7,6 +8,7 @@
   position: relative;
 }
 
+/* Styles for the upper layer */
 .upper-layer {
   height: 200px;
   background-color: #f0f0f0;
@@ -15,12 +17,14 @@
   align-items: center;
 }
 
+/* Styles for the image preview */
 .image-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Styles for the edit icon */
 .edit-icon {
   position: absolute;
   top: 10px;
@@ -32,6 +36,7 @@
   cursor: pointer;
 }
 
+/* Styles for the divider between layers */
 .divider {
   position: absolute;
   top: 170px; /* Adjust to overlap layers */
@@ -42,20 +47,255 @@
   z-index: 1;
 }
 
+/* Styles for the logo preview */
 .logo-preview {
-  height: 70px; /* Adjust the size as needed */
-  width: 70px; /* Adjust the size as needed */
-  object-fit: cover; /* Keep the aspect ratio */
-  border-radius: 50%; /* Make it a perfect circle */
-  border: 2px solid white; /* Optional: Add a border around the logo */
+  height: 70px; 
+  width: 70px; 
+  object-fit: cover; 
+  border-radius: 50%; 
+  border: 2px solid white; 
 }
 
+/* Styles for the lower layer */
 .lower-layer {
   background-color: white;
   padding: 20px;
-  padding-top: 40px; /* Adjust padding to fit content */
+  padding-top: 40px; 
 }
 
+/* Styles for the text container */
 .text-container {
   margin: 0;
+}
+
+/* Styles for interaction icons */
+.interaction-icons {
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for icon circles */
+.icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 5px;
+  color: white; /* White icon color */
+}
+/* Styles for icon circle */
+/* .icon-circle {
+  display: inline-block;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+} */
+
+.like-icon2 {
+  width: 20px;
+  height: 20px;
+}
+/* Styles for love circle */
+.love-circle {
+  background-color: #f45d22; /* Orange background */
+}
+
+/* Styles for applaud circle */
+.applaud-circle {
+  background-color: #00a76d; /* Green background */
+}
+
+/* Styles for like icon */
+.like-icon {
+  width: 60px; /* Adjust size as needed */
+  height: 36px; /* Adjust size as needed */
+}
+
+.like-icon2 {
+  background-color: #0000;
+  width: 30px; 
+  height: 30px; 
+}
+
+/* Styles for comment icon */
+.comment-icon {
+  width: 26px; 
+  height: 26px; 
+}
+
+/* Styles for app container */
+.app-container {
+  padding: 20px;
+}
+
+/* Styles for post card */
+.post-card {
+  margin-bottom: 20px;
+}
+
+/* Styles for header top */
+.header-top {
+  margin-bottom: 15px;
+}
+
+.header-top img {
+  margin-right: 15px;
+}
+
+/* Styles for post interactions and buttons */
+.post-interactions,
+.interaction-buttons {
+  margin-top: 15px;
+}
+
+
+
+/* Styles for comment section */
+.comment-section .active-comment-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.comment-section .active-comment-box img {
+  margin-right: 10px;
+}
+
+.comment-section .active-comment-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.comment-section .active-comment-box button {
+  padding: 10px 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Container for comments */
+.comment-wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.comment-wrapper .avatar {
+  margin-right: 10px;
+}
+
+/* Styling for the comment div */
+.comment {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 5px; 
+}
+
+/* Styling for the comment header */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.comment-header .comment-name {
+  font-weight: bold;
+}
+
+/* Styling for the comment actions */
+.comment-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-left: 55px; 
+}
+
+/* Styles for reply box */
+.reply-box {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 40px; /* Indent replies */
+}
+
+.reply-box .avatar {
+  margin-right: 10px;
+}
+
+.reply-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.reply-box button {
+  padding: 10px 15px;
+  
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Styles for reply wrapper */
+.reply-wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-left: 40px; /* Indent replies */
+}
+
+.reply-wrapper .avatar {
+  margin-right: 10px;
+}
+
+/* Styles for reply */
+.reply {
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for reply header */
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.reply-header .reply-name {
+  font-weight: bold;
+}
+
+/* Styles for reply actions */
+.reply-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.reply-actions .like-action,
+.reply-actions .reply-action {
+  cursor: pointer;
+  font-weight: bold;
 }
