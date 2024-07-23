@@ -190,6 +190,8 @@ const ServicesSingle = () => {
     }
   };
 
+  let originalImgUrl = serviceDetails.backgroundCover?.[0] || "";
+  let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : "";
   return (
     <Fragment>
       <NavbarDefault />
@@ -212,14 +214,8 @@ const ServicesSingle = () => {
               <div className="mb-3 mb-md-2 d-flex justify-content-center">
                 {userDetails && (
                   <Image
-                    src={
-                      serviceDetails && serviceDetails.backgroundCover == null
-                        ? ""
-                        : serviceDetails.backgroundCover[0]
-                    }
-                    alt={`${userDetails && userDetails.firstName} ${
-                      userDetails.ecosystemDomain
-                    }`}
+                    src={updatedImgUrl}
+                    alt={`${serviceDetails && serviceDetails.ecosystemDomain} `}
                     className="img-fluid border zoom-image"
                     style={{ height: "300px", width: "800px" }}
                   />
@@ -395,34 +391,9 @@ const ServicesSingle = () => {
                 </div>
               </div>
             </div>
-            <div className="d-inline-flex flex-wrap">
-              {/* {userDetails.skills &&
-              userDetails.skills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="p-1 m-1 rounded-pill bg-secondary text-white"
-                  style={{ fontSize: "small" }}
-                >
-                  {skill}
-                </div>
-              ))} */}
-            </div>
+
             <hr className="my-4" />
-            <div>
-              <p>
-                <span>
-                  Total Job Done:{" "}
-                  <span className="text-dark">
-                    {serviceDetails.totalJobDone}
-                  </span>
-                </span>
-              </p>
-            </div>
-            {/* <div
-                dangerouslySetInnerHTML={{
-                  __html: job.jobDetails,
-                }}
-              /> */}
+
             {/* button */}
             <div className="mt-5">
               <h1 className="fs-3">Service description</h1>
@@ -594,52 +565,6 @@ const ServicesSingle = () => {
               >
                 Contact me <FaArrowRight />
               </a>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          {/* <Col xl={{ span: 8, offset: 2 }} md={12}>
-              <div className="mt-12">
-                <h2 className="mb-4">Similar Jobs</h2>
-                {similarJobs.map((job, index) => {
-                  return <JobListingListviewCard item={job} key={index} />;
-                })}
-              </div>
-            </Col> */}
-          <Col xl={{ span: 8, offset: 2 }} md={12} className="mt-8">
-            <div className="d-xl-flex border p-4 rounded">
-              <div className="mb-3 mb-md-0">
-                {userDetails && (
-                  <img
-                    src={userDetails.userImage}
-                    alt={`${userDetails.firstName} ${userDetails.lastName}`}
-                    className="icon-shape border rounded-circle"
-                    style={{ maxHeight: "100px", maxWidth: "100%" }}
-                  />
-                )}
-              </div>
-
-              {/* text */}
-              <div id="contact-section" className="ms-xl-3 w-100 mt-3 mt-xl-0">
-                <div className="d-flex justify-content-between mb-5">
-                  <div>
-                    {/* <h1 className="mb-1 h2">{`${userDetails.firstName} ${userDetails.lastName}`}</h1> */}
-                    {userDetails && userDetails.phoneNumber && (
-                      <h5>Contact: {userDetails.phoneNumber} </h5>
-                    )}
-                    {userDetails && userDetails.emailAddress && (
-                      <h5>Email: {userDetails.emailAddress} </h5>
-                    )}
-
-                    {serviceDetails && serviceDetails.serviceName && (
-                      <span>Service as {serviceDetails.serviceName}, </span>
-                    )}
-                  </div>
-                  <div>
-                    <Button variant="success">Contact Information</Button>
-                  </div>
-                </div>
-              </div>
             </div>
           </Col>
         </Row>

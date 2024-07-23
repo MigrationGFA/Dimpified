@@ -117,6 +117,12 @@ import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/Ecosys
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
+import Join from "../developer-program/pages/Join";
+import AboutDevProgram from "../developer-program/pages/AboutDevProgram";
+import ApiLicense from "../developer-program/pages/ApiLicense";
+import Grow from "../developer-program/pages/Grow";
+import EventPage from "../developer-program/pages/EventsPage";
+import LoyaltyProgram from "../developer-program/pages/LoyaltyProgram";
 
 const AllRoutes = () => {
   return (
@@ -349,6 +355,13 @@ const AllRoutes = () => {
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+      <Route path="/dimp/developer-program/join" element={<Join />} />
+      <Route path="/dimp/developer-program/about" element={<AboutDevProgram />} />
+      <Route path="/dimp/developer-program/apilicense" element={<ApiLicense />} />
+      <Route path="/dimp/developer-program/grow" element={<Grow />} />
+      <Route path="/dimp/developer-program/events" element={<EventPage />} />
+      <Route path="/dimp/developer-program/loyalty-program" element={<LoyaltyProgram />} />
+
     </Routes>
   );
 };

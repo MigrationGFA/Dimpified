@@ -24,7 +24,7 @@ const ProgramSection = () => {
             </Link>
           </div>
         </Col>
-        <Col lg={3} xs={10} className="mt-6">
+        {/* <Col lg={3} xs={10} className="mt-6">
           <h3 className="display-5">Develop</h3>
           <p>Get tools, resources, and support to develop on Dimp.</p>
           <div className="d-flex justify-content-between">
@@ -38,7 +38,7 @@ const ProgramSection = () => {
               See APIs <ArrowRight />
             </Link>
           </div>
-        </Col>
+        </Col> */}
         <Col lg={3} xs={10} className="mt-6">
           <h3 className="display-5">Grow</h3>
           <p>Receive support for your application in the Dimp ecosystem.</p>
