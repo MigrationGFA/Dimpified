@@ -1,30 +1,21 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Modal, Form, Row, Col, Image } from "react-bootstrap";
+import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import DotBadge from "../Components/elements/bootstrap/DotBadge";
 import TanstackTable from "../Components/elements/advance-table/TanstackTable";
 import { showToast } from "../Components/Showtoast";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const JobTable = ({ data, header }) => {
+const JobTable = ({ data, header, currencyName }) => {
   const [loading, setLoading] = useState(false);
   const [loadingC, setLoadingC] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState(null);
-  const [selectedJobSeekerId, setSelectedJobSeekerId] = useState(null);
-  const [selectedJobTitle, setSelectedJobTitle] = useState(null);
   const [Rloading, setRLoading] = useState(false);
 
-  function truncateDescription(description, maxLength = 40) {
-    if (description.length <= maxLength) {
-      return description;
-    } else {
-      return `${description.slice(0, maxLength)}...`;
-    }
-  }
+  
   const formatPrice = (currencyName, priceValue) => {
     switch (currencyName) {
       case "naira":
@@ -56,43 +47,27 @@ const JobTable = ({ data, header }) => {
               // {`/jobs/listing/dashboard-job-list/?id=${row.original._id}`}
               className="text-inherit"
             >
-              <h4 className="mb-1 text-primary-hover">{row.original.title}</h4>
+              <h4 className="mb-1 text-primary-hover">{row.original.course.title}</h4>
               <h4 className="mb-1 text-primary-hover">{row.original.header}</h4>
               <h4 className="mb-1 text-primary-hover">{row.original.productName}</h4>
-              <span className="text-inherit" style={{ width: "30px" }}>
-                {truncateDescription(row.original.description)}
-              </span>
+              
             </Link>
           );
         }  else if (accessorKey === "category") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.category} </p>
+              <p className="mb-1 text-primary-hover">{row.original.course.category} {row.original.productType}</p>
             </Fragment>
           );
-        }  else if (accessorKey === "image") {
-          return (
-            <div>
-              <Image
-                src={row.original.image || row.original.backgroundCover[0]}
-                alt=""
-                className="rounded-circle img-fluid" 
-                style={{ 
-                  width: '80px',
-                  height: '70px'
-                }}
-              />
-            </div>
-          );
-        } else if (accessorKey === "format") {
+        } else if (accessorKey === "amount") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.format}</p>
+              <p className="mb-1 text-primary-hover">{formatPrice(currencyName, row.original.itemAmount || row.original.service.price)}</p>
             </Fragment>
           );
         } else if (accessorKey === "deliveryDate") {
-          const updatedAt = new Date(row.original.updatedAt);
-          const formattedDate = updatedAt.toLocaleDateString("en-GB", {
+          const purchaseDate = new Date(row.original.purchaseDate);
+          const formattedDate = purchaseDate.toLocaleDateString("en-GB", {
             day: "numeric",
             month: "long",
             year: "numeric",
@@ -169,86 +144,9 @@ const JobTable = ({ data, header }) => {
         data={data}
         columns={columns}
         filter={true}
-        filterPlaceholder="Search Jobs"
+        filterPlaceholder="Search Orders"
         pagination={true}
       />
-      {/* Modal component for submitting review */}
-      <Modal
-        show={showReviewModal}
-        onHide={() => {
-          setReviewText("");
-          setRating(0);
-          setShowReviewModal(false);
-        }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Post Review</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="mb-3">
-            <h3 className="mb-4">Give Your Review on this Job</h3>
-            <Row className="align-items-center">
-              <Col xs="auto" className="text-center">
-                <h6 className="">
-                  Press any of the stars for your star rating
-                </h6>
-
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <span
-                    key={value}
-                    className="text-warning"
-                    onClick={() => handleStarClick(value)}
-                  >
-                    <i
-                      className={`fa${value <= rating ? "s" : "r"} fa-star`}
-                      style={{ cursor: "pointer", fontSize: "24px" }}
-                    />
-                  </span>
-                ))}
-
-                <span className="ms-2 fs-5">{rating}/5</span>
-              </Col>
-            </Row>
-          </div>
-
-          <div className="w-100 mb-3">
-            <h4 className="mb-3">Write Your Review</h4>
-
-            <Form className="position-relative">
-              <Form.Group className="mb-3">
-                <Form.Control
-                  as="textarea"
-                  rows={5}
-                  placeholder="Write your review here..."
-                  className="w-100"
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </div>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setReviewText("");
-              setRating(0);
-              setShowReviewModal(false);
-            }}
-          >
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            disabled={Rloading}
-            // onClick={handleSubmitReview}
-          >
-            {Rloading ? "Processing" : "Submit Review"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Fragment>
   ) : (
     <div>Loading...</div>
