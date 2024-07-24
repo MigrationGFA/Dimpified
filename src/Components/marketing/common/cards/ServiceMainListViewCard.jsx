@@ -1,6 +1,6 @@
 // import node module libraries
 import { Card, Image, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaNairaSign } from "react-icons/fa6";
 
 // import custom components
@@ -34,7 +34,8 @@ function getTimeDifference(updatedAt) {
 }
 
 const ServiceMainListViewCard = (props) => {
-  const { item } = props;
+  let {ecosystemDomain} = useParams();
+  const { item, link } = props;
 
   const getTimeDifferenceString = (time) => {
     if (time.days > 0) {
@@ -93,31 +94,30 @@ const ServiceMainListViewCard = (props) => {
       <Card.Body>
         <div>
           <div className="d-md-flex">
-            <div className="col-md-3">
-              {item.user && item.user.image && (
+            <div className="col-md-2">
+    
                 <Link
-                  to={`/services/listing?id=${item._id}`}
-                  onClick={() => SearchActivity({ name: item.department })}
+                  to={link}
                 >
                   <Image
-                    src={item.user.image}
-                    alt={item.user.name}
+                    src={item.backgroundCover[0]}
+                    alt={ecosystemDomain}
                     className="img-fluid"
-                    style={{ maxHeight: "100px", maxWidth: "100%" }}
+                    style={{ maxHeight: "120px", maxWidth: "50%" }}
                   />
                 </Link>
-              )}
+             
             </div>
             <div className="ms-md-3 w-100 mt-3 mt-xl-1">
               <div className="d-flex justify-content-between mb-3">
                 <div>
                   <h3 className="mb-1 fs-4">
                     <Link
-                      to={`/services/listing?id=${item._id}`}
+                      to={link}
                       onClick={() => SearchActivity({ name: item.department })}
                       className="text-inherit me-1"
                     >
-                      {item.serviceName}
+                      {item.header}
                     </Link>
                     {/* {item.featured && (
                       <span className="badge bg-danger-soft ms-2">
@@ -126,7 +126,7 @@ const ServiceMainListViewCard = (props) => {
                     )} */}
                   </h3>
                   <div>
-                    <span>category of {item.department}</span>
+                    <span>category of {item.category}</span>
 
                     <span className="ms-0">(0 Reviews)</span>
                   </div>
@@ -159,22 +159,22 @@ const ServiceMainListViewCard = (props) => {
                 <div className="mb-2 mb-md-0">
                   <span className="me-2">
                     <i className="fe fe-briefcase text-muted"></i>
-                    <span className="ms-1 ">{item.experience}</span>
+                    <span className="ms-1 ">{item.services[0].deliveryTime}</span>
                   </span>
                   <span className="me-2">
                     {/* <i className="fe fe-naira-sign text-muted"></i> */}
                     {/* <FaNairaSign style={{ height: "14px" }} /> */}
                     <span className="ms-1 ">
-                      {formatPrice(item.currency, item.price)}
+                      {formatPrice(item.currency, item.services[0].price)}
                     </span>
                   </span>
                   <span className="me-2">
                     <i className="fe fe-map-pin text-muted"></i>
-                    <span className="ms-1 ">{item.serviceType}</span>
+                    <span className="ms-1 ">{item.format}</span>
                   </span>
                   <span className="me-2">
                     <i className="fe fe-clock text-muted"></i>
-                    <span className="ms-1 ">{item.jobSalaryFormat}</span>
+                    <span className="ms-1 ">{item.services[0].priceFormat}</span>
                   </span>
                 </div>
                 <div>
