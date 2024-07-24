@@ -90,6 +90,7 @@ import UserNotification from "../DashboardsPeerComponents/account-settings/Notif
 import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
 import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
+import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList"
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
@@ -337,6 +338,10 @@ const AllRoutes = () => {
       <Route
         path="/:ecosystemDomain/User/browse-course"
         element={<UserBrowseCourse />}
+      />
+       <Route
+        path="/:ecosystemDomain/User/browse-service"
+        element={<UserBrowseService />}
       />
       <Route
         path="/:ecosystemDomain/User/single/learning/single-course"

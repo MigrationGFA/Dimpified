@@ -34,7 +34,7 @@ const RequestModalForm = ({
       <Row className="mb-4 border border-secondary rounded p-2">
         <div className="d-flex justify-content-between mb-2">
           <div className="display-6 fw-bold">{header || name}</div>
-          <div className="display-6">${totalPrice}</div>
+          <div className="display-6">{price}</div>
         </div>
 
         <p>

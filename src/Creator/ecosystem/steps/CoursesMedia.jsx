@@ -21,7 +21,7 @@ const CoursesMedia = ({ submit, previous }) => {
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
   const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
-
+console.log(ecosystemId)
 
   const courseData = useSelector((state) => state.course);
   const {

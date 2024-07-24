@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
-import { Col, Row, Container } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Col, Row, Container, Button } from "react-bootstrap";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import GKStepper from "../../../../Components/elements/stepper/GKStepper";
 import BasicInformation from "../PostAService/steps/BasicInformation";
 import CoursesMedia from "../PostAService/steps/CoursesMedia";
@@ -16,6 +16,8 @@ const PostAService = () => {
     courses_level: "",
     course_description: "",
   });
+
+  const navigate = useNavigate();
   
 
   const handleChange = (event) => {
@@ -84,9 +86,8 @@ const PostAService = () => {
     // },
   ];
 
-  const handleBackToCourse = () => {
-    clearStorage();
-    setStep(1);
+  const handleBackToDashBoard = () => {
+    navigate(`/${ecosystemDomain}/Ecosystemdashboard`)
   };
 
   return (
@@ -104,13 +105,13 @@ const PostAService = () => {
                 </div>
                 <div>
                 {ecosystemDomain && (
-                    <Link
+                    <Button
                       to=""
                       className="btn btn-white"
-                      onClick={handleBackToCourse}
+                      onClick={handleBackToDashBoard}
                     >
                       Back to My Dashboard
-                    </Link>
+                    </Button>
                   )}
                 </div>
               </div>

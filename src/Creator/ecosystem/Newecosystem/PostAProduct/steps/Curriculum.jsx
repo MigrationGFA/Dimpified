@@ -7,7 +7,7 @@ import {
   deletePackage,
   resetProductData,
 } from "../../../../../features/product";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation  } from "react-router-dom";
 import { showToast } from "../../../../../Components/Showtoast";
 import axios from "axios";
 
@@ -115,6 +115,11 @@ const AddPackage = () => {
 };
 
 const Product = ({ submit, onPrevious }) => {
+  const { ecosystemDomain } = useParams();
+  const location = useLocation();
+  const ecosystemFromState = useSelector((state) => state.ecosystem.ecosystemDomain);
+  const user = useSelector((state) => state.authentication.user);
+  const creatorId = user?.data?.CreatorId;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const sections = useSelector((state) => state.product.packAge) || [];
@@ -126,10 +131,6 @@ const Product = ({ submit, onPrevious }) => {
   const [editDownloadUrl, setEditDownloadUrl] = useState("");
  
 
-  const user = useSelector((state) => state.authentication.user);
-  const creatorId = user?.data?.CreatorId;
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemDomain);
-  console.log(ecosystemId)
 
   const ProductData = useSelector((state) => state.product);
   const {
@@ -143,6 +144,15 @@ const Product = ({ submit, onPrevious }) => {
     backgroundCover,
     packAge,
   } = ProductData;
+
+  let ecosystem;
+  if (ecosystemDomain) {
+    ecosystem = ecosystemDomain;
+  } else {
+    ecosystem = ecosystemFromState;
+  }
+  
+  console.log(ecosystem)
 
   const convertBase64ToFile = (base64String, filename) => {
     const arr = base64String.split(",");
@@ -220,7 +230,7 @@ const Product = ({ submit, onPrevious }) => {
     }
 
     formData.append("creatorId", creatorId);
-    formData.append("ecosystemDomain", ecosystemId);
+    formData.append("ecosystemDomain", ecosystem);
 
     axios
       .post(`${import.meta.env.VITE_API_URL}/create-digital-product`, formData, {
@@ -234,7 +244,11 @@ const Product = ({ submit, onPrevious }) => {
           showToast(response.data.message);
         }
         dispatch(resetProductData());
-        navigate("/creator/dashboard/Products");
+        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+        } else {
+          navigate('/creator/dashboard/Products');
+        }
         submit();
       })
       .catch((error) => {

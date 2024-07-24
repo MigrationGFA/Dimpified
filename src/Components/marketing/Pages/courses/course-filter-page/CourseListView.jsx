@@ -4,8 +4,10 @@ import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import CourseCard from "../FilterCourseCard";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const CourseListView = ({ filterOptions, setTotalFilteredCourses }) => {
+  let {ecosystemDomain} = useParams();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -41,10 +43,10 @@ const CourseListView = ({ filterOptions, setTotalFilteredCourses }) => {
           }
         } else {
           const response = await axios.get(
-            "https://remsana-backend-testing.azurewebsites.net/api/v1/get-all-courses"
+             `${import.meta.env.VITE_API_URL}/ecosystem-courses/${ecosystemDomain}`
           );
-          if (response.data && Array.isArray(response.data.allCourses)) {
-            filteredCourses = response.data.allCourses;
+          if (response.data && Array.isArray(response.data.courses)) {
+            filteredCourses = response.data.courses;
             setTotalFilteredCourses(filteredCourses.length);
           }
         }
@@ -76,7 +78,7 @@ const CourseListView = ({ filterOptions, setTotalFilteredCourses }) => {
             key={index}
             item={item}
             viewby="list"
-            link={`/student/single-course?id=${item.id || item._id}`} 
+            link={`/${ecosystemDomain}/${item._id}`}
           />
         </Col>
       ))
