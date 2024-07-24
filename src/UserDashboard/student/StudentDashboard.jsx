@@ -24,6 +24,7 @@ import { OrderColumnChartOptions } from "../../data/charts/ChartData";
 
 const StudentDashboard = () => {
   let { ecosystemDomain } = useParams();
+
   const user = useSelector((state) => state.authentication.user.data);
   const userId = user.UserId;
   const [totalCourses, setTotalCourses] = useState("");
@@ -100,6 +101,29 @@ const StudentDashboard = () => {
   const ActionMenu = () => {
     return null;
   };
+
+  // product order
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-monthly-product-purchase/${userId}/${ecosystemDomain}`
+        );
+        const result = response.data;
+        const monthlyData = result.map((item) => item.totalPurchasedItems);
+
+        // Create the final structure with the 'data' property
+        const formattedData = [{ data: monthlyData }];
+        console.log("this is monthly data", monthlyData);
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchProductData();
+  }, []);
 
   return (
     <StudentProfileLayout>
