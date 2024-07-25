@@ -13,9 +13,12 @@ const JobTable = ({ data, header }) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState(null);
-  const [selectedJobSeekerId, setSelectedJobSeekerId] = useState(null);
-  const [selectedJobTitle, setSelectedJobTitle] = useState(null);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedCourseTitle, setSelectedCourseTitle] = useState(null);
+  const [selectedItemType, setSelectedItemType] = useState(null);
+  const [selectedEcosystemDomain, setSelectedEcosystemDomain] = useState(null);
+
   const [Rloading, setRLoading] = useState(false);
 
   function truncateDescription(description, maxLength = 40) {
@@ -42,6 +45,52 @@ const JobTable = ({ data, header }) => {
       default:
         return `₦${priceValue}`;
     }
+  };
+
+   // Function to handle star rating click
+   const handleStarClick = (value) => {
+    setRating(value);
+  };
+
+  const handleSubmitReview = async () => {
+    setRLoading(true);
+    if (!selectedItemId) {
+      setRLoading(false);
+      showToast("Item ID not provided");
+      return;
+    }
+    const reviewData = {
+      reviewedItemType: selectedItemType,
+      userId: selectedUserId,
+      reviewedItemId: selectedItemId,
+      rating: rating,
+      title: selectedCourseTitle,
+      review: reviewText,
+      ecosystemDomain: selectedEcosystemDomain,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-reviews`,
+        reviewData
+      );
+      setRLoading(false);
+      showToast(response.data.message);
+      setShowReviewModal(false);
+    } catch (error) {
+      setRLoading(false);
+      showToast("Error submitting review");
+    }
+  };
+
+  const handleShow = (userId, itemId, title, itemType, ecosystemDomain) => {
+    setSelectedItemId(itemId);
+    setSelectedUserId(userId);
+    setSelectedCourseTitle(title);
+    setSelectedItemType(itemType);
+    setSelectedEcosystemDomain(ecosystemDomain);
+    setShowReviewModal(true);
+   
   };
 
   const columns = useMemo(() => {
@@ -129,7 +178,26 @@ const JobTable = ({ data, header }) => {
               )}
             </Fragment>
           );
-        } else if (accessorKey === "action") {
+        }  else if (accessorKey === "review") {
+            return (
+              <Fragment>
+                <Button
+                  variant="primary"
+                  onClick={() =>
+                    handleShow(
+                      row.original.userId,
+                      row.original.course._id,
+                      row.original.course.title,
+                      row.original.itemType,
+                      row.original.ecosystemDomain,
+                    )
+                  }
+                >
+                  Post Review
+                </Button>
+              </Fragment>
+            );
+          } else if (accessorKey === "action") {
           return (
             <Fragment>
               {row.original.paymentStatus === "paid" ? (
@@ -249,7 +317,7 @@ const JobTable = ({ data, header }) => {
           <Button
             variant="primary"
             disabled={Rloading}
-            // onClick={handleSubmitReview}
+            onClick={handleSubmitReview}
           >
             {Rloading ? "Processing" : "Submit Review"}
           </Button>
