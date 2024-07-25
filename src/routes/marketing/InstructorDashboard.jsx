@@ -31,12 +31,12 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-reviews`,
       icon: "star",
     },
-    {
-      id: 4,
-      title: "Earnings",
-      link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-earning`,
-      icon: "pie-chart",
-    },
+    // {
+    //   id: 4,
+    //   title: "Earnings",
+    //   link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-earning`,
+    //   icon: "pie-chart",
+    // },
     {
       id: 5,
       title: "Orders",

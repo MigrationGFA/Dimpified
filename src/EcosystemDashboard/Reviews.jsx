@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Card, Form, ListGroup, Row, Col, Spinner, Button } from 'react-bootstrap';
 import axios from 'axios';
 import InstructorProfileLayout from './InstructorProfileLayout';
 import InstructorReviewCard from '../Components/marketing/common/cards/InstructorReviewCard';
 import { FormSelect } from '../Components/elements/form-select/FormSelect';
-import { useGlobalContext } from '../context/AuthContext';
+
+
 
 const Reviews = () => {
-  const { userId } = useGlobalContext();
+  let {ecosystemDomain} = useParams();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,18 +18,18 @@ const Reviews = () => {
 
   useEffect(() => {
     fetchUserRating();
-  }, [userId]);
+  }, []);
 
   const fetchUserRating = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://remsana-backend-testing.azurewebsites.net/api/v1/get-instructor-rating/${userId}`);
-      setReviews(response.data.map(review => ({
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/ecosystem-reviews/${ecosystemDomain}`);
+      setReviews(response.data.ecosystemReviews.map(review => ({
         ...review,
         user: {
-          id: review.user.id,
-          username: review.user.username,
-          imageUrl: review.user.imageUrl
+          id: review.id,
+          username: review.EcosystemUser.username,
+          imageUrl: review.EcosystemUser.imageUrl
         }
       })));
     } catch (error) {
