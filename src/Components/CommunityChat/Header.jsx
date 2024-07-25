@@ -1,21 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { FaPen, FaHeart, FaHandsHelping, FaShare } from 'react-icons/fa';
+import { FaPen, FaHeart, FaHandsHelping, FaShare, FaEllipsisV } from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
-import { Card, Row, Col, Form, Button } from 'react-bootstrap';
+import { Card, Row, Col, Form, Button, Dropdown } from 'react-bootstrap';
 import { AiOutlineFileImage } from 'react-icons/ai';
 import "../CommunityChat/Header.css";
-import "../CommunityChat/PostFeed.css";
 import img4 from "../../assets/SocialImages/Img 4.jpeg";
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
 import Box from "../../assets/Comment.jpeg";
 import Like from "../../assets/Like.jpeg"; 
-import CommentSection from "../CommunityChat/Comment";
+// import CommentSection from "../CommunityChat/Comment";
 
 // Initial posts array
 const initialPosts = [
   {
     type: "image",
-    caption: "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
+    caption:
+      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
     images: [img4, img4, img4, img4],
     likeCount: 2292,
     commentCount: 12,
@@ -23,7 +23,8 @@ const initialPosts = [
   },
   {
     type: "image",
-    caption: "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
+    caption:
+      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
     images: [img4, img4, img4, img4],
     likeCount: 2292,
     commentCount: 12,
@@ -31,7 +32,8 @@ const initialPosts = [
   },
   ...Array(3).fill({
     type: "image",
-    caption: "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
+    caption:
+      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
     images: [img4, img4, img4, img4],
     likeCount: 2292,
     commentCount: 12,
@@ -39,7 +41,8 @@ const initialPosts = [
   }),
   ...Array(3).fill({
     type: "image",
-    caption: "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
+    caption:
+      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
     images: [img4, img4, img4, img4],
     likeCount: 2292,
     commentCount: 12,
@@ -47,7 +50,8 @@ const initialPosts = [
   }),
   {
     type: "write-up",
-    caption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    caption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.sit amet, consectetur adipiscing elit.",
     likeCount: 123,
     commentCount: 5,
     comments: [],
@@ -61,9 +65,11 @@ const initialPosts = [
   },
 ];
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, onDelete, onEdit }) => {
   const [comments, setComments] = useState(post.comments || []);
   const [isCommenting, setIsCommenting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCaption, setEditedCaption] = useState(post.caption);
   const commentInputRef = useRef(null);
 
   const handleCommentClick = () => {
@@ -83,12 +89,17 @@ const PostCard = ({ post }) => {
         });
         console.log("Page shared successfully");
       } else {
-        // Show fallback for browsers that don't support Web Share API
         alert("Sharing not supported on this browser.");
       }
     } catch (error) {
       console.error("Error sharing page:", error);
     }
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    onEdit(post, editedCaption);
+    setIsEditing(false);
   };
 
   return (
@@ -105,92 +116,108 @@ const PostCard = ({ post }) => {
             <p className="text-muted mb-0 font-text-bold">2 months ago</p>
           </div>
         </div>
-        {post.type === "write-up" && (
-          <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
-        )}
-        {post.type === "image" && (
+        {isEditing ? (
+          <Form onSubmit={handleEditSubmit}>
+            <Form.Group controlId="editCaption">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={editedCaption}
+                onChange={(e) => setEditedCaption(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="mt-2">Save</Button>
+            <Button variant="secondary" onClick={() => setIsEditing(false)} className="mt-2 ms-2">Cancel</Button>
+          </Form>
+        ) : (
           <>
-            <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
-            <Row className="post-images">
-              {post.images.slice(0, 4).map((image, index) => (
-                <Col key={index} xs={6} md={3}>
-                  <img
-                    src={image}
-                    alt={`Post Image ${index}`}
-                    className="img-fluid post-image"
-                  />
-                </Col>
-              ))}
-              {post.images.length > 4 && (
-                <Col xs={6} md={3} className="d-flex align-items-center justify-content-center post-image-more">
-                  +{post.images.length - 4}
-                </Col>
-              )}
-            </Row>
+            {post.type === "write-up" && (
+              <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
+            )}
+            {post.type === "image" && (
+              <>
+                <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
+                <Row className="post-images">
+                  {post.images.slice(0, 4).map((image, index) => (
+                    <Col key={index} xs={6} md={3}>
+                      <img
+                        src={image}
+                        alt={`Post Image ${index}`}
+                        className="img-fluid post-image"
+                      />
+                    </Col>
+                  ))}
+                  {post.images.length > 4 && (
+                    <Col xs={6} md={3} className="d-flex align-items-center justify-content-center post-image-more">
+                      +{post.images.length - 4}
+                    </Col>
+                  )}
+                </Row>
+              </>
+            )}
+            {post.type === "image-only" && (
+              <Row className="post-images">
+                {post.images.map((image, index) => (
+                  <Col key={index} xs={12}>
+                    <img
+                      src={image}
+                      alt={`Post Image ${index}`}
+                      className="img-fluid post-image"
+                    />
+                  </Col>
+                ))}
+              </Row>
+            )}
+            <div className="post-interactions d-flex justify-content-between align-items-center mt-3">
+              <div className="interaction-icons">
+                <div className="icon-circle like-circle">
+                  <img src={Like} alt="Like Icon" className="icon like-icon2" />
+                </div>
+                <div className="icon-circle love-circle">
+                  <FaHeart className="icon" />
+                </div>
+                <div className="icon-circle applaud-circle">
+                  <FaHandsHelping className="icon" />
+                </div>
+                {post.likeCount.toLocaleString()}
+              </div>
+              <div className="interaction-details">{comments.length} comments</div>
+            </div>
+            <hr />
+            <div className="interaction-buttons d-flex justify-content-between mt-2">
+              <div className="d-flex align-items-center">
+                <img src={Like} alt="Like Icon" className="white-icon like-icon" />
+                <span className="ml-2">Like</span>
+              </div>
+              <div className="d-flex align-items-center" onClick={handleCommentClick}>
+                <img src={Box} alt="Comment Icon" className="white-icon comment-icon" />
+                <span className="ml-2">Comment</span>
+              </div>
+              <div className="d-flex align-items-center" onClick={handleShare}>
+                <FaShare className="fs-5 text-primary" />
+                <span className="ml-2">Share</span>
+              </div>
+            </div>
+            {/* {isCommenting && (
+              <CommentSection
+                comments={comments}
+                setComments={setComments}
+                commentInputRef={commentInputRef}
+              />
+            )} */}
           </>
         )}
-        {post.type === "image-only" && (
-          <Row className="post-images">
-            {post.images.map((image, index) => (
-              <Col key={index} xs={12}>
-                <img
-                  src={image}
-                  alt={`Post Image ${index}`}
-                  className="img-fluid post-image"
-                />
-              </Col>
-            ))}
-          </Row>
-        )}
-        <div className="post-interactions d-flex justify-content-between align-items-center mt-3">
-          <div className="interaction-icons">
-            <div className="icon-circle like-circle">
-              <img src={Like} alt="Like Icon" className="icon like-icon2" />
-            </div>
-            <div className="icon-circle love-circle">
-              <FaHeart className="icon" />
-            </div>
-            <div className="icon-circle applaud-circle">
-              <FaHandsHelping className="icon" />
-            </div>
-            {post.likeCount.toLocaleString()}
-          </div>
-          <div className="interaction-details">{comments.length} comments</div>
-        </div>
-        <hr />
-        <div className="interaction-buttons d-flex justify-content-between mt-2">
-          <div className="d-flex align-items-center">
-            <img src={Like} alt="Like Icon" className="white-icon like-icon" />
-            <span className="ml-2">Like</span>
-          </div>
-          <div className="d-flex align-items-center" onClick={handleCommentClick}>
-            <img src={Box} alt="Comment Icon" className="white-icon comment-icon" />
-            <span className="ml-2">Comment</span>
-          </div>
-          <div className="d-flex align-items-center" onClick={handleShare}>
-            <FaShare className="fs-5 text-primary" />
-            <span className="ml-2">Share</span>
-          </div>
-        </div>
-        {isCommenting && (
-          <CommentSection
-            comments={comments}
-            setComments={setComments}
-            commentInputRef={commentInputRef}
-          />
-        )}
       </Card.Body>
+      <Dropdown className="position-absolute top-0 end-0 m-2">
+        <Dropdown.Toggle variant="none" className="p-0" id="dropdown-basic">
+          <FaEllipsisV />
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => setIsEditing(true)}>Edit</Dropdown.Item>
+          <Dropdown.Item onClick={() => onDelete(post)}>Delete</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </Card>
-  );
-};
-
-const AllPosts = ({ posts }) => {
-  return (
-    <div>
-      {posts.map((post, index) => (
-        <PostCard key={index} post={post} />
-      ))}
-    </div>
   );
 };
 
@@ -242,10 +269,20 @@ const Header = () => {
     setImagePreview(null); 
   };
 
+  const handleEdit = (postToEdit, newCaption) => {
+    setPosts(posts.map(post =>
+      post === postToEdit ? { ...post, caption: newCaption } : post
+    ));
+  };
+
+  const handleDelete = (postToDelete) => {
+    setPosts(posts.filter(post => post !== postToDelete));
+  };
+
   return (
     <div className="container">
-      <div className="two-layered-box">
-        <div className="upper-layer">
+      <div className="two-box">
+        <div className="cover-image-container">
           {imagePreview ? (
             <img src={imagePreview} alt="Selected" className="image-preview" />
           ) : (
@@ -276,6 +313,15 @@ const Header = () => {
               Technology, Information and Internet·
             </p>
           </div>
+          <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search posts..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+      </div>
         </div>
       </div>
       <div className="bg-white p-2 rounded-3 shadow-sm mt-3 border border-black">
@@ -310,16 +356,17 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="search-input"
-        />
-      </div>
-      <AllPosts posts={posts} />
+
+      {posts
+        .filter(post => post.caption && post.caption.toLowerCase().includes(searchQuery.toLowerCase()))
+        .map((post, index) => (
+          <PostCard
+            key={index}
+            post={post}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        ))}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams  } from "react-router-dom";
 import { Col, Row, Nav, Container, Navbar } from "react-bootstrap";
 import NavBar from "../../Pages/Pages/home-academy/navbars/UserNavbar";
 import "./StudentProfileLayout.css";

@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect, Fragment } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Dropdown,
@@ -15,19 +16,40 @@ import Icon from "@mdi/react";
 import { mdiStar } from "@mdi/js";
 import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
 import { numberWithCommas } from "../../helper/utils";
-import { InstructorData } from "./InstructorData";
-import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+import StatRightChart from "../analytics/stats/StatRightChart";
 import avatar from "../../assets/images/avatar/person.png";
 
-const InstructorsListItems = ({ userDetails }) => {
+const UsersListItems = ({ userDetails }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
   const [instructors, setInstructorsList] = useState([]);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    verifiedUsers: 0,
+    usersThisMonth: 0,
+    totalAmountPaid: 0,
+  });
 
-  // useEffect(() => {
-  //     setLoading(false);
-  // }, []);
+  
+  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (creatorId) {
+        try {
+          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+          setStats(data);
+        } catch (error) {
+          console.error("Failed to fetch stats:", error);
+        }
+      }
+    };
+
+    fetchStats();
+  }, [creatorId]);
 
   useEffect(() => {
     if (Array.isArray(userDetails)) {
@@ -95,7 +117,6 @@ const InstructorsListItems = ({ userDetails }) => {
           </div>
         ),
       },
-      // { accessorKey: 'topic', header: 'Topic' },
       {
         accessorKey: "products",
         header: "Products",
@@ -117,49 +138,6 @@ const InstructorsListItems = ({ userDetails }) => {
         header: "Ecosystem",
         cell: ({ getValue, row }) => row.original.ecosystemDomain,
       },
-      // {
-      //     accessorKey: 'rating',
-      //     header: 'Rating',
-      //     cell: ({ getValue }) => (
-      //         <div className="align-middle text-warning border-top-0">
-      //             {getValue()} <Icon path={mdiStar} size={0.6} />
-      //         </div>
-      //     )
-      // },
-      // {
-      //   accessorKey: "message",
-      //   header: "",
-      //   cell: () => (
-      //     <div className="align-middle border-top-0">
-      //       <OverlayTrigger
-      //         key="top"
-      //         placement="top"
-      //         overlay={<Tooltip id={`tooltip-top`}>Message</Tooltip>}
-      //       >
-      //         <Link href="#">
-      //           <Mail size="15px" className="dropdown-item-icon" />
-      //         </Link>
-      //       </OverlayTrigger>
-      //     </div>
-      //   ),
-      // },
-      // {
-      //   accessorKey: "delete",
-      //   header: "",
-      //   cell: () => (
-      //     <div className="align-middle border-top-0">
-      //       <OverlayTrigger
-      //         key="top"
-      //         placement="top"
-      //         overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}
-      //       >
-      //         <Link href="#">
-      //           <Trash size="15px" className="dropdown-item-icon" />
-      //         </Link>
-      //       </OverlayTrigger>
-      //     </div>
-      //   ),
-      // },
       {
         accessorKey: "shortcutmenu",
         header: "",
@@ -170,7 +148,6 @@ const InstructorsListItems = ({ userDetails }) => {
   );
 
   const data = userDetails;
-  // useMemo(() => InstructorData, []);
 
   const ecosystems = [
     "Ecosystem 1",
@@ -218,8 +195,8 @@ const InstructorsListItems = ({ userDetails }) => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total "
-                value="1"
+                title="Total users"
+                value={numberWithCommas(stats.totalUsers)}
                 summary="Number of sales"
                 summaryIcon="up"
                 showSummaryIcon
@@ -229,8 +206,8 @@ const InstructorsListItems = ({ userDetails }) => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Completed "
-                value="1"
+                title="Verified Users"
+                value={numberWithCommas(stats.verifiedUsers)}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -240,8 +217,8 @@ const InstructorsListItems = ({ userDetails }) => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Pending "
-                value="0"
+                title="Users This Month"
+                value={numberWithCommas(stats.usersThisMonth)}
                 summary="Students"
                 summaryIcon="up"
                 showSummaryIcon
@@ -251,8 +228,8 @@ const InstructorsListItems = ({ userDetails }) => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Paid Users"
-                value="0"
+                title="Total Amount Paid"
+                value={`${numberWithCommas(stats.totalAmountPaid)}`}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon
@@ -296,16 +273,11 @@ const InstructorsListItems = ({ userDetails }) => {
               />
             </Form.Group>
           </div>
+          <TanstackTable columns={columns} data={instructors} />
         </div>
       )}
-      <TanstackTable
-        data={data}
-        columns={columns}
-        filter={false}
-        pagination={true}
-      />
     </Fragment>
   );
 };
 
-export default InstructorsListItems;
+export default UsersListItems;

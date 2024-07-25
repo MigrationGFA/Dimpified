@@ -1,5 +1,5 @@
 /* Styles for the two-layered box */
-.two-layered-box {
+.two-box {
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
@@ -8,8 +8,7 @@
   position: relative;
 }
 
-/* Styles for the upper layer */
-.upper-layer {
+.cover-image-container {
   height: 200px;
   background-color: #f0f0f0;
   display: flex;
@@ -17,14 +16,12 @@
   align-items: center;
 }
 
-/* Styles for the image preview */
 .image-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Styles for the edit icon */
 .edit-icon {
   position: absolute;
   top: 10px;

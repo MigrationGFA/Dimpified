@@ -1,21 +1,19 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import GDGHeader from '../CommunityChat/Header';
-// import GDGNavTabs from '../CommunityChat/Nav';
+import Header from '../CommunityChat/Header';
 import EventsFeed from '../CommunityChat/EventsFeed';
-import '../CommunityChat/Page.css'
+// import '../CommunityChat/Page.css'
 import StudentProfileLayout from '../../UserDashboard/student/StudentProfileLayout';
 
-const CommunityChat = () => {
+const Community = () => {
   return (
     <StudentProfileLayout>
-      <Container fluid className="community-chat-container">
+      <Container fluid className="community-container">
         <Row className="justify-content-center">
-          <Col xs={12} lg={9} className="community-chat-content">
-            <GDGHeader />
-            {/* <GDGNavTabs /> */}
+          <Col xs={12} lg={9} className="community-content">
+            <Header />
           </Col>
-          <Col xs={12} lg={3} className="community-chat-right">
+          <Col xs={12} lg={3} className="community-right">
             <EventsFeed />
           </Col>
         </Row>
@@ -24,4 +22,4 @@ const CommunityChat = () => {
   );
 };
 
-export default CommunityChat;
+export default Community;

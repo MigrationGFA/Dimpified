@@ -1,4 +1,4 @@
-.gdg-rightside {
+.user-rightside {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,13 +8,13 @@
   margin: 0 auto; 
 }
 
-.gdg-rightside-heading {
+.user-rightside-heading {
   color: #1a1a1a; 
   margin-bottom: 1rem;
   font-weight: bold;
 }
 
-.gdg-event-card {
+.user-card {
   background-color: #ffffff;
   margin-bottom: 1rem;
   border: none;
@@ -23,7 +23,7 @@
   max-width: 1300px;
 }
 
-.gdg-card-body {
+.user-card-body {
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -31,39 +31,32 @@
   width: 100%;
 }
 
-.gdg-event-image {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  margin-right: 1px;
-}
-
-.gdg-event-image {
+.user-image {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.gdg-event-info {
+.user-info {
   display: flex;
   align-items: center;
   flex-grow: 1;
 }
 
-.gdg-event-details {
+.user-details {
   flex-grow: 1;
 }
 
-.gdg-event-title {
+.user-title {
   margin-bottom: 0.25rem;
 }
 
-.gdg-event-date {
+.user-date {
   font-size: 0.875rem; 
 }
 
-.gdg-view-details-btn {
+.user-view-details-btn {
   background-color: #007bff;
   border: none;
   border-radius: 20px;
@@ -72,6 +65,6 @@
   margin-left: 3px;
 }
 
-.gdg-view-details-btn:hover {
+.user-view-details-btn:hover {
   background-color: #0056b3;
 }
