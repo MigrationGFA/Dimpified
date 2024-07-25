@@ -123,6 +123,7 @@ import ApiLicense from "../developer-program/pages/ApiLicense";
 import Grow from "../developer-program/pages/Grow";
 import EventPage from "../developer-program/pages/EventsPage";
 import LoyaltyProgram from "../developer-program/pages/LoyaltyProgram";
+import DeveloperProgramSupport from "../developer-program/pages/Support";
 
 const AllRoutes = () => {
   return (
@@ -361,7 +362,7 @@ const AllRoutes = () => {
       <Route path="/dimp/developer-program/grow" element={<Grow />} />
       <Route path="/dimp/developer-program/events" element={<EventPage />} />
       <Route path="/dimp/developer-program/loyalty-program" element={<LoyaltyProgram />} />
-
+      <Route path="/dimp/developer-program/support" element={<DeveloperProgramSupport />} />
     </Routes>
   );
 };

@@ -69,7 +69,7 @@ const NavbarComponent = () => {
             {/* <NavDropdown.Item href="#">Awards</NavDropdown.Item> */}
           </NavDropdown>
           {/* <Nav.Link href="#updates">Updates</Nav.Link> */}
-          <Nav.Link href="#support" className="display-4">
+          <Nav.Link href="/dimp/developer-program/support" className="display-4">
             Support
           </Nav.Link>
           {/* <Nav.Link></Nav.Link> */}

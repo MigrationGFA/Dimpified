@@ -212,7 +212,7 @@ const ServicesSingle = () => {
             `}</style>
             <div>
               <div className="mb-3 mb-md-2 d-flex justify-content-center">
-                {userDetails && (
+                {serviceDetails && (
                   <Image
                     src={updatedImgUrl}
                     alt={`${serviceDetails && serviceDetails.ecosystemDomain} `}
@@ -529,6 +529,7 @@ const ServicesSingle = () => {
                               header={pkg.header}
                               shortDescription={pkg.shortDescription}
                               price={pkg.price}
+                              incentives={pkg.incentives}
                               // additionalRevision={pkg.additionalRevision.price}
                             />
                           </Modal.Body>

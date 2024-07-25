@@ -107,3 +107,47 @@ export const solutionProviderPages = [
   "Italy",
   "France",
 ];
+
+export const faqs = [
+  {
+    question: "Help with User Tokens",
+    answer: "Dummy text for Help with User Tokens.",
+  },
+  {
+    question: "My OAuth token expired",
+    answer: "Dummy text for My OAuth token expired.",
+  },
+  {
+    question: "My Auth 'n' Auth token expired",
+    answer: "Dummy text for My Auth 'n' Auth token expired.",
+  },
+  {
+    question: "I need to change my application or company name",
+    answer: "Dummy text for I need to change my application or company name.",
+  },
+  {
+    question: "Help with Specific eBay APIs or SDKs",
+    answer: "Dummy text for Help with Specific eBay APIs or SDKs.",
+  },
+  {
+    question: "An error says I violated an eBay policy",
+    answer: "Dummy text for An error says I violated an eBay policy.",
+  },
+  {
+    question: "Help with Other eBay Topics",
+    answer: "Dummy text for Help with Other eBay Topics.",
+  },
+  {
+    question: "I have a cool idea for eBay’s Business",
+    answer: "Dummy text for I have a cool idea for eBay’s Business.",
+  },
+  {
+    question: "I found an issue while using eBay Mobile",
+    answer: "Dummy text for I found an issue while using eBay Mobile.",
+  },
+  {
+    question: "I have an intellectual property or security question",
+    answer:
+      "Dummy text for I have an intellectual property or security question.",
+  },
+];

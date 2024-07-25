@@ -1,6 +1,6 @@
 
 import { Container, Row, Col, Table } from "react-bootstrap";
-import { tiers, benefits, solutionProviderPages } from "../utils/contact";
+import { tiers, benefits, solutionProviderPages } from "../utils/constant";
 import NavbarComponent from "../components/Navbar";
 import Footer from "../components/Footer";
 

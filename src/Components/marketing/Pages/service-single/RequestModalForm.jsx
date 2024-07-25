@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 
 const RequestModalForm = ({
   header,
@@ -7,10 +9,13 @@ const RequestModalForm = ({
   service,
   price,
   name,
+  incentives,
   additionalRevision,
 }) => {
   const [gigQuantity, setGigQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     setTotalPrice(price * gigQuantity);
@@ -26,7 +31,20 @@ const RequestModalForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
+    const dataToPass = {
+      header,
+      shortDescription,
+      service,
+      totalPrice,
+      incentives,
+      additionalRevision,
+      gigQuantity,
+    };
+
+    console.log("Navigating with data:", dataToPass);
+
+    // Navigate to the ServiceBilling component and pass the data
+    navigate("/service/billing", { state: { dataToPass } });
   };
 
   return (

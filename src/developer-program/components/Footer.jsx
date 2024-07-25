@@ -1,25 +1,19 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container, Image } from "react-bootstrap";
+import { footerDefaultLink } from "../utils/footerDefaultRoutes";
 
 // Import media files
 import FooterLogo from "../../assets/DIMP logo colored.png";
 
 // Define footer links (replace this with your actual footerDefaultLink array)
-const footerDefaultLink = [
-  { id: 1, link: "/faq", linkName: "FAQs" },
-  { id: 2, link: "/community", linkName: "Developer Community Forum" },
-  { id: 3, link: "/support", linkName: "Developer Technical Support" },
-  { id: 4, link: "/apis", linkName: "APIs" },
-  { id: 5, link: "/license", linkName: "API License Agreement" },
-];
 
 // const currentYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
     <Fragment>
-      <footer className="pt-lg-10 pt-5 footer bg-light">
+      <footer className="pt-lg-10 pt-5 footer bg-light text-black">
         <Container>
           <Row>
             <Col lg={4} md={6} sm={12} className="text-md-left mb-4">
@@ -92,16 +86,16 @@ const Footer = () => {
               className="d-md-flex justify-content-center justify-content-md-end"
             >
               <nav className="nav nav-footer">
-                <Link className="nav-link ps-0" to="#">
+                <Link className="nav-link ps-0 text-black" to="#">
                   Privacy Policy
                 </Link>
-                <Link className="nav-link px-2 px-md-3" to="#">
+                <Link className="nav-link px-2 px-md-3 text-black" to="#">
                   Cookie Notice
                 </Link>
-                <Link className="nav-link d-none d-lg-block" to="#">
+                <Link className="nav-link d-none d-lg-block text-black" to="#">
                   Do Not Sell My Personal Information
                 </Link>
-                <Link className="nav-link" to="#">
+                <Link className="nav-link text-black" to="#">
                   Terms of Use
                 </Link>
               </nav>
