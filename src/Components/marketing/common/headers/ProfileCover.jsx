@@ -76,14 +76,14 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               >
                 {ServiceButton.linkname}
               </Link>
-              {/* <Link
+              <Link
                 to={ProductButton.link}
                 className={`btn btn${
                   ProductButton.outlinebutton ? "-outline" : ""
                 }-primary btn-sm d-none d-md-block`}
               >
                 {ProductButton.linkname}
-              </Link> */}
+              </Link>
             </div>
           </div>
         </Card>

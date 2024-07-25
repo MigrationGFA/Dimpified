@@ -1,9 +1,9 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal, Form, Row, Col, Image } from "react-bootstrap";
-import DotBadge from "../Components/elements/bootstrap/DotBadge";
-import TanstackTable from "../Components/elements/advance-table/TanstackTable";
-import { showToast } from "../Components/Showtoast";
+// import DotBadge from "../Components/elements/bootstrap/DotBadge";
+import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
+import { showToast } from "../../Components/Showtoast";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -13,9 +13,12 @@ const JobTable = ({ data, header }) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState(null);
-  const [selectedJobSeekerId, setSelectedJobSeekerId] = useState(null);
-  const [selectedJobTitle, setSelectedJobTitle] = useState(null);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedCourseTitle, setSelectedCourseTitle] = useState(null);
+  const [selectedItemType, setSelectedItemType] = useState(null);
+  const [selectedEcosystemDomain, setSelectedEcosystemDomain] = useState(null);
+
   const [Rloading, setRLoading] = useState(false);
 
   function truncateDescription(description, maxLength = 40) {
@@ -44,6 +47,52 @@ const JobTable = ({ data, header }) => {
     }
   };
 
+   // Function to handle star rating click
+   const handleStarClick = (value) => {
+    setRating(value);
+  };
+
+  const handleSubmitReview = async () => {
+    setRLoading(true);
+    if (!selectedItemId) {
+      setRLoading(false);
+      showToast("Item ID not provided");
+      return;
+    }
+    const reviewData = {
+      reviewedItemType: selectedItemType,
+      userId: selectedUserId,
+      reviewedItemId: selectedItemId,
+      rating: rating,
+      title: selectedCourseTitle,
+      review: reviewText,
+      ecosystemDomain: selectedEcosystemDomain,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-reviews`,
+        reviewData
+      );
+      setRLoading(false);
+      showToast(response.data.message);
+      setShowReviewModal(false);
+    } catch (error) {
+      setRLoading(false);
+      showToast("Error submitting review");
+    }
+  };
+
+  const handleShow = (userId, itemId, title, itemType, ecosystemDomain) => {
+    setSelectedItemId(itemId);
+    setSelectedUserId(userId);
+    setSelectedCourseTitle(title);
+    setSelectedItemType(itemType);
+    setSelectedEcosystemDomain(ecosystemDomain);
+    setShowReviewModal(true);
+   
+  };
+
   const columns = useMemo(() => {
     return header.map(({ accessorKey, header }) => ({
       header: header,
@@ -60,21 +109,21 @@ const JobTable = ({ data, header }) => {
               <h4 className="mb-1 text-primary-hover">{row.original.header}</h4>
               <h4 className="mb-1 text-primary-hover">{row.original.productName}</h4>
               <span className="text-inherit" style={{ width: "30px" }}>
-                {truncateDescription(row.original.description)}
+                {truncateDescription(row.original.course.description)}
               </span>
             </Link>
           );
         }  else if (accessorKey === "category") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.category} </p>
+              <p className="mb-1 text-primary-hover">{row.original.course.category} </p>
             </Fragment>
           );
         }  else if (accessorKey === "image") {
           return (
             <div>
               <Image
-                src={row.original.image || (row.original.backgroundCover && row.original.backgroundCover[0])}
+                src={row.original.course.image || row.original.backgroundCover[0]}
                 alt=""
                 className="rounded-circle img-fluid" 
                 style={{ 
@@ -90,7 +139,13 @@ const JobTable = ({ data, header }) => {
               <p className="mb-1 text-primary-hover">{row.original.format}</p>
             </Fragment>
           );
-        } else if (accessorKey === "deliveryDate") {
+        } else if (accessorKey === "totalNumberOfEnrolledStudent") {
+            return (
+              <Fragment>
+                <p className="mb-1 text-primary-hover">{row.original.course.totalNumberOfEnrolledStudent}</p>
+              </Fragment>
+            );
+          } else if (accessorKey === "deliveryDate") {
           const updatedAt = new Date(row.original.updatedAt);
           const formattedDate = updatedAt.toLocaleDateString("en-GB", {
             day: "numeric",
@@ -123,7 +178,26 @@ const JobTable = ({ data, header }) => {
               )}
             </Fragment>
           );
-        } else if (accessorKey === "action") {
+        }  else if (accessorKey === "review") {
+            return (
+              <Fragment>
+                <Button
+                  variant="primary"
+                  onClick={() =>
+                    handleShow(
+                      row.original.userId,
+                      row.original.course._id,
+                      row.original.course.title,
+                      row.original.itemType,
+                      row.original.ecosystemDomain,
+                    )
+                  }
+                >
+                  Post Review
+                </Button>
+              </Fragment>
+            );
+          } else if (accessorKey === "action") {
           return (
             <Fragment>
               {row.original.paymentStatus === "paid" ? (
@@ -153,7 +227,7 @@ const JobTable = ({ data, header }) => {
         } else if (accessorKey === "price") {
           return (
             <span>
-              {formatPrice(row.original.currency, row.original.price || row.original.service.price)}
+              {formatPrice(row.original.currency, row.original.course.price || row.original.service.price)}
             </span>
           );
         } else {
@@ -169,7 +243,7 @@ const JobTable = ({ data, header }) => {
         data={data}
         columns={columns}
         filter={true}
-        filterPlaceholder="Search Jobs"
+        filterPlaceholder="Search My Products"
         pagination={true}
       />
       {/* Modal component for submitting review */}
@@ -243,7 +317,7 @@ const JobTable = ({ data, header }) => {
           <Button
             variant="primary"
             disabled={Rloading}
-            // onClick={handleSubmitReview}
+            onClick={handleSubmitReview}
           >
             {Rloading ? "Processing" : "Submit Review"}
           </Button>

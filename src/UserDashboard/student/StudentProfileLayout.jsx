@@ -28,9 +28,11 @@ const StudentProfileLayout = (props) => {
   };
   const ServiceButton = {
     linkname: "Browse Services",
+    link: `/${ecosystemDomain}/User/browse-service`,
   };
   const ProductButton = {
     linkname: "Browse Product",
+    // link: "/${ecosystemDomain}/User/browse-product",
   };
 
   return (

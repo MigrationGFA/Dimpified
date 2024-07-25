@@ -22,6 +22,7 @@ import EcoHeader from "./ecoHeader";
 import EcoForm from "../../../EditTemplate/EcoForm";
 import EcoFormPreview from "../../../EditTemplate/EcoFormPreview";
 import PreviewPageSize from "./PreviewPageSize";
+import PreviewForm1 from "../Preview/Form/Form1";
 
 const templates = [
   {
@@ -39,7 +40,7 @@ const templateSections = [
   { id: 5, name: "Professional Services" },
   { id: 6, name: "Creative Services" },
   { id: 7, name: "Trade Services" },
-{ id: 8, name: "Personal Care Services" },
+  { id: 8, name: "Personal Care Services" },
   { id: 9, name: "Educational Services" },
   { id: 10, name: "Event Services" },
   { id: 11, name: "Technology Services" },
@@ -324,7 +325,7 @@ const CreateForm = () => {
           <Modal.Title>Preview Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EcoForm />
+          <PreviewForm1 />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

@@ -22,42 +22,38 @@ const HelpCenter = () => {
   });
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      console.log("Fetching data for creatorId:", creatorId);
-      const [helpDataResponse, helpcenterDataResponse] = await Promise.all([
-        axios.get(
-          `${import.meta.env.VITE_API_URL}/get-creator-help-request/${creatorId}`
-        ),
-        axios.get(
-          `${import.meta.env.VITE_API_URL}/creator/my-help-request/${creatorId}`
-        ),
-      ]);
+    const fetchData = async () => {
+      try {
+        const [helpDataResponse, helpcenterDataResponse] = await Promise.all([
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/get-creator-help-request/${creatorId}`
+          ),
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/creator/my-help-request/${creatorId}`
+          ),
+        ]);
 
-      console.log("helpDataResponse:", helpDataResponse.data);
-      console.log("helpcenterDataResponse:", helpcenterDataResponse.data);
+        // Combine the data
+        const helpData = helpDataResponse.data;
+        const helpcenterData = helpcenterDataResponse.data;
 
-      const helpData = helpDataResponse.data;
-      const helpcenterData = helpcenterDataResponse.data;
+        setStats({
+          totalHelpRequests: helpcenterData.totalHelpRequests || helpData.totalHelpRequests || 0,
+          totalCompletedHelpRequest: helpcenterData.totalCompletedHelpRequest || helpData.totalCompletedHelpRequest || 0,
+          totalPendingHelpRequest: helpcenterData.totalPendingHelpRequest || helpData.totalPendingHelpRequest || 0,
+        });
 
-      setStats({
-        totalHelpRequests: helpcenterData.totalHelpRequests || helpData.totalHelpRequests || 0,
-        totalCompletedHelpRequest: helpcenterData.totalCompletedHelpRequest || helpData.totalCompletedHelpRequest || 0,
-        totalPendingHelpRequest: helpcenterData.totalPendingHelpRequest || helpData.totalPendingHelpRequest || 0,
-      });
+        setData(helpData.creatorHelpRequest || []); 
+        setLoading(false);
 
-      setData(helpData.creatorHelpRequest || []); 
-      setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
 
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    }
-  };
-
-  fetchData();
-}, [creatorId]);
-
+    fetchData();
+  }, [creatorId]);
 
   const handleReply = (id, message) => {
     setSelectedSupportID(id);

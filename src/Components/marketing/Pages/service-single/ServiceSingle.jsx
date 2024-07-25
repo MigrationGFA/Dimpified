@@ -175,25 +175,25 @@ const ServicesSingle = () => {
     switch (currencyName) {
       case "naira":
       case "NGN":
-        return `From ₦${priceValue}`;
+        return ` ₦${priceValue}`;
       case "dollars":
       case "USD":
-        return `From $${priceValue}`;
+        return `$${priceValue}`;
       case "euros":
       case "EUR":
-        return `From €${priceValue}`;
+        return `€${priceValue}`;
       case "pounds":
       case "GBP":
-        return `From £${priceValue}`;
+        return `£${priceValue}`;
       default:
-        return `From ₦${priceValue}`;
+        return `₦${priceValue}`;
     }
   };
 
   return (
     <Fragment>
       <NavbarDefault />
-      <section className="py-10 px-5 bg-white overflow-hidden">
+      <section className="py-10 px-8 bg-white overflow-hidden">
         {/* <Container className="px-2"> */}
         <Row className="g-6">
           <Col xl={7} md={12} style={{ span: 8, offset: 2 }}>
@@ -210,7 +210,7 @@ const ServicesSingle = () => {
             `}</style>
             <div>
               <div className="mb-3 mb-md-2 d-flex justify-content-center">
-                {userDetails && (
+                {serviceDetails && (
                   <Image
                     src={
                       serviceDetails && serviceDetails.backgroundCover == null
@@ -218,10 +218,10 @@ const ServicesSingle = () => {
                         : serviceDetails.backgroundCover[0]
                     }
                     alt={`${userDetails && userDetails.firstName} ${
-                      userDetails.ecosystemDomain
+                      ecosystemDomain
                     }`}
                     className="img-fluid border zoom-image"
-                    style={{ height: "300px", width: "800px" }}
+                    style={{ height: "400px", width: "100%" }}
                   />
                 )}
               </div>
@@ -350,9 +350,9 @@ const ServicesSingle = () => {
                         {" "}
                         <i className="fe fe-briefcase text-muted"></i>
                         <span className="ms-1 ">
-                          {serviceDetails && serviceDetails.department && (
+                          {serviceDetails && serviceDetails.category && (
                             <span>
-                              Department: {serviceDetails.department}{" "}
+                              Department: {serviceDetails.category}
                             </span>
                           )}
                         </span>
@@ -377,14 +377,14 @@ const ServicesSingle = () => {
                       <span className="me-4">
                         <i className="fe fe-clock text-muted"></i>
                         <span className="ms-1 ">
-                          {serviceDetails.format} Payment
+                          {serviceDetails.format} 
                         </span>
                       </span>
                       {/* location */}
-                      {/* <span className="me-2">
+                      <span className="me-2">
                       <i className="fe fe-map-pin text-muted"></i>
-                      <span className="ms-1 ">{serviceDetails.format}</span>
-                    </span> */}
+                      <span className="ms-1 ">{serviceDetails.services && serviceDetails.services[0].priceFormat}</span>
+                    </span>
                     </div>
                     <div>
                       {/* time */}
@@ -413,7 +413,7 @@ const ServicesSingle = () => {
                 <span>
                   Total Job Done:{" "}
                   <span className="text-dark">
-                    {serviceDetails.totalJobDone}
+                    {serviceDetails.totalJobDone || 0}
                   </span>
                 </span>
               </p>
@@ -488,7 +488,7 @@ const ServicesSingle = () => {
                         className="d-flex justify-content-between"
                       >
                         <h3>{pkg.name}</h3>
-                        <h3>${pkg.price}</h3>
+                        <h3>{formatPrice(currencyName, pkg.price)}</h3>
                       </div>
 
                       <div className="mt-2">
@@ -557,7 +557,7 @@ const ServicesSingle = () => {
                               name={pkg.name}
                               header={pkg.header}
                               shortDescription={pkg.shortDescription}
-                              price={pkg.price}
+                              price={formatPrice(currencyName, pkg.price)}
                               // additionalRevision={pkg.additionalRevision.price}
                             />
                           </Modal.Body>
@@ -606,7 +606,7 @@ const ServicesSingle = () => {
                 })}
               </div>
             </Col> */}
-          <Col xl={{ span: 8, offset: 2 }} md={12} className="mt-8">
+          {/* <Col xl={{ span: 8, offset: 2 }} md={12} className="mt-8">
             <div className="d-xl-flex border p-4 rounded">
               <div className="mb-3 mb-md-0">
                 {userDetails && (
@@ -619,14 +619,13 @@ const ServicesSingle = () => {
                 )}
               </div>
 
-              {/* text */}
+              
               <div id="contact-section" className="ms-xl-3 w-100 mt-3 mt-xl-0">
                 <div className="d-flex justify-content-between mb-5">
                   <div>
-                    {/* <h1 className="mb-1 h2">{`${userDetails.firstName} ${userDetails.lastName}`}</h1> */}
-                    {userDetails && userDetails.phoneNumber && (
+                   
                       <h5>Contact: {userDetails.phoneNumber} </h5>
-                    )}
+                  
                     {userDetails && userDetails.emailAddress && (
                       <h5>Email: {userDetails.emailAddress} </h5>
                     )}
@@ -641,7 +640,7 @@ const ServicesSingle = () => {
                 </div>
               </div>
             </div>
-          </Col>
+          </Col> */}
         </Row>
         {showFallback && (
           <Modal show={showFallback} onHide={() => setShowFallback(false)}>
