@@ -9,6 +9,8 @@ import LevelIconWithTooltip from "../../../../Components/elements/miscellaneous/
 import CheckedMark from "../../../../assets/images/svg/checked-mark.svg";
 import ProfileBackground from "../../../../assets/images/background/profile-bg.jpg";
 
+const ecoLogo = sessionStorage.getItem("ecoLogo")
+const ecosystemDomain = sessionStorage.getItem("ecosystemDomain")
 const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
   return (
     <Row className="align-items-center">
@@ -28,7 +30,7 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
             <div className="d-flex align-items-center">
               <div className="me-2 position-relative d-flex justify-content-end align-items-end mt-n5">
                 <Image
-                  src={dashboardData.avatar}
+                  src={ecoLogo}
                   className="avatar-xl rounded-circle border border-4 border-white position-relative"
                   alt=""
                 />
@@ -49,10 +51,10 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               </div>
               <div className="lh-1">
                 <h2 className="mb-0">
-                  {dashboardData.name}{" "}
+                 This is {ecosystemDomain} ecosystem dashboard
                   <LevelIconWithTooltip level={dashboardData.level} />{" "}
                 </h2>
-                <p className="mb-0 d-block">{dashboardData.username}</p>
+                <p className="mb-0 d-block">{ecosystemDomain}</p>
               </div>
             </div>
             <div className="d-flex gap-2">

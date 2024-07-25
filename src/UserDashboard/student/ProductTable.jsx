@@ -1,9 +1,9 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal, Form, Row, Col, Image } from "react-bootstrap";
-import DotBadge from "../Components/elements/bootstrap/DotBadge";
-import TanstackTable from "../Components/elements/advance-table/TanstackTable";
-import { showToast } from "../Components/Showtoast";
+// import DotBadge from "../Components/elements/bootstrap/DotBadge";
+import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
+import { showToast } from "../../Components/Showtoast";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -60,21 +60,21 @@ const JobTable = ({ data, header }) => {
               <h4 className="mb-1 text-primary-hover">{row.original.header}</h4>
               <h4 className="mb-1 text-primary-hover">{row.original.productName}</h4>
               <span className="text-inherit" style={{ width: "30px" }}>
-                {truncateDescription(row.original.description)}
+                {truncateDescription(row.original.course.description)}
               </span>
             </Link>
           );
         }  else if (accessorKey === "category") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.category} </p>
+              <p className="mb-1 text-primary-hover">{row.original.course.category} </p>
             </Fragment>
           );
         }  else if (accessorKey === "image") {
           return (
             <div>
               <Image
-                src={row.original.image || row.original.backgroundCover[0]}
+                src={row.original.course.image || row.original.backgroundCover[0]}
                 alt=""
                 className="rounded-circle img-fluid" 
                 style={{ 
@@ -90,7 +90,13 @@ const JobTable = ({ data, header }) => {
               <p className="mb-1 text-primary-hover">{row.original.format}</p>
             </Fragment>
           );
-        } else if (accessorKey === "deliveryDate") {
+        } else if (accessorKey === "totalNumberOfEnrolledStudent") {
+            return (
+              <Fragment>
+                <p className="mb-1 text-primary-hover">{row.original.course.totalNumberOfEnrolledStudent}</p>
+              </Fragment>
+            );
+          } else if (accessorKey === "deliveryDate") {
           const updatedAt = new Date(row.original.updatedAt);
           const formattedDate = updatedAt.toLocaleDateString("en-GB", {
             day: "numeric",
@@ -153,7 +159,7 @@ const JobTable = ({ data, header }) => {
         } else if (accessorKey === "price") {
           return (
             <span>
-              {formatPrice(row.original.currency, row.original.price || row.original.service.price)}
+              {formatPrice(row.original.currency, row.original.course.price || row.original.service.price)}
             </span>
           );
         } else {
@@ -169,7 +175,7 @@ const JobTable = ({ data, header }) => {
         data={data}
         columns={columns}
         filter={true}
-        filterPlaceholder="Search Jobs"
+        filterPlaceholder="Search My Products"
         pagination={true}
       />
       {/* Modal component for submitting review */}

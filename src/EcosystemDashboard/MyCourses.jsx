@@ -28,7 +28,7 @@ import { numberWithCommas } from "../helper/utils";
 
 
 
-const MyJob = () => {
+const MyProduct = () => {
   let {ecosystemDomain} = useParams();
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
@@ -38,6 +38,7 @@ const MyJob = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const serviceHeader = [
+    { accessorKey: "image", header: "Service Image" },
     { accessorKey: "title", header: "Service Header" },
     { accessorKey: "category", header: "Category" },
     { accessorKey: "format", header: "Service Format" },
@@ -47,6 +48,7 @@ const MyJob = () => {
   ];
 
   const productHeader = [
+    { accessorKey: "image", header: "Product Image" },
     { accessorKey: "title", header: "Product Name" },
     { accessorKey: "category", header: "Category" },
     { accessorKey: "productType", header: "Product Type" },
@@ -77,6 +79,7 @@ const MyJob = () => {
   }, []);
 
   const courseHeader = [
+    { accessorKey: "image", header: "Course Image" },
     { accessorKey: "title", header: "Course Name" },
     { accessorKey: "category", header: "Category" },
     { accessorKey: "totalNumberOfEnrolledStudent", header: "No of Students" },
@@ -169,4 +172,4 @@ const MyJob = () => {
   );
 };
 
-export default MyJob;
+export default MyProduct;

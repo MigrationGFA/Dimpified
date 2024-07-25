@@ -12,6 +12,7 @@ import ProfileCover from "../../Components/marketing/common/headers/ProfileCover
 
 const StudentProfileLayout = (props) => {
   const location = useLocation();
+  let { ecosystemDomain } = useParams();
 
   const user = sessionStorage.getItem("username");
   const image = sessionStorage.getItem("image");
@@ -21,18 +22,18 @@ const StudentProfileLayout = (props) => {
     name: user !== null ? user : "John Doe",
     // username: `@${user}` ,
     linkname: "Browse Course",
-    link: "/:ecosystemDomain/User/browse-course",
+    link: `/${ecosystemDomain}/User/browse-course`,
     verified: true,
     outlinebutton: false,
     level: "Beginner",
   };
   const ServiceButton = {
     linkname: "Browse Services",
-    // link: "/creator/dashboard/Add-New-Service",
+    link: `/${ecosystemDomain}/User/browse-service`,
   };
   const ProductButton = {
     linkname: "Browse Product",
-    // link: "/creator/dashboard/Add-New-Product",
+    // link: "/${ecosystemDomain}/User/browse-product",
   };
   return (
     <Fragment>

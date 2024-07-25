@@ -4,8 +4,10 @@ import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import CourseCard from "../FilterCourseCard";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const CourseGridView = ({ filterOptions, setTotalFilteredCourses }) => {
+  let {ecosystemDomain} = useParams();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -44,10 +46,10 @@ const CourseGridView = ({ filterOptions, setTotalFilteredCourses }) => {
         } else {
           // Fetch all courses if no filters applied
           const response = await axios.get(
-            "https://remsana-backend-testing.azurewebsites.net/api/v1/get-all-courses"
+            `${import.meta.env.VITE_API_URL}/ecosystem-courses/${ecosystemDomain}`
           );
-          if (response.data && Array.isArray(response.data.allCourses)) {
-            filteredCourses = response.data.allCourses;
+          if (response.data && Array.isArray(response.data.courses)) {
+            filteredCourses = response.data.courses;
             // Update total filtered courses count using setTotalFilteredCourses
             setTotalFilteredCourses(filteredCourses.length);
           }
@@ -71,7 +73,7 @@ const CourseGridView = ({ filterOptions, setTotalFilteredCourses }) => {
       ? courses
           .slice(pagesVisited, pagesVisited + recordsPerPage)
           .map((item, index) => (
-            <Col lg={4} md={6} sm={12} key={item.id || item._id} className="mb-5">
+            <Col lg={3} md={6} sm={12} key={item.id || item._id} className="mb-5">
             <CourseCard
               key={index}
               item={item}
@@ -79,7 +81,7 @@ const CourseGridView = ({ filterOptions, setTotalFilteredCourses }) => {
               viewby="grid"
               showprogressbar={false}
               extraclass="mx-2"
-              link={`/student/single-course?id=${item.id || item._id}`} // Adjust the link to match your routing
+              link={`/${ecosystemDomain}/${item._id}`} // Adjust the link to match your routing
             />
           </Col>
           ))

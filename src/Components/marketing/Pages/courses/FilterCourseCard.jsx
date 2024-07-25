@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Image, Card, Row, Col, ListGroup, Badge } from "react-bootstrap";
 import axios from "axios"; // Import axios library
-import { useGlobalContext } from "../../../../context/AuthContext"; // Import useGlobalContext hook
 import Ratings from "../../common/ratings/Ratings";
 import LevelIcon from "../../common/miscellaneous/LevelIcon";
 import GKTippy from "../../../../Components/elements/tooltips/GKTippy";
@@ -12,26 +11,27 @@ import { showToast } from "../../../../Components/Showtoast";
 import "./CourseCard.css";
 
 const CourseCard = ({ item, viewby, extraclass, link }) => {
-  const { userId } = useGlobalContext(); // Get userId from global context
+  let {ecosystemDomain} = useParams();
 
-  const handleBookmarkClick = async () => {
-    try {
-      // Send POST request to bookmark endpoint
-      const response = await axios.post(
-        "https://remsana-backend-testing.azurewebsites.net/api/v1/bookmark",
-        {
-          courseId: item._id, // Use courseId from item object
-          userId: userId, // Use userId from global context
-        }
-      );
-      showToast(response.data.msg);
-      // You can add any further handling here, like showing a success message
-    } catch (error) {
-      console.error("Error adding bookmark:", error);
-      // Handle error here, like showing an error message
-    }
-  };
+  // const handleBookmarkClick = async () => {
+  //   try {
+  //     // Send POST request to bookmark endpoint
+  //     const response = await axios.post(
+  //       "https://remsana-backend-testing.azurewebsites.net/api/v1/bookmark",
+  //       {
+  //         courseId: item._id, // Use courseId from item object
+  //         userId: userId, // Use userId from global context
+  //       }
+  //     );
+  //     showToast(response.data.msg);
+  //     // You can add any further handling here, like showing a success message
+  //   } catch (error) {
+  //     console.error("Error adding bookmark:", error);
+  //     // Handle error here, like showing an error message
+  //   }
+  // };
 
+  const ecoLogo = sessionStorage.getItem("ecoLogo")
   const GridView = () => (
     <Card
       className={`mb-4 card-hover ${extraclass} h-100 overflow-auto course-card`}
@@ -92,11 +92,7 @@ const CourseCard = ({ item, viewby, extraclass, link }) => {
           <Col xs="auto">
             <Image
               src={
-                item.instructorId
-                  ? item.instructorId.InstructorImage
-                  : item.Agent
-                  ? item.Agent.InstructorImage
-                  : "Unknown"
+                ecoLogo
               }
               className="rounded-circle avatar-xs"
               alt=""
@@ -104,16 +100,14 @@ const CourseCard = ({ item, viewby, extraclass, link }) => {
           </Col>
           <Col className="col ms-2">
             <span>
-              {item.instructorId
-                ? item.instructorId.username
-                : item.Agent
-                ? item.Agent.username
-                : "Unknown"}
+              {ecosystemDomain}
             </span>
           </Col>
           <Col xs="auto">
             <GKTippy content="Add to Bookmarks">
-              <Link to="#" onClick={handleBookmarkClick}>
+              <Link to="#"
+               //onClick={handleBookmarkClick}
+               >
                 <i className="fe fe-bookmark"></i>
               </Link>
             </GKTippy>
@@ -141,7 +135,7 @@ const CourseCard = ({ item, viewby, extraclass, link }) => {
             <Image
               src={item.image}
               alt="..."
-              className="img-fluid d-lg-none invisible"
+              className="img-fluid d-lg-none "
             />
           </Link>
           <Col lg={9} md={12} sm={12}>
@@ -184,11 +178,7 @@ const CourseCard = ({ item, viewby, extraclass, link }) => {
                 <Col xs="auto">
                   <Image
                     src={
-                      item.instructorId
-                      ? item.instructorId.InstructorImage
-                      : item.Agent
-                      ? item.Agent.InstructorImage
-                      : "Unknown"
+                      ecoLogo
                     }
                     className="rounded-circle avatar-xs"
                     alt=""
@@ -196,11 +186,7 @@ const CourseCard = ({ item, viewby, extraclass, link }) => {
                 </Col>
                 <Col className="col ms-2">
                   <span>
-                    {item.instructorId
-                ? item.instructorId.username
-                : item.Agent
-                ? item.Agent.username
-                : "Unknown"}
+                    {ecosystemDomain}
                   </span>
                 </Col>
                 <Col xs="auto">
