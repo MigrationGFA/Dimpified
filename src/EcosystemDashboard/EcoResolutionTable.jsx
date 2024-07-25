@@ -1,10 +1,27 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Modal, Row, Col, Form } from "react-bootstrap";
+import { Button, Modal, Row, Col, Form, Card } from "react-bootstrap";
 import DotBadge from "../Components/elements/bootstrap/DotBadge";
 import TanstackTable from "../Components/elements/advance-table/TanstackTable";
+import SupportModal from "./HelpCenterModal";
 
-const ecoResolutionTable = ({ data, header }) => {
+const EcoResolutionTable = ({ data, header }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedSupportID, setSelectedSupportID] = useState(null);
+  const [selectedUserMessage, setSelectedUserMessage] = useState("");
+
+  const handleReply = (id, message) => {
+    setSelectedSupportID(id);
+    setSelectedUserMessage(message);
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+    setSelectedSupportID(null);
+    setSelectedUserMessage("");
+  };
+
   const columns = useMemo(() => {
     return header.map(({ accessorKey, header }) => ({
       header: header,
@@ -56,6 +73,18 @@ const ecoResolutionTable = ({ data, header }) => {
               {shortenedMessage}
             </p>
           );
+        } else if (accessorKey === "reply") {
+          return (
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() =>
+                handleReply(row.original.id, row.original.message)
+              }
+            >
+              Reply
+            </Button>
+          );
         } else if (accessorKey === "date") {
           const updatedAt = new Date(row.original.updatedAt);
           const formattedDate = updatedAt.toLocaleDateString("en-GB", {
@@ -71,17 +100,26 @@ const ecoResolutionTable = ({ data, header }) => {
     }));
   }, [header]);
 
-  return data || datas || dataes ? (
-    <TanstackTable
-      data={data || datas || dataes}
-      columns={columns}
-      filter={true}
-      filterPlaceholder="Search ticket"
-      pagination={true}
-    />
+  return data ? (
+    <Card>
+      <TanstackTable
+        data={data}
+        columns={columns}
+        filter={true}
+        filterPlaceholder="Search ticket"
+        pagination={true}
+      />
+      <SupportModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        supportID={selectedSupportID}
+        userMessage={selectedUserMessage}
+        onClose={handleModalClose}
+      />
+    </Card>
   ) : (
     <div>Loading...</div>
   );
 };
 
-export default ecoResolutionTable;
+export default EcoResolutionTable;
