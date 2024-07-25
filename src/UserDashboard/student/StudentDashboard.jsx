@@ -39,10 +39,10 @@ const StudentDashboard = () => {
   const [newServices, setNewServices] = useState("");
   const [totalProducts, setTotalProducts] = useState("");
   const [newProducts, setNewProducts] = useState("");
-  const [orderChartData, setOrderChartData] = useState([]);
   const [data, setData] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("NGN");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [total4PurchasedCourse, setTotal4PurchasedCourse] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +70,26 @@ const StudentDashboard = () => {
     };
 
     fetchData();
+
+    const fetch4PurchasedCourseData = async () => {
+      try {
+        // Fetch other dashboard statistics
+        const dashboard4PurchasedCourseData = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-last-four-product/${userId}/${ecosystemDomain}`
+        );
+
+        const user4TopPurchasedDashboard =
+          await dashboard4PurchasedCourseData.data;
+        console.log(user4TopPurchasedDashboard);
+        setTotal4PurchasedCourse(user4TopPurchasedDashboard);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetch4PurchasedCourseData();
   }, []);
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
@@ -124,6 +144,25 @@ const StudentDashboard = () => {
     };
     fetchProductData();
   }, []);
+
+  const formatPrice = (currencyName, priceValue) => {
+    switch (currencyName) {
+      case "naira":
+      case "NGN":
+        return `₦${priceValue}`;
+      case "dollars":
+      case "USD":
+        return `$${priceValue}`;
+      case "euros":
+      case "EUR":
+        return `€${priceValue}`;
+      case "pounds":
+      case "GBP":
+        return `£${priceValue}`;
+      default:
+        return `₦${priceValue}`;
+    }
+  };
 
   return (
     <StudentProfileLayout>
@@ -214,33 +253,37 @@ const StudentDashboard = () => {
                 <th scope="col" className="border-0"></th>
               </tr>
             </thead>
-            {/* <tbody> */}
-            {/* {top4Courses &&
-                top4Courses.map((course, index) => (
+            <tbody>
+              {total4PurchasedCourse &&
+                total4PurchasedCourse.map((course, index) => (
                   <tr key={index}>
                     <td className="align-middle border-top-0">
                       <Link to="#">
                         <div className="d-lg-flex align-items-center">
                           <Image
-                            src={course.Course.image}
+                            src={course.itemDetails.image}
                             alt=""
-                            className="rounded img-4by3-lg"
+                            className="rounded-circle img-fluid"
+                            style={{
+                              width: "80px",
+                              height: "70px",
+                            }}
                           />
                           <h5 className="mb-0 ms-lg-3 mt-lg-0 mt-2 text-primary-hover">
-                            {course.Course.title}
+                            {course.itemDetails.title}
                           </h5>
                         </div>
                       </Link>
                     </td>
                     <td className="align-middle border-top-0">
-                      {"₦" + course.Course.price}
+                      {formatPrice(course.currency, course.itemAmount)}
                     </td>
-                    <td className="align-middle border-top-0">
+                    {/* <td className="align-middle border-top-0">
                       <ActionMenu />
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
-            </tbody> */}
+            </tbody>
           </Table>
         </Card.Body>
       </Card>

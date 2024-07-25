@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [data, setData] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("NGN");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [total4BestSelling, setTotal4BestSelling] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +55,22 @@ const Dashboard = () => {
     };
 
     fetchData();
+
+    const fetchBestSellingData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-best-selling-products/${ecosystemDomain}`
+        );
+        const data = await response.data;
+        setTotal4BestSelling(data.top4Items);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchBestSellingData();
   }, []);
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
@@ -104,14 +121,32 @@ const Dashboard = () => {
     };
     fetchProductData();
   }, []);
+  const formatPrice = (currencyName, priceValue) => {
+    switch (currencyName) {
+      case "naira":
+      case "NGN":
+        return `₦${priceValue}`;
+      case "dollars":
+      case "USD":
+        return `$${priceValue}`;
+      case "euros":
+      case "EUR":
+        return `€${priceValue}`;
+      case "pounds":
+      case "GBP":
+        return `£${priceValue}`;
+      default:
+        return `₦${priceValue}`;
+    }
+  };
 
   return (
     <InstructorProfileLayout>
       <Row>
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
-            title={`Revenue (${selectedCurrency})`}
-            subtitle="Month"
+            title={`Life Time Sales (${selectedCurrency})`}
+            subtitle="month"
             value={formatCurrency(
               getTotalAmount(selectedCurrency),
               selectedCurrency
@@ -137,7 +172,7 @@ const Dashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Created Course"
-            subtitle="New this month"
+            subtitle="month"
             value={totalCourses.total || 0}
             badgeValue={totalCourses.thisMonth || 0}
             colorVariant="info"
@@ -146,7 +181,7 @@ const Dashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Created Services"
-            subtitle="For the month"
+            subtitle="month"
             value={totalServices.total || 0}
             badgeValue={totalServices.thisMonth || 0}
             colorVariant="warning"
@@ -155,7 +190,7 @@ const Dashboard = () => {
         <Col lg={3} md={12} sm={12} className="mb-4 mb-lg-0">
           <StatRightBadge
             title="Digital Product"
-            subtitle="For the month"
+            subtitle="month"
             value={totalProducts.total || 0}
             badgeValue={totalProducts.thisMonth || 0}
             colorVariant="warning"
@@ -196,9 +231,9 @@ const Dashboard = () => {
                 </th>
               </tr>
             </thead>
-            {/* <tbody>
-              {top4Courses && top4Courses.length > 0 ? (
-                top4Courses.map((course, index) => (
+            <tbody>
+              {total4BestSelling && total4BestSelling.length > 0 ? (
+                total4BestSelling.map((course, index) => (
                   <tr key={index}>
                     <td className="align-middle border-top-0">
                       <Link to="#">
@@ -206,36 +241,38 @@ const Dashboard = () => {
                           <Image
                             src={course.image}
                             alt=""
-                            className="rounded img-4by3-lg"
+                            className="rounded-circle img-fluid"
+                            style={{
+                              width: "80px",
+                              height: "70px",
+                            }}
                           />
-                          <h5 className="mb-0 ms-lg-3 mt-lg-0 mt-2 text-primary-hover">
-                            {course.name}
-                          </h5>
+                          <div>
+                            <h5 className="mb-0 ms-lg-3 mt-lg-0 mt-2 text-primary-hover">
+                              {course.title}
+                            </h5>
+                            <h5 className="mb-0 ms-lg-3 mt-lg-0 mt-2 text-primary-hover">
+                              {course.category}
+                            </h5>
+                          </div>
                         </div>
                       </Link>
                     </td>
                     <td className="align-middle border-top-0">
-                      {course.totalNumberOfSales}
+                      {course.purchaseCount}
                     </td>
                     <td className="align-middle border-top-0">
-                      {(course.totalAmount / 100)
-                        .toLocaleString("en-NG", {
-                          style: "currency",
-                          currency: "NGN",
-                        })
-                        .slice(0, -3) +
-                        "." +
-                        (course.totalAmount % 100).toString().padStart(2, "0")}
+                      {formatPrice(course.currency, course.price)}
                     </td>
                     {/* <td className="align-middle border-top-0">
                     <ActionMenu />
                     </td> */}
-            {/* </tr>
+                  </tr>
                 ))
               ) : (
                 <div className="px-4 py-12">No product have been purchased</div>
               )}
-            </tbody> */}
+            </tbody>
           </Table>
         </Card.Body>
       </Card>
