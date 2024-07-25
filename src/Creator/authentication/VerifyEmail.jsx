@@ -82,7 +82,9 @@ const VerifyEmail = () => {
             </Col>
             <Col lg={12} md={12} className="text-center mt-4">
               <h1>Verify Your Email</h1>
-              <p>Please check your email inbox to verify your account.</p>
+              <p>
+                Please check your email inbox or spam to verify your account.
+              </p>
               <p>
                 Didn&apos;t receive any email?
                 {loading ? (

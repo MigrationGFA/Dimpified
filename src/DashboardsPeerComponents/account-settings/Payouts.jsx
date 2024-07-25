@@ -11,7 +11,7 @@ import {
 import JobTable from "./PayoutTable";
 import StudentProfileLayout from "../../UserDashboard/student/StudentProfileLayout";
 import axios from "axios"; // Import axios library
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
 const Payout = () => {
   let { ecosystemDomain } = useParams();
@@ -42,7 +42,9 @@ const Payout = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/purchase-payout/${userId}/${ecosystemDomain}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-purchase-payout/${userId}/${ecosystemDomain}`
         );
         setCourses(response.data.courses);
         setServices(response.data.services);
@@ -99,8 +101,11 @@ const Payout = () => {
         </div>
       );
     } else {
-      const currencyName = data.length > 0 && data[0].course ? data[0].course.currency : "NGN";
-      return <JobTable header={header} data={data} currencyName={currencyName} />;
+      const currencyName =
+        data.length > 0 && data[0].course ? data[0].course.currency : "NGN";
+      return (
+        <JobTable header={header} data={data} currencyName={currencyName} />
+      );
     }
   };
 
