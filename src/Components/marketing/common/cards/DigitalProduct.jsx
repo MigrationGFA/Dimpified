@@ -12,11 +12,11 @@ function shortenMessage(message, maxLength = 20) {
   return message;
 }
 
-const DigitalServiceCard = ({ item }) => {
+const DigitalProductCard = ({ item }) => {
   let { ecosystemDomain } = useParams();
 
   const firstServicePrice =
-    item.services && item.services.length > 0 ? item.services[0].price : null;
+    item.package && item.package.length > 0 ? item.package[0].price : null;
 
   // Function to format price with currency symbol
   const formatPrice = (currencyName, priceValue) => {
@@ -69,7 +69,7 @@ const DigitalServiceCard = ({ item }) => {
                 to={`/${ecosystemDomain}/service/${item._id}`}
                 className="text-inherit me-1"
               >
-                <h4 className="mb-1 fs-4">{item.header}</h4>
+                <h4 className="mb-1 fs-4">{item.productName}</h4>
               </Link>
             </div>
             <div>{/* Bookmark */}</div>
@@ -85,7 +85,7 @@ const DigitalServiceCard = ({ item }) => {
                 </div>
                 <div className="mt-1">
                   <i className="fe fe-map-pin text-muted"></i>
-                  <span className="ms-1 ">{item.format}</span>
+                  <span className="ms-1 ">{item.productType[0]}</span>
                 </div>
               </div>
               <div className="mt-3">
@@ -102,4 +102,4 @@ const DigitalServiceCard = ({ item }) => {
   );
 };
 
-export default DigitalServiceCard;
+export default DigitalProductCard;

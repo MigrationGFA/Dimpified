@@ -24,6 +24,7 @@ import { OrderColumnChartOptions } from "../../data/charts/ChartData";
 
 const StudentDashboard = () => {
   let { ecosystemDomain } = useParams();
+
   const user = useSelector((state) => state.authentication.user.data);
   const userId = user.UserId;
   const [totalCourses, setTotalCourses] = useState("");
@@ -38,7 +39,6 @@ const StudentDashboard = () => {
   const [newServices, setNewServices] = useState("");
   const [totalProducts, setTotalProducts] = useState("");
   const [newProducts, setNewProducts] = useState("");
-  const [orderChartData, setOrderChartData] = useState([]);
   const [data, setData] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("NGN");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -71,7 +71,6 @@ const StudentDashboard = () => {
 
     fetchData();
 
-
     const fetch4PurchasedCourseData = async () => {
       try {
         // Fetch other dashboard statistics
@@ -81,7 +80,8 @@ const StudentDashboard = () => {
           }/ecosystem-user-last-four-product/${userId}/${ecosystemDomain}`
         );
 
-        const user4TopPurchasedDashboard = await dashboard4PurchasedCourseData.data;
+        const user4TopPurchasedDashboard =
+          await dashboard4PurchasedCourseData.data;
         console.log(user4TopPurchasedDashboard);
         setTotal4PurchasedCourse(user4TopPurchasedDashboard);
       } catch (error) {
@@ -121,6 +121,29 @@ const StudentDashboard = () => {
   const ActionMenu = () => {
     return null;
   };
+
+  // product order
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-monthly-product-purchase/${userId}/${ecosystemDomain}`
+        );
+        const result = response.data;
+        const monthlyData = result.map((item) => item.totalPurchasedItems);
+
+        // Create the final structure with the 'data' property
+        const formattedData = [{ data: monthlyData }];
+        console.log("this is monthly data", monthlyData);
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchProductData();
+  }, []);
 
   const formatPrice = (currencyName, priceValue) => {
     switch (currencyName) {
@@ -231,7 +254,7 @@ const StudentDashboard = () => {
               </tr>
             </thead>
             <tbody>
-            {total4PurchasedCourse &&
+              {total4PurchasedCourse &&
                 total4PurchasedCourse.map((course, index) => (
                   <tr key={index}>
                     <td className="align-middle border-top-0">
@@ -240,10 +263,10 @@ const StudentDashboard = () => {
                           <Image
                             src={course.itemDetails.image}
                             alt=""
-                            className="rounded-circle img-fluid" 
-                            style={{ 
-                              width: '80px',
-                              height: '70px'
+                            className="rounded-circle img-fluid"
+                            style={{
+                              width: "80px",
+                              height: "70px",
                             }}
                           />
                           <h5 className="mb-0 ms-lg-3 mt-lg-0 mt-2 text-primary-hover">
@@ -253,7 +276,7 @@ const StudentDashboard = () => {
                       </Link>
                     </td>
                     <td className="align-middle border-top-0">
-                      {formatPrice (course.currency, course.itemAmount)}
+                      {formatPrice(course.currency, course.itemAmount)}
                     </td>
                     {/* <td className="align-middle border-top-0">
                       <ActionMenu />

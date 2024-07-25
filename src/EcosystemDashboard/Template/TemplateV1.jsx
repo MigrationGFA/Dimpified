@@ -6,6 +6,7 @@ import avatar from "../../assets/images/avatar/person.png";
 import sanitizeHtml from "sanitize-html";
 import AllCourse from "./Course";
 import AllService from "./Service";
+import AllProduct from "./Product";
 
 // import "../assets/scss/theme.scss";
 import {
@@ -28,6 +29,7 @@ const TemplateV1 = () => {
   const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
   const [services, setServices] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const [navigatePage, setNavigatePage] = useState(false);
   const [navigateLoginPage, setNavigateLoginPage] = useState(false);
@@ -113,6 +115,25 @@ const TemplateV1 = () => {
     getServiceeDetails();
   }, [ecosystemDomain]);
 
+  // products
+  useEffect(() => {
+    const getProductDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/get-all-ecosystem-digital-products/${ecosystemDomain}`
+        );
+        setProducts(response.data.ecosystemDigitalProducts);
+      } catch (error) {
+        console.log("not working", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getProductDetails();
+  }, [ecosystemDomain]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -162,6 +183,12 @@ const TemplateV1 = () => {
       {services && services.length > 0 ? (
         <section className=" pt-5">
           <AllService serviceData={services} />
+        </section>
+      ) : null}
+
+      {products && products.length > 0 ? (
+        <section className=" pt-5">
+          <AllProduct productData={products} />
         </section>
       ) : null}
 

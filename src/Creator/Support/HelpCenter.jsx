@@ -27,7 +27,6 @@ const HelpCenter = () => {
         );
         setData(response.data.creatorHelpRequest || []);
         setLoading(false);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
