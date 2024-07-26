@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Offcanvas, Form } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { showToast } from "../Components/Showtoast";
+import axios from "axios";
 
 const SupportModal = ({
   openModal,
@@ -17,29 +18,46 @@ const SupportModal = ({
 
   const [loading, setLoading] = useState(false);
 
+  // Ensure supportID is always up-to-date in formData
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      support_id: supportID,
+    }));
+  }, [supportID]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-      support_id: supportID,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate success without actual API call
-    toast.success("Message sent successfully!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setOpenModal(false);
-    setFormData({
-      subject: "",
-      message: "",
-      support_id: "",
-    });
-    setLoading(false);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/help-request-feedback`,
+        {
+          requestId: supportID, 
+          subject: formData.subject,
+          message: formData.message,
+        }
+      );
+      showToast(response.data.message);
+      setOpenModal(false);
+      setFormData({
+        subject: "",
+        message: "",
+        support_id: "",
+      });
+    } catch (error) {
+      showToast(error.response.data.error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,7 +99,6 @@ const SupportModal = ({
               value={formData.subject}
               onChange={handleChange}
             />
-            <Form.Control type="hidden" value={supportID} />
           </Form.Group>
           <Form.Group className="mb-3" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
             <Form.Label>Message</Form.Label>

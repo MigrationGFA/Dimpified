@@ -257,9 +257,9 @@ const Payouts = () => {
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
         const response = await axios.post(
-          "https://unleashified-backend.azurewebsites.net/api/v1/create-payment-request",
+          `${import.meta.env.VITE_API_URL}/withdrawal-request`,
           {
-            userId: parseFloat(userId),
+            creatorId: parseFloat(userId),
             accountId: selectedBankId,
             amount: parseFloat(withdrawnAmount),
             currency: selectedCurrency,
