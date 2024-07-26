@@ -69,7 +69,9 @@ const Overview = () => {
   const fetchDashboardData = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/creator/my-dashboard-overview/${creatorId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/creator/my-dashboard-overview/${creatorId}`
       );
       setDashboardData(response.data);
       setLoading(false);
@@ -109,51 +111,57 @@ const Overview = () => {
         <div>
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Ecosystem"
-                value={dashboardData?.totalEcosystems || "0"}
-                summary="Number of sales"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="UserChart"
-              />
+              <Link to="/creator/dashboard/All-Ecosystem">
+                <StatRightChart
+                  title="Total Ecosystem"
+                  value={dashboardData?.totalEcosystems || "0"}
+                  summary="Number of sales"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="UserChart"
+                />
+              </Link>
+            </Col>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <Link to="/creator/my-user">
+                <StatRightChart
+                  title="Total Users"
+                  value={dashboardData?.totalUsers || "0"}
+                  summary="Number of pending"
+                  summaryIcon="down"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="VisitorChart"
+                />
+              </Link>
             </Col>
 
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Users"
-                value={dashboardData?.totalUsers || "0"}
-                summary="Number of pending"
-                summaryIcon="down"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="VisitorChart"
-              />
+              <Link to="/creator/support">
+                <StatRightChart
+                  title="Total Support Requests"
+                  value={dashboardData?.totalSupportRequests || "0"}
+                  summary="Students"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="BounceChart"
+                />
+              </Link>
             </Col>
-
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Support Requests"
-                value={dashboardData?.totalSupportRequests || "0"}
-                summary="Students"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="BounceChart"
-              />
-            </Col>
-
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Paid Users"
-                value={dashboardData?.totalPaidUsers || "0"}
-                summary="Instructor"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="AverageVisitTimeChart"
-              />
+              <Link to="/creator/received-payment">
+                <StatRightChart
+                  title="Total Paid Users"
+                  value={dashboardData?.totalPaidUsers || "0"}
+                  summary="Instructor"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="AverageVisitTimeChart"
+                />
+              </Link>
             </Col>
           </Row>
 
