@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Offcanvas, Form } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { showToast } from "../../Components/Showtoast";
+import axios from "axios";
 
 const SupportModal = ({
   openModal,
@@ -26,20 +27,37 @@ const SupportModal = ({
     });
   };
 
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      support_id: supportID,
+    }));
+  }, [supportID]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate success without actual API call
-    toast.success("Message sent successfully!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setOpenModal(false);
-    setFormData({
-      subject: "",
-      message: "",
-      support_id: "",
-    });
-    setLoading(false);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/help-request-feedback`,
+        {
+          requestId: supportID, 
+          subject: formData.subject,
+          message: formData.message,
+        }
+      );
+      showToast(response.data.message);
+      setOpenModal(false);
+      setFormData({
+        subject: "",
+        message: "",
+        support_id: "",
+      });
+    } catch (error) {
+      showToast(error.response.data.error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
