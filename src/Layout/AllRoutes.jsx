@@ -118,6 +118,9 @@ import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/Ecosys
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
+import CommunityChat from "../Components/CommunityChat/Page";
+import UserChat from "../Components/Chat/UserChat"
+import UserChatLayout from "../Components/Chat/UserChatLayout";
 
 const AllRoutes = () => {
   return (
@@ -239,6 +242,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
+      
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -351,9 +355,14 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/User-delete-profile"
         element={<UserDeleteProfile />}
       />
+      <Route path="/:ecosystemDomain/community-chat" element={<CommunityChat />} />
+      <Route element={<UserChatLayout />}>
+      <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
+      </Route>
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+    
     </Routes>
   );
 };

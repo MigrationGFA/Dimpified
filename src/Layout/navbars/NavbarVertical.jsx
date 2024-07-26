@@ -2,7 +2,7 @@
 import { Fragment, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-
+ 
 import {
   ListGroup,
   Accordion,
@@ -12,22 +12,22 @@ import {
   useAccordionButton,
   AccordionContext,
 } from "react-bootstrap";
-
+ 
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-
+ 
 // import media files
 // import InverseLogo from '../../assets/images/brand/logo/logo-inverse.svg';
 import Logo from "../../assets/DIMP logo.png";
 import GiftBox from "../../assets/images/avatar/giftbox.png";
-
+ 
 // import routes file
 import { DashboardMenu } from "../../routes/CreatorDashboardRoutes";
-
+ 
 const NavbarVertical = (props) => {
   const location = useLocation();
-
+ 
   const CustomToggle = ({ children, eventKey, icon }) => {
     const { activeEventKey } = useContext(AccordionContext);
     const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -51,7 +51,7 @@ const NavbarVertical = (props) => {
       </li>
     );
   };
-
+ 
   const generateLink = (item) => {
     return (
       <Link
@@ -78,9 +78,9 @@ const NavbarVertical = (props) => {
       </Link>
     );
   };
-
+ 
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
+ 
   return (
     <Fragment>
       <SimpleBar style={{ maxHeight: "100vh" }}>
@@ -305,7 +305,7 @@ const NavbarVertical = (props) => {
           })}
         </Accordion>
         {/* end of Dashboard Menu */}
-
+ 
         <Card className="bg-dark-primary shadow-none text-center mx-4 my-8">
           <Card.Body className="py-6">
             <Image src={GiftBox} alt="" />
@@ -325,5 +325,5 @@ const NavbarVertical = (props) => {
     </Fragment>
   );
 };
-
+ 
 export default NavbarVertical;

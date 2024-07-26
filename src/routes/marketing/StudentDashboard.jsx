@@ -44,14 +44,26 @@ export const DashboardMenu = () => {
         },
       ],
     },
+    // {
+    //   id: 5,
+    //   title: "Community",
+    //   link: `/${ecosystemDomain}/community-chat`,
+    //   icon: "user",
+    // },
+    // {
+    //     id: 6,
+    //     title: "Chat",
+    //     icon: "message-square",
+    //     link: `/${ecosystemDomain}/chat`,
+    //   },
     {
-      id: 5,
+      id: 7,
       title: "Reviews",
       link: `/${ecosystemDomain}/User-Reviews`,
       icon: "star",
     },
     {
-      id: 6,
+      id: 8,
       title: "Payouts",
       link: `/${ecosystemDomain}/User-payout`,
       icon: "dollar-sign",
