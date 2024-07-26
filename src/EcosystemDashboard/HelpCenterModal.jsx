@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Offcanvas, Form } from "react-bootstrap";
-import { showToast } from "../../Components/Showtoast";
+import { showToast } from "../Components/Showtoast";
 import axios from "axios";
 
 const SupportModal = ({
@@ -18,21 +18,21 @@ const SupportModal = ({
 
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-      support_id: supportID,
-    });
-  };
-
+  // Ensure supportID is always up-to-date in formData
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
       support_id: supportID,
     }));
   }, [supportID]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,7 +99,6 @@ const SupportModal = ({
               value={formData.subject}
               onChange={handleChange}
             />
-            <Form.Control type="hidden" value={supportID} />
           </Form.Group>
           <Form.Group className="mb-3" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
             <Form.Label>Message</Form.Label>
