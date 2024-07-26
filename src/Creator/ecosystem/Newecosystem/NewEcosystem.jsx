@@ -56,18 +56,25 @@ const NewEcosystem = () => {
       } else {
         setIsOtherCategory(false);
         const subCategories = categorySubSection[value] || [];
-        setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+        setSubCategoryOptions(
+          subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+        );
       }
     }
   };
 
   useEffect(() => {
-    if (ecosystem.targetAudienceSector && ecosystem.targetAudienceSector !== "Other") {
-      const subCategories = categorySubSection[ecosystem.targetAudienceSector] || [];
-      setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+    if (
+      ecosystem.targetAudienceSector &&
+      ecosystem.targetAudienceSector !== "Other"
+    ) {
+      const subCategories =
+        categorySubSection[ecosystem.targetAudienceSector] || [];
+      setSubCategoryOptions(
+        subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+      );
     }
   }, [ecosystem.targetAudienceSector]);
-
 
   const validateForm = () => {
     const {
@@ -223,8 +230,6 @@ const NewEcosystem = () => {
     { value: "Other", label: "Other" },
   ];
 
-  
-
   return (
     <Container fluid className="p-0">
       <EcoHeader />
@@ -245,7 +250,7 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                        EcoSystem Name<span className="text-danger">*</span>
+                        Ecosystem Name<span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -387,7 +392,7 @@ const NewEcosystem = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg={6} className="col-12">
+                    <Col lg={6} className="col-12 mb-3">
                       <Form.Label htmlFor="expected-audience-number">
                         Expected Audience Number
                         <span className="text-danger">*</span>
@@ -403,7 +408,7 @@ const NewEcosystem = () => {
                       />
                     </Col>
                     <Col lg={6} className="col-12">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-3 ">
                         <Form.Label>
                           Do you have experience with creating ecosystems?{" "}
                           <span className="text-danger">*</span>
@@ -474,13 +479,12 @@ const NewEcosystem = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to make this ecosystem live for users to have
-          access to?
+          Are you sure you want to activate this ecosystem for users to access?
           <br />
-          <strong>Note:</strong> <br />
-          If you click on No, you can still edit the ecosystem information and
-          if you click on Next, you will be creating your ecosystem, but you
-          won't be able to edit the ecosystem information.
+          <strong>Please note</strong> <br /> Selecting "No" allows you to
+          continue editing the ecosystem information. Selecting "Next" will
+          finalize the creation of your ecosystem, but you won't be able to edit
+          the information afterwards.
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setConfirmModal(false)}>
