@@ -3,7 +3,6 @@ import { Col, Row, Card, Spinner, Table, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import SupportModal from "../Support/SupportModal";
-import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 
 const HelpCenter = () => {
@@ -16,16 +15,35 @@ const HelpCenter = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedSupportID, setSelectedSupportID] = useState(null);
   const [selectedUserMessage, setSelectedUserMessage] = useState("");
+  const [stats, setStats] = useState({
+    totalHelpRequests: 0,
+    totalCompletedHelpRequest: 0,
+    totalPendingHelpRequest: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_URL
-          }/get-creator-help-request/${creatorId}`
-        );
-        setData(response.data.creatorHelpRequest || []);
+        const [helpDataResponse, helpcenterDataResponse] = await Promise.all([
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/get-creator-help-request/${creatorId}`
+          ),
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/creator/my-help-request/${creatorId}`
+          ),
+        ]);
+
+        // Combine the data
+        const helpData = helpDataResponse.data;
+        const helpcenterData = helpcenterDataResponse.data;
+
+        setStats({
+          totalHelpRequests: helpcenterData.totalHelpRequests || helpData.totalHelpRequests || 0,
+          totalCompletedHelpRequest: helpcenterData.totalCompletedHelpRequest || helpData.totalCompletedHelpRequest || 0,
+          totalPendingHelpRequest: helpcenterData.totalPendingHelpRequest || helpData.totalPendingHelpRequest || 0,
+        });
+
+        setData(helpData.creatorHelpRequest || []); 
         setLoading(false);
 
       } catch (error) {
@@ -35,7 +53,7 @@ const HelpCenter = () => {
     };
 
     fetchData();
-  }, []);
+  }, [creatorId]);
 
   const handleReply = (id, message) => {
     setSelectedSupportID(id);
@@ -58,7 +76,7 @@ const HelpCenter = () => {
           return "#" + row.id;
         },
       },
-      { accessorKey: "ecosystemDomain", header: "ecosystemDomain" },
+      { accessorKey: "ecosystemDomain", header: "Ecosystem Domain" },
       { accessorKey: "reason", header: "Reason" },
       { accessorKey: "message", header: "Message" },
       { accessorKey: "status", header: "Status" },
@@ -106,9 +124,9 @@ const HelpCenter = () => {
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Help Center"
-                value="0"
-                summary="Number of sales"
+                title="Total"
+                value={stats.totalHelpRequests}
+                summary="Number of help requests"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -118,9 +136,9 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Completed Help Center"
-                value="0"
-                summary="Number of pending"
+                title="Completed"
+                value={stats.totalCompletedHelpRequest}
+                summary="Number of completed requests"
                 summaryIcon="down"
                 showSummaryIcon
                 classValue="mb-4"
@@ -130,9 +148,9 @@ const HelpCenter = () => {
 
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Pending Help Center"
-                value="0"
-                summary="Students"
+                title="Pending"
+                value={stats.totalPendingHelpRequest}
+                summary="Pending requests"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
@@ -143,8 +161,8 @@ const HelpCenter = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Help Center"
-                value="0"
-                summary="Instructor"
+                value={stats.totalHelpRequests}
+                summary="Overall stats"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"

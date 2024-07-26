@@ -27,7 +27,6 @@ import {
 } from "@tanstack/react-table";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import { useGlobalContext } from "../../context/AuthContext";
 import { showToast } from "../../Components/Showtoast";
 import { Trash, Edit, MoreVertical } from "react-feather";
 
@@ -53,9 +52,13 @@ import {
   PayoutChartOptions,
 } from "../../data/charts/ChartData";
 
+import {useSelector}  from "react-redux"
+
 
 const Payouts = () => {
-  const { userId } = useGlobalContext();
+  const userId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
+  );
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -76,13 +79,13 @@ const Payouts = () => {
   const [editedAccount, setEditedAccount] = useState(null);
 
   const [earnings, setEarnings] = useState({
-    NGN: 0,
-    USD: 0,
+    Naira: 0,
+    Dollar: 0,
     EUR: 0,
     GBP: 0,
   });
 
-  const [selectedCurrency, setSelectedCurrency] = useState("NGN");
+  const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleChange = (event) => {
@@ -91,14 +94,13 @@ const Payouts = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userId = sessionStorage.getItem("UserId");
       try {
         const response = await axios.get(
-          `https://unleashified-backend.azurewebsites.net/api/v1/get-my-earning/${userId}`
+          `${import.meta.env.VITE_API_URL}/creator/earnings/${userId}`
         );
 
-        if (response.data.userEarning) {
-          setEarnings(response.data.userEarning);
+        if (response.data) {
+          setEarnings(response.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -117,10 +119,10 @@ const Payouts = () => {
   const formatPrice = (currencyName) => {
     switch (currencyName) {
       case "naira":
-      case "NGN":
+      case "Naira":
         return `₦`;
       case "dollars":
-      case "USD":
+      case "Dollar":
         return `$`;
       case "euros":
       case "EUR":
@@ -157,7 +159,7 @@ const Payouts = () => {
     const fetchBankData = async () => {
       try {
         const response = await axios.get(
-          `https://unleashified-backend.azurewebsites.net/api/v1/bank-details/${userId}`
+         `${import.meta.env.VITE_API_URL}/bank-details/${userId}`
         );
         const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
         setBankData(fetchedBankData);
@@ -175,9 +177,9 @@ const Payouts = () => {
       // Check if userId is present
       try {
         const saveBankData = await axios.post(
-          "https://unleashified-backend.azurewebsites.net/api/v1/save-bank-details",
+         `${import.meta.env.VITE_API_URL}/save-bank-details`,
           {
-            userId: userId,
+            creatorId: userId,
             accountName,
             accountNumber,
             bankName,
@@ -186,8 +188,6 @@ const Payouts = () => {
         );
 
         console.log("Response :", saveBankData.data);
-        // Update bank data state with the newly saved account details
-        // setBankData([...bankData, saveBankData.data.newAccount]);
         setBankData([...bankData, saveBankData.data.newAccount]);
 
         showToast(saveBankData.data.message);
@@ -222,9 +222,9 @@ const Payouts = () => {
     console.log(accountId);
     try {
       await axios.put(
-        "https://unleashified-backend.azurewebsites.net/api/v1/edit-account",
+       `${import.meta.env.VITE_API_URL}/edit-account`,
         {
-          userId: userId,
+          creatorId: userId,
           accountId: accountId, 
           accountName: editedAccount.accountName,
           bankName: editedAccount.bankName,
@@ -257,9 +257,9 @@ const Payouts = () => {
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
         const response = await axios.post(
-          "https://unleashified-backend.azurewebsites.net/api/v1/create-payment-request",
+          `${import.meta.env.VITE_API_URL}/withdrawal-request`,
           {
-            userId: parseFloat(userId),
+            creatorId: parseFloat(userId),
             accountId: selectedBankId,
             amount: parseFloat(withdrawnAmount),
             currency: selectedCurrency,
@@ -416,10 +416,10 @@ const Payouts = () => {
                 <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
                   <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem onClick={() => handleCurrencyChange("NGN")}>
+                    <DropdownItem onClick={() => handleCurrencyChange("Naira")}>
                       NGN
                     </DropdownItem>
-                    <DropdownItem onClick={() => handleCurrencyChange("USD")}>
+                    <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
                       USD
                     </DropdownItem>
                     <DropdownItem onClick={() => handleCurrencyChange("EUR")}>
@@ -433,7 +433,7 @@ const Payouts = () => {
                 <h4 className="mb-1">Your total earnings</h4>
                 <h5 className="mb-0 display-4 fw-bold">
                   {formatPrice(selectedCurrency)}
-                  {earnings[selectedCurrency] || 0.0}{" "}
+                  {earnings[selectedCurrency] || 0.0}
                   {/* Display earnings with Naira sign */}
                 </h5>
                 <p className="px-4">You can change your payout account above</p>
@@ -575,14 +575,19 @@ const Payouts = () => {
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <Form.Label>Currency</Form.Label>
-                        <FormSelect
-                          options={bankCurrency}
+                        <Form.Select
                           placeholder="select currency"
                           id="course_currency"
                           name="currency"
                           value={currency}
                           onChange={(e) => setCurrency(e.target.value)}
-                        />
+                        >
+                          {bankCurrency.map((currency) => (
+                            <option key={currency.value} value={currency.value}>
+                              {currency.label}
+                            </option>
+                          ))}
+                          </Form.Select>
                       </Form.Group>
                     </Form>
                   </Modal.Body>

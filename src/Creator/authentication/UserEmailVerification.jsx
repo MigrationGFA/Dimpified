@@ -128,7 +128,12 @@ const UserEmailVerification = () => {
                 <h1 className="fs-3 mb-4">Your Email has been verified</h1>
               </Col>
               <Col lg={10} md={9} className="text-center">
-                <Button variant="primary" type="submit" as={Link} to="/">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  as={Link}
+                  to="/creator/signin"
+                >
                   Please Login
                 </Button>
               </Col>

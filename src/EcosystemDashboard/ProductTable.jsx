@@ -74,7 +74,7 @@ const JobTable = ({ data, header }) => {
           return (
             <div>
               <Image
-                src={row.original.image || row.original.backgroundCover[0]}
+                src={row.original.image || (row.original.backgroundCover && row.original.backgroundCover[0])}
                 alt=""
                 className="rounded-circle img-fluid" 
                 style={{ 

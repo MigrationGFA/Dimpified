@@ -2,18 +2,22 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Ratings from "../ratings/Ratings";
+import PersonAvatar from "../../../../assets/images/avatar/person.png";
+import {useSelector} from "react-redux"
+
 
 const InstructorReviewCard = ({ item }) => {
+  const user = useSelector((state) => state.authentication.user.data);
   // Check if item.userImage exists before accessing it
-  const userImageSrc = item.userImage || ""; // Provide a default value if userImage is undefined
+  const userImageSrc = item.userImage || PersonAvatar; 
 
   return (
     <div className="d-flex">
-      <Image src={userImageSrc} alt="" className="rounded-circle avatar-lg" />
+      <Image src={user.image || userImageSrc} alt="" className="rounded-circle avatar-lg" />
       <div className="ms-3 mt-2">
         <div className="d-flex align-items-center justify-content-between">
           <div>
-            <h4 className="mb-0">{item.user}</h4>
+            <h4 className="mb-0">{user.username}</h4>
           </div>
           {/* <div>
             <OverlayTrigger
@@ -37,7 +41,7 @@ const InstructorReviewCard = ({ item }) => {
             <Ratings rating={item.rating} />
           </span>
           <span className="me-1">for</span>
-          <span className="h5">{item.courseTitle}</span>
+          <span className="h5">{item.title}</span>
           <p className="mt-2">{item.review}</p>
           {/* <Link to="#" className="btn btn-outline-secondary btn-sm">
             Respond

@@ -41,8 +41,6 @@ const DigitalServiceCard = ({ item }) => {
   let originalImgUrl = item?.backgroundCover?.[0] || "";
   let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : "";
 
-  const handleClick = () => {};
-
   return (
     <Card className="card-bordered card-hover cursor-pointer h-100 ">
       <Card.Body className="p-0">

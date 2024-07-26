@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
+import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
 
 const templateSections = [
   { id: 1, name: "Government" },
@@ -32,7 +33,7 @@ const templateSections = [
   { id: 5, name: "Professional Services" },
   { id: 6, name: "Creative Services" },
   { id: 7, name: "Trade Services" },
-{ id: 8, name: "Personal Care Services" },
+  { id: 8, name: "Personal Care Services" },
   { id: 9, name: "Educational Services" },
   { id: 10, name: "Event Services" },
   { id: 11, name: "Technology Services" },
@@ -342,7 +343,7 @@ const EditTemplate = () => {
           <Modal.Title>Preview Template</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Template1 />
+          <PreviewTemplateV1 />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

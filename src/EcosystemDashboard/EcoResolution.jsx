@@ -19,6 +19,15 @@ const EcoResolution = () => {
     { accessorKey: "reason", header: "Reason" },
     { accessorKey: "message", header: "Message" },
     { accessorKey: "status", header: "Status" },
+    {accessorKey: "reply", header: "Action",cell: ({ row }) => (
+      <Button
+        variant="success"
+        size="sm"
+        onClick={() => handleReply(row.id, row.message)}
+      >
+        Reply
+      </Button>
+    ),},
   ];
 
   useEffect(() => {
