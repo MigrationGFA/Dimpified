@@ -90,8 +90,9 @@ import UserNotification from "../DashboardsPeerComponents/account-settings/Notif
 import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
 import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
-import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList"
+import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
+import UserServiceBilling from "../Components/marketing/Pages/service-single/ServiceBilling"
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
 
@@ -125,6 +126,7 @@ import Grow from "../developer-program/pages/Grow";
 import EventPage from "../developer-program/pages/EventsPage";
 import LoyaltyProgram from "../developer-program/pages/LoyaltyProgram";
 import DeveloperProgramSupport from "../developer-program/pages/Support";
+import DevProgramAuthForm from "../developer-program/pages/DevProgramAuthForm";
 
 const AllRoutes = () => {
   return (
@@ -282,6 +284,10 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/service/:id"
         element={<UserSingleService />}
       />
+      <Route
+        path="/:ecosystemDomain/service/service-billing"
+        element={<UserServiceBilling />}
+      />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
 
       <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
@@ -346,7 +352,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/User/browse-course"
         element={<UserBrowseCourse />}
       />
-       <Route
+      <Route
         path="/:ecosystemDomain/User/browse-service"
         element={<UserBrowseService />}
       />
@@ -362,12 +368,28 @@ const AllRoutes = () => {
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
       <Route path="/dimp/developer-program/join" element={<Join />} />
-      <Route path="/dimp/developer-program/about" element={<AboutDevProgram />} />
-      <Route path="/dimp/developer-program/apilicense" element={<ApiLicense />} />
+      <Route
+        path="/dimp/developer-program/about"
+        element={<AboutDevProgram />}
+      />
+      <Route
+        path="/dimp/developer-program/apilicense"
+        element={<ApiLicense />}
+      />
       <Route path="/dimp/developer-program/grow" element={<Grow />} />
       <Route path="/dimp/developer-program/events" element={<EventPage />} />
-      <Route path="/dimp/developer-program/loyalty-program" element={<LoyaltyProgram />} />
-      <Route path="/dimp/developer-program/support" element={<DeveloperProgramSupport />} />
+      <Route
+        path="/dimp/developer-program/loyalty-program"
+        element={<LoyaltyProgram />}
+      />
+      <Route
+        path="/dimp/developer-program/support"
+        element={<DeveloperProgramSupport />}
+      />
+      <Route
+        path="/dimp/developer-program/auth"
+        element={<DevProgramAuthForm />}
+      />
     </Routes>
   );
 };

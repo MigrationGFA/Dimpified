@@ -20,7 +20,7 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { IoMdTime } from "react-icons/io";
 import { TfiReload } from "react-icons/tfi";
-import { MdBookmarkBorder } from "react-icons/md";
+import { MdBookmarkBorder, MdCancel } from "react-icons/md";
 
 import { showToast } from "../../../Showtoast";
 import { IoPersonOutline } from "react-icons/io5";
@@ -187,6 +187,25 @@ const ServicesSingle = () => {
         return `£${priceValue}`;
       default:
         return `₦${priceValue}`;
+    }
+  };
+
+  const formatCurrency = (currencyName) => {
+    switch (currencyName) {
+      case "naira":
+      case "NGN":
+        return `₦`;
+      case "dollars":
+      case "USD":
+        return `$`;
+      case "euros":
+      case "EUR":
+        return `€`;
+      case "pounds":
+      case "GBP":
+        return `£`;
+      default:
+        return `₦`;
     }
   };
 
@@ -521,6 +540,13 @@ const ServicesSingle = () => {
                             <Modal.Title className="p-4 mt-2 display-6 fw-bold">
                               Additional payment Information
                             </Modal.Title>
+                            <Button
+                              variant="transparent"
+                              className="rounded-circle "
+                              onClick={handleClose}
+                            >
+                              <MdCancel className="display-6" />
+                            </Button>
                           </Modal.Header>
                           <Modal.Body className="p-4">
                             <RequestModalForm
@@ -530,16 +556,18 @@ const ServicesSingle = () => {
                               shortDescription={pkg.shortDescription}
                               price={pkg.price}
                               incentives={pkg.incentives}
+                              currency={formatCurrency(currencyName)}
+                              ecosystemDomain={ecosystemDomain}
                               // additionalRevision={pkg.additionalRevision.price}
                             />
                           </Modal.Body>
                           <Modal.Footer className="d-flex justify-content-around">
-                            <Button variant="secondary" onClick={handleClose}>
+                            {/* <Button variant="secondary" onClick={handleClose}>
                               Close
                             </Button>
                             <Button variant="primary" onClick={handleContinue}>
                               Continue
-                            </Button>
+                            </Button> */}
                           </Modal.Footer>
                         </div>
                       </div>

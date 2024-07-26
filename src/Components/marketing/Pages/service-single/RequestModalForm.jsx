@@ -11,6 +11,7 @@ const RequestModalForm = ({
   name,
   incentives,
   additionalRevision,
+  currency
 }) => {
   const [gigQuantity, setGigQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
@@ -39,12 +40,13 @@ const RequestModalForm = ({
       incentives,
       additionalRevision,
       gigQuantity,
+      currency
     };
 
     console.log("Navigating with data:", dataToPass);
 
     // Navigate to the ServiceBilling component and pass the data
-    navigate("/service/billing", { state: { dataToPass } });
+    navigate("/:ecosystemDomain/service/service-billing", { state: { dataToPass } });
   };
 
   return (
@@ -52,7 +54,7 @@ const RequestModalForm = ({
       <Row className="mb-4 border border-secondary rounded p-2">
         <div className="d-flex justify-content-between mb-2">
           <div className="display-6 fw-bold">{header || name}</div>
-          <div className="display-6">{price}</div>
+          <div className="display-6">{currency}{totalPrice}</div>
         </div>
 
         <p>
@@ -111,7 +113,9 @@ const RequestModalForm = ({
           </Col>
         </Form.Group>
       </Row>
-      {/* <Button type="submit">Submit</Button> */}
+      <Row>
+        <Button type="submit">Continue</Button>
+      </Row>
     </Form>
   );
 };

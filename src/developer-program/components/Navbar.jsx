@@ -74,8 +74,8 @@ const NavbarComponent = () => {
           </Nav.Link>
           {/* <Nav.Link></Nav.Link> */}
           <NavDropdown title={<i className="fas fa-user"></i>} href="#account" id="icon-dropdown">
-            <NavDropdown.Item href="#" >Sign In</NavDropdown.Item>
-            <NavDropdown.Item href="#">Sign Up</NavDropdown.Item>
+            <NavDropdown.Item href="/dimp/developer-program/auth?tab=signIn" >Sign In</NavDropdown.Item>
+            <NavDropdown.Item href="/dimp/developer-program/auth?tab=register">Sign Up</NavDropdown.Item>
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
