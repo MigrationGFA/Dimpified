@@ -5,8 +5,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import PopularInstructor from "./PopularJobCategory";
-import RecentCourses from "./RecentJobs";
+import TopEcosystem from "./TopEcosystem";
+import RecentEcosystem from "./RecentEcosystem";
 import {
   TrafficChartSeries,
   TrafficChartOptions,
@@ -203,10 +203,10 @@ const Overview = () => {
 
           <Row>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <PopularInstructor title="Popular EcoSystems" />
+              <TopEcosystem title="Popular EcoSystems" />
             </Col>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <RecentCourses title="Last 4 Created Ecosystem" />
+              <RecentEcosystem title="Last 4 Created Ecosystem" />
             </Col>
             {/* <Col xl={4} lg={6} md={12} className="mb-4">
                             <Activity title="Activity" />

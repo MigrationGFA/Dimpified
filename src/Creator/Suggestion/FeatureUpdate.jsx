@@ -16,6 +16,7 @@ import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import PaginationComponent from "../../Components/elements/advance-table/Pagination";
 
 const FeatureUpdate = () => {
+  // State variables
   const [featureName, setFeatureName] = useState("");
   const [featureType, setFeatureType] = useState("");
   const [featureDescription, setFeatureDescription] = useState("");
@@ -28,14 +29,15 @@ const FeatureUpdate = () => {
   const [reviewText, setReviewText] = useState("");
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviews, setReviews] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  // Redux state
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
   console.log(creatorId);
 
+  // Fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
       if (!creatorId) return;
@@ -43,14 +45,8 @@ const FeatureUpdate = () => {
       try {
         setDashboardLoading(true);
         const [featureResponse, reviewResponse] = await Promise.all([
-          axios.get(
-            `${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`
-          ),
-          axios.get(
-            `${
-              import.meta.env.VITE_API_URL
-            }/get-reviews-by-creator/${creatorId}`
-          ),
+          axios.get(`${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`),
+          axios.get(`${import.meta.env.VITE_API_URL}/get-reviews-by-creator/${creatorId}`),
         ]);
         setFeatures(featureResponse.data.featuresByCreator || []);
         setReviews(reviewResponse.data.reviews || []);
@@ -64,6 +60,7 @@ const FeatureUpdate = () => {
     fetchData();
   }, [creatorId]);
 
+  // Handle review submission
   const handleSubmitReview = async () => {
     if (!creatorId) {
       showToast("Creator ID is missing. Please log in again.", "error");
@@ -92,8 +89,7 @@ const FeatureUpdate = () => {
       setReviews(reviewResponse.data.reviews || []);
     } catch (error) {
       showToast(
-        error.response?.data?.message ||
-          "Error submitting review. Please try again.",
+        error.response?.data?.message || "Error submitting review. Please try again.",
         "error"
       );
     } finally {
@@ -101,6 +97,7 @@ const FeatureUpdate = () => {
     }
   };
 
+  // Handle feature submission
   const handleSubmitFeature = async (e) => {
     e.preventDefault();
 
@@ -134,8 +131,7 @@ const FeatureUpdate = () => {
       setFeatures(featureResponse.data.featuresByCreator || []);
     } catch (error) {
       showToast(
-        error.response?.data?.message ||
-          "Error submitting feature request. Please try again.",
+        error.response?.data?.message || "Error submitting feature request. Please try again.",
         "error"
       );
     } finally {
@@ -143,14 +139,17 @@ const FeatureUpdate = () => {
     }
   };
 
+  // Handle star rating click
   const handleStarClick = (value) => {
     setRating(value);
   };
 
+  // Handle modals
   const handleFeedbackModalOpen = () => {
     setShowFeedbackModal(true);
   };
 
+  // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentFeatures = features.slice(indexOfFirstItem, indexOfLastItem);
@@ -160,11 +159,13 @@ const FeatureUpdate = () => {
     setCurrentPage(pageNumber);
   };
 
+  // Format date
   const formatDate = (date) => {
     const options = { day: "numeric", month: "long", year: "numeric" };
     return new Date(date).toLocaleDateString("en-GB", options);
   };
 
+  // Loading state
   if (dashboardLoading) {
     return (
       <div className="text-center">
@@ -277,156 +278,121 @@ const FeatureUpdate = () => {
                   <td>{feature.featureName}</td>
                   <td>{feature.featureType}</td>
                   <td>{feature.featureDescription}</td>
-                  <td>{formatDate(feature.createdAt)}</td>
+                  <td>{formatDate(feature.dateCreated)}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
-
-          <div className="d-flex justify-content-center mt-3">
-            <PaginationComponent
-              totalItems={totalItems}
-              itemsPerPage={itemsPerPage}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
-          </div>
+          <PaginationComponent
+            itemsPerPage={itemsPerPage}
+            totalItems={totalItems}
+            paginate={handlePageChange}
+          />
         </Card.Body>
       </Card>
 
+      {/* Feature Request Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Request New Feature</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmitFeature}>
-            <Form.Group className="mb-3" controlId="featureName">
+            <Form.Group className="mb-3">
               <Form.Label>Feature Name</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter feature name"
                 value={featureName}
                 onChange={(e) => setFeatureName(e.target.value)}
-                required
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="featureType">
+            <Form.Group className="mb-3">
               <Form.Label>Feature Type</Form.Label>
-              <Form.Select
+              <Form.Control
                 type="text"
+                placeholder="Enter feature type"
                 value={featureType}
                 onChange={(e) => setFeatureType(e.target.value)}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Template Upgrade">Template Upgrade</option>
-                <option value="Pricing Features">Pricing Features</option>
-                <option value="Payment Issues">Payment Issues</option>
-                <option value="Ecosystem Upgrade">Ecosystem Upgrade</option>
-                <option value="Others">Others</option>
-              </Form.Select>
+              />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="featureDescription">
+            <Form.Group className="mb-3">
               <Form.Label>Feature Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
+                placeholder="Enter feature description"
                 value={featureDescription}
                 onChange={(e) => setFeatureDescription(e.target.value)}
-                required
               />
             </Form.Group>
-
-            <div className="d-flex justify-content-end">
-              <Button
-                variant="secondary"
-                className="me-2"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit" disabled={loading}>
-                {loading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />{" "}
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </Button>
-            </div>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Spinner animation="border" size="sm" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>
 
-      <Modal
-        show={showFeedbackModal}
-        onHide={() => setShowFeedbackModal(false)}
-      >
+      {/* Feedback Modal */}
+      <Modal show={showFeedbackModal} onHide={() => setShowFeedbackModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Submit Feedback</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmitReview}>
-            <Form.Group className="mb-3" controlId="rating">
+          <Form>
+            <Form.Group className="mb-3">
               <Form.Label>Rating</Form.Label>
-              <div className="star-rating">
+              <div>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
                     key={star}
-                    className={`star ${star <= rating ? "filled" : ""}`}
                     onClick={() => handleStarClick(star)}
+                    style={{
+                      cursor: "pointer",
+                      color: star <= rating ? "gold" : "gray",
+                      fontSize: "1.5rem",
+                    }}
                   >
-                    &#9733;
+                    ★
                   </span>
                 ))}
               </div>
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="reviewText">
+            <Form.Group className="mb-3">
               <Form.Label>Review</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
+                placeholder="Write your review here..."
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
-                required
               />
             </Form.Group>
-
-            <div className="d-flex justify-content-end">
-              <Button
-                variant="secondary"
-                className="me-2"
-                onClick={() => setShowFeedbackModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit" disabled={reviewLoading}>
-                {reviewLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />{" "}
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </Button>
-            </div>
+            <Button
+              variant="primary"
+              onClick={handleSubmitReview}
+              disabled={reviewLoading}
+            >
+              {reviewLoading ? (
+                <>
+                  <Spinner animation="border" size="sm" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>
