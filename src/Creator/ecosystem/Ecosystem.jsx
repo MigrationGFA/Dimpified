@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Button, Card, Image, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../Components/elements/advance-table/Pagination";
-
+import { updateField, setEcosystemId } from "../../features/ecosystem";
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
   if (message.length > maxLength) {
@@ -50,6 +50,8 @@ function getTimeDifference(updatedAt) {
 }
 
 const Ecosystem = () => {
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
   const [ecosystems, setEcosystems] = useState([]);
   const [ecosystemData, setEcosystemData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -61,6 +63,9 @@ const Ecosystem = () => {
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
+
+ 
+  
 
   const getMyEcosystems = async () => {
     try {
@@ -138,6 +143,25 @@ const Ecosystem = () => {
     // Copy the URL to the clipboard
     const siteNme = `${window.location.origin}/${ecosystemDomain}`;
     navigator.clipboard.writeText(siteNme);
+  };
+
+  const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
+    
+    console.log('Ecosystem Name:', ecosystemName);
+  console.log('Ecosystem Domain:', ecosystemDomain);
+  console.log('Steps:', steps);
+  console.log('ID:', id);
+
+    dispatch(updateField({ field: 'ecosystemName', value: ecosystemName }));
+    dispatch(updateField({ field: 'ecosystemDomain', value: ecosystemDomain }));
+    dispatch(setEcosystemId(id));
+  
+    if (steps === 2) {
+      navigate('/creator/dashboard/Create-Form');
+    } else if (steps === 1) {
+      navigate('/creator/dashboard/Edit-Template'); 
+    } else if (steps === 0)
+      navigate('/creator/dashboard/New-Ecosystem')
   };
 
   return (
@@ -316,6 +340,15 @@ const Ecosystem = () => {
                             <Button
                               variant="outline-primary"
                               className="me-2 mb-2 mb-md-0"
+                              onClick={() =>
+                                handleContinue(
+                                  eco.ecosystemName,
+                                  eco.ecosystemDomain,
+                                  eco.steps,
+                                  eco._id, 
+                                  
+                                )
+                              }
                             >
                               Continue
                             </Button>

@@ -1,33 +1,6 @@
 const categorySubSection = {
 
-    "Government": [
-      "Licensing",
-      "e-Governance",
-      "Tax Management",
-      "Upskilling Programs"
-    ],
-    "Corporations": [
-      "Hackathons",
-      "Pitch Competitions",
-      "Incubation Programs",
-      "Accelerator Programs",
-      "Upskilling Programs"
-    ],
-    "Foundations/NGO's": [
-      "Program Management",
-      "Event Management",
-      "Hackathons",
-      "Incubation programs",
-      "Upskilling Programs"
-    ],
-    "Religious Bodies": [
-      "Donor management",
-      "Volunteer management",
-      "Study Management",
-      "Surveys",
-      "Events Management"
-    ],
-
+    
     "Professional Services": [
       "Legal Consulting",
       "Financial Planning",
@@ -183,6 +156,34 @@ const categorySubSection = {
       "Blockchain Development",
       "ERP Implementation",
     ],
+    "Government": [
+      "Licensing",
+      "e-Governance",
+      "Tax Management",
+      "Upskilling Programs"
+    ],
+    "Corporations": [
+      "Hackathons",
+      "Pitch Competitions",
+      "Incubation Programs",
+      "Accelerator Programs",
+      "Upskilling Programs"
+    ],
+    "Foundations/NGO's": [
+      "Program Management",
+      "Event Management",
+      "Hackathons",
+      "Incubation programs",
+      "Upskilling Programs"
+    ],
+    "Religious Bodies": [
+      "Donor management",
+      "Volunteer management",
+      "Study Management",
+      "Surveys",
+      "Events Management"
+    ],
+
     
   };
   

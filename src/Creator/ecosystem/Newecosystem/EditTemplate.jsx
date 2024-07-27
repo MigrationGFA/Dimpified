@@ -26,17 +26,18 @@ import PreviewPageSize from "./PreviewPageSize";
 import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
 
 const templateSections = [
-  { id: 1, name: "Government" },
-  { id: 2, name: "Corporations" },
-  { id: 3, name: "Foundation/NGO's" },
-  { id: 4, name: "Religious Bodies" },
-  { id: 5, name: "Professional Services" },
-  { id: 6, name: "Creative Services" },
-  { id: 7, name: "Trade Services" },
-  { id: 8, name: "Personal Care Services" },
-  { id: 9, name: "Educational Services" },
-  { id: 10, name: "Event Services" },
-  { id: 11, name: "Technology Services" },
+  { id: 1, name: "Professional Services" },
+  { id: 2, name: "Creative Services" },
+  { id: 3, name: "Trade Services" },
+  { id: 4, name: "Personal Care Services" },
+  { id: 5, name: "Educational Services" },
+  { id: 6, name: "Event Services" },
+  { id: 7, name: "Technology Services" },
+  { id: 8, name: "Government" },
+  { id: 9, name: "Corporations" },
+  { id: 10, name: "Foundation/NGO's" },
+  { id: 11, name: "Religious Bodies" },
+ 
 ];
 
 const EditTemplate = () => {
@@ -244,11 +245,11 @@ const EditTemplate = () => {
               </div>
               <div className="d-sm-flex justify-content-between align-items-center mt-8">
                 <h3 className="">Select a Template</h3>
-                <div className="d-flex ">
+                {/* <div className="d-flex ">
                   <div className="me-5" onClick={handleShow}>
                     <Link to="">
                       <Button variant="primary">
-                        {/* <i className="fe fe-edit me-2"></i> */}
+                        <i className="fe fe-edit me-2"></i>
                         Get Premium Template
                       </Button>
                     </Link>
@@ -260,7 +261,7 @@ const EditTemplate = () => {
                       Create New Template
                     </Button>
                   </Link>
-                </div>
+                </div> */}
               </div>
               <Row className={showModal ? "blurred" : ""}>
                 {Templates.map((template) => (
@@ -276,13 +277,13 @@ const EditTemplate = () => {
                       <Card.Body className="text-center">
                         <Card.Title>{template.name}</Card.Title>
                         <div className="overlay">
-                          <Button
+                          {/* <Button
                             variant="primary"
                             className="select-preview"
                             onClick={handleShow}
                           >
                             Preview Template
-                          </Button>
+                          </Button> */}
                           <Button
                             variant="primary"
                             className="select-button"
@@ -354,12 +355,11 @@ const EditTemplate = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Please cross check for spelling or any error before submiting
+        Kindly check for errors including spelling errors before continuing.  
           <br />
           <p className="mt-5">
             <strong>Note:</strong> <br />
-            If you click on No, you can still edit the template by clicking on
-            the previous button bellow the template
+            If you click on review, you’ll be able to check for spelling errors, if you click on continue, it will take you to the next page
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -368,11 +368,11 @@ const EditTemplate = () => {
             variant="secondary"
             onClick={handleCloseModal}
           >
-            No
+            Review
           </Button>
 
           <Button variant="primary" disabled={loading} onClick={handleSubmit}>
-            {loading ? "Processing" : "Yes"}
+            {loading ? "Processing" : "Continue"}
           </Button>
         </Modal.Footer>
       </Modal>
