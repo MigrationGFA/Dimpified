@@ -25,6 +25,7 @@ import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
 import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
 
+
 const templateSections = [
   { id: 1, name: "Professional Services" },
   { id: 2, name: "Creative Services" },
@@ -76,6 +77,7 @@ const EditTemplate = () => {
         return <Template2 />;
       case 2:
         return <Template1 />;
+     
       // Add cases for Template3 and Template4...
       default:
         return <div>Invalid template</div>;
