@@ -73,7 +73,7 @@ const CourseSingle = () => {
   };
 
   const handleFlutterPayment = useFlutterwave({
-    public_key: "FLWPUBK_TEST-d99e582b1f593f250ea49b53385f5cce-X",
+    public_key: import.meta.env.VITE_FLW_PUBLIC_KEY,
     tx_ref: generateTxRef(),
     amount: parseInt(sessionStorage.getItem("price")),
     currency: "NGN",
@@ -88,6 +88,7 @@ const CourseSingle = () => {
       description: "Course Purchase Payment",
       logo: sessionStorage.getItem("ecoLogo"),
     },
+    
   });
 
   const verifyFlutterwave = async (tx_ref) => {

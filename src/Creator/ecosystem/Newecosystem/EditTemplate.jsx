@@ -17,6 +17,7 @@ import "./Steps.css";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
 import Template2 from "../../../EditTemplate/Template2";
+import Template3 from "../../../EditTemplate/Template1";
 import PreviewPage from "../../../EditTemplate/Preview";
 import Templates from "../../../data/Template/LandingPageTemplate";
 import { useSelector } from "react-redux";
@@ -24,6 +25,7 @@ import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
 import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
+
 
 const templateSections = [
   { id: 1, name: "Professional Services" },
@@ -75,7 +77,10 @@ const EditTemplate = () => {
       case 1:
         return <Template2 />;
       case 2:
+        return <Template2 />;
+      case 3:
         return <Template1 />;
+       
       // Add cases for Template3 and Template4...
       default:
         return <div>Invalid template</div>;
