@@ -8,11 +8,11 @@ const Templates = [
     name: "Template 1",
     img: template1,
   },
-  {
-    id: 2,
-    name: "Template 2",
-    img: template2,
-  }
+  // {
+  //   id: 2,
+  //   name: "Template 2",
+  //   img: template2,
+  // }
 
 ];
 
