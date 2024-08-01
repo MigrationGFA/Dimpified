@@ -25,8 +25,8 @@ const Support = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ reason: "", message: "" });
-  const [showMessageModal, setShowMessageModal] = useState(false); 
-  const [modalMessage, setModalMessage] = useState(""); 
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     if (creatorId) {
@@ -179,10 +179,21 @@ const Support = () => {
         <Col lg={12} md={12} sm={12}>
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
-              <h1 className="mb-0 h2 fw-bold">Support</h1>
+              <h1 className="mb-0 h2 fw-bold">
+                Support{" "}
+                <small
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "gray",
+                    fontWeight: "normal",
+                  }}
+                >
+                  (from you to us)
+                </small>
+              </h1>
               <p>
-                Keep track of your support information and submit support
-                requests.
+                Keep track of your previous support ticket or create new submit
+                support requests.
               </p>
             </div>
           </div>
@@ -315,7 +326,7 @@ const Support = () => {
             <Col lg={12} md={12} sm={12}>
               <Card className="border-0">
                 <Card.Header>
-                  <h4 className="mb-0">Support Requests</h4>
+                  <h4 className="mb-0">Support Requests </h4>
                 </Card.Header>
                 <Card.Body>
                   <Table responsive>
@@ -357,7 +368,10 @@ const Support = () => {
           </Row>
 
           {/* Message Modal */}
-          <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
+          <Modal
+            show={showMessageModal}
+            onHide={() => setShowMessageModal(false)}
+          >
             <Modal.Header closeButton>
               <Modal.Title>Action Completed</Modal.Title>
             </Modal.Header>
@@ -365,7 +379,10 @@ const Support = () => {
               <p>{modalMessage}</p>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowMessageModal(false)}>
+              <Button
+                variant="secondary"
+                onClick={() => setShowMessageModal(false)}
+              >
                 Close
               </Button>
             </Modal.Footer>

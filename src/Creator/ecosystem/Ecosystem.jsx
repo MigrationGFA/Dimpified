@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Button, Card, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Col, Row, Button, Card, Image, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../Components/elements/advance-table/Pagination";
-
+import { updateField, setEcosystemId } from "../../features/ecosystem";
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
   if (message.length > maxLength) {
@@ -50,15 +50,22 @@ function getTimeDifference(updatedAt) {
 }
 
 const Ecosystem = () => {
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
   const [ecosystems, setEcosystems] = useState([]);
   const [ecosystemData, setEcosystemData] = useState({});
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [showFallback, setShowFallback] = useState(false);
+  const [url, setEcoUrl] = useState(null);
 
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
+
+ 
+  
 
   const getMyEcosystems = async () => {
     try {
@@ -109,6 +116,53 @@ const Ecosystem = () => {
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // to share ecosystem
+
+  const handleShare = async (ecosystemName, ecosystemDomain) => {
+    try {
+      // Check if Web Share API is supported by the browser
+      if (navigator.share) {
+        await navigator.share({
+          title: ecosystemName,
+          url: `${window.location.origin}/${ecosystemDomain}`,
+        });
+        console.log("Page shared successfully");
+      } else {
+        console.log("coming here");
+        setEcoUrl(`${window.location.origin}/${ecosystemDomain}`);
+        // Show fallback for browsers that don't support Web Share API
+        setShowFallback(true);
+      }
+    } catch (error) {
+      console.error("Error sharing page:", error);
+    }
+  };
+
+  const handleCopy = (ecosystemDomain) => {
+    // Copy the URL to the clipboard
+    const siteNme = `${window.location.origin}/${ecosystemDomain}`;
+    navigator.clipboard.writeText(siteNme);
+  };
+
+  const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
+    
+    console.log('Ecosystem Name:', ecosystemName);
+  console.log('Ecosystem Domain:', ecosystemDomain);
+  console.log('Steps:', steps);
+  console.log('ID:', id);
+
+    dispatch(updateField({ field: 'ecosystemName', value: ecosystemName }));
+    dispatch(updateField({ field: 'ecosystemDomain', value: ecosystemDomain }));
+    dispatch(setEcosystemId(id));
+  
+    if (steps === 2) {
+      navigate('/creator/dashboard/Create-Form');
+    } else if (steps === 1) {
+      navigate('/creator/dashboard/Edit-Template'); 
+    } else if (steps === 0)
+      navigate('/creator/dashboard/New-Ecosystem')
+  };
 
   return (
     <div>
@@ -269,11 +323,32 @@ const Ecosystem = () => {
                                   View Site
                                 </Button>
                               </a>
+                              <Button
+                                variant="primary"
+                                className="me-2 mb-2 mb-md-0"
+                                onClick={() =>
+                                  handleShare(
+                                    eco.ecosystemName,
+                                    eco.ecosystemDomain
+                                  )
+                                }
+                              >
+                                Share
+                              </Button>
                             </div>
                           ) : (
                             <Button
                               variant="outline-primary"
                               className="me-2 mb-2 mb-md-0"
+                              onClick={() =>
+                                handleContinue(
+                                  eco.ecosystemName,
+                                  eco.ecosystemDomain,
+                                  eco.steps,
+                                  eco._id, 
+                                  
+                                )
+                              }
                             >
                               Continue
                             </Button>
@@ -296,6 +371,24 @@ const Ecosystem = () => {
         currentPage={currentPage}
         paginate={paginate}
       />
+      {showFallback && (
+        <Modal show={showFallback} onHide={() => setShowFallback(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Copy Job Link</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input type="text" value={url} readOnly /> <br />
+            <Button className="mt-5 " onClick={handleCopy}>
+              Copy
+            </Button>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowFallback(false)}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };

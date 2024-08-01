@@ -26,10 +26,14 @@ const HelpCenter = () => {
       try {
         const [helpDataResponse, helpcenterDataResponse] = await Promise.all([
           axios.get(
-            `${import.meta.env.VITE_API_URL}/get-creator-help-request/${creatorId}`
+            `${
+              import.meta.env.VITE_API_URL
+            }/get-creator-help-request/${creatorId}`
           ),
           axios.get(
-            `${import.meta.env.VITE_API_URL}/creator/my-help-request/${creatorId}`
+            `${
+              import.meta.env.VITE_API_URL
+            }/creator/my-help-request/${creatorId}`
           ),
         ]);
 
@@ -38,14 +42,20 @@ const HelpCenter = () => {
         const helpcenterData = helpcenterDataResponse.data;
 
         setStats({
-          totalHelpRequests: helpcenterData.totalHelpRequests || helpData.totalHelpRequests || 0,
-          totalCompletedHelpRequest: helpcenterData.totalCompletedHelpRequest || helpData.totalCompletedHelpRequest || 0,
-          totalPendingHelpRequest: helpcenterData.totalPendingHelpRequest || helpData.totalPendingHelpRequest || 0,
+          totalHelpRequests:
+            helpcenterData.totalHelpRequests || helpData.totalHelpRequests || 0,
+          totalCompletedHelpRequest:
+            helpcenterData.totalCompletedHelpRequest ||
+            helpData.totalCompletedHelpRequest ||
+            0,
+          totalPendingHelpRequest:
+            helpcenterData.totalPendingHelpRequest ||
+            helpData.totalPendingHelpRequest ||
+            0,
         });
 
-        setData(helpData.creatorHelpRequest || []); 
+        setData(helpData.creatorHelpRequest || []);
         setLoading(false);
-
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -103,10 +113,20 @@ const HelpCenter = () => {
         <Col lg={12} md={12} sm={12}>
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
-              <h1 className="mb-0 h2 fw-bold">Help Center</h1>
+              <h1 className="mb-0 h2 fw-bold">
+                Help Center
+                <small
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "gray",
+                    fontWeight: "normal",
+                  }}
+                >
+                  (from your ecosystem users)
+                </small>
+              </h1>
               <p>
-                Navigate effortlessly! Access FAQs, guides, and troubleshooting
-                tips for seamless platform usage.
+                Reply support ticket raise by all your ecosystem website users
               </p>
             </div>
           </div>

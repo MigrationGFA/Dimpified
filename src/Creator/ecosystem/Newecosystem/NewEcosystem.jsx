@@ -56,18 +56,25 @@ const NewEcosystem = () => {
       } else {
         setIsOtherCategory(false);
         const subCategories = categorySubSection[value] || [];
-        setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+        setSubCategoryOptions(
+          subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+        );
       }
     }
   };
 
   useEffect(() => {
-    if (ecosystem.targetAudienceSector && ecosystem.targetAudienceSector !== "Other") {
-      const subCategories = categorySubSection[ecosystem.targetAudienceSector] || [];
-      setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+    if (
+      ecosystem.targetAudienceSector &&
+      ecosystem.targetAudienceSector !== "Other"
+    ) {
+      const subCategories =
+        categorySubSection[ecosystem.targetAudienceSector] || [];
+      setSubCategoryOptions(
+        subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+      );
     }
   }, [ecosystem.targetAudienceSector]);
-
 
   const validateForm = () => {
     const {
@@ -223,8 +230,6 @@ const NewEcosystem = () => {
     { value: "Other", label: "Other" },
   ];
 
-  
-
   return (
     <Container fluid className="p-0">
       <EcoHeader />
@@ -245,7 +250,7 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                        EcoSystem Name<span className="text-danger">*</span>
+                        A. Ecosystem Name<span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -264,7 +269,7 @@ const NewEcosystem = () => {
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                        Ecosystem Domain<span className="text-danger">*</span>
+                        B. Ecosystem Domain<span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
                         <span className="input-group-text">
@@ -306,35 +311,18 @@ const NewEcosystem = () => {
                           )}
                         </Alert>
                       )}
-                      <p className="text-danger text-uppercase fs-5 fw-bold">
-                        Or
-                      </p>
-                      <div className="d-flex">
-                        <Button
-                          style={{ backgroundColor: "#00008B" }}
-                          onClick={() => setShowModal(true)}
-                          className="me-3"
-                        >
-                          Purchase New Domain
-                        </Button>
-                        <Button
-                          style={{ backgroundColor: "#00008B" }}
-                          onClick={() => setShowModal(true)}
-                        >
-                          Transfer Domain
-                        </Button>
-                      </div>
+
                     </Col>
                   </Row>
                   <Row className="mb-3">
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label>
-                          Target Audience Sector
+                        C. Industry Sector
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <FormSelect
-                          placeholder="Select Target Audience Sector"
+                          placeholder="Select Industry Sector"
                           id="target"
                           name="target"
                           selectedValue={ecosystem.targetAudienceSector}
@@ -349,12 +337,11 @@ const NewEcosystem = () => {
                       {isOtherCategory ? (
                         <Form.Group>
                           <Form.Label htmlFor="ecosystem-objective">
-                            What's your main Objective of Creating this
-                            Ecosystem
+                         D. What’s your specific business type
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <FormSelect
-                            placeholder="Select Objective"
+                            placeholder="Enter business activities"
                             id="objective"
                             name="objective"
                             selectedValue={ecosystem.mainObjective}
@@ -367,12 +354,11 @@ const NewEcosystem = () => {
                       ) : (
                         <Form.Group className="mb-3">
                           <Form.Label htmlFor="ecosystem-objective">
-                            What's your main Objective of Creating this
-                            Ecosystem
+                         D. What’s your specific business type
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <FormSelect
-                            placeholder="Select Objective"
+                            placeholder="Select business activities"
                             selectedValue={ecosystem.mainObjective}
                             options={subCategoryOptions}
                             id="subCategory"
@@ -387,14 +373,14 @@ const NewEcosystem = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg={6} className="col-12">
+                    <Col lg={6} className="col-12 mb-3">
                       <Form.Label htmlFor="expected-audience-number">
-                        Expected Audience Number
+                      E. Selected your expected number of users
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <FormSelect
                         options={audienceNumber}
-                        placeholder="Select Expected Audience Number"
+                        placeholder="Select Expected Number"
                         selectedValue={ecosystem.expectedAudienceNumber}
                         onChange={(value) =>
                           handleFieldChange("expectedAudienceNumber", value)
@@ -403,9 +389,9 @@ const NewEcosystem = () => {
                       />
                     </Col>
                     <Col lg={6} className="col-12">
-                      <Form.Group className="mb-3">
+                      <Form.Group className="mb-3 ">
                         <Form.Label>
-                          Do you have experience with creating ecosystems?{" "}
+                          F. Do you have experience with creating ecosystems?{" "}
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <FormSelect
@@ -423,13 +409,13 @@ const NewEcosystem = () => {
                   </Row>
                   <Col className="mb-3">
                     <Form.Label htmlFor="ecosystem-description">
-                      Ecosystem Description
+                      G. Ecosystem Description
                       <span className="text-danger">*</span>
                     </Form.Label>
                     <Form.Control
                       as="textarea"
                       id="ecosystem-description"
-                      placeholder="Write the ecosystem description"
+                      placeholder="Describe your business"
                       value={ecosystem.ecosystemDescription}
                       onChange={(e) =>
                         handleFieldChange(
@@ -474,23 +460,21 @@ const NewEcosystem = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to make this ecosystem live for users to have
-          access to?
+          Are you sure you want to activate this ecosystem for users to access?
           <br />
-          <strong>Note:</strong> <br />
-          If you click on No, you can still edit the ecosystem information and
-          if you click on Next, you will be creating your ecosystem, but you
-          won't be able to edit the ecosystem information.
+          <strong>Please note</strong> <br /> Kindly review the information as you will not be able to change your ecosystem information once you click next
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setConfirmModal(false)}>
-            No
+            Review
           </Button>
           <Button variant="primary" onClick={handleConfirm}>
-            Yes
+            Next
           </Button>
         </Modal.Footer>
       </Modal>
+
+
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Search Domain</Modal.Title>
