@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import Header from '../CommunityChat/Header';
-import EventsFeed from '../CommunityChat/EventsFeed';
+import Header from './Header';
+import UserProfile from './UserProfile';
 // import '../CommunityChat/Page.css'
 import StudentProfileLayout from '../../UserDashboard/student/StudentProfileLayout';
 
@@ -14,7 +14,7 @@ const Community = () => {
             <Header />
           </Col>
           <Col xs={12} lg={3} className="community-right">
-            <EventsFeed />
+            <UserProfile />
           </Col>
         </Row>
       </Container>
