@@ -1,0 +1,62 @@
+.commentSectionContainer {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+  }
+  
+  .commentRow {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    border: 1px solid #dee2e6;
+  }
+  
+  .replyRow {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+  }
+  
+  .noCommentsContainer {
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .commentImage {
+    width: 75%;
+    border-radius: 50%;
+  }
+  
+  .commentInputContainer,
+  .replyInputContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .commentInput,
+  .replyInput {
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+  
+  .commentButton,
+  .replyButton {
+    margin-left: 0.5rem;
+  }
+  
+  .commentTime {
+    margin-right: 0.75rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+  }
+  
+  .commentButtonLink,
+  .replyButtonLink {
+    padding: 0;
+    margin-right: 0.75rem;
+  }
+  
