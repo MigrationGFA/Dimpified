@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 const NavbarComponent = () => {
   return (
-    <Navbar bg="white" expand="lg" className="px-md-8 px-sm-2 py-0">
+    <Navbar bg="white" expand="lg" className="px-md-8 px-sm-2 py-2">
       <Navbar.Brand href="/dimp/developer-program">
         <img
           src={Logo}
           width="100"
-          height="100"
+          height="50"
           className="d-inline-block align-center"
           alt="dimp logo"
         />{" "}

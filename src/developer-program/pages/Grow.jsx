@@ -61,13 +61,13 @@ const Grow = () => {
         </Row>
         <Row className="mt-6 d-flex justify-content-between" id="programs">
           <Col lg={3} xs={10} className="mt-6">
-            <h3 className="display-5">Affiliate Program</h3>
-            <p>Learn about driving traffic and prompting sales with eBay Partner Network.</p>
+            <h3 className="display-5">Events</h3>
+            <p>Learn about driving traffic and prompting sales with Dimp Partner Network.</p>
             <div className="d-flex justify-content-between">
               <Link
                 variant="secondary"
                 className="btn btn-outline-secondary align-self-center rounded-pill"
-                to="/dimp/developer-program/affliate-program"
+                to="/dimp/developer-program/events"
               >
                 Learn more <ArrowRight />
               </Link>

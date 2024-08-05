@@ -13,7 +13,7 @@ const DevProgramAuthForm = () => {
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmEmail, setShowConfirmEmail] = useState(false);
+  // const [showConfirmEmail, setShowConfirmEmail] = useState(false);
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -23,9 +23,9 @@ const DevProgramAuthForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const toggleConfirmEmailVisibility = () => {
-    setShowConfirmEmail(!showConfirmEmail);
-  };
+  // const toggleConfirmEmailVisibility = () => {
+  //   setShowConfirmEmail(!showConfirmEmail);
+  // };
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),

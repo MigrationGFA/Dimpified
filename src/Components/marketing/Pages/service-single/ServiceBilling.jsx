@@ -9,16 +9,23 @@ import {
   Modal,
   ProgressBar,
 } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CountryDropdown } from "react-country-region-selector";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { PiNumberCircleThreeFill, PiNumberCircleTwoFill } from "react-icons/pi";
 import paystack from "../../../../assets/Paystack.png";
 import flutterwave from "../../../../assets/Flutterwave.png";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useSelector } from "react-redux";
+import { showToast } from "../../../../Components/Showtoast";
+import axios from "axios";
 
 const ServiceBilling = () => {
   const location = useLocation();
+  let { ecosystemDomain, id } = useParams();
+  const user = useSelector((state) => state.authentication.user);
+
   const [dataToPass, setDataToPass] = useState(null);
 
   useEffect(() => {
@@ -28,6 +35,7 @@ const ServiceBilling = () => {
   console.log(dataToPass);
   const userName = sessionStorage.getItem("username");
 
+  const [loading, setLoading] = useState(false);
   const [billingInfo, setBillingInfo] = useState({
     username: userName,
     country: "",
@@ -38,6 +46,9 @@ const ServiceBilling = () => {
 
   const [paymentOption, setPaymentOption] = useState("");
   const [rememberPayment, setRememberPayment] = useState(false);
+  const [notLogin, setNotLogin] = useState(false);
+  const [navigatePage, setNavigatePage] = useState(false);
+  const [navigateLoginPage, setNavigateLoginPage] = useState(false);
 
   // Modal states
   const [showModal, setShowModal] = useState(false);
@@ -48,6 +59,29 @@ const ServiceBilling = () => {
     state: "",
     address: "",
   });
+
+  useEffect(() => {
+    if (user === null) {
+      setNotLogin(true);
+    }
+  }, [user]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ecosystemDomain) {
+      setNavigatePage(true);
+      setNavigateLoginPage(true);
+    }
+  }, [ecosystemDomain]);
+
+  const handleLoginNavigate = () => {
+    if (navigateLoginPage) {
+      navigate(`/${ecosystemDomain}/signin`);
+    } else {
+      navigate(`/${ecosystemDomain}`);
+    }
+  };
 
   const handleBillingChange = (e) => {
     const { name, value } = e.target;
@@ -114,6 +148,54 @@ const ServiceBilling = () => {
       ? `${shortenedDescription}...`
       : shortenedDescription;
 
+  // flutterwave payment
+  const generateTxRef = () => {
+    const randomString = Math.random().toString(36).substring(7);
+    const timestamp = Date.now();
+    return `${timestamp}-${randomString}`;
+  };
+
+  const handleFlutterPayment = useFlutterwave({
+    public_key: "FLWPUBK_TEST-d99e582b1f593f250ea49b53385f5cce-X",
+    tx_ref: generateTxRef(),
+    amount: total,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
+    customer: {
+      email: user.data.email,
+      phone_number: "09064000000",
+      name: user.data.username,
+    },
+    customizations: {
+      title: "Service Purchase Payment",
+      description: "Service Purchase Payment",
+      logo: sessionStorage.getItem("ecoLogo"),
+    },
+  });
+
+  const verifyFlutterwave = async (tx_ref) => {
+    sessionStorage.removeItem("totalAmount");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/verify-payment`,
+        {
+          reference: tx_ref,
+          email: user.data.email,
+          itemType: "Service",
+          userId: user.data.UserId,
+          provider: "flutterwave",
+          itemId: id,
+          ecosystemDomain: ecosystemDomain,
+        }
+      );
+      setLoading(false);
+      showToast(response.data.message);
+      navigate(`/${ecosystemDomain}/service/order-summary/${id}`)
+    } catch (error) {
+      setLoading(false);
+      showToast(error.response.data.message);
+    }
+  };
   return (
     <Container className="mt-5 mb-4">
       {/* Progress Bar */}
@@ -126,7 +208,7 @@ const ServiceBilling = () => {
           <span className="fw-bolder me-3">Confirm & Pay</span>
           <MdOutlineNavigateNext className="me-2 display-6" />
           <PiNumberCircleThreeFill className="me-1 display-6" />
-          <span className="text-muted me-3">Submit Requirements</span>
+          <span className="text-muted me-3">Order Summary</span>
         </Col>
       </Row>
 
@@ -232,15 +314,35 @@ const ServiceBilling = () => {
                   /> */}
                 </Form>
                 {/* {paymentOption && ( */}
-                  <Row>
-                    <Button className="me-2 mb-2 mt-2">
-                      <img src={flutterwave} alt="paystack" width="150" />
-                    </Button>
-
-                    {/* <Button className="me-2 mb-2 mt-2">
+                <Row>
+                  {/* <Button className="me-2 mb-2 mt-2">
+                    <img src={flutterwave} alt="paystack" width="150" />
+                  </Button> */}
+                  <div className="d-grid" style={{ height: "50px" }}>
+                    {notLogin ? (
+                      <Button variant="primary" onClick={handleLoginNavigate}>
+                        Login
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          handleFlutterPayment({
+                            callback: (response) => {
+                              verifyFlutterwave(response.transaction_id);
+                              closePaymentModal(); // this will close the modal programmatically
+                            },
+                          })
+                        }
+                      >
+                        <img src={flutterwave} alt="paystack" width="150" />
+                      </Button>
+                    )}
+                  </div>
+                  {/* <Button className="me-2 mb-2 mt-2">
                       <img src={paystack} alt="paystack" width="150" />
                     </Button> */}
-                  </Row>
+                </Row>
                 {/* )} */}
               </Row>
             </Card.Body>

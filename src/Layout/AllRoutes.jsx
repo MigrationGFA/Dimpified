@@ -93,6 +93,7 @@ import UserSingleCourse from "../Components/marketing/Pages/courses/course-singl
 import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
 import UserServiceBilling from "../Components/marketing/Pages/service-single/ServiceBilling"
+import UserOrderSummary from "../Components/marketing/Pages/service-single/OrderSummary"
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
 
@@ -289,9 +290,10 @@ const AllRoutes = () => {
         element={<UserSingleService />}
       />
       <Route
-        path="/:ecosystemDomain/service/service-billing"
+        path="/:ecosystemDomain/service/service-billing/:id"
         element={<UserServiceBilling />}
       />
+      <Route path="/:ecosystemDomain/service/order-summary/:id" element={<UserOrderSummary />} />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
 
       <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />

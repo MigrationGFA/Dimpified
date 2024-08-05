@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import { Form, Link, useLocation, useParams } from "react-router-dom";
 
-import { FaArrowRight, FaBookmark, FaNairaSign } from "react-icons/fa6";
+import { FaArrowRight, FaBookmark } from "react-icons/fa6";
 
 import GKTippy from "../../../elements/tooltips/GKTippy";
 import { Fragment, useEffect, useState } from "react";
@@ -366,9 +366,7 @@ const ServicesSingle = () => {
                         <i className="fe fe-briefcase text-muted"></i>
                         <span className="ms-1 ">
                           {serviceDetails && serviceDetails.category && (
-                            <span>
-                              Department: {serviceDetails.category}
-                            </span>
+                            <span>Department: {serviceDetails.category}</span>
                           )}
                         </span>
                       </span>
@@ -391,15 +389,16 @@ const ServicesSingle = () => {
                       </span>
                       <span className="me-4">
                         <i className="fe fe-clock text-muted"></i>
-                        <span className="ms-1 ">
-                          {serviceDetails.format} 
-                        </span>
+                        <span className="ms-1 ">{serviceDetails.format}</span>
                       </span>
                       {/* location */}
                       <span className="me-2">
-                      <i className="fe fe-map-pin text-muted"></i>
-                      <span className="ms-1 ">{serviceDetails.services && serviceDetails.services[0].priceFormat}</span>
-                    </span>
+                        <i className="fe fe-map-pin text-muted"></i>
+                        <span className="ms-1 ">
+                          {serviceDetails.services &&
+                            serviceDetails.services[0].priceFormat}
+                        </span>
+                      </span>
                     </div>
                     <div>
                       {/* time */}
@@ -536,9 +535,10 @@ const ServicesSingle = () => {
                             zIndex: 1050, // Same as Bootstrap modal z-index
                           }}
                         >
-                          <Modal.Header onHide={handleClose}>
+                          <Modal.Header onHide={handleClose} className="d-flex justify-content-between ">
                             <Modal.Title className="p-4 mt-2 display-6 fw-bold">
-                              Additional payment Information
+                              {/* Additional payment Information */}
+                              Booking Details
                             </Modal.Title>
                             <Button
                               variant="transparent"
@@ -558,6 +558,7 @@ const ServicesSingle = () => {
                               incentives={pkg.incentives}
                               currency={formatCurrency(currencyName)}
                               ecosystemDomain={ecosystemDomain}
+                              id={id}
                               // additionalRevision={pkg.additionalRevision.price}
                             />
                           </Modal.Body>

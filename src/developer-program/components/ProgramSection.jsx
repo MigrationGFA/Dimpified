@@ -17,6 +17,7 @@ const ProgramSection = () => {
               Learn more
             </Link>
             <Link
+              to="/dimp/developer-program/auth?tab=register"
               variant="secondary"
               className="btn btn-outline-secondary align-self-center rounded-pill"
             >
@@ -42,7 +43,11 @@ const ProgramSection = () => {
         <Col lg={3} xs={10} className="mt-6">
           <h3 className="display-5">Grow</h3>
           <p>Receive support for your application in the Dimp ecosystem.</p>
-          <Link variant="primary" className="align-self-center">
+          <Link
+            to="/dimp/developer-program/grow"
+            variant="primary"
+            className="align-self-center"
+          >
             Learn more
           </Link>
         </Col>

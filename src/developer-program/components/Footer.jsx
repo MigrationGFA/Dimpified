@@ -21,7 +21,7 @@ const Footer = () => {
                 src={FooterLogo}
                 alt="Footer Logo"
                 className="logo-inverse"
-                style={{ height: "100px", width: "100px" }}
+                style={{ height: "50px", width: "100px" }}
               />
               <div>
                 <p>
