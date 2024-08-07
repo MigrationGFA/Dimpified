@@ -29,7 +29,7 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
   }, [post._id]);
 
   const handleCommentClick = () => {
-    setIsCommenting(true);
+    setCommenting(true);
     setTimeout(() => {
       commentInputRef.current?.scrollIntoView({ behavior: 'smooth' });
       commentInputRef.current?.focus();
@@ -89,8 +89,16 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
                 onChange={(e) => setEditedCaption(e.target.value)}
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-2">Save</Button>
-            <Button variant="secondary" onClick={() => setIsEditing(false)} className="mt-2 ms-2">Cancel</Button>
+            <Button variant="primary" type="submit" className="mt-2">
+              Save
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setIsEditing(false)}
+              className="mt-2 ms-2"
+            >
+              Cancel
+            </Button>
           </Form>
         ) : (
           <>
@@ -120,7 +128,9 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
                 </div>
                 {post.likes}
               </div>
-              <div className="interaction-details">{comments.length} comments</div>
+              <div className="interaction-details">
+                {comments.length} comments
+              </div>
             </div>
             <hr />
             <div className="interaction-buttons d-flex justify-content-between mt-2">
@@ -335,7 +345,7 @@ const Header = () => {
             value={message}
             onChange={({ target }) => setMessage(target.value)}
             className="form-control border-0 form-control-simple no-resize"
-            style={{ height: '50px' }}
+            style={{ height: "50px" }}
           />
           <div className="position-absolute end-0 mt-n7 me-4 d-flex align-items-center">
             <label htmlFor="image-upload" className="me-2 cursor-pointer">

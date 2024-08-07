@@ -30,7 +30,7 @@ import CategorySingle from "../Creator/courses/CategorySingle";
 import MyUser from "../Creator/user/MyUser";
 import JobProvider from "../Creator/user/JobProvider";
 import JobSeeker from "../Creator/user/JobSeeker";
-import AdminDashboardIndex from "../Creator/UserDashboardIndex";
+import UserDashboardIndex from "../Creator/UserDashboardIndex";
 
 // Import Notification
 import Notification from "../Creator/authentication/Notifications";
@@ -51,8 +51,8 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-import Chat from "../Admin/chat/Chat";
-import ChatLayout from "./Dashboard/ChatLayout";
+// import Chat from "../Components/elements/chat/Chat" 
+// import ChatLayout from "./Dashboard/ChatLayout";
 import EditProfile from "../Creator/AccountSettings/EditProfile";
 import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
 
@@ -122,6 +122,18 @@ import CommunityChat from "../Components/CommunityChat/Page";
 import UserChat from "../Components/Chat/UserChat"
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 
+// ** Import Admin Dahbaord Menu Pages
+import AdminSignIn from "../Admin/Authentication/AdminSignIn"
+import AdminForgetPassword from "../Admin/Authentication/AdminForgetPassword";
+import AdminOverview from "../Admin/overview/AdminOverview";
+import AllCreator from "../Admin/AdminAllCreator/MyUser";
+import AdminDashboardIndex from "../Admin/AdminDashboardIndex";
+import AdminAllEcosystem from "../Admin/AdminAllEcosystem/AdminAllEcosystem";
+import OutSource from "../Admin/Outsource/OutSource";
+import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
+import AdminSupport from "../Admin/Support/Support";
+
+
 const AllRoutes = () => {
   return (
     <Routes>
@@ -142,6 +154,11 @@ const AllRoutes = () => {
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
+      <Route path="/admin/signin" element={<AdminSignIn />} />
+        <Route
+          path="/admin/forget-password"
+          element={<AdminForgetPassword />}
+        />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/verify-email" element={<UserEmailVerification />} />
       <Route path="/creator/verification" element={<VerifyEmail />} />
@@ -169,11 +186,12 @@ const AllRoutes = () => {
 
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
-      <Route element={<ChatLayout />}>
+      {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
-      </Route>
-      {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
-      <Route element={<AdminDashboardIndex />}>
+      </Route> */}
+
+      {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
+      <Route element={<UserDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
         <Route path="/creator/notifications" element={<Notification />} />
@@ -363,6 +381,26 @@ const AllRoutes = () => {
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
     
+{/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
+<Route element={<AdminDashboardIndex />}>
+        <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
+        <Route path="/admin/all-creator" element={<AllCreator />} />
+        <Route path="/admin/out-source" element={<OutSource />} />
+        <Route
+          path="/admin/all-ecosystem"
+          element={<AdminAllEcosystem />}
+        />
+        <Route
+          path="/admin/out-source/job-single"
+          element={<OutsourceJobSingle />}
+        />
+        <Route path="/admin/support" element={<AdminSupport />} />
+        <Route
+          path="admin/dashboard/layouts/layout-vertical"
+          element={<AdminOverview />}
+        />
+      </Route>
+
     </Routes>
   );
 };

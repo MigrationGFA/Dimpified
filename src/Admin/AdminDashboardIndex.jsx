@@ -1,12 +1,12 @@
 // import node module libraries
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
- 
+
 // import sub components
-import NavbarVertical from "../Layout/navbars/NavbarVertical";
-import HeaderDefault from "../Layout/navbars/HeaderDefault";
- 
-const UserDashboardIndex = (props) => {
+import NavbarVertical from "./../Layout/navbars/AdminNavbarVertical ";
+import HeaderDefault from "../Layout/navbars/AdminHeaderDefault";
+
+const AdminDashboardIndex = (props) => {
   const { children, className, overflowHidden } = props;
   const [showMenu, setShowMenu] = useState(true);
   const ToggleMenu = () => {
@@ -42,4 +42,4 @@ const UserDashboardIndex = (props) => {
     </div>
   );
 };
-export default UserDashboardIndex;
+export default AdminDashboardIndex;
