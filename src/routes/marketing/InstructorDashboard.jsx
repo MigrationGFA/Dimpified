@@ -61,6 +61,12 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/Ecosystemdashboard/Help-Center`,
       icon: "help-circle",
     },
+    {
+      id: 9,
+      title: "Community",
+      link: `/${ecosystemDomain}/community-chat`,
+      icon: "user",
+    },
     // {
     // 	id: 8,
     // 	title: 'Quiz',

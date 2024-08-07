@@ -17,6 +17,7 @@ import "./Steps.css";
 import EcoHeader from "./ecoHeader";
 import Template1 from "../../../EditTemplate/Template1";
 import Template2 from "../../../EditTemplate/Template2";
+import Template3 from "../../../EditTemplate/BarberTemplate";
 import PreviewPage from "../../../EditTemplate/Preview";
 import Templates from "../../../data/Template/LandingPageTemplate";
 import { useSelector } from "react-redux";
@@ -24,7 +25,6 @@ import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
 import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
-
 
 const templateSections = [
   { id: 1, name: "Professional Services" },
@@ -38,7 +38,6 @@ const templateSections = [
   { id: 9, name: "Corporations" },
   { id: 10, name: "Foundation/NGO's" },
   { id: 11, name: "Religious Bodies" },
- 
 ];
 
 const EditTemplate = () => {
@@ -76,8 +75,9 @@ const EditTemplate = () => {
       case 1:
         return <Template2 />;
       case 2:
+        return <Template3 />;
+      case 3:
         return <Template1 />;
-     
       // Add cases for Template3 and Template4...
       default:
         return <div>Invalid template</div>;
@@ -184,6 +184,14 @@ const EditTemplate = () => {
     checkScroll();
   }, []);
 
+  const handleSectionSelect = (id) => {
+    setActiveSection(id);
+  };
+
+  const filteredTemplates = Templates.filter(
+    (template) => template.sectionId === activeSection
+  );
+
   const handleShow = () => {
     setShowModal(true);
   };
@@ -206,7 +214,7 @@ const EditTemplate = () => {
         <div>
           {step === 1 && (
             <div>
-              <h3>Template Sections</h3>
+              <h3>A. Template Sections  (please select your industry to see the available templates)</h3>
               <div className="d-flex align-items-center position-relative">
                 <FaChevronLeft
                   className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
@@ -227,7 +235,7 @@ const EditTemplate = () => {
                           ? "bg-primary text-white"
                           : "bg-body-secondary"
                       }`}
-                      onClick={() => setActiveSection(section.id)}
+                      onClick={() => handleSectionSelect(section.id)}
                       style={{
                         padding: "10px 20px",
                         cursor: "pointer",
@@ -246,7 +254,7 @@ const EditTemplate = () => {
                 />
               </div>
               <div className="d-sm-flex justify-content-between align-items-center mt-8">
-                <h3 className="">Select a Template</h3>
+                <h3 className="">B. Select a Template (select your desired template)</h3>
                 {/* <div className="d-flex ">
                   <div className="me-5" onClick={handleShow}>
                     <Link to="">
@@ -266,7 +274,7 @@ const EditTemplate = () => {
                 </div> */}
               </div>
               <Row className={showModal ? "blurred" : ""}>
-                {Templates.map((template) => (
+                {filteredTemplates.map((template) => (
                   <Col key={template.id} md={4} className="mt-5 md-mt-0">
                     <Card className="template-card">
                       <Card.Img
@@ -357,11 +365,12 @@ const EditTemplate = () => {
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        Kindly check for errors including spelling errors before continuing.  
+          Kindly check for errors including spelling errors before continuing.
           <br />
           <p className="mt-5">
             <strong>Note:</strong> <br />
-            If you click on review, you’ll be able to check for spelling errors, if you click on continue, it will take you to the next page
+            If you click on review, you’ll be able to check for spelling errors,
+            if you click on continue, it will take you to the next page
           </p>
         </Modal.Body>
         <Modal.Footer>
