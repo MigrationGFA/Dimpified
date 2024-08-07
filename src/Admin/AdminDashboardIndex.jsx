@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 // import sub components
-import NavbarVertical from "./../Layout/navbars/NavbarVertical";
-import HeaderDefault from "../Layout/navbars/HeaderDefault";
+import NavbarVertical from "./../Layout/navbars/AdminNavbarVertical ";
+import HeaderDefault from "../Layout/navbars/AdminHeaderDefault";
 
 const AdminDashboardIndex = (props) => {
   const { children, className, overflowHidden } = props;

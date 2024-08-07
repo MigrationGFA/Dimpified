@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Row, Col, Card, Breadcrumb, Spinner, Tab, Nav } from "react-bootstrap";
 import axios from "axios";
-import OutsourceTable from "./OutsourceTable";
+import OutsourceTable from "../AdminAllEcosystem/AllEcosystemTable";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../Components/Showtoast";
 
@@ -123,8 +123,7 @@ const Outsource = () => {
             <div className="mb-3 mb-md-0">
               <h1 className="mb-1 h2 fw-bold">Out-Source Job</h1>
               <Breadcrumb>
-                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="#">Out-source</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/dashboard/overview">Dashboard</Breadcrumb.Item>
                 <Breadcrumb.Item active>All</Breadcrumb.Item>
               </Breadcrumb>
             </div>
@@ -144,14 +143,14 @@ const Outsource = () => {
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="unpaid" className="mb-sm-3 mb-md-0">
-                      Unpaid
+                      Pending
                     </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
+                  {/* <Nav.Item>
                     <Nav.Link eventKey="paid" className="mb-sm-3 mb-md-0">
                       Paid
                     </Nav.Link>
-                  </Nav.Item>
+                  </Nav.Item> */}
                   <Nav.Item>
                     <Nav.Link eventKey="completed" className="mb-sm-3 mb-md-0">
                       Completed

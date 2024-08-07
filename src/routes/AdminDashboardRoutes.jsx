@@ -35,73 +35,48 @@ export const DashboardMenu = [
     title: "Dashboard",
     icon: "home",
     children: [
-      { id: uuid(), link: "admin/dashboard/overview", name: "Overview" },
-      { id: uuid(), link: "admin/dashboard/analytics", name: "Analytics" },
+      { id: uuid(), link: "/admin/dashboard/overview", name: "Overview" },
+      // { id: uuid(), link: "/admin/dashboard/analytics", name: "Analytics" },
     ],
   },
 
   {
     id: uuid(),
-    title: "My Campaign",
+    title: "All Ecosystem",
     icon: "book",
-    // children: [
-    //   { id: uuid(), link: "admin/jobs/all-jobs", name: "All campaign" },
-    //   {
-    //     id: uuid(),
-    //     link: "admin/jobs/job-category",
-    //     name: "Campaign Category",
-    //   },
-    // ],
+    link: "/admin/all-ecosystem",
   },
   {
     id: uuid(),
-    title: "Out-Source",
-    icon: "book",
-    link: "/admin/out-source",
-  },
-
-  {
-    id: uuid(),
-    title: "Students",
+    title: "All Creators",
     icon: "user",
-    // children: [
-    //   { id: uuid(), link: "/admin/JobSeeker", name: "JobSeeker" },
-    //   { id: uuid(), link: "/admin/JobProvider", name: "JobProvider" },
-    // ],
+    link: "/admin/all-creator",
   },
-  {
-    id: uuid(),
-    title: "Payment",
-    icon: "user",
-    children: [
-      // { id: uuid(), link: "/admin/all-payment", name: "All" },
-      { id: uuid(), link: "/admin/pending-payment", name: "Pending" },
-      { id: uuid(), link: "/admin/received-payment", name: "Received" },
-      { id: uuid(), link: "/admin/withdraw-request", name: " Withdraw" },
-    ],
-  },
+  
+  // {
+  //   id: uuid(),
+  //   title: "Payment",
+  //   icon: "user",
+  //   children: [
+  //     // { id: uuid(), link: "/admin/all-payment", name: "All" },
+  //     { id: uuid(), link: "/admin/pending-payment", name: "Pending" },
+  //     { id: uuid(), link: "/admin/received-payment", name: "Received" },
+  //     { id: uuid(), link: "/admin/withdraw-request", name: " Withdraw" },
+  //   ],
+  // },
   {
     id: uuid(),
     title: "Support",
     icon: "help-circle",
     link: "/admin/support",
   },
-  {
-    id: uuid(),
-    title: "Notification",
-    icon: "help-circle",
-    children: [
-      {id: uuid(), link:"/user/notifications", name: "Notification"},
-      {id: uuid(), link:"/user/notification-single", name: "Notification Single"},l
-    ]
-  },
 
-  {
-    id: uuid(),
-    title: "Resolution",
-    icon: "help-circle",
-    link: "/admin/resolution",
-  },
+  // {
+  //   id: uuid(),
+  //   title: "Resolution",
+  //   icon: "help-circle",
+  //   link: "/admin/resolution",
+  // },
   // {
   // 	id: uuid(),
   // 	title: 'CMS',
@@ -172,7 +147,11 @@ export const DashboardMenu = [
   //         link: "/authentication/forget-password",
   //         name: "Forget Password",
   //       },
-        
+  //       {
+  //         id: uuid(),
+  //         link: "/authentication/notifications",
+  //         name: "Notifications",
+  //       },
   //       {
   //         id: uuid(),
   //         link: "/marketing/specialty/404-error/",
