@@ -19,10 +19,12 @@ function App() {
 
   useEffect(() => {
     const hostname = window.location.hostname;
+    console.log("this is dimp host name", hostname);
 
     const parts = hostname.split(".");
     if (parts.length > 2) {
       const subdomain = parts.slice(0, -2).join(".");
+      console.log("this is dimp subdomain name", subdomain);
 
       // Send a request to the backend with the subdomain
       axios
