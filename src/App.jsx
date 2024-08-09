@@ -15,6 +15,7 @@ import TemplateV1 from "./EcosystemDashboard/Template/TemplateV1";
 
 function App() {
   const [template, setTemplate] = useState(null);
+  console.log("this is dimp landing page");
 
   useEffect(() => {
     const hostname = window.location.hostname;
