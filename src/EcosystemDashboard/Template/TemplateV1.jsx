@@ -25,8 +25,8 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-const TemplateV1 = () => {
-  const [details, setDetails] = useState(null);
+const TemplateV1 = ({ details }) => {
+  // const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
   const [services, setServices] = useState([]);
   const [products, setProducts] = useState([]);
@@ -68,11 +68,11 @@ const TemplateV1 = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/getTemplate/${ecosystemDomain}`
         );
-        setDetails(response.data.templateDetails);
-        sessionStorage.setItem(
-          "ecoLogo",
-          response.data.templateDetails.navbar.logo
-        );
+        // setDetails(response.data.templateDetails);
+        // sessionStorage.setItem(
+        //   "ecoLogo",
+        //   response.data.templateDetails.navbar.logo
+        // );
       } catch (error) {
         console.log("not working", error);
       } finally {
