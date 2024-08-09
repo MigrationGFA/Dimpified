@@ -51,7 +51,7 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-// import Chat from "../Components/elements/chat/Chat" 
+// import Chat from "../Components/elements/chat/Chat"
 // import ChatLayout from "./Dashboard/ChatLayout";
 import EditProfile from "../Creator/AccountSettings/EditProfile";
 import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
@@ -90,7 +90,7 @@ import UserNotification from "../DashboardsPeerComponents/account-settings/Notif
 import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
 import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
-import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList"
+import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
@@ -119,11 +119,11 @@ import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/Eco
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
-import UserChat from "../Components/Chat/UserChat"
+import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 
 // ** Import Admin Dahbaord Menu Pages
-import AdminSignIn from "../Admin/Authentication/AdminSignIn"
+import AdminSignIn from "../Admin/Authentication/AdminSignIn";
 import AdminForgetPassword from "../Admin/Authentication/AdminForgetPassword";
 import AdminOverview from "../Admin/overview/AdminOverview";
 import AllCreator from "../Admin/AdminAllCreator/MyUser";
@@ -133,275 +133,296 @@ import OutSource from "../Admin/Outsource/OutSource";
 import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
 import AdminSupport from "../Admin/Support/Support";
 
-
 const AllRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<DimpHome />} />
-      <Route path="/education" element={<CustomerTraining />} />
-      <Route path="/pricing" element={<Pricing />} />
-      <Route path="/government" element={<Government />} />
-      <Route path="/corporation" element={<Corporation />} />
-      <Route path="/non-profit" element={<NonProfit />} />
-      <Route path="/professional-services" element={<Professional />} />
-      <Route path="/religious-bodies" element={<ReligiousBodies />} />
-      <Route path="/creative-services" element={<Creatives />} />
-      <Route path="/trade-services" element={<TradeServices />} />
-      <Route path="/personal-care-services" element={<PersonalCare />} />
-      <Route path="/technology-services" element={<TechnologyServices />} />
-      <Route path="/event-services" element={<EventServices />} />
+    <div>
+      <Routes>
+        <Route path="/" element={<DimpHome />} />
+        <Route path="/education" element={<CustomerTraining />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/government" element={<Government />} />
+        <Route path="/corporation" element={<Corporation />} />
+        <Route path="/non-profit" element={<NonProfit />} />
+        <Route path="/professional-services" element={<Professional />} />
+        <Route path="/religious-bodies" element={<ReligiousBodies />} />
+        <Route path="/creative-services" element={<Creatives />} />
+        <Route path="/trade-services" element={<TradeServices />} />
+        <Route path="/personal-care-services" element={<PersonalCare />} />
+        <Route path="/technology-services" element={<TechnologyServices />} />
+        <Route path="/event-services" element={<EventServices />} />
 
-      <Route path="/creator/signin" element={<UserSignIn />} />
-      <Route path="/creator/signup" element={<UserSignUp />} />
-      <Route path="/creator/forget-password" element={<UserForgetPassword />} />
-      <Route path="/admin/signin" element={<AdminSignIn />} />
+        <Route path="/creator/signin" element={<UserSignIn />} />
+        <Route path="/creator/signup" element={<UserSignUp />} />
+        <Route
+          path="/creator/forget-password"
+          element={<UserForgetPassword />}
+        />
+        <Route path="/admin/signin" element={<AdminSignIn />} />
         <Route
           path="/admin/forget-password"
           element={<AdminForgetPassword />}
         />
-      <Route path="/creator/Onboard" element={<Onboard />} />
-      <Route path="/creator/verify-email" element={<UserEmailVerification />} />
-      <Route path="/creator/verification" element={<VerifyEmail />} />
-      <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
-      <Route
-        path="/creator/dashboard/New-Ecosystem"
-        element={<NewEcosystem />}
-      />
-      <Route path="/creator/dashboard/Template" element={<Template1 />} />
-      <Route
-        path="/creator/dashboard/new-template"
-        element={<NewSiteTemplate />}
-      />
+        <Route path="/creator/Onboard" element={<Onboard />} />
+        <Route
+          path="/creator/verify-email"
+          element={<UserEmailVerification />}
+        />
+        <Route path="/creator/verification" element={<VerifyEmail />} />
+        <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+        <Route
+          path="/creator/dashboard/New-Ecosystem"
+          element={<NewEcosystem />}
+        />
+        <Route path="/creator/dashboard/Template" element={<Template1 />} />
+        <Route
+          path="/creator/dashboard/new-template"
+          element={<NewSiteTemplate />}
+        />
 
-      <Route
-        path="/creator/dashboard/Edit-Template"
-        element={<EditTemplate />}
-      />
-      <Route path="/creator/dashboard/Create-Form" element={<CreateForm />} />
-      <Route path="/creator/dashboard/Products" element={<Courses />} />
-      <Route
-        path="/creator/dashboard/Preview-and-Send"
-        element={<PreviewAndSend />}
-      />
+        <Route
+          path="/creator/dashboard/Edit-Template"
+          element={<EditTemplate />}
+        />
+        <Route path="/creator/dashboard/Create-Form" element={<CreateForm />} />
+        <Route path="/creator/dashboard/Products" element={<Courses />} />
+        <Route
+          path="/creator/dashboard/Preview-and-Send"
+          element={<PreviewAndSend />}
+        />
 
-      <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
-      <Route path="/creator/dashboard/Integrations" element={<Integration />} />
-      {/* <Route element={<ChatLayout />}>
+        <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
+        <Route
+          path="/creator/dashboard/Integrations"
+          element={<Integration />}
+        />
+        {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route> */}
 
-      {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
-      <Route element={<UserDashboardIndex />}>
-        <Route path="/creator/dashboard/overview" element={<Overview />} />
-        <Route path="/creator/dashboard/analytics" element={<Analytics />} />
-        <Route path="/creator/notifications" element={<Notification />} />
+        {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
+        <Route element={<UserDashboardIndex />}>
+          <Route path="/creator/dashboard/overview" element={<Overview />} />
+          <Route path="/creator/dashboard/analytics" element={<Analytics />} />
+          <Route path="/creator/notifications" element={<Notification />} />
+          <Route
+            path="/creator/notification-single"
+            element={<NotificationSingle />}
+          />
+          <Route
+            path="/creator/dashboard/All-Ecosystem"
+            element={<Ecosystem />}
+          />
+
+          <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+          <Route path="/creator/jobs/job-category" element={<JobCategory />} />
+          <Route
+            path="/creator/jobs/category-single"
+            element={<CategorySingle />}
+          />
+          <Route path="/creator/my-user" element={<MyUser />} />
+          <Route path="/creator/jobProvider" element={<JobProvider />} />
+          <Route path="/creator/jobSeeker" element={<JobSeeker />} />
+          <Route path="/creator/escrow-payment" element={<ContractPage />} />
+          <Route path="/creator/payout" element={<Payouts />} />
+          <Route path="/creator/pending-payment" element={<PendingPayment />} />
+          <Route
+            path="/creator/received-payment"
+            element={<ReceivedPayment />}
+          />
+          <Route
+            path="/creator/withdraw-request"
+            element={<WithdrawPayment />}
+          />
+          <Route path="/creator/feature-update" element={<FeatureUpdate />} />
+          <Route path="/creator/help-center" element={<HelpCenter />} />
+          <Route path="/creator/support" element={<Support />} />
+          <Route path="/creator/edit-profile" element={<EditProfile />} />
+          <Route path="/creator/social-profile" element={<SocialProfile />} />
+          <Route path="/creator/Onboard" element={<Onboard />} />
+          <Route
+            path="creator/dashboard/layouts/layout-vertical"
+            element={<Overview />}
+          />
+        </Route>
+
+        {/* Creator Ecosystem Dashboard */}
         <Route
-          path="/creator/notification-single"
-          element={<NotificationSingle />}
+          path="/:ecosystemDomain/Ecosystemdashboard"
+          element={<EcosystemDashboard />}
         />
         <Route
-          path="/creator/dashboard/All-Ecosystem"
-          element={<Ecosystem />}
-        />
-
-        <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
-        <Route path="/creator/jobs/job-category" element={<JobCategory />} />
-        <Route
-          path="/creator/jobs/category-single"
-          element={<CategorySingle />}
-        />
-        <Route path="/creator/my-user" element={<MyUser />} />
-        <Route path="/creator/jobProvider" element={<JobProvider />} />
-        <Route path="/creator/jobSeeker" element={<JobSeeker />} />
-        <Route path="/creator/escrow-payment" element={<ContractPage />} />
-        <Route path="/creator/payout" element={<Payouts />} />
-        <Route path="/creator/pending-payment" element={<PendingPayment />} />
-        <Route path="/creator/received-payment" element={<ReceivedPayment />} />
-        <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
-        <Route path="/creator/feature-update" element={<FeatureUpdate />} />
-        <Route path="/creator/help-center" element={<HelpCenter />} />
-        <Route path="/creator/support" element={<Support />} />
-        <Route path="/creator/edit-profile" element={<EditProfile />} />
-        <Route path="/creator/social-profile" element={<SocialProfile />} />
-        <Route path="/creator/Onboard" element={<Onboard />} />
-        <Route
-          path="creator/dashboard/layouts/layout-vertical"
-          element={<Overview />}
-        />
-      </Route>
-
-      {/* Creator Ecosystem Dashboard */}
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard"
-        element={<EcosystemDashboard />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
-        element={<EcosystemCourses />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
-        element={<EcosystemReviews />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning"
-        element={<EcosystemEarning />}
-      />
-
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders"
-        element={<EcosystemOrders />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-students"
-        element={<EcosystemStudents />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
-        element={<EcosystemPayouts />}
-      />
-      
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
-        element={<EcosystemResolution />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
-        element={<EcosystemQuiz />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-single"
-        element={<EcosystemQuizSingle />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result"
-        element={<EcosystemQuizResult />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Course"
-        element={<AddNewCourse />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Service"
-        element={<PostAService />}
-      />
-      <Route
-        path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Product"
-        element={<PostAProduct />}
-      />
-
-      {/* End user ecosystem routes */}
-      <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
-      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-      <Route
-        path="/:ecosystemDomain/service/:id"
-        element={<UserSingleService />}
-      />
-      <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
-
-      <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
-      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
-      <Route
-        path="/ecosystem/forget-password"
-        element={<EcosystemForgetPassword />}
-      />
-      <Route
-        path="/ecosystem/verify-email"
-        element={<EcosystemEmailVerification />}
-      />
-      <Route
-        path="/ecosystem/verification"
-        element={<EcosystemVerifyEmail />}
-      />
-      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-
-      <Route
-        path="/:ecosystemDomain/User-My-Course"
-        element={<UserMyCourse />}
-      />
-      <Route
-        path="/:ecosystemDomain/Userdashboard"
-        element={<UserDashboard />}
-      />
-      <Route path="/:ecosystemDomain/User-Reviews" element={<UserReviews />} />
-      <Route
-        path="/:ecosystemDomain/User-My-Course/Bookmarked"
-        element={<UserBookmarked />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-My-Course/Learning"
-        element={<UserLearning />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-quiz-result"
-        element={<UserQiuzResult />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-edit-profile"
-        element={<UserEditProfile />}
-      />
-      <Route path="/:ecosystemDomain/User-payout" element={<UserPayouts />} />
-      <Route
-        path="/:ecosystemDomain/User-social-profile"
-        element={<UserSocialProfile />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-notifications"
-        element={<UserNotification />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-delete-profile"
-        element={<UserDeleteProfile />}
-      />
-      <Route
-        path="/:ecosystemDomain/help-center"
-        element={<UserResolution />}
-      />
-      <Route
-        path="/:ecosystemDomain/User/browse-course"
-        element={<UserBrowseCourse />}
-      />
-       <Route
-        path="/:ecosystemDomain/User/browse-service"
-        element={<UserBrowseService />}
-      />
-      <Route
-        path="/:ecosystemDomain/User/single/learning/single-course"
-        element={<UserLearningCourse />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-delete-profile"
-        element={<UserDeleteProfile />}
-      />
-      <Route path="/:ecosystemDomain/community-chat" element={<CommunityChat />} />
-      <Route element={<UserChatLayout />}>
-      <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
-      </Route>
-
-      {/* dimp developer program */}
-      <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-    
-{/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
-<Route element={<AdminDashboardIndex />}>
-        <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
-        <Route path="/admin/all-creator" element={<AllCreator />} />
-        <Route path="/admin/out-source" element={<OutSource />} />
-        <Route
-          path="/admin/all-ecosystem"
-          element={<AdminAllEcosystem />}
+          path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
+          element={<EcosystemCourses />}
         />
         <Route
-          path="/admin/out-source/job-single"
-          element={<OutsourceJobSingle />}
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
+          element={<EcosystemReviews />}
         />
-        <Route path="/admin/support" element={<AdminSupport />} />
         <Route
-          path="admin/dashboard/layouts/layout-vertical"
-          element={<AdminOverview />}
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning"
+          element={<EcosystemEarning />}
         />
-      </Route>
 
-    </Routes>
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders"
+          element={<EcosystemOrders />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-students"
+          element={<EcosystemStudents />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
+          element={<EcosystemPayouts />}
+        />
+
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
+          element={<EcosystemResolution />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz"
+          element={<EcosystemQuiz />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-single"
+          element={<EcosystemQuizSingle />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result"
+          element={<EcosystemQuizResult />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Course"
+          element={<AddNewCourse />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Service"
+          element={<PostAService />}
+        />
+        <Route
+          path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Product"
+          element={<PostAProduct />}
+        />
+
+        {/* End user ecosystem routes */}
+        <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
+        <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+        <Route
+          path="/:ecosystemDomain/service/:id"
+          element={<UserSingleService />}
+        />
+        <Route
+          path="/:ecosystemDomain/signup"
+          element={<RegisterEcosystem />}
+        />
+
+        <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
+        <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+        <Route
+          path="/ecosystem/forget-password"
+          element={<EcosystemForgetPassword />}
+        />
+        <Route
+          path="/ecosystem/verify-email"
+          element={<EcosystemEmailVerification />}
+        />
+        <Route
+          path="/ecosystem/verification"
+          element={<EcosystemVerifyEmail />}
+        />
+        <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
+
+        <Route
+          path="/:ecosystemDomain/User-My-Course"
+          element={<UserMyCourse />}
+        />
+        <Route
+          path="/:ecosystemDomain/Userdashboard"
+          element={<UserDashboard />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-Reviews"
+          element={<UserReviews />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-My-Course/Bookmarked"
+          element={<UserBookmarked />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-My-Course/Learning"
+          element={<UserLearning />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-quiz-result"
+          element={<UserQiuzResult />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-edit-profile"
+          element={<UserEditProfile />}
+        />
+        <Route path="/:ecosystemDomain/User-payout" element={<UserPayouts />} />
+        <Route
+          path="/:ecosystemDomain/User-social-profile"
+          element={<UserSocialProfile />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-notifications"
+          element={<UserNotification />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-delete-profile"
+          element={<UserDeleteProfile />}
+        />
+        <Route
+          path="/:ecosystemDomain/help-center"
+          element={<UserResolution />}
+        />
+        <Route
+          path="/:ecosystemDomain/User/browse-course"
+          element={<UserBrowseCourse />}
+        />
+        <Route
+          path="/:ecosystemDomain/User/browse-service"
+          element={<UserBrowseService />}
+        />
+        <Route
+          path="/:ecosystemDomain/User/single/learning/single-course"
+          element={<UserLearningCourse />}
+        />
+        <Route
+          path="/:ecosystemDomain/User-delete-profile"
+          element={<UserDeleteProfile />}
+        />
+        <Route
+          path="/:ecosystemDomain/community-chat"
+          element={<CommunityChat />}
+        />
+        <Route element={<UserChatLayout />}>
+          <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
+        </Route>
+
+        {/* dimp developer program */}
+        <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+
+        {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
+        <Route element={<AdminDashboardIndex />}>
+          <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
+          <Route path="/admin/all-creator" element={<AllCreator />} />
+          <Route path="/admin/out-source" element={<OutSource />} />
+          <Route path="/admin/all-ecosystem" element={<AdminAllEcosystem />} />
+          <Route
+            path="/admin/out-source/job-single"
+            element={<OutsourceJobSingle />}
+          />
+          <Route path="/admin/support" element={<AdminSupport />} />
+          <Route
+            path="admin/dashboard/layouts/layout-vertical"
+            element={<AdminOverview />}
+          />
+        </Route>
+      </Routes>
+    </div>
   );
 };
 
