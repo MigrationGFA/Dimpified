@@ -51,7 +51,7 @@ function getTimeDifference(updatedAt) {
 
 const Ecosystem = () => {
   const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [ecosystems, setEcosystems] = useState([]);
   const [ecosystemData, setEcosystemData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -63,10 +63,24 @@ const Ecosystem = () => {
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
-
+  const userType = useSelector(
+    (state) => state.authentication.user?.data?.userType
+  );
+  const role = useSelector(
+    (state) => state.authentication.user?.data?.role
+  );
  
-  
 
+  const getLink = () => {
+    if (userType === 'creator' || role === 'Enterprise') {
+      return '/creator/dashboard/New-Ecosystem';
+    } else if (role === 'consumer') {
+      return '/creator/dashboard/New-Ecosystem/individual';
+    } else {
+      return '';
+    }
+  };
+  
   const getMyEcosystems = async () => {
     try {
       setLoading(true);
@@ -145,23 +159,23 @@ const Ecosystem = () => {
     navigator.clipboard.writeText(siteNme);
   };
 
-  const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
-    
-    console.log('Ecosystem Name:', ecosystemName);
-  console.log('Ecosystem Domain:', ecosystemDomain);
-  console.log('Steps:', steps);
-  console.log('ID:', id);
-
-    dispatch(updateField({ field: 'ecosystemName', value: ecosystemName }));
-    dispatch(updateField({ field: 'ecosystemDomain', value: ecosystemDomain }));
-    dispatch(setEcosystemId(id));
   
+
+  const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
+    console.log("Ecosystem Name:", ecosystemName);
+    console.log("Ecosystem Domain:", ecosystemDomain);
+    console.log("Steps:", steps);
+    console.log("ID:", id);
+
+    dispatch(updateField({ field: "ecosystemName", value: ecosystemName }));
+    dispatch(updateField({ field: "ecosystemDomain", value: ecosystemDomain }));
+    dispatch(setEcosystemId(id));
+
     if (steps === 2) {
-      navigate('/creator/dashboard/Create-Form');
+      navigate("/creator/dashboard/Create-Form");
     } else if (steps === 1) {
-      navigate('/creator/dashboard/Edit-Template'); 
-    } else if (steps === 0)
-      navigate('/creator/dashboard/New-Ecosystem')
+      navigate("/creator/dashboard/Edit-Template");
+    } else if (steps === 0) navigate("/creator/dashboard/New-Ecosystem");
   };
 
   return (
@@ -173,7 +187,7 @@ const Ecosystem = () => {
               <h1 className="mb-0 h2 fw-bold">All Ecosystem</h1>
             </div>
             <div>
-              <Link to="/creator/dashboard/New-Ecosystem">
+              <Link to={getLink()}>
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
                   Create New Ecosystem
@@ -345,8 +359,7 @@ const Ecosystem = () => {
                                   eco.ecosystemName,
                                   eco.ecosystemDomain,
                                   eco.steps,
-                                  eco._id, 
-                                  
+                                  eco._id
                                 )
                               }
                             >

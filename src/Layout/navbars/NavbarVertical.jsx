@@ -15,7 +15,7 @@ import {
  
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
-import "simplebar/dist/simplebar.min.css";
+// import "simplebar/dist/simplebar.min.css";
  
 // import media files
 // import InverseLogo from '../../assets/images/brand/logo/logo-inverse.svg';

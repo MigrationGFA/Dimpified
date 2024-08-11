@@ -935,11 +935,11 @@ const EcoPayment = ({ plan }) => {
     const popup = new Paystack();
    
     popup.newTransaction({
-      key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
-      //key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
+      //key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
+      key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
       email: Email,
-      plan: planCode,
-      //plan: "PLN_marhiqmjkhdm3ta",
+      //plan: planCode,
+      plan: "PLN_marhiqmjkhdm3ta",
       currency: "NGN",
       text: loading ? "Processing" : "Paystack",
       payment_options: "card,mobilemoney,ussd",

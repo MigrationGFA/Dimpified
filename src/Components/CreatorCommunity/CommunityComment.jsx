@@ -57,12 +57,28 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
           {
             postId,
             userId,
-            userType: "user",
+            userType: "creator",
             comment: newComment,
             ecosystemDomain,
           }
         );
-        // setComments((prevComments) => [...prevComments, response.data]);
+  
+        // // Check if the backend response exists and has data
+        // const newCommentData = response.data || {
+        //   _id: Date.now().toString(), // Generate a temporary ID for frontend use
+        //   userId,
+        //   userName: "Anonymous", // Or use the actual userName if available
+        //   comment: newComment,
+        //   likes: 0,
+        //   replies: [],
+        //   updatedAt: new Date(), // Use the current date for the timestamp
+        // };
+  
+        setComments((prevComments) => [
+          ...prevComments,
+          // newCommentData,
+        ]);
+        
         setNewComment('');
         if (commentInputRef.current) {
           commentInputRef.current.focus();
@@ -72,7 +88,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
       }
     }
   };
-
+  
   const handleAddReply = (commentId) => {
     if (reply.trim()) {
       setComments(comments.map(comment =>

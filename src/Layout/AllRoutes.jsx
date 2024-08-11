@@ -51,7 +51,7 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-// import Chat from "../Components/elements/chat/Chat" 
+// import Chat from "../Components/elements/chat/Chat"
 // import ChatLayout from "./Dashboard/ChatLayout";
 import EditProfile from "../Creator/AccountSettings/EditProfile";
 import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
@@ -64,8 +64,11 @@ import Onboard from "../Pages/creator/Onboard";
 import OnboardTwo from "../Pages/creator/OnboardTwo";
 import Ecosystem from "../Creator/ecosystem/Ecosystem";
 import NewEcosystem from "../Creator/ecosystem/Newecosystem/NewEcosystem";
+import IndividualNewEcosystem from "../Creator/ecosystem/Newecosystem/Individual/IndividualNewEcosystem";
 import EditTemplate from "../Creator/ecosystem/Newecosystem/EditTemplate";
+import IndividualEditTemplate from "../Creator/ecosystem/Newecosystem/Individual/EditTemplate";
 import CreateForm from "../Creator/ecosystem/Newecosystem/CreateForm";
+import IndividualProduct from "../Creator/ecosystem/Newecosystem/Individual/Courses";
 import Courses from "../Creator/ecosystem/Newecosystem/Courses";
 import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
@@ -90,7 +93,7 @@ import UserNotification from "../DashboardsPeerComponents/account-settings/Notif
 import UserDeleteProfile from "../DashboardsPeerComponents/account-settings/DeleteProfile";
 import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilterPage";
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
-import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList"
+import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
@@ -119,11 +122,12 @@ import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/Eco
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
-import UserChat from "../Components/Chat/UserChat"
+import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
+import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 
 // ** Import Admin Dahbaord Menu Pages
-import AdminSignIn from "../Admin/Authentication/AdminSignIn"
+import AdminSignIn from "../Admin/Authentication/AdminSignIn";
 import AdminForgetPassword from "../Admin/Authentication/AdminForgetPassword";
 import AdminOverview from "../Admin/overview/AdminOverview";
 import AllCreator from "../Admin/AdminAllCreator/MyUser";
@@ -132,7 +136,6 @@ import AdminAllEcosystem from "../Admin/AdminAllEcosystem/AdminAllEcosystem";
 import OutSource from "../Admin/Outsource/OutSource";
 import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
 import AdminSupport from "../Admin/Support/Support";
-
 
 const AllRoutes = () => {
   return (
@@ -155,10 +158,7 @@ const AllRoutes = () => {
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />
-        <Route
-          path="/admin/forget-password"
-          element={<AdminForgetPassword />}
-        />
+      <Route path="/admin/forget-password" element={<AdminForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/verify-email" element={<UserEmailVerification />} />
       <Route path="/creator/verification" element={<VerifyEmail />} />
@@ -172,7 +172,18 @@ const AllRoutes = () => {
         path="/creator/dashboard/new-template"
         element={<NewSiteTemplate />}
       />
-
+      <Route
+        path="/creator/dashboard/New-Ecosystem/individual"
+        element={<IndividualNewEcosystem />}
+      />
+      <Route
+        path="/creator/dashboard/Products/individual"
+        element={<IndividualProduct />}
+      />
+      <Route
+        path="/creator/dashboard/Edit-Template/individual"
+        element={<IndividualEditTemplate />}
+      />
       <Route
         path="/creator/dashboard/Edit-Template"
         element={<EditTemplate />}
@@ -260,7 +271,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
-      
+
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -350,6 +361,10 @@ const AllRoutes = () => {
         element={<UserNotification />}
       />
       <Route
+        path="/:ecosystemDomain/creator-community-chat"
+        element={<CreatorCommunityChat />}
+      />
+      <Route
         path="/:ecosystemDomain/User-delete-profile"
         element={<UserDeleteProfile />}
       />
@@ -361,7 +376,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/User/browse-course"
         element={<UserBrowseCourse />}
       />
-       <Route
+      <Route
         path="/:ecosystemDomain/User/browse-service"
         element={<UserBrowseService />}
       />
@@ -373,23 +388,23 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/User-delete-profile"
         element={<UserDeleteProfile />}
       />
-      <Route path="/:ecosystemDomain/community-chat" element={<CommunityChat />} />
+      <Route
+        path="/:ecosystemDomain/community-chat"
+        element={<CommunityChat />}
+      />
       <Route element={<UserChatLayout />}>
-      <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
+        <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
       </Route>
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-    
-{/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
-<Route element={<AdminDashboardIndex />}>
+
+      {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
+      <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
         <Route path="/admin/all-creator" element={<AllCreator />} />
         <Route path="/admin/out-source" element={<OutSource />} />
-        <Route
-          path="/admin/all-ecosystem"
-          element={<AdminAllEcosystem />}
-        />
+        <Route path="/admin/all-ecosystem" element={<AdminAllEcosystem />} />
         <Route
           path="/admin/out-source/job-single"
           element={<OutsourceJobSingle />}
@@ -400,7 +415,6 @@ const AllRoutes = () => {
           element={<AdminOverview />}
         />
       </Route>
-
     </Routes>
   );
 };
