@@ -374,35 +374,39 @@ const NewEcosystem = () => {
                   </Row>
                   <Row>
                     <Col lg={6} className="col-12 mb-3">
-                      <Form.Label htmlFor="expected-audience-number">
-                        E. How many users are you expecting?{" "}
+                      <Form.Label htmlFor="contact-phone-number">
+                        E. What is your Contact Phone Number?{" "}
                         <span className="text-danger">*</span>
                       </Form.Label>
-                      <FormSelect
-                        options={audienceNumber}
-                        placeholder="Select expected number"
-                        selectedValue={ecosystem.expectedAudienceNumber}
-                        onChange={(value) =>
-                          handleFieldChange("expectedAudienceNumber", value)
+                      <Form.Control
+                        type="text"
+                        id="contact-phone-number"
+                        placeholder="Enter your contact phone number"
+                        value={ecosystem.expectedAudienceNumber}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            "expectedAudienceNumber",
+                            e.target.value
+                          )
                         }
                         required
                       />
                     </Col>
                     <Col lg={6} className="col-12">
-                      <Form.Group className="mb-3 ">
-                        <Form.Label>
-                          F. Have you created a similar business before?{" "}
+                      <Form.Group className="mb-3">
+                        <Form.Label htmlFor="address">
+                          F. What is your Address?{" "}
                           <span className="text-danger">*</span>
                         </Form.Label>
-                        <FormSelect
-                          options={yesNoOptions}
-                          placeholder="Select your answer"
-                          id="experience"
-                          name="experience"
-                          selectedValue={ecosystem.experience}
-                          onChange={(value) =>
-                            handleFieldChange("experience", value)
+                        <Form.Control
+                          type="text"
+                          id="address"
+                          placeholder="Enter your address"
+                          value={ecosystem.experience}
+                          onChange={(e) =>
+                            handleFieldChange("experience", e.target.value)
                           }
+                          required
                         />
                       </Form.Group>
                     </Col>

@@ -189,7 +189,7 @@ const EditTemplate = () => {
   };
 
   const filteredTemplates = Templates.filter(
-    (template) => template.sectionId === activeSection
+    (template) => template.id === activeSection
   );
 
   const handleShow = () => {

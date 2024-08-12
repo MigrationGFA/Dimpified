@@ -37,23 +37,26 @@ const ecoHeader = () => {
                 </div>
               )}
               <Nav.Item>
-                <Nav.Link
-                  as={Link}
-                  to={item.path}
-                  className={`p-2 rounded-2 transition-colors duration-300 ${
+                <div
+                  className={`p-2 rounded-2 ${
                     location.pathname === item.path
-                      ? "bg-white text-blue-800"
-                      : "text-white hover:bg-gray-100 hover:text-blue-800"
+                      ? "bg-white text-primary"
+                      : "text-white"
                   }`}
+                  style={{
+                    cursor: "default",
+                    pointerEvents: "none",
+                    userSelect: "none"
+                  }}
                 >
                   {item.label}
-                </Nav.Link>
+                </div>
               </Nav.Item>
             </React.Fragment>
           ))}
         </Nav>
       </Col>
-      <Col xs="auto" onClick={handleCancle}>
+      <Col xs="auto" onClick={handleCancel}>
         <Button variant="outline-light">Cancel</Button>
       </Col>
     </Row>

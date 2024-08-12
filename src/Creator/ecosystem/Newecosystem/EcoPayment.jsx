@@ -929,72 +929,144 @@ const EcoPayment = ({ plan }) => {
 
   const user = useSelector((state) => state.authentication.user);
   const username = user?.data?.organizationName || "Unknown User";
+  const creatorId = user?.data?.CreatorId || "Unknown User";
+  console.log(creatorId)
   const Email = user?.data?.email || "No email";
+
+  // const handlePaystackPayment = (planCode) => {
+  //   const popup = new Paystack();
+   
+  //   popup.newTransaction({
+  //     //key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
+  //     key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
+  //     email: Email,
+  //     //plan: planCode,
+  //     plan: "PLN_marhiqmjkhdm3ta",
+  //     currency: "NGN",
+  //     text: loading ? "Processing" : "Paystack",
+  //     payment_options: "card,mobilemoney,ussd",
+  //     metadata: {
+  //       custom_fields: [
+  //         {
+  //           display_name: username,
+  //           variable_name: "Extra",
+  //           value: username,
+  //         },
+  //       ],
+  //     },
+
+  //     // callback: (response) => {
+  //     //   setLoading(true);
+  //     //   console.log('Payment successful, reference:', response.reference);
+  //     //   axios
+  //     //     .post(`${import.meta.env.VITE_API_URL}/verify-subscription`, {
+  //     //       reference: trxref,
+  //     //       email: Email,
+  //     //       userId: user.id,
+  //     //       plan: selectedPlan,
+  //     //     })
+  //     //     .then((response) => {
+  //     //       if (response.data.message === 'Course Purchased Successfully') {
+  //     //         showToast(response.data.message);
+  //     //         navigate('/student-My-Course/Learning');
+  //     //         setOpenModal(true);
+  //     //         setBlurBackground(true); // Apply blur effect when modal is open
+  //     //       } else {
+  //     //         showToast('Payment for course not verified');
+  //     //       }
+  //     //     })
+  //     //     .catch((error) => {
+  //     //       showToast('An error occurred during payment verification');
+  //     //     })
+  //     //     .finally(() => {
+  //     //       setLoading(false);
+  //     //     });
+  //     // },
+  //     onClose: () => {
+  //       setLoading(false);
+  //       showToast("You have canceled the transaction");
+  //     },
+  //     // onLoad: (txn) => {
+  //     //   transaction = txn;
+  //     //   clearInterval(redirectTimer);
+  //     // },
+  //   });
+
+  //   // const redirectURL = `${window.location.origin}/creator/dashboard/payment`;
+  //   // let timeElapsed = 0;
+  //   // const timeLimit = 2;
+  //   // let redirectTimer;
+
+  //   // redirectTimer = setInterval(() => {
+  //   //   timeElapsed += 1;
+  //   //   if (timeElapsed === timeLimit) {
+  //   //     if (transaction) {
+  //   //       popup.cancelTransaction(transaction.id);
+  //   //     }
+  //   //     window.location.href = redirectURL;
+  //   //   }
+  //   // }, 1000);
+  // };
+
 
   const handlePaystackPayment = (planCode) => {
     const popup = new Paystack();
-   
+  
     popup.newTransaction({
-      //key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
-      key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
+     key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
+      //key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
       email: Email,
-      //plan: planCode,
-      plan: "PLN_marhiqmjkhdm3ta",
+      plan: planCode,
+      //plan: "PLN_marhiqmjkhdm3ta",
       currency: "NGN",
       text: loading ? "Processing" : "Paystack",
       payment_options: "card,mobilemoney,ussd",
       metadata: {
         custom_fields: [
           {
-            display_name: username,
-            variable_name: "Extra",
+            display_name: "Username",
+            variable_name: "username",
             value: username,
           },
         ],
       },
-
-      // callback: (response) => {
-      //   setLoading(true);
-      //   console.log('Payment successful, reference:', response.reference);
-      //   axios
-      //     .post('https://remsana-backend-testing.azurewebsites.net/api/v1/verify-payment', {
-      //       reference: response.reference,
-      //       email: Email,
-      //       userId: user.id,
-      //       plan: selectedPlan,
-      //     })
-      //     .then((response) => {
-      //       if (response.data.message === 'Course Purchased Successfully') {
-      //         showToast(response.data.message);
-      //         navigate('/student-My-Course/Learning');
-      //         setOpenModal(true);
-      //         setBlurBackground(true); // Apply blur effect when modal is open
-      //       } else {
-      //         showToast('Payment for course not verified');
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       showToast('An error occurred during payment verification');
-      //     })
-      //     .finally(() => {
-      //       setLoading(false);
-      //     });
-      // },
+      callback: (response) => {
+        setLoading(true);
+        const reference = response.trxref;
+  
+        axios
+          .post(`${import.meta.env.VITE_API_URL}/verify-subscription`, {
+            reference,
+            creatorId: creatorId,
+          })
+          .then((response) => {
+            if (response.data.message === 'Subscription verified successfully') {
+              showToast(response.data.message);
+              navigate('/creator/dashboard/Preview-and-Send');
+              setOpenModal(true);
+              setBlurBackground(true);
+            } else {
+              showToast('Payment for course not verified');
+            }
+          })
+          .catch((error) => {
+            showToast('An error occurred during payment verification', error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
       onClose: () => {
         setLoading(false);
         showToast("You have canceled the transaction");
       },
-      // onLoad: (txn) => {
-      //   transaction = txn;
-      //   clearInterval(redirectTimer);
-      // },
     });
 
     // const redirectURL = `${window.location.origin}/creator/dashboard/payment`;
     // let timeElapsed = 0;
-    // const timeLimit = 2;
+    // const timeLimit = 2; // Time limit in seconds
     // let redirectTimer;
-
+  
     // redirectTimer = setInterval(() => {
     //   timeElapsed += 1;
     //   if (timeElapsed === timeLimit) {
@@ -1005,6 +1077,7 @@ const EcoPayment = ({ plan }) => {
     //   }
     // }, 1000);
   };
+  
 
   // flutterwave payment
   const generateTxRef = () => {

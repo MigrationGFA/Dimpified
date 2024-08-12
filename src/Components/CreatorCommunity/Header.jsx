@@ -258,7 +258,7 @@ const Header = () => {
     formData.append("content", message);
 
     selectedImages.forEach((image) => {
-      formData.append("images", image);
+      formData.append("image", image);
     });
 
     try {
