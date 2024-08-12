@@ -1,6 +1,6 @@
 import template1 from "../../assets/template/templateNew1.png";
 import template2 from "../../assets/template/templateNew2.png";
-
+ 
 const Templates = [
   {
     id: 1,
@@ -75,5 +75,5 @@ const Templates = [
   //   sectionId: 4,
   // },
 ];
-
+ 
 export default Templates;

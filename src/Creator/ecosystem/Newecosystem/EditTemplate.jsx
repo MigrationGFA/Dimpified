@@ -214,7 +214,10 @@ const EditTemplate = () => {
         <div>
           {step === 1 && (
             <div>
-              <h3>A. Template Sections  (please select your industry to see the available templates)</h3>
+              <h3>
+                A. Template Sections (please select your industry to see the
+                available templates)
+              </h3>
               <div className="d-flex align-items-center position-relative">
                 <FaChevronLeft
                   className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
@@ -254,7 +257,9 @@ const EditTemplate = () => {
                 />
               </div>
               <div className="d-sm-flex justify-content-between align-items-center mt-8">
-                <h3 className="">B. Select a Template (select your desired template)</h3>
+                <h3 className="">
+                  B. Select a Template (select your desired template)
+                </h3>
                 {/* <div className="d-flex ">
                   <div className="me-5" onClick={handleShow}>
                     <Link to="">
