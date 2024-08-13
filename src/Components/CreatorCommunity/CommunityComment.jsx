@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Button, Image, Form, Container, Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './CommunityComment.module.css';
 import Box from '../../assets/Comment.jpeg';
 import Logo from '../../assets/LogoList/FgnAlatLogo.jpg';

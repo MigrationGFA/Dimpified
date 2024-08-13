@@ -12,7 +12,7 @@ import { Card, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { AiOutlineFileImage } from "react-icons/ai";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import "../CommunityChat/Header.css";
+import "./Header.css"
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
 import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
