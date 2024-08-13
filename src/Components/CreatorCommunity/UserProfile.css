@@ -47,6 +47,7 @@
 .userInfo {
   display: flex;
   align-items: center;
+  
 }
 
 .userImage {
@@ -73,6 +74,7 @@
 }
 
 .followBtn {
+  font-size: 10px;
   background-color: #007bff;
   border: none;
   border-radius: 20px;

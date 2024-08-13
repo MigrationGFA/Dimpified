@@ -28,6 +28,7 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
   const user = useSelector((state) => state.authentication.user.data);
   const userId = user.UserId;
 
+
   const handleCommentClick = () => {
     setIsCommenting(true);
     setTimeout(() => {
@@ -185,22 +186,22 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
 
-  const userId = useSelector(
-    (state) => state.authentication.user.data.CreatorId
-  ) || {};
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+
+
+  const fetchCommunityData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
+      );
+      setPosts(response.data.posts);
+    } catch (error) {
+      console.error("Error fetching community data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCommunityData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
-        );
-        setPosts(response.data.posts);
-      } catch (error) {
-        console.error("Error fetching community data:", error);
-      }
-    };
-
     fetchCommunityData();
   }, [ecosystemDomain]);
 
@@ -248,7 +249,6 @@ const Header = () => {
     setPostImagePreviews(updatedPreviews);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -271,7 +271,7 @@ const Header = () => {
           },
         }
       );
-      setPosts([response.data, ...posts]);
+      fetchCommunityData();
       setMessage("");
       showToast(response.data.message);
       setSelectedImages([]);

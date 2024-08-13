@@ -18,7 +18,7 @@ import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 import CommunityComment from "./CommunityComment";
 
-const PostCard = ({ post, onDelete, onEdit, onComment }) => {
+const PostCard = ({ post, onDelete, onEdit }) => {
   const { ecosystemDomain } = useParams();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -127,10 +127,10 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
                 <div className="icon-circle like-circle">
                   <FaHeart className="icon" />
                 </div>
-                {post.likes}
+                {post.likes} likes
               </div>
               {/* <div className="interaction-details">
-                {comments && comments.length} comments
+                {comments.length} comments
               </div> */}
             </div>
             <hr />
@@ -190,18 +190,18 @@ const Header = () => {
     (state) => state.authentication.user.data.CreatorId
   ) || {};
 
-  useEffect(() => {
-    const fetchCommunityData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
-        );
-        setPosts(response.data.posts);
-      } catch (error) {
-        console.error("Error fetching community data:", error);
-      }
-    };
+  const fetchCommunityData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
+      );
+      setPosts(response.data.posts);
+    } catch (error) {
+      console.error("Error fetching community data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchCommunityData();
   }, [ecosystemDomain]);
 
@@ -271,7 +271,7 @@ const Header = () => {
           },
         }
       );
-      setPosts([response.data, ...posts]);
+      fetchCommunityData();
       setMessage("");
       showToast(response.data.message);
       setSelectedImages([]);
@@ -286,29 +286,6 @@ const Header = () => {
     setSearchQuery(e.target.value);
   };
 
-  // const handleEdit = async (postToEdit, newCaption) => {
-  //   try {
-  //     const response = await axios.patch(`/posts/${postToEdit._id}`, {
-  //       content: newCaption,
-  //     });
-  //     setPosts(
-  //       posts.map((post) =>
-  //         post._id === postToEdit._id ? response.data : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error editing post:", error);
-  //   }
-  // };
-
-  // const handleDelete = async (postToDelete) => {
-  //   try {
-  //     await axios.delete(`/posts/${postToDelete._id}`);
-  //     setPosts(posts.filter((post) => post._id !== postToDelete._id));
-  //   } catch (error) {
-  //     console.error("Error deleting post:", error);
-  //   }
-  // };
 
  
 
