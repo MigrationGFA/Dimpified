@@ -64,7 +64,7 @@ export const DashboardMenu = () => {
     {
       id: 9,
       title: "Community",
-      link: `/${ecosystemDomain}/community-chat`,
+      link: `/${ecosystemDomain}/creator-community-chat`,
       icon: "user",
     },
     // {

@@ -67,7 +67,7 @@ const Templates = [
     img: template1,
    //sectionId: 8,
   },
- 
+  
   // {
   //   id: 2,
   //   name: "Template 2",

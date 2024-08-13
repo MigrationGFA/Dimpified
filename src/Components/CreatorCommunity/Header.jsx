@@ -25,8 +25,9 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
   const [editedCaption, setEditedCaption] = useState(post.content);
   const commentInputRef = useRef(null);
 
-  const user = useSelector((state) => state.authentication.user.data);
-  const userId = user.UserId;
+  const userId = useSelector(
+    (state) => state.authentication.user.data.CreatorId
+  );
 
   const handleCommentClick = () => {
     setIsCommenting(true);
@@ -248,12 +249,11 @@ const Header = () => {
     setPostImagePreviews(updatedPreviews);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("authorId", userId);
-    formData.append("userType", "user");
+    formData.append("userType", "creator");
     formData.append("ecosystemDomain", ecosystemDomain);
     formData.append("content", message);
 
