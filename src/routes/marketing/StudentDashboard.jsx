@@ -50,12 +50,12 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/community-chat`,
       icon: "user",
     },
-    {
-        id: 6,
-        title: "Chat",
-        icon: "message-square",
-        link: `/${ecosystemDomain}/chat`,
-      },
+    // {
+    //     id: 6,
+    //     title: "Chat",
+    //     icon: "message-square",
+    //     link: `/${ecosystemDomain}/chat`,
+    //   },
     {
       id: 7,
       title: "Reviews",

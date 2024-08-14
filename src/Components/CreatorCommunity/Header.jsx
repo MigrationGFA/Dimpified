@@ -26,15 +26,16 @@ import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 import CommunityComment from "./CommunityComment";
 
-const PostCard = ({ post, onDelete, onEdit, onComment }) => {
+const PostCard = ({ post, onDelete, onEdit }) => {
   const { ecosystemDomain } = useParams();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedCaption, setEditedCaption] = useState(post.content);
   const commentInputRef = useRef(null);
 
-  const user = useSelector((state) => state.authentication.user.data);
-  const userId = user.UserId;
+  const userId = useSelector(
+    (state) => state.authentication.user.data.CreatorId
+  );
 
   const handleCommentClick = () => {
     setIsCommenting(true);
@@ -133,10 +134,10 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
                 <div className="icon-circle like-circle">
                   <FaHeart className="icon" />
                 </div>
-                {post.likes}
+                {post.likes} likes
               </div>
               {/* <div className="interaction-details">
-                {comments && comments.length} comments
+                {comments.length} comments
               </div> */}
             </div>
             <hr />
@@ -197,8 +198,8 @@ const Header = () => {
   const [message, setMessage] = useState("");
   const [isPosting, setIsPosting] = useState(false);
 
-  const user = useSelector((state) => state.authentication.user.data);
-  const userId = user.UserId;
+  const userId =
+    useSelector((state) => state.authentication.user.data.CreatorId) || {};
 
   const fetchCommunityData = async () => {
     try {
@@ -265,7 +266,7 @@ const Header = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("authorId", userId);
-    formData.append("userType", "user");
+    formData.append("userType", "creator");
     formData.append("ecosystemDomain", ecosystemDomain);
     formData.append("content", message);
 
@@ -299,30 +300,6 @@ const Header = () => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
-  // const handleEdit = async (postToEdit, newCaption) => {
-  //   try {
-  //     const response = await axios.patch(`/posts/${postToEdit._id}`, {
-  //       content: newCaption,
-  //     });
-  //     setPosts(
-  //       posts.map((post) =>
-  //         post._id === postToEdit._id ? response.data : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error editing post:", error);
-  //   }
-  // };
-
-  // const handleDelete = async (postToDelete) => {
-  //   try {
-  //     await axios.delete(`/posts/${postToDelete._id}`);
-  //     setPosts(posts.filter((post) => post._id !== postToDelete._id));
-  //   } catch (error) {
-  //     console.error("Error deleting post:", error);
-  //   }
-  // };
 
   return (
     <div className="container">

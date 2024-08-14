@@ -12,19 +12,19 @@ import {
   Modal,
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "./Steps.css";
+import "../Steps.css";
 // import logo from "../../../assets/digital.png";
-import EcoHeader from "./ecoHeader";
-import Template1 from "../../../EditTemplate/Template1";
-import Template2 from "../../../EditTemplate/Template2";
-import Template3 from "../../../EditTemplate/BarberTemplate";
-import PreviewPage from "../../../EditTemplate/Preview";
-import Templates from "../../../data/Template/LandingPageTemplate";
+import EcoHeader from "../Individual/individualHeader";
+import Template1 from "../../../../EditTemplate/Template1";
+import Template2 from "../../../../EditTemplate/Template2";
+import Template3 from "../../../../EditTemplate/BarberTemplate";
+import PreviewPage from "../../../../EditTemplate/Preview";
+import Templates from "../../../../data/Template/LandingPageTemplate";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { showToast } from "../../../Components/Showtoast";
-import PreviewPageSize from "./PreviewPageSize";
-import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
+import { showToast } from "../../../../Components/Showtoast";
+import PreviewPageSize from "../PreviewPageSize";
+import PreviewTemplateV1 from "../../Preview/Template/TemplateV1";
 
 const templateSections = [
   { id: 1, name: "Professional Services" },
@@ -189,7 +189,7 @@ const EditTemplate = () => {
   };
 
   const filteredTemplates = Templates.filter(
-    (template) => template.id === activeSection
+    (template) => template.sectionId === activeSection
   );
 
   const handleShow = () => {
@@ -202,22 +202,19 @@ const EditTemplate = () => {
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
-          <p>Step 2 of 7</p>
+          <p>Step 3 of 3</p>
           <h2>Select Template</h2>
           <p>Select and Edit your ecosystem template</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
             <ProgressBar now={(step / 3) * 100} />
           </div>
-          <p>{`Step 2.${step} of 2.3`}</p>
+          <p>{`Step 3.${step} of 3.3`}</p>
         </div>
 
         <div>
           {step === 1 && (
             <div>
-              <h3>
-                A. Template Sections (please select your industry to see the
-                available templates)
-              </h3>
+              <h3>A. Template Sections  (please select your industry to see the available templates)</h3>
               <div className="d-flex align-items-center position-relative">
                 <FaChevronLeft
                   className={`scroll-arrow ${!canScrollLeft ? "disabled" : ""}`}
@@ -257,9 +254,7 @@ const EditTemplate = () => {
                 />
               </div>
               <div className="d-sm-flex justify-content-between align-items-center mt-8">
-                <h3 className="">
-                  B. Select a Template (select your desired template)
-                </h3>
+                <h3 className="">B. Select a Template (select your desired template)</h3>
                 {/* <div className="d-flex ">
                   <div className="me-5" onClick={handleShow}>
                     <Link to="">

@@ -96,11 +96,11 @@ const VerifyEmail = () => {
                   </div>
                 ) : (
                   <span
-                    className="text-primary ml-5"
+                    className="text-primary ml-6"
                     style={{ cursor: "pointer" }}
                     onClick={onSubmit}
                   >
-                    Resend link
+                     Resend link
                   </span>
                 )}
               </p>

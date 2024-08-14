@@ -10,7 +10,7 @@ import QuickMenu from "../../Layout/QuickMenu";
 const HeaderDefault = (props) => {
   return (
     <Fragment>
-      <Navbar expanded="lg" className="navbar-default">
+      <Navbar expanded="lg" className="navbar-default w-100">
         <div className="d-flex justify-content-between w-100">
           <div className="d-flex align-items-center">
             <Link
