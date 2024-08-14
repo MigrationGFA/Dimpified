@@ -7,12 +7,20 @@ import {
   FaEllipsisV,
   FaTrash,
 } from "react-icons/fa";
-import { FiSend, } from "react-icons/fi";
-import { Card, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
+import { FiSend } from "react-icons/fi";
+import {
+  Card,
+  Row,
+  Col,
+  Form,
+  Button,
+  Dropdown,
+  Spinner,
+} from "react-bootstrap";
 import { AiOutlineFileImage } from "react-icons/ai";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import "./Header.css"
+import "./Header.css";
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
 import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
@@ -57,7 +65,6 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
     onEdit(post, editedCaption);
     setIsEditing(false);
   };
- 
 
   return (
     <Card className="mb-3 post-card">
@@ -156,7 +163,11 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
 
             {isCommenting && (
               <div ref={commentInputRef}>
-                <CommunityComment postId={post._id} userId={userId} ecosystemDomain={ecosystemDomain} />
+                <CommunityComment
+                  postId={post._id}
+                  userId={userId}
+                  ecosystemDomain={ecosystemDomain}
+                />
               </div>
             )}
           </>
@@ -184,23 +195,23 @@ const Header = () => {
   const [postImagePreviews, setPostImagePreviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
-  const userId = useSelector(
-    (state) => state.authentication.user.data.CreatorId
-  ) || {};
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+
+  const fetchCommunityData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
+      );
+      setPosts(response.data.posts);
+    } catch (error) {
+      console.error("Error fetching community data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCommunityData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
-        );
-        setPosts(response.data.posts);
-      } catch (error) {
-        console.error("Error fetching community data:", error);
-      }
-    };
-
     fetchCommunityData();
   }, [ecosystemDomain]);
 
@@ -215,7 +226,9 @@ const Header = () => {
 
       try {
         const response = await axios.patch(
-          `${import.meta.env.VITE_API_URL}/update-backgroundCover/${ecosystemDomain}`,
+          `${
+            import.meta.env.VITE_API_URL
+          }/update-backgroundCover/${ecosystemDomain}`,
           formData,
           {
             headers: {
@@ -248,7 +261,6 @@ const Header = () => {
     setPostImagePreviews(updatedPreviews);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -260,7 +272,7 @@ const Header = () => {
     selectedImages.forEach((image) => {
       formData.append("image", image);
     });
-
+    setIsPosting(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/create-post`,
@@ -271,7 +283,7 @@ const Header = () => {
           },
         }
       );
-      setPosts([response.data, ...posts]);
+      fetchCommunityData();
       setMessage("");
       showToast(response.data.message);
       setSelectedImages([]);
@@ -279,6 +291,8 @@ const Header = () => {
     } catch (error) {
       console.error("Error creating post:", error);
       showToast(error.response.data.message);
+    } finally {
+      setIsPosting(false);
     }
   };
 
@@ -309,8 +323,6 @@ const Header = () => {
   //     console.error("Error deleting post:", error);
   //   }
   // };
-
- 
 
   return (
     <div className="container">
@@ -390,7 +402,11 @@ const Header = () => {
               className="send-button"
               onClick={handleSubmit}
             >
-              <FiSend size={25} />
+              {isPosting ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                <FiSend size={25} />
+              )}
             </Button>
           </div>
         </div>
@@ -451,9 +467,7 @@ const Header = () => {
             onEdit={(editedPost, newContent) => {
               setPosts(
                 posts.map((p) =>
-                  p._id === editedPost._id
-                    ? { ...p, content: newContent }
-                    : p
+                  p._id === editedPost._id ? { ...p, content: newContent } : p
                 )
               );
             }}
