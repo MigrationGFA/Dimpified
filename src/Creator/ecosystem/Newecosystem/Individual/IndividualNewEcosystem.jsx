@@ -375,7 +375,7 @@ const NewEcosystem = () => {
                   <Row>
                     <Col lg={6} className="col-12 mb-3">
                       <Form.Label htmlFor="contact-phone-number">
-                        E. What is your Contact Phone Number?{" "}
+                        E. What is your Business Phone Number?{" "}
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
@@ -395,7 +395,7 @@ const NewEcosystem = () => {
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="address">
-                          F. What is your Address?{" "}
+                          F. What is your Business Address?{" "}
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
