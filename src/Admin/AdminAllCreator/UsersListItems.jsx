@@ -18,27 +18,29 @@ import TanstackTable from "../../Components/elements/advance-table/TanstackTable
 import { numberWithCommas } from "../../helper/utils";
 import StatRightChart from "../analytics/stats/StatRightChart";
 import avatar from "../../assets/images/avatar/person.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UsersListItems = ({ userDetails }) => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
   const [instructors, setInstructorsList] = useState([]);
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    verifiedUsers: 0,
-    usersThisMonth: 0,
-    totalAmountPaid: 0,
-  });
+  const [stats, setStats] = useState({});
 
-  
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
       if (creatorId) {
         try {
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const apiUrl = `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-users-stats/${creatorId}`;
           const response = await fetch(apiUrl);
           const data = await response.json();
           setStats(data);
@@ -56,12 +58,30 @@ const UsersListItems = ({ userDetails }) => {
       setInstructorsList(userDetails.slice(0, 500));
     }
     setLoading(false);
+    getCreatorDashboard();
   }, [userDetails]);
 
   // Utility function to format the date
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handleViewClick = (id) => {
+    // Handle click event for View button
+    navigate(`/admin/creator-single-page?id=${id}`);
+  };
+
+  const getCreatorDashboard = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/admin-creator-dashboard-overview`
+      );
+      setStats(response.data.dashboardData);
+      // console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -103,18 +123,21 @@ const UsersListItems = ({ userDetails }) => {
         accessorKey: "name",
         header: "Name",
         cell: ({ getValue, row }) => (
-          <div className="d-flex align-items-center">
-            <Image
-              src={
-                row.original.imageUrl == null ? avatar : row.original.imageUrl
-              }
-              alt=""
-              className="rounded-circle avatar-md me-2"
-            />
-            <h5 className="mb-0">
-              {getValue()} {row.original.lastName} {row.original.firstName}
-            </h5>
-          </div>
+          <a href="#" onClick={() => handleViewClick(row.original.id)}>
+            {" "}
+            <div className="d-flex align-items-center">
+              <Image
+                src={
+                  row.original.imageUrl == null ? avatar : row.original.imageUrl
+                }
+                alt=""
+                className="rounded-circle avatar-md me-2"
+              />
+              <h5 className="mb-0">
+                {getValue()} {row.original.organizationName}
+              </h5>
+            </div>{" "}
+          </a>
         ),
       },
       {
@@ -123,7 +146,9 @@ const UsersListItems = ({ userDetails }) => {
         cell: ({ getValue, row }) => (
           <div className="d-flex align-items-center">
             <h5 className="mb-0">
-              {row.original.courses == null ? 0 : row.original.courses}
+              {row.original.digitalProductCount +
+                row.original.serviceCount +
+                row.original.courseCount}
             </h5>
           </div>
         ),
@@ -136,7 +161,7 @@ const UsersListItems = ({ userDetails }) => {
       {
         accessorKey: "Ecosystem",
         header: "Ecosystem",
-        cell: ({ getValue, row }) => row.original.ecosystemDomain,
+        cell: ({ getValue, row }) => row.original.ecosystemCount,
       },
       {
         accessorKey: "shortcutmenu",
@@ -192,11 +217,11 @@ const UsersListItems = ({ userDetails }) => {
         </div>
       ) : (
         <div>
-<Row>
+          <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total"
-                value={stats.totalUsers}
+                value={stats.totalCreators}
                 summary="Number of sales"
                 summaryIcon="up"
                 showSummaryIcon
@@ -207,7 +232,7 @@ const UsersListItems = ({ userDetails }) => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Verified"
-                value={stats.verifiedUsers}
+                value={stats.totalVerifiedCreators}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -218,7 +243,7 @@ const UsersListItems = ({ userDetails }) => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Unverified "
-                value={stats.usersThisMonth}
+                value={stats.totalUnverifiedCreators}
                 summary="Students"
                 summaryIcon="up"
                 showSummaryIcon
@@ -229,7 +254,7 @@ const UsersListItems = ({ userDetails }) => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Have ecosystem"
-                value={stats.totalAmountPaid}
+                value={stats.totalCreatorsWithEcosystem}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon

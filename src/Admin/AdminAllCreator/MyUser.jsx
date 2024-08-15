@@ -20,6 +20,7 @@ const Instructor = () => {
   });
   const [userDetails, setUserDetails] = useState([]); 
   const [myEcosystem, setMyEcosystem] = useState([]);
+  const [creatorDashboard, setCreatorDashboard] = useState([])
 
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
@@ -28,11 +29,11 @@ const Instructor = () => {
   const getMyUser = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-ecosystem-users/${userId}`
+        `${import.meta.env.VITE_API_URL}/admin-all-creators`
       );
 
-      setUserDetails(response.data.ecosystemUsers);
-      console.log(response.data.ecosystemUsers);
+      setUserDetails(response.data.creators);
+      console.log(response.data.creators);
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +55,7 @@ const Instructor = () => {
         }
       );
       setMyEcosystem(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +64,8 @@ const Instructor = () => {
   useEffect(() => {
     getMyUser();
   }, [userId]);
+
+
 
   // Fetch the ecosystem data whenever `userDetails` changes
   useEffect(() => {

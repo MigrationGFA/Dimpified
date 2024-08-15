@@ -51,7 +51,7 @@ import VerifyEmail from "../Creator/authentication/VerifyEmail";
 // ** Import Support components
 import HelpCenter from "../Creator/Support/HelpCenter";
 import Support from "../Creator/Support/Support";
-// import Chat from "../Components/elements/chat/Chat" 
+// import Chat from "../Components/elements/chat/Chat"
 // import ChatLayout from "./Dashboard/ChatLayout";
 import EditProfile from "../Creator/AccountSettings/EditProfile";
 import SocialProfile from "../Creator/AccountSettings/SocialProfiles";
@@ -92,8 +92,8 @@ import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilter
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
 import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
-import UserServiceBilling from "../Components/marketing/Pages/service-single/ServiceBilling"
-import UserOrderSummary from "../Components/marketing/Pages/service-single/OrderSummary"
+import UserServiceBilling from "../Components/marketing/Pages/service-single/ServiceBilling";
+import UserOrderSummary from "../Components/marketing/Pages/service-single/OrderSummary";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
 
@@ -121,7 +121,7 @@ import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/Eco
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
-import UserChat from "../Components/Chat/UserChat"
+import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 import Join from "../developer-program/pages/Join";
 import AboutDevProgram from "../developer-program/pages/AboutDevProgram";
@@ -133,7 +133,7 @@ import DeveloperProgramSupport from "../developer-program/pages/Support";
 import DevProgramAuthForm from "../developer-program/pages/DevProgramAuthForm";
 
 // ** Import Admin Dahbaord Menu Pages
-import AdminSignIn from "../Admin/Authentication/AdminSignIn"
+import AdminSignIn from "../Admin/Authentication/AdminSignIn";
 import AdminForgetPassword from "../Admin/Authentication/AdminForgetPassword";
 import AdminOverview from "../Admin/overview/AdminOverview";
 import AllCreator from "../Admin/AdminAllCreator/MyUser";
@@ -142,7 +142,7 @@ import AdminAllEcosystem from "../Admin/AdminAllEcosystem/AdminAllEcosystem";
 import OutSource from "../Admin/Outsource/OutSource";
 import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
 import AdminSupport from "../Admin/Support/Support";
-
+import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 
 const AllRoutes = () => {
   return (
@@ -165,10 +165,7 @@ const AllRoutes = () => {
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />
-        <Route
-          path="/admin/forget-password"
-          element={<AdminForgetPassword />}
-        />
+      <Route path="/admin/forget-password" element={<AdminForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/verify-email" element={<UserEmailVerification />} />
       <Route path="/creator/verification" element={<VerifyEmail />} />
@@ -270,7 +267,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
-      
+
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -311,7 +308,10 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/service/service-billing/:id"
         element={<UserServiceBilling />}
       />
-      <Route path="/:ecosystemDomain/service/order-summary/:id" element={<UserOrderSummary />} />
+      <Route
+        path="/:ecosystemDomain/service/order-summary/:id"
+        element={<UserOrderSummary />}
+      />
       <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
 
       <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
@@ -388,26 +388,30 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/User-delete-profile"
         element={<UserDeleteProfile />}
       />
-      <Route path="/:ecosystemDomain/community-chat" element={<CommunityChat />} />
+      <Route
+        path="/:ecosystemDomain/community-chat"
+        element={<CommunityChat />}
+      />
       <Route element={<UserChatLayout />}>
-      <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
+        <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
       </Route>
 
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-    
-{/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
-<Route element={<AdminDashboardIndex />}>
+
+      {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
+      <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
         <Route path="/admin/all-creator" element={<AllCreator />} />
         <Route path="/admin/out-source" element={<OutSource />} />
-        <Route
-          path="/admin/all-ecosystem"
-          element={<AdminAllEcosystem />}
-        />
+        <Route path="/admin/all-ecosystem" element={<AdminAllEcosystem />} />
         <Route
           path="/admin/out-source/job-single"
           element={<OutsourceJobSingle />}
+        />
+        <Route
+          path="/admin/creator-single-page/"
+          element={<CreatorSinglePage />}
         />
         <Route path="/admin/support" element={<AdminSupport />} />
         <Route

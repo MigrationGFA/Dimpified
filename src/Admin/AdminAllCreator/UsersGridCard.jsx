@@ -5,20 +5,22 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import avatar from "../../assets/images/avatar/person.png";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function UsersGridCard({ userDetails }) {
+
+  const navigate = useNavigate();
+
   const [instructors, setInstructorsList] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    verifiedUsers: 0,
-    usersThisMonth: 0,
-    totalAmountPaid: 0,
-  });
+  const [stats, setStats] = useState({});
 
   // Get creatorId from Redux state
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId
+  );
 
   const instructorsPerPage = 8;
   const pagesVisited = pageNumber * instructorsPerPage;
@@ -28,34 +30,58 @@ function UsersGridCard({ userDetails }) {
     setPageNumber(selected);
   };
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (creatorId) {
-        try {
-          // Use environment variable to construct the API URL
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          setStats(data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchStats = async () => {
+  //     if (creatorId) {
+  //       try {
+  //         // Use environment variable to construct the API URL
+  //         const apiUrl = `${
+  //           import.meta.env.VITE_API_URL
+  //         }/admin-creator-dashboard-overview`;
+  //         const response = await fetch(apiUrl);
+  //         const data = await response.json();
+  //         setStats(data);
+  //       } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchStats();
-  }, [creatorId]);
+  //   fetchStats();
+  // }, [creatorId]);
+
+  const getCreatorDashboard = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/admin-creator-dashboard-overview`
+      );
+      setStats(response.data.dashboardData);
+      // console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (Array.isArray(userDetails)) {
       setInstructorsList(userDetails.slice(0, 500));
     }
     setLoading(false);
+    getCreatorDashboard();
   }, [userDetails]);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
+  const handleViewClick = (id) => {
+    // Handle click event for View button
+    navigate(`/admin/creator-single-page?id=${id}`);
   };
 
   const displayInstructors = instructors
@@ -65,26 +91,37 @@ function UsersGridCard({ userDetails }) {
         <Card className="mb-5">
           <Card.Body>
             <div className="text-center">
-              <Image
-                src={instructor.imageUrl == null ? avatar : instructor.imageUrl}
-                className="rounded-circle avatar-xl mb-3"
-                alt=""
-              />
-              <h4 className="mb-0">
-                {instructor.lastName} {instructor.firstName}
-              </h4>
+              <a href="#" onClick={() => handleViewClick(instructor.id)}>
+                <Image
+                  src={
+                    instructor.imageUrl == null ? avatar : instructor.imageUrl
+                  }
+                  className="rounded-circle avatar-xl mb-3"
+                  alt=""
+                />
+                <h4 className="mb-0">
+                  {truncate(instructor.organizationName, 19)}
+                </h4>
+              </a>
             </div>
             <div className="d-flex justify-content-between border-bottom py-2 mt-4">
               <span>Ecosystem</span>
-              <span className="text-dark">{instructor.ecosystemDomain}</span>
+              <span className="text-dark">{instructor.ecosystemCount}</span>
             </div>
             <div className="d-flex justify-content-between border-bottom py-2">
               <span>Date Joined</span>
-              <span className="text-dark">{formatDate(instructor.createdAt)}</span>
+              <span className="text-dark">
+                {formatDate(instructor.createdAt)}
+              </span>
             </div>
             <div className="d-flex justify-content-between pt-2">
               <span>Products</span>
-              <span className="text-dark">{instructor.products == null ? 0 : instructor.products}</span>
+              <span className="text-dark">
+                {/* {instructor.products == null ? 0 : instructor.products} */}
+                {instructor.digitalProductCount +
+                  instructor.serviceCount +
+                  instructor.courseCount}
+              </span>
             </div>
           </Card.Body>
         </Card>
@@ -142,7 +179,7 @@ function UsersGridCard({ userDetails }) {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total"
-                value={stats.totalUsers}
+                value={stats.totalCreators}
                 summary="Number of sales"
                 summaryIcon="up"
                 showSummaryIcon
@@ -153,7 +190,7 @@ function UsersGridCard({ userDetails }) {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Verified"
-                value={stats.verifiedUsers}
+                value={stats.totalVerifiedCreators}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -164,7 +201,7 @@ function UsersGridCard({ userDetails }) {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Unverified "
-                value={stats.usersThisMonth}
+                value={stats.totalUnverifiedCreators}
                 summary="Students"
                 summaryIcon="up"
                 showSummaryIcon
@@ -175,7 +212,7 @@ function UsersGridCard({ userDetails }) {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Have ecosystem"
-                value={stats.totalAmountPaid}
+                value={stats.totalCreatorsWithEcosystem}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon
