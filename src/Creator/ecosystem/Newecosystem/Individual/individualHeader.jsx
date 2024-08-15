@@ -9,7 +9,7 @@ const ecoHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleCancle = async () => {
+  const handleCancel = async () => {
     dispatch(resetState());
     navigate("/creator/dashboard/All-Ecosystem");
   };
