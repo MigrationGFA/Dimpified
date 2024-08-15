@@ -309,94 +309,44 @@ const AllRoutes = () => {
         element={<PostAProduct />}
       />
       {/* End user ecosystem routes */}
-      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-      <Route
-        path="/:ecosystemDomain/service/:id"
-        element={<UserSingleService />}
-      />
+      <Route path="/course-single/:id" element={<UserSingleCourse />} />
+
+      <Route path="/digital-service/:id" element={<UserSingleService />} />
+      <Route path="/service/:id" element={<UserSingleService />} />
       <Route path="/signup" element={<RegisterEcosystem />} />
       <Route path="/signin" element={<EcosystemSignIn />} />
-      <Route
-        path="/ecosystem/forget-password"
-        element={<EcosystemForgetPassword />}
-      />
+      <Route path="/forget-password" element={<EcosystemForgetPassword />} />
       <Route
         path="/ecosystem/verify-email"
         element={<EcosystemEmailVerification />}
       />
-      <Route
-        path="/ecosystem/verification"
-        element={<EcosystemVerifyEmail />}
-      />
-      <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-      <Route
-        path="/:ecosystemDomain/User-My-Course"
-        element={<UserMyCourse />}
-      />
-      <Route
-        path="/:ecosystemDomain/Userdashboard"
-        element={<UserDashboard />}
-      />
-      <Route path="/:ecosystemDomain/User-Reviews" element={<UserReviews />} />
-      <Route
-        path="/:ecosystemDomain/User-My-Course/Bookmarked"
-        element={<UserBookmarked />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-My-Course/Learning"
-        element={<UserLearning />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-quiz-result"
-        element={<UserQiuzResult />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-edit-profile"
-        element={<UserEditProfile />}
-      />
-      <Route path="/:ecosystemDomain/User-payout" element={<UserPayouts />} />
-      <Route
-        path="/:ecosystemDomain/User-social-profile"
-        element={<UserSocialProfile />}
-      />
-      <Route
-        path="/:ecosystemDomain/User-notifications"
-        element={<UserNotification />}
-      />
+      <Route path="/verification" element={<EcosystemVerifyEmail />} />
+      <Route path="/User-My-Course" element={<UserMyCourse />} />
+      <Route path="/Userdashboard" element={<UserDashboard />} />
+      <Route path="/User-Reviews" element={<UserReviews />} />
+      <Route path="/User-My-Course/Bookmarked" element={<UserBookmarked />} />
+      <Route path="/User-My-Course/Learning" element={<UserLearning />} />
+      <Route path="/User-quiz-result" element={<UserQiuzResult />} />
+      <Route path="/User-edit-profile" element={<UserEditProfile />} />
+      <Route path="/User-payout" element={<UserPayouts />} />
+      <Route path="/User-social-profile" element={<UserSocialProfile />} />
+      <Route path="/User-notifications" element={<UserNotification />} />
       <Route
         path="/:ecosystemDomain/creator-community-chat"
         element={<CreatorCommunityChat />}
       />
+      <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
+      <Route path="/help-center" element={<UserResolution />} />
+      <Route path="/User/browse-course" element={<UserBrowseCourse />} />
+      <Route path="/User/browse-service" element={<UserBrowseService />} />
       <Route
-        path="/:ecosystemDomain/User-delete-profile"
-        element={<UserDeleteProfile />}
-      />
-      <Route
-        path="/:ecosystemDomain/help-center"
-        element={<UserResolution />}
-      />
-      <Route
-        path="/:ecosystemDomain/User/browse-course"
-        element={<UserBrowseCourse />}
-      />
-      <Route
-        path="/:ecosystemDomain/User/browse-service"
-        element={<UserBrowseService />}
-      />
-      <Route
-        path="/:ecosystemDomain/User/single/learning/single-course"
+        path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
       />
-      <Route
-        path="/:ecosystemDomain/User-delete-profile"
-        element={<UserDeleteProfile />}
-      />
-      <Route
-        path="/:ecosystemDomain/community-chat"
-        element={<CommunityChat />}
-      />
+
+      <Route path="/community-chat" element={<CommunityChat />} />
       <Route element={<UserChatLayout />}>
-        <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
+        <Route path="/chat" element={<UserChat />} />
       </Route>
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />

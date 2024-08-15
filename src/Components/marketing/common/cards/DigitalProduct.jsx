@@ -44,10 +44,7 @@ const DigitalProductCard = ({ item }) => {
   return (
     <Card className="card-bordered card-hover cursor-pointer h-100 ">
       <Card.Body className="p-0">
-        <Link
-          to={`/${ecosystemDomain}/service/${item._id}`}
-          className="text-inherit me-1"
-        >
+        <Link to={`/digital-service/${item._id}`} className="text-inherit me-1">
           <div
             className="position-relative  top-0 start-0 w-100 "
             style={{
@@ -66,7 +63,7 @@ const DigitalProductCard = ({ item }) => {
           <div className="d-flex justify-content-between mb-2">
             <div>
               <Link
-                to={`/${ecosystemDomain}/service/${item._id}`}
+                to={`/digital-service/${item._id}`}
                 className="text-inherit me-1"
               >
                 <h4 className="mb-1 fs-4">{item.productName}</h4>
