@@ -51,7 +51,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
       >
         <Container fluid className="px-0 ps-2">
           {/* <Navbar.Brand as={Link} to="/"> */}
-          <Link to="" onClick="">
+          <Link to="/" onClick="">
             <Image
               src={logo}
               alt="logo"
