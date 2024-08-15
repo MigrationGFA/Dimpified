@@ -43,6 +43,7 @@ const CourseSingle = () => {
   const user = useSelector((state) => state.authentication.user);
   console.log(user)
 
+
   useEffect(() => {
     if (user === null) {
       setNotLogin(true);

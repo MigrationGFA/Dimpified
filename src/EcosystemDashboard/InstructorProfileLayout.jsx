@@ -61,7 +61,7 @@ const ProfileLayout = (props) => {
     <Fragment>
       <NavbarDefault />
       <section className="pt-5 pb-5">
-        <Container>
+        <Container fluid>
           {/* User info */}
           <ProfileCover
             dashboardData={dashboardData}
@@ -71,7 +71,7 @@ const ProfileLayout = (props) => {
 
           {/* Content */}
           <Row className="mt-0 mt-md-4">
-            <Col lg={3} md={4} sm={12}>
+            <Col lg={2} md={3} sm={12}>
               <Navbar
                 expand="lg"
                 className="navbar navbar-expand-md navbar-light shadow-sm mb-4 mb-lg-0 sidenav"
@@ -112,7 +112,7 @@ const ProfileLayout = (props) => {
               </Navbar>
             </Col>
 
-            <Col lg={9} md={8} sm={12}>
+            <Col lg={10} md={9} sm={12}>
               {props.children}
             </Col>
           </Row>

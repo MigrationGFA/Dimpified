@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FaPen,
   FaHeart,
   FaHandsHelping,
   FaShare,
   FaEllipsisV,
+  FaTrash,
 } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import {
@@ -14,81 +15,29 @@ import {
   Form,
   Button,
   Dropdown,
-  Container,
-  Image,
+  Spinner,
 } from "react-bootstrap";
 import { AiOutlineFileImage } from "react-icons/ai";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import "./Header.css";
-import img4 from "../../assets/SocialImages/Img 4.jpeg";
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
-import Box from "../../assets/Comment.jpeg";
-import Like from "../../assets/Like.jpeg";
-// import CommunityComment from "./CommunityComment";
+import { showToast } from "../../Components/Showtoast";
+import { useSelector } from "react-redux";
+import CommunityComment from "./CommunityComment";
 
-// Initial posts array
-const initialPosts = [
-  {
-    type: "image",
-    caption:
-      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
-    images: [img4, img4, img4, img4],
-    likeCount: 2292,
-    commentCount: 12,
-    comments: [],
-  },
-  {
-    type: "image",
-    caption:
-      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
-    images: [img4, img4, img4, img4],
-    likeCount: 2292,
-    commentCount: 12,
-    comments: [],
-  },
-  ...Array(3).fill({
-    type: "image",
-    caption:
-      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
-    images: [img4, img4, img4, img4],
-    likeCount: 2292,
-    commentCount: 12,
-    comments: [],
-  }),
-  ...Array(3).fill({
-    type: "image",
-    caption:
-      "As #GoogleIO comes to a close, we're filled with immense gratitude for everyone who joined us on this inspiring journey.",
-    images: [img4, img4, img4, img4],
-    likeCount: 2292,
-    commentCount: 12,
-    comments: [],
-  }),
-  {
-    type: "write-up",
-    caption:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.sit amet, consectetur adipiscing elit.",
-    likeCount: 123,
-    commentCount: 5,
-    comments: [],
-  },
-  {
-    type: "image-only",
-    images: [img4],
-    likeCount: 567,
-    commentCount: 8,
-    comments: [],
-  },
-];
-
-const PostCard = ({ post, onDelete, onEdit }) => {
-  const [comments, setComments] = useState(post.comments || []);
-  const [Commenting, setCommenting] = useState(false);
+const PostCard = ({ post, onDelete, onEdit, onComment }) => {
+  const { ecosystemDomain } = useParams();
+  const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedCaption, setEditedCaption] = useState(post.caption);
+  const [editedCaption, setEditedCaption] = useState(post.content);
   const commentInputRef = useRef(null);
 
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+
   const handleCommentClick = () => {
-    setCommenting(true);
+    setIsCommenting(true);
     setTimeout(() => {
       commentInputRef.current?.scrollIntoView({ behavior: "smooth" });
       commentInputRef.current?.focus();
@@ -122,13 +71,15 @@ const PostCard = ({ post, onDelete, onEdit }) => {
       <Card.Body>
         <div className="header-top d-flex align-items-center mb-3">
           <img
-            src={Logo}
-            alt="Logo"
+            src={post.userImage || "default-user-image.png"}
+            alt="User"
             style={{ borderRadius: "50%", height: "60px", width: "60px" }}
           />
           <div>
-            <h3 className="mb-0">Google Developer Groups (GDG)</h3>
-            <p className="text-muted mb-0 font-text-bold">2 months ago</p>
+            <h3 className="mb-0">{post.username || "Unknown User"}</h3>
+            <p className="text-muted mb-0 font-text-bold">
+              {new Date(post.createdAt).toLocaleString()}
+            </p>
           </div>
         </div>
         {isEditing ? (
@@ -154,38 +105,11 @@ const PostCard = ({ post, onDelete, onEdit }) => {
           </Form>
         ) : (
           <>
-            {post.type === "write-up" && (
-              <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
-            )}
-            {post.type === "image" && (
-              <>
-                <Card.Text style={{ color: "black" }}>{post.caption}</Card.Text>
-                <Row className="post-images">
-                  {post.images.slice(0, 4).map((image, index) => (
-                    <Col key={index} xs={6} md={3}>
-                      <img
-                        src={image}
-                        alt={`Post Image ${index}`}
-                        className="img-fluid post-image"
-                      />
-                    </Col>
-                  ))}
-                  {post.images.length > 4 && (
-                    <Col
-                      xs={6}
-                      md={3}
-                      className="d-flex align-items-center justify-content-center post-image-more"
-                    >
-                      +{post.images.length - 4}
-                    </Col>
-                  )}
-                </Row>
-              </>
-            )}
-            {post.type === "image-only" && (
+            <Card.Text style={{ color: "black" }}>{post.content}</Card.Text>
+            {post.images && post.images.length > 0 && (
               <Row className="post-images">
-                {post.images.map((image, index) => (
-                  <Col key={index} xs={12}>
+                {post.images.slice(0, 4).map((image, index) => (
+                  <Col key={index} xs={6} md={3}>
                     <img
                       src={image}
                       alt={`Post Image ${index}`}
@@ -193,57 +117,58 @@ const PostCard = ({ post, onDelete, onEdit }) => {
                     />
                   </Col>
                 ))}
+                {post.images.length > 4 && (
+                  <Col
+                    xs={6}
+                    md={3}
+                    className="d-flex align-items-center justify-content-center post-image-more"
+                  >
+                    +{post.images.length - 4}
+                  </Col>
+                )}
               </Row>
             )}
             <div className="post-interactions d-flex justify-content-between align-items-center mt-3">
               <div className="interaction-icons">
                 <div className="icon-circle like-circle">
-                  <img src={Like} alt="Like Icon" className="icon like-icon2" />
-                </div>
-                <div className="icon-circle love-circle">
                   <FaHeart className="icon" />
                 </div>
-                <div className="icon-circle applaud-circle">
-                  <FaHandsHelping className="icon" />
-                </div>
-                {post.likeCount.toLocaleString()}
+                {post.likes}
               </div>
-              <div className="interaction-details">
-                {comments.length} comments
-              </div>
+              {/* <div className="interaction-details">
+                {comments && comments.length} comments
+              </div> */}
             </div>
             <hr />
             <div className="interaction-buttons d-flex justify-content-between mt-2">
               <div className="d-flex align-items-center">
-                <img
-                  src={Like}
-                  alt="Like Icon"
-                  className="white-icon like-icon"
-                />
+                <FaHeart className="white-icon like-icon" />
                 <span className="ml-2">Like</span>
               </div>
               <div
-                className="d-flex align-items-center"
+                className="d-flex align-items-center pointer"
                 onClick={handleCommentClick}
               >
-                <img
-                  src={Box}
-                  alt="Comment Icon"
-                  className="white-icon comment-icon"
-                />
+                <FaHandsHelping className="white-icon comment-icon" />
                 <span className="ml-2">Comment</span>
               </div>
-              <div className="d-flex align-items-center" onClick={handleShare}>
+              <div
+                className="d-flex align-items-center pointer"
+                onClick={handleShare}
+              >
                 <FaShare className="fs-5 text-primary" />
                 <span className="ml-2">Share</span>
               </div>
             </div>
-            {Commenting && (
-              <CommunityComment
-                comments={comments}
-                setComments={setComments}
-                commentInputRef={commentInputRef}
-              />
+
+            {isCommenting && (
+              <div ref={commentInputRef}>
+                <CommunityComment
+                  postId={post._id}
+                  userId={userId}
+                  ecosystemDomain={ecosystemDomain}
+                />
+              </div>
             )}
           </>
         )}
@@ -262,31 +187,112 @@ const PostCard = ({ post, onDelete, onEdit }) => {
 };
 
 const Header = () => {
-  const [posts, setPosts] = useState(initialPosts);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const { ecosystemDomain } = useParams();
+  const [posts, setPosts] = useState([]);
+  const [backgroundCoverPreview, setBackgroundCoverPreview] = useState(null);
+  const [backgroundCoverImage, setBackgroundCoverImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [postImagePreviews, setPostImagePreviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
-  const handleImagePreviewChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target.result);
-      };
-      reader.readAsDataURL(file);
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
+
+  const fetchCommunityData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
+      );
+      setPosts(response.data.posts);
+    } catch (error) {
+      console.error("Error fetching community data:", error);
     }
   };
 
-  const handleSelectedImageChange = (event) => {
+  useEffect(() => {
+    fetchCommunityData();
+  }, [ecosystemDomain]);
+
+  // Handle background cover image change
+  const handleBackgroundCoverChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+      setBackgroundCoverImage(file);
+
+      const formData = new FormData();
+      formData.append("backgroundCover", file);
+
+      try {
+        const response = await axios.patch(
+          `${
+            import.meta.env.VITE_API_URL
+          }/update-backgroundCover/${ecosystemDomain}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        showToast(response.data.message);
+        setBackgroundCoverPreview(URL.createObjectURL(file));
+      } catch (error) {
+        console.error("Error updating header image:", error);
+        showToast(error.response.data.error);
+      }
+    }
+  };
+
+  // Handle selected images for post creation
+  const handleSelectedImagesChange = (event) => {
+    const files = Array.from(event.target.files);
+    const imagePreviews = files.map((file) => URL.createObjectURL(file));
+    setSelectedImages(files);
+    setPostImagePreviews(imagePreviews);
+  };
+
+  // Remove an image from the post creation images
+  const removePostImage = (index) => {
+    const updatedImages = selectedImages.filter((_, i) => i !== index);
+    const updatedPreviews = postImagePreviews.filter((_, i) => i !== index);
+    setSelectedImages(updatedImages);
+    setPostImagePreviews(updatedPreviews);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("authorId", userId);
+    formData.append("userType", "user");
+    formData.append("ecosystemDomain", ecosystemDomain);
+    formData.append("content", message);
+
+    selectedImages.forEach((image) => {
+      formData.append("image", image);
+    });
+    setIsPosting(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/create-post`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      fetchCommunityData();
+      setMessage("");
+      showToast(response.data.message);
+      setSelectedImages([]);
+      setPostImagePreviews([]);
+    } catch (error) {
+      console.error("Error creating post:", error);
+      showToast(error.response.data.message);
+    } finally {
+      setIsPosting(false);
     }
   };
 
@@ -294,52 +300,53 @@ const Header = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newPost = {
-      type: selectedImage ? (message ? "image" : "image-only") : "write-up",
-      caption: message,
-      images: selectedImage ? [selectedImage] : [],
-      likeCount: 0,
-      comments: [],
-    };
-    setPosts([newPost, ...posts]);
-    setMessage("");
-    setSelectedImage(null);
-    setImagePreview(null);
-  };
+  // const handleEdit = async (postToEdit, newCaption) => {
+  //   try {
+  //     const response = await axios.patch(`/posts/${postToEdit._id}`, {
+  //       content: newCaption,
+  //     });
+  //     setPosts(
+  //       posts.map((post) =>
+  //         post._id === postToEdit._id ? response.data : post
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error editing post:", error);
+  //   }
+  // };
 
-  const handleEdit = (postToEdit, newCaption) => {
-    setPosts(
-      posts.map((post) =>
-        post === postToEdit ? { ...post, caption: newCaption } : post
-      )
-    );
-  };
-
-  const handleDelete = (postToDelete) => {
-    setPosts(posts.filter((post) => post !== postToDelete));
-  };
+  // const handleDelete = async (postToDelete) => {
+  //   try {
+  //     await axios.delete(`/posts/${postToDelete._id}`);
+  //     setPosts(posts.filter((post) => post._id !== postToDelete._id));
+  //   } catch (error) {
+  //     console.error("Error deleting post:", error);
+  //   }
+  // };
 
   return (
     <div className="container">
       <div className="two-layered-box">
         <div className="upper-layer">
-          {imagePreview ? (
-            <img src={imagePreview} alt="Selected" className="image-preview" />
+          {backgroundCoverPreview ? (
+            <img
+              src={backgroundCoverPreview}
+              alt="Selected Cover"
+              className="image-preview"
+            />
           ) : (
             <div className="placeholder">
               Click the pen icon to add an image
             </div>
           )}
-          <label htmlFor="image-upload-preview" className="edit-icon">
+          <label htmlFor="background-cover-upload" className="edit-icon">
             <FaPen />
           </label>
           <input
             type="file"
-            id="image-upload-preview"
+            id="background-cover-upload"
             accept="image/*"
-            onChange={handleImagePreviewChange}
+            onChange={handleBackgroundCoverChange}
             style={{ display: "none" }}
           />
         </div>
@@ -366,6 +373,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+
       <div className="bg-white p-2 rounded-3 shadow-sm mt-3 border border-black">
         <div className="position-relative">
           <Form.Control
@@ -385,7 +393,8 @@ const Header = () => {
               type="file"
               id="image-upload"
               accept="image/*"
-              onChange={handleSelectedImageChange}
+              multiple
+              onChange={handleSelectedImagesChange}
               style={{ display: "none" }}
             />
             <Button
@@ -393,240 +402,80 @@ const Header = () => {
               className="send-button"
               onClick={handleSubmit}
             >
-              <FiSend size={25} />
+              {isPosting ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                <FiSend size={25} />
+              )}
             </Button>
           </div>
         </div>
+
+        {postImagePreviews.length > 0 && (
+          <div className="d-flex flex-wrap mt-2">
+            {postImagePreviews.map((preview, index) => (
+              <div
+                key={index}
+                className="position-relative me-2 mb-2"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={preview}
+                  alt={`Preview ${index + 1}`}
+                  className="img-fluid"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn btn-danger btn-sm position-absolute top-0 start-0"
+                  onClick={() => removePostImage(index)}
+                  style={{
+                    backgroundColor: "rgba(255, 0, 0, 0.7)",
+                    border: "none",
+                    padding: "0.2rem",
+                    lineHeight: "1",
+                  }}
+                >
+                  <FaTrash size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {posts
-        .filter(
-          (post) =>
-            post.caption &&
-            post.caption.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .map((post, index) => (
+      {posts && posts.length === 0 ? (
+        <div className="d-flex justify-content-center align-items-center">
+          <p>No posts available. Be the first to share something!</p>
+        </div>
+      ) : (
+        posts.map((post) => (
           <PostCard
-            key={index}
+            key={post._id}
             post={post}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onDelete={(deletedPost) =>
+              setPosts(posts.filter((p) => p._id !== deletedPost._id))
+            }
+            onEdit={(editedPost, newContent) => {
+              setPosts(
+                posts.map((p) =>
+                  p._id === editedPost._id ? { ...p, content: newContent } : p
+                )
+              );
+            }}
           />
-        ))}
+        ))
+      )}
     </div>
   );
 };
 
 export default Header;
-
-// Utility function to format time
-const formatTime = (date) => {
-  const now = new Date();
-  const diff = Math.floor((now - date) / 1000);
-
-  if (diff < 60) return `${diff} seconds ago`;
-  if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
-  if (diff < 604800) return `${Math.floor(diff / 86400)} days ago`;
-
-  return `on ${date.toLocaleDateString("en-US", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  })}`;
-};
-
-export const CommunityComment = ({ comments, setComments }) => {
-  const [newComment, setNewComment] = useState("");
-  const [reply, setReply] = useState("");
-  const [replyToCommentId, setReplyToCommentId] = useState(null);
-  const [showCommentInput, setShowCommentInput] = useState(false); 
-  const commentInputRef = useRef(null);
-
-  const handleCommentChange = (e) => setNewComment(e.target.value);
-
-  const handleReplyChange = (e) => setReply(e.target.value);
-
-  const handleAddComment = () => {
-    if (newComment.trim()) {
-      setComments([
-        ...comments,
-        {
-          id: Date.now(),
-          text: newComment,
-          replies: [],
-          time: new Date(),
-          likes: 0,
-        },
-      ]);
-      setNewComment("");
-      commentInputRef.current.focus();
-    }
-  };
-
-  const handleAddReply = (commentId) => {
-    if (reply.trim()) {
-      setComments(
-        comments.map((comment) =>
-          comment.id === commentId
-            ? {
-                ...comment,
-                replies: [
-                  ...(comment.replies || []),
-                  { text: reply, time: new Date(), likes: 0 },
-                ],
-              }
-            : comment
-        )
-      );
-      setReply("");
-      setReplyToCommentId(null);
-    }
-  };
-
-  const handleLikeComment = (commentId) => {
-    setComments(
-      comments.map((comment) =>
-        comment.id === commentId
-          ? { ...comment, likes: comment.likes + 1 }
-          : comment
-      )
-    );
-  };
-
-  const handleLikeReply = (commentId, replyIndex) => {
-    setComments(
-      comments.map((comment) =>
-        comment.id === commentId
-          ? {
-              ...comment,
-              replies: comment.replies.map((reply, index) =>
-                index === replyIndex
-                  ? { ...reply, likes: reply.likes + 1 }
-                  : reply
-              ),
-            }
-          : comment
-      )
-    );
-  };
-
-  const handleNoCommentsClick = () => {
-    setShowCommentInput(true);
-  };
-
-  return (
-    <Container className="comment-section mt-3">
-      {!showCommentInput ? (
-        <div
-          className="text-center no-comments-message"
-          onClick={handleNoCommentsClick}
-        >
-          <img src={Box} alt="No Comments" className="no-comments-icon " />
-          <h3 className="font-weight-bold">No comments yet</h3>
-          <p>Be the first to comment</p>
-        </div>
-      ) : (
-        <Row className="new-comment">
-          <Col xs={1}>
-            <Image src={Logo} roundedCircle className="user-image" />
-          </Col>
-          <Col xs={11}>
-            <div className="active-comment-box">
-              <Form.Control
-                type="text"
-                value={newComment}
-                onChange={handleCommentChange}
-                placeholder="Type your comment..."
-                ref={commentInputRef}
-              />
-              <Button onClick={handleAddComment}>Post</Button>
-            </div>
-          </Col>
-        </Row>
-      )}
-
-      {comments.map((comment) => (
-        <Row key={comment.id} className="comment">
-          <Col xs={1}>
-            <Image src={Logo} roundedCircle className="commenter-image" />
-          </Col>
-          <Col xs={11}>
-            <div className="comment-content">
-              <div className="comment-header">Commenter Name</div>
-              <div className="comment-text">{comment.text}</div>
-              <div className="comment-footer">
-                <span className="comment-time">
-                  {formatTime(new Date(comment.time))}
-                </span>
-                <Button
-                  variant="link"
-                  className="like-button"
-                  onClick={() => handleLikeComment(comment.id)}
-                >
-                  Like ({comment.likes})
-                </Button>
-                <Button
-                  variant="link"
-                  className="reply-button"
-                  onClick={() => setReplyToCommentId(comment.id)}
-                >
-                  Reply
-                </Button>
-              </div>
-              {comment.replies &&
-                comment.replies.map((reply, index) => (
-                  <Row key={index} className="reply">
-                    <Col xs={1}>
-                      <Image
-                        src={Logo}
-                        roundedCircle
-                        className="replier-image"
-                      />
-                    </Col>
-                    <Col xs={11} style={{ marginLeft: "auto" }}>
-                      <div className="reply-content">
-                        <div className="replier-name">Replier Name</div>
-                        <div className="reply-text">{reply.text}</div>
-                        <div className="reply-footer">
-                          <span className="reply-time">
-                            {formatTime(new Date(reply.time))}
-                          </span>
-                          <Button
-                            variant="link"
-                            className="like-button"
-                            onClick={() => handleLikeReply(comment.id, index)}
-                          >
-                            Like ({reply.likes})
-                          </Button>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
-            </div>
-            {replyToCommentId === comment.id && (
-              <Row className="reply-input">
-                <Col xs={1}>
-                  <Image src={Logo} roundedCircle className="replier-image" />
-                </Col>
-                <Col xs={11}>
-                  <Form.Control
-                    type="text"
-                    value={reply}
-                    onChange={handleReplyChange}
-                    placeholder="Type your reply here..."
-                    ref={commentInputRef}
-                  />
-                  <Button onClick={() => handleAddReply(comment.id)}>
-                    Post Reply
-                  </Button>
-                </Col>
-              </Row>
-            )}
-          </Col>
-        </Row>
-      ))}
-    </Container>
-  );
-};

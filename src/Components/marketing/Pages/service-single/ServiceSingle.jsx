@@ -517,14 +517,13 @@ const ServicesSingle = () => {
                         </Button>
 
                         <div
-                          className="custom-modal"
                           style={{
                             position: "fixed",
                             top: 0,
                             right: 0,
                             height: "100%",
                             width: show ? "33.33%" : "0",
-                            overflow: "hidden",
+                            overflowY: "auto",
                             backgroundColor: "#fff",
                             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
                             transform: show
@@ -532,10 +531,19 @@ const ServicesSingle = () => {
                               : "translateX(100%)",
                             transition:
                               "transform 0.3s ease-out, width 0.3s ease-out",
-                            zIndex: 1050, // Same as Bootstrap modal z-index
+                            zIndex: 1050,
+                            ...(window.innerWidth <= 768
+                              ? {
+                                  width: show ? "100%" : "0",
+                                  maxHeight: "100vh",
+                                }
+                              : { width: show ? "33.33%" : "0" }),
                           }}
                         >
-                          <Modal.Header onHide={handleClose} className="d-flex justify-content-between ">
+                          <Modal.Header
+                            onHide={handleClose}
+                            className="d-flex justify-content-between "
+                          >
                             <Modal.Title className="p-4 mt-2 display-6 fw-bold">
                               {/* Additional payment Information */}
                               Booking Details

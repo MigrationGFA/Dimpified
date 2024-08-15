@@ -25,7 +25,7 @@
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@pathofdev/react-tag-input": "^1.0.7",
-    "@paystack/inline-js": "^2.14.0",
+    "@paystack/inline-js": "^2.19.2",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.2.5",
     "@tanstack/react-table": "^8.11.7",
