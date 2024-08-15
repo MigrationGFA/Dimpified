@@ -85,7 +85,7 @@ const UserSignIn = () => {
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to={`/${ecosystemDomain}/signup`} className="ms-1">
+                  <Link to={`/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>
