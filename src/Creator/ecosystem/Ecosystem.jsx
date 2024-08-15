@@ -63,24 +63,19 @@ const Ecosystem = () => {
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
-  const userType = useSelector(
-    (state) => state.authentication.user?.data?.userType
-  );
-  const role = useSelector(
-    (state) => state.authentication.user?.data?.role
-  );
- 
+
+  const role = useSelector((state) => state.authentication.user?.data?.role);
 
   const getLink = () => {
-    if (userType === 'creator' || role === 'Enterprise') {
-      return '/creator/dashboard/New-Ecosystem';
-    } else if (role === 'consumer') {
-      return '/creator/dashboard/New-Ecosystem/individual';
+    if (role === "creator" || role === "Enterprise") {
+      return "/creator/dashboard/New-Ecosystem";
+    } else if (role === "consumer") {
+      return "/creator/dashboard/New-Ecosystem/individual";
     } else {
-      return '';
+      return "";
     }
   };
-  
+
   const getMyEcosystems = async () => {
     try {
       setLoading(true);
@@ -158,8 +153,6 @@ const Ecosystem = () => {
     const siteNme = `${window.location.origin}/${ecosystemDomain}`;
     navigator.clipboard.writeText(siteNme);
   };
-
-  
 
   const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
     console.log("Ecosystem Name:", ecosystemName);

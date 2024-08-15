@@ -116,7 +116,6 @@ import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAPr
 // ** Import Ecosystem Authentication components
 import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register";
 import EcosystemSignIn from "../EcosystemDashboard/Authentication/EcosystemSignIn";
-import EcosystemSignUp from "../EcosystemDashboard/Authentication/EcosystemSignUp";
 import EcosystemForgetPassword from "../EcosystemDashboard/Authentication/EcosystemForgetPassword";
 import EcosystemEmailVerification from "../EcosystemDashboard/Authentication/EcosystemEmailVerification";
 import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/EcosystemVerifyEmail";
@@ -137,10 +136,25 @@ import OutSource from "../Admin/Outsource/OutSource";
 import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
 import AdminSupport from "../Admin/Support/Support";
 
+// subdomain
+import getSubdomain from "../helper/Subdomain";
+import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
+import BarberTemplate from "../EditTemplate/BarberTemplate";
+
 const AllRoutes = () => {
+  const ecosystemDomain = getSubdomain();
+
   return (
     <Routes>
-      <Route path="/" element={<DimpHome />} />
+      {ecosystemDomain ? (
+        <Route
+          path="/"
+          element={<MainTemplate subdomain={ecosystemDomain} />}
+        />
+      ) : (
+        <Route path="/" element={<DimpHome />} />
+      )}
+      <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/government" element={<Government />} />
@@ -153,7 +167,6 @@ const AllRoutes = () => {
       <Route path="/personal-care-services" element={<PersonalCare />} />
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
-
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
@@ -194,13 +207,11 @@ const AllRoutes = () => {
         path="/creator/dashboard/Preview-and-Send"
         element={<PreviewAndSend />}
       />
-
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route> */}
-
       {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<UserDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
@@ -240,7 +251,6 @@ const AllRoutes = () => {
           element={<Overview />}
         />
       </Route>
-
       {/* Creator Ecosystem Dashboard */}
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard"
@@ -258,7 +268,6 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-earning"
         element={<EcosystemEarning />}
       />
-
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-orders"
         element={<EcosystemOrders />}
@@ -271,7 +280,6 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
-
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -300,18 +308,14 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Add-New-Product"
         element={<PostAProduct />}
       />
-
       {/* End user ecosystem routes */}
-      <Route path="/:ecosystemDomain" element={<TemplateV1 />} />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
       <Route
         path="/:ecosystemDomain/service/:id"
         element={<UserSingleService />}
       />
-      <Route path="/:ecosystemDomain/signup" element={<RegisterEcosystem />} />
-
-      <Route path="/:ecosystemDomain/signin" element={<EcosystemSignIn />} />
-      <Route path="/ecosystem/signup" element={<EcosystemSignUp />} />
+      <Route path="/signup" element={<RegisterEcosystem />} />
+      <Route path="/signin" element={<EcosystemSignIn />} />
       <Route
         path="/ecosystem/forget-password"
         element={<EcosystemForgetPassword />}
@@ -325,7 +329,6 @@ const AllRoutes = () => {
         element={<EcosystemVerifyEmail />}
       />
       <Route path="/:ecosystemDomain/:id" element={<UserSingleCourse />} />
-
       <Route
         path="/:ecosystemDomain/User-My-Course"
         element={<UserMyCourse />}
@@ -395,10 +398,8 @@ const AllRoutes = () => {
       <Route element={<UserChatLayout />}>
         <Route path="/:ecosystemDomain/chat" element={<UserChat />} />
       </Route>
-
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />

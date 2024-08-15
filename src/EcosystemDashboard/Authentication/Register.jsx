@@ -4,11 +4,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import sanitizeHtml from "sanitize-html";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
+import getSubdomain from "../../helper/Subdomain";
 
 const RegisterEcosystem = () => {
+  const myDomain = getSubdomain();
+  const [ecosystemDomain, setEcosystemDomain] = useState(null);
+
+  useEffect(() => {
+    setEcosystemDomain(myDomain);
+  }, []);
+
   const [step, setStep] = useState(1);
   const [details, setDetails] = useState(null);
-  let { ecosystemDomain } = useParams();
   const navigate = useNavigate();
   const [loadingButton, setLoadingButton] = useState(false);
   const [formData, setFormData] = useState({
