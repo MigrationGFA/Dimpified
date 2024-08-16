@@ -22,6 +22,7 @@ import EcoHeader from "./ecoHeader";
 import EcoForm from "../../../EditTemplate/EcoForm";
 import EcoFormPreview from "../../../EditTemplate/EcoFormPreview";
 import PreviewPageSize from "./PreviewPageSize";
+import PreviewForm1 from "../Preview/Form/Form1";
 
 const templates = [
   {
@@ -32,17 +33,17 @@ const templates = [
 ];
 
 const templateSections = [
-  { id: 1, name: "Government" },
-  { id: 2, name: "Corporations" },
-  { id: 3, name: "Foundation/NGO's" },
-  { id: 4, name: "Religious Bodies" },
-  { id: 5, name: "Professional Services" },
-  { id: 6, name: "Creative Services" },
-  { id: 7, name: "Trade Services" },
-{ id: 8, name: "Personal Care Services" },
-  { id: 9, name: "Educational Services" },
-  { id: 10, name: "Event Services" },
-  { id: 11, name: "Technology Services" },
+  { id: 1, name: "Professional Services" },
+  { id: 2, name: "Creative Services" },
+  { id: 3, name: "Trade Services" },
+  { id: 4, name: "Personal Care Services" },
+  { id: 5, name: "Educational Services" },
+  { id: 6, name: "Event Services" },
+  { id: 7, name: "Technology Services" },
+  { id: 8, name: "Government" },
+  { id: 9, name: "Corporations" },
+  { id: 10, name: "Foundation/NGO's" },
+  { id: 11, name: "Religious Bodies" },
 ];
 
 const CreateForm = () => {
@@ -226,14 +227,14 @@ const CreateForm = () => {
               </div>
               <div className="d-sm-flex justify-content-between align-items-center mt-8">
                 <h3 className="">Select a form Template</h3>
-                <div className="d-flex ">
+                {/* <div className="d-flex ">
                   <Link to="">
                     <Button variant="primary">
                       <i className="fe fe-edit me-2"></i>
                       Create New Form
                     </Button>
                   </Link>
-                </div>
+                </div> */}
               </div>
               <Row className={showModal ? "blurred" : ""}>
                 {templates.map((template) => (
@@ -249,13 +250,13 @@ const CreateForm = () => {
                       <Card.Body className="text-center">
                         <Card.Title>{template.name}</Card.Title>
                         <div className="overlay">
-                          <Button
+                          {/* <Button
                             variant="primary"
                             className="select-preview"
                             onClick={handleShow}
                           >
                             Preview Form
-                          </Button>
+                          </Button> */}
                           <Button
                             variant="primary"
                             className="select-button"
@@ -270,7 +271,7 @@ const CreateForm = () => {
                 ))}
               </Row>
 
-              <div className="d-flex justify-content-between mt-4">
+              {/* <div className="d-flex justify-content-between mt-4">
                 <Button
                   variant="secondary"
                   className="me-2"
@@ -278,7 +279,7 @@ const CreateForm = () => {
                 >
                   Previous
                 </Button>
-              </div>
+              </div> */}
             </div>
           )}
           {step === 2 && (
@@ -324,7 +325,7 @@ const CreateForm = () => {
           <Modal.Title>Preview Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EcoForm />
+          <PreviewForm1 />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>

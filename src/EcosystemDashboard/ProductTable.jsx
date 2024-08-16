@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Modal, Form, Row, Col } from "react-bootstrap";
+import { Button, Modal, Form, Row, Col, Image } from "react-bootstrap";
 import DotBadge from "../Components/elements/bootstrap/DotBadge";
 import TanstackTable from "../Components/elements/advance-table/TanstackTable";
 import { showToast } from "../Components/Showtoast";
@@ -67,7 +67,27 @@ const JobTable = ({ data, header }) => {
         }  else if (accessorKey === "category") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.category} {row.original.productType}</p>
+              <p className="mb-1 text-primary-hover">{row.original.category} </p>
+            </Fragment>
+          );
+        }  else if (accessorKey === "image") {
+          return (
+            <div>
+              <Image
+                src={row.original.image || (row.original.backgroundCover && row.original.backgroundCover[0])}
+                alt=""
+                className="rounded-circle img-fluid" 
+                style={{ 
+                  width: '80px',
+                  height: '70px'
+                }}
+              />
+            </div>
+          );
+        } else if (accessorKey === "format") {
+          return (
+            <Fragment>
+              <p className="mb-1 text-primary-hover">{row.original.format}</p>
             </Fragment>
           );
         } else if (accessorKey === "deliveryDate") {

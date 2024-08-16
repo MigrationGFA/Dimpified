@@ -15,7 +15,7 @@ const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
-  let { ecosystemDomain } = useParams();
+
   const { isLoading, error, user } = useSelector(
     (state) => state.authentication
   );
@@ -49,7 +49,7 @@ const UserSignIn = () => {
         ecosystemLogin({
           email: data.email,
           password: data.password,
-          domainName: ecosystemDomain,
+          domainName: localStorage.getItem("subDomain"),
         })
       );
 
@@ -85,7 +85,7 @@ const UserSignIn = () => {
                 <h1 className="mb-1 fw-bold">Sign in</h1>
                 <span>
                   Don’t have an account?
-                  <Link to={`/${ecosystemDomain}/signup`} className="ms-1">
+                  <Link to={`/signup`} className="ms-1">
                     Sign up
                   </Link>
                 </span>
@@ -123,9 +123,9 @@ const UserSignIn = () => {
                       {errors.password && errors.password.message}
                     </small>
                   </Col>
-                  {/* <Link to="/user/Forget-password" className="ms-1 text-bold">
+                  <Link to="/forget-password" className="ms-1 text-bold">
                     Forgot Password
-                  </Link> */}
+                  </Link>
 
                   <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-6">
                     {isLoading ? (

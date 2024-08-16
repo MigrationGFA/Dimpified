@@ -5,8 +5,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
-import PopularInstructor from "./PopularJobCategory";
-import RecentCourses from "./RecentJobs";
+import TopEcosystem from "./TopEcosystem";
+import RecentEcosystem from "./RecentEcosystem";
 import {
   TrafficChartSeries,
   TrafficChartOptions,
@@ -69,13 +69,27 @@ const Overview = () => {
   const fetchDashboardData = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/creator/my-dashboard-overview/${creatorId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/creator/my-dashboard-overview/${creatorId}`
       );
       setDashboardData(response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       setLoading(false);
+    }
+  };
+
+  const role = useSelector((state) => state.authentication.user?.data?.role);
+
+  const getLink = () => {
+    if (role === "creator" || role === "Enterprise") {
+      return "/creator/dashboard/New-Ecosystem";
+    } else if (role === "consumer") {
+      return "/creator/dashboard/New-Ecosystem/individual";
+    } else {
+      return "";
     }
   };
 
@@ -88,7 +102,7 @@ const Overview = () => {
               <h1 className="mb-0 h2 fw-bold">Dashboard</h1>
             </div>
             <div>
-              <Link to="/creator/dashboard/New-Ecosystem">
+              <Link to={getLink()}>
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
                   Create New Ecosystem
@@ -109,51 +123,57 @@ const Overview = () => {
         <div>
           <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Ecosystem"
-                value={dashboardData?.totalEcosystems || "0"}
-                summary="Number of sales"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="UserChart"
-              />
+              <Link to="/creator/dashboard/All-Ecosystem">
+                <StatRightChart
+                  title="Total Ecosystem"
+                  value={dashboardData?.totalEcosystems || "0"}
+                  summary="Number of sales"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="UserChart"
+                />
+              </Link>
+            </Col>
+            <Col xl={3} lg={6} md={12} sm={12}>
+              <Link to="/creator/my-user">
+                <StatRightChart
+                  title="Total Users"
+                  value={dashboardData?.totalUsers || "0"}
+                  summary="Number of pending"
+                  summaryIcon="down"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="VisitorChart"
+                />
+              </Link>
             </Col>
 
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Users"
-                value={dashboardData?.totalUsers || "0"}
-                summary="Number of pending"
-                summaryIcon="down"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="VisitorChart"
-              />
+              <Link to="/creator/support">
+                <StatRightChart
+                  title="Total Support Requests"
+                  value={dashboardData?.totalSupportRequests || "0"}
+                  summary="Students"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="BounceChart"
+                />
+              </Link>
             </Col>
-
             <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Support Requests"
-                value={dashboardData?.totalSupportRequests || "0"}
-                summary="Students"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="BounceChart"
-              />
-            </Col>
-
-            <Col xl={3} lg={6} md={12} sm={12}>
-              <StatRightChart
-                title="Total Paid Users"
-                value={dashboardData?.totalPaidUsers || "0"}
-                summary="Instructor"
-                summaryIcon="up"
-                showSummaryIcon
-                classValue="mb-4"
-                chartName="AverageVisitTimeChart"
-              />
+              <Link to="/creator/received-payment">
+                <StatRightChart
+                  title="Total Paid Users"
+                  value={dashboardData?.totalPaidUsers || "0"}
+                  summary="Instructor"
+                  summaryIcon="up"
+                  showSummaryIcon
+                  classValue="mb-4"
+                  chartName="AverageVisitTimeChart"
+                />
+              </Link>
             </Col>
           </Row>
 
@@ -203,10 +223,10 @@ const Overview = () => {
 
           <Row>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <PopularInstructor title="Popular EcoSystems" />
+              <TopEcosystem title="Popular EcoSystems" />
             </Col>
             <Col xl={4} lg={6} md={12} className="mb-4">
-              <RecentCourses title="Last 4 Created Ecosystem" />
+              <RecentEcosystem title="Last 4 Created Ecosystem" />
             </Col>
             {/* <Col xl={4} lg={6} md={12} className="mb-4">
                             <Activity title="Activity" />

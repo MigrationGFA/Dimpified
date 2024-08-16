@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link, useLocation, useParams  } from "react-router-dom";
 import { Col, Row, Nav, Container, Navbar } from "react-bootstrap";
 import NavBar from "../../Pages/Pages/home-academy/navbars/UserNavbar";
 import "./StudentProfileLayout.css";
@@ -12,6 +12,7 @@ import ProfileCover from "../../Components/marketing/common/headers/ProfileCover
 
 const StudentProfileLayout = (props) => {
   const location = useLocation();
+  let { ecosystemDomain } = useParams();
 
   const user = sessionStorage.getItem("username");
   const image = sessionStorage.getItem("image");
@@ -19,26 +20,26 @@ const StudentProfileLayout = (props) => {
   const dashboardData = {
     avatar: image !== null ? image : Avatar3,
     name: user !== null ? user : "John Doe",
-    // username: `@${user}` ,
     linkname: "Browse Course",
-    link: "/:ecosystemDomain/User/browse-course",
+    link: `/${ecosystemDomain}/User/browse-course`,
     verified: true,
     outlinebutton: false,
     level: "Beginner",
   };
   const ServiceButton = {
     linkname: "Browse Services",
-    // link: "/creator/dashboard/Add-New-Service",
+    link: `/${ecosystemDomain}/User/browse-service`,
   };
   const ProductButton = {
     linkname: "Browse Product",
-    // link: "/creator/dashboard/Add-New-Product",
+    // link: "/${ecosystemDomain}/User/browse-product",
   };
+
   return (
     <Fragment>
       <NavBar />
       <section className="pt-5 pb-5">
-        <Container>
+        <Container fluid>
           {/* User info */}
           <ProfileCover
             dashboardData={dashboardData}
@@ -47,8 +48,8 @@ const StudentProfileLayout = (props) => {
           />
 
           {/* Content */}
-          <Row className="mt-0 mt-md-4 ">
-            <Col lg={3} md={4} sm={12}>
+          <Row className="mt-0 mt-md-4">
+            <Col lg={2} md={3} sm={12}>
               <Navbar
                 expand="lg"
                 className="navbar navbar-expand-md navbar-light shadow-sm mb-4 mb-lg-0 sidenav"
@@ -77,7 +78,7 @@ const StudentProfileLayout = (props) => {
                 </Navbar.Toggle>
 
                 <Navbar.Collapse id="basic-navbar-nav" className="mx-auto">
-                  <Nav className="me-auto flex-column " as="ul">
+                  <Nav className="me-auto flex-column" as="ul">
                     <Nav.Item className="navbar-header" as="li">
                       Dashboard
                     </Nav.Item>
@@ -91,7 +92,7 @@ const StudentProfileLayout = (props) => {
               </Navbar>
             </Col>
 
-            <Col lg={9} md={8} sm={12}>
+            <Col lg={10} md={9} sm={12}>
               {props.children}
             </Col>
           </Row>

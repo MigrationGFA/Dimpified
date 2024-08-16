@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
-import { Col, Row, Container } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Col, Row, Container, Button } from "react-bootstrap";
+import { Link, useParams, useNavigate  } from "react-router-dom";
 import GKStepper from "../../Components/elements/stepper/GKStepper";
 import BasicInformation from "../ecosystem/steps/BasicInformation";
 import CoursesMedia from "../ecosystem/steps/CoursesMedia";
@@ -24,6 +24,7 @@ const AddNewCourse = () => {
       [name]: value,
     });
   };
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
@@ -82,21 +83,9 @@ const AddNewCourse = () => {
     },
   ];
 
-  const clearStorage = async () => {
-    sessionStorage.removeItem("category");
-    sessionStorage.removeItem("courseTitle");
-    sessionStorage.removeItem("requirements");
-    sessionStorage.removeItem("description");
-    sessionStorage.removeItem("level");
-    sessionStorage.removeItem("type");
-    sessionStorage.removeItem("price");
-    sessionStorage.removeItem("curriculum");
-    sessionStorage.removeItem("category");
-  };
 
-  const handleBackToCourse = () => {
-    clearStorage();
-    setStep(1);
+  const handleBackToDashBoard = () => {
+    navigate(`/${ecosystemDomain}/Ecosystemdashboard`)
   };
 
   return (
@@ -114,13 +103,12 @@ const AddNewCourse = () => {
                 </div>
                 <div>
                   {ecosystemDomain && (
-                    <Link
-                      to=""
+                    <Button
                       className="btn btn-white"
-                      onClick={handleBackToCourse}
+                      onClick={handleBackToDashBoard}
                     >
                       Back to My Dashboard
-                    </Link>
+                    </Button>
                   )}
                 </div>
               </div>

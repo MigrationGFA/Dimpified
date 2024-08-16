@@ -31,12 +31,12 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-reviews`,
       icon: "star",
     },
-    {
-      id: 4,
-      title: "Earnings",
-      link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-earning`,
-      icon: "pie-chart",
-    },
+    // {
+    //   id: 4,
+    //   title: "Earnings",
+    //   link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-earning`,
+    //   icon: "pie-chart",
+    // },
     {
       id: 5,
       title: "Orders",
@@ -60,6 +60,12 @@ export const DashboardMenu = () => {
       title: "Help Center",
       link: `/${ecosystemDomain}/Ecosystemdashboard/Help-Center`,
       icon: "help-circle",
+    },
+    {
+      id: 9,
+      title: "Community",
+      link: `/${ecosystemDomain}/creator-community-chat`,
+      icon: "user",
     },
     // {
     // 	id: 8,

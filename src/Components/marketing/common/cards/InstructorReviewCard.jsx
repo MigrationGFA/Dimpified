@@ -8,7 +8,7 @@ const InstructorReviewCard = ({ item }) => {
     <div className="d-flex">
       {/* Use the imageUrl directly from item.user */}
       <Image
-        src={item.User.imageUrl}
+        src={item.EcosystemUser.imageUrl}
         alt=""
         className="rounded-circle avatar-lg"
       />
@@ -16,7 +16,7 @@ const InstructorReviewCard = ({ item }) => {
         <div className="d-flex align-items-center justify-content-between">
           <div>
             {/* Render the username from item.user */}
-            <h4 className="mb-0">{item.User.username}</h4>
+            <h4 className="mb-0">{item.EcosystemUser.username}</h4>
           </div>
         </div>
         <div className="mt-2">
@@ -24,7 +24,7 @@ const InstructorReviewCard = ({ item }) => {
             <Ratings rating={item.rating} />
           </span>
           <span className="me-1">for</span>
-          <span className="h5">{item.jobTitle}</span>
+          <span className="h5">{item.title}</span>
           <p className="mt-2">{item.review}</p>
           {/* <Link to="#" className="btn btn-outline-secondary btn-sm">
             Respond

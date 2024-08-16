@@ -12,15 +12,18 @@ import {
   updateCourseData,
   resetCourseData,
 } from "../../../features/course";
+import { useParams, useLocation } from "react-router-dom";
 
 const CoursesMedia = ({ submit, previous }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { ecosystemDomain } = useParams();
+  const location = useLocation();
+  const ecosystemFromState = useSelector((state) => state.ecosystem.ecosystemDomain);
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+  console.log(creatorId)
 
 
   const courseData = useSelector((state) => state.course);
@@ -38,6 +41,15 @@ const CoursesMedia = ({ submit, previous }) => {
     totalDuration,
     includedOptions,
   } = courseData;
+
+  let ecosystem;
+  if (ecosystemDomain) {
+    ecosystem = ecosystemDomain;
+  } else {
+    ecosystem = ecosystemFromState;
+  }
+  
+  console.log(ecosystem)
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -72,7 +84,7 @@ const CoursesMedia = ({ submit, previous }) => {
     formData.append("hour", totalDuration);
     formData.append("whatIsIncluded", JSON.stringify(includedOptions.map(option => option.value)));
     formData.append("creatorId", creatorId);
-    formData.append("ecosystemId", ecosystemId);
+    formData.append("ecosystemDomain", ecosystem);
 
     axios
       .post(`${import.meta.env.VITE_API_URL}/create-course`, formData)
@@ -80,14 +92,21 @@ const CoursesMedia = ({ submit, previous }) => {
         setLoading(false);
         showToast(response.data.message);
         dispatch(resetCourseData());
-        navigate("/creator/dashboard/Products");
-        submit();
+        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+        } else {
+          navigate('/creator/dashboard/Products');
+        }
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error:", error);
         showToast(error.response.data.message);
-        navigate("/creator/dashboard/Products");
+        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+        } else {
+          navigate('/creator/dashboard/Products');
+        }
       });
   };
 

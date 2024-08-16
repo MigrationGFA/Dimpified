@@ -1,155 +1,162 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { Fragment, useState, useMemo, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Trash, Edit, MoreVertical } from "react-feather";
+
 import {
   Card,
-  Table,
-  Badge,
-  Alert,
-  Spinner, // Import Spinner component
-  Container,
+  Tab,
+  Nav,
+  Spinner, // Import Spinner from React Bootstrap
 } from "react-bootstrap";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import ProfileLayout from "../../Components/marketing/student/ProfileLayout";
-import Pagination from "../../Components/elements/advance-table/Pagination";
-import { numberWithCommas } from "../../helper/utils";
+import JobTable from "./PayoutTable";
 import StudentProfileLayout from "../../UserDashboard/student/StudentProfileLayout";
+import axios from "axios"; // Import axios library
+import { useSelector } from "react-redux";
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = date.toLocaleDateString("en-US", options);
-  const day = date.getDate();
-  const suffix =
-    ["st", "nd", "rd"][((((day + 90) % 100) - 10) % 10) - 1] || "th";
-  return formattedDate.replace(/\b(\d{1,2})\b/g, `$1${suffix}`);
-};
-
-const Payouts = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Payout = () => {
+  let { ecosystemDomain } = useParams();
+  const user = useSelector((state) => state.authentication.user.data);
+  const userId = user.UserId;
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
+  const [courses, setCourses] = useState([]);
+  const [services, setServices] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  // 	axios.get(`https://remsana-backend-testing.azurewebsites.net/api/v1/transactions/${userId}`)
-  // 		.then(response => {
-  // 			setData(response.data);
-  // 			setLoading(false); // Set loading to false after data is fetched
-  // 		})
-  // 		.catch(error => {
-  // 			console.error('Error fetching data:', error);
-  // 			setLoading(false); // In case of error, still set loading to false
-  // 		});
-  // }, []);
-
-  const columns = [
-    {
-      accessorKey: "id",
-      header: "ID",
-      cell: ({ getValue }) => "#" + getValue(),
-    },
-    { accessorKey: "paymentMethod", header: "Method" },
-    { accessorKey: "course_title", header: "Course Title" },
-    {
-      accessorKey: "amount",
-      header: "Amount",
-      cell: ({ getValue }) => "₦" + numberWithCommas(getValue()),
-    },
-    {
-      accessorKey: "transactionDate",
-      header: "Date",
-      cell: ({ getValue }) => formatDate(getValue()),
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ getValue }) => (
-        <Badge bg={getValue() === "success" ? "success" : "danger"}>
-          {getValue()}
-        </Badge>
-      ),
-    },
+  const serviceHeader = [
+    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
   ];
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      globalFilter: filtering,
-      rowSelection,
-    },
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
-    onGlobalFilterChange: setFiltering,
-    debugTable: false,
-  });
+  const productHeader = [
+    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
+  ];
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-user-purchase-payout/${userId}/${ecosystemDomain}`
+        );
+        setCourses(response.data.courses);
+        setServices(response.data.services);
+        setProducts(response.data.products);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  const courseHeader = [
+    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "deliveryDate", header: "Purchased Date" },
+  ];
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <Link
+      to=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+      className="btn-icon btn btn-ghost btn-sm rounded-circle"
+    >
+      {children}
+    </Link>
+  ));
+
+  const renderContent = (header, data, dataName) => {
+    if (isLoading) {
+      return (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "200px" }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </div>
+      );
+    } else if (!data || data.length <= 0) {
+      return (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "200px" }}
+        >
+          You don't have any payment history for {dataName}
+        </div>
+      );
+    } else {
+      const currencyName =
+        data.length > 0 && data[0].course ? data[0].course.currency : "NGN";
+      return (
+        <JobTable header={header} data={data} currencyName={currencyName} />
+      );
+    }
+  };
 
   return (
     <StudentProfileLayout>
-      <Container>
-        <Card className="border-0 mt-4">
-          <Card.Header>
-            <h3 className="mb-0 h4">Payment History</h3>
-          </Card.Header>
-          <Card.Body className="p-0 pb-4">
-            {loading ? ( // Display spinner if loading is true
-              <div className="text-center my-4">
-                <Spinner animation="border" variant="primary" />
+      <Card className="border-0">
+        <Tab.Container defaultActiveKey="course">
+          <Card>
+            <Card.Header className="border-bottom-0 p-0 bg-white">
+              <Nav className="nav-lb-tab">
+                <Nav.Item>
+                  <Nav.Link eventKey="course" className="mb-sm-3 mb-md-0">
+                    Courses
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="service" className="mb-sm-3 mb-md-0">
+                    Services
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="product" className="mb-sm-3 mb-md-0">
+                    Digital Products
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Card.Header>
+            <Card.Header>
+              <div className="mb-3 mb-lg-0">
+                <h3 className="mb-0">Payment History</h3>
+                <p className="mb-0">Manage your Payment History.</p>
               </div>
-            ) : (
-              <>
-                <Table hover responsive className="text-nowrap table-centered">
-                  <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => (
-                          <th key={header.id}>
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell) => (
-                          <td key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-                {/* Pagination @ Footer */}
-                <div className="mt-4">
-                  <Pagination table={table} />
-                </div>
-              </>
-            )}
-          </Card.Body>
-        </Card>
-      </Container>
+            </Card.Header>
+            <Card.Body className="p-0">
+              <Tab.Content>
+                <Tab.Pane eventKey="course" className="pb-4">
+                  {renderContent(courseHeader, courses, "courses")}
+                </Tab.Pane>
+                <Tab.Pane eventKey="service" className="pb-4">
+                  {renderContent(serviceHeader, services, "services")}
+                </Tab.Pane>
+                <Tab.Pane eventKey="product" className="pb-4">
+                  {renderContent(productHeader, products, "products")}
+                </Tab.Pane>
+              </Tab.Content>
+            </Card.Body>
+          </Card>
+        </Tab.Container>
+      </Card>
     </StudentProfileLayout>
   );
 };
 
-export default Payouts;
+export default Payout;

@@ -36,14 +36,20 @@ const CourseSingle = () => {
   const [notLogin, setNotLogin] = useState(false);
   const [navigatePage, setNavigatePage] = useState(false);
   const [navigateLoginPage, setNavigateLoginPage] = useState(false);
+  const [ecosystemDomain, setEcosystemDomain] = useState(null);
 
   const location = useLocation();
-  let { ecosystemDomain, id } = useParams();
+  let { id } = useParams();
 
   const user = useSelector((state) => state.authentication.user);
 
   useEffect(() => {
+    localStorage.getItem("subDomain");
+  }, []);
+
+  useEffect(() => {
     if (user === null) {
+      console.log("this is user", user);
       setNotLogin(true);
     }
   }, [user]);
@@ -59,9 +65,9 @@ const CourseSingle = () => {
 
   const handleLoginNavigate = () => {
     if (navigateLoginPage) {
-      navigate(`/${ecosystemDomain}/signin`);
+      navigate(`/signin`);
     } else {
-      navigate(`/${ecosystemDomain}`);
+      navigate(`/`);
     }
   };
 
@@ -73,15 +79,19 @@ const CourseSingle = () => {
   };
 
   const handleFlutterPayment = useFlutterwave({
-    public_key: "FLWPUBK_TEST-d99e582b1f593f250ea49b53385f5cce-X",
+    public_key: import.meta.env.VITE_FLW_PUBLIC_KEY,
     tx_ref: generateTxRef(),
     amount: parseInt(sessionStorage.getItem("price")),
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
     customer: {
-      email: user.data.email,
+      email: notLogin
+        ? "samuelmakinde1999@gmail.com"
+        : user?.data?.username || "",
       phone_number: "09064000000",
-      name: user.data.username,
+      name: notLogin
+        ? "samuelmakinde1999@gmail.com"
+        : user?.data?.username || "",
     },
     customizations: {
       title: "Course Purchase Payment",
@@ -119,6 +129,9 @@ const CourseSingle = () => {
 
   const fetchCourseData = async () => {
     try {
+      console.log("this is fetch inside");
+      const ecosystemDomain = localStorage.getItem("subDomain");
+      console.log("this is domain", ecosystemDomain);
       const response = await axios.get(
         `${
           import.meta.env.VITE_API_URL

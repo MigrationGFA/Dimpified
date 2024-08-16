@@ -35,7 +35,7 @@ const CourseCategory = () => {
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="consumer" className="mb-sm-3 mb-md-0">
-                      Consumer
+                      Individual
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>

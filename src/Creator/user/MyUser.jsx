@@ -7,8 +7,8 @@ import axios from "axios";
 import GridListViewButton from "../../Components/elements/miscellaneous/GridListViewButton";
 
 // import sub components
-import InstructorsGridView from "./InstructorsGridCard";
-import InstructorsListItems from "./InstructorsListItems";
+import UsersGridView from "./UsersGridCard";
+import UsersListItems from "./UsersListItems";
 import { useSelector } from "react-redux";
 
 const Instructor = () => {
@@ -18,12 +18,12 @@ const Instructor = () => {
     monthlyProvider: 1,
     totalProvider: 1,
   });
-  const [userDetails, setUserDetails] = useState([]); // Initialize as an empty array
+  const [userDetails, setUserDetails] = useState([]); 
   const [myEcosystem, setMyEcosystem] = useState([]);
 
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
-  const ecosystemId = user?.data?.ecosystemId || "Unknown Ecosystem"
+  const ecosystemId = user?.data?.ecosystemId || "Unknown Ecosystem";
 
   const getMyUser = async () => {
     try {
@@ -46,12 +46,12 @@ const Instructor = () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-users`,
-         {
-          params:{
+        {
+          params: {
             creatorId: userId,
             ecosystemId: ecosystemId,
           },
-         }
+        }
       );
       setMyEcosystem(response.data);
       console.log(response.data);
@@ -103,14 +103,14 @@ const Instructor = () => {
           <Tab.Content>
             <Tab.Pane eventKey="grid" className="pb-4">
               <div className="instructors-content">
-                <InstructorsGridView userDetails={userDetails} />
+                <UsersGridView userDetails={userDetails} />
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="list" className="pb-4">
               <div className="instructors-content">
                 <Card className="mb-5">
                   <Card.Body className="p-0">
-                    <InstructorsListItems userDetails={userDetails} />
+                    <UsersListItems userDetails={userDetails} />
                   </Card.Body>
                 </Card>
               </div>

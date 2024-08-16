@@ -1,0 +1,95 @@
+.userRightside {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f8;
+  padding: 1px;
+  border-radius: 8px;
+  max-width: 300px;
+  margin: 0 auto;
+  color: #ffffff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.heading {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.seeAll {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.userCard {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  height: 120px;
+}
+
+.userCardBody {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  
+}
+
+.userImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.userFollowers {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.followBtn {
+  font-size: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.7rem;
+  margin-left: 9px;
+}
+
+.followBtn:hover {
+  background-color: #0056b3;
+}
+
+.modalUserImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 15px;
+}

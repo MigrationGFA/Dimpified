@@ -50,7 +50,9 @@ const OnboardTwo = () => {
                 </div>
               </div>
               <div className="mb-4">
-                <h2 className="mb-3">DO YOU WANT TO SET UP AN/A ECOSYSTEM WEBSITE</h2>
+                <h2 className="mb-3">
+                  DO YOU WANT TO SET UP AN/A ECOSYSTEM WEBSITE
+                </h2>
                 <div className="d-flex justify-content-center">
                   <Button
                     variant={
@@ -75,6 +77,9 @@ const OnboardTwo = () => {
             <Card.Footer className="d-flex justify-content-between">
               <Button variant="secondary" onClick={handlePreviousClick}>
                 Previous
+              </Button>
+              <Button variant="secondary" onClick={handleNoClick}>
+                Skip
               </Button>
             </Card.Footer>
           </Card>

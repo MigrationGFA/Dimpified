@@ -50,7 +50,7 @@ const CourseFilterPage = () => {
     <Fragment>
       <NavbarDefault />
       {/* Page header */}
-      <PageHeading pagetitle="Browse Course" />
+      <PageHeading pagetitle="Browse Course" pageButton="Back to Dashboard"/>
 
       {/* Content */}
       <section className="py-6">
@@ -72,12 +72,12 @@ const CourseFilterPage = () => {
               </Row>
             </Col>
             <Row>
-              <Col xl={3} lg={3} md={4} sm={12} className="mb-4 mb-lg-0">
-                {/* Pass handleFilterChange function as a prop */}
+              {/* <Col xl={3} lg={3} md={4} sm={12} className="mb-4 mb-lg-0">
+               
                 <FilterOptions onFilterChange={handleFilterChange} />
-              </Col>
+              </Col> */}
               {/* Pass filterOptions as a prop and setTotalFilteredCourses function to update total count */}
-              <Col xl={9} lg={9} md={8} sm={12}>
+              <Col xl={12} lg={9} md={8} sm={12}>
                 <Tab.Content>
                   <Tab.Pane eventKey="grid" className="pb-4 px-0">
                     <CourseGridView filterOptions={filterOptions} setTotalFilteredCourses={setTotalFilteredCourses} />
