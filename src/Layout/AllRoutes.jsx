@@ -17,6 +17,14 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 
+import SalonTemplate from "../dimp-templates/Trade-services/fashion-designer/SalonTemplate";
+import BarberTemplateV2 from "../dimp-templates/Trade-services/barber/BarberTemplateV2";
+import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
+import EventTemplate from "../dimp-templates/EventTemplate";
+import StateUpskilling from "../dimp-templates/government/StateUpskilling";
+import LegalTemplate from "../dimp-templates/professional-services/Legal";
+import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
+
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
 import Analytics from "../Creator/analytics/Analytics";
@@ -167,6 +175,15 @@ const AllRoutes = () => {
       <Route path="/personal-care-services" element={<PersonalCare />} />
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
+
+      <Route path="/salon-template" element={<SalonTemplate />} />
+      <Route path="/event-template" element={<EventTemplate />} />
+      <Route path="/barber-template" element={<BarberTemplateV2 />} />
+      <Route path="/upskill-template" element={<StateUpskilling />} />
+      <Route path="/barber-two" element={<BarberMordern />} />
+      <Route path="/legal-template" element={<LegalTemplate />} />
+      <Route path="/course-template" element={<OnlineCourses />} />
+
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
