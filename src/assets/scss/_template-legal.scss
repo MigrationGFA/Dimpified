@@ -13,6 +13,20 @@
   --alt-font: "Playfair Display", serif;
   --primary-font: "DM Sans", sans-serif;
 }
+.legal .nav-link {
+  color: white; /* White text on a transparent background */
+}
+
+/* Mobile and Tablet styles */
+@media (max-width: 992px) {
+  .legal {
+    background-color: white; /* White background on mobile and tablet */
+  }
+
+  .legal .nav-link {
+    color: black; /* Black text on a white background */
+  }
+}
 
 /* custom cursor */
 .custom-cursor .circle-cursor-inner {

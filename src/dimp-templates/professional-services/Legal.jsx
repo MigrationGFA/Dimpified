@@ -14,6 +14,7 @@ import {
   PersonFill,
   Heart,
   GeoAlt,
+  Telephone,
   TelephoneOutbound,
   ArrowRight,
 } from "react-bootstrap-icons";
@@ -64,7 +65,7 @@ const Navbar = () => (
     <Container fluid>
       <BootstrapNavbar.Brand href="demo-lawyer.html">
         <img
-          src="https://craftohtml.themezaa.com/images/demo-lawyer-logo-white@2x.png"
+          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-logo-white.png"
           alt="Logo"
           className="default-logo"
           width="138"
@@ -78,23 +79,23 @@ const Navbar = () => (
         className="justify-content-center"
       >
         <Nav className="mx-auto">
-          <Nav.Link href="demo-lawyer.html" className="nav-item text-white active">
+          <Nav.Link href="#home" className="nav-item text-white active">
             Home
           </Nav.Link>
-          <Nav.Link href="demo-lawyer-about.html" className="nav-item text-white">
+          <Nav.Link href="#about" className="nav-item text-white">
             About
           </Nav.Link>
-          <Nav.Link href="demo-lawyer.html" className="nav-item text-white active">
+          <Nav.Link href="#services" className="nav-item text-white active">
             Practice areas
           </Nav.Link>
-          <Nav.Link href="demo-lawyer-about.html" className="nav-item text-white">
+          <Nav.Link href="#team" className="nav-item text-white">
             Attourneys
           </Nav.Link>
 
-          <Nav.Link href="demo-lawyer-journal.html" className="nav-item text-white">
+          <Nav.Link href="#blog" className="nav-item text-white">
             Journal
           </Nav.Link>
-          <Nav.Link href="demo-lawyer-contact.html" className="nav-item text-white">
+          <Nav.Link href="#contact" className="nav-item text-white">
             Contact
           </Nav.Link>
         </Nav>
@@ -103,7 +104,7 @@ const Navbar = () => (
       <div className="d-none d-lg-flex ms-auto header-icon">
         <div className="d-none d-xxl-flex me-25px align-items-center">
           <span className="w-40px h-40px bg-base-color d-flex align-items-center justify-content-center me-10px rounded-circle fs-15">
-            <i className="bi bi-telephone-outbound"></i>
+            <TelephoneOutbound />
           </span>
           <a href="tel:1234567890" className="widget-text text-white-hover">
             123 456 7890
@@ -126,10 +127,11 @@ const Navbar = () => (
 const Hero = () => (
   <section
     className="legal p-0 bg-dark-gray"
+    id="home"
     style={{
       height: "100vh",
       backgroundImage:
-        "url(https://craftohtml.themezaa.com/images/demo-lawyer-slider-01.jpg)",
+        "url(https://gfa-tech.com/dimp-template-images/images/demo-lawyer-slider-01.jpg)",
       backgroundSize: "cover",
     }}
   >
@@ -144,7 +146,7 @@ const Hero = () => (
             <span className="fw-700 font-style-italic">voice of justice.</span>
           </div>
           <Button
-            href="demo-lawyer-contact.html"
+            href="#contact"
             className="btn-extra-large btn-rounded with-rounded btn-white btn-box-shadow fw-600"
           >
             Contact us
@@ -160,13 +162,13 @@ const Hero = () => (
 
 // About Section
 const About = () => (
-  <section className="legal">
+  <section id="about" className="legal">
     <Container>
       <Row className="align-items-center">
         <Col lg={6} className="position-relative mb-4 md-mb-50px">
           <div className="overflow-hidden position-relative w-80 md-w-90 ms-auto">
             <Image
-              src="https://craftohtml.themezaa.com/images/demo-lawyer-01.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-01.jpg"
               className="w-100 border-radius-6px"
               alt="Experienced Lawyer"
             />
@@ -174,7 +176,7 @@ const About = () => (
         </Col>
         <Col lg={5} className="offset-lg-1 legal">
           <Image
-            src="https://craftohtml.themezaa.com/images/demo-lawyer-03.png"
+            src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-03.png"
             className="w-60px mb-4"
             alt="Law Firm Logo"
           />
@@ -201,10 +203,10 @@ const About = () => (
           </ul>
           <div className="d-inline-block mt-30px">
             <Button
-              href="demo-lawyer-practice-areas.html"
+              href="#services"
               variant="dark"
               size="lg"
-              className="btn-rounded with-rounded btn-box-shadow me-20px"
+              className="btn-extra-large btn-rounded with-rounded btn-box-shadow me-20px"
             >
               Learn more
               <span className="bg-blue-licorice text-white">
@@ -227,7 +229,7 @@ const About = () => (
 
 // Services Section
 const Services = () => (
-  <section className="legal overflow-hidden bg-blue-whale position-relative">
+  <section id="services" className="legal overflow-hidden bg-blue-whale position-relative">
     <Container>
       <Row className="align-items-center">
         <Col lg={4} className="text-center text-lg-start">
@@ -247,13 +249,13 @@ const Services = () => (
             <Button
               variant="outline-light"
               className="me-2"
-              onClick={() => carouselRef.current.prev()}
+              onClick={() => CarouselRef.current.prev()}
             >
               <ArrowLeftShort className="icon-very-medium" />
             </Button>
             <Button
               variant="outline-light"
-              onClick={() => carouselRef.current.next()}
+              onClick={() => CarouselRef.current.next()}
             >
               <ArrowRightShort className="icon-very-medium" />
             </Button>
@@ -264,7 +266,7 @@ const Services = () => (
             ref={Carousel}
             indicators={false}
             controls={false}
-            interval={4000}
+            interval={2000}
             className="carousel-fade"
           >
             <Carousel.Item>
@@ -272,14 +274,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-01.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
                       alt="Business law advisor"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-01.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
                           className="w-60px"
                           alt="Business law advisor icon"
                         />
@@ -288,7 +290,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Business law advisor
@@ -296,7 +298,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -309,14 +311,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-02.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-02.jpg"
                       alt="Investment litigation"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-02.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-02.png"
                           className="w-60px"
                           alt="Investment litigation icon"
                         />
@@ -325,7 +327,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Investment litigation
@@ -333,7 +335,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -346,14 +348,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-03.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-03.jpg"
                       alt="Trust and estates"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-03.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-03.png"
                           className="w-60px"
                           alt="Trust and estates icon"
                         />
@@ -362,7 +364,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Trust and estates
@@ -370,7 +372,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -387,14 +389,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-04.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-04.jpg"
                       alt="Child care support"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-4.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-4.png"
                           className="w-60px"
                           alt="Child care support icon"
                         />
@@ -403,7 +405,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Child care support
@@ -411,7 +413,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -424,14 +426,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-05.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-05.jpg"
                       alt="Personal injury advisor"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-5.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
                           className="w-60px"
                           alt="Personal injury advisor icon"
                         />
@@ -440,7 +442,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Personal injury advisor
@@ -448,7 +450,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -461,14 +463,14 @@ const Services = () => (
                 <Col>
                   <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
                     <img
-                      src="https://craftohtml.themezaa.com/images/demo-lawyer-home-06.jpg"
+                      src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
                       alt="Employment law advisor"
                       className="w-100"
                     />
                     <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                      <a href="demo-lawyer-practice-areas.html">
+                      <a href="#">
                         <img
-                          src="https://craftohtml.themezaa.com/images/demo-lawyer-home-icon-6.png"
+                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
                           className="w-60px"
                           alt="Employment law advisor icon"
                         />
@@ -477,7 +479,7 @@ const Services = () => (
                         <div className="col last-paragraph-no-margin">
                           <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
                             <a
-                              href="demo-lawyer-practice-areas.html"
+                              href="#"
                               className="text-white"
                             >
                               Employment law advisor
@@ -485,7 +487,7 @@ const Services = () => (
                           </h6>
                         </div>
                         <a
-                          href="demo-lawyer-practice-areas.html"
+                          href="#"
                           className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
                         >
                           <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
@@ -546,7 +548,7 @@ const Statistics = () => (
             </Row>
           </div>
           <Image
-            src="https://craftohtml.themezaa.com/images/demo-lawyer-home-dotted-pattern.png"
+            src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-dotted-pattern.png"
             className="position-absolute end-0 bottom-0 opacity-50"
             alt="Pattern"
             style={{ right: "-20px", bottom: "-30px" }}
@@ -600,16 +602,16 @@ const Statistics = () => (
         </h4>
       </Col>
       <Col xs={6} lg={2} md={3} className="mb-4 text-center">
-        <Image src="https://craftohtml.themezaa.com/images/demo-lawyer-awards-01.png" alt="Award 1" />
+        <Image src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-awards-01.png" alt="Award 1" />
       </Col>
       <Col xs={6} lg={2} md={3} className="mb-4 text-center">
-        <Image src="https://craftohtml.themezaa.com/images/demo-lawyer-awards-02.png" alt="Award 2" />
+        <Image src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-awards-02.png" alt="Award 2" />
       </Col>
       <Col xs={6} lg={2} md={3} className="mb-4 text-center">
-        <Image src="https://craftohtml.themezaa.com/images/demo-lawyer-awards-03.png" alt="Award 3" />
+        <Image src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-awards-03.png" alt="Award 3" />
       </Col>
       <Col xs={6} lg={2} md={3} className="mb-4 text-center">
-        <Image src="https://craftohtml.themezaa.com/images/demo-lawyer-awards-04.png" alt="Award 4" />
+        <Image src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-awards-04.png" alt="Award 4" />
       </Col>
     </Row> */}
     </Container>
@@ -618,7 +620,7 @@ const Statistics = () => (
 
 // Testimonials Section
 const Team = () => (
-  <section className="legal bg-very-light-gray overlap-height position-relative">
+  <section id="team" className="legal bg-very-light-gray overlap-height position-relative">
     <Container className="overlap-gap-section">
       <Row className="justify-content-center mb-3">
         <Col lg={7} className="text-center">
@@ -638,7 +640,7 @@ const Team = () => (
             <a href="/attorney-details/evan-thomson">
               <img
                 className="rounded-circle w-150px h-150px mb-3"
-                src="https://craftohtml.themezaa.com/images/team-22.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/team-22.jpg"
                 alt="Evan Thomson"
               />
             </a>
@@ -658,46 +660,7 @@ const Team = () => (
               </a>
               .
             </p>
-            <div className="text-center border-top border-light w-100 pt-3">
-              <ul className="list-inline">
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="http://www.dribbble.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Dribbble />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twitter />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram />
-                  </a>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </Col>
 
@@ -706,7 +669,7 @@ const Team = () => (
             <a href="/attorney-details/bryan-johnson">
               <img
                 className="rounded-circle w-150px h-150px mb-3"
-                src="https://craftohtml.themezaa.com/images/team-21.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/team-21.jpg"
                 alt="Bryan Johnson"
               />
             </a>
@@ -726,46 +689,7 @@ const Team = () => (
               </a>
               .
             </p>
-            <div className="text-center border-top border-light w-100 pt-3">
-              <ul className="list-inline">
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="http://www.dribbble.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Dribbble />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twitter />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram />
-                  </a>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </Col>
 
@@ -774,7 +698,7 @@ const Team = () => (
             <a href="/attorney-details/jemmy-watson">
               <img
                 className="rounded-circle w-150px h-150px mb-3"
-                src="https://craftohtml.themezaa.com/images/team-23.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/team-23.jpg"
                 alt="Jemmy Watson"
               />
             </a>
@@ -794,46 +718,7 @@ const Team = () => (
               </a>
               .
             </p>
-            <div className="text-center border-top border-light w-100 pt-3">
-              <ul className="list-inline">
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="http://www.dribbble.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Dribbble />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twitter />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram />
-                  </a>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </Col>
 
@@ -842,7 +727,7 @@ const Team = () => (
             <a href="/attorney-details/jeremy-dupont">
               <img
                 className="rounded-circle w-150px h-150px mb-3"
-                src="https://craftohtml.themezaa.com/images/team-56.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/team-56.jpg"
                 alt="Jeremy Dupont"
               />
             </a>
@@ -862,46 +747,7 @@ const Team = () => (
               </a>
               .
             </p>
-            <div className="text-center border-top border-light w-100 pt-3">
-              <ul className="list-inline">
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="http://www.dribbble.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Dribbble />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twitter />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a
-                    href="https://www.instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram />
-                  </a>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </Col>
       </Row>
@@ -919,7 +765,7 @@ const Testimonials = () => (
           className="cover-background p-10 border-radius-6px position-relative"
           style={{
             backgroundImage:
-              "url(https://craftohtml.themezaa.com/images/demo-lawyer-home-07.jpg)",
+              "url(https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-07.jpg)",
           }}
         >
           <div className="fs-1 alt-font text-white d-block lh-1">
@@ -958,7 +804,7 @@ const Testimonials = () => (
   </section>
 );
 const Blog = () => (
-  <section className="legal">
+  <section id="blog" className="legal">
     <Container>
       <Row className="justify-content-center mb-3">
         <Col lg={7} className="text-center">
@@ -979,7 +825,7 @@ const Blog = () => (
               <Card className="border-0 rounded-3 shadow-lg">
                 <Card.Img
                   variant="top"
-                  src="https://craftohtml.themezaa.com/images/demo-lawyer-blog-01.jpg"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-blog-01.jpg"
                 />
                 <Card.Body>
                   <Button
@@ -1015,7 +861,7 @@ const Blog = () => (
               <Card className="border-0 rounded-3 shadow-lg">
                 <Card.Img
                   variant="top"
-                  src="https://craftohtml.themezaa.com/images/demo-lawyer-blog-02.jpg"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-blog-02.jpg"
                 />
                 <Card.Body>
                   <Button
@@ -1051,7 +897,7 @@ const Blog = () => (
               <Card className="border-0 rounded-3 shadow-lg">
                 <Card.Img
                   variant="top"
-                  src="https://craftohtml.themezaa.com/images/demo-lawyer-blog-03.jpg"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-blog-03.jpg"
                 />
                 <Card.Body>
                   <Button
@@ -1089,12 +935,12 @@ const Blog = () => (
   </section>
 );
 const MiniCTA = () => (
-  <section className="legal bg-blue-whale py-0">
+  <section id= "contact" className="legal bg-blue-whale py-0">
     <Container className="footer-top pt-lg-8 pt-3 pb-50px md-pb-35px">
       <Row className="justify-content-center">
         <Col className="position-relative justify-content-center align-items-center text-center">
           <Image
-            src="https://craftohtml.themezaa.com/images/demo-lawyer-07.png"
+            src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-07.png"
             className="position-absolute left-90px lg-left-15px opacity-1 top-minus-35px sm-top-minus-25px w-10 sm-w-15 xs-w-80px"
             alt="Lawyer Image"
           />
@@ -1127,6 +973,7 @@ const MiniCTA = () => (
   </section>
 );
 
+
 // Footer Section
 const Footer = () => (
   <footer className="footer-dark bg-blue-whale py-0">
@@ -1138,7 +985,7 @@ const Footer = () => (
         >
           <a href="/" className="footer-logo d-inline-block">
             <Image
-              src="https://craftohtml.themezaa.com/images/demo-lawyer-logo-white@2x.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-logo-white.png"
               alt="Logo"
               width="138"
               height="36"
@@ -1207,35 +1054,35 @@ const Footer = () => (
         <Col lg={7} className="text-center text-lg-start sm-pb-10px">
           <ul className="footer-navbar md-lh-normal list-unstyled d-flex justify-content-center justify-content-lg-start mb-0">
             <li className="nav-item">
-              <a href="/" className="legal primary-font nav-link px-2">
+              <a href="#home" className="legal primary-font nav-link px-2">
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a href="/about" className="legal primary-font nav-link px-2">
+              <a href="#about" className="legal primary-font nav-link px-2">
                 About
               </a>
             </li>
             <li className="nav-item">
               <a
-                href="/practice-areas"
+                href="#services"
                 className="legal primary-font nav-link px-2"
               >
                 Practice areas
               </a>
             </li>
             <li className="nav-item">
-              <a href="/attorneys" className="legal primary-font nav-link px-2">
+              <a href="#team" className="legal primary-font nav-link px-2">
                 Attorneys
               </a>
             </li>
             <li className="nav-item">
-              <a href="/journal" className="legal primary-font nav-link px-2">
+              <a href="#blogl" className="legal primary-font nav-link px-2">
                 Journal
               </a>
             </li>
             <li className="nav-item">
-              <a href="/contact" className="legal primary-font nav-link px-2">
+              <a href="#contact" className="legal primary-font nav-link px-2">
                 Contact
               </a>
             </li>

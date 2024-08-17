@@ -35,12 +35,12 @@ const BarberMordern = () => {
 
 export default BarberMordern;
 const images = [
-  "https://craftohtml.themezaa.com/images/demo-barber-home-04.jpg",
-  "https://craftohtml.themezaa.com/images/demo-barber-home-08.jpg",
-  "https://craftohtml.themezaa.com/images/demo-barber-home-06.jpg",
-  "https://craftohtml.themezaa.com/images/demo-barber-home-07.jpg",
-  "https://craftohtml.themezaa.com/images/demo-barber-home-08.jpg",
-  "https://craftohtml.themezaa.com/images/demo-barber-home-04.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-04.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-08.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-06.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-07.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-08.jpg",
+  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-04.jpg",
 ];
 const chunkArray = (array, chunkSize) => {
   const result = [];
@@ -63,12 +63,12 @@ const Navbar = () => (
   >
     <Container>
       <BootstrapNavbar.Brand
-        className="fw-bold text-white d-flex align-items-center"
+        className="fw-bold d-flex align-items-center"
         href="#home"
       >
         BARBER
         <img
-          src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
+          src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-04.svg"
           alt="Icon"
           style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
         />
@@ -77,35 +77,35 @@ const Navbar = () => (
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
             ABOUT
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
           >
             SERVICES
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#gallery"
           >
             GALLERY
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
           >
             TESTIMONIALS
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#contact"
           >
@@ -134,7 +134,7 @@ const Hero = () => (
     id="home"
     className="barber full-screen bg-dark-gray ipad-top-space-margin position-relative"
     style={{
-      backgroundImage: `url(https://craftohtml.themezaa.com/images/demo-barber-home-bg.jpg)`,
+      backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg.jpg)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}
@@ -225,14 +225,14 @@ const About = () => (
             style={{ transition: "transform 0.6s ease-out" }}
           >
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-01.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-01.jpg"
               className="border-radius-6px"
               alt="Barber Studio"
             />
           </div>
           <div className="position-absolute right-15px bottom-minus-60px border-radius-6px lg-w-65 md-w-50 overflow-hidden">
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-02.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-02.jpg"
               className="box-shadow-quadruple-large"
               alt="Barber Studio"
             />
@@ -255,7 +255,7 @@ const Services = () => (
     ></div>
     <div className="position-absolute left-0 top-minus-130px lg-top-minus-90px d-none d-md-block">
       <img
-        src="https://craftohtml.themezaa.com/images/demo-barber-home-03.png"
+        src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-03.png"
         alt=""
         style={{ transform: "translateY(50px)" }}
         onLoad={(e) => {
@@ -281,7 +281,7 @@ const Services = () => (
           <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
             <div className="position-relative ms-auto me-auto mb-25px">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-01.svg"
                 className="h-70px position-relative z-index-1 mt-35px"
                 alt=""
               />
@@ -323,7 +323,7 @@ const Services = () => (
           <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
             <div className="position-relative ms-auto me-auto mb-25px">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-barber-icon-02.svg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-02.svg"
                 className="h-70px position-relative z-index-1 mt-35px"
                 alt=""
               />
@@ -365,7 +365,7 @@ const Services = () => (
           <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
             <div className="position-relative ms-auto me-auto mb-25px">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-barber-icon-03.svg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-03.svg"
                 className="h-70px position-relative z-index-1 mt-35px"
                 alt=""
               />
@@ -407,7 +407,7 @@ const Services = () => (
           <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
             <div className="position-relative ms-auto me-auto mb-25px">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-04.svg"
                 className="h-70px position-relative z-index-1 mt-35px"
                 alt=""
               />
@@ -448,7 +448,7 @@ const Services = () => (
         <Col className="text-center last-paragraph-no-margin">
           <div className="d-inline-block align-middle me-5px">
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-icon-05.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-05.png"
               className="h-20px"
               alt=""
             />
@@ -641,7 +641,7 @@ const Team = () => (
           <Figure className="mb-0 position-relative">
             <Figure.Image
               className="border-radius-6px"
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-team-01.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-01.jpg"
               alt="Michal Ruheen"
             />
             <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
@@ -658,7 +658,7 @@ const Team = () => (
                   href="https://www.instagram.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white"
+                  
                 >
                   <FaInstagram className="icon-small" />
                 </a>
@@ -670,7 +670,7 @@ const Team = () => (
           <Figure className="mb-0 position-relative">
             <Figure.Image
               className="border-radius-6px"
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-team-02.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-02.jpg"
               alt="Jessica Dover"
             />
             <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
@@ -687,7 +687,7 @@ const Team = () => (
                   href="https://www.facebook.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white"
+                  
                 >
                   <FaFacebookF className="icon-small" />
                 </a>
@@ -699,7 +699,7 @@ const Team = () => (
           <Figure className="mb-0 position-relative">
             <Figure.Image
               className="border-radius-6px"
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-team-03.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-03.jpg"
               alt="Johncy Parker"
             />
             <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
@@ -716,7 +716,7 @@ const Team = () => (
                   href="https://www.twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white"
+                  
                 >
                   <FaTwitter className="icon-small" />
                 </a>
@@ -728,7 +728,7 @@ const Team = () => (
           <Figure className="mb-0 position-relative">
             <Figure.Image
               className="border-radius-6px"
-              src="https://craftohtml.themezaa.com/images/demo-barber-home-team-04.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-04.jpg"
               alt="Jemmy Watson"
             />
             <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
@@ -745,7 +745,7 @@ const Team = () => (
                   href="https://www.instagram.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white"
+                  
                 >
                   <FaInstagram className="icon-small" />
                 </a>
@@ -761,7 +761,7 @@ const Team = () => (
         >
           <div className="d-inline-block align-middle me-5px">
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-icon-05.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-05.png"
               className="h-20px"
               alt="Barber Icon"
             />
@@ -779,7 +779,7 @@ const Testimonial = () => (
     <div
       className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
       style={{
-        backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-barber-home-bg-up.png')`,
+        backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg-up.png')`,
       }}
     ></div>
     <Container>
@@ -941,7 +941,7 @@ const Contact = () => (
           <div className="icon-with-text-style-01 feature-box feature-box-left-icon-middle bg-medium-yellow p-25px border-radius-6px last-paragraph-no-margin w-95 md-w-100 text-start">
             <div className="feature-box-icon me-15px">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-barber-home-13.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-13.jpg"
                 className="h-60px"
                 alt=""
               />
@@ -1065,7 +1065,7 @@ const Footer = () => (
   <footer
     className="barber footer-light position-relative cover-background"
     style={{
-      backgroundImage: `url(https://craftohtml.themezaa.com/images/demo-barber-home-footer-bg.jpg)`,
+      backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-footer-bg.jpg)`,
     }}
   >
     <Container>
@@ -1076,7 +1076,7 @@ const Footer = () => (
             className="footer-logo position-relative z-index-1 d-inline-block"
           >
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-logo-black.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-logo-black.png"
               alt="Barber Logo"
             />
           </a>

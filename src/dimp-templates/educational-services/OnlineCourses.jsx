@@ -202,12 +202,12 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="learning header-transparent bg-transparent"
+    className="learning"
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="/demo-elearning">
         <img
-          src="https://gfa-tech.com/dimp-template-images/images/demo-elearning-logo-white@2x.png"
+          src="https://gfa-tech.com/dimp-template-images/images/demo-elearning-logo-white.png"
           alt="E-learning Logo"
           width="157"
           height="39"
@@ -218,12 +218,12 @@ const Navbar = () => (
       <BootstrapNavbar.Toggle aria-controls="navbarNav" />
 
       <BootstrapNavbar.Collapse id="navbarNav">
-        <Nav className="me-auto alt-font text-white">
+        <Nav className="me-auto alt-font ">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#about">About</Nav.Link>
           <Nav.Link href="#courses">Courses</Nav.Link>
           <Nav.Link href="#instructors">Instructors</Nav.Link>
-          <Nav.Link href="#testimonial">Testimonial</Nav.Link>
+          <Nav.Link href="#testimonials">Testimonial</Nav.Link>
           <Nav.Link href="#blog">Blog</Nav.Link>
           <Nav.Link href="#contact">Contact</Nav.Link>
         </Nav>
@@ -245,8 +245,9 @@ const Hero = () => (
     className="learning p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin position-relative"
     style={{
       backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-elearning-hero-bg.jpg)`,
+      backgroundSize: 'cover',
       marginTop: "inherit",
-      height: "auto",
+      height: "100vh"
     }}
   >
     <div
@@ -280,18 +281,12 @@ const Hero = () => (
           </div>
           <div className="overflow-hidden">
             <Button
-              href="demo-elearning-contact.html"
+              href="#courses"
               className="btn-extra-large btn-base-color btn-rounded fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon"
             >
               <HandThumbsUp /> Get started
             </Button>
-            <Button
-              href="https://www.youtube.com/watch?v=cfXHhfNy7tU"
-              className="btn btn-link btn-hover-animation-switch btn-extra-large text-white popup-youtube btn-icon-left"
-            >
-              <span className="btn-text">How it works</span>
-              <Youtube />
-            </Button>
+            
           </div>
         </Col>
         <Col xl={7} lg={6} className="pt-30px lg-pt-0">
@@ -376,9 +371,7 @@ const About = () => (
             Skilled instructors
           </span>
           <p className="text-muted">Learn from the best in the industry.</p>
-          <Button variant="dark" className="mt-3">
-            Great instructors <ArrowRight />
-          </Button>
+          
         </Col>
 
         <Col lg={3} md={6} className="border-end mb-4">
@@ -392,9 +385,7 @@ const About = () => (
           <p className="text-muted">
             Get assistance from experienced educators.
           </p>
-          <Button variant="dark" className="mt-3">
-            Students feedback <ArrowRight />
-          </Button>
+          
         </Col>
 
         <Col lg={3} md={6} className="border-end mb-4">
@@ -408,9 +399,7 @@ const About = () => (
             Get certificate
           </span>
           <p className="text-muted">Earn certificates recognized worldwide.</p>
-          <Button variant="dark" className="mt-3">
-            Explore courses <ArrowRight />
-          </Button>
+         
         </Col>
 
         <Col lg={3} md={6} className="mb-4">
@@ -424,9 +413,7 @@ const About = () => (
           <p className="text-muted">
             Access learning materials anytime, anywhere.
           </p>
-          <Button variant="dark" className="mt-3">
-            Popular courses <ArrowRight />
-          </Button>
+          
         </Col>
       </Row>
     </Container>
@@ -477,13 +464,13 @@ const Services = () => (
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
-                    <i className="bi bi-clipboard text-dark-gray me-2"></i>
+                    <Clipboard />
                     <span className="fs-16 text-dark-gray fw-500">
                       {course.lessons}
                     </span>
                   </div>
                   <div>
-                    <i className="bi bi-person text-dark-gray me-2"></i>
+                    <People />
                     <span className="fs-16 text-dark-gray fw-500">
                       {course.students}
                     </span>
@@ -494,27 +481,14 @@ const Services = () => (
           </Col>
         ))}
       </Row>
-      <Row className="justify-content-center mt-5">
-        <Col className="text-center">
-          <span className="fs-20 text-dark-gray fw-500 ls-minus-05px">
-            We help you find the perfect tutor. It's completely free.
-            <a
-              href="demo-elearning-courses.html"
-              className="fw-600 text-dark-gray"
-            >
-              Explore all courses
-              <i className="bi bi-arrow-right ms-2"></i>
-            </a>
-          </span>
-        </Col>
-      </Row>
+      
     </Container>
   </section>
 );
 
 // Gallery Section
 const Team = () => (
-  <section id="instuctors" className="learning" style={{ height: "auto" }}>
+  <section id="instructors" className="learning" style={{ height: "auto" }}>
     <Container>
       <Row className="align-items-end mb-6">
         <Col xl={5} lg={6} md={9} className="text-center text-lg-start">
@@ -582,7 +556,7 @@ const Team = () => (
 // Testimonials Section
 const Testimonials = () => (
   <section
-    id="testimonial"
+    id="testimonials"
     className="learning bg-gradient-tranquil-white position-relative"
   >
     <Container className="position-relative z-index-1">
@@ -858,7 +832,7 @@ const Footer = () => (
               </a>
             </li>
             <li className="nav-item">
-              <a href="#testimonial" className="nav-link alt-font">
+              <a href="#testimonials" className="nav-link alt-font">
                 Testimonial
               </a>
             </li>

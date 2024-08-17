@@ -8,6 +8,20 @@
   --alt-font: "Marcellus", serif;
   --primary-font: "Urbanist", sans-serif;
 }
+.beauty .nav-link {
+  color: white; /* White text on a transparent background */
+}
+
+/* Mobile and Tablet styles */
+@media (max-width: 992px) {
+  .beauty {
+    background-color: white; /* White background on mobile and tablet */
+  }
+
+  .beauty .nav-link {
+    color: black; /* Black text on a white background */
+  }
+}
 .alt-font {
   font-family: var(--alt-font);
 }

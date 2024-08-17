@@ -35,7 +35,7 @@ export default StateUpskilling;
 
 // Navbar Component
 const Navbar = () => (
-  <BootstrapNavbar bg="transparent" expand="lg" className="px-lg-10 py-lg-3">
+  <BootstrapNavbar bg="transparent" expand="lg" className="gov px-lg-10 py-lg-3">
     <Container>
       <BootstrapNavbar.Brand
         className="fw-bold text-dark d-flex align-items-center"
@@ -55,7 +55,7 @@ const Navbar = () => (
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
-            ABOUT
+            ABOUT THE PROGRAMME
           </Nav.Link>
           <Nav.Link
             className="text-dark"
@@ -83,7 +83,7 @@ const Navbar = () => (
 
 // Hero Section
 const Hero = () => (
-  <section className="hero-area hero-speakers">
+  <section className="gov hero-area hero-speakers">
     <div
       className="banner-item px-4"
       style={{
@@ -127,8 +127,8 @@ const Hero = () => (
 // About Section
 const About = () => (
   <section
-    id="aboutr"
-    className="pb-6 px-3"
+    id="about"
+    className="gov pb-6 px-3"
     style={{ backgroundColor: "#f9fafc" }}
   >
     <Container id="about">
@@ -185,7 +185,7 @@ const About = () => (
 
 // Services Section
 const HeroRightImage = () => (
-  <section id="ts-experiences" className="ts-experiences">
+  <section id="ts-experiences" className="gov ts-experiences">
     <Container fluid>
       <Row>
         <Col lg={6} className="p-0 align-self-center">
@@ -233,7 +233,7 @@ const HeroRightImage = () => (
   </section>
 );
 const Audience = () => (
-  <section className="ts-intro-item section-bg px-4" id="audience">
+  <section className="gov ts-intro-item section-bg px-4" id="audience">
     <Container>
       <Row>
         <Col
@@ -323,7 +323,7 @@ const Audience = () => (
 
 // Gallery Section
 const HeroLeftImage = () => (
-  <section id="benefit" className="ts-experiences">
+  <section id="benefit" className="gov ts-experiences">
     {/* <img src="https://gfa-tech.com/projects/kaduna-digital-skills-program/images/kaduna-comm.jpg" className="him" width="100%" height="auto" alt="Kaduna Community" /> */}
 
     <Container fluid>
@@ -386,7 +386,7 @@ const HeroLeftImage = () => (
 
 // Testimonials Section
 const Services = () => (
-  <section className="ts-event-outcome px-4">
+  <section className="gov ts-event-outcome px-4">
     <Container>
       <div className="intro-left-content">
         <h2 className="column-title">
@@ -455,7 +455,7 @@ const Services = () => (
 // Contact Section
 const LargeCTA = () => (
   <section
-    className="ts-book-seat"
+    className="gov ts-book-seat"
     style={{
       backgroundImage:
         "url(https://gfa-tech.com/projects/kaduna-digital-skills-program/images/book_seat_img.jpg)",
@@ -483,7 +483,7 @@ const LargeCTA = () => (
   </section>
 );
 const Blog = () => (
-  <section className="ts-blog section-bg">
+  <section className="gov ts-blog section-bg">
     <Container>
       <Row>
         <Col lg={12}>
@@ -629,7 +629,7 @@ const Blog = () => (
 
 // Footer Section
 const Footer = () => (
-  <footer className="ts-footer" style={{ padding: "1rem 0rem" }}>
+  <footer className="gov ts-footer" style={{ padding: "1rem 0rem" }}>
     <Container>
       <Row>
         <Col lg={12}>

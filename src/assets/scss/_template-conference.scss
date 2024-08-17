@@ -7,6 +7,20 @@
   --primary-font: "DM Sans", sans-serif;
   --little-black: #090808;
 }
+.conference .nav-link {
+  color: white; /* White text on a transparent background */
+}
+
+/* Mobile and Tablet styles */
+@media (max-width: 992px) {
+  .conference {
+    background-color: white; /* White background on mobile and tablet */
+  }
+
+  .conference .nav-link {
+    color: black; /* Black text on a white background */
+  }
+}
 
 .my-mfp-zoom-in.mfp-ready.mfp-bg {
   background: var(--base-color);

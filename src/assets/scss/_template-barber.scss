@@ -13,6 +13,20 @@
     --alt-font: 'Limelight', cursive;
     --primary-font: 'Sen', sans-serif;
 }
+.barber .nav-link {
+    color: white; /* White text on a transparent background */
+  }
+  
+  /* Mobile and Tablet styles */
+  @media (max-width: 992px) {
+    .barber {
+      background-color: white; /* White background on mobile and tablet */
+    }
+  
+    .barber .nav-link {
+      color: black; /* Black text on a white background */
+    }
+  }
 .center-logo .navbar-nav .nav-link, header.sticky .center-logo .navbar-nav .nav-link {
     padding: 55px 23px;
 }
