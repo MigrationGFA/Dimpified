@@ -20,6 +20,13 @@ import {
   Carousel,
   ListGroup,
 } from "react-bootstrap";
+import {
+  Heart,
+  GeoAlt,
+  Telephone,
+  TelephoneOutbound,
+  ArrowRight,
+} from "react-bootstrap-icons";
 
 const EventTemplate = () => {
   return (
@@ -43,46 +50,6 @@ const EventTemplate = () => {
   );
 };
 
-const CountdownTimer = () => {
-  useEffect(() => {
-    if ($.fn.countdown !== undefined && $.fn.countdown !== null) {
-      $(".countdown").each(function () {
-        const $this = $(this);
-        $this
-          .countdown($this.attr("data-enddate"))
-          .on("update.countdown", function (event) {
-            $this.html(
-              event.strftime(
-                `
-                <div class="counter-container">
-                  <div class="countdown-box first"><div class="number">%-D</div><span>Days</span></div>
-                  <div class="countdown-box"><div class="number">%H</div><span>Hours</span></div>
-                  <div class="countdown-box"><div class="number">%M</div><span>Minutes</span></div>
-                  <div class="countdown-box last"><div class="number">%S</div><span>Seconds</span></div>
-                </div>
-                `
-              )
-            );
-          })
-          .on("finish.countdown", function (event) {
-            $this.html(
-              event.strftime(
-                `
-                <div class="counter-container">
-                  <div class="countdown-box first" data-number="00"><div class="number">00</div><span>Days</span></div>
-                  <div class="countdown-box"><div class="number">00</div><span>Hours</span></div>
-                  <div class="countdown-box"><div class="number">00</div><span>Minutes</span></div>
-                  <div class="countdown-box last"><div class="number">00</div><span>Seconds</span></div>
-                </div>
-                `
-              )
-            );
-          });
-      });
-    }
-  }, []);
-};
-
 const HeaderComponent = () => (
   <header className="sticky sticky-active">
     <Navbar
@@ -92,11 +59,10 @@ const HeaderComponent = () => (
       <Container fluid>
         <Row className="w-100 align-items-center">
           <Col xs="auto" lg={2} className="me-lg-0 me-auto">
-            <Navbar.Brand href="demo-branding-agency.html">
+            <Navbar.Brand href="#">
               <img
                 src="https://gfa-tech.com/productivity-and-growth-program/images/providusplusgfa-removebg-preview.png"
                 alt=""
-                className="default-logo"
                 width="87"
                 height="35"
               />
@@ -203,7 +169,7 @@ const FeatureSection = () => (
         <Col className="md-mb-50px sm-mb-30px">
           <div className="feature-box feature-box-left-icon-middle">
             <div className="feature-box-icon ms-40px me-40px lg-ms-25px lg-me-25px">
-              <h1 className="alt-font fs-2 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
+              <h1 className="alt-font fs-1 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
                 03
               </h1>
             </div>
@@ -218,7 +184,7 @@ const FeatureSection = () => (
         <Col className="md-mb-50px sm-mb-30px">
           <div className="feature-box feature-box-left-icon-middle">
             <div className="feature-box-icon ms-40px me-40px lg-ms-25px lg-me-25px">
-              <h1 className="alt-font fs-2 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
+              <h1 className="alt-font fs-1 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
                 03
               </h1>
             </div>
@@ -272,7 +238,7 @@ const AboutSection = () => (
                 <Image
                   src="https://gfa-tech.com/productivity-and-growth-program/images/bg-growth.jpg"
                   alt=""
-                  className="w-100 border-radius-5px liquid-parallax"
+                  className="w-80 border-radius-5px liquid-parallax"
                   fluid
                   style={{ transform: "translateY(0px)", opacity: 1 }}
                 />
@@ -309,30 +275,30 @@ const AboutSection = () => (
           md={10}
           className="appear anime-child anime-complete"
         >
-          <h2 className="alt-font fs-2 text-dark fw-500 ls-minus-2px mb-40px sm-mb-30px">
+          <h2 className="alt-font fs-1 text-dark fw-500 ls-minus-2px mb-40px sm-mb-30px">
             <span className="w-20px h-4px d-inline-block bg-base-color me-10px"></span>
             About the program
           </h2>
 
           <div className="icon-with-text-style-01 mb-30px pb-30px border-bottom border-color-transparent-dark-light">
             <div className="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-              <div className="mt-10px w-100">
+              <p className="primary-font fs-20 primary-font fs-15 mt-10px w-100">
                 The comprehensive program is aimed at enhancing productivity and
                 fostering growth for medium to large-sized companies.
-              </div>
+              </p>
             </div>
           </div>
 
           <div className="icon-with-text-style-01 mb-40px md-mb-30px">
             <div className="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-              <div className="mt-10px w-100">
+              <p className="primary-font fs-20 primary-font fs-15 mt-10px w-100">
                 With a focus on equipping attendees with valuable insights and
                 strategies, this program will feature a series of lectures
                 delivered by renowned foreign business owners, and experienced
                 mentors in our ecosystem, coupled with immersive visits to
                 leading organizations such as the Nigerian Exchange Group (NGX)
                 and Providus Bank Headquarters.
-              </div>
+              </p>
             </div>
           </div>
 
@@ -373,7 +339,7 @@ const ComponentsSection = () => (
             <h3 className="text-dark-gray fs-2  ls-minus-2px fw-bold">
               Program Components
             </h3>
-            <p className="mb-4 w-90 lg-w-100 sm-mb-3">
+            <p className="primary-font fs-20 primary-font fs-15 mb-4 w-90 lg-w-100 sm-mb-3">
               The programme is packed with several elements that facilitate
               learning and skill development, offer interactive sessions, and
               also allow participants valuable insights into industry-leading
@@ -503,13 +469,15 @@ const ObjectivesSection = () => (
         <Col className="icon-with-text-style-03">
           <div className="feature-box p-10 sm-p-8">
             <div className="feature-box-icon">
-              <i className="line-icon-Idea-5 icon-double-large text-base-color mb-25px"></i>
+              <h1 className="alt-font fs-1 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
+                01
+              </h1>
             </div>
             <div className="feature-box-content last-paragraph-no-margin">
               <span className="d-inline-block alt-font fs-3 text-dark fs-20 mb-5px">
                 Knowledge Exchange
               </span>
-              <p className="w-90 md-w-100 mx-auto">
+              <p className="primary-font fs-20 primary-font fs-15 w-90 md-w-100 mx-auto">
                 We pride ourselves on knowledge exchange. We believe this can be
                 achieved by learning from successful foreign business owners and
                 providing valuable insights into global best practices.
@@ -521,13 +489,15 @@ const ObjectivesSection = () => (
         <Col className="icon-with-text-style-03">
           <div className="feature-box p-10 sm-p-8">
             <div className="feature-box-icon">
-              <i className="line-icon-Talk-Man icon-double-large text-base-color mb-25px"></i>
+              <h1 className="alt-font fs-1 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
+                02
+              </h1>
             </div>
             <div className="feature-box-content last-paragraph-no-margin">
               <span className="d-inline-block alt-font fs-3 text-dark fs-20 mb-5px">
                 Empowerment
               </span>
-              <p className="w-90 md-w-100 mx-auto">
+              <p className="primary-font fs-20 primary-font fs-15 w-90 md-w-100 mx-auto">
                 One of our goals is to empower participating companies with
                 actionable strategies and tools to optimize productivity and
                 drive sustainable growth.
@@ -539,13 +509,15 @@ const ObjectivesSection = () => (
         <Col className="icon-with-text-style-03">
           <div className="feature-box p-10 sm-p-8">
             <div className="feature-box-icon">
-              <i className="line-icon-handshake icon-double-large text-base-color mb-25px"></i>
+              <h1 className="alt-font fs-1 text-outline text-outline-width-2px text-outline-color-base-color fw-700 ls-minus-1px mb-0">
+                03
+              </h1>
             </div>
             <div className="feature-box-content last-paragraph-no-margin">
               <span className="d-inline-block alt-font fs-3 text-dark fs-20 mb-5px">
                 Networking
               </span>
-              <p className="w-90 md-w-100 mx-auto">
+              <p className="primary-font fs-20 primary-font fs-15 w-90 md-w-100 mx-auto">
                 We hope to achieve this by fostering networking opportunities
                 among participants and industry leaders to encourage
                 collaboration and partnerships.
@@ -613,7 +585,9 @@ const CurriculumSection = () => (
                 </div>
                 {items.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    <p className="text-light-opacity">{item}</p>
+                    <p className="primary-font fs-20 primary-font fs-15 text-light-opacity">
+                      {item}
+                    </p>
                     {idx < items.length - 1 && (
                       <div className="divider-style-03 mb-20px divider-style-03-01 border-color-transparent-dark-light"></div>
                     )}
@@ -794,25 +768,11 @@ const CountdownSection = () => (
           className="text-center position-relative last-paragraph-no-margin parallax-scrolling-style-2"
         >
           <div className="countdown-style-02 mb-30px mt-40px sm-mb-10px">
-            <div data-enddate="2024/08/16 23:59:59" className="countdown">
-              <div className="counter-container">
-                <div className="countdown-box first">
-                  <div className="number" style={{ color: "#000" }}>
-                    11
-                  </div>
-                  <span>Days</span>
-                </div>
-                <div className="countdown-box">
-                  <div className="number">00</div>
-                  <span>Hours</span>
-                </div>
-                <div className="countdown-box">
-                  <div className="number">21</div>
-                  <span>Minutes</span>
-                </div>
-                <div className="countdown-box last">
-                  <div className="number">04</div>
-                  <span>Seconds</span>
+            <div className="counter-container">
+              <div className="">
+                <span className="alt-font fs-20">Registration Ends:</span>
+                <div className="alt-font fs-0" style={{ color: "#000" }}>
+                  September 7, 2024
                 </div>
               </div>
             </div>
@@ -849,7 +809,7 @@ const Footer = () => (
             <i className="feather icon-feather-map-pin align-text-bottom icon-extra-medium text-base-color me-10px"></i>
             Venue infos
           </span>
-          <p className="w-80 lg-w-100 md-w-70 sm-w-90 xs-w-100 mb-5px">
+          <p className="primary-font fs-20 primary-font fs-15 w-80 lg-w-100 md-w-70 sm-w-90 xs-w-100 mb-5px">
             724 Adetokunbo Ademola Street, Victoria Island, Lagos, Lagos State,
             Nigeria
           </p>
@@ -861,8 +821,8 @@ const Footer = () => (
           </a>
         </Col>
 
-        <Col lg={4} sm={6} className="md-mb-35px">
-          <span className="alt-font  d-block text-dark mb-10px fs-20">
+        <Col lg={4} sm={6} className="md-mb-35px fs-20">
+          <span className="alt-font d-block text-dark mb-10px fs-20">
             <i className="feather icon-feather-phone-call align-text-bottom icon-extra-medium text-base-color me-10px"></i>
             Contact us
           </span>
@@ -877,7 +837,9 @@ const Footer = () => (
             <i className="feather icon-feather-send align-text-bottom icon-extra-medium text-base-color me-10px"></i>
             Newsletter signup
           </span>
-          <p className="mb-25px sm-mb-20px">Don't miss this amazing events</p>
+          <p className="primary-font fs-20 primary-font fs-15 mb-25px sm-mb-20px">
+            Don't miss this amazing events
+          </p>
           <div className="d-inline-block w-100 newsletter-style-01 position-relative">
             <Form
               action="email-templates/subscribe-newsletter.php"
@@ -952,13 +914,13 @@ const Footer = () => (
           className="order-3 order-sm-2 order-lg-3 text-center text-sm-end xs-mt-10px last-paragraph-no-margin"
         >
           <p>
-            © Copyright 2024
+            © Copyright 2024 {""}
             <a
-              to="https://gfa-tech.com"
+              to="https://dimpified.com"
               target="_blank"
               className="text-decoration-line-bottom text-dark"
             >
-              GFA Technologies
+              DIMP
             </a>
           </p>
         </Col>

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 import {
@@ -16,6 +16,16 @@ import {
   Figure,
 } from "react-bootstrap";
 
+import {
+  ArrowRight,
+  PlayCircle,
+  Mouse,
+  StarFill,
+  Person,
+  Envelope,
+  ChatSquareDots,
+  Calendar2Check,
+} from "react-bootstrap-icons";
 const BarberMordern = () => {
   return (
     <Fragment>
@@ -23,9 +33,10 @@ const BarberMordern = () => {
       <Hero />
       <About />
       <Services />
+      <Pricing />
       <Gallery />
       <Team />
-      <Testimonial />
+      <Testimonials />
       <Statistics />
       <Contact />
       <Footer />
@@ -66,61 +77,54 @@ const Navbar = () => (
         className="fw-bold d-flex align-items-center"
         href="#home"
       >
-        BARBER
         <img
-          src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-04.svg"
-          alt="Icon"
-          style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
+          src="https://gfa-tech.com/dimp-template-images/images/demo-barber-logo-black.png"
+          alt="Barber Logo"
         />
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
-            ABOUT
+            About Us
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
           >
-            SERVICES
+            Hair Services
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#gallery"
           >
-            GALLERY
+            Gallery
           </Nav.Link>
           <Nav.Link
-            
+            style={{ fontWeight: "600", fontSize: "1rem" }}
+            href="#barbers"
+          >
+            Barbers
+          </Nav.Link>
+          <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
           >
-            TESTIMONIALS
-          </Nav.Link>
-          <Nav.Link
-            
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#contact"
-          >
-            CONTACT
+            Reviews
           </Nav.Link>
         </Nav>
         <Button
           href="#appointment"
-          className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
+          className="btn-large btn-round-edge btn-box-shadow btn-white left-icon section-link"
         >
           <span>
-            <i className="feather icon-feather-calendar"></i>
-            <span className="btn-double-text" data-text="Online appointment">
-              Online appointment
+            <span className="btn-double-text" >
+              Contact Us
             </span>
+           
           </span>
         </Button>
       </BootstrapNavbar.Collapse>
@@ -129,46 +133,253 @@ const Navbar = () => (
 );
 
 // Hero Section
-const Hero = () => (
-  <section
-    id="home"
-    className="barber full-screen bg-dark-gray ipad-top-space-margin position-relative"
-    style={{
-      backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg.jpg)`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    }}
-  >
-    <Container className="h-100">
-      <Row className="align-items-center justify-content-center h-100">
-        <Col lg={9} md={12} className="text-center">
-          <span className="fs-16 text-white text-uppercase text-shadow-double-large ls-3px d-block mb-25px sm-mb-15px">
-            London popular barber
-          </span>
-          <h1 className="fs-90 md-fs-80 ls-minus-4px alt-font text-white mb-35px md-mb-20px text-shadow-double-large xs-fs-60 xs-ls-minus-2px">
-            Talented men's barber studio
-          </h1>
-          <Button
-            href="#appointment"
-            className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
-          >
-            <span>
-              <i className="feather icon-feather-calendar"></i>
-              <span className="btn-double-text" data-text="Online appointment">
-                Online appointment
+const Hero = () => {
+  const [show, setShow] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    serviceLocation: "",
+    email: "",
+    phone: "",
+    address: "",
+    service: "",
+    date: "",
+    time: "",
+  });
+  const [notification, setNotification] = useState(null);
+  const [barbingServices, setBarbingServices] = useState([]);
+
+  const serviceOptions = {
+    "Home service": [
+      "Haircut - #3000",
+      "Shave - #2500",
+      "Hair Dye - #5000",
+      "Beard Trim - #3000",
+    ],
+    Shop: [
+      "Haircut - #2000",
+      "Shave - #1500",
+      "Hair Dye - #4000",
+      "Beard Trim - #3000",
+    ],
+  };
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+
+    if (id === "serviceLocation") {
+      setBarbingServices(serviceOptions[value] || []);
+      setFormData({ ...formData, serviceLocation: value, service: "" });
+    }
+  };
+
+  const checkAvailability = async () => {
+    try {
+      const response = await axios.post("/api/check-availability", {
+        date: formData.date,
+        time: formData.time,
+      });
+      return response.data.isAvailable;
+    } catch (error) {
+      console.error("Error checking availability:", error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const isAvailable = await checkAvailability();
+    if (!isAvailable) {
+      setNotification(
+        "The selected date and time are already booked. Please choose another."
+      );
+      return;
+    }
+    // Proceed with booking
+    // Submit the booking form data to the server
+    handleClose();
+  };
+
+  return (
+    <Fragment>
+      <section
+        id="home"
+        className="barber full-screen bg-dark-gray ipad-top-space-margin position-relative"
+        style={{
+          backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg.jpg)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <Container className="h-100">
+          <Row className="align-items-center justify-content-center h-100">
+            <Col lg={9} md={12} className="text-center">
+              <span className="fs-16 text-white text-uppercase text-shadow-double-large ls-3px d-block mb-25px sm-mb-15px">
+                London popular barber
               </span>
-            </span>
-          </Button>
-        </Col>
-        <div className="text-center position-absolute left-0px bottom-50px md-bottom-30px w-100 animation-float">
-          <a href="#about" className="d-block text-white section-link">
-            <i className="bi bi-mouse icon-extra-medium lh-0px"></i>
-          </a>
-        </div>
-      </Row>
-    </Container>
-  </section>
-);
+              <h1 className="fs-90 md-fs-80 ls-minus-4px alt-font text-white mb-35px md-mb-20px text-shadow-double-large xs-fs-60 xs-ls-minus-2px">
+                Talented men's barber studio
+              </h1>
+              <Button
+                onClick={handleShow}
+                className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
+              >
+                <span>
+                  <span
+                    className="btn-double-text"
+                    data-text="Online appointment"
+                  >
+                    Online appointment
+                  </span>
+                  {""}
+                  <Calendar2Check />
+                </span>
+              </Button>
+            </Col>
+            <div className="text-center position-absolute left-0px bottom-50px md-bottom-30px w-100 animation-float">
+              <a href="#about" className="d-block text-white section-link">
+                <Mouse />
+              </a>
+            </div>
+          </Row>
+        </Container>
+      </section>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Book an appointment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {notification && <Alert variant="danger">{notification}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="name">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="email" className="mt-1">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email address"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="phone" className="mt-1">
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your phone number"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="serviceLocation" className="mt-1">
+              <Form.Label>Where should we attend to you?</Form.Label>
+              <Form.Control
+                as="select"
+                value={formData.serviceLocation}
+                onChange={handleChange}
+                style={{
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+                  appearance: "none",
+                  background: `url('https://www.svgrepo.com/show/315098/caret-down.svg)`,
+                  paddingRight: "1.75rem",
+                }}
+              >
+                <option value="">Select convenient location</option>
+                <option value="Home service">Home service</option>
+                <option value="Shop">Shop</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="address" className="mt-1">
+              <Form.Label>Your address please? (for Home service)</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="service" className="mt-1">
+              <Form.Label>Choose your preferred barbing service</Form.Label>
+              <Form.Control
+                as="select"
+                value={formData.service}
+                onChange={handleChange}
+                disabled={!formData.serviceLocation}
+                style={{
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+                  appearance: "none",
+                  background: `url('https://www.svgrepo.com/show/315098/caret-down.svg') no-repeat right 1.75rem center/8px 10px`,
+                  paddingRight: "1.75rem",
+                }}
+              >
+                <option value="">Select service</option>
+                {barbingServices.map((service, index) => (
+                  <option key={index} value={service}>
+                    {service}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+
+            <Row className="g-2 mt-2">
+              <Form.Label>What date and time do you want to book?</Form.Label>
+              <Col xl={6} className="mb-3">
+                <Form.Control
+                  className="border-color-transparent-dark-very-light bg-transparent"
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  min="2023-01-01"
+                  max="2099-12-31"
+                />
+              </Col>
+              <Col xl={6}>
+                <Form.Control
+                  className="border-color-transparent-dark-very-light bg-transparent"
+                  type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                  min="09:00"
+                  max="12:00"
+                />
+              </Col>
+            </Row>
+            <Modal.Footer>
+              <Button variant="secondary" href="/payment">
+                Pay-on-delivery
+              </Button>
+              <Button variant="dark" type="submit">
+                Proceed to Payment
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </Fragment>
+  );
+};
 
 // About Section
 const About = () => (
@@ -183,7 +394,7 @@ const About = () => (
           lg={6}
           className="align-self-end mt-15 xl-mt-18 md-mt-22 xs-mt-30"
         >
-          <h2 className="fs-60 alt-font fw-400 ls-minus-2px text-white-gray mb-15px shadow-none">
+          <h2 className="fs-60 alt-font  fw-400 ls-minus-2px text-white-gray mb-15px shadow-none">
             Award{" "}
             <span className="text-highlight">
               winning
@@ -199,20 +410,19 @@ const About = () => (
           <div className="d-inline-block">
             <Button
               href="#services"
-              className="btn-large btn-round-edge btn-box-shadow btn-switch-text btn-dark-gray left-icon section-link me-20px"
+              className="btn btn-extra-large btn-base-color btn-hover-animation-switch btn-round-edge btn-box-shadow me-4"
             >
-              <i className="bi bi-scissors"></i>
-              <span className="btn-double-text" data-text="Explore services">
-                Explore services
+              <span>
+                <span className="primary-font btn-text text-white">
+                  Explore Services
+                </span>
+                <span className="primary-font btn-icon text-white">
+                  <i className="fa-solid fa-arrow-right fs-14"></i>
+                </span>
+                <span className="primary-font btn-icon text-white">
+                  <i className="fa-solid fa-arrow-right fs-14"></i>
+                </span>
               </span>
-            </Button>
-            <Button
-              href="#barbers"
-              variant="link"
-              className="btn-extra-large btn-hover-animation-switch text-white-gray section-link"
-            >
-              <span className="btn-text">Our barbers</span>
-              <i className="fa-solid fa-arrow-right ms-2"></i>
             </Button>
           </div>
         </Col>
@@ -266,7 +476,7 @@ const Services = () => (
     <Container className="overlap-gap-section">
       <Row className="mb-3">
         <Col className="text-center">
-          <h2 className="alt-font ls-minus-2px text-dark-gray shadow-none">
+          <h2 className="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none">
             Barbershop{" "}
             <span className="text-highlight">
               services
@@ -300,7 +510,7 @@ const Services = () => (
             </div>
             <div className="btn-hover d-flex align-items-center justify-content-center bg-dark-gray">
               <Button
-                href="#appointment"
+                href="#book"
                 className="inner-link btn btn-link btn-hover-animation-switch btn-large text-white"
               >
                 <span>
@@ -483,17 +693,13 @@ const Gallery = () => (
                     <Col md={4} key={idx} className="p-1">
                       <div className="gallery-box">
                         <a
-                          href={src}
+                          href="#"
                           data-group="lightbox-gallery"
                           title="Lightbox gallery image title"
                         >
                           <div className="position-relative gallery-image bg-dark-gray overflow-hidden border-radius-6px">
                             <img src={src} className="img-fluid h-100" alt="" />
-                            <div className="d-flex align-items-center justify-content-center position-absolute top-0 start-0 w-100 h-100 gallery-hover move-bottom-top">
-                              <div className="d-flex align-items-center justify-content-center w-80px h-80px rounded-circle bg-white">
-                                <i className="feather icon-feather-zoom-in text-dark-gray icon-extra-medium"></i>
-                              </div>
-                            </div>
+                            
                           </div>
                         </a>
                       </div>
@@ -510,13 +716,13 @@ const Gallery = () => (
 );
 
 // Testimonials Section
-const Testimonials = () => (
+const Pricing = () => (
   <section id="pricing" class="barber bg-very-light-yellow overlap-height">
     <div class="container overlap-gap-section">
       <div class="row mb-1">
         <div class="col-12 text-center">
           <h2
-            class="alt-font ls-minus-2px text-dark-gray shadow-none"
+            class="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none"
             data-shadow-animation="true"
             data-animation-delay="700"
           >
@@ -627,7 +833,7 @@ const Team = () => (
     <Container className="overlap-gap-section">
       <Row className="mb-3 animate__animated animate__fadeIn animate__delay-1s">
         <Col xs={12} className="text-center">
-          <h2 className="alt-font ls-minus-2px text-dark-gray shadow-none">
+          <h2 className="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none">
             Talented{" "}
             <span className="text-highlight">
               barbers
@@ -653,16 +859,7 @@ const Team = () => (
                   Hair stylist
                 </span>
               </div>
-              <div className="social-icon d-flex flex-column flex-shrink-1">
-                <a
-                  href="https://www.instagram.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  
-                >
-                  <FaInstagram className="icon-small" />
-                </a>
-              </div>
+              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -682,16 +879,7 @@ const Team = () => (
                   Hair stylist
                 </span>
               </div>
-              <div className="social-icon d-flex flex-column flex-shrink-1">
-                <a
-                  href="https://www.facebook.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  
-                >
-                  <FaFacebookF className="icon-small" />
-                </a>
-              </div>
+              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -711,16 +899,7 @@ const Team = () => (
                   Beard stylist
                 </span>
               </div>
-              <div className="social-icon d-flex flex-column flex-shrink-1">
-                <a
-                  href="https://www.twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  
-                >
-                  <FaTwitter className="icon-small" />
-                </a>
-              </div>
+              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -740,16 +919,7 @@ const Team = () => (
                   Hair washer
                 </span>
               </div>
-              <div className="social-icon d-flex flex-column flex-shrink-1">
-                <a
-                  href="https://www.instagram.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  
-                >
-                  <FaInstagram className="icon-small" />
-                </a>
-              </div>
+              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -774,19 +944,19 @@ const Team = () => (
     </Container>
   </section>
 );
-const Testimonial = () => (
+const Testimonials = () => (
   <section className="barber bg-medium-yellow position-relative">
     <div
       className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
       style={{
-        backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg-up.png')`,
+        backgroundImage: `url('https://gfa-tech.com/dimp-template-imags/images/demo-barber-home-bg-up.png')`,
       }}
     ></div>
     <Container>
       <Row className="justify-content-center mb-1">
         <Col className="text-center">
           <h2
-            className="alt-font ls-minus-2px text-dark-gray shadow-none"
+            className="alt-font fs-2 fs-2 ls-minus-2px text-dark-gray shadow-none"
             data-shadow-animation="true"
             data-animation-delay="700"
           >
@@ -865,7 +1035,7 @@ const Statistics = () => (
         {/* Start counter item */}
         <Col className="last-paragraph-no-margin sm-mb-30px text-center">
           <h2
-            className="alt-font ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
+            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
             data-text="+"
             data-to="437"
           >
@@ -879,7 +1049,7 @@ const Statistics = () => (
         {/* Start counter item */}
         <Col className="last-paragraph-no-margin sm-mb-30px text-center">
           <h2
-            className="alt-font ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
+            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
             data-text="+"
             data-to="864"
           >
@@ -891,7 +1061,7 @@ const Statistics = () => (
         {/* Start counter item */}
         <Col className="last-paragraph-no-margin xs-mb-30px text-center">
           <h2
-            className="alt-font ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
+            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
             data-text="+"
             data-to="334"
           >
@@ -905,7 +1075,7 @@ const Statistics = () => (
         {/* Start counter item */}
         <Col className="last-paragraph-no-margin text-center">
           <h2
-            className="alt-font ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
+            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
             data-text="+"
             data-to="453"
           >
@@ -924,7 +1094,7 @@ const Contact = () => (
       <Row>
         <Col xl={4} lg={5} className="md-mb-50px">
           <h3
-            className="alt-font ls-minus-2px text-dark-gray mb-20px shadow-none"
+            className="alt-font fs-2 ls-minus-2px text-dark-gray mb-20px shadow-none"
             data-shadow-animation="true"
             data-animation-delay="700"
           >
@@ -1080,7 +1250,7 @@ const Footer = () => (
               alt="Barber Logo"
             />
           </a>
-          <span className="fs-90 xs-fs-60 alt-font text-base-color opacity-4 d-block mt-minus-50px mb-30px ls-minus-4px xs-ls-minus-2px">
+          <span className="fs-90 xs-fs-60 alt-font fs-2 text-base-color opacity-4 d-block mt-minus-50px mb-30px ls-minus-4px xs-ls-minus-2px">
             Award winning barber studio
           </span>
           <Col

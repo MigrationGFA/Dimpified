@@ -13,17 +13,29 @@ import {
   Carousel,
   ButtonGroup,
 } from "react-bootstrap";
+import {
+  ArrowRight,
+  PlayCircle,
+  Mouse,
+  StarFill,
+  Person,
+  Envelope,
+  ChatSquareDots,
+} from "react-bootstrap-icons";
 
 const SalonTemplate = () => {
   return (
     <Fragment className="beauty-theme">
       <Navbar />
       <Hero />
+      <Statistics />
       <About />
       <Services />
+      <Pricing />
       <Gallery />
       <Testimonials />
       <Contact />
+      <MiniCTA />
       <Footer />
     </Fragment>
   );
@@ -89,11 +101,11 @@ const Navbar = () => (
         className="fw-bold text-white d-flex align-items-center"
         href="#home"
       >
-        BEAUTY SALON
         <img
-          src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-03.png"
-          alt="Icon"
-          style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
+          src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-white.png"
+          alt="Logo"
+          width="146"
+          height="42"
         />
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
@@ -104,40 +116,40 @@ const Navbar = () => (
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
-            ABOUT
+            About Us
           </Nav.Link>
           <Nav.Link
             className="text-white"
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
           >
-            SERVICES
+            Services
           </Nav.Link>
           <Nav.Link
             className="text-white"
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#gallery"
           >
-            GALLERY
+            Gallery
           </Nav.Link>
           <Nav.Link
             className="text-white"
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
           >
-            REVIEWS
+            Reviews
           </Nav.Link>
           <Nav.Link
             className="text-white"
             style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#contact"
+            href="#book"
           >
-            CONTACT
+            Contact
           </Nav.Link>
         </Nav>
-        <Button variant="dark" className="btn-lg">
-          <i className="feather icon-feather-calendar me-2"></i>
-          Contact Us
+        <Button variant="light" href="#book" className="btn-lg">
+          Book Appointment
+          <ArrowRight />
         </Button>
       </BootstrapNavbar.Collapse>
     </Container>
@@ -148,6 +160,7 @@ const Navbar = () => (
 const Hero = () => (
   <Fragment>
     <section
+      id="home"
       className="beauty pb-0 top-space-padding bg-dark-gray full-screen border-top bg-white position-relative md-h-700px sm-h-600px sm-pb-70px"
       style={{
         backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-banner.jpg)`,
@@ -183,7 +196,7 @@ const Hero = () => (
               treatments.
             </div>
             <Button
-              href="demo-beauty-salon-contact.html"
+              href="#book"
               className="btn btn-extra-large btn-base-color btn-hover-animation-switch btn-round-edge btn-box-shadow"
             >
               <span>
@@ -200,6 +213,10 @@ const Hero = () => (
         </Row>
       </Container>
     </section>
+  </Fragment>
+);
+const Statistics = () => (
+  <Fragment>
     <section className="beauty  beauty p-0 position-relative border-bottom bg-white border-color-extra-medium-gray">
       <Container>
         <div className="w-50 bg-white position-absolute top-minus-40px left-0px text-end">
@@ -234,7 +251,7 @@ const Hero = () => (
           <Col lg={6} className="pt-40px pb-40px xs-pt-30px ps-8 lg-ps-15px">
             <h6 className="fw-400 mb-0 alt-font">
               <a
-                href="demo-beauty-salon-story.html"
+                href="#book"
                 className="text-dark-gray fs-3 text-dark-gray-hover"
               >
                 Get{" "}
@@ -255,7 +272,7 @@ const Hero = () => (
 // About Section
 const About = () => (
   <Fragment>
-    <section className="beauty beauty p-0 bg-white">
+    <section id="about" className="beauty beauty p-0 bg-white">
       <Container fluid className="p-0">
         <Row className="align-items-center g-0">
           <Col
@@ -287,27 +304,21 @@ const About = () => (
             </p>
             <div className="d-sm-flex align-items-center justify-content-center justify-content-lg-start">
               <Button
-                href="demo-beauty-salon-story.html"
+                href="#book"
                 variant="dark"
                 className="btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow xs-me-20px xs-mb-10px"
               >
                 <span>
-                  <span className="primary-font btn-text">About story</span>
-                  <span className="primary-font btn-icon">
-                    <i className="feather icon-feather-arrow-right"></i>
+                  <span className="primary-font btn-text">
+                    Book Appointment
                   </span>
                   <span className="primary-font btn-icon">
-                    <i className="feather icon-feather-arrow-right"></i>
+                    <ArrowRight />
+                  </span>
+                  <span className="primary-font btn-icon">
+                    <ArrowRight />
                   </span>
                 </span>
-              </Button>
-              <Button
-                href="https://www.youtube.com/watch?v=cfXHhfNy7tU"
-                variant="link"
-                className="hover-text-light btn-extra-large text-dark-gray popup-youtube xs-ps-0 xs-mb-10px"
-              >
-                <i className="bi bi-play-circle align-middle lh-normal icon-extra-medium me-10px"></i>
-                Luxury salon
               </Button>
             </div>
           </Col>
@@ -384,7 +395,10 @@ const About = () => (
 // Services Section
 const Services = () => (
   <Fragment>
-    <section className="beauty overlap-height bg-white border-bottom border-color-extra-medium-gray">
+    <section
+      id="services"
+      className="beauty overlap-height bg-white border-bottom border-color-extra-medium-gray"
+    >
       <Container className="overlap-gap-section">
         <Row className="justify-content-center align-items-center mb-6">
           <Col className="col-auto pe-25px border-2 border-end border-color-dark-gray sm-border-end-0 sm-pe-15px">
@@ -435,11 +449,11 @@ const Services = () => (
             <Col key={index} className="mb-20px">
               <Card className="services-box-style-01 hover-box">
                 <div className="position-relative box-image border-radius-6px overflow-hidden">
-                  <a href="demo-beauty-salon-services.html">
+                  <a href="#book">
                     <img src={service.img} alt="" fluid />
                     <div className="box-overlay bg-gradient-blue-ironstone-brown"></div>
                     <span className="primary-font d-flex justify-content-center align-items-center mx-auto icon-box absolute-middle-center z-index-1 w-65px h-65px rounded-circle border border-color-transparent-white border-1">
-                      <i className="bi bi-arrow-right-short text-white icon-very-medium d-flex"></i>
+                      <ArrowRight className="text-white" />
                     </span>
                   </a>
                 </div>
@@ -453,7 +467,14 @@ const Services = () => (
             </Col>
           ))}
         </Row>
-
+      </Container>
+    </section>
+  </Fragment>
+);
+const Pricing = () => (
+  <Fragment>
+    <section className="beauty overlap-height bg-white border-bottom border-color-extra-medium-gray">
+      <Container className="overlap-gap-section">
         <Row className="justify-content-between align-items-center mb-5 xs-mb-6">
           {[
             {
@@ -529,20 +550,6 @@ const Services = () => (
             </Col>
           ))}
         </Row>
-
-        <Row>
-          <Col className="col-12 text-center">
-            <h6 className="text-dark-gray alt-font">
-              Our flexible beauty salon pricing plans.{" "}
-              <a
-                href="demo-beauty-salon-wedding.html"
-                className="text-dark-gray text-dark-gray-hover text-decoration-line-bottom-medium"
-              >
-                Explore package
-              </a>
-            </h6>
-          </Col>
-        </Row>
       </Container>
     </section>
   </Fragment>
@@ -551,7 +558,7 @@ const Services = () => (
 // Gallery Section
 const Gallery = () => (
   <Fragment>
-    <section className="beauty position-relative bg-white ">
+    <section id="gallery" className="beauty position-relative bg-white ">
       <Container>
         <Row className="align-items-center">
           <Col md={9} className="last-paragraph-no-margin">
@@ -642,7 +649,7 @@ const Testimonials = () => (
           className="section-link absolute-middle-center top-0"
         >
           <div className="d-flex justify-content-center align-items-center mx-auto rounded-circle h-70px w-70px fs-22 text-dark-gray bg-white box-shadow-bottom">
-            <i className="ti-mouse"></i>
+            <Mouse />
           </div>
         </a>
       </div>
@@ -655,22 +662,22 @@ const Testimonials = () => (
             className="position-relative z-index-2 pt-30px pb-50px sm-pb-30px md-pt-0 text-center text-lg-start animate-child animate-complete"
           >
             <span className="primary-font fs-16 text-uppercase text-gradient-san-blue-new-york-red fw-700 mb-10px ls-1px d-inline-block">
-              People's feedback
+              People's Feedback
             </span>
             <h2 className="alt-font fs-2 text-dark-grey ls-minus-4px mb-30px">
-              Here is what our clients have to say.
+              Hear from our satisfied clients.
             </h2>
             <a
-              href="#down-section"
+              href="#book"
               className="btn btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow section-link"
             >
               <span>
-                <span className="primary-font btn-text">Loved by people</span>
+                <span className="primary-font btn-text">Loved by Clients</span>
                 <span className="primary-font btn-icon">
-                  <i className="feather icon-feather-arrow-right"></i>
+                  <ArrowRight />
                 </span>
                 <span className="primary-font btn-icon">
-                  <i className="feather icon-feather-arrow-right"></i>
+                  <ArrowRight />
                 </span>
               </span>
             </a>
@@ -685,20 +692,20 @@ const Testimonials = () => (
               <img
                 src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-review-01.jpg"
                 className="w-100 position-relative z-index-1 border-radius-6px"
-                alt=""
+                alt="Client Review"
                 style={{ transform: "translateY(-22.4068px)" }}
               />
               <img
                 src="https://gfa-tech.com/dimp-template-images/images/demo-yoga-and-meditation-about-02.png"
                 className="position-absolute top-55px right-minus-150px d-none d-md-inline-block"
-                alt=""
+                alt="Decorative Element"
                 style={{ transform: "translateX(0)", opacity: 1 }}
               />
               <div className="position-absolute left-minus-100px lg-left-minus-70px sm-left-minus-60px bottom-50px lg-bottom-minus-30px md-bottom-50px z-index-1 d-none d-sm-flex flex-column align-items-center justify-content-center w-200px h-200px lg-w-150px lg-h-150px bg-white border-radius-100 box-shadow-extra-large p-10px">
                 <img
                   src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-story-02.png"
                   className="position-absolute top-50 translate-middle-y lg-w-80"
-                  alt=""
+                  alt="Decorative Story"
                 />
               </div>
             </div>
@@ -711,14 +718,14 @@ const Testimonials = () => (
             <img
               src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-black.png"
               className="mb-20px"
-              alt=""
+              alt="Company Logo"
             />
             <h6 className="alt-font fs-3 text-dark-gray">
-              Our team will help you achieve the best result.
+              We ensure outstanding results.
             </h6>
             <p className="primary-font w-90 lg-w-100">
-              Amet minim mollit deserunt ullamco aliqua dolor amet sint velit
-              officia duis consequat enim mollit.
+              Our services are designed to exceed expectations and deliver
+              unparalleled satisfaction to all our clients.
             </p>
             <div className="d-flex align-items-center justify-content-center justify-content-md-start">
               <div className="col-auto text-center">
@@ -726,17 +733,17 @@ const Testimonials = () => (
               </div>
               <div className="col-auto border-start border-color-extra-medium-gray ms-25px ps-25px text-start">
                 <div className="review-star-icon fs-18 lh-22 mb-5px text-gradient-san-blue-new-york-red">
-                  <i className="bi bi-star-fill"></i>
-                  <i className="bi bi-star-fill"></i>
-                  <i className="bi bi-star-fill"></i>
-                  <i className="bi bi-star-fill"></i>
-                  <i className="bi bi-star-fill"></i>
+                  <StarFill />
+                  <StarFill />
+                  <StarFill />
+                  <StarFill />
+                  <StarFill />
                   <span className="primary-font text-dark-gray fw-600 fs-16">
                     25K
                   </span>
                 </div>
                 <span className="primary-font d-block fs-16 fw-500 lh-22 text-dark-gray primary-font">
-                  Reviewed by google.
+                  Rated by our clients on Google.
                 </span>
               </div>
             </div>
@@ -763,12 +770,12 @@ const Contact = () => (
             Book your appointment
           </span>
           <h2 className="alt-font fs-1 fw-400 text-dark-gray ls-minus-1px w-80 lg-w-100 mb-40px sm-mb-30px">
-            We would love to hear from you.
+            We would love to pamper you.
           </h2>
           <Row className="row-cols-1 row-cols-sm-2 mb-30px xs-mb-25px">
             <Col className="last-paragraph-no-margin xs-mb-25px">
               <span className="primary-font fs-18 fw-600 text-dark-gray">
-                Visit beauty salon
+                Visit our beauty salon
               </span>
               <div className="h-1px w-80 sm-w-100 bg-dark-gray mt-10px mb-10px"></div>
               <p className="primary-font w-75 lg-w-90">
@@ -777,7 +784,7 @@ const Contact = () => (
             </Col>
             <Col>
               <span className="primary-font fs-18 fw-600 text-dark-gray">
-                Book appointment
+                Book an appointment
               </span>
               <div className="h-1px w-80 sm-w-100 bg-dark-gray mt-10px mb-10px"></div>
               <div className="w-100 d-block">
@@ -792,7 +799,7 @@ const Contact = () => (
           <Row className="row-cols-1 row-cols-sm-2">
             <Col className="last-paragraph-no-margin xs-mb-25px">
               <span className="primary-font fs-18 fw-600 text-dark-gray">
-                Let's talk with us
+                Let's talk
               </span>
               <div className="h-1px w-80 sm-w-100 bg-dark-gray mt-10px mb-10px"></div>
               <div className="w-100 d-block">
@@ -836,11 +843,12 @@ const Contact = () => (
         </Col>
         <Col
           lg={5}
+          id="book"
           className="offset-lg-1 align-self-end contact-form-style-03 sm-mb-50px"
         >
-          <div className="bg-dark-gray box-shadow-double-large p-5  lg-p-10 border-radius-10px position-relative overflow-hidden">
+          <div className="bg-dark-gray box-shadow-double-large p-5 lg-p-10 border-radius-10px position-relative overflow-hidden">
             <h2 className="alt-font fs-1 text-white xs-mb-15px fancy-text-style-4 ls-minus-1px ps-5">
-              Say Hello!
+              Book Now!
             </h2>
             <Form
               action="email-templates/contact-form.php"
@@ -849,7 +857,7 @@ const Contact = () => (
             >
               <Form.Group className="position-relative mb-10px">
                 <span className="primary-font form-icon">
-                  <i className="bi bi-person icon-extra-medium"></i>
+                  <Person className="icon-extra-medium" />
                 </span>
                 <Form.Control
                   className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
@@ -859,9 +867,9 @@ const Contact = () => (
                   required
                 />
               </Form.Group>
-              <Form.Group className="position-relative mb-0px">
+              <Form.Group className="position-relative mb-10px">
                 <span className="primary-font form-icon">
-                  <i className="bi bi-envelope icon-extra-medium"></i>
+                  <Envelope className="icon-extra-medium" />
                 </span>
                 <Form.Control
                   className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
@@ -871,31 +879,40 @@ const Contact = () => (
                   required
                 />
               </Form.Group>
-              <Form.Group className="position-relative form-textarea mt-5px mb-12">
+              <Form.Group className="position-relative mb-10px">
+                <span className="primary-font form-icon">
+                  <ChatSquareDots className="icon-extra-medium" />
+                </span>
                 <Form.Control
                   as="textarea"
                   className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
-                  name="comment"
-                  placeholder="Enter your message"
+                  name="service"
+                  placeholder="Which service would you like to book?"
+                  rows={2}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="position-relative mb-12">
+                <Form.Control
+                  as="textarea"
+                  className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
+                  name="message"
+                  placeholder="Any special requests or notes"
                   rows={4}
                 />
-                <span className="primary-font form-icon">
-                  <i className="bi bi-chat-square-dots icon-extra-medium"></i>
-                </span>
-                <input type="hidden" name="redirect" value="" />
               </Form.Group>
               <Button
                 className="btn btn-medium btn-white btn-box-shadow mt-0px fw-700 submit btn-round-edge"
                 type="submit"
               >
-                Send message
+                Book Appointment
               </Button>
               <div className="form-results mt-20px d-none"></div>
             </Form>
             <div
               className="w-200px h-200px xs-w-150px xs-h-150px bg-white border-radius-100 bg-gradient-solitude-blue-fair-pink d-flex align-items-center justify-content-center position-absolute right-minus-30px xs-right-minus-20px bottom-minus-60px xs-bottom-minus-40px"
               style={{
-                backgroundImage: "url(images/demo-beauty-saln-contact-01.png)",
+                backgroundImage: "url(images/demo-beauty-salon-contact-01.png)",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
@@ -903,7 +920,7 @@ const Contact = () => (
               <img
                 src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-contact-01.png"
                 className="h-80px"
-                alt=""
+                alt="Beauty Salon"
               />
             </div>
           </div>
@@ -912,10 +929,8 @@ const Contact = () => (
     </Container>
   </section>
 );
-
-// Footer Section
-const Footer = () => (
-  <footer className="beauty p-0 bg-gradient-blue-ironstone-brown">
+const MiniCTA = () => (
+  <section className="beauty p-0 bg-gradient-blue-ironstone-brown">
     <div className="pt-40px pb-40px border-bottom border-color-transparent-white-light">
       <Container>
         <Row>
@@ -923,18 +938,22 @@ const Footer = () => (
             <h6 className="text-white fs-2 pt-lg-10 alt-font">
               Everyone can discover their hidden beauty.
               <a
-                href="demo-beauty-salon-contact.html"
+                href="#book"
                 className="text-white text-decoration-line-bottom-medium d-inline-block"
               >
                 Book an appointment
               </a>
-              <i className="bi bi-arrow-right align-middle icon-extra-medium ms-10px"></i>
+              <ArrowRight />
             </h6>
           </Col>
         </Row>
       </Container>
     </div>
-
+  </section>
+);
+// Footer Section
+const Footer = () => (
+  <footer className="beauty p-0 bg-gradient-blue-ironstone-brown">
     <Container>
       <Row className="justify-content-center pt-55px pb-55px sm-pt-40px sm-pb-40px">
         <Col
@@ -943,12 +962,9 @@ const Footer = () => (
           sm={6}
           className="last-paragraph-no-margin text-center text-sm-start text-md-center text-lg-start md-mb-30px"
         >
-          <a
-            href="demo-beauty-salon.html"
-            className="footer-logo d-inline-block"
-          >
+          <a href="#home" className="footer-logo d-inline-block">
             <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-white@2x.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-white.png"
               alt="Logo"
               width="146"
               height="42"
@@ -1044,15 +1060,13 @@ const Footer = () => (
           <Col xxl={8} lg={7} className="text-center text-lg-start md-mb-10px">
             <Nav className="footer-navbar fs-16">
               <Nav.Item>
-                <Nav.Link href="demo-beauty-salon.html">Home</Nav.Link>
+                <Nav.Link href="#home">Home</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="demo-beauty-salon-story.html">About</Nav.Link>
+                <Nav.Link href="#book">About</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="demo-beauty-salon-services.html">
-                  Services
-                </Nav.Link>
+                <Nav.Link href="#book">Services</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link href="demo-beauty-salon-wedding.html">
@@ -1065,9 +1079,7 @@ const Footer = () => (
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="demo-beauty-salon-contact.html">
-                  Contact
-                </Nav.Link>
+                <Nav.Link href="#book">Contact</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>

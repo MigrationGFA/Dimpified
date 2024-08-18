@@ -17,10 +17,10 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 
-import SalonTemplate from "../dimp-templates/Trade-services/fashion-designer/SalonTemplate";
+import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
 import BarberTemplateV2 from "../dimp-templates/Trade-services/barber/BarberTemplateV2";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
-import EventTemplate from "../dimp-templates/EventTemplate";
+import EventTemplate from "../dimp-templates/event-services/EventTemplate";
 import StateUpskilling from "../dimp-templates/government/StateUpskilling";
 import LegalTemplate from "../dimp-templates/professional-services/Legal";
 import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
