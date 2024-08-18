@@ -18,7 +18,6 @@ import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 
 import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
-import BarberTemplateV2 from "../dimp-templates/Trade-services/barber/BarberTemplateSecond";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
 import EventTemplate from "../dimp-templates/event-services/EventTemplate";
 import StateUpskilling from "../dimp-templates/government/StateUpskilling";
