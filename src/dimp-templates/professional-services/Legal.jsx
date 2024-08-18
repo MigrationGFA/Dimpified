@@ -1094,7 +1094,7 @@ const Footer = () => (
           className="text-center text-lg-end last-paragraph-no-margin"
         >
           <p>
-            © 2024 Crafto is Powered by{" "}
+            Powered by{" "}
             <a
               href="https://www.dimpified.com/"
               target="_blank"
