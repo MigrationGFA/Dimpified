@@ -177,6 +177,7 @@ const AllRoutes = () => {
 
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
+     
 
       <Route path="/upskill-template" element={<StateUpskilling />} />
       <Route path="/barber-two" element={<BarberMordern />} />
