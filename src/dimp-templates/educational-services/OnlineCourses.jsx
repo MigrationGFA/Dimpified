@@ -202,7 +202,7 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="learning"
+    className="learning px-4"
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="/demo-elearning">
@@ -242,7 +242,7 @@ const Navbar = () => (
 const Hero = () => (
   <section
     id="home"
-    className="learning p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin position-relative"
+    className="learning px-4 p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin position-relative"
     style={{
       backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-elearning-hero-bg.jpg)`,
       backgroundSize: 'cover',
@@ -329,7 +329,7 @@ const About = () => (
       className="position-absolute end-0 bottom-0 d-none d-md-block"
       style={{ transform: "translateY(-50px)" }}
     ></div>
-    <Container className="learning">
+    <Container className="learning px-4">
       <Row className="align-items-end justify-content-center mb-4">
         <Col xl={5} lg={6} md={10} className="text-center text-lg-start mb-4">
           <div className="d-inline-block mb-3">
@@ -422,7 +422,7 @@ const About = () => (
 
 // Services Section
 const Services = () => (
-  <section id="courses" className="learning bg-tranquil position-relative">
+  <section id="courses" className="learning px-4 bg-tranquil position-relative">
     <Container>
       <Row className="align-items-center mb-4">
         <Col xl={5} className="text-center text-xl-start">
@@ -488,7 +488,7 @@ const Services = () => (
 
 // Gallery Section
 const Team = () => (
-  <section id="instructors" className="learning" style={{ height: "auto" }}>
+  <section id="instructors" className="learning px-4" style={{ height: "auto" }}>
     <Container>
       <Row className="align-items-end mb-6">
         <Col xl={5} lg={6} md={9} className="text-center text-lg-start">
@@ -557,7 +557,7 @@ const Team = () => (
 const Testimonials = () => (
   <section
     id="testimonials"
-    className="learning bg-gradient-tranquil-white position-relative"
+    className="learning px-4 bg-gradient-tranquil-white position-relative"
   >
     <Container className="position-relative z-index-1">
       <Row className="row-cols-1 row-cols-lg-3 row-cols-md-2 align-items-center mb-4 xs-mb-25px">
@@ -618,7 +618,7 @@ const Testimonials = () => (
 const Blog = () => (
   <section
     id="blog"
-    className="learning bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
+    className="learning px-4 bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
   >
     <Container className="overlap-gap-section">
       <Row className="mb-4 md-mb-6">
@@ -665,10 +665,10 @@ const Blog = () => (
 const Contact = () => (
   <section
     id="contact"
-    className="learning overflow-hidden position-relative overlap-height pt-3 pt-lg-8"
-    style={{ height: "765.75px" }}
+    className="learning px-4 overflow-hidden position-relative overlap-height py-6 py-lg-8"
+    
   >
-    <Container className="overlap-gap-section">
+    <Container className="px-4 py-6 overlap-gap-section">
       <Row className="justify-content-center mb-3">
         <Col xs={12} className="text-center">
           <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
@@ -784,7 +784,7 @@ const Contact = () => (
                   respond to your request.
                 </p>
               </Col>
-              <Col md={4} className="text-center text-md-end">
+              <Col md={4} className="text-center text-md-end mb-4">
                 <Button
                   type="submit"
                   className="btn btn-dark-gray btn-rounded btn-box-shadow"
@@ -806,7 +806,7 @@ const Contact = () => (
 
 // Footer Section
 const Footer = () => (
-  <footer className="learning bg-gradient-aztec-green position-relative">
+  <footer className="learning px-4 bg-gradient-aztec-green position-relative">
     <Container className="footer-dark text-center text-sm-start position-relative">
       <Row className="align-items-center footer-bottom border-top border-color-transparent-white-light pt-30px g-0">
         <Col xl={7} className="ps-0 text-center text-xl-start lg-mb-10px">

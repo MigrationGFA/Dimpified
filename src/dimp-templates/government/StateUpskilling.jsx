@@ -35,7 +35,7 @@ export default StateUpskilling;
 
 // Navbar Component
 const Navbar = () => (
-  <BootstrapNavbar bg="transparent" expand="lg" className="gov px-lg-10 py-lg-3">
+  <BootstrapNavbar bg="transparent" expand="lg" className="gov px-4 px-lg-10 py-lg-3">
     <Container>
       <BootstrapNavbar.Brand
         className="fw-bold text-dark d-flex align-items-center"
@@ -185,10 +185,10 @@ const About = () => (
 
 // Services Section
 const HeroRightImage = () => (
-  <section id="ts-experiences" className="gov ts-experiences">
+  <section id="ts-experiences" className="gov p-0 ts-experiences">
     <Container fluid>
       <Row>
-        <Col lg={6} className="p-0 align-self-center">
+        <Col lg={6} className="px-0 align-self-center">
           <div className="ts-exp-wrap">
             <div className="ts-exp-content">
               <p style={{ fontSize: "18px" }}>
@@ -233,7 +233,7 @@ const HeroRightImage = () => (
   </section>
 );
 const Audience = () => (
-  <section className="gov ts-intro-item section-bg px-4" id="audience">
+  <section className="gov px-4 ts-intro-item section-bg px-4" id="audience">
     <Container>
       <Row>
         <Col
@@ -386,7 +386,7 @@ const HeroLeftImage = () => (
 
 // Testimonials Section
 const Services = () => (
-  <section className="gov ts-event-outcome px-4">
+  <section className="gov px-4 ts-event-outcome px-4">
     <Container>
       <div className="intro-left-content">
         <h2 className="column-title">
@@ -455,7 +455,7 @@ const Services = () => (
 // Contact Section
 const LargeCTA = () => (
   <section
-    className="gov ts-book-seat"
+    className="gov px-4 ts-book-seat"
     style={{
       backgroundImage:
         "url(https://gfa-tech.com/projects/kaduna-digital-skills-program/images/book_seat_img.jpg)",
@@ -483,7 +483,7 @@ const LargeCTA = () => (
   </section>
 );
 const Blog = () => (
-  <section className="gov ts-blog section-bg">
+  <section className="gov px-4 ts-blog section-bg">
     <Container>
       <Row>
         <Col lg={12}>
@@ -629,7 +629,7 @@ const Blog = () => (
 
 // Footer Section
 const Footer = () => (
-  <footer className="gov ts-footer" style={{ padding: "1rem 0rem" }}>
+  <footer className="gov px-4 ts-footer" style={{ padding: "1rem 0rem" }}>
     <Container>
       <Row>
         <Col lg={12}>

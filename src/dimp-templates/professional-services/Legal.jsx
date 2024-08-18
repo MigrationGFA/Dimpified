@@ -60,7 +60,7 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="legal primary-font align-items-center header-transparent bg-transparent disable-fixed border-bottom border-color-transparent-white-light"
+    className="legal px-4 primary-font align-items-center header-transparent bg-transparent disable-fixed border-bottom border-color-transparent-white-light"
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="demo-lawyer.html">
@@ -126,7 +126,7 @@ const Navbar = () => (
 // Hero Section
 const Hero = () => (
   <section
-    className="legal p-0 bg-dark-gray"
+    className="legal px-4 p-0 bg-dark-gray"
     id="home"
     style={{
       height: "100vh",
@@ -162,7 +162,7 @@ const Hero = () => (
 
 // About Section
 const About = () => (
-  <section id="about" className="legal">
+  <section id="about" className="legal px-4">
     <Container>
       <Row className="align-items-center">
         <Col lg={6} className="position-relative mb-4 md-mb-50px">
@@ -229,7 +229,7 @@ const About = () => (
 
 // Services Section
 const Services = () => (
-  <section id="services" className="legal overflow-hidden bg-blue-whale position-relative">
+  <section id="services" className="legal px-4 overflow-hidden bg-blue-whale position-relative">
     <Container>
       <Row className="align-items-center">
         <Col lg={4} className="text-center text-lg-start">
@@ -515,7 +515,7 @@ const Services = () => (
 
 // Gallery Section
 const Statistics = () => (
-  <section className="legal bg-white ">
+  <section className="legal px-4 bg-white ">
     <Container>
       <Row className="mb-5">
         <Col lg={6} className="position-relative mb-5">
@@ -620,7 +620,7 @@ const Statistics = () => (
 
 // Testimonials Section
 const Team = () => (
-  <section id="team" className="legal bg-very-light-gray overlap-height position-relative">
+  <section id="team" className="legal px-4 bg-very-light-gray overlap-height position-relative">
     <Container className="overlap-gap-section">
       <Row className="justify-content-center mb-3">
         <Col lg={7} className="text-center">
@@ -757,7 +757,7 @@ const Team = () => (
 
 // Contact Section
 const Testimonials = () => (
-  <section className="legal py-3 mt-4 mt-lg-20">
+  <section className="legal px-4 py-3 mt-4 mt-lg-20">
     <Container className="overlap-section" style={{ marginTop: "-244.9px" }}>
       <Row className="g-0 overflow-hidden">
         <Col
@@ -804,7 +804,7 @@ const Testimonials = () => (
   </section>
 );
 const Blog = () => (
-  <section id="blog" className="legal">
+  <section id="blog" className="legal px-4">
     <Container>
       <Row className="justify-content-center mb-3">
         <Col lg={7} className="text-center">
@@ -935,7 +935,7 @@ const Blog = () => (
   </section>
 );
 const MiniCTA = () => (
-  <section id= "contact" className="legal bg-blue-whale py-0">
+  <section id= "contact" className="legal px-4 bg-blue-whale py-0">
     <Container className="footer-top pt-lg-8 pt-3 pb-50px md-pb-35px">
       <Row className="justify-content-center">
         <Col className="position-relative justify-content-center align-items-center text-center">

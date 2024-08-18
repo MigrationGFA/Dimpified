@@ -108,7 +108,7 @@ const HeaderComponent = () => (
 
 const HomeSection = () => (
   <section
-    className="conference p-0 full-screen ipad-top-space-margin position-relative bg-base-color background-position-left-top"
+    className="conference px-4 full-screen ipad-top-space-margin position-relative bg-base-color background-position-left-top"
     id="home"
     style={{
       backgroundImage: `url(https://gfa-tech.com/productivity-and-growth-program/images/bg-people.jpg)`,
@@ -163,7 +163,7 @@ const HomeSection = () => (
 );
 
 const FeatureSection = () => (
-  <section className="conference bg-white bg-dark-midnight-blue border-bottom border-color-transparent-dark-light half-section">
+  <section className="conference px-4 bg-white bg-dark-midnight-blue border-bottom border-color-transparent-dark-light half-section">
     <Container>
       <Row className="row-cols-auto row-cols-lg-2 row-cols-md-2 justify-content-center">
         <Col className="md-mb-50px sm-mb-30px">
@@ -202,7 +202,7 @@ const FeatureSection = () => (
 
 const AboutSection = () => (
   <section
-    className="conference bg-dark-midnight-blue background-position-right-top background-no-repeat"
+    className="conference px-4 bg-dark-midnight-blue background-position-right-top background-no-repeat"
     style={{
       backgroundImage:
         "url('https://gfa-tech.com/productivity-and-growth-program/images/demo-conference-about-bg.png')",
@@ -321,7 +321,7 @@ const AboutSection = () => (
 );
 
 const ComponentsSection = () => (
-  <section className="conference pt-3 bg-dark-midnight-blue" id="components">
+  <section className="conference px-4 pt-3 bg-dark-midnight-blue" id="components">
     <Container>
       <Row className="justify-content-center">
         <Col
@@ -447,7 +447,7 @@ const ComponentsSection = () => (
 
 const ObjectivesSection = () => (
   <section
-    className="conference bg-dark-midnight-blue overlap-height border-top border-color-transparent-dark-light"
+    className="conference px-4 bg-dark-midnight-blue overlap-height border-top border-color-transparent-dark-light"
     style={{
       backgroundImage: `url(https://gfa-tech.com/productivity-and-growth-program/images/demo-conference-experts-bg.png)`,
       backgroundPosition: "left top",
@@ -532,7 +532,7 @@ const ObjectivesSection = () => (
 
 const CurriculumSection = () => (
   <section
-    className="conference p-0 bg-midnight-blue border-bottom border-color-transparent-dark-light background-position-left-bottom background-no-repeat overflow-hidden"
+    className="conference bg-midnight-blue border-bottom border-color-transparent-dark-light background-position-left-bottom background-no-repeat overflow-hidden"
     style={{
       backgroundImage: `url(https://gfa-tech.com/productivity-and-growth-program/images/demo-conference-Curriculum-bg.png)`,
     }}
@@ -607,7 +607,7 @@ const CurriculumSection = () => (
 );
 const FacilitatorsSection = () => (
   <section
-    className="conference bg-midnight-blue"
+    className="conference px-4 bg-midnight-blue"
     style={{
       backgroundImage: `url(https://gfa-tech.com/productivity-and-growth-program/images/images/demo-conference-experts-bg.png)`,
       backgroundPosition: "left bottom",
@@ -753,7 +753,7 @@ const FacilitatorsSection = () => (
 
 const CountdownSection = () => (
   <section
-    className="conference bg-white position-relative appear anime-complete"
+    className="conference px-4 bg-white position-relative appear anime-complete"
     data-parallax-background-ratio="0.5"
     style={{
       // backgroundImage: "url('https://gfa-tech.com/productivity-and-growth-program/images/demo-conference-parallax.jpg')",
@@ -799,7 +799,7 @@ const CountdownSection = () => (
 
 const Footer = () => (
   <footer
-    className="conference bg-dark-midnight-blue background-position-right-top background-no-repeat md-background-image-none"
+    className="conference px-4 bg-dark-midnight-blue background-position-right-top background-no-repeat md-background-image-none"
     // style={{ backgroundImage: "url('https://gfa-tech.com/productivity-and-growth-program/images/demo-conference-about-bg.png')" }}
   >
     <Container>

@@ -70,7 +70,7 @@ const Navbar = () => (
     bg="transparent"
     variant="transparent"
     expand="lg"
-    className="barber px-lg-10 py-lg-3"
+    className="barber px-4 px-lg-10"
   >
     <Container>
       <BootstrapNavbar.Brand
@@ -212,7 +212,7 @@ const Hero = () => {
     <Fragment>
       <section
         id="home"
-        className="barber full-screen bg-dark-gray ipad-top-space-margin position-relative"
+        className="barber px-4 full-screen bg-dark-gray position-relative"
         style={{
           backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg.jpg)`,
           backgroundSize: "cover",
@@ -385,7 +385,7 @@ const Hero = () => {
 const About = () => (
   <section
     id="about"
-    className="barber bg-very-light-yellow position-relative pb-8"
+    className="barber px-4 bg-very-light-yellow position-relative pb-8"
   >
     <Container>
       <Row className="align-items-center mb-50px sm-mb-40px">
@@ -457,7 +457,7 @@ const About = () => (
 const Services = () => (
   <section
     id="services"
-    className="barber bg-medium-yellow position-relative overlap-height pt-4"
+    className="barber px-4 bg-medium-yellow position-relative overlap-height pt-4"
   >
     <div
       className="position-absolute left-0 top-minus-50px md-top-minus-30px sm-top-minus-25px xs-top-minus-15px background-position-left-top w-100 h-100px md-h-50px background-size-100 background-no-repeat"
@@ -674,7 +674,7 @@ const Services = () => (
 
 // Gallery Section
 const Gallery = () => (
-  <section className="barber bg-very-light-gray p-0">
+  <section className="barber px-4 bg-very-light-gray p-0">
     <Container fluid className="p-0">
       <Row className="g-0 position-relative overlap-section">
         <Col md={12}>
@@ -717,7 +717,7 @@ const Gallery = () => (
 
 // Testimonials Section
 const Pricing = () => (
-  <section id="pricing" class="barber bg-very-light-yellow overlap-height">
+  <section id="pricing" class="barber px-4 bg-very-light-yellow overlap-height">
     <div class="container overlap-gap-section">
       <div class="row mb-1">
         <div class="col-12 text-center">
@@ -824,7 +824,7 @@ const Pricing = () => (
 const Team = () => (
   <section
     id="barbers"
-    className="barber bg-very-light-yellow overlap-height position-relative"
+    className="barber px-4 bg-very-light-yellow overlap-height position-relative"
   >
     <div
       className="position-absolute left-0 top-minus-50 lg-top-minus-10 background-position-left-top w-100 h-100 background-size-100 background-no-repeat"
@@ -945,7 +945,7 @@ const Team = () => (
   </section>
 );
 const Testimonials = () => (
-  <section className="barber bg-medium-yellow position-relative">
+  <section className="barber px-4 bg-medium-yellow position-relative">
     <div
       className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
       style={{
@@ -1025,7 +1025,7 @@ const Testimonials = () => (
   </section>
 );
 const Statistics = () => (
-  <section className="barber bg-medium-yellow position-relative">
+  <section className="barber px-4 bg-medium-yellow position-relative">
     <div
       className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
       style={{ backgroundImage: "url(images/demo-barber-home-bg-up.png)" }}
@@ -1089,7 +1089,7 @@ const Statistics = () => (
   </section>
 );
 const Contact = () => (
-  <section className="barber bg-very-light-yellow" id="appointment">
+  <section className="barber px-4 bg-very-light-yellow" id="appointment">
     <Container>
       <Row>
         <Col xl={4} lg={5} className="md-mb-50px">
@@ -1233,7 +1233,7 @@ const Contact = () => (
 // Footer Section
 const Footer = () => (
   <footer
-    className="barber footer-light position-relative cover-background"
+    className="barber px-4 footer-light position-relative cover-background"
     style={{
       backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-footer-bg.jpg)`,
     }}

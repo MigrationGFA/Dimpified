@@ -112,35 +112,35 @@ const Navbar = () => (
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
             About Us
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
           >
             Services
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#gallery"
           >
             Gallery
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
           >
             Reviews
           </Nav.Link>
           <Nav.Link
-            className="text-white"
+            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#book"
           >
@@ -161,7 +161,7 @@ const Hero = () => (
   <Fragment>
     <section
       id="home"
-      className="beauty pb-0 top-space-padding bg-dark-gray full-screen border-top bg-white position-relative md-h-700px sm-h-600px sm-pb-70px"
+      className="px-4 beauty pb-0 top-space-padding bg-dark-gray full-screen border-top bg-white position-relative md-h-700px sm-h-600px sm-pb-70px"
       style={{
         backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-banner.jpg)`,
         backgroundAttachment: "fixed",
@@ -217,7 +217,7 @@ const Hero = () => (
 );
 const Statistics = () => (
   <Fragment>
-    <section className="beauty  beauty p-0 position-relative border-bottom bg-white border-color-extra-medium-gray">
+    <section className="beauty px-4 position-relative border-bottom bg-white border-color-extra-medium-gray">
       <Container>
         <div className="w-50 bg-white position-absolute top-minus-40px left-0px text-end">
           <div className="fs-15 primary-font lh-30 text-dark-gray pt-5px pb-5px ps-25px pe-25px fw-600 d-inline-block bg-yellow">
@@ -272,8 +272,8 @@ const Statistics = () => (
 // About Section
 const About = () => (
   <Fragment>
-    <section id="about" className="beauty beauty p-0 bg-white">
-      <Container fluid className="p-0">
+    <section id="about" className="beauty px-4 bg-white">
+      <Container fluid className="">
         <Row className="align-items-center g-0">
           <Col
             xl={6}
@@ -397,7 +397,7 @@ const Services = () => (
   <Fragment>
     <section
       id="services"
-      className="beauty overlap-height bg-white border-bottom border-color-extra-medium-gray"
+      className="beauty px-4 overlap-height bg-white border-bottom border-color-extra-medium-gray"
     >
       <Container className="overlap-gap-section">
         <Row className="justify-content-center align-items-center mb-6">
@@ -473,7 +473,7 @@ const Services = () => (
 );
 const Pricing = () => (
   <Fragment>
-    <section className="beauty overlap-height bg-white border-bottom border-color-extra-medium-gray">
+    <section className="beauty px-4 overlap-height bg-white border-bottom border-color-extra-medium-gray">
       <Container className="overlap-gap-section">
         <Row className="justify-content-between align-items-center mb-5 xs-mb-6">
           {[
@@ -558,7 +558,7 @@ const Pricing = () => (
 // Gallery Section
 const Gallery = () => (
   <Fragment>
-    <section id="gallery" className="beauty position-relative bg-white ">
+    <section id="gallery" className="beauty px-4 position-relative bg-white ">
       <Container>
         <Row className="align-items-center">
           <Col md={9} className="last-paragraph-no-margin">
@@ -642,7 +642,7 @@ const Gallery = () => (
 // Testimonials Section
 const Testimonials = () => (
   <Fragment>
-    <section className="beauty position-relative bg-white">
+    <section className="beauty px-4 position-relative bg-white">
       <div className="d-none d-md-flex mb-4">
         <a
           href="#down-section"
@@ -756,7 +756,7 @@ const Testimonials = () => (
 
 // Contact Section
 const Contact = () => (
-  <section className="beauty position-relative z-index-1 pb-0">
+  <section className="beauty px-6 position-relative z-index-1 pb-0">
     <div className="d-none d-md-flex mb-1">
       <a
         href="#down-section"
@@ -930,7 +930,7 @@ const Contact = () => (
   </section>
 );
 const MiniCTA = () => (
-  <section className="beauty p-0 bg-gradient-blue-ironstone-brown">
+  <section className="beauty px-4 bg-gradient-blue-ironstone-brown">
     <div className="pt-40px pb-40px border-bottom border-color-transparent-white-light">
       <Container>
         <Row>
@@ -953,7 +953,7 @@ const MiniCTA = () => (
 );
 // Footer Section
 const Footer = () => (
-  <footer className="beauty p-0 bg-gradient-blue-ironstone-brown">
+  <footer className="beauty px-4 bg-gradient-blue-ironstone-brown">
     <Container>
       <Row className="justify-content-center pt-55px pb-55px sm-pt-40px sm-pb-40px">
         <Col
