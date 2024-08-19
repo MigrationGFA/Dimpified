@@ -139,7 +139,7 @@ import AdminSupport from "../Admin/Support/Support";
 // subdomain
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
-import BarberTemplate from "../EditTemplate/BarberTemplate";
+import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();

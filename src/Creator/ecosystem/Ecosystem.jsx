@@ -49,6 +49,14 @@ function getTimeDifference(updatedAt) {
   return `${formattedDate}`;
 }
 
+const fullPath = (domain) => {
+  const path = `${import.meta.env.VITE_ORIGIN_HEADER}${domain}${
+    import.meta.env.VITE_ORIGIN
+  }`;
+  console.log("Generated URL:", path);
+  return path;
+};
+
 const Ecosystem = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -169,6 +177,11 @@ const Ecosystem = () => {
     } else if (steps === 1) {
       navigate("/creator/dashboard/Edit-Template");
     } else if (steps === 0) navigate("/creator/dashboard/New-Ecosystem");
+  };
+
+  const handleClick = (ecosystemDomain) => {
+    const url = fullPath(ecosystemDomain);
+    window.open(url, "_blank", "noopener,noreferrer"); // Open URL in new tab
   };
 
   return (
@@ -319,7 +332,7 @@ const Ecosystem = () => {
                                 Dashboard
                               </Button>
                               <a
-                                href={`${window.location.origin}/${eco.ecosystemDomain}`}
+                                href={`http://${eco.ecosystemDomain}.localhost:5173/`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
