@@ -26,7 +26,7 @@ import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 import CommunityComment from "./CommunityComment";
 
-const PostCard = ({ post, onDelete, onEdit }) => {
+const PostCard = ({community, post, onDelete, onEdit, fetchCommunityData}) => {
   const { ecosystemDomain } = useParams();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -44,6 +44,40 @@ const PostCard = ({ post, onDelete, onEdit }) => {
       commentInputRef.current?.focus();
     }, 0);
   };
+
+  // useEffect(() => {
+  //   fetchCommunityData();
+  // }, []);
+
+  const handleLikeComment = async (communityId, postId) => {
+
+    try {
+    
+      const isLiked = post.likesUserId.includes(userId);
+
+  
+      if (isLiked) {
+        post.likesUserId = post.likesUserId.filter(id => id !== userId);
+      } else {
+        post.likesUserId.push(userId);
+      }
+  
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/like-unlike-post`, {
+        communityId,
+        userId,
+        postId,
+      });
+  
+      if (response.data.message === "Post liked" || response.data.message === "Post unliked") {
+        fetchCommunityData();
+      }
+    } catch (error) {
+      console.error("Error liking/unliking comment:", error);
+    }
+  };
+  
+  
+
 
   const handleShare = async () => {
     try {
@@ -136,25 +170,28 @@ const PostCard = ({ post, onDelete, onEdit }) => {
                 </div>
                 {post.likes} likes
               </div>
-              {/* <div className="interaction-details">
-                {comments.length} comments
-              </div> */}
+              <div className="interaction-details">
+                {post.commentsCount} comments
+              </div>
             </div>
             <hr />
             <div className="interaction-buttons d-flex justify-content-between mt-2">
-              <div className="d-flex align-items-center">
+              <div
+                className="d-flex align-items-center cursor-pointer"
+                onClick={() => handleLikeComment(community._id, post._id)}
+              >
                 <FaHeart className="white-icon like-icon" />
                 <span className="ml-2">Like</span>
               </div>
               <div
-                className="d-flex align-items-center pointer"
+                className="d-flex align-items-center cursor-pointer"
                 onClick={handleCommentClick}
               >
                 <FaHandsHelping className="white-icon comment-icon" />
                 <span className="ml-2">Comment</span>
               </div>
               <div
-                className="d-flex align-items-center pointer"
+                className="d-flex align-items-center cursor-pointer"
                 onClick={handleShare}
               >
                 <FaShare className="fs-5 text-primary" />
@@ -190,6 +227,7 @@ const PostCard = ({ post, onDelete, onEdit }) => {
 const Header = () => {
   const { ecosystemDomain } = useParams();
   const [posts, setPosts] = useState([]);
+  const [community, setCommunity] = useState([]);
   const [backgroundCoverPreview, setBackgroundCoverPreview] = useState(null);
   const [backgroundCoverImage, setBackgroundCoverImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -207,6 +245,7 @@ const Header = () => {
         `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
       );
       setPosts(response.data.posts);
+      setCommunity(response.data.community);
     } catch (error) {
       console.error("Error fetching community data:", error);
     }
@@ -438,6 +477,8 @@ const Header = () => {
           <PostCard
             key={post._id}
             post={post}
+            community={community}
+            fetchCommunityData={fetchCommunityData}
             onDelete={(deletedPost) =>
               setPosts(posts.filter((p) => p._id !== deletedPost._id))
             }

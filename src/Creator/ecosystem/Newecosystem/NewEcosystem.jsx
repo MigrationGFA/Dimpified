@@ -40,15 +40,20 @@ const NewEcosystem = () => {
   const [domainSuggestions, setDomainSuggestions] = useState([]);
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const [isOtherCategory, setIsOtherCategory] = useState(false);
-  useEffect(() => {
-    validateForm();
-  }, [ecosystem]);
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
+
+    if (field === "ecosystemName") {
+      const domainValue = value.toLowerCase().replace(/\s+/g, '-');
+      dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
+      validateDomain(domainValue);
+    }
+
     if (field === "ecosystemDomain") {
       validateDomain(value);
     }
+
     if (field === "target") {
       if (value === "Other") {
         setIsOtherCategory(true);
@@ -75,6 +80,10 @@ const NewEcosystem = () => {
       );
     }
   }, [ecosystem.targetAudienceSector]);
+
+  useEffect(() => {
+    validateForm();
+  }, [ecosystem]);
 
   const validateForm = () => {
     const {
@@ -263,18 +272,16 @@ const NewEcosystem = () => {
                         }
                       />
                       <Form.Text className="text-muted fst-italic">
-                        note: this is the name your users will see on email
-                        received
+                        Note: This is the name your users will see on emails
+                        received.
                       </Form.Text>
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                        B. Ecosystem Domain<span className="text-danger">*</span>
+                        B. Ecosystem Domain
+                        <span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
-                        <span className="input-group-text">
-                          www.dimpified.com/
-                        </span>
                         <Form.Control
                           type="text"
                           id="ecosystem-domain"
@@ -286,6 +293,7 @@ const NewEcosystem = () => {
                           }
                           isInvalid={domainErrorMessage !== ""}
                         />
+                        <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
                         The domain must contain only lowercase letters and
@@ -311,14 +319,13 @@ const NewEcosystem = () => {
                           )}
                         </Alert>
                       )}
-
                     </Col>
                   </Row>
                   <Row className="mb-3">
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label>
-                        C. Industry Sector
+                          C. Industry Sector
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <FormSelect
@@ -337,7 +344,7 @@ const NewEcosystem = () => {
                       {isOtherCategory ? (
                         <Form.Group>
                           <Form.Label htmlFor="ecosystem-objective">
-                         D. What’s your specific business type
+                            D. What’s your specific business type
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <FormSelect
@@ -354,7 +361,7 @@ const NewEcosystem = () => {
                       ) : (
                         <Form.Group className="mb-3">
                           <Form.Label htmlFor="ecosystem-objective">
-                         D. What’s your specific business type
+                            D. What’s your specific business type
                             <span className="text-danger">*</span>
                           </Form.Label>
                           <FormSelect
@@ -375,7 +382,7 @@ const NewEcosystem = () => {
                   <Row>
                     <Col lg={6} className="col-12 mb-3">
                       <Form.Label htmlFor="expected-audience-number">
-                      E. Selected your expected number of users
+                        E. Selected your expected number of users
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <FormSelect
@@ -462,7 +469,9 @@ const NewEcosystem = () => {
         <Modal.Body>
           Are you sure you want to activate this ecosystem for users to access?
           <br />
-          <strong>Please note</strong> <br /> Kindly review the information as you will not be able to change your ecosystem information once you click next
+          <strong>Please note</strong> <br /> Kindly review the information as
+          you will not be able to change your ecosystem information once you
+          click next
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setConfirmModal(false)}>
@@ -473,7 +482,6 @@ const NewEcosystem = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>

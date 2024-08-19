@@ -31,11 +31,11 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Integrations");
+    navigate("/creator/dashboard/Payment/individual");
   };
 
   const handlePrevious = () => {
-    navigate("/creator/dashboard/Create-Form");
+    navigate("/creator/dashboard/Edit-Template/individual");
   };
 
   const handleService = () => {

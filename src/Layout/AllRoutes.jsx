@@ -17,6 +17,13 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 
+import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
+import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
+import EventTemplate from "../dimp-templates/event-services/EventTemplate";
+import StateUpskilling from "../dimp-templates/government/StateUpskilling";
+import LegalTemplate from "../dimp-templates/professional-services/Legal";
+import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
+
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
 import Analytics from "../Creator/analytics/Analytics";
@@ -73,6 +80,7 @@ import Courses from "../Creator/ecosystem/Newecosystem/Courses";
 import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
 import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
+import IndividualEcoPayment from "../Creator/ecosystem/Newecosystem/Individual/EcoPayment";
 import Integration from "../Creator/ecosystem/Newecosystem/Integration";
 import Template1 from "../EditTemplate/Template1";
 import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
@@ -167,6 +175,16 @@ const AllRoutes = () => {
       <Route path="/personal-care-services" element={<PersonalCare />} />
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
+
+      <Route path="/salon-template" element={<SalonTemplate />} />
+      <Route path="/event-template" element={<EventTemplate />} />
+     
+
+      <Route path="/upskill-template" element={<StateUpskilling />} />
+      <Route path="/barber-two" element={<BarberMordern />} />
+      <Route path="/legal-template" element={<LegalTemplate />} />
+      <Route path="/course-template" element={<OnlineCourses />} />
+
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
@@ -208,6 +226,8 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
+
+      <Route path="/creator/dashboard/Payment/Individual" element={<IndividualEcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />

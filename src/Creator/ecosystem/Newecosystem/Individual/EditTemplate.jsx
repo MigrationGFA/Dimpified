@@ -161,7 +161,7 @@ const EditTemplate = () => {
         }
       );
       setLoading(false);
-      navigate("/creator/dashboard/Create-Form");
+      navigate("/creator/dashboard/Products/individual");
       showToast(response.data.message);
       console.log("Template created successfully", response.data);
     } catch (error) {

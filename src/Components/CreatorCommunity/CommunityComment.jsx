@@ -5,6 +5,7 @@ import styles from "./CommunityComment.module.css";
 import Box from "../../assets/Comment.jpeg";
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
 
+// Utility function to format time
 const formatTime = (date) => {
   const now = new Date();
   const diff = Math.floor((now - date) / 1000);
@@ -27,8 +28,10 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
   const [reply, setReply] = useState('');
   const [replyToCommentId, setReplyToCommentId] = useState(null);
   const [isPosting, setIsPosting] = useState(false);
+  const [replies, setReplies] = useState({});
   const commentInputRef = useRef(null);
 
+  // Fetch comments
   const fetchComments = async () => {
     try {
       const response = await axios.get(
@@ -45,6 +48,23 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
     }
   };
 
+  // Fetch replies for a comment
+  const fetchReplies = async (commentId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/replies/${commentId}`
+      );
+      if (response.data && Array.isArray(response.data.replies)) {
+        setReplies((prevReplies) => ({
+          ...prevReplies,
+          [commentId]: response.data.replies,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching replies:", error);
+    }
+  };
+
   useEffect(() => {
     fetchComments();
   }, [postId]);
@@ -55,7 +75,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
 
   const handleAddComment = async () => {
     if (newComment.trim()) {
-      setIsPosting(true); 
+      setIsPosting(true);
       try {
         await axios.post(
           `${import.meta.env.VITE_API_URL}/comment`,
@@ -69,7 +89,6 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
         );
 
         fetchComments();
-
         setNewComment('');
         if (commentInputRef.current) {
           commentInputRef.current.focus();
@@ -82,51 +101,72 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
     }
   };
 
-  const handleAddReply = (commentId) => {
+  const handleAddReply = async (commentId) => {
     if (reply.trim()) {
-      setComments(
-        comments.map((comment) =>
-          comment._id === commentId
-            ? {
-                ...comment,
-                replies: [
-                  ...(comment.replies || []),
-                  { text: reply, time: new Date(), likes: 0 },
-                ],
-              }
-            : comment
-        )
-      );
-      setReply("");
-      setReplyToCommentId(null);
+      try {
+        await axios.post(`${import.meta.env.VITE_API_URL}/reply-to-comment`, {
+          userType: "creator",
+          reply,
+          ecosystemDomain,
+          commentId,
+          userId,
+        });
+
+        fetchReplies(commentId);
+        setReply("");
+        setReplyToCommentId(null);
+      } catch (error) {
+        console.error("Error replying to comment:", error);
+      }
     }
   };
 
-  const handleLikeComment = (commentId) => {
-    setComments(
-      comments.map((comment) =>
-        comment._id === commentId
-          ? { ...comment, likes: comment.likes + 1 }
-          : comment
-      )
-    );
+   // const handleLikeComment = async (commentId) => {
+  //   try {
+  //     const response = await axios.post(${import.meta.env.VITE_API_URL}/like-unlike-post, {
+  //       communityId: commentId,  // Assuming commentId is the same as communityId, adjust as needed
+  //       userId,
+  //       postId,
+  //     });
+
+  //     if (response.data.success) {
+  //       fetchComments(); // Refresh comments to reflect the updated like status
+  //     }
+  //   } catch (error) {
+  //     console.error("Error liking/unliking comment:", error);
+  //   }
+  // };
+
+  const handleShowReplies = (commentId) => {
+    if (!replies[commentId]) {
+      fetchReplies(commentId);
+    } else {
+      setReplies((prevReplies) => ({
+        ...prevReplies,
+        [commentId]: undefined,  // Toggle visibility
+      }));
+    }
   };
 
-  const handleLikeReply = (commentId, replyIndex) => {
-    setComments(
-      comments.map((comment) =>
-        comment._id === commentId
-          ? {
-              ...comment,
-              replies: comment.replies.map((reply, index) =>
-                index === replyIndex
-                  ? { ...reply, likes: reply.likes + 1 }
-                  : reply
-              ),
-            }
-          : comment
-      )
-    );
+  // Function to handle like/unlike a reply
+  const handleLikeReply = async (replyId) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/like-unlike-reply`, {
+        replyId,
+        userId,
+      });
+
+      if (response.data.message === "Like removed") {
+        // Update the replies for the comment containing this reply
+        Object.keys(replies).forEach(commentId => {
+          if (replies[commentId].some(reply => reply._id === replyId)) {
+            fetchReplies(commentId);
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error liking/unliking reply:", error);
+    }
   };
 
   return (
@@ -145,15 +185,15 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
               placeholder="Type your comment..."
               ref={commentInputRef}
               className={styles.commentInput}
-              disabled={isPosting} 
+              disabled={isPosting}
             />
             <Button
               onClick={handleAddComment}
               className={styles.commentButton}
-              disabled={isPosting} 
+              disabled={isPosting}
             >
               {isPosting ? (
-                <Spinner animation="border" size="sm" /> 
+                <Spinner animation="border" size="sm" />
               ) : (
                 'Post'
               )}
@@ -193,22 +233,22 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                   <Button
                     variant="link"
                     className={styles.commentButtonLink}
-                    onClick={() => handleLikeComment(comment._id)}
+                    //onClick={() => handleLikeComment(comment._id)}
                   >
                     Like ({comment.likes})
                   </Button>
                   <Button
                     variant="link"
                     className={styles.replyButtonLink}
-                    onClick={() => setReplyToCommentId(comment._id)}
+                    onClick={() => handleShowReplies(comment._id)}
                   >
-                    Reply
+                    {replies[comment._id] ? 'Hide Replies' : 'View Replies'} 
                   </Button>
                 </div>
-                {comment.replies &&
-                  comment.replies.map((reply, index) => (
+                {replies[comment._id] &&
+                  replies[comment._id].map((reply) => (
                     <Row
-                      key={index}
+                      key={reply._id}
                       className={`align-items-start ${styles.replyRow}`}
                     >
                       <Col xs={1}>
@@ -220,18 +260,16 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                       </Col>
                       <Col xs={11}>
                         <div className="d-flex flex-column">
-                          <div className="fw-bold">Replier Name</div>
-                          <div className="mt-1">{reply.text}</div>
+                          <div className="fw-bold">{reply.userId || "Anonymous"}</div>
+                          <div className="mt-1">{reply.reply}</div>
                           <div className="d-flex align-items-center mt-2">
                             <span className={styles.commentTime}>
-                              {formatTime(new Date(reply.time))}
+                              {formatTime(new Date(reply.createdAt))}
                             </span>
                             <Button
                               variant="link"
                               className={styles.replyButtonLink}
-                              onClick={() =>
-                                handleLikeReply(comment._id, index)
-                              }
+                              onClick={() => handleLikeReply(reply._id)}
                             >
                               Like ({reply.likes})
                             </Button>
@@ -263,7 +301,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                         onClick={() => handleAddReply(comment._id)}
                         className={styles.replyButton}
                       >
-                        Post Reply
+                        Reply
                       </Button>
                     </Form.Group>
                   </Col>
