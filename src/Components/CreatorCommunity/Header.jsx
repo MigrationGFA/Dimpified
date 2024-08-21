@@ -45,9 +45,9 @@ const PostCard = ({community, post, onDelete, onEdit, fetchCommunityData}) => {
     }, 0);
   };
 
-  // useEffect(() => {
-  //   fetchCommunityData();
-  // }, []);
+  useEffect(() => {
+    fetchCommunityData();
+  }, []);
 
   const handleLikeComment = async (communityId, postId) => {
 
@@ -352,7 +352,7 @@ const Header = () => {
             />
           ) : (
             <div className="placeholder">
-              Click the pen icon to add an image
+             <Spinner animation="border" size="sm" />
             </div>
           )}
           <label htmlFor="background-cover-upload" className="edit-icon">

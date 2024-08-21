@@ -38,12 +38,10 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Payment/individual");
-  };
-
-  const handlePrevious = () => {
     navigate("/creator/dashboard/Edit-Template/individual");
   };
+
+ 
 
   const handleService = () => {
     setStep(2);
@@ -162,8 +160,8 @@ const Courses = () => {
                 </Col>
               </Row>
 
-              <div className="d-flex justify-content-between align-content-center">
-                <div>
+              <div className="d-flex justify-content-end align-content-center">
+                {/* <div>
                   <Button
                     variant="secondary"
                     className="me-2"
@@ -171,7 +169,7 @@ const Courses = () => {
                   >
                     Previous
                   </Button>
-                </div>
+                </div> */}
                 <div className="d-flex justify-content-end">
                   <Button
                     variant="secondary"
