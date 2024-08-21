@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import TemplateV1 from "./TemplateV1";
+import Template1 from "./AllTemplate/TemplateV1";
 
 const MainTemplate = ({ subdomain }) => {
   const [details, setDetails] = useState(null);
@@ -16,6 +16,10 @@ const MainTemplate = ({ subdomain }) => {
         sessionStorage.setItem(
           "ecoLogo",
           response.data.templateDetails.navbar.logo
+        );
+        sessionStorage.setItem(
+          "brand",
+          response.data.templateDetails.navbar.brand
         );
       } catch (error) {
         console.log("not working", error);
@@ -34,10 +38,10 @@ const MainTemplate = ({ subdomain }) => {
     return <div>Error: Unable to load template details</div>;
   }
 
-  const templateNumber = parseInt(details.templateNumber, 10);
+  const templateNumber = parseInt(details.templateId, 10);
   switch (templateNumber) {
     case 1:
-      return <TemplateV1 details={details} subdomain={subdomain} />;
+      return <Template1 details={details} subdomain={subdomain} />;
     default:
       break;
   }

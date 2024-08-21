@@ -23,9 +23,16 @@ const mainTemplateSlice = createSlice({
       const { section, styles } = action.payload;
       state.currentTemplate[section].styles = { ...state.currentTemplate[section].styles, ...styles };
     },
+    clearTemplate(state) {
+      // Clear the current template when done editing
+      state.currentTemplate = null;
+    },
+    updateNavbarFromEcosystem(state) {
+      state.currentTemplate.navbar.brand = state.ecosystem.ecosystemName;
+    },
   },
 });
 
-export const { setTemplate, updateContent, updateStyles } = mainTemplateSlice.actions;
+export const { setTemplate, updateContent, updateStyles, clearTemplate, updateNavbarFromEcosystem } = mainTemplateSlice.actions;
 export default mainTemplateSlice.reducer;
 
