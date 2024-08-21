@@ -1,20 +1,27 @@
-import React, { Fragment, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 
 import { ecosystemLogin } from "../../features/login";
+import getSubdomain from "../../helper/Subdomain";
 
 const UserSignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
   const dispatch = useDispatch();
+
+  const myDomain = getSubdomain();
+  const [ecosystemDomain, setEcosystemDomain] = useState(null);
+
+  useEffect(() => {
+    setEcosystemDomain(myDomain);
+  }, []);
 
   const { isLoading, error, user } = useSelector(
     (state) => state.authentication
@@ -42,7 +49,6 @@ const UserSignIn = () => {
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-
     try {
       // Dispatch the login action
       const resultAction = await dispatch(
@@ -52,7 +58,6 @@ const UserSignIn = () => {
           domainName: localStorage.getItem("subDomain"),
         })
       );
-
       if (ecosystemLogin.rejected.match(resultAction)) {
         // Login failed, access the payload from the rejected action
         const errorPayload = resultAction.payload;
@@ -61,7 +66,7 @@ const UserSignIn = () => {
         // Login was successful
         showToast(resultAction.payload.message);
         sessionStorage.setItem("ecosystemDomain", ecosystemDomain);
-        navigate(`/${ecosystemDomain}/Userdashboard`);
+        navigate(`/Userdashboard`);
       }
     } catch (error) {
       // Handle unexpected errors, such as network issues

@@ -45,7 +45,7 @@ const NewEcosystem = () => {
     dispatch(updateField({ field, value }));
 
     if (field === "ecosystemName") {
-      const domainValue = value.toLowerCase().replace(/\s+/g, '-');
+      const domainValue = value.toLowerCase().replace(/\s+/g, "-");
       dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
       validateDomain(domainValue);
     }

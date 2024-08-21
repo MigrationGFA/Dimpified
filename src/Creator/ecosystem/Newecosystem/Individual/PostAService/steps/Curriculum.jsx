@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addService, updateService, deleteService, resetServiceData } from "../../../../../../features/service";
+import {
+  addService,
+  updateService,
+  deleteService,
+  resetServiceData,
+} from "../../../../../../features/service";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { showToast } from "../../../../../../Components/Showtoast";
-import axios from 'axios';
+import axios from "axios";
 
 const AddService = () => {
   const dispatch = useDispatch();
@@ -138,10 +143,13 @@ const AddService = () => {
 const Service = ({ submit, onPrevious }) => {
   const { ecosystemDomain } = useParams();
   const location = useLocation();
-  const ecosystemFromState = useSelector((state) => state.ecosystem.ecosystemDomain);
+  const ecosystemFromState = useSelector(
+    (state) => state.ecosystem.ecosystemDomain
+  );
   const user = useSelector((state) => state.authentication.user);
+  const userType = useSelector((state) => state.authentication.user.data.role);
   const creatorId = user?.data?.CreatorId;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const sections = useSelector((state) => state.service.services) || [];
   const dispatch = useDispatch();
@@ -161,9 +169,6 @@ const Service = ({ submit, onPrevious }) => {
     { value: "Yearly", label: "Yearly" },
   ];
 
- 
-  
-
   const serviceData = useSelector((state) => state.service);
   const {
     category,
@@ -177,16 +182,14 @@ const Service = ({ submit, onPrevious }) => {
     services,
   } = serviceData;
 
- 
-
   let ecosystem;
   if (ecosystemDomain) {
     ecosystem = ecosystemDomain;
   } else {
     ecosystem = ecosystemFromState;
   }
-  
-  console.log(ecosystem)
+
+  console.log(ecosystem);
 
   const convertBase64ToFile = (base64String, filename) => {
     const arr = base64String.split(",");
@@ -200,11 +203,9 @@ const Service = ({ submit, onPrevious }) => {
     return new File([u8arr], filename, { type: mime });
   };
 
-  
-
   const handleSubmit = () => {
     setLoading(true);
-  
+
     const formData = new FormData();
     formData.append("category", category);
     formData.append("subCategory", subCategory);
@@ -213,7 +214,7 @@ const Service = ({ submit, onPrevious }) => {
     formData.append("format", format);
     formData.append("currency", currency);
     formData.append("services", JSON.stringify(services));
-  
+
     // Convert and append base64 images directly to FormData
     const imageProperties = {
       "product.mainImage": "mainImage.png",
@@ -224,7 +225,7 @@ const Service = ({ submit, onPrevious }) => {
       "gallery.image4": "galleryImage4.png",
       "details.coverImage": "coverImage.png",
     };
-  
+
     // Assuming image data is within the serviceData object
     for (const [key, filename] of Object.entries(imageProperties)) {
       const keys = key.split(".");
@@ -234,7 +235,10 @@ const Service = ({ submit, onPrevious }) => {
           imageProp = imageProp[k];
           if (imageProp === undefined) break; // Exit loop if property is undefined
         }
-        if (typeof imageProp === "string" && imageProp.startsWith("data:image")) {
+        if (
+          typeof imageProp === "string" &&
+          imageProp.startsWith("data:image")
+        ) {
           const convertedFile = convertBase64ToFile(imageProp, filename);
           formData.append(key, convertedFile);
         }
@@ -242,22 +246,28 @@ const Service = ({ submit, onPrevious }) => {
         console.error(`Error accessing property ${key}:`, error);
       }
     }
-  
+
     // Convert backgroundCover images from base64 to binary and append to formData as separate fields under the same key
     if (Array.isArray(backgroundCover)) {
       backgroundCover.forEach((image, index) => {
-        if (typeof image.preview === "string" && image.preview.startsWith("data:image")) {
-          const convertedFile = convertBase64ToFile(image.preview, `backgroundCover${index}.png`);
+        if (
+          typeof image.preview === "string" &&
+          image.preview.startsWith("data:image")
+        ) {
+          const convertedFile = convertBase64ToFile(
+            image.preview,
+            `backgroundCover${index}.png`
+          );
           formData.append("backgroundCover", convertedFile);
         }
       });
     } else {
       console.error("Invalid backgroundCover data:", backgroundCover);
     }
-  
+
     formData.append("creatorId", creatorId);
     formData.append("ecosystemDomain", ecosystem);
-  
+
     axios
       .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
         headers: {
@@ -269,12 +279,17 @@ const Service = ({ submit, onPrevious }) => {
         if (response.data) {
           showToast(response.data.message);
         }
-        dispatch(resetServiceData());
-      if (location.pathname.includes(`/${ecosystemDomain}/`)) {
-        navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
-      } else {
-        navigate('/creator/dashboard/Products');
-      }
+
+        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+          dispatch(resetServiceData());
+          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+        } else {
+          if (userType === "consumer") {
+            navigate("/creator/dashboard/Edit-Template/individual");
+          } else {
+            navigate("/creator/dashboard/Products");
+          }
+        }
         submit();
       })
       .catch((error) => {
@@ -282,10 +297,10 @@ const Service = ({ submit, onPrevious }) => {
         setLoading(false);
       });
   };
-  
+
   useEffect(() => {
-    if (submit && typeof submit !== 'function') {
-      console.error('submit is not a function');
+    if (submit && typeof submit !== "function") {
+      console.error("submit is not a function");
     }
   }, [submit]);
 
@@ -297,13 +312,8 @@ const Service = ({ submit, onPrevious }) => {
 
   useEffect(() => {
     if (editIndex !== null) {
-      const {
-        name,
-        shortDescription,
-        price,
-        deliveryTime,
-        priceFormat,
-      } = sections[editIndex];
+      const { name, shortDescription, price, deliveryTime, priceFormat } =
+        sections[editIndex];
       setEditName(name);
       setEditShortDescription(shortDescription);
       setEditPrice(price);
@@ -318,13 +328,8 @@ const Service = ({ submit, onPrevious }) => {
 
   const handleEditService = (index) => {
     setEditIndex(index);
-    const {
-      name,
-      shortDescription,
-      price,
-      deliveryTime,
-      priceFormat,
-    } = sections[index];
+    const { name, shortDescription, price, deliveryTime, priceFormat } =
+      sections[index];
     setEditName(name);
     setEditShortDescription(shortDescription);
     setEditPrice(price);
@@ -363,7 +368,7 @@ const Service = ({ submit, onPrevious }) => {
           shortDescription: editShortDescription,
           price: editPrice,
           deliveryTime: editDeliveryTime,
-         priceFormat: editPriceFormat,
+          priceFormat: editPriceFormat,
         },
       })
     );
@@ -521,16 +526,16 @@ const Service = ({ submit, onPrevious }) => {
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between">
-      <Button
-            variant="outline-secondary"
-            className="mr-2"
-            onClick={handlePrevious}
-          >
-            Previous
-          </Button>
-          <Button variant="primary" onClick={handleSubmit} disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
-          </Button>
+        <Button
+          variant="outline-secondary"
+          className="mr-2"
+          onClick={handlePrevious}
+        >
+          Previous
+        </Button>
+        <Button variant="primary" onClick={handleSubmit} disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
+        </Button>
       </div>
     </Form>
   );
