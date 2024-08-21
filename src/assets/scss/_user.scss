@@ -1257,24 +1257,6 @@ a.text-jade-hover:hover {
   -webkit-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.05);
 }
-.form-control,
-.form-select,
-input,
-select,
-textarea {
-  padding: 12px 25px;
-  width: 100%;
-  max-width: 100%;
-  resize: none;
-  outline: 0;
-  font-size: 16px;
-  border: 1px solid #e4e4e4;
-  color: var(--medium-gray);
-  line-height: inherit;
-  word-break: normal;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
 .form-select {
   color: var(--medium-gray);
 }
@@ -5758,7 +5740,7 @@ header .left-nav .navbar-nav:before {
   right: -150px;
 }
 header .header-top-bar,
-header .navbar {
+ {
   position: fixed;
   top: 0;
   right: 0;
@@ -6190,11 +6172,7 @@ header .navbar [class*="col-"] .navbar-nav {
   -ms-grid-row-align: stretch;
   align-self: stretch;
 }
-header .navbar {
-  left: 0;
-  z-index: 99;
-  transition: 0.3s;
-}
+
 header .navbar [class*="col-"] {
   padding: 0 15px;
   display: -webkit-box;
@@ -6639,22 +6617,8 @@ header.sticky .navbar.disable-fixed {
 .navbar .navbar-nav .simple-dropdown .dropdown-menu .dropdown.open > a {
   color: var(--dark-gray);
 }
-.navbar
-  .navbar-nav
-  .simple-dropdown
-  .dropdown-menu
-  .dropdown.open
-  > .dropdown-menu {
-  display: block;
-}
-.navbar
-  .navbar-nav
-  .simple-dropdown
-  .dropdown-menu
-  .dropdown.menu-left
-  .dropdown-menu {
-  left: calc(-100% - 1px);
-}
+
+
 .navbar .navbar-nav .simple-dropdown .dropdown-menu .dropdown .dropdown-menu {
   -webkit-animation: none;
   animation: none;
@@ -18427,10 +18391,7 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 1600px) {
-  section {
-    padding-top: 90px;
-    padding-bottom: 90px;
-  }
+ 
   section.big-section {
     padding-top: 120px;
     padding-bottom: 120px;
@@ -18441,13 +18402,7 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 991px) {
-  html {
-    font-size: 14px;
-  }
-  section {
-    padding-top: 75px;
-    padding-bottom: 75px;
-  }
+ 
   section.half-section {
     padding-top: 50px;
     padding-bottom: 50px;
@@ -18478,13 +18433,7 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 767px) {
-  html {
-    font-size: 12px;
-  }
-  section {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
+ 
   section.half-section {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -38705,9 +38654,7 @@ footer .footer-navbar .nav-item:last-child a {
     top: 15px;
     right: 15px;
   }
-  .navbar .navbar-nav {
-    padding: 15px 0;
-  }
+  
   .header-search-popup .search-form {
     width: 85%;
   }

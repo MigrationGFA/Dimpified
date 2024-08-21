@@ -55,6 +55,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-country-region-selector": "^3.6.1",
     "react-data-table-component": "^7.6.2",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
     "react-dropzone": "^14.2.3",

@@ -26,7 +26,7 @@ import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 import CommunityComment from "./CommunityComment";
 
-const PostCard = ({ post, onDelete, onEdit, onComment }) => {
+const PostCard = ({ community, post, onDelete,  fetchCommunityData}) => {
   const { ecosystemDomain } = useParams();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -42,6 +42,28 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
       commentInputRef.current?.scrollIntoView({ behavior: "smooth" });
       commentInputRef.current?.focus();
     }, 0);
+  };
+
+  useEffect(() => {
+    fetchCommunityData();
+  }, []);
+
+  const handleLikeComment = async (communityId, postId) => {
+
+    try {
+  
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/like-unlike-post`, {
+        communityId,
+        userId,
+        postId,
+      });
+  
+      if (response.data.message === "Post liked" || response.data.message === "Post unliked") {
+        fetchCommunityData();
+      }
+    } catch (error) {
+      console.error("Error liking/unliking comment:", error);
+    }
   };
 
   const handleShare = async () => {
@@ -135,13 +157,13 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
                 </div>
                 {post.likes}
               </div>
-              {/* <div className="interaction-details">
-                {comments && comments.length} comments
-              </div> */}
+              <div className="interaction-details">
+                {post.commentsCount} comments
+              </div>
             </div>
             <hr />
             <div className="interaction-buttons d-flex justify-content-between mt-2">
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center cursor-pointer" onClick={() => handleLikeComment(community._id, post._id)}>
                 <FaHeart className="white-icon like-icon" />
                 <span className="ml-2">Like</span>
               </div>
@@ -189,6 +211,7 @@ const PostCard = ({ post, onDelete, onEdit, onComment }) => {
 const Header = () => {
   const { ecosystemDomain } = useParams();
   const [posts, setPosts] = useState([]);
+  const [community, setCommunity] = useState([]);
   const [backgroundCoverPreview, setBackgroundCoverPreview] = useState(null);
   const [backgroundCoverImage, setBackgroundCoverImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -206,6 +229,7 @@ const Header = () => {
         `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
       );
       setPosts(response.data.posts);
+      setCommunity(response.data.community);
     } catch (error) {
       console.error("Error fetching community data:", error);
     }
@@ -300,30 +324,7 @@ const Header = () => {
     setSearchQuery(e.target.value);
   };
 
-  // const handleEdit = async (postToEdit, newCaption) => {
-  //   try {
-  //     const response = await axios.patch(`/posts/${postToEdit._id}`, {
-  //       content: newCaption,
-  //     });
-  //     setPosts(
-  //       posts.map((post) =>
-  //         post._id === postToEdit._id ? response.data : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.error("Error editing post:", error);
-  //   }
-  // };
-
-  // const handleDelete = async (postToDelete) => {
-  //   try {
-  //     await axios.delete(`/posts/${postToDelete._id}`);
-  //     setPosts(posts.filter((post) => post._id !== postToDelete._id));
-  //   } catch (error) {
-  //     console.error("Error deleting post:", error);
-  //   }
-  // };
-
+ 
   return (
     <div className="container">
       <div className="two-layered-box">
@@ -459,18 +460,10 @@ const Header = () => {
       ) : (
         posts.map((post) => (
           <PostCard
-            key={post._id}
-            post={post}
-            onDelete={(deletedPost) =>
-              setPosts(posts.filter((p) => p._id !== deletedPost._id))
-            }
-            onEdit={(editedPost, newContent) => {
-              setPosts(
-                posts.map((p) =>
-                  p._id === editedPost._id ? { ...p, content: newContent } : p
-                )
-              );
-            }}
+          key={post._id}
+          post={post}
+          community={community}
+          fetchCommunityData={fetchCommunityData} 
           />
         ))
       )}
