@@ -10,16 +10,18 @@ import {
   Modal,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { SizeSelect } from "../../../Components/elements/form-select/SizeSelect";
+import { SizeSelect } from "../../../../Components/elements/form-select/SizeSelect";
 import pricingData from "./PricingData";
-import EcoHeader from "./ecoHeader";
+import EcoHeader from "./individualHeader";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { usePaystackPayment } from "react-paystack";
 import { PaystackButton } from "react-paystack";
 import Paystack from "@paystack/inline-js";
-import { showToast } from "../../../Components/Showtoast";
+import { showToast } from "../../../../Components/Showtoast";
+import { resetState } from "../../../../features/ecosystem";
+import { useDispatch } from "react-redux";
 
 // import FAQsData from "./FAQsData";
 
@@ -932,6 +934,7 @@ const EcoPayment = ({ plan }) => {
   const creatorId = user?.data?.CreatorId || "Unknown User";
   console.log(creatorId);
   const Email = user?.data?.email || "No email";
+  const dispatch = useDispatch();
 
   // const handlePaystackPayment = (planCode) => {
   //   const popup = new Paystack();
@@ -1136,7 +1139,8 @@ const EcoPayment = ({ plan }) => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Preview-and-Send");
+    dispatch(resetState());
+    navigate("/creator/dashboard/All-Ecosystem");
   };
 
   const handleSignUp = (planName) => {
@@ -1563,7 +1567,7 @@ const EcoPayment = ({ plan }) => {
             onClick={handleSkipAndContinue}
             className="mt-4 mb-5"
           >
-            Continue
+            Publish
           </Button>
         </Container>
       </div>

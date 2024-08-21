@@ -21,6 +21,7 @@ const EcosystemEmailVerification = () => {
         {
           email: queryParam.get("email"),
           verificationToken: queryParam.get("token"),
+          ecosystemDomain: queryParam.get("ecosystemDomain"),
         }
       );
       console.log("Verification response:", response.data);

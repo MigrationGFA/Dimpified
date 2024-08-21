@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.20.0",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
@@ -36,6 +38,7 @@
     "apexcharts": "^3.45.2",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "cloudinary": "^2.4.0",
     "dompurify": "^3.1.5",
     "dotenv": "^16.4.5",
     "flatpickr": "^4.6.13",
