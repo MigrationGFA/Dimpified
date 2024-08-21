@@ -202,7 +202,7 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="learning px-4"
+    className="px-4"
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="/demo-elearning">
