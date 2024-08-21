@@ -60,7 +60,7 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="legal px-4 primary-font align-items-center header-transparent bg-transparent disable-fixed border-bottom border-color-transparent-white-light"
+    className="px-4 primary-font align-items-center  disable-fixed border-bottom "
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="demo-lawyer.html">

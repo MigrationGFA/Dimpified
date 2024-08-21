@@ -112,7 +112,6 @@ const HomeSection = () => (
     id="home"
     style={{
       backgroundImage: `url(https://gfa-tech.com/productivity-and-growth-program/images/bg-people.jpg)`,
-      marginTop: "79px",
       height: "100vh",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -321,7 +320,10 @@ const AboutSection = () => (
 );
 
 const ComponentsSection = () => (
-  <section className="conference px-4 pt-3 bg-dark-midnight-blue" id="components">
+  <section
+    className="conference px-4 pt-3 bg-dark-midnight-blue"
+    id="components"
+  >
     <Container>
       <Row className="justify-content-center">
         <Col
