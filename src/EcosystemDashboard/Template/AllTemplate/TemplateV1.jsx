@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -13,14 +13,14 @@ import {
   Carousel,
   ButtonGroup,
 } from "react-bootstrap";
-import sanitizeHtml from "sanitize-html";
 import {
   FaFacebookF,
   FaInstagram,
   FaTwitter,
   FaDribbble,
 } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+import sanitizeHtml from "sanitize-html";
+import axios from "axios";
 
 const iconStyle = {
   color: "#222",
@@ -37,10 +37,6 @@ const iconStyle = {
   transition: "background-color 0.3s",
 };
 
-const hoverStyle = {
-  backgroundColor: "#333" /* Adjust hover background color as needed */,
-};
-
 const MAX_MESSAGE_LENGTH = 44;
 
 const truncateMessage = (messages) => {
@@ -49,11 +45,12 @@ const truncateMessage = (messages) => {
   }
   return messages;
 };
-const BarberPreview1 = () => {
+
+const hoverStyle = {
+  backgroundColor: "#333" /* Adjust hover background color as needed */,
+};
+const Template1 = ({ details, subdomain }) => {
   const [show, setShow] = useState(false);
-  const content = useSelector((state) => state.mainTemplate.currentTemplate);
-  const services = useSelector((state) => state.service.services);
-  const ecosystemDetails = useSelector((state) => state.ecosystem);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -96,44 +93,44 @@ const BarberPreview1 = () => {
 
   const counters = [
     {
-      value: content.Statistics.section1header,
-      label: content.Statistics.section1span,
+      value: details.Statistics.section1header,
+      label: details.Statistics.section1span,
     },
     {
-      value: content.Statistics.section2header,
-      label: content.Statistics.section2span,
+      value: details.Statistics.section2header,
+      label: details.Statistics.section2span,
     },
     {
-      value: content.Statistics.section3header,
-      label: content.Statistics.section3span,
+      value: details.Statistics.section3header,
+      label: details.Statistics.section3span,
     },
     {
-      value: content.Statistics.section4header,
-      label: content.Statistics.section4span,
+      value: details.Statistics.section4header,
+      label: details.Statistics.section4span,
     },
   ];
   const testimonials = [
     {
-      text: content.Reviews.summary1,
-      client: content.Reviews.header1,
+      text: details.Reviews.summary1,
+      client: details.Reviews.header1,
       img: "https://via.placeholder.com/80",
     },
     {
-      text: content.Reviews.summary2,
-      client: content.Reviews.header2,
+      text: details.Reviews.summary2,
+      client: details.Reviews.header2,
       img: "https://via.placeholder.com/80",
     },
     {
-      text: content.Reviews.summary3,
-      client: content.Reviews.header3,
+      text: details.Reviews.summary3,
+      client: details.Reviews.header3,
       img: "https://via.placeholder.com/80",
     },
   ];
 
   const images = [
-    content.Gallery.image1,
-    content.Gallery.image2,
-    content.Gallery.image3,
+    details.Gallery.image1,
+    details.Gallery.image2,
+    details.Gallery.image3,
   ];
 
   const groupedImages = [];
@@ -152,6 +149,26 @@ const BarberPreview1 = () => {
   });
   const [notification, setNotification] = useState(null);
   const [barbingServices, setBarbingServices] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // services
+  useEffect(() => {
+    const getServiceeDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/get-all-services/${subdomain}`
+        );
+        setServices(response.data.services);
+        console.log("this is service", response.data.services);
+      } catch (error) {
+        console.log("not working", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getServiceeDetails();
+  }, [subdomain]);
 
   const serviceOptions = {
     "Home service": [
@@ -227,7 +244,7 @@ const BarberPreview1 = () => {
               className="fw-bold text-dark d-flex align-items-center"
               href="#home"
             >
-              {sanitizeContent(content.navbar.brand)}
+              {sanitizeContent(details.navbar.brand)}
               <img
                 src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
                 alt="Icon"
@@ -285,7 +302,7 @@ const BarberPreview1 = () => {
         {/* Hero Section */}
         <section
           style={{
-            backgroundImage: `url(${content.hero.backgroundImage1})`,
+            backgroundImage: `url(${details.hero.backgroundImage1})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             height: "100vh",
@@ -300,11 +317,11 @@ const BarberPreview1 = () => {
                 <div className="py-6 py-lg-0 text-center pt-lg-14">
                   <h1 className="display-3 fw-bold mb-3 text-white">
                     <span className="text-white px-3  ">
-                      {content.hero.title1}
+                      {sanitizeContent(details.hero.title1)}
                     </span>
                   </h1>
                   <p className="mb-6 h2 text-white">
-                    {sanitizeContent(content.hero.span1)}
+                    {sanitizeContent(details.hero.span1)}
                   </p>
                 </div>
               </Col>
@@ -450,21 +467,21 @@ const BarberPreview1 = () => {
         </Modal>
 
         {/* About Section */}
-        <section id="about" className="py-3 px-3 py-lg-10">
+        <section id="about" className="py-3 px-3 mt-10 py-lg-10">
           <Container>
             <Row>
               <Col xxl={6} xl={6} lg={6} xs={12}>
                 <div>
                   <h1 className="display-4 fw-bold mb-3">
                     <span className="text-dark  px-md-0">
-                      {sanitizeContent(content.aboutUs.title1)}
+                      {sanitizeContent(details.aboutUs.title1)}
                     </span>
                   </h1>
                   <p className="text-dark fs-4 mb-4 pe-xl-12 ">
-                    {sanitizeContent(content.aboutUs.text1)}
+                    {sanitizeContent(details.aboutUs.text1)}
                   </p>
                   <p className="text-dark fs-4 mb-4 pe-xl-12 ">
-                    {sanitizeContent(content.aboutUs.text2)}
+                    {sanitizeContent(details.aboutUs.text2)}
                   </p>
 
                   <div className="d-grid d-md-block">
@@ -483,13 +500,13 @@ const BarberPreview1 = () => {
                     <div
                       className="bg-cover rounded-3 mb-2 h-14rem"
                       style={{
-                        backgroundImage: `url(${content.aboutUs.image1})`,
+                        backgroundImage: `url(${details.aboutUs.image1})`,
                       }}
                     ></div>
                     <div
                       className="bg-cover rounded-3 mb-2 h-14rem"
                       style={{
-                        backgroundImage: `url(${content.aboutUs.image2})`,
+                        backgroundImage: `url(${details.aboutUs.image2})`,
                       }}
                     ></div>
                   </Col>
@@ -497,7 +514,7 @@ const BarberPreview1 = () => {
                     <div
                       className="bg-cover rounded-3 mt-6 mb-2 h-18rem"
                       style={{
-                        backgroundImage: `url(${content.aboutUs.image3})`,
+                        backgroundImage: `url(${details.aboutUs.image3})`,
                       }}
                     ></div>
                   </Col>
@@ -520,34 +537,58 @@ const BarberPreview1 = () => {
           <Container>
             <h2 className="fs-2">Our Services</h2>
             <Row>
-              {services.map((service, index) => (
-                <Col key={index} xl={3} lg={3} sm={12}>
-                  <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                    <Card.Img
-                      variant="top"
-                      height={100}
-                      src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
-                      className="py-4"
-                    />
-                    <Card.Body>
-                      <Card.Title className="text-dark fs-3">
-                        {service.name}
-                      </Card.Title>
-                      <Card.Text className="fs-4">
-                        {truncateMessage(service.shortDescription)}
-                      </Card.Text>
-                      <Card.Text className="fs-5">
-                        Price: {service.price} {service.priceFormat}
-                      </Card.Text>
-                      <Card.Text className="fs-6">
-                        Delivery Time: {service.deliveryTime}
-                      </Card.Text>
-                      <Button variant="dark" onClick={handleShow}>
-                        Book a Visit
-                      </Button>
-                    </Card.Body>
-                  </Card>
+              {/* {services.map((service, idx) => (
+                <Col md={6} className="mb-4 px-4" key={idx}>
+                  <div style={pricingStyle}>
+                    <Row>
+                      <Col>
+                        <div style={titleStyle}>{service.name}</div>
+                      </Col>
+                      <Col>
+                        <div style={priceStyle}>₦{service.price}</div>
+                      </Col>
+                    </Row>
+                    <p style={descriptionStyle}>{service.shortDescription}</p>
+                  </div>
                 </Col>
+              ))} */}
+              {services.map((service, serviceIdx) => (
+                <div key={serviceIdx}>
+                  <h5>{service.header}</h5>
+                  <Row>
+                    {service.services.map((subService, idx) => (
+                      <Col key={idx} xl={3} lg={3} sm={12}>
+                        <Card
+                          style={{ margin: "10px", backgroundColor: "#f7f3e8" }}
+                        >
+                          <Card.Img
+                            variant="top"
+                            height={100}
+                            src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
+                            className="py-4"
+                          />
+                          <Card.Body>
+                            <Card.Title className="text-dark fs-3">
+                              {subService.name}
+                            </Card.Title>
+                            <Card.Text className="fs-4">
+                              {truncateMessage(subService.shortDescription)}
+                            </Card.Text>
+                            <Card.Text className="fs-5">
+                              Price: {service.price} {subService.priceFormat}
+                            </Card.Text>
+                            <Card.Text className="fs-6">
+                              Delivery Time: {subService.deliveryTime}
+                            </Card.Text>
+                            <Button variant="dark" onClick={handleShow}>
+                              Book a Visit
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
               ))}
             </Row>
           </Container>
@@ -599,6 +640,7 @@ const BarberPreview1 = () => {
             </ButtonGroup>
           </Container>
         </section>
+
         <section id="pricing px-3" style={sectionStyle}>
           <Container>
             <Row className="mb-4">
@@ -608,27 +650,37 @@ const BarberPreview1 = () => {
                 </h2>
               </Col>
             </Row>
-            <Row>
-              {services.map((service, idx) => (
-                <Col md={6} className="mb-4 px-4" key={idx}>
-                  <div style={pricingStyle}>
-                    <Row>
-                      <Col>
-                        <div style={titleStyle}>{service.name}</div>
-                      </Col>
-                      <Col>
-                        <div style={priceStyle}>₦{service.price}</div>
-                      </Col>
-                    </Row>
-                    <p style={descriptionStyle}>{service.shortDescription}</p>
-                  </div>
-                </Col>
-              ))}
-            </Row>
+            {services.map((service, serviceIdx) => (
+              <div key={serviceIdx}>
+                <h5 className="text-center">{service.header}</h5>
+                <Row>
+                  {service.services.map((subService, idx) => (
+                    <Col md={6} className="mb-4 px-4" key={idx}>
+                      <div style={pricingStyle}>
+                        <Row>
+                          <Col>
+                            <div style={titleStyle}>{subService.name}</div>
+                          </Col>
+                          <Col>
+                            <div style={priceStyle}>₦{subService.price}</div>
+                          </Col>
+                        </Row>
+                        <p
+                          className="px-4"
+                          style={{
+                            color: "#666",
+                          }}
+                        >
+                          {subService.shortDescription}
+                        </p>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            ))}
           </Container>
         </section>
-
-        {/* Testimonials Section */}
 
         {/* Crew Section */}
         <section
@@ -648,7 +700,7 @@ const BarberPreview1 = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src={content.Team.image1}
+                    src={details.Team.image1}
                     style={{
                       height: "260px",
                     }}
@@ -657,10 +709,10 @@ const BarberPreview1 = () => {
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        {sanitizeContent(content.Team.header1)}
+                        {sanitizeContent(details.Team.header1)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        {sanitizeContent(content.Team.summary1)}
+                        {sanitizeContent(details.Team.summary1)}
                       </Card.Subtitle>
                     </div>
                     <div className="d-flex flex-column flex-shrink-1"></div>
@@ -671,7 +723,7 @@ const BarberPreview1 = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src={content.Team.image2}
+                    src={details.Team.image2}
                     style={{
                       height: "260px",
                     }}
@@ -680,10 +732,10 @@ const BarberPreview1 = () => {
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        {sanitizeContent(content.Team.header2)}
+                        {sanitizeContent(details.Team.header2)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        {sanitizeContent(content.Team.summary2)}
+                        {sanitizeContent(details.Team.summary2)}
                       </Card.Subtitle>
                     </div>
                     <div className="d-flex flex-column flex-shrink-1"></div>
@@ -694,7 +746,7 @@ const BarberPreview1 = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src={content.Team.image3}
+                    src={details.Team.image3}
                     style={{
                       height: "260px",
                     }}
@@ -703,10 +755,10 @@ const BarberPreview1 = () => {
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        {sanitizeContent(content.Team.header3)}
+                        {sanitizeContent(details.Team.header3)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        {sanitizeContent(content.Team.summary3)}
+                        {sanitizeContent(details.Team.summary3)}
                       </Card.Subtitle>
                     </div>
                     <div className="d-flex flex-column flex-shrink-1"></div>
@@ -717,7 +769,7 @@ const BarberPreview1 = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src={sanitizeContent(content.Team.image4)}
+                    src={sanitizeContent(details.Team.image4)}
                     style={{
                       height: "260px",
                     }}
@@ -726,10 +778,10 @@ const BarberPreview1 = () => {
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        {sanitizeContent(content.Team.header4)}
+                        {sanitizeContent(details.Team.header4)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        {sanitizeContent(content.Team.summary4)}
+                        {sanitizeContent(details.Team.summary4)}
                       </Card.Subtitle>
                     </div>
                     <div className="d-flex flex-column flex-shrink-1"></div>
@@ -755,6 +807,7 @@ const BarberPreview1 = () => {
           </Container>
         </section>
 
+        {/* Testimonials Section */}
         <section
           id="testimonials"
           className="py-3 px-3 py-lg-10"
@@ -777,14 +830,10 @@ const BarberPreview1 = () => {
                         >
                           <Card.Body>
                             <Card.Text className="font-italic fs-3 text-dark">
-                              {sanitizeContent(
-                                content.Reviews[`summary${idx + 1}`]
-                              )}
+                              {sanitizeContent(testimonial.text)}
                             </Card.Text>
                             <Card.Title className="mt-3 font-weight-bold mb-3">
-                              {sanitizeContent(
-                                content.Reviews[`header${idx + 1}`]
-                              )}
+                              {sanitizeContent(testimonial.client)}
                             </Card.Title>
                           </Card.Body>
                         </Card>
@@ -801,12 +850,12 @@ const BarberPreview1 = () => {
                 <Col key={index} className="mb-3">
                   <h2 className="fs-2">
                     {sanitizeContent(
-                      content.Statistics[`section${idx + 1}header`]
+                      details.Statistics[`section${idx + 1}header`]
                     )}
                   </h2>
                   <span className="lh-22 text-dark-gray d-block">
                     {sanitizeContent(
-                      content.Statistics[`section${idx + 1}span`]
+                      details.Statistics[`section${idx + 1}span`]
                     )}
                   </span>
                 </Col>
@@ -857,7 +906,7 @@ const BarberPreview1 = () => {
                         href="tel:12345678910"
                         className="fs-22 ls-minus-1px fw-600 text-dark"
                       >
-                        {ecosystemDetails.expectedAudienceNumber}
+                        +234 8098765432
                       </a>
                     </div>
                   </div>
@@ -963,11 +1012,11 @@ const BarberPreview1 = () => {
           <Container className="py-lg-14 px-3 py-4">
             <h1 className="display-3 fw-bold mb-3 text-white">
               <span className=" px-3 px-md-0 ">
-                {sanitizeContent(content.footer.header)}
+                {sanitizeContent(details.footer.header)}
               </span>
             </h1>
-            <p>&copy; {sanitizeContent(content.footer.title1)}</p>
-            <p>{sanitizeContent(content.footer.paragraph1)}</p>
+            <p>&copy; {sanitizeContent(details.footer.title1)}</p>
+            <p>{sanitizeContent(details.footer.paragraph1)}</p>
             <Nav className="justify-content-center">
               <Nav.Link
                 href="#facebook"
@@ -1003,4 +1052,4 @@ const BarberPreview1 = () => {
   );
 };
 
-export default BarberPreview1;
+export default Template1;

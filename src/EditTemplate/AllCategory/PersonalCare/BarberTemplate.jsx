@@ -45,10 +45,18 @@ const iconStyle = {
   margin: "0 0.5rem" /* Adjust spacing as needed */,
   transition: "background-color 0.3s",
 };
-
 const hoverStyle = {
-  backgroundColor: "#333" /* Adjust hover background color as needed */,
+  backgroundColor: "#333",
 };
+const MAX_MESSAGE_LENGTH = 44;
+
+const truncateMessage = (messages) => {
+  if (messages.length > MAX_MESSAGE_LENGTH) {
+    return messages.slice(0, MAX_MESSAGE_LENGTH) + "...";
+  }
+  return messages;
+};
+
 const BarberTemplate = () => {
   const [show, setShow] = useState(false);
 
@@ -57,9 +65,12 @@ const BarberTemplate = () => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
   const content = useSelector((state) => state.mainTemplate.currentTemplate);
+  const ecosystemDetails = useSelector((state) => state.ecosystem);
   const activeSection = useSelector(
     (state) => state.activeSection.activeSection
   );
+
+  const services = useSelector((state) => state.service.services);
 
   const handleContentChange = (section, field, value, index = null) => {
     dispatch(updateContent({ section, field, value, index }));
@@ -161,10 +172,6 @@ const BarberTemplate = () => {
     content.Gallery.image3,
   ];
 
-  const groupedImages = [];
-  for (let i = 0; i < images.length; i += 3) {
-    groupedImages.push(images.slice(i, i + 3));
-  }
   const [formData, setFormData] = useState({
     name: "",
     serviceLocation: "",
@@ -259,7 +266,9 @@ const BarberTemplate = () => {
                 href="#home"
               >
                 <EditableBlock
-                  initialContent={content.navbar.brand}
+                  initialContent={
+                    ecosystemDetails.ecosystemName || content.navbar.brand
+                  }
                   onContentChange={(value) =>
                     handleContentChange("navbar", "brand", value)
                   }
@@ -268,7 +277,7 @@ const BarberTemplate = () => {
                 <img
                   src={content.navbar.logo}
                   alt="Icon"
-                  style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
+                  style={{ marginLeft: "10px", height: "24px" }}
                 />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -329,21 +338,26 @@ const BarberTemplate = () => {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               height: "100vh",
-              color: "white",
+              color: content.hero.styles.color || "black",
               textAlign: "center",
               padding: "100px 0",
-              // backgroundSize: "cover",
-              // backgroundPosition: "center",
-              // backgroundRepeat: "no-repeat",
-              // position: "relative",
             }}
           >
-            <Container>
+            <Container
+              style={{
+                color: content.hero.styles.color,
+              }}
+            >
               <Row className="justify-content-center mb-4">
                 <Col xl={7} lg={7} md={12}>
                   <div className="py-6 py-lg-0 text-center pt-lg-14">
                     <h1 className="display-3 fw-bold mb-3 text-white">
-                      <span className="text-white px-3  ">
+                      <span
+                        className=" px-3  "
+                        style={{
+                          color: content.hero.styles.color,
+                        }}
+                      >
                         <EditableBlock
                           initialContent={content.hero.title1}
                           onContentChange={(value) =>
@@ -352,7 +366,12 @@ const BarberTemplate = () => {
                         />
                       </span>
                     </h1>
-                    <p className="mb-6 h2 text-white">
+                    <p
+                      className="mb-6 h2"
+                      style={{
+                        color: content.hero.styles.color,
+                      }}
+                    >
                       <EditableBlock
                         initialContent={content.hero.span1}
                         onContentChange={(value) =>
@@ -545,13 +564,20 @@ const BarberTemplate = () => {
         {/* About Section */}
         {renderSection(
           "aboutUs",
-          <section id="about" className="py-3 px-3 py-lg-10">
+          <section
+            id="about"
+            className="py-3 px-3 py-lg-10"
+            style={{
+              color: content.aboutUs.styles.color,
+            }}
+          >
             <Container>
               <Row>
                 <Col xxl={6} xl={6} lg={6} xs={12}>
                   <div>
+                    <p>double tab a section to edit the texts</p>
                     <h1 className="display-4 fw-bold mb-3">
-                      <span className="text-dark  px-md-0">
+                      <span className="  px-md-0">
                         <EditableBlock
                           initialContent={content.aboutUs.title1}
                           onContentChange={(value) =>
@@ -560,7 +586,7 @@ const BarberTemplate = () => {
                         />
                       </span>
                     </h1>
-                    <p className="text-dark fs-4 mb-4 pe-xl-12 ">
+                    <p className=" fs-4 mb-4 pe-xl-12 ">
                       <EditableBlock
                         initialContent={content.aboutUs.text1}
                         onContentChange={(value) =>
@@ -568,7 +594,7 @@ const BarberTemplate = () => {
                         }
                       />
                     </p>
-                    <p className="text-dark fs-4 mb-4 pe-xl-12 ">
+                    <p className=" fs-4 mb-4 pe-xl-12 ">
                       <EditableBlock
                         initialContent={content.aboutUs.text2}
                         onContentChange={(value) =>
@@ -746,274 +772,98 @@ const BarberTemplate = () => {
             backgroundColor: "#f7f3e8",
           }}
         >
+          <p>section not editable</p>
           <Container>
             <h2 className="fs-2">Our Services</h2>
             <Row>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Haircut</Card.Title>
-                    <Card.Text className="fs-4">
-                      Professional haircut services for all styles.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-02.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Shave</Card.Title>
-                    <Card.Text>
-                      Expert shaving services for a clean and smooth look.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-03.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Hair Dye</Card.Title>
-                    <Card.Text>
-                      Quality hair dye services to give you a fresh new look.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">
-                      Beard Trim
-                    </Card.Title>
-                    <Card.Text>
-                      Perfect beard trims to keep you looking sharp.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
+              {services.map((service, index) => (
+                <Col key={index} xl={3} lg={3} sm={12}>
+                  <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
+                    <Card.Img
+                      variant="top"
+                      height={100}
+                      src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
+                      className="py-4"
+                    />
+                    <Card.Body>
+                      <Card.Title className="text-dark fs-3">
+                        {service.name}
+                      </Card.Title>
+                      <Card.Text className="fs-4">
+                        {truncateMessage(service.shortDescription)}
+                      </Card.Text>
+                      <Card.Text className="fs-5">
+                        Price: {service.price} {service.priceFormat}
+                      </Card.Text>
+                      <Card.Text className="fs-6">
+                        Delivery Time: {service.deliveryTime}
+                      </Card.Text>
+                      <Button variant="dark" onClick={handleShow}>
+                        Book a Visit
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
             </Row>
           </Container>
           {/* gallery part */}
           {renderSection(
             "Gallery",
-            <Container fluid className="pt-lg-10 pt-3 px-0">
-              <Carousel
-                activeIndex={index}
-                onSelect={handleSelect}
-                interval={3000}
-              >
-                {groupedImages.map((group, idx) => (
-                  <Carousel.Item key={idx}>
-                    <Row className="d-none d-lg-flex no-gutter">
-                      {group.map((src, imgIdx) => (
-                        <Col key={imgIdx} className="px-1 position-relative">
-                          <img
-                            className="d-block w-100 img-fluid"
-                            src={src}
-                            alt={`Slide ${imgIdx + 1}`}
-                          />
-                          {/* Button to edit each image */}
-                          <Button
-                            onClick={() =>
-                              handleEditImageClick(
-                                `Gallery`,
-                                `image${idx}-${imgIdx}`
-                              )
-                            }
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              right: "10px",
-                              zIndex: 1000,
-                              backgroundColor: "rgba(0,0,0,0.5)",
-                              color: "#fff",
-                              border: "none",
-                            }}
-                          >
-                            {loadingImage ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-primary"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : (
-                              "Edit Image"
-                            )}
-                          </Button>
-                          {/* Hidden input for each image */}
-                          <input
-                            type="file"
-                            ref={(ref) =>
-                              (fileInputRefs.current[
-                                `Gallery-image${idx}-${imgIdx}`
-                              ] = ref)
-                            }
-                            onChange={(e) =>
-                              handleImageChange(
-                                e,
-                                "Gallery",
-                                `image${idx}-${imgIdx}`
-                              )
-                            }
-                            style={{ display: "none" }}
-                          />
-                        </Col>
-                      ))}
-                    </Row>
 
-                    {/* Mobile layout (single image per slide) */}
-                    <Row className="d-flex d-lg-none no-gutters">
-                      {group.slice(0, 1).map((src, imgIdx) => (
-                        <Col key={imgIdx} className="px-1 position-relative">
-                          <img
-                            className="d-block w-100 img-fluid"
-                            src={src}
-                            alt={`Slide ${imgIdx + 1}`}
-                          />
-                          <Button
-                            onClick={() =>
-                              handleEditImageClick(`Gallery`, `image${idx}`)
-                            }
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              right: "10px",
-                              zIndex: 1000,
-                              backgroundColor: "rgba(0,0,0,0.5)",
-                              color: "#fff",
-                              border: "none",
-                            }}
+            <Row>
+              {images.map((src, idx) => (
+                <Col key={idx} xl={4} lg={4} sm={12}>
+                  <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
+                    <Card.Img
+                      variant="top"
+                      height={300}
+                      src={src}
+                      className="py-4"
+                    />
+                    <Card.Body>
+                      <Button
+                        variant="dark"
+                        onClick={() =>
+                          handleEditImageClick("Gallery", `image${idx + 1}`)
+                        }
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "10px",
+                          zIndex: 1000,
+                          backgroundColor: "rgba(0,0,0,0.5)",
+                          color: "#fff",
+                          border: "none",
+                        }}
+                      >
+                        {loadingImage ? (
+                          <div
+                            className="spinner-border spinner-border-sm text-primary"
+                            role="status"
                           >
-                            {loadingImage ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-primary"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : (
-                              "Edit Image"
-                            )}
-                          </Button>
-                          <input
-                            type="file"
-                            ref={(ref) =>
-                              (fileInputRefs.current[`Gallery-image${idx}`] =
-                                ref)
-                            }
-                            onChange={(e) =>
-                              handleImageChange(e, "Gallery", `image${idx}`)
-                            }
-                            style={{ display: "none" }}
-                          />
-                        </Col>
-                      ))}
-                    </Row>
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-
-              {/* Pagination buttons */}
-              <ButtonGroup className="mt-3">
-                {groupedImages.map((_, idx) => (
-                  <Button
-                    key={idx}
-                    variant={index === idx ? "white" : "dark"}
-                    onClick={() => handleSelect(idx)}
-                  >
-                    {idx + 1}
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </Container>
-            //     <Container fluid className="pt-lg-10 pt-3 px-0">
-            //       <Carousel
-            //         activeIndex={index}
-            //         onSelect={handleSelect}
-            //         interval={3000}
-            //       >
-            //         {groupedImages.map((group, idx) => (
-            //           <Carousel.Item key={idx}>
-            //             <Row className="d-none d-lg-flex no-gutter">
-            //               {group.map((src, imgIdx) => (
-            //                 <Col key={imgIdx} className="px-1">
-            //                   <img
-            //                     className="d-block w-100 img-fluid"
-            //                     src={src}
-            //                     alt={`Slide ${imgIdx + 1}`}
-            //                   />
-            //                 </Col>
-            //               ))}
-            //             </Row>
-            //             <Row className="d-flex d-lg-none no-gutters">
-            //               {group
-            //                 .map((src, imgIdx) => (
-            //                   <Col key={imgIdx} className="px-1">
-            //                     <img
-            //                       className="d-block w-100 img-fluid"
-            //                       src={src}
-            //                       alt={`Slide ${imgIdx + 1}`}
-            //                     />
-            //                   </Col>
-            //                 ))
-            //                 .slice(0, 1)}
-            //             </Row>
-            //           </Carousel.Item>
-            //         ))}
-            //       </Carousel>
-            //       <ButtonGroup className="mt-3">
-            //         {groupedImages.map((_, idx) => (
-            //           <Button
-            //             key={idx}
-            //             variant={index === idx ? "white" : "dark"}
-            //             onClick={() => handleSelect(idx)}
-            //           >
-            //             {idx + 1}
-            //           </Button>
-            //         ))}
-            //       </ButtonGroup>
-            //     </Container>
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Edit Image"
+                        )}
+                      </Button>
+                      <input
+                        type="file"
+                        ref={(ref) =>
+                          (fileInputRefs.current[`Gallery-image${idx + 1}`] =
+                            ref)
+                        }
+                        onChange={(e) =>
+                          handleImageChange(e, "Gallery", `image${idx + 1}`)
+                        }
+                        style={{ display: "none" }}
+                      />
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           )}
         </section>
 
@@ -1021,98 +871,28 @@ const BarberTemplate = () => {
           <Container>
             <Row className="mb-4">
               <Col xs={12}>
+                <p className="text-center">section not editable</p>
                 <h2 style={headerStyle}>
                   Flexible <span className="text-highlight">Pricing</span>
                 </h2>
               </Col>
             </Row>
             <Row>
-              <Col md={6} className="mb-4 px-4 ps-lg-10">
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Basic Haircut</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦1,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A quick and efficient haircut, perfect for maintaining your
-                    style.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Classic Haircut & Shave</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A classic haircut with a shave, ensuring you look sharp and
-                    fresh.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Deluxe Haircut</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    An extended haircut with additional styling, tailored to
-                    your preferences.
-                  </p>
-                </div>
-              </Col>
-              <Col md={6} className="mb-4 px-4 pe-lg-10">
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Beard Styling</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    Professional beard styling and trimming to match your look.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Beard & Hair Combo</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦3,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A complete package including both haircut and beard styling.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Grooming Package</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦4,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    Includes a full haircut, beard styling, and additional
-                    grooming services.
-                  </p>
-                </div>
-              </Col>
+              {services.map((service, idx) => (
+                <Col md={6} className="mb-4 px-4" key={idx}>
+                  <div style={pricingStyle}>
+                    <Row>
+                      <Col>
+                        <div style={titleStyle}>{service.name}</div>
+                      </Col>
+                      <Col>
+                        <div style={priceStyle}>₦{service.price}</div>
+                      </Col>
+                    </Row>
+                    <p style={descriptionStyle}>{service.shortDescription}</p>
+                  </div>
+                </Col>
+              ))}
             </Row>
           </Container>
         </section>
@@ -1165,16 +945,7 @@ const BarberTemplate = () => {
                           />
                         </Card.Subtitle>
                       </div>
-                      <div className="d-flex flex-column flex-shrink-1">
-                        <a
-                          href="https://www.instagram.com/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white"
-                        >
-                          <i className="fa-brands fa-instagram fs-5"></i>
-                        </a>
-                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
                     </Card.ImgOverlay>
                     <Button
                       onClick={() => handleEditImageClick("Team", "image1")}
@@ -1241,16 +1012,7 @@ const BarberTemplate = () => {
                           />
                         </Card.Subtitle>
                       </div>
-                      <div className="d-flex flex-column flex-shrink-1">
-                        <a
-                          href="https://www.facebook.com/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white"
-                        >
-                          <i className="fa-brands fa-facebook-f fs-5"></i>
-                        </a>
-                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
                     </Card.ImgOverlay>
                     <Button
                       onClick={() => handleEditImageClick("Team", "image2")}
@@ -1317,16 +1079,7 @@ const BarberTemplate = () => {
                           />
                         </Card.Subtitle>
                       </div>
-                      <div className="d-flex flex-column flex-shrink-1">
-                        <a
-                          href="https://www.twitter.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white"
-                        >
-                          <i className="fa-brands fa-twitter fs-5"></i>
-                        </a>
-                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
                     </Card.ImgOverlay>
                     <Button
                       onClick={() => handleEditImageClick("Team", "image3")}
@@ -1393,16 +1146,7 @@ const BarberTemplate = () => {
                           />
                         </Card.Subtitle>
                       </div>
-                      <div className="d-flex flex-column flex-shrink-1">
-                        <a
-                          href="https://www.instagram.com/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white"
-                        >
-                          <i className="fa-brands fa-instagram fs-5"></i>
-                        </a>
-                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
                     </Card.ImgOverlay>
                     <Button
                       onClick={() => handleEditImageClick("Team", "image4")}
@@ -1599,7 +1343,7 @@ const BarberTemplate = () => {
                         href="tel:12345678910"
                         className="fs-22 ls-minus-1px fw-600 text-dark"
                       >
-                        +234 8098765432
+                        {ecosystemDetails.expectedAudienceNumber}
                       </a>
                     </div>
                   </div>

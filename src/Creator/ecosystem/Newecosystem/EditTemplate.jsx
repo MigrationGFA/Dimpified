@@ -63,11 +63,15 @@ const EditTemplate = () => {
   const dispatch = useDispatch();
   const [templateLoading, setTemplateLoading] = useState(false);
 
-  const content = useSelector((state) => state.template1);
+  const content = useSelector((state) => state.mainTemplate.currentTemplate);
   const userId = useSelector(
     (state) => state.authentication.user.data.CreatorId
   );
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+  const ecosystemDomain = useSelector(
+    (state) => state.ecosystem.ecosystemDomain
+  );
+
+  const userType = useSelector((state) => state.authentication.user.data.role);
 
   const navigate = useNavigate();
 
@@ -123,53 +127,44 @@ const EditTemplate = () => {
     }
   };
 
-  // to convert to file type
-  const convertBase64ToFile = (base64String, filename) => {
-    const arr = base64String.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  };
-
   const handleSubmit = async () => {
     setLoading(true);
-    const formData = new FormData();
-
     // Add template details to FormData
-    formData.append("creatorId", userId);
-    formData.append("ecosystemId", ecosystemId);
-    formData.append("templateNumber", localStorage.getItem("templateId"));
-
-    // Convert nested objects to JSON and append to FormData
-    formData.append("navbar", JSON.stringify(content.navbar));
-    formData.append("hero", JSON.stringify(content.hero));
-    formData.append("aboutUs", JSON.stringify(content.aboutUs));
-    formData.append("vision", JSON.stringify(content.Vision));
-    formData.append("audience", JSON.stringify(content.Audience));
-    formData.append("cta", JSON.stringify(content.CTA));
-    formData.append("whyUs", JSON.stringify(content.WhyUs));
-    formData.append("contactUs", JSON.stringify(content.contactUs));
-    formData.append("faq", JSON.stringify(content.faq));
-    formData.append("footer", JSON.stringify(content.footer));
+    const templateData = {
+      creatorId: userId,
+      ecosystemDomain: ecosystemDomain,
+      templateId: selectedTemplate,
+      navbar: content.navbar,
+      hero: content.hero,
+      aboutUs: content.aboutUs,
+      Vision: content.Vision,
+      Statistics: content.Statistics,
+      Patrners: content.Patrners,
+      Events: content.Events,
+      Gallery: content.Gallery,
+      LargeCta: content.LargeCta,
+      Team: content.Team,
+      Blog: content.Blog,
+      Reviews: content.Reviews,
+      contactUs: content.contactUs,
+      faq: content.faq,
+      faqStyles: content.faqStyles,
+      footer: content.footer,
+    };
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ecosystem/create-templates`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-creator-template`,
+        templateData
       );
       setLoading(false);
-      navigate("/creator/dashboard/Create-Form");
-      showToast(response.data.message);
+      if (userType === "creator" || userType === "enterprise") {
+        navigate("/creator/dashboard/Create-Form");
+        showToast(response.data.message);
+      } else {
+        navigate("/creator/dashboard/Create-Form");
+      }
+
       console.log("Template created successfully", response.data);
     } catch (error) {
       setLoading(false);
@@ -358,7 +353,6 @@ const EditTemplate = () => {
             <div>
               <PreviewPageSize setView={setView} />
               {renderPreviewTemplate(selectedTemplate)}
-              {/* <PreviewPage view={view} /> */}
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back

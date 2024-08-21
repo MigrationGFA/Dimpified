@@ -45,7 +45,7 @@ const NewEcosystem = () => {
     dispatch(updateField({ field, value }));
 
     if (field === "ecosystemName") {
-      const domainValue = value.toLowerCase().replace(/\s+/g, '-');
+      const domainValue = value.toLowerCase().replace(/\s+/g, "-");
       dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
       validateDomain(domainValue);
     }
@@ -158,7 +158,7 @@ const NewEcosystem = () => {
       const data = response.data.ecosystem;
       const { _id } = data;
       dispatch(setEcosystemId(_id));
-      navigate("/creator/dashboard/Edit-Template/individual");
+      navigate("/creator/dashboard/Products/individual");
       showToast(response.data.message);
     } catch (error) {
       showToast(error.response.data.message);

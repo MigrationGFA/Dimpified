@@ -317,7 +317,7 @@ const Ecosystem = () => {
 
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         <div>
-                          {eco.steps && eco.steps === 3 ? (
+                          {role === "consumer" && eco.steps === 2 ? (
                             <div>
                               <Button
                                 variant="primary"
@@ -357,20 +357,63 @@ const Ecosystem = () => {
                               </Button>
                             </div>
                           ) : (
-                            <Button
-                              variant="outline-primary"
-                              className="me-2 mb-2 mb-md-0"
-                              onClick={() =>
-                                handleContinue(
-                                  eco.ecosystemName,
-                                  eco.ecosystemDomain,
-                                  eco.steps,
-                                  eco._id
-                                )
-                              }
-                            >
-                              Continue
-                            </Button>
+                            <div>
+                              {eco.steps && eco.steps === 3 ? (
+                                <div>
+                                  <Button
+                                    variant="primary"
+                                    className="me-2 mb-2 mb-md-0"
+                                    onClick={() =>
+                                      saveEcoLogo(
+                                        eco.templateLogos[0].logoPath,
+                                        eco.ecosystemDomain
+                                      )
+                                    }
+                                  >
+                                    Dashboard
+                                  </Button>
+                                  <a
+                                    href={`http://${eco.ecosystemDomain}.localhost:5173/`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Button
+                                      variant="primary"
+                                      className="me-2 mb-2 mb-md-0"
+                                    >
+                                      View Site
+                                    </Button>
+                                  </a>
+                                  <Button
+                                    variant="primary"
+                                    className="me-2 mb-2 mb-md-0"
+                                    onClick={() =>
+                                      handleShare(
+                                        eco.ecosystemName,
+                                        eco.ecosystemDomain
+                                      )
+                                    }
+                                  >
+                                    Share
+                                  </Button>
+                                </div>
+                              ) : (
+                                <Button
+                                  variant="outline-primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                  onClick={() =>
+                                    handleContinue(
+                                      eco.ecosystemName,
+                                      eco.ecosystemDomain,
+                                      eco.steps,
+                                      eco._id
+                                    )
+                                  }
+                                >
+                                  Continue
+                                </Button>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>
