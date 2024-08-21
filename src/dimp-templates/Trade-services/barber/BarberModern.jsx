@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+import BookingModal from "./BookingModal";
 import {
   Modal,
   Button,
@@ -121,10 +122,7 @@ const Navbar = () => (
           className="btn-large btn-round-edge btn-box-shadow btn-white left-icon section-link"
         >
           <span>
-            <span className="btn-double-text" >
-              Contact Us
-            </span>
-           
+            <span className="btn-double-text">Contact Us</span>
           </span>
         </Button>
       </BootstrapNavbar.Collapse>
@@ -134,79 +132,80 @@ const Navbar = () => (
 
 // Hero Section
 const Hero = () => {
-  const [show, setShow] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    serviceLocation: "",
-    email: "",
-    phone: "",
-    address: "",
-    service: "",
-    date: "",
-    time: "",
-  });
-  const [notification, setNotification] = useState(null);
-  const [barbingServices, setBarbingServices] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
+  // const [show, setShow] = useState(false);
+  // const [index, setIndex] = useState(0);
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   serviceLocation: "",
+  //   email: "",
+  //   phone: "",
+  //   address: "",
+  //   service: "",
+  //   date: "",
+  //   time: "",
+  // });
+  // const [notification, setNotification] = useState(null);
+  // const [barbingServices, setBarbingServices] = useState([]);
 
-  const serviceOptions = {
-    "Home service": [
-      "Haircut - #3000",
-      "Shave - #2500",
-      "Hair Dye - #5000",
-      "Beard Trim - #3000",
-    ],
-    Shop: [
-      "Haircut - #2000",
-      "Shave - #1500",
-      "Hair Dye - #4000",
-      "Beard Trim - #3000",
-    ],
-  };
+  // const serviceOptions = {
+  //   "Home service": [
+  //     "Haircut - #3000",
+  //     "Shave - #2500",
+  //     "Hair Dye - #5000",
+  //     "Beard Trim - #3000",
+  //   ],
+  //   Shop: [
+  //     "Haircut - #2000",
+  //     "Shave - #1500",
+  //     "Hair Dye - #4000",
+  //     "Beard Trim - #3000",
+  //   ],
+  // };
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
+  // const handleSelect = (selectedIndex) => {
+  //   setIndex(selectedIndex);
+  // };
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+  // const handleChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setFormData({ ...formData, [id]: value });
 
-    if (id === "serviceLocation") {
-      setBarbingServices(serviceOptions[value] || []);
-      setFormData({ ...formData, serviceLocation: value, service: "" });
-    }
-  };
+  //   if (id === "serviceLocation") {
+  //     setBarbingServices(serviceOptions[value] || []);
+  //     setFormData({ ...formData, serviceLocation: value, service: "" });
+  //   }
+  // };
 
-  const checkAvailability = async () => {
-    try {
-      const response = await axios.post("/api/check-availability", {
-        date: formData.date,
-        time: formData.time,
-      });
-      return response.data.isAvailable;
-    } catch (error) {
-      console.error("Error checking availability:", error);
-      return false;
-    }
-  };
+  // const checkAvailability = async () => {
+  //   try {
+  //     const response = await axios.post("/api/check-availability", {
+  //       date: formData.date,
+  //       time: formData.time,
+  //     });
+  //     return response.data.isAvailable;
+  //   } catch (error) {
+  //     console.error("Error checking availability:", error);
+  //     return false;
+  //   }
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const isAvailable = await checkAvailability();
-    if (!isAvailable) {
-      setNotification(
-        "The selected date and time are already booked. Please choose another."
-      );
-      return;
-    }
-    // Proceed with booking
-    // Submit the booking form data to the server
-    handleClose();
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const isAvailable = await checkAvailability();
+  //   if (!isAvailable) {
+  //     setNotification(
+  //       "The selected date and time are already booked. Please choose another."
+  //     );
+  //     return;
+  //   }
+  //   // Proceed with booking
+  //   // Submit the booking form data to the server
+  //   handleClose();
+  // };
 
   return (
     <Fragment>
@@ -229,7 +228,7 @@ const Hero = () => {
                 Talented men's barber studio
               </h1>
               <Button
-                onClick={handleShow}
+                onClick={() => setModalShow(true)}
                 className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
               >
                 <span>
@@ -243,6 +242,10 @@ const Hero = () => {
                   <Calendar2Check />
                 </span>
               </Button>
+              <BookingModal
+                show={modalShow}
+                handleClose={() => setModalShow(false)}
+              />
             </Col>
             <div className="text-center position-absolute left-0px bottom-50px md-bottom-30px w-100 animation-float">
               <a href="#about" className="d-block text-white section-link">
@@ -252,131 +255,6 @@ const Hero = () => {
           </Row>
         </Container>
       </section>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Book an appointment</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {notification && <Alert variant="danger">{notification}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="name">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="email" className="mt-1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter your email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="phone" className="mt-1">
-              <Form.Label>Phone number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="serviceLocation" className="mt-1">
-              <Form.Label>Where should we attend to you?</Form.Label>
-              <Form.Control
-                as="select"
-                value={formData.serviceLocation}
-                onChange={handleChange}
-                style={{
-                  WebkitAppearance: "none",
-                  MozAppearance: "none",
-                  appearance: "none",
-                  background: `url('https://www.svgrepo.com/show/315098/caret-down.svg)`,
-                  paddingRight: "1.75rem",
-                }}
-              >
-                <option value="">Select convenient location</option>
-                <option value="Home service">Home service</option>
-                <option value="Shop">Shop</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="address" className="mt-1">
-              <Form.Label>Your address please? (for Home service)</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="service" className="mt-1">
-              <Form.Label>Choose your preferred barbing service</Form.Label>
-              <Form.Control
-                as="select"
-                value={formData.service}
-                onChange={handleChange}
-                disabled={!formData.serviceLocation}
-                style={{
-                  WebkitAppearance: "none",
-                  MozAppearance: "none",
-                  appearance: "none",
-                  background: `url('https://www.svgrepo.com/show/315098/caret-down.svg') no-repeat right 1.75rem center/8px 10px`,
-                  paddingRight: "1.75rem",
-                }}
-              >
-                <option value="">Select service</option>
-                {barbingServices.map((service, index) => (
-                  <option key={index} value={service}>
-                    {service}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-
-            <Row className="g-2 mt-2">
-              <Form.Label>What date and time do you want to book?</Form.Label>
-              <Col xl={6} className="mb-3">
-                <Form.Control
-                  className="border-color-transparent-dark-very-light bg-transparent"
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  min="2023-01-01"
-                  max="2099-12-31"
-                />
-              </Col>
-              <Col xl={6}>
-                <Form.Control
-                  className="border-color-transparent-dark-very-light bg-transparent"
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                  min="09:00"
-                  max="12:00"
-                />
-              </Col>
-            </Row>
-            <Modal.Footer>
-              <Button variant="secondary" href="/payment">
-                Pay-on-delivery
-              </Button>
-              <Button variant="dark" type="submit">
-                Proceed to Payment
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
-      </Modal>
     </Fragment>
   );
 };
@@ -699,7 +577,6 @@ const Gallery = () => (
                         >
                           <div className="position-relative gallery-image bg-dark-gray overflow-hidden border-radius-6px">
                             <img src={src} className="img-fluid h-100" alt="" />
-                            
                           </div>
                         </a>
                       </div>
@@ -859,7 +736,6 @@ const Team = () => (
                   Hair stylist
                 </span>
               </div>
-              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -879,7 +755,6 @@ const Team = () => (
                   Hair stylist
                 </span>
               </div>
-              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -899,7 +774,6 @@ const Team = () => (
                   Beard stylist
                 </span>
               </div>
-              
             </Figure.Caption>
           </Figure>
         </Col>
@@ -919,7 +793,6 @@ const Team = () => (
                   Hair washer
                 </span>
               </div>
-              
             </Figure.Caption>
           </Figure>
         </Col>

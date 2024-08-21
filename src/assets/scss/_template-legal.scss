@@ -55,10 +55,7 @@ header.sticky .left-nav .navbar-nav:before {
   transform: translate(-28px, 0px);
   -webkit-transform: translate(-28px, 0px);
 }
-.navbar .navbar-nav .nav-link {
-  font-size: 18px;
-  font-weight: 400;
-}
+
 .navbar .navbar-nav .dropdown.dropdown-with-icon-style02 .dropdown-menu li a {
   border-bottom: 1px solid #f6f3ef;
   padding: 16px 20px;
@@ -242,12 +239,7 @@ footer .footer-logo img {
     min-height: 270px !important;
   }
 }
-@media (max-width: 1300px) {
-  .navbar .navbar-nav .nav-link {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
+
 @media (max-width: 1199px) {
   header .left-nav .navbar-nav:before {
     transform: translate(-10px, 0px);
@@ -264,17 +256,10 @@ footer .footer-logo img {
     padding-left: 0.6rem;
     padding-right: 0.6rem;
   }
-  .navbar .navbar-nav .nav-link {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+ 
 }
-@media (max-width: 1024px) {
-  .navbar .navbar-nav .nav-link {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-}
+
+
 @media (max-width: 991px) {
   header .widget-text {
     color: var(--dark-gray);
