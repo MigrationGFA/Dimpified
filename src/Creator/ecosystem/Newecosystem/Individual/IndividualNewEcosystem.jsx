@@ -158,7 +158,7 @@ const NewEcosystem = () => {
       const data = response.data.ecosystem;
       const { _id } = data;
       dispatch(setEcosystemId(_id));
-      navigate("/creator/dashboard/Edit-Template/individual");
+      navigate("/creator/dashboard/Products/individual");
       showToast(response.data.message);
     } catch (error) {
       showToast(error.response.data.message);
