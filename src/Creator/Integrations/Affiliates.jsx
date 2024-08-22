@@ -1,65 +1,100 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
 
-const AffiliateIntegration = () => {
-  const [isReferralCandyActive, setReferralCandyActive] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setReferralCandyActive(!isReferralCandyActive);
-  };
+const Affiliates = () => {
+  const [referralCandyActive, setReferralCandyActive] = useState(false);
+  const [refersionActive, setRefersionActive] = useState(false);
 
   return (
-    <div className="container mt-5">
-      <h2>Affiliates</h2>
+    <Container>
+      <h3 className="my-3">Affiliates</h3>
       <p>Integrate affiliate marketing via ReferralCandy or Refersion to boost product promotion.</p>
-      <button className="btn btn-success mb-3">Save</button>
+      <Button variant="success" className="mb-4">Save</Button>
 
-      <div className="row border">
-        {/* Left side with gray background */}
-        <div className="col-md-8 p-4" style={{ backgroundColor: '#f5f5f5' }}>
-          <h4>ReferralCandy</h4>
-          <p>
-            ReferralCandy is an ecommerce store plugin that helps you get more word of mouth sales.
-            Sign up for an account via LearnWorlds <a href="#">here</a> and get $50 worth of credits (1+1 months free).
-          </p>
-          <img
-            src="https://via.placeholder.com/150"
-            alt="ReferralCandy"
-            className="img-fluid"
-          />
-        </div>
-
-        {/* Right side with white background */}
-        <div className="col-md-4 p-4" style={{ backgroundColor: '#fff' }}>
-          <div className="form-check text-end">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              checked={isReferralCandyActive}
-              onChange={handleCheckboxChange}
-              id="activateReferralCandy"
-            />
-            <label className="form-check-label ms-2" htmlFor="activateReferralCandy">
-              Activate
-            </label>
-          </div>
-
-          {isReferralCandyActive && (
-            <div className="mt-4">
-              <div className="mb-3">
-                <label htmlFor="appId" className="form-label">App ID</label>
-                <input type="text" className="form-control" id="appId" placeholder="App ID" />
-              </div>
-              <div>
-                <label htmlFor="secretKey" className="form-label">Secret Key</label>
-                <input type="text" className="form-control" id="secretKey" placeholder="Secret Key" />
-              </div>
+      {/* ReferralCandy Section */}
+      <Card className="mb-3">
+        <Card.Body>
+          <Row className="align-items-center">
+            <Col md={10}>
+              <h5>ReferralCandy</h5>
+              <p>
+                ReferralCandy is an ecommerce store plugin that helps you get more word of mouth sales.
+                Sign up for an account via LearnWorlds <a href="#">here</a> and get $50 worth of credits (1+1 months free).
+              </p>
+              <img src="https://via.placeholder.com/100x50" alt="ReferralCandy Logo" />
+            </Col>
+            <Col md={2} className="text-right">
+              <Form.Check
+                type="checkbox"
+                label="Activate"
+                checked={referralCandyActive}
+                onChange={(e) => setReferralCandyActive(e.target.checked)}
+              />
+            </Col>
+          </Row>
+          {referralCandyActive && (
+            <div className="mt-3">
+              <Form.Group controlId="formAppID">
+                <Form.Label>App ID</Form.Label>
+                <Form.Control type="text" placeholder="App ID" />
+                <Form.Text className="text-muted">
+                  You can find the App ID in My Profile &gt; Plugin Tokens
+                </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formSecretKey" className="mt-3">
+                <Form.Label>Secret Key</Form.Label>
+                <Form.Control type="text" placeholder="Secret key" />
+                <Form.Text className="text-muted">
+                  You can find the Secret Key in My Profile &gt; Plugin Tokens
+                </Form.Text>
+              </Form.Group>
             </div>
           )}
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Card>
+
+      {/* Refersion Section */}
+      <Card>
+        <Card.Body>
+          <Row className="align-items-center">
+            <Col md={10}>
+              <h5>Refersion</h5>
+              <p>
+                Refersion is a simple affiliate marketing software that allows you to easily manage your affiliates and automate their commissions.
+              </p>
+              <img src="https://via.placeholder.com/100x50" alt="Refersion Logo" />
+            </Col>
+            <Col md={2} className="text-right">
+              <Form.Check
+                type="checkbox"
+                label="Activate"
+                checked={refersionActive}
+                onChange={(e) => setRefersionActive(e.target.checked)}
+              />
+            </Col>
+          </Row>
+          {refersionActive && (
+            <div className="mt-3">
+              <Form.Group controlId="formRefersionAppID">
+                <Form.Label>App ID</Form.Label>
+                <Form.Control type="text" placeholder="App ID" />
+                <Form.Text className="text-muted">
+                  You can find the App ID in My Profile &gt; Plugin Tokens
+                </Form.Text>
+              </Form.Group>
+              <Form.Group controlId="formRefersionSecretKey" className="mt-3">
+                <Form.Label>Secret Key</Form.Label>
+                <Form.Control type="text" placeholder="Secret key" />
+                <Form.Text className="text-muted">
+                  You can find the Secret Key in My Profile &gt; Plugin Tokens
+                </Form.Text>
+              </Form.Group>
+            </div>
+          )}
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 
-export default AffiliateIntegration;
+export default Affiliates;
