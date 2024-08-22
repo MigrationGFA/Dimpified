@@ -925,8 +925,8 @@ const Contact = () => (
   </section>
 );
 const MiniCTA = () => (
-  <section className="beauty px-4 bg-gradient-blue-ironstone-brown">
-    <div className=" border-bottom border-color-transparent-white-light">
+  <section className=" px-4 bg-gradient-blue-ironstone-brown">
+    <div className=" beauty border-bottom border-color-transparent-white-light">
       <Container>
         <Row>
           <Col className="text-center">
