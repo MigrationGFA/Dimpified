@@ -8,21 +8,23 @@
   --alt-font: "Marcellus", serif;
   --primary-font: "Urbanist", sans-serif;
 }
-.beauty .nav-link {
-  color: white; /* White text on a transparent background */
+.beauty-link .nav-link {
+  color: white;
+  font-family: "Marcellus", serif;
 }
 .beauty {
   padding-top: 50px;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
 }
 
 /* Mobile and Tablet styles */
 @media (max-width: 992px) {
-  .beauty {
-    background-color: white; /* White background on mobile and tablet */
+  .beauty-link {
+    background-color: white;
+    font-family: "Marcellus", serif;
   }
 
-  .beauty .nav-link {
+  .beauty-link .nav-link {
     color: black; /* Black text on a white background */
   }
 }
@@ -32,7 +34,6 @@
 .primary-font {
   font-family: var(--primary-font) !important;
 }
-
 
 .custom-cursor .circle-cursor-inner {
   background-color: var(--dark-gray);
@@ -178,8 +179,6 @@ footer .elements-social .medium-icon li {
 footer .nav-link {
   color: var(--white);
 }
-
-
 
 @media (max-width: 991px) {
   [data-mobile-nav-style="modern"]
