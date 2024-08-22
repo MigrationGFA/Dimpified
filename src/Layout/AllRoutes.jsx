@@ -48,6 +48,26 @@ import PendingPayment from "../Creator/Payment/PendingPayment";
 import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
 import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
+// Import Integration components
+import Booking from "../Creator/Integrations/Booking";
+import Affiliates from "../Creator/Integrations/Affiliates";
+import Analytic from "../Creator/Integrations/Analytics";
+import Certificate from "../Creator/Integrations/Certifications";
+import Communication from "../Creator/Integrations/Communications";
+import CRMtools from "../Creator/Integrations/CRMTools";
+import CustomerService from "../Creator/Integrations/CustomerService";
+import DomainManagement from "../Creator/Integrations/DomainManagement";
+import Ecommerce from "../Creator/Integrations/Ecommerce";
+import EmailIntegration from "../Creator/Integrations/EmailIntegrations";
+import Finance from "../Creator/Integrations/Finance";
+import LiveSession from "../Creator/Integrations/LiveSessions";
+import MobileApp from "../Creator/Integrations/Mobile";
+import Security from "../Creator/Integrations/Security";
+import SocialMedia from "../Creator/Integrations/Social";
+import StoragePlatform from "../Creator/Integrations/StoragePlatform";
+import VideoPlayer from "../Creator/Integrations/VideoPlayer";
+
+
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
 import UserSignUp from "../Creator/authentication/UserSignUp";
@@ -132,6 +152,7 @@ import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
 import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
+import CommunityCreation from "../Components/CommunityChat/CommunityCreation"
 
 // ** Import Admin Dahbaord Menu Pages
 import AdminSignIn from "../Admin/Authentication/AdminSignIn";
@@ -259,6 +280,23 @@ const AllRoutes = () => {
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
+        <Route path="/creator/booking" element={<Booking />} />
+        <Route path="/creator/affiliates" element={<Affiliates />} />
+        <Route path="/creator/analytic" element={<Analytic />} />
+        <Route path="/creator/certification" element={<Certificate />} />
+        <Route path="/creator/communication" element={<Communication />} />
+        <Route path="/creator/crm-tools" element={<CRMtools />} />
+        <Route path="/creator/customer-service" element={<CustomerService />} />
+        <Route path="/creator/domain-management" element={<DomainManagement />} />
+        <Route path="/creator/e-commerce" element={<Ecommerce />} />
+        <Route path="/creator/email-integration" element={<EmailIntegration />} />
+        <Route path="/creator/finance" element={<Finance />} />
+        <Route path="/creator/live-session" element={<LiveSession />} />
+        <Route path="/creator/mobile-app" element={<MobileApp />} />
+        <Route path="/creator/security" element={<Security />} />
+        <Route path="/creator/social-media" element={<SocialMedia />} />
+        <Route path="/creator/storage-platform" element={<StoragePlatform />} />
+        <Route path="/creator/video-player" element={<VideoPlayer />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
@@ -355,6 +393,10 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/creator-community-chat"
         element={<CreatorCommunityChat />}
       />
+      <Route
+        path="/:ecosystemDomain/community-creation"
+        element={<CommunityCreation />}
+      /> 
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/help-center" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
