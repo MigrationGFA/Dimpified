@@ -31,15 +31,14 @@
   border: none;
   border-radius: 8px;
   padding: 8px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  /* justify-content: space-between; */
   margin-bottom: 8px;
   height: 120px;
 }
 
 .userCardBody {
-  display: flex;
   align-items: center;
   width: 100%;
 }
@@ -47,6 +46,7 @@
 .userInfo {
   display: flex;
   align-items: center;
+  
 }
 
 .userImage {
@@ -73,6 +73,7 @@
 }
 
 .followBtn {
+  font-size: 10px;
   background-color: #007bff;
   border: none;
   border-radius: 20px;

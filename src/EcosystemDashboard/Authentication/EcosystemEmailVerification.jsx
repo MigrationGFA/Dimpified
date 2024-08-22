@@ -21,6 +21,7 @@ const EcosystemEmailVerification = () => {
         {
           email: queryParam.get("email"),
           verificationToken: queryParam.get("token"),
+          ecosystemDomain: queryParam.get("ecosystemDomain"),
         }
       );
       console.log("Verification response:", response.data);
@@ -45,29 +46,33 @@ const EcosystemEmailVerification = () => {
     setLoading(false);
   };
 
-  // const resendEmail = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.post(
-  //       `https://dimpified-backend.azurewebsites.net/api/v1/creator/resend-email`,
-  //       {
-  //         email: queryParam.get("email"),
-  //       }
-  //     );
-  //     if (response.data.msg === "Email address have been verified") {
-  //       setError(false);
-  //       setLoading(false);
-  //       showToast("Email address have been verified");
-  //     }
-  //   } catch (error) {
-  //     setLoading(false);
-  //     showToast(error.response.data.message);
-  //   }
-  // };
+  const resendEmail = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem-user/resend-email`,
+        {
+          email: queryParam.get("email"),
+        }
+      );
+      if (response.data.msg === "Email address have been verified") {
+        setError(false);
+        setLoading(false);
+        showToast("Email address have been verified");
+      }
+    } catch (error) {
+      setLoading(false);
+      showToast(error.response.data.message);
+    }
+  };
 
   useEffect(() => {
     console.log("Component mounted");
-    console.log("Query parameters:", queryParam.get("email"), queryParam.get("token"));
+    console.log(
+      "Query parameters:",
+      queryParam.get("email"),
+      queryParam.get("token")
+    );
     verifyUserToken();
   }, []);
 
@@ -93,7 +98,8 @@ const EcosystemEmailVerification = () => {
             <Row className="align-items-center justify-content-center">
               <Col lg={10} md={9} className="text-center">
                 <h1 className="fs-4">
-                  An error occurred while verifying your account. Please click the button below to request a new verification link.
+                  An error occurred while verifying your account. Please click
+                  the button below to request a new verification link.
                 </h1>
               </Col>
               <Col lg={10} md={9} className="text-center">
@@ -122,7 +128,7 @@ const EcosystemEmailVerification = () => {
                 <h1 className="fs-3 mb-4">Your Email has been verified</h1>
               </Col>
               <Col lg={10} md={9} className="text-center">
-                <Button variant="primary" type="submit" as={Link} to="/">
+                <Button variant="primary" type="submit" as={Link} to="/signin">
                   Please Login
                 </Button>
               </Col>

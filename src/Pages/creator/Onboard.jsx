@@ -1,33 +1,30 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import Categories from "../../data/CreatorInterest";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
-// import Ecosystem from "../../assets/ecosystem.png";
 import Ecosystem from "../../assets/images/background/Onboard.jpg";
-import { useSelector } from "react-redux";
+import { EnterpriseCategories, IndividualCategories } from "../../data/CreatorInterest";
 
 const Onboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState(null);
+  const navigate = useNavigate();
+
+  const userId = useSelector((state) => state.authentication.user.data.CreatorId);
+  const role = useSelector((state) => state.authentication.user.data.role);
+  console.log(role)
+
   const handleCategoryClick = (categoryId) => {
     if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(
-        selectedCategories.filter((id) => id !== categoryId)
-      );
+      setSelectedCategories(selectedCategories.filter((id) => id !== categoryId));
     } else {
       setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
-
-  const navigate = useNavigate();
-  const userId = useSelector(
-    (state) => state.authentication.user.data.CreatorId
-  );
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -48,6 +45,7 @@ const Onboard = () => {
       showToast(error.response.message);
     }
   };
+
 
   const departments = [
     { value: "1-500", label: "1 - 500" },
@@ -107,6 +105,8 @@ const Onboard = () => {
     { value: "4500001-5000000", label: "4,500,001 - 5,000,000" },
   ];
 
+  const categories = role === "Enterprise" ? EnterpriseCategories : IndividualCategories;
+
   return (
     <div className="d-flex justify-content-center align-items-center">
       <Row className="w-100">
@@ -143,15 +143,15 @@ const Onboard = () => {
                 <span className="text-danger">*</span>
               </h2>
               <div className="d-flex flex-wrap justify-content-center">
-                {Categories.map((category) => (
+                {categories.map((category) => (
                   <Button
                     key={category.id}
                     variant={
-                      selectedCategories.includes(category.name)
+                      selectedCategories.includes(category.id)
                         ? "primary"
                         : "outline-primary"
                     }
-                    onClick={() => handleCategoryClick(category.name)}
+                    onClick={() => handleCategoryClick(category.id)}
                     className="me-1 mb-2"
                     style={{ borderRadius: "0.5rem", fontSize: "0.8rem" }}
                   >
@@ -164,15 +164,6 @@ const Onboard = () => {
                   Select Target Audience
                   <span className="text-danger">*</span>
                 </h2>
-                {/* <FormSelect
-                  as={FormSelect}
-                  options={departments}
-                  placeholder="Select Target Audience"
-                  defaultValue=""
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  required
-                /> */}
                 <Form.Control
                   as="select"
                   value={department}

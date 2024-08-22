@@ -3,53 +3,45 @@ import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 export const DashboardMenu = () => {
-  const [ecosystemDomain, setEcosystemDomain] = useState("");
   const [showChildren, setShowChildren] = useState(false);
 
   const handleMyCoursesClick = () => {
     setShowChildren(!showChildren);
   };
 
-  useEffect(() => {
-    const domain = sessionStorage.getItem("ecosystemDomain");
-    if (domain) {
-      setEcosystemDomain(domain);
-    }
-  }, []);
-
   const menuItems = [
     {
       id: 1,
       title: "My Dashboard",
-      link: `/${ecosystemDomain}/Userdashboard`,
+      link: `/Userdashboard`,
       icon: "home",
     },
     {
       id: 2,
       title: "My Products",
-      link: `/${ecosystemDomain}/User-My-Course`,
+      link: `/User-My-Course`,
       icon: "book",
       children: [
         {
           id: 3,
           title: "Bookmarked",
-          link: `/${ecosystemDomain}/User-My-Course/Bookmarked`,
+          link: `/User-My-Course/Bookmarked`,
           icon: "bookmark",
         },
         {
           id: 4,
           title: "Learning",
-          link: `/${ecosystemDomain}/User-My-Course/Learning`,
+          link: `/User-My-Course/Learning`,
           icon: "book",
         },
       ],
     },
-    // {
-    //   id: 5,
-    //   title: "Community",
-    //   link: `/${ecosystemDomain}/community-chat`,
-    //   icon: "user",
-    // },
+    {
+      id: 5,
+      title: "Community",
+      link: `/community-chat`,
+      icon: "user",
+    },
     // {
     //     id: 6,
     //     title: "Chat",
@@ -59,13 +51,13 @@ export const DashboardMenu = () => {
     {
       id: 7,
       title: "Reviews",
-      link: `/${ecosystemDomain}/User-Reviews`,
+      link: `/User-Reviews`,
       icon: "star",
     },
     {
       id: 8,
       title: "Payouts",
-      link: `/${ecosystemDomain}/User-payout`,
+      link: `/User-payout`,
       icon: "dollar-sign",
     },
     //   // {
@@ -74,7 +66,7 @@ export const DashboardMenu = () => {
     //   // 	link: '/marketing/instructor/quiz/',
     //   // 	icon: 'help-circle'
     //   // },
-    
+
     //   // {
     //   //   id: 5,
     //   //   title: "Quiz Result",
@@ -145,7 +137,7 @@ export const AccountSettingsMenu = () => {
     {
       id: 1,
       title: "Edit Profile",
-      link: `/${ecosystemDomain}/User-edit-profile`,
+      link: `/User-edit-profile`,
       icon: "settings",
     },
     // {
@@ -157,7 +149,7 @@ export const AccountSettingsMenu = () => {
     {
       id: 2,
       title: "Social Profiles",
-      link: `/${ecosystemDomain}/User-social-profile`,
+      link: `/User-social-profile`,
       icon: "refresh-cw",
     },
     // {
@@ -175,13 +167,13 @@ export const AccountSettingsMenu = () => {
     {
       id: 5,
       title: "Help Center",
-      link: `/${ecosystemDomain}/help-center`,
+      link: `/help-center`,
       icon: "help-circle",
     },
     {
       id: 4,
       title: "Delete Profile",
-      link: `/${ecosystemDomain}/User-delete-profile`,
+      link: `/User-delete-profile`,
       icon: "trash",
     },
     {
