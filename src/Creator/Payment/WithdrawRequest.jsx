@@ -24,7 +24,7 @@ const WithdrawPayment = () => {
     const fetchWithdrawalRequests = async () => {
       try {
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/all-payment-request"
+          `${import.meta.env.VITE_API_URL}/all-payment-request`
         );
         setWithdrawalRequests(response.data.paymentRequests);
         setLoading(false);
