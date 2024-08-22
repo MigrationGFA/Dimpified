@@ -67,6 +67,7 @@ import SocialMedia from "../Creator/Integrations/Social";
 import StoragePlatform from "../Creator/Integrations/StoragePlatform";
 import VideoPlayer from "../Creator/Integrations/VideoPlayer";
 
+
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
 import UserSignUp from "../Creator/authentication/UserSignUp";
@@ -151,7 +152,7 @@ import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
 import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
-import CommunityCreation from "../Components/CommunityChat/ClommunityCreation";
+import CommunityCreation from "../Components/CommunityChat/CommunityCreation"
 
 // ** Import Admin Dahbaord Menu Pages
 import AdminSignIn from "../Admin/Authentication/AdminSignIn";
@@ -198,6 +199,7 @@ const AllRoutes = () => {
 
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
+     
 
       <Route path="/upskill-template" element={<StateUpskilling />} />
       <Route path="/barber-two" element={<BarberMordern />} />
@@ -246,10 +248,7 @@ const AllRoutes = () => {
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
 
-      <Route
-        path="/creator/dashboard/Payment/Individual"
-        element={<IndividualEcoPayment />}
-      />
+      <Route path="/creator/dashboard/Payment/Individual" element={<IndividualEcoPayment />} />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
@@ -288,15 +287,9 @@ const AllRoutes = () => {
         <Route path="/creator/communication" element={<Communication />} />
         <Route path="/creator/crm-tools" element={<CRMtools />} />
         <Route path="/creator/customer-service" element={<CustomerService />} />
-        <Route
-          path="/creator/domain-management"
-          element={<DomainManagement />}
-        />
+        <Route path="/creator/domain-management" element={<DomainManagement />} />
         <Route path="/creator/e-commerce" element={<Ecommerce />} />
-        <Route
-          path="/creator/email-integration"
-          element={<EmailIntegration />}
-        />
+        <Route path="/creator/email-integration" element={<EmailIntegration />} />
         <Route path="/creator/finance" element={<Finance />} />
         <Route path="/creator/live-session" element={<LiveSession />} />
         <Route path="/creator/mobile-app" element={<MobileApp />} />
@@ -400,6 +393,10 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/creator-community-chat"
         element={<CreatorCommunityChat />}
       />
+      <Route
+        path="/:ecosystemDomain/community-creation"
+        element={<CommunityCreation />}
+      /> 
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/help-center" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
@@ -408,10 +405,7 @@ const AllRoutes = () => {
         path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
       />
-      <Route
-        path="/:ecosystemDomain/community-creation"
-        element={<CommunityCreation />}
-      />
+
       <Route path="/community-chat" element={<CommunityChat />} />
       <Route element={<UserChatLayout />}>
         <Route path="/chat" element={<UserChat />} />

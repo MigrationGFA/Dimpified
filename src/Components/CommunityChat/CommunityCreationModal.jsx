@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,18 +6,29 @@ import axios from "axios";
 import { showToast } from "../Showtoast";
 
 const CompanyFormModal = ({ show, handleClose }) => {
-  const {ecosystemDomain}= useParams();
+  const { ecosystemDomain } = useParams();
+
+  // Safely accessing userId
   const userId = useSelector(
-    (state) => state.authentication.user.data.CreatorId
+    (state) => state.authentication.user?.data?.CreatorId
   );
 
   const [formData, setFormData] = useState({
-    creatorId: userId,
-    ecosystemDomain,
+    creatorId: userId || "",
+    ecosystemDomain: ecosystemDomain || "",
     sectors: "",
     description: "",
     rules: "",
   });
+
+  // Update formData whenever userId or ecosystemDomain changes
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      creatorId: userId || "",
+      ecosystemDomain: ecosystemDomain || "",
+    }));
+  }, [userId, ecosystemDomain]);
 
   const handleChange = (e) => {
     setFormData({
@@ -32,9 +43,15 @@ const CompanyFormModal = ({ show, handleClose }) => {
         `${import.meta.env.VITE_API_URL}/create-community-header`,
         formData
       );
-      showToast(response.data.message || "Community created successfully", "success");
+      showToast(
+        response.data.message || "Community created successfully",
+        "success"
+      );
     } catch (error) {
-      showToast(error.response?.data?.message || "Failed to create community", "error");
+      showToast(
+        error.response?.data?.message || "Failed to create community",
+        "error"
+      );
     }
   };
 
