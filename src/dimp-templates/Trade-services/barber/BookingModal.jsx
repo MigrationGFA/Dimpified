@@ -39,8 +39,6 @@ const BookingModal = ({ show, handleClose }) => {
     { time: "09:00 PM", booked: false },
     { time: "09:30 PM", booked: false },
     { time: "10:00 PM", booked: false },
- 
- 
   ]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [formData, setFormData] = useState({
@@ -83,39 +81,42 @@ const BookingModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title className="nism fs-3 alt-font">Book Appointment</Modal.Title>
+        <Modal.Title className="nism fs-3 alt-font">
+          Book Appointment
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {loading && <Spinner animation="border" />}
-        
+
         {!loading && step === 1 && (
           <div>
-            <h5 className="nism fs-4 alt-font">Select Date & Time</h5>
             <Row>
-              <Col md={5}>
+              <Col md={5} className="border rounded-md p-3 ">
+                <h5 className="nism fs-4 alt-font">Select Date</h5>
                 <DatePicker
                   selected={selectedDate}
                   onChange={handleDateChange}
                   minDate={new Date()}
                   inline
-                  className="form-control mt-3 alt-font"
+                  className="rounded rounded-pill border align-items-center"
                 />
               </Col>
               <Col md={7}>
-                <Row className="mt-3">
+                <Row className="border rounded-lg p-3">
+                  <h5 className="nism fs-4 alt-font">Select Time</h5>
+
                   {timeSlots.map((slot, index) => (
                     <Col
+                      md={4}
+                      sm={6}
                       key={index}
-                      className={`time-slot ${slot.booked ? "booked" : ""} ${
-                        selectedTimeSlot === slot.time ? "selected" : "primary"
-                      }`}
                       onClick={() => handleTimeSlotSelect(slot)}
                     >
                       <Button
-                        variant={slot.booked ? "secondary" : "outline-primary" }
+                        className={`p-1 mb-2 px-1 btn btn-outline-primary
+                          ${selectedTimeSlot === slot.time && "btn-primary text-white"}`}
                         disabled={slot.booked}
-                        className="mb-3 fs-6 px-2 py-2"
-                        block
+                        variant=" w-100 rounded rounded-pill"
                       >
                         {slot.time}
                       </Button>
@@ -182,11 +183,11 @@ const BookingModal = ({ show, handleClose }) => {
                 >
                   <option>Select Service</option>
                   <option value="">Select barber service</option>
-                      <option value="Haircut">Haircut</option>
-                      <option value="Hair styling">Hair styling</option>
-                      <option value="Shaving">Shaving</option>
-                      <option value="Beard sculpting">Beard sculpting</option>
-                      <option value="Kids haircut">Kids haircut</option>
+                  <option value="Haircut">Haircut</option>
+                  <option value="Hair styling">Hair styling</option>
+                  <option value="Shaving">Shaving</option>
+                  <option value="Beard sculpting">Beard sculpting</option>
+                  <option value="Kids haircut">Kids haircut</option>
                   {/* Add more services as needed */}
                 </Form.Control>
               </Form.Group>
@@ -236,28 +237,37 @@ const BookingModal = ({ show, handleClose }) => {
             <Alert variant="info">
               <p>
                 <strong>Date:</strong>{" "}
-                {summary.selectedDate ? summary.selectedDate.toDateString() : "Not selected"}
+                {summary.selectedDate
+                  ? summary.selectedDate.toDateString()
+                  : "Not selected"}
               </p>
               <p>
-                <strong>Time:</strong> {summary.selectedTimeSlot || "Not selected"}
+                <strong>Time:</strong>{" "}
+                {summary.selectedTimeSlot || "Not selected"}
               </p>
               <p>
-                <strong>Name:</strong> {summary.formData.fullName || "Not provided"}
+                <strong>Name:</strong>{" "}
+                {summary.formData.fullName || "Not provided"}
               </p>
               <p>
-                <strong>Address:</strong> {summary.formData.address || "Not provided"}
+                <strong>Address:</strong>{" "}
+                {summary.formData.address || "Not provided"}
               </p>
               <p>
-                <strong>Phone:</strong> {summary.formData.phone || "Not provided"}
+                <strong>Phone:</strong>{" "}
+                {summary.formData.phone || "Not provided"}
               </p>
               <p>
-                <strong>Email:</strong> {summary.formData.email || "Not provided"}
+                <strong>Email:</strong>{" "}
+                {summary.formData.email || "Not provided"}
               </p>
               <p>
-                <strong>Service:</strong> {summary.formData.service || "Not provided"}
+                <strong>Service:</strong>{" "}
+                {summary.formData.service || "Not provided"}
               </p>
               <p>
-                <strong>Location:</strong> {summary.formData.location || "Not provided"}
+                <strong>Location:</strong>{" "}
+                {summary.formData.location || "Not provided"}
               </p>
             </Alert>
 
