@@ -51,12 +51,11 @@ const getSubdomain = () => {
 
   // Case 2: Handle base domain like 'dimpified.com'
   if (
-    domainParts.length === 2 &&
-    (hostname === "dimpified.com" ||
-      hostname === "www.dimpified.com" ||
-      hostname === "https://dimpified-frontend-testing.azurewebsites.net")
+    hostname === "dimpified.com" ||
+    hostname === "www.dimpified.com" ||
+    hostname === "dimpified-frontend-testing.azurewebsites.net"
   ) {
-    return null; // No subdomain for base domains like dimpified.com
+    return null; // No subdomain for these base domains
   }
 
   // Case 3: Handle subdomains (like 'paullo.dimpified.com' or 'paullo5.localhost:5173')
