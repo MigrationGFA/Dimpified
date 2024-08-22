@@ -25,8 +25,8 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-const TemplateV1 = () => {
-  const [details, setDetails] = useState(null);
+const TemplateV1 = ({ details, subdomain }) => {
+  // const [details, setDetails] = useState(null);
   const [courses, setCourses] = useState([]);
   const [services, setServices] = useState([]);
   const [products, setProducts] = useState([]);
@@ -34,59 +34,59 @@ const TemplateV1 = () => {
   const [navigatePage, setNavigatePage] = useState(false);
   const [navigateLoginPage, setNavigateLoginPage] = useState(false);
 
-  let { ecosystemDomain } = useParams();
+  // let { ecosystemDomain } = useParams();
 
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ecosystemDomain) {
+    if (subdomain) {
       setNavigatePage(true);
       setNavigateLoginPage(true);
     }
-  }, [ecosystemDomain]);
+  }, [subdomain]);
 
   const handleNavigate = () => {
     if (navigatePage) {
-      navigate(`/${ecosystemDomain}/signup`);
+      navigate(`/signup`);
     } else {
-      navigate(`/${ecosystemDomain}`);
+      navigate(`/`);
     }
   };
   const handleLoginNavigate = () => {
     if (navigateLoginPage) {
-      navigate(`/${ecosystemDomain}/signin`);
+      navigate(`/signin`);
     } else {
-      navigate(`/${ecosystemDomain}`);
+      navigate(`/`);
     }
   };
 
-  useEffect(() => {
-    const getDetails = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/getTemplate/${ecosystemDomain}`
-        );
-        setDetails(response.data.templateDetails);
-        sessionStorage.setItem(
-          "ecoLogo",
-          response.data.templateDetails.navbar.logo
-        );
-      } catch (error) {
-        console.log("not working", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getDetails();
-  }, [ecosystemDomain]);
+  // useEffect(() => {
+  //   const getDetails = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${import.meta.env.VITE_API_URL}/getTemplate/${ecosystemDomain}`
+  //       );
+  //       setDetails(response.data.templateDetails);
+  //       sessionStorage.setItem(
+  //         "ecoLogo",
+  //         response.data.templateDetails.navbar.logo
+  //       );
+  //     } catch (error) {
+  //       console.log("not working", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getDetails();
+  // }, [ecosystemDomain]);
 
   useEffect(() => {
     const getCourseDetails = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ecosystem-courses/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-courses/${subdomain}`
         );
         setCourses(response.data.courses);
       } catch (error) {
@@ -96,14 +96,14 @@ const TemplateV1 = () => {
       }
     };
     getCourseDetails();
-  }, [ecosystemDomain]);
+  }, [subdomain]);
 
   // services
   useEffect(() => {
     const getServiceeDetails = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-all-services/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/get-all-services/${subdomain}`
         );
         setServices(response.data.services);
       } catch (error) {
@@ -113,7 +113,7 @@ const TemplateV1 = () => {
       }
     };
     getServiceeDetails();
-  }, [ecosystemDomain]);
+  }, [subdomain]);
 
   // products
   useEffect(() => {
@@ -122,7 +122,7 @@ const TemplateV1 = () => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_API_URL
-          }/get-all-ecosystem-digital-products/${ecosystemDomain}`
+          }/get-all-ecosystem-digital-products/${subdomain}`
         );
         setProducts(response.data.ecosystemDigitalProducts);
       } catch (error) {
@@ -132,7 +132,7 @@ const TemplateV1 = () => {
       }
     };
     getProductDetails();
-  }, [ecosystemDomain]);
+  }, [subdomain]);
 
   if (loading) {
     return <div>Loading...</div>;

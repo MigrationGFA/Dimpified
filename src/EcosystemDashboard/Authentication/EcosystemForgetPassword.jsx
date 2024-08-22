@@ -3,9 +3,6 @@ import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image } from "react-bootstrap";
 
-import Logo from "../../assets/GFA logo Rebrand Blue.png";
-// import Logo2 from "../assets/LogoList/cote-logo.png";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -58,7 +55,7 @@ const ForgetPassword = () => {
               <div className="mb-4 d-flex flex-column align-items-center justify-content-center">
                 <Link to="/">
                   <Image
-                    src={Logo}
+                    src={sessionStorage.getItem("ecoLogo")}
                     className="mb-4"
                     alt=""
                     style={{ height: "100px", width: "120px" }}
@@ -76,12 +73,7 @@ const ForgetPassword = () => {
                   <Col lg={12} md={12} className="mb-3">
                     {/*  email */}
                     <Form.Label>Email</Form.Label>
-                    {/* <Form.Control
-                      type="email"
-                      id="email"
-                      placeholder="Enter your email"
-                      required
-                    /> */}
+
                     <Form.Control
                       type="email"
                       id="email"
@@ -119,7 +111,7 @@ const ForgetPassword = () => {
                   </Col>
                 </Row>
                 <span>
-                  Return to <Link to="/">Sign in</Link>
+                  Return to <Link to="/signin">Sign in</Link>
                 </span>
               </Form>
             </Card.Body>

@@ -49,6 +49,14 @@ function getTimeDifference(updatedAt) {
   return `${formattedDate}`;
 }
 
+const fullPath = (domain) => {
+  const path = `${import.meta.env.VITE_ORIGIN_HEADER}${domain}${
+    import.meta.env.VITE_ORIGIN
+  }`;
+  console.log("Generated URL:", path);
+  return path;
+};
+
 const Ecosystem = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,24 +71,19 @@ const Ecosystem = () => {
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
-  const userType = useSelector(
-    (state) => state.authentication.user?.data?.userType
-  );
-  const role = useSelector(
-    (state) => state.authentication.user?.data?.role
-  );
- 
+
+  const role = useSelector((state) => state.authentication.user?.data?.role);
 
   const getLink = () => {
-    if (userType === 'creator' || role === 'Enterprise') {
-      return '/creator/dashboard/New-Ecosystem';
-    } else if (role === 'consumer') {
-      return '/creator/dashboard/New-Ecosystem/individual';
+    if (role === "creator" || role === "Enterprise") {
+      return "/creator/dashboard/New-Ecosystem";
+    } else if (role === "consumer") {
+      return "/creator/dashboard/New-Ecosystem/individual";
     } else {
-      return '';
+      return "";
     }
   };
-  
+
   const getMyEcosystems = async () => {
     try {
       setLoading(true);
@@ -159,8 +162,6 @@ const Ecosystem = () => {
     navigator.clipboard.writeText(siteNme);
   };
 
-  
-
   const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
     console.log("Ecosystem Name:", ecosystemName);
     console.log("Ecosystem Domain:", ecosystemDomain);
@@ -176,6 +177,11 @@ const Ecosystem = () => {
     } else if (steps === 1) {
       navigate("/creator/dashboard/Edit-Template");
     } else if (steps === 0) navigate("/creator/dashboard/New-Ecosystem");
+  };
+
+  const handleClick = (ecosystemDomain) => {
+    const url = fullPath(ecosystemDomain);
+    window.open(url, "_blank", "noopener,noreferrer"); // Open URL in new tab
   };
 
   return (
@@ -311,7 +317,7 @@ const Ecosystem = () => {
 
                       <div className="d-flex mt-5 md-mt-0 justify-content-between md-align-items-center">
                         <div>
-                          {eco.steps && eco.steps === 3 ? (
+                          {role === "consumer" && eco.steps === 2 ? (
                             <div>
                               <Button
                                 variant="primary"
@@ -326,7 +332,7 @@ const Ecosystem = () => {
                                 Dashboard
                               </Button>
                               <a
-                                href={`${window.location.origin}/${eco.ecosystemDomain}`}
+                                href={`http://${eco.ecosystemDomain}.localhost:5173/`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
@@ -351,20 +357,63 @@ const Ecosystem = () => {
                               </Button>
                             </div>
                           ) : (
-                            <Button
-                              variant="outline-primary"
-                              className="me-2 mb-2 mb-md-0"
-                              onClick={() =>
-                                handleContinue(
-                                  eco.ecosystemName,
-                                  eco.ecosystemDomain,
-                                  eco.steps,
-                                  eco._id
-                                )
-                              }
-                            >
-                              Continue
-                            </Button>
+                            <div>
+                              {eco.steps && eco.steps === 3 ? (
+                                <div>
+                                  <Button
+                                    variant="primary"
+                                    className="me-2 mb-2 mb-md-0"
+                                    onClick={() =>
+                                      saveEcoLogo(
+                                        eco.templateLogos[0].logoPath,
+                                        eco.ecosystemDomain
+                                      )
+                                    }
+                                  >
+                                    Dashboard
+                                  </Button>
+                                  <a
+                                    href={`http://${eco.ecosystemDomain}.localhost:5173/`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Button
+                                      variant="primary"
+                                      className="me-2 mb-2 mb-md-0"
+                                    >
+                                      View Site
+                                    </Button>
+                                  </a>
+                                  <Button
+                                    variant="primary"
+                                    className="me-2 mb-2 mb-md-0"
+                                    onClick={() =>
+                                      handleShare(
+                                        eco.ecosystemName,
+                                        eco.ecosystemDomain
+                                      )
+                                    }
+                                  >
+                                    Share
+                                  </Button>
+                                </div>
+                              ) : (
+                                <Button
+                                  variant="outline-primary"
+                                  className="me-2 mb-2 mb-md-0"
+                                  onClick={() =>
+                                    handleContinue(
+                                      eco.ecosystemName,
+                                      eco.ecosystemDomain,
+                                      eco.steps,
+                                      eco._id
+                                    )
+                                  }
+                                >
+                                  Continue
+                                </Button>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>

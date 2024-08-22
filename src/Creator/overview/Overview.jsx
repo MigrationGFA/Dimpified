@@ -81,6 +81,18 @@ const Overview = () => {
     }
   };
 
+  const role = useSelector((state) => state.authentication.user?.data?.role);
+
+  const getLink = () => {
+    if (role === "creator" || role === "Enterprise") {
+      return "/creator/dashboard/New-Ecosystem";
+    } else if (role === "consumer") {
+      return "/creator/dashboard/New-Ecosystem/individual";
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div>
       <Row>
@@ -90,7 +102,7 @@ const Overview = () => {
               <h1 className="mb-0 h2 fw-bold">Dashboard</h1>
             </div>
             <div>
-              <Link to="/creator/dashboard/New-Ecosystem">
+              <Link to={getLink()}>
                 <Button variant="primary">
                   <i className="fe fe-edit me-2"></i>
                   Create New Ecosystem

@@ -13,12 +13,15 @@ import {
   Carousel,
   ButtonGroup,
 } from "react-bootstrap";
+import sanitizeHtml from "sanitize-html";
 import {
   FaFacebookF,
   FaInstagram,
   FaTwitter,
   FaDribbble,
 } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+
 const iconStyle = {
   color: "#222",
   fontSize: "1.5rem" /* Adjust size as needed */,
@@ -37,8 +40,20 @@ const iconStyle = {
 const hoverStyle = {
   backgroundColor: "#333" /* Adjust hover background color as needed */,
 };
-const BarberTemplate = () => {
+
+const MAX_MESSAGE_LENGTH = 44;
+
+const truncateMessage = (messages) => {
+  if (messages.length > MAX_MESSAGE_LENGTH) {
+    return messages.slice(0, MAX_MESSAGE_LENGTH) + "...";
+  }
+  return messages;
+};
+const BarberPreview1 = () => {
   const [show, setShow] = useState(false);
+  const content = useSelector((state) => state.mainTemplate.currentTemplate);
+  const services = useSelector((state) => state.service.services);
+  const ecosystemDetails = useSelector((state) => state.ecosystem);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -80,36 +95,45 @@ const BarberTemplate = () => {
   };
 
   const counters = [
-    { value: 437, label: "Haircuts per week" },
-    { value: 864, label: "Shaved per week" },
-    { value: 334, label: "Stylization per week" },
-    { value: 453, label: "Washing per week" },
+    {
+      value: content.Statistics.section1header,
+      label: content.Statistics.section1span,
+    },
+    {
+      value: content.Statistics.section2header,
+      label: content.Statistics.section2span,
+    },
+    {
+      value: content.Statistics.section3header,
+      label: content.Statistics.section3span,
+    },
+    {
+      value: content.Statistics.section4header,
+      label: content.Statistics.section4span,
+    },
   ];
   const testimonials = [
     {
-      text: "The Barbers offers a fantastic blend of affordability, convenience, and exceptional quality. It's a place where you can expect a friendly and laid-back atmosphere, perfect for a relaxing haircut experience. The team of professionals is highly skilled, making it a great spot for everyone, from kids to adults. I always leave feeling satisfied and well-groomed!",
-      client: "Chinonso Okafor",
+      text: content.Reviews.summary1,
+      client: content.Reviews.header1,
       img: "https://via.placeholder.com/80",
     },
     {
-      text: "The Barbers provides an outstanding service with a warm and friendly team. The environment is welcoming and comfortable, making each visit a pleasant experience. The staff’s professionalism and attention to detail ensure that I always get exactly what I’m looking for. It’s a fantastic choice for anyone seeking quality grooming in a relaxed setting.",
-      client: "Ngozi Eze",
+      text: content.Reviews.summary2,
+      client: content.Reviews.header2,
       img: "https://via.placeholder.com/80",
     },
     {
-      text: "I’m absolutely delighted with my new look from The Barbers! The service was top-notch, and the team was incredibly friendly and attentive. The quality of the haircut exceeded my expectations, and I appreciate the skill and care that went into it. Whether you’re looking for a fresh style or a simple trim, this place is the perfect choice.",
-      client: "Emeka Nwosu",
+      text: content.Reviews.summary3,
+      client: content.Reviews.header3,
       img: "https://via.placeholder.com/80",
     },
   ];
 
   const images = [
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-12.jpg",
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-5.jpg",
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-8.jpg",
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-13.jpg",
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-7.jpg",
-    "https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-17-copy.jpg",
+    content.Gallery.image1,
+    content.Gallery.image2,
+    content.Gallery.image3,
   ];
 
   const groupedImages = [];
@@ -181,6 +205,13 @@ const BarberTemplate = () => {
     handleClose();
   };
 
+  const sanitizeContent = (html) => {
+    return sanitizeHtml(html, {
+      allowedTags: [], // Disallow all tags
+      allowedAttributes: {}, // Disallow all attributes
+    });
+  };
+
   return (
     <div>
       {/* Navbar */}
@@ -196,7 +227,7 @@ const BarberTemplate = () => {
               className="fw-bold text-dark d-flex align-items-center"
               href="#home"
             >
-              LUXECUTZ
+              {sanitizeContent(content.navbar.brand)}
               <img
                 src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
                 alt="Icon"
@@ -254,7 +285,7 @@ const BarberTemplate = () => {
         {/* Hero Section */}
         <section
           style={{
-            backgroundImage: `url(https://www.bellanaija.com/wp-content/uploads/2021/06/Groomed-By-Elereka-Ikoyi-13.jpg)`,
+            backgroundImage: `url(${content.hero.backgroundImage1})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             height: "100vh",
@@ -268,10 +299,12 @@ const BarberTemplate = () => {
               <Col xl={7} lg={7} md={12}>
                 <div className="py-6 py-lg-0 text-center pt-lg-14">
                   <h1 className="display-3 fw-bold mb-3 text-white">
-                    <span className="text-white px-3  ">Luxecutz Barbers</span>
+                    <span className="text-white px-3  ">
+                      {content.hero.title1}
+                    </span>
                   </h1>
                   <p className="mb-6 h2 text-white">
-                    #1 finest barbing services in nigeria
+                    {sanitizeContent(content.hero.span1)}
                   </p>
                 </div>
               </Col>
@@ -423,21 +456,15 @@ const BarberTemplate = () => {
               <Col xxl={6} xl={6} lg={6} xs={12}>
                 <div>
                   <h1 className="display-4 fw-bold mb-3">
-                    <span className="text-dark  px-md-0">About Us</span>
+                    <span className="text-dark  px-md-0">
+                      {sanitizeContent(content.aboutUs.title1)}
+                    </span>
                   </h1>
                   <p className="text-dark fs-4 mb-4 pe-xl-12 ">
-                    Welcome to LuxeCuts Barbershop, your premier destination for
-                    exceptional grooming services in the heart of Lagos. At
-                    LuxeCuts, we blend the finest traditions of barbering with
-                    contemporary techniques to provide a grooming experience
-                    that is both sophisticated and personalized.
+                    {sanitizeContent(content.aboutUs.text1)}
                   </p>
                   <p className="text-dark fs-4 mb-4 pe-xl-12 ">
-                    At LuxeCuts, our mission is to deliver unparalleled
-                    barbering services with a focus on quality, style, and
-                    customer satisfaction. We believe that every client deserves
-                    to look and feel their best, and our skilled barbers are
-                    dedicated to making that happen.
+                    {sanitizeContent(content.aboutUs.text2)}
                   </p>
 
                   <div className="d-grid d-md-block">
@@ -456,13 +483,13 @@ const BarberTemplate = () => {
                     <div
                       className="bg-cover rounded-3 mb-2 h-14rem"
                       style={{
-                        backgroundImage: `url(https://img.freepik.com/premium-photo/free-photo-young-africanamerican-man-visiting-barbershop_1022426-4308.jpg?w=740)`,
+                        backgroundImage: `url(${content.aboutUs.image1})`,
                       }}
                     ></div>
                     <div
                       className="bg-cover rounded-3 mb-2 h-14rem"
                       style={{
-                        backgroundImage: `url(https://img.freepik.com/free-photo/young-african-american-man-visiting-barbershop_1157-47689.jpg?t=st=1722397676~exp=1722401276~hmac=0786711351d7975c426ebe1300ce2aa538650e80a2286bee4b1d12c8cfa93aaf&w=360)`,
+                        backgroundImage: `url(${content.aboutUs.image2})`,
                       }}
                     ></div>
                   </Col>
@@ -470,7 +497,7 @@ const BarberTemplate = () => {
                     <div
                       className="bg-cover rounded-3 mt-6 mb-2 h-18rem"
                       style={{
-                        backgroundImage: `url(https://img.freepik.com/free-photo/hairdresser-grooming-their-client_23-2149205916.jpg?t=st=1722403970~exp=1722407570~hmac=376c25a6077395a614b39aa6f1d4fb2a56d11acbd97937ec8b3aeb6b1e763178&w=996)`,
+                        backgroundImage: `url(${content.aboutUs.image3})`,
                       }}
                     ></div>
                   </Col>
@@ -493,84 +520,35 @@ const BarberTemplate = () => {
           <Container>
             <h2 className="fs-2">Our Services</h2>
             <Row>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Haircut</Card.Title>
-                    <Card.Text className="fs-4">
-                      Professional haircut services for all styles.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-02.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Shave</Card.Title>
-                    <Card.Text>
-                      Expert shaving services for a clean and smooth look.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-03.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">Hair Dye</Card.Title>
-                    <Card.Text>
-                      Quality hair dye services to give you a fresh new look.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xl={3} lg={3} sm={12}>
-                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
-                  <Card.Img
-                    variant="top"
-                    height={100}
-                    src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
-                    className="py-4"
-                  />
-                  <Card.Body>
-                    <Card.Title className="text-dark fs-3">
-                      Beard Trim
-                    </Card.Title>
-                    <Card.Text>
-                      Perfect beard trims to keep you looking sharp.
-                    </Card.Text>
-                    <Button variant="dark" onClick={handleShow}>
-                      Book a Visit
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
+              {services.map((service, index) => (
+                <Col key={index} xl={3} lg={3} sm={12}>
+                  <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
+                    <Card.Img
+                      variant="top"
+                      height={100}
+                      src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
+                      className="py-4"
+                    />
+                    <Card.Body>
+                      <Card.Title className="text-dark fs-3">
+                        {service.name}
+                      </Card.Title>
+                      <Card.Text className="fs-4">
+                        {truncateMessage(service.shortDescription)}
+                      </Card.Text>
+                      <Card.Text className="fs-5">
+                        Price: {service.price} {service.priceFormat}
+                      </Card.Text>
+                      <Card.Text className="fs-6">
+                        Delivery Time: {service.deliveryTime}
+                      </Card.Text>
+                      <Button variant="dark" onClick={handleShow}>
+                        Book a Visit
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
             </Row>
           </Container>
           <Container fluid className="pt-lg-10 pt-3 px-0">
@@ -631,92 +609,21 @@ const BarberTemplate = () => {
               </Col>
             </Row>
             <Row>
-              <Col md={6} className="mb-4 px-4 ps-lg-10">
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Basic Haircut</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦1,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A quick and efficient haircut, perfect for maintaining your
-                    style.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Classic Haircut & Shave</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A classic haircut with a shave, ensuring you look sharp and
-                    fresh.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Deluxe Haircut</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    An extended haircut with additional styling, tailored to
-                    your preferences.
-                  </p>
-                </div>
-              </Col>
-              <Col md={6} className="mb-4 px-4 pe-lg-10">
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Beard Styling</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦2,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    Professional beard styling and trimming to match your look.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Beard & Hair Combo</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦3,500</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    A complete package including both haircut and beard styling.
-                  </p>
-                </div>
-                <div style={pricingStyle}>
-                  <Row>
-                    <Col>
-                      <div style={titleStyle}>Grooming Package</div>
-                    </Col>
-                    <Col>
-                      <div style={priceStyle}>₦4,000</div>
-                    </Col>
-                  </Row>
-                  <p style={descriptionStyle}>
-                    Includes a full haircut, beard styling, and additional
-                    grooming services.
-                  </p>
-                </div>
-              </Col>
+              {services.map((service, idx) => (
+                <Col md={6} className="mb-4 px-4" key={idx}>
+                  <div style={pricingStyle}>
+                    <Row>
+                      <Col>
+                        <div style={titleStyle}>{service.name}</div>
+                      </Col>
+                      <Col>
+                        <div style={priceStyle}>₦{service.price}</div>
+                      </Col>
+                    </Row>
+                    <p style={descriptionStyle}>{service.shortDescription}</p>
+                  </div>
+                </Col>
+              ))}
             </Row>
           </Container>
         </section>
@@ -741,28 +648,22 @@ const BarberTemplate = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src="https://img.freepik.com/free-photo/portrait-smiley-man_23-2148850957.jpg?t=st=1722405151~exp=1722408751~hmac=0aa952cd9a820f94d4601e8f5522bfbf4c8488ce5e4f0571f3048f99dd093ca7&w=360"
+                    src={content.Team.image1}
+                    style={{
+                      height: "260px",
+                    }}
                     className="rounded-3"
                   />
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        Ademola
+                        {sanitizeContent(content.Team.header1)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        Senior Barber
+                        {sanitizeContent(content.Team.summary1)}
                       </Card.Subtitle>
                     </div>
-                    <div className="d-flex flex-column flex-shrink-1">
-                      <a
-                        href="https://www.instagram.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white"
-                      >
-                        <i className="fa-brands fa-instagram fs-5"></i>
-                      </a>
-                    </div>
+                    <div className="d-flex flex-column flex-shrink-1"></div>
                   </Card.ImgOverlay>
                 </Card>
               </Col>
@@ -770,28 +671,22 @@ const BarberTemplate = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src="https://img.freepik.com/free-photo/portrait-shaved-african-young-man-looking-camera_23-2148123902.jpg?t=st=1722405034~exp=1722408634~hmac=b9f2934f3f89b2f28d0e92fa7f6577a01d9c2ea3b713b817800c83d5bd36afa1&w=360"
+                    src={content.Team.image2}
+                    style={{
+                      height: "260px",
+                    }}
                     className="rounded-3"
                   />
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        Oludare
+                        {sanitizeContent(content.Team.header2)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        Barber
+                        {sanitizeContent(content.Team.summary2)}
                       </Card.Subtitle>
                     </div>
-                    <div className="d-flex flex-column flex-shrink-1">
-                      <a
-                        href="https://www.facebook.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white"
-                      >
-                        <i className="fa-brands fa-facebook-f fs-5"></i>
-                      </a>
-                    </div>
+                    <div className="d-flex flex-column flex-shrink-1"></div>
                   </Card.ImgOverlay>
                 </Card>
               </Col>
@@ -799,26 +694,22 @@ const BarberTemplate = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src="https://img.freepik.com/free-photo/man-applying-anti-aging-treatment_23-2149340122.jpg?t=st=1722404676~exp=1722408276~hmac=0a530b310fcdee43494a71c9278dbdd27e36948849f7118c8431a9f8e33bf079&w=360"
+                    src={content.Team.image3}
+                    style={{
+                      height: "260px",
+                    }}
                     className="rounded-3 h-80"
                   />
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
-                      <Card.Title className="text-white fs-5">Emeka</Card.Title>
+                      <Card.Title className="text-white fs-5">
+                        {sanitizeContent(content.Team.header3)}
+                      </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        Beard Specialist
+                        {sanitizeContent(content.Team.summary3)}
                       </Card.Subtitle>
                     </div>
-                    <div className="d-flex flex-column flex-shrink-1">
-                      <a
-                        href="https://www.twitter.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white"
-                      >
-                        <i className="fa-brands fa-twitter fs-5"></i>
-                      </a>
-                    </div>
+                    <div className="d-flex flex-column flex-shrink-1"></div>
                   </Card.ImgOverlay>
                 </Card>
               </Col>
@@ -826,28 +717,22 @@ const BarberTemplate = () => {
                 <Card className="border-0 rounded-3">
                   <Card.Img
                     variant="top"
-                    src="https://img.freepik.com/free-photo/african-american-student-sitting-stairs-park_1303-11984.jpg?t=st=1722405292~exp=1722408892~hmac=627feadd2cb4bceae963a2dc7f0db049b236f3dd037172f887a2ebcb54b98d25&w=360"
+                    src={sanitizeContent(content.Team.image4)}
+                    style={{
+                      height: "260px",
+                    }}
                     className="rounded-3"
                   />
                   <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
                     <div>
                       <Card.Title className="text-white fs-5">
-                        Clement
+                        {sanitizeContent(content.Team.header4)}
                       </Card.Title>
                       <Card.Subtitle className="text-white fs-6">
-                        Hair Washer
+                        {sanitizeContent(content.Team.summary4)}
                       </Card.Subtitle>
                     </div>
-                    <div className="d-flex flex-column flex-shrink-1">
-                      <a
-                        href="https://www.instagram.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white"
-                      >
-                        <i className="fa-brands fa-instagram fs-5"></i>
-                      </a>
-                    </div>
+                    <div className="d-flex flex-column flex-shrink-1"></div>
                   </Card.ImgOverlay>
                 </Card>
               </Col>
@@ -869,6 +754,7 @@ const BarberTemplate = () => {
             </Row>
           </Container>
         </section>
+
         <section
           id="testimonials"
           className="py-3 px-3 py-lg-10"
@@ -891,10 +777,14 @@ const BarberTemplate = () => {
                         >
                           <Card.Body>
                             <Card.Text className="font-italic fs-3 text-dark">
-                              "{testimonial.text}"
+                              {sanitizeContent(
+                                content.Reviews[`summary${idx + 1}`]
+                              )}
                             </Card.Text>
                             <Card.Title className="mt-3 font-weight-bold mb-3">
-                              {testimonial.client}
+                              {sanitizeContent(
+                                content.Reviews[`header${idx + 1}`]
+                              )}
                             </Card.Title>
                           </Card.Body>
                         </Card>
@@ -907,11 +797,17 @@ const BarberTemplate = () => {
           </Container>
           <Container>
             <Row className="">
-              {counters.map((counter, index) => (
+              {counters.map((counter, idx) => (
                 <Col key={index} className="mb-3">
-                  <h2 className="fs-2">{counter.value}+</h2>
+                  <h2 className="fs-2">
+                    {sanitizeContent(
+                      content.Statistics[`section${idx + 1}header`]
+                    )}
+                  </h2>
                   <span className="lh-22 text-dark-gray d-block">
-                    {counter.label}
+                    {sanitizeContent(
+                      content.Statistics[`section${idx + 1}span`]
+                    )}
                   </span>
                 </Col>
               ))}
@@ -961,7 +857,7 @@ const BarberTemplate = () => {
                         href="tel:12345678910"
                         className="fs-22 ls-minus-1px fw-600 text-dark"
                       >
-                        +234 8098765432
+                        {ecosystemDetails.expectedAudienceNumber}
                       </a>
                     </div>
                   </div>
@@ -1066,10 +962,12 @@ const BarberTemplate = () => {
         >
           <Container className="py-lg-14 px-3 py-4">
             <h1 className="display-3 fw-bold mb-3 text-white">
-              <span className=" px-3 px-md-0 ">LuxeCutz Barbers</span>
+              <span className=" px-3 px-md-0 ">
+                {sanitizeContent(content.footer.header)}
+              </span>
             </h1>
-            <p>&copy; 2024 Nigerian Barber. All rights reserved.</p>
-            <p>Follow us on:</p>
+            <p>&copy; {sanitizeContent(content.footer.title1)}</p>
+            <p>{sanitizeContent(content.footer.paragraph1)}</p>
             <Nav className="justify-content-center">
               <Nav.Link
                 href="#facebook"
@@ -1101,9 +999,8 @@ const BarberTemplate = () => {
           </Container>
         </footer>
       </Col>
-      
     </div>
   );
 };
 
-export default BarberTemplate;
+export default BarberPreview1;

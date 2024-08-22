@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Row, Col, ProgressBar, Card, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  ProgressBar,
+  Card,
+  Button,
+} from "react-bootstrap";
 import EcoHeader from "../Individual/individualHeader";
 import { useSelector } from "react-redux";
 import AddNewCourse from "./AddNewCourse";
@@ -18,11 +25,11 @@ const Courses = () => {
   const [showPostProduct, setShowPostProduct] = useState(false);
   const navigate = useNavigate();
   const courses = useSelector((state) => state.course);
-  console.log(courses)
+  console.log(courses);
   const services = useSelector((state) => state.service);
-  console.log(services)
+  console.log(services);
   const digitalProducts = useSelector((state) => state.product);
-  console.log(digitalProducts)
+  console.log(digitalProducts);
 
   const handleCreateNewCourse = () => {
     setStep(2);
@@ -31,12 +38,10 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Integrations");
+    navigate("/creator/dashboard/Edit-Template/individual");
   };
 
-  const handlePrevious = () => {
-    navigate("/creator/dashboard/Create-Form");
-  };
+ 
 
   const handleService = () => {
     setStep(2);
@@ -65,7 +70,7 @@ const Courses = () => {
 
   const handleSubmit = () => {
     alert("Form submitted!");
-    navigate("/creator/dashboard/Integrations");
+    navigate("/creator/dashboard/Edit-Template/individual");
   };
 
   return (
@@ -155,8 +160,8 @@ const Courses = () => {
                 </Col>
               </Row>
 
-              <div className="d-flex justify-content-between align-content-center">
-                <div>
+              <div className="d-flex justify-content-end align-content-center">
+                {/* <div>
                   <Button
                     variant="secondary"
                     className="me-2"
@@ -164,7 +169,7 @@ const Courses = () => {
                   >
                     Previous
                   </Button>
-                </div>
+                </div> */}
                 <div className="d-flex justify-content-end">
                   <Button
                     variant="secondary"
@@ -226,67 +231,67 @@ const Courses = () => {
           )}
           {step === 3 && (
             <div>
-            <h3>Preview Products</h3>
-            <p className="mt-4">
-              Drag the cards to rearrange your products as you like
-            </p>
-      
-            <div>
-              {courses && courses.length > 0 && (
-                <div>
-                  <h4>Courses</h4>
-                  {courses.map((course, item) => (
-                    <Card key={item} className="mb-3">
-                      <Card.Body>
-                        <Card.Title>{course.courseTitle}</Card.Title>
-                        <Card.Text>{course.subCategory}</Card.Text>
-                        {/* Add more course details as needed */}
-                      </Card.Body>
-                    </Card>
-                  ))}
-                </div>
-              )}
-      
-              { services && services.length > 0 && (
-                <div>
-                  <h4>Services</h4>
-                  {services.map((service, index) => (
-                    <Card key={index} className="mb-3">
-                      <Card.Body>
-                        <Card.Title>{service.header}</Card.Title>
-                        <Card.Text>{service.category}</Card.Text>
-                        {/* Add more service details as needed */}
-                      </Card.Body>
-                    </Card>
-                  ))}
-                </div>
-              )}
-      
-              {digitalProducts && digitalProducts.length > 0 && (
-                <div>
-                  <h4>Digital Products</h4>
-                  {digitalProducts.map((product) => (
-                    <Card className="mb-3">
-                      <Card.Body>
-                        <Card.Title>{product.category}</Card.Title>
-                        <Card.Text>{product.subCategory}</Card.Text>
-                        {/* Add more digital product details as needed */}
-                      </Card.Body>
-                    </Card>
-                  ))}
-                </div>
-              )}
+              <h3>Preview Products</h3>
+              <p className="mt-4">
+                Drag the cards to rearrange your products as you like
+              </p>
+
+              <div>
+                {courses && courses.length > 0 && (
+                  <div>
+                    <h4>Courses</h4>
+                    {courses.map((course, item) => (
+                      <Card key={item} className="mb-3">
+                        <Card.Body>
+                          <Card.Title>{course.courseTitle}</Card.Title>
+                          <Card.Text>{course.subCategory}</Card.Text>
+                          {/* Add more course details as needed */}
+                        </Card.Body>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                {services && services.length > 0 && (
+                  <div>
+                    <h4>Services</h4>
+                    {services.map((service, index) => (
+                      <Card key={index} className="mb-3">
+                        <Card.Body>
+                          <Card.Title>{service.header}</Card.Title>
+                          <Card.Text>{service.category}</Card.Text>
+                          {/* Add more service details as needed */}
+                        </Card.Body>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                {digitalProducts && digitalProducts.length > 0 && (
+                  <div>
+                    <h4>Digital Products</h4>
+                    {digitalProducts.map((product) => (
+                      <Card className="mb-3">
+                        <Card.Body>
+                          <Card.Title>{product.category}</Card.Title>
+                          <Card.Text>{product.subCategory}</Card.Text>
+                          {/* Add more digital product details as needed */}
+                        </Card.Body>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="d-flex justify-content-between mt-3">
+                <Button variant="secondary" onClick={() => setStep(2)}>
+                  Back
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
             </div>
-      
-            <div className="d-flex justify-content-between mt-3">
-              <Button variant="secondary" onClick={() => setStep(2)}>
-                Back
-              </Button>
-              <Button variant="primary" onClick={handleSubmit}>
-                Submit
-              </Button>
-            </div>
-          </div>
           )}
         </div>
       </Container>

@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Button, Image, Form, Container, Row, Col, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Image,
+  Form,
+  Container,
+  Row,
+  Col,
+  Spinner,
+} from "react-bootstrap";
 import styles from "./CommunityComment.module.css";
 import Box from "../../assets/Comment.jpeg";
 import Logo from "../../assets/LogoList/FgnAlatLogo.jpg";
 
+// Utility function to format time
 const formatTime = (date) => {
   const now = new Date();
   const diff = Math.floor((now - date) / 1000);
@@ -23,12 +32,15 @@ const formatTime = (date) => {
 
 const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
-  const [reply, setReply] = useState('');
+  const [newComment, setNewComment] = useState("");
+  const [reply, setReply] = useState("");
   const [replyToCommentId, setReplyToCommentId] = useState(null);
   const [isPosting, setIsPosting] = useState(false);
+  const [replies, setReplies] = useState({});
+  const [showReplies, setShowReplies] = useState({}); // Track visibility of replies for each comment
   const commentInputRef = useRef(null);
 
+  // Fetch comments
   const fetchComments = async () => {
     try {
       const response = await axios.get(
@@ -45,6 +57,23 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
     }
   };
 
+  // Fetch replies for a comment
+  const fetchReplies = async (commentId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/replies/${commentId}`
+      );
+      if (response.data && Array.isArray(response.data.replies)) {
+        setReplies((prevReplies) => ({
+          ...prevReplies,
+          [commentId]: response.data.replies,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching replies:", error);
+    }
+  };
+
   useEffect(() => {
     fetchComments();
   }, [postId]);
@@ -55,22 +84,18 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
 
   const handleAddComment = async () => {
     if (newComment.trim()) {
-      setIsPosting(true); 
+      setIsPosting(true);
       try {
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/comment`,
-          {
-            postId,
-            userId,
-            userType: "creator",
-            comment: newComment,
-            ecosystemDomain,
-          }
-        );
+        await axios.post(`${import.meta.env.VITE_API_URL}/comment`, {
+          postId,
+          userId,
+          userType: "creator",
+          comment: newComment,
+          ecosystemDomain,
+        });
 
         fetchComments();
-
-        setNewComment('');
+        setNewComment("");
         if (commentInputRef.current) {
           commentInputRef.current.focus();
         }
@@ -82,51 +107,61 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
     }
   };
 
-  const handleAddReply = (commentId) => {
+  const handleAddReply = async (commentId) => {
     if (reply.trim()) {
-      setComments(
-        comments.map((comment) =>
-          comment._id === commentId
-            ? {
-                ...comment,
-                replies: [
-                  ...(comment.replies || []),
-                  { text: reply, time: new Date(), likes: 0 },
-                ],
-              }
-            : comment
-        )
-      );
-      setReply("");
-      setReplyToCommentId(null);
+      try {
+        await axios.post(`${import.meta.env.VITE_API_URL}/reply-to-comment`, {
+          userType: "creator",
+          reply,
+          ecosystemDomain,
+          commentId,
+          userId,
+        });
+
+        fetchReplies(commentId);
+        setReply("");
+        setReplyToCommentId(null);
+      } catch (error) {
+        console.error("Error replying to comment:", error);
+      }
     }
   };
 
-  const handleLikeComment = (commentId) => {
-    setComments(
-      comments.map((comment) =>
-        comment._id === commentId
-          ? { ...comment, likes: comment.likes + 1 }
-          : comment
-      )
-    );
+  const handleShowReplies = (commentId) => {
+    if (!showReplies[commentId]) {
+      fetchReplies(commentId);
+    }
+    setShowReplies((prevShowReplies) => ({
+      ...prevShowReplies,
+      [commentId]: !prevShowReplies[commentId],
+    }));
   };
 
-  const handleLikeReply = (commentId, replyIndex) => {
-    setComments(
-      comments.map((comment) =>
-        comment._id === commentId
-          ? {
-              ...comment,
-              replies: comment.replies.map((reply, index) =>
-                index === replyIndex
-                  ? { ...reply, likes: reply.likes + 1 }
-                  : reply
-              ),
-            }
-          : comment
-      )
-    );
+  // Handle like/unlike comment
+  const handleLikeComment = async (commentId) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/like-unlike-comment`, {
+        commentId,
+        userId,
+      });
+
+      fetchComments();
+    } catch (error) {
+      console.error("Error liking/unliking comment:", error);
+    }
+  };
+
+  const handleLikeReply = async (replyId, commentId) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/like-unlike-reply`, {
+        replyId,
+        userId,
+      });
+
+      fetchReplies(commentId);
+    } catch (error) {
+      console.error("Error liking/unliking reply:", error);
+    }
   };
 
   return (
@@ -145,18 +180,14 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
               placeholder="Type your comment..."
               ref={commentInputRef}
               className={styles.commentInput}
-              disabled={isPosting} 
+              disabled={isPosting}
             />
             <Button
               onClick={handleAddComment}
               className={styles.commentButton}
-              disabled={isPosting} 
+              disabled={isPosting}
             >
-              {isPosting ? (
-                <Spinner animation="border" size="sm" /> 
-              ) : (
-                'Post'
-              )}
+              {isPosting ? <Spinner animation="border" size="sm" /> : "Post"}
             </Button>
           </Form.Group>
         </Col>
@@ -188,7 +219,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                 <div className="mt-1">{comment.comment}</div>
                 <div className="d-flex align-items-center mt-2">
                   <span className={styles.commentTime}>
-                    {formatTime(new Date(comment.updatedAt))}
+                    {formatTime(new Date(comment.createdAt))}
                   </span>
                   <Button
                     variant="link"
@@ -200,17 +231,51 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                   <Button
                     variant="link"
                     className={styles.replyButtonLink}
-                    onClick={() => setReplyToCommentId(comment._id)}
+                    onClick={() => handleShowReplies(comment._id)}
                   >
-                    Reply
+                    {showReplies[comment._id] ? "Hide Replies" : "View Replies"}
                   </Button>
                 </div>
-                {comment.replies &&
-                  comment.replies.map((reply, index) => (
-                    <Row
-                      key={index}
-                      className={`align-items-start ${styles.replyRow}`}
-                    >
+                {showReplies[comment._id] && (
+                  <>
+                    {replies[comment._id] &&
+                      replies[comment._id].map((reply) => (
+                        <Row
+                          key={reply._id}
+                          className={`align-items-start ${styles.replyRow}`}
+                        >
+                          <Col xs={1}>
+                            <Image
+                              src={Logo}
+                              alt="User Image"
+                              className={styles.commentImage}
+                            />
+                          </Col>
+                          <Col xs={11}>
+                            <div className="d-flex flex-column">
+                              <div className="fw-bold">
+                                {reply.userId || "Anonymous"}
+                              </div>
+                              <div className="mt-1">{reply.reply}</div>
+                              <div className="d-flex align-items-center mt-2">
+                                <span className={styles.commentTime}>
+                                  {formatTime(new Date(reply.createdAt))}
+                                </span>
+                                <Button
+                                  variant="link"
+                                  className={styles.replyButtonLink}
+                                  onClick={() =>
+                                    handleLikeReply(reply._id, comment._id)
+                                  }
+                                >
+                                  Like ({reply.likes})
+                                </Button>
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      ))}
+                    <Row className="align-items-center mt-3">
                       <Col xs={1}>
                         <Image
                           src={Logo}
@@ -219,56 +284,26 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                         />
                       </Col>
                       <Col xs={11}>
-                        <div className="d-flex flex-column">
-                          <div className="fw-bold">Replier Name</div>
-                          <div className="mt-1">{reply.text}</div>
-                          <div className="d-flex align-items-center mt-2">
-                            <span className={styles.commentTime}>
-                              {formatTime(new Date(reply.time))}
-                            </span>
-                            <Button
-                              variant="link"
-                              className={styles.replyButtonLink}
-                              onClick={() =>
-                                handleLikeReply(comment._id, index)
-                              }
-                            >
-                              Like ({reply.likes})
-                            </Button>
-                          </div>
-                        </div>
+                        <Form.Group className={styles.replyInputContainer}>
+                          <Form.Control
+                            type="text"
+                            value={reply}
+                            onChange={handleReplyChange}
+                            placeholder="Type your reply..."
+                            className={styles.replyInput}
+                          />
+                          <Button
+                            onClick={() => handleAddReply(comment._id)}
+                            className={styles.replyButton}
+                          >
+                            Reply
+                          </Button>
+                        </Form.Group>
                       </Col>
                     </Row>
-                  ))}
+                  </>
+                )}
               </div>
-              {replyToCommentId === comment._id && (
-                <Row className="align-items-start mt-2 ms-3">
-                  <Col xs={1}>
-                    <Image
-                      src={Logo}
-                      alt="User Image"
-                      className={styles.commentImage}
-                    />
-                  </Col>
-                  <Col xs={11}>
-                    <Form.Group className={styles.replyInputContainer}>
-                      <Form.Control
-                        type="text"
-                        value={reply}
-                        onChange={handleReplyChange}
-                        placeholder="Type your reply here..."
-                        className={styles.replyInput}
-                      />
-                      <Button
-                        onClick={() => handleAddReply(comment._id)}
-                        className={styles.replyButton}
-                      >
-                        Post Reply
-                      </Button>
-                    </Form.Group>
-                  </Col>
-                </Row>
-              )}
             </Col>
           </Row>
         ))

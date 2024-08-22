@@ -9,7 +9,7 @@ const ecoHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleCancle = async () => {
+  const handleCancel = async () => {
     dispatch(resetState());
     navigate("/creator/dashboard/All-Ecosystem");
   };
@@ -18,7 +18,7 @@ const ecoHeader = () => {
     { path: "/creator/dashboard/New-Ecosystem/individual", label: "1. About Ecosystem" },
     { path: "/creator/dashboard/Products/individual", label: "2. Products" },
     { path: "/creator/dashboard/Edit-Template/individual", label: "3. Select Template" },
-   
+    { path: "/creator/dashboard/Payment/individual", label: "4. Payment" },
    
   ];
 

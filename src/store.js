@@ -10,15 +10,34 @@ import serviceReducer from './features/service';
 import ecosystemReducer from './features/ecosystem'; 
 import form1Reducer from "./features/Template/Form1"
 import productReducer from './features/product';
+import mainTemplateReducer from "./features/Template/MainTemplate"
 
+// Define your app version
+const APP_VERSION = '1.1.1';
+
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+// };
 const persistConfig = {
   key: 'root',
   storage,
+  version: APP_VERSION,
+  migrate: (state) => {
+    const currentVersion = state?._persist?.version;
+    if (currentVersion !== APP_VERSION) {
+      // When the version is different, clear the persisted data
+      storage.removeItem('persist:root'); // Removes the persisted state from storage
+      return Promise.resolve(undefined); // Forces app to start fresh
+    }
+    return Promise.resolve(state); 
+  }
 };
 
 const rootReducer = combineReducers({
   authentication: authReducer,
   template1: temPlate1Reducer,
+  mainTemplate: mainTemplateReducer,
   form1: form1Reducer,
   activeSection: activeSectionReducer,
   course: courseReducer,
