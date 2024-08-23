@@ -24,6 +24,7 @@ import StateUpskilling from "../dimp-templates/government/StateUpskilling";
 import LegalTemplate from "../dimp-templates/professional-services/Legal";
 import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
 import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
+import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -205,6 +206,7 @@ const AllRoutes = () => {
       <Route path="/legal-template" element={<LegalTemplate />} />
       <Route path="/course-template" element={<OnlineCourses />} />
       <Route path="/ngo-template" element={<NonGovTemplate/>} />
+      <Route path="/spa-template" element={<SpaTemplate/>} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
