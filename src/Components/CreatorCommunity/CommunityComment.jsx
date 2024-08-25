@@ -37,7 +37,8 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
   const [replyToCommentId, setReplyToCommentId] = useState(null);
   const [isPosting, setIsPosting] = useState(false);
   const [replies, setReplies] = useState({});
-  const [showReplies, setShowReplies] = useState({}); // Track visibility of replies for each comment
+  // const [replyCount, setReplyCount] = useState({});
+  const [showReplies, setShowReplies] = useState({});
   const commentInputRef = useRef(null);
 
   // Fetch comments
@@ -48,6 +49,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
       );
       if (response.data && Array.isArray(response.data.comments)) {
         setComments(response.data.comments);
+        
       } else {
         setComments([]);
       }
@@ -63,11 +65,12 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/replies/${commentId}`
       );
-      if (response.data && Array.isArray(response.data.replies)) {
+      if (response.data && Array.isArray(response.data.repliesWithImages)) {
         setReplies((prevReplies) => ({
           ...prevReplies,
-          [commentId]: response.data.replies,
+          [commentId]: response.data.repliesWithImages,
         }));
+        fetchComments();
       }
     } catch (error) {
       console.error("Error fetching replies:", error);
@@ -77,6 +80,10 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
   useEffect(() => {
     fetchComments();
   }, [postId]);
+
+  useEffect(() => {
+    fetchReplies();
+  }, []);
 
   const handleCommentChange = (e) => setNewComment(e.target.value);
 
@@ -219,23 +226,26 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                 <div className="mt-1">{comment.comment}</div>
                 <div className="d-flex align-items-center mt-2">
                   <span className={styles.commentTime}>
-                    {formatTime(new Date(comment.createdAt))}
+                    {formatTime(new Date(comment?.createdAt))}
                   </span>
                   <Button
                     variant="link"
                     className={styles.commentButtonLink}
                     onClick={() => handleLikeComment(comment._id)}
                   >
-                    Like ({comment.likes})
+                    Like ({comment?.likes || 0})
                   </Button>
                   <Button
                     variant="link"
                     className={styles.replyButtonLink}
                     onClick={() => handleShowReplies(comment._id)}
                   >
-                    {showReplies[comment._id] ? "Hide Replies" : "View Replies"}
+                    {showReplies[comment._id]
+                      ? `Hide Replies (${comment?.totalReplies || 0})`
+                      : `View Replies (${comment?.totalReplies || 0})`}
                   </Button>
                 </div>
+
                 {showReplies[comment._id] && (
                   <>
                     {replies[comment._id] &&
@@ -246,7 +256,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                         >
                           <Col xs={1}>
                             <Image
-                              src={Logo}
+                              src={reply.userImage}
                               alt="User Image"
                               className={styles.commentImage}
                             />
@@ -254,7 +264,7 @@ const CommunityComment = ({ postId, userId, ecosystemDomain }) => {
                           <Col xs={11}>
                             <div className="d-flex flex-column">
                               <div className="fw-bold">
-                                {reply.userId || "Anonymous"}
+                                {reply.userName || "Anonymous"}
                               </div>
                               <div className="mt-1">{reply.reply}</div>
                               <div className="d-flex align-items-center mt-2">

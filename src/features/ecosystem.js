@@ -7,10 +7,11 @@ const initialState = {
   ecosystemDomain: '',
   targetAudienceSector: '',
   mainObjective: '',
-  expectedAudienceNumber: '',
-  experience: '',
   ecosystemDescription: '',
-  ecosystemId: 'null', 
+  contact: '',
+  address: '',
+  socialMedia: [],
+  ecosystemId: 'null',
 };
 
 const ecosystemSlice = createSlice({
@@ -27,10 +28,14 @@ const ecosystemSlice = createSlice({
     setEcosystemId: (state, action) => {
       state.ecosystemId = action.payload;
     },
+    updateSocialMedia: (state, action) => {
+      state.socialMedia = action.payload;
+    },
     resetState: () => initialState,
   },
 });
 
-export const { updateField, setCreatorId, setEcosystemId, resetState } = ecosystemSlice.actions;
+export const { updateField, setCreatorId, setEcosystemId, resetState, updateSocialMedia: updateSocialMedia } = ecosystemSlice.actions;
 
 export default ecosystemSlice.reducer;
+

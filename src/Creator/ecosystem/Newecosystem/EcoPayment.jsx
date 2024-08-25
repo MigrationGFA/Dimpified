@@ -1008,15 +1008,15 @@ const EcoPayment = ({ plan }) => {
   //   // }, 1000);
   // };
 
-  const handlePaystackPayment = (planCode) => {
+  const handlePaystackPayment = (planCode, planName) => {
     const popup = new Paystack();
 
     popup.newTransaction({
-      key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
-      //key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
+      //key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",
+      key: "pk_test_57f928ef3b08dc974a816c89f7687c37e9afb03c",
       email: Email,
-      plan: planCode,
-      //plan: "PLN_marhiqmjkhdm3ta",
+      //plan: planCode,
+      plan: "PLN_marhiqmjkhdm3ta",
       currency: "NGN",
       text: loading ? "Processing" : "Paystack",
       payment_options: "card,mobilemoney,ussd",
@@ -1037,6 +1037,7 @@ const EcoPayment = ({ plan }) => {
           .post(`${import.meta.env.VITE_API_URL}/verify-subscription`, {
             reference,
             creatorId: creatorId,
+            planType: planName,
           })
           .then((response) => {
             if (
@@ -1044,14 +1045,14 @@ const EcoPayment = ({ plan }) => {
             ) {
               showToast(response.data.message);
               navigate("/creator/dashboard/Preview-and-Send");
-              setOpenModal(true);
-              setBlurBackground(true);
+              setOpenModal(true)
             } else {
               showToast("Payment for course not verified");
             }
           })
           .catch((error) => {
             showToast("An error occurred during payment verification", error);
+    
           })
           .finally(() => {
             setLoading(false);
@@ -1146,8 +1147,8 @@ const EcoPayment = ({ plan }) => {
     const sizePlans = selectedPlanObj?.[selectedSize];
     const planCode = sizePlans ? sizePlans[selectedPlan] : null;
 
-    if (planCode) {
-      handlePaystackPayment(planCode);
+    if (planCode, planName) {
+      handlePaystackPayment(planCode, planName);
     } else {
       showToast("Invalid plan selected");
     }
