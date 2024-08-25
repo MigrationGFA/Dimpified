@@ -57,9 +57,9 @@ const PostCard = ({
     }, 0);
   };
 
-  useEffect(() => {
-    fetchCommunityData();
-  }, []);
+  // useEffect(() => {
+  //   fetchCommunityData();
+  // }, []);
 
   const handleLikeComment = async (communityId, postId) => {
     try {

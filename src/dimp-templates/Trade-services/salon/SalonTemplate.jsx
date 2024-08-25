@@ -94,7 +94,7 @@ const Navbar = () => (
     bg="transparent"
     variant="transparent"
     expand="lg"
-    className="px-lg-10 py-lg-3"
+    className="beauty-link px-lg-10 py-lg-3"
   >
     <Container>
       <BootstrapNavbar.Brand
@@ -112,35 +112,30 @@ const Navbar = () => (
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
           >
             About Us
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
           >
             Services
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#gallery"
           >
             Gallery
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
           >
             Reviews
           </Nav.Link>
           <Nav.Link
-            
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#book"
           >
@@ -217,7 +212,7 @@ const Hero = () => (
 );
 const Statistics = () => (
   <Fragment>
-    <section className="beauty px-4 position-relative border-bottom bg-white border-color-extra-medium-gray">
+    <section className="px-4 position-relative border-bottom bg-white border-color-extra-medium-gray  alt-font">
       <Container>
         <div className="w-50 bg-white position-absolute top-minus-40px left-0px text-end">
           <div className="fs-15 primary-font lh-30 text-dark-gray pt-5px pb-5px ps-25px pe-25px fw-600 d-inline-block bg-yellow">
@@ -930,8 +925,8 @@ const Contact = () => (
   </section>
 );
 const MiniCTA = () => (
-  <section className="beauty px-4 bg-gradient-blue-ironstone-brown">
-    <div className="pt-40px pb-40px border-bottom border-color-transparent-white-light">
+  <section className=" px-4 bg-gradient-blue-ironstone-brown">
+    <div className=" beauty border-bottom border-color-transparent-white-light">
       <Container>
         <Row>
           <Col className="text-center">

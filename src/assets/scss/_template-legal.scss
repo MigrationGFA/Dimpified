@@ -10,15 +10,17 @@
   --very-light-gray: #f6f3ef;
   --alt-font: "Playfair Display", serif;
   --primary-font: "DM Sans", sans-serif;
+  padding-top: 50px;
+  padding-bottom: 50px; 
 }
 .legal .nav-link {
-  color: white; /* White text on a transparent background */
+  color: rgb(0, 0, 0); /* White text on a transparent background */
 }
 
 /* Mobile and Tablet styles */
 @media (max-width: 992px) {
-  .legal {
-    background-color: white; /* White background on mobile and tablet */
+  .legal .nav-link {
+    background-color: rgb(0, 0, 0); /* White background on mobile and tablet */
   }
 
   .legal .nav-link {

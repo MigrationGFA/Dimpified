@@ -9,19 +9,22 @@
   --extra-medium-gray: #e4e4e4;
   --alt-font: "Space Grotesk", sans-serif;
   --primary-font: "Inter", sans-serif;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 /* reset */
-.learning .nav-link {
-  color: white; /* White text on a transparent background */
+.learning-link .nav-link {
+  color: white;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 /* Mobile and Tablet styles */
 @media (max-width: 992px) {
-  .learning {
+  .learning-link {
     background-color: white; /* White background on mobile and tablet */
   }
 
-  .learning .nav-link {
+  .learning-link .nav-link {
     color: black; /* Black text on a white background */
   }
 }

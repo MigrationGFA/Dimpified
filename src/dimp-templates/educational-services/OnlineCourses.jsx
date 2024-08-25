@@ -202,7 +202,7 @@ const Navbar = () => (
     expand="lg"
     bg="transparent"
     variant="transparent"
-    className="learning px-4"
+    className="px-4 learning-link"
   >
     <Container fluid>
       <BootstrapNavbar.Brand href="/demo-elearning">
@@ -218,7 +218,7 @@ const Navbar = () => (
       <BootstrapNavbar.Toggle aria-controls="navbarNav" />
 
       <BootstrapNavbar.Collapse id="navbarNav">
-        <Nav className="me-auto alt-font ">
+        <Nav className="mx-auto alt-font fs-4 learning-link ">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#about">About</Nav.Link>
           <Nav.Link href="#courses">Courses</Nav.Link>
@@ -227,12 +227,7 @@ const Navbar = () => (
           <Nav.Link href="#blog">Blog</Nav.Link>
           <Nav.Link href="#contact">Contact</Nav.Link>
         </Nav>
-        <div className="d-none d-lg-flex align-items-center">
-          <Telephone className="me-2" />
-          <a href="tel:1800222000" className="text-white-hover">
-            1 800 222 000
-          </a>
-        </div>
+        
       </BootstrapNavbar.Collapse>
     </Container>
   </BootstrapNavbar>
@@ -245,9 +240,9 @@ const Hero = () => (
     className="learning px-4 p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin position-relative"
     style={{
       backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-elearning-hero-bg.jpg)`,
-      backgroundSize: 'cover',
+      backgroundSize: "cover",
       marginTop: "inherit",
-      height: "100vh"
+      height: "100vh",
     }}
   >
     <div
@@ -286,7 +281,6 @@ const Hero = () => (
             >
               <HandThumbsUp /> Get started
             </Button>
-            
           </div>
         </Col>
         <Col xl={7} lg={6} className="pt-30px lg-pt-0">
@@ -371,7 +365,6 @@ const About = () => (
             Skilled instructors
           </span>
           <p className="text-muted">Learn from the best in the industry.</p>
-          
         </Col>
 
         <Col lg={3} md={6} className="border-end mb-4">
@@ -385,7 +378,6 @@ const About = () => (
           <p className="text-muted">
             Get assistance from experienced educators.
           </p>
-          
         </Col>
 
         <Col lg={3} md={6} className="border-end mb-4">
@@ -399,7 +391,6 @@ const About = () => (
             Get certificate
           </span>
           <p className="text-muted">Earn certificates recognized worldwide.</p>
-         
         </Col>
 
         <Col lg={3} md={6} className="mb-4">
@@ -413,7 +404,6 @@ const About = () => (
           <p className="text-muted">
             Access learning materials anytime, anywhere.
           </p>
-          
         </Col>
       </Row>
     </Container>
@@ -481,14 +471,17 @@ const Services = () => (
           </Col>
         ))}
       </Row>
-      
     </Container>
   </section>
 );
 
 // Gallery Section
 const Team = () => (
-  <section id="instructors" className="learning px-4" style={{ height: "auto" }}>
+  <section
+    id="instructors"
+    className="learning px-4"
+    style={{ height: "auto" }}
+  >
     <Container>
       <Row className="align-items-end mb-6">
         <Col xl={5} lg={6} md={9} className="text-center text-lg-start">
@@ -666,7 +659,6 @@ const Contact = () => (
   <section
     id="contact"
     className="learning px-4 overflow-hidden position-relative overlap-height py-6 py-lg-8"
-    
   >
     <Container className="px-4 py-6 overlap-gap-section">
       <Row className="justify-content-center mb-3">
