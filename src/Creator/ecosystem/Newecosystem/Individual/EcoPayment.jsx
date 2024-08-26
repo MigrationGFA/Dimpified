@@ -1011,7 +1011,7 @@ const EcoPayment = ({ plan }) => {
   //   // }, 1000);
   // };
 
-  const handlePaystackPayment = (planCode) => {
+  const handlePaystackPayment = (planCode, planName) => {
     const popup = new Paystack();
 
     popup.newTransaction({
@@ -1040,15 +1040,15 @@ const EcoPayment = ({ plan }) => {
           .post(`${import.meta.env.VITE_API_URL}/verify-subscription`, {
             reference,
             creatorId: creatorId,
+            planType: planName,
           })
           .then((response) => {
             if (
               response.data.message === "Subscription verified successfully"
             ) {
               showToast(response.data.message);
-              navigate("/creator/dashboard/Preview-and-Send");
+              navigate("/creator/dashboard/All-Ecosystem");
               setOpenModal(true);
-              setBlurBackground(true);
             } else {
               showToast("Payment for course not verified");
             }
@@ -1150,8 +1150,8 @@ const EcoPayment = ({ plan }) => {
     const sizePlans = selectedPlanObj?.[selectedSize];
     const planCode = sizePlans ? sizePlans[selectedPlan] : null;
 
-    if (planCode) {
-      handlePaystackPayment(planCode);
+    if (planCode, planName) {
+      handlePaystackPayment(planCode, planName);
     } else {
       showToast("Invalid plan selected");
     }
