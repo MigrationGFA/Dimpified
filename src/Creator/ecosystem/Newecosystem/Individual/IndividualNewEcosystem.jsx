@@ -15,7 +15,12 @@ import {
 import { FormSelect } from "../../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import IndividualHeader from "./individualHeader";
-import { updateField, setEcosystemId } from "../../../../features/ecosystem";
+import {
+  updateField,
+  setEcosystemId,
+  updateSocialMedia,
+  resetState
+} from "../../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
 import categorySubSection from "../../../ecosystem/Newecosystem/PostAService/SectionJson";
@@ -29,6 +34,7 @@ const NewEcosystem = () => {
   const creatorId = user?.data?.CreatorId;
 
   const [showModal, setShowModal] = useState(false);
+  const [showSocialModal, setShowSocialModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [domainName, setDomainName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,6 +46,53 @@ const NewEcosystem = () => {
   const [domainSuggestions, setDomainSuggestions] = useState([]);
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const [isOtherCategory, setIsOtherCategory] = useState(false);
+  const [socialMedia, setSocialMedia] = useState([{ name: "", link: "" }]);
+
+  const socialMediaOptions = [
+    { value: "facebook", label: "Facebook" },
+    { value: "instagram", label: "Instagram" },
+    { value: "linkedin", label: "LinkedIn" },
+    { value: "twitter", label: "Twitter" },
+    { value: "whatsapp", label: "WhatsApp" },
+    { value: "youtube", label: "YouTube" },
+    { value: "wechat", label: "WeChat" },
+    { value: "tiktok", label: "TikTok" },
+    { value: "telegram", label: "Telegram" },
+    { value: "pinterest", label: "Pinterest" },
+    { value: "reddit", label: "Reddit" },
+    { value: "quora", label: "Quora" },
+    { value: "discord", label: "Discord" },
+    { value: "twitch", label: "Twitch" },
+    { value: "threads", label: "Threads by Instagram" },
+  ];
+
+  const handlePlatformChange = (index, event) => {
+    if (event && event.target) {
+      const newLinks = socialMedia.map((link, i) =>
+        i === index ? { ...link, name: event.target.value } : link
+      );
+      setSocialMedia(newLinks);
+      dispatch(updateSocialMedia(newLinks));
+    } else {
+      console.error("Event or event.target is undefined");
+    }
+  };
+  
+  const handleUrlChange = (index, event) => {
+    const newLinks = socialMedia.map((link, i) =>
+      i === index ? { ...link, link: event.target.value } : link
+    );
+    setSocialMedia(newLinks);
+    dispatch(updateSocialMedia(newLinks));
+  };
+  
+  const addLink = () => {
+    setSocialMedia([...socialMedia, { name: "", link: "" }]);
+  };
+  
+  const removeLink = (index) => {
+    setSocialMedia(socialMedia.filter((_, i) => i !== index));
+  };
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
@@ -90,8 +143,8 @@ const NewEcosystem = () => {
       ecosystemDomain,
       targetAudienceSector,
       mainObjective,
-      expectedAudienceNumber,
-      experience,
+      contact,
+      address,
       ecosystemDescription,
     } = ecosystem;
     if (
@@ -99,8 +152,8 @@ const NewEcosystem = () => {
       ecosystemDomain &&
       targetAudienceSector &&
       mainObjective &&
-      expectedAudienceNumber &&
-      experience &&
+      contact &&
+      address &&
       ecosystemDescription
     ) {
       setIsFormValid(true);
@@ -108,6 +161,7 @@ const NewEcosystem = () => {
       setIsFormValid(false);
     }
   };
+
 
   const validateDomain = async (ecosystemDomain) => {
     try {
@@ -188,7 +242,7 @@ const NewEcosystem = () => {
                   <h3 className="mb-0 h3 fw-bold">
                     Basic Ecosystem Information
                   </h3>
-                  <p>Step 1 of 3</p>
+                  <p>Step 1 of 4</p>
                 </div>
               </div>
               <div>
@@ -196,7 +250,7 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                        A. Ecosystem Name<span className="text-danger">*</span>
+                      A. What’s the name of your business?<span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -215,7 +269,7 @@ const NewEcosystem = () => {
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                        B. Ecosystem Domain
+                      B. What should your website address be?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
@@ -316,22 +370,19 @@ const NewEcosystem = () => {
                       )}
                     </Col>
                   </Row>
-                  <Row>
-                    <Col lg={6} className="col-12 mb-3">
+                  <Row className="mb-4">
+                    <Col lg={6} className="col-12">
                       <Form.Label htmlFor="contact-phone-number">
-                        E. What is your Business Phone Number?{" "}
+                        E. What is your Business Phone Number?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
                         id="contact-phone-number"
                         placeholder="Enter your contact phone number"
-                        value={ecosystem.expectedAudienceNumber}
+                        value={ecosystem.contact}
                         onChange={(e) =>
-                          handleFieldChange(
-                            "expectedAudienceNumber",
-                            e.target.value
-                          )
+                          handleFieldChange("contact", e.target.value)
                         }
                         required
                       />
@@ -339,16 +390,16 @@ const NewEcosystem = () => {
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="address">
-                          F. What is your Business Address?{" "}
+                          F. What is your Business Address?
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                           type="text"
                           id="address"
                           placeholder="Enter your address"
-                          value={ecosystem.experience}
+                          value={ecosystem.address}
                           onChange={(e) =>
-                            handleFieldChange("experience", e.target.value)
+                            handleFieldChange("address", e.target.value)
                           }
                           required
                         />
@@ -375,6 +426,19 @@ const NewEcosystem = () => {
                       rows={5}
                     />
                   </Col>
+                  <Row>
+                    <Col
+                      lg={4}
+                      style={{ display: "block", marginBottom: "15px" }}
+                    >
+                      <Form.Label htmlFor="ecosystem-social">
+                        H. Add Your Social Media Links
+                      </Form.Label>
+                      <Button onClick={() => setShowSocialModal(true)}>
+                        Add Social Media
+                      </Button>
+                    </Col>
+                  </Row>
                   <div className="d-flex justify-content-end mt-4">
                     <Button
                       variant="primary"
@@ -447,6 +511,62 @@ const NewEcosystem = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showSocialModal} onHide={() => setShowSocialModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Social Media Links</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {socialMedia.map((link, index) => (
+            <Row key={index} className="mb-3">
+              <Col lg={6} className="col-12">
+                <Form.Group controlId={`social-platform-${index}`}>
+                  <Form.Label>Social Media Platform</Form.Label>
+                  <Form.Select
+                    value={link.name}
+                    onChange={(e) => handlePlatformChange(index, e)}
+                  >
+                    <option value="" disabled>
+                      Select platform
+                    </option>
+                    {socialMediaOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col lg={6} className="col-12">
+                <Form.Group controlId={`social-url-${index}`}>
+                  <Form.Label>URL</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter URL"
+                    value={link.link}
+                    onChange={(e) => handleUrlChange(index, e)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col lg={12} className="text-right mt-2">
+                {socialMedia.length > 1 && (
+                  <Button variant="danger" onClick={() => removeLink(index)}>
+                    Remove
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          ))}
+          <Button variant="primary" onClick={addLink}>
+            Add another link
+          </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowSocialModal(false)}>
             Close
           </Button>
         </Modal.Footer>

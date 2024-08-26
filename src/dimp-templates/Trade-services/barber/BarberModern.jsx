@@ -71,7 +71,7 @@ const Navbar = () => (
     bg="transparent"
     variant="transparent"
     expand="lg"
-    className="barber px-4 px-lg-10"
+    className="px-4 px-lg-10"
   >
     <Container>
       <BootstrapNavbar.Brand
@@ -80,12 +80,12 @@ const Navbar = () => (
       >
         <img
           src="https://gfa-tech.com/dimp-template-images/images/demo-barber-logo-black.png"
-          alt="Barber Logo"
+          alt="Logo"
         />
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-auto">
+        <Nav className="mx-auto barber-link">
           <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
