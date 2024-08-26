@@ -227,7 +227,20 @@ const Navbar = () => (
           <Nav.Link href="#blog">Blog</Nav.Link>
           <Nav.Link href="#contact">Contact</Nav.Link>
         </Nav>
-        
+        <Button
+          href="signup"
+          className="learning learning-link btn-small btn btn-base-color btn-rounded btn-box-shadow me-2"
+        >
+         
+          Sign Up
+        </Button>
+        <Button
+          href="signin"
+          className="learning learning-link btn-small btn-dark-gray btn-rounded btn-box-shadow"
+        >
+          
+          Sign In
+        </Button>
       </BootstrapNavbar.Collapse>
     </Container>
   </BootstrapNavbar>
@@ -553,6 +566,13 @@ const Testimonials = () => (
     className="learning px-4 bg-gradient-tranquil-white position-relative"
   >
     <Container className="position-relative z-index-1">
+      <Row className="justify-content-center mb-3">
+        <Col xs={12} className="text-center">
+          <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
+            Trusted by hundreds of students
+          </h2>
+        </Col>
+      </Row>
       <Row className="row-cols-1 row-cols-lg-3 row-cols-md-2 align-items-center mb-4 xs-mb-25px">
         {reviews.map((review, index) => (
           <Col key={index} className="mb-30px">
