@@ -86,21 +86,21 @@ const PreviewAndSend = () => {
             <Row className="mb-2">
               <Col lg={6}>
                 <p>
-                  <strong>Expected Audience Number:</strong>
+                  <strong>Contact:</strong>
                 </p>
               </Col>
               <Col lg={6}>
-                <p>{ecosystem.expectedAudienceNumber}</p>
+                <p>{ecosystem.contact}</p>
               </Col>
             </Row>
             <Row className="mb-2">
               <Col lg={6}>
                 <p>
-                  <strong>Experience with Creating Ecosystem:</strong>
+                  <strong>Address:</strong>
                 </p>
               </Col>
               <Col lg={6}>
-                <p>{ecosystem.experience.toUpperCase()}</p>
+                <p>{ecosystem.address}</p>
               </Col>
             </Row>
             <Row className="mb-2">

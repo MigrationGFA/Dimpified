@@ -143,7 +143,7 @@ const CreateForm = () => {
       );
       setLoading(false);
       showToast(response.data.message);
-      navigate("/creator/dashboard/Products");
+      navigate("/creator/dashboard/Integrations");
     } catch (error) {
       setLoading(false);
       showToast("Form creation Failed");
