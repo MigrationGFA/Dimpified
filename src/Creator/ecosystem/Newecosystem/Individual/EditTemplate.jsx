@@ -198,7 +198,7 @@ const EditTemplate = () => {
 
       <Container className="mt-5 ">
         <div className="d-flex flex-column align-items-center">
-          <p>Step 3 of 3</p>
+          <p>Step 3 of 4</p>
           <h2>Select Template</h2>
           <p>Select and Edit your ecosystem template</p>
           <div className="w-50 mb-4" style={{ height: "1px" }}>
