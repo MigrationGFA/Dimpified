@@ -332,7 +332,7 @@ const Ecosystem = () => {
                                 Dashboard
                               </Button>
                               <a
-                                href={`http://${eco.ecosystemDomain}.localhost:5173/`}
+                                href={`https://${eco.ecosystemDomain}.dimpified.com`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
