@@ -15,17 +15,26 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../Steps.css";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "../Individual/individualHeader";
+
+// template import part
 import Template1 from "../../../../EditTemplate/Template1";
 import Template2 from "../../../../EditTemplate/Template2";
 import Template3 from "../../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
-import PreviewPage from "../../../../EditTemplate/Preview";
+import Template4 from "../../../../EditTemplate/AllCategory/PersonalCare/Salon1";
+import Template6 from "../../../../EditTemplate/AllCategory/Government/Upskilling1";
+
+// preview template
+import BarberPreview1 from "../../../../EditTemplate/PreviewPage/BarberPreview1";
+import Preview6 from "../../../../EditTemplate/PreviewPage/Government/UpskillingPreview1";
+
+// others
 import Templates from "../../../../data/Template/LandingPageTemplate";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
 import PreviewPageSize from "../PreviewPageSize";
 import PreviewTemplateV1 from "../../Preview/Template/TemplateV1";
-import BarberPreview1 from "../../../../EditTemplate/PreviewPage/BarberPreview1";
+
 import { setTemplate } from "../../../../features/Template/MainTemplate";
 import LoadingState from "../../../../Components/Loading";
 
@@ -105,7 +114,10 @@ const EditTemplate = () => {
         return <Template2 />;
       case 3:
         return <Template1 />;
-      // Add cases for Template3 and Template4...
+      case 4:
+        return <Template4 />;
+      case 6:
+        return <Template6 />;
       default:
         return <div>Invalid template</div>;
     }
@@ -119,6 +131,8 @@ const EditTemplate = () => {
         return <Template2 />;
       case 3:
         return <Template1 />;
+      case 6:
+        return <Preview6 />;
       // Add cases for Template3 and Template4...
       default:
         return <div>Invalid template</div>;
