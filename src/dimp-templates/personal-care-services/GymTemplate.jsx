@@ -35,7 +35,11 @@ import {
 const GymTemplate = () => {
   return (
     <Fragment>
-      <Navbar bg="transparent" expand="lg" className="px-lg-10 alt-font bg-cultured py-lg-3">
+      <Navbar
+        bg=""
+        expand="lg"
+        className="px-lg-10 alt-font bg-cultured py-lg-3"
+      >
         <Container>
           <Navbar.Brand
             className="fw-bold text-dark d-flex align-items-center"
@@ -87,9 +91,9 @@ const GymTemplate = () => {
                 Contact
               </Nav.Link>
             </Nav>
-            <Button variant="dark" className="btn-lg">
-              <i className="feather icon-feather-calendar me-2"></i>
-              Contact Us
+            <Button variant="dark" className="btn-round-edge">
+              Join today!
+              <ArrowRight className="ms-2" />
             </Button>
           </Navbar.Collapse>
         </Container>
@@ -136,11 +140,11 @@ const GymTemplate = () => {
           </Col>
         </Row>
       </section>
-      <section className="gym bg-white position-relative overflow-hidden">
+      <section className="gym bg-white primary-font position-relative overflow-hidden">
         <Container className="position-relative z-index-1">
           <Row className="row-cols-1 row-cols-md-4 row-cols-sm-2 justify-content-center counter-style-07 pb-lg-14 pb-3">
             <Col className="text-center sm-mb-35px">
-              <h1 className="alt-font vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative z-index-0">
+              <h1 className="alt-font fs-50 vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative z-index-0">
                 4566
                 <span className="text-highlight position-absolute bottom-10px w-100">
                   <span className="bg-base-color h-10px bottom-0px opacity-4"></span>
@@ -151,7 +155,7 @@ const GymTemplate = () => {
               </span>
             </Col>
             <Col className="text-center sm-mb-35px">
-              <h1 className="alt-font vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
+              <h1 className="alt-font fs-50 vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
                 5635
                 <span className="text-highlight position-absolute bottom-10px w-100">
                   <span className="bg-base-color h-10px bottom-0px opacity-4"></span>
@@ -162,7 +166,7 @@ const GymTemplate = () => {
               </span>
             </Col>
             <Col className="text-center xs-mb-35px">
-              <h1 className="alt-font vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
+              <h1 className="alt-font fs-50 vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
                 6546
                 <span className="text-highlight position-absolute bottom-10px w-100">
                   <span className="bg-base-color h-10px bottom-0px opacity-4"></span>
@@ -173,7 +177,7 @@ const GymTemplate = () => {
               </span>
             </Col>
             <Col className="text-center">
-              <h1 className="alt-font vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
+              <h1 className="alt-font fs-50 vertical-counter d-inline-flex text-dark-gray fw-700 mb-0 ls-minus-2px md-ls-0px position-relative">
                 6365
                 <span className="text-highlight position-absolute bottom-10px w-100">
                   <span className="bg-base-color h-10px bottom-0px opacity-4"></span>
@@ -212,7 +216,7 @@ const GymTemplate = () => {
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
                 Elevate Your Fitness Journey
               </span>
-              <h2 className="h1 alt-font fw-700 ls-minus-1px text-dark-gray mb-15px">
+              <h2 className="h1 alt-font fs-50 fw-700 ls-minus-1px text-dark-gray mb-15px">
                 Personalized Workout Programs
                 <span className="text-base-color">.</span>
               </h2>
@@ -240,7 +244,7 @@ const GymTemplate = () => {
           </Row>
         </Container>
       </section>
-      <section className="gym bg-white position-relative pt-1">
+      <section className="gym bg-white primary-font position-relative pt-1">
         <Container>
           <Row className="mb-7 xs-mb-40px">
             <Col
@@ -251,8 +255,9 @@ const GymTemplate = () => {
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
                 Why choose us?
               </span>
-              <h2 className="h1 alt-font fw-700 ls-minus-1px text-dark-gray mb-10px">
-                Enhancing your health and well-being
+              <h2 className="h1 alt-font fs-50 fw-700 ls-minus-1px text-dark-gray mb-10px">
+                Enhancing your health
+                <br /> and well-being
                 <span className="text-base-color">.</span>
               </h2>
               <div className="fw-500 text-dark-gray w-100 mt-auto fs-19 ls-0px position-relative left-minus-20px d-flex align-items-center">
@@ -367,7 +372,7 @@ const GymTemplate = () => {
           />
         </div>
       </section>
-      <section className="gym bg-white position-relative overflow-hidden">
+      <section className="gym bg-cultured primary-font position-relative overflow-hidden">
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="mb-4 mb-lg-0">
@@ -419,7 +424,7 @@ const GymTemplate = () => {
               <span className="fs-5 fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-3">
                 Flexibility and Patience
               </span>
-              <h2 className="h1 fw-700 text-dark-gray">
+              <h2 className="h1 fw-700 alt-font fs-50 text-dark-gray">
                 Fitness You’ll Enjoy with Our Workouts
                 <span className="text-base-color">.</span>
               </h2>
@@ -471,7 +476,7 @@ const GymTemplate = () => {
           </div>
         </Container>
       </section>
-      <section className="gym bg-white pt-0 pb-5 md-pb-8 overlap-height overflow-hidden">
+      <section className="gym bg-white primary-font py-3 py-lg-10 pb-5 md-pb-8 overlap-height overflow-hidden">
         <Container className="overlap-gap-section">
           <Row className="align-items-center justify-content-center">
             <Col
@@ -483,24 +488,11 @@ const GymTemplate = () => {
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
                 Member Reviews
               </span>
-              <h2 className="h1 alt-font fw-700 ls-minus-1px text-dark-gray mb-10px w-80 lg-w-100">
+              <h2 className="h1 alt-font fs-50 fw-700 ls-minus-1px text-dark-gray mb-10px w-80 lg-w-100">
                 What our members say about our facilities
                 <span className="text-base-color">.</span>
               </h2>
-              <div className="d-block mb-25px">
-                See our 437 reviews on{" "}
-                <a
-                  href="https://www.reviews.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="https://craftohtml.themezaa.com/images//reviewsio.svg"
-                    className="h-20px align-middle ms-5px"
-                    alt=""
-                  />
-                </a>
-              </div>
+
               <div className="d-flex justify-content-center justify-content-xl-start">
                 {/* Slider navigation */}
                 <div
@@ -525,7 +517,7 @@ const GymTemplate = () => {
                 <Carousel className="carousel-shadow-right sm-carousel-shadow-none magic-cursor overflow-visible ps-25px sm-p-0">
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -553,7 +545,7 @@ const GymTemplate = () => {
                   {/* End review item */}
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -580,7 +572,7 @@ const GymTemplate = () => {
                   {/* End review item */}
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -608,7 +600,7 @@ const GymTemplate = () => {
                   {/* End review item */}
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -659,7 +651,7 @@ const GymTemplate = () => {
       </section>
       <section
         id="instructors"
-        className="gym bg-white px-4"
+        className="gym primary-font bg-cultured px-4"
         style={{ height: "auto" }}
       >
         <Container>
@@ -674,7 +666,7 @@ const GymTemplate = () => {
                   </div>
                 </div>
               </div>
-              <h2 className="text-dark fs-2 alt-font fw-600 mb-3">
+              <h2 className="text-dark fs-50 alt-font fw-600 mb-3">
                 We have amazing instructors
               </h2>
             </Col>
@@ -723,12 +715,12 @@ const GymTemplate = () => {
       </section>
       <section
         id="contact"
-        className="gym bg-white px-4 overflow-hidden position-relative overlap-height py-6 py-lg-8"
+        className="gym bg-white primary-font px-4 overflow-hidden position-relative overlap-height py-6 py-lg-8"
       >
         <Container className="px-4 py-6 overlap-gap-section">
           <Row className="justify-content-center mb-3">
             <Col xs={12} className="text-center">
-              <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
+              <h2 className="alt-font fs-50 text-dark-gray fw-600 ls-minus-3px">
                 How can we assist you?
               </h2>
             </Col>
