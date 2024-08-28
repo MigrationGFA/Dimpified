@@ -77,6 +77,13 @@ const Template6 = () => {
     );
   };
 
+  const {
+    fileInputRefs,
+    handleEditImageClick,
+    handleImageChange,
+    loadingImage,
+  } = useImageEditor();
+
   return (
     <div>
       <Container fluid>

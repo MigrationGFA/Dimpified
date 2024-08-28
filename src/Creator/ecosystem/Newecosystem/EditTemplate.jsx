@@ -17,14 +17,16 @@ import "./Steps.css";
 import EcoHeader from "./ecoHeader";
 
 // template import section
-import Template1 from "../../../EditTemplate/Template1";
-import Template2 from "../../../EditTemplate/Template2";
-import Template3 from "../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import Template1 from "../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import Template2 from "../../../EditTemplate/AllCategory/Education/OnlineCourse1";
+import Template3 from "../../../EditTemplate/AllCategory/Professional/LegalTemplate1";
 import Template4 from "../../../EditTemplate/AllCategory/PersonalCare/Salon1";
 import Template6 from "../../../EditTemplate/AllCategory/Government/Upskilling1";
 
 // preview template section
 import BarberPreview1 from "../../../EditTemplate/PreviewPage/BarberPreview1";
+import Preview2 from "../../../EditTemplate/PreviewPage/Education/OnlineSchoolPreview";
+import Preview3 from "../../../EditTemplate/PreviewPage/Professional/LegalTemplate";
 import Preview6 from "../../../EditTemplate/PreviewPage/Government/UpskillingPreview1";
 
 // others
@@ -110,11 +112,11 @@ const EditTemplate = () => {
   const renderTemplate = (templateId) => {
     switch (templateId) {
       case 1:
-        return <Template3 />;
+        return <Template1 />;
       case 2:
         return <Template2 />;
       case 3:
-        return <Template1 />;
+        return <Template3 />;
       case 4:
         return <Template4 />;
       case 6:
@@ -129,9 +131,9 @@ const EditTemplate = () => {
       case 1:
         return <BarberPreview1 />;
       case 2:
-        return <Template2 />;
+        return <Preview2 />;
       case 3:
-        return <Template1 />;
+        return <Preview3 />;
       case 6:
         return <Preview6 />;
       default:

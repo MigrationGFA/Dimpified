@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -14,18 +14,15 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 
-import { useSelector, useDispatch } from "react-redux";
-import {
-  updateContent,
-  updateStyles,
-  updateNavbarFromEcosystem,
-} from "../../../features/Template/MainTemplate";
-import { setActiveSection } from "../../../features/Template/activeTemplateSection";
-import EditableBlock from "../../EditableBlock";
-import SideEditor from "../../SideEditor";
-import useImageEditor from "../../userImageEditor";
+import sanitizeHtml from "sanitize-html";
 
 const Preview6 = () => {
+  const sanitizeContent = (html) => {
+    return sanitizeHtml(html, {
+      allowedTags: [], // Disallow all tags
+      allowedAttributes: {}, // Disallow all attributes
+    });
+  };
   return (
     <Fragment>
       <UserNavbar />
