@@ -376,7 +376,7 @@ const Product = ({ submit, onPrevious }) => {
                   <Form.Group>
                     <Form.Label>Price</Form.Label>
                     <Form.Control
-                      type="text"
+                      type="number"
                       value={editPrice}
                       onChange={(e) =>
                         handleFieldChange("price", e.target.value)
