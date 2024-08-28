@@ -30,24 +30,23 @@ import {
   Send,
   Telephone,
   People,
+  CheckCircle,
+  PlayBtn,
 } from "react-bootstrap-icons";
 
 const GymTemplate = () => {
   return (
     <Fragment>
-      <Navbar
-        bg=""
-        expand="lg"
-        className="px-lg-10 alt-font bg-cultured py-lg-3"
-      >
+      <Navbar expand="lg" className="px-lg-10 alt-font bg-cultured py-lg-3">
         <Container>
           <Navbar.Brand
-            className="fw-bold text-dark d-flex align-items-center"
+            className="gym fw-bold text-dark d-flex alt-font align-items-center"
             href="#home"
           >
-            FASHION DESIGNER
+            {" "}
+            WORKOUT GYM
             <img
-              src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
+              src="https://craftohtml.themezaa.com/images/demo-gym-and-fitness-logo-white@2x.png"
               alt="Icon"
               style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
             />
@@ -58,21 +57,21 @@ const GymTemplate = () => {
               <Nav.Link
                 className="gym-link text-dark"
                 style={{ fontWeight: "600", fontSize: "1rem" }}
-                href="#about"
+                href="#home"
               >
                 Home
               </Nav.Link>
               <Nav.Link
                 className="gym-link text-dark"
                 style={{ fontWeight: "600", fontSize: "1rem" }}
-                href="#services"
+                href="#about"
               >
                 About
               </Nav.Link>
               <Nav.Link
                 className="gym-link text-dark"
                 style={{ fontWeight: "600", fontSize: "1rem" }}
-                href="#gallery"
+                href="#services"
               >
                 Services
               </Nav.Link>
@@ -91,14 +90,20 @@ const GymTemplate = () => {
                 Contact
               </Nav.Link>
             </Nav>
-            <Button variant="dark" className="btn-round-edge">
-              Join today!
+            <Button
+              className="gym alt-font btn btn-small btn-base-color btn-round-edge btn-box-shadow"
+              href="#services"
+            >
+              JOIN US
               <ArrowRight className="ms-2" />
             </Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <section className="gym bg-cultured position-relative overflow-hidden p-0 primary-font position-relative overflow-hidden p-0">
+      <section
+        id="home"
+        className="px-4 gym bg-cultured position-relative overflow-hidden p-0 primary-font position-relative overflow-hidden p-0"
+      >
         <Row>
           <Col
             xl={5}
@@ -106,13 +111,14 @@ const GymTemplate = () => {
             md={6}
             className="px-4 px-lg-20 pt-4 pt-lg-16 pb-3"
           >
-            <span className="fs-19 lh-20 primary-font pb-4 ls-0 fw-bold text-dark d-inline-block mb-3">
+            <span className="primary-font fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
               Upstanding Strength
             </span>
             <h2 className="fw-bold alt-font fs-50 text-dark mb-3">
               Strength Training Benefits for You
               <span className="text-primary">.</span>
             </h2>
+
             <p className="w-90">
               Our primary goal is to create awareness and easy access to keep
               your body, mind and spirit at peak performance.
@@ -123,7 +129,7 @@ const GymTemplate = () => {
               <span className="fw-bold text-dark">first payment today</span> and
               start now.
             </p>
-            <Button variant="dark" className="btn-round-edge">
+            <Button className="alt-font btn btn-large btn-base-color btn-round-edge btn-box-shadow">
               Join today!
               <ArrowRight className="ms-2" />
             </Button>
@@ -211,6 +217,7 @@ const GymTemplate = () => {
             </Col>
             <Col
               lg={5}
+              id="about"
               className="offset-lg-1 mb-50px mt-40px md-mt-0 order-1 order-lg-2 xs-mb-35px"
             >
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
@@ -220,31 +227,44 @@ const GymTemplate = () => {
                 Personalized Workout Programs
                 <span className="text-base-color">.</span>
               </h2>
+              <p className="w-90">
+                At [Your Fitness Brand Name], we believe that fitness is more
+                than just a routine—it's a lifestyle. Our mission is to empower
+                individuals of all fitness levels to achieve their personal
+                best, both physically and mentally. Whether you're a beginner or
+                an experienced athlete, our state-of-the-art facilities, expert
+                trainers, and personalized programs are designed to help you
+                reach your goals.
+              </p>
               <p className="w-85 mb-30px lg-w-100">
                 Our tailored workout plans are designed to match your fitness
                 goals. Whether you're a beginner or a pro, our programs will
                 help you reach new heights.
               </p>
+
               <Button
-                href="demo-gym-and-fitness-about.html"
-                variant="dark"
-                className="btn-large btn-round-edge me-15px"
+                href="#services"
+                className="alt-font btn btn-large btn-base-color btn-round-edge btn-box-shadow me-3"
               >
-                Learn More
+                Gym Services
               </Button>
               <Button
-                href="https://www.youtube.com/watch?v=cfXHhfNy7tU"
+                href="#instructors"
                 variant="link"
                 className="btn-extra-large text-dark-gray pb-0"
               >
-                <i className="bi bi-play-circle lh-normal align-middle icon-extra-medium me-5px"></i>
-                How It Works
+                <span className="fs-20px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-3">
+                  Our Instructors
+                </span>
               </Button>
             </Col>
           </Row>
         </Container>
       </section>
-      <section className="gym bg-white primary-font position-relative pt-1">
+      <section
+        id="services"
+        className="gym bg-white primary-font position-relative pt-1"
+      >
         <Container>
           <Row className="mb-7 xs-mb-40px">
             <Col
@@ -253,7 +273,7 @@ const GymTemplate = () => {
               className="d-flex flex-column align-items-start md-mb-20px"
             >
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
-                Why choose us?
+                Our Services
               </span>
               <h2 className="h1 alt-font fs-50 fw-700 ls-minus-1px text-dark-gray mb-10px">
                 Enhancing your health
@@ -296,11 +316,8 @@ const GymTemplate = () => {
                   <p>Get guidance from certified professionals.</p>
                 </Col>
                 <Col xs={1} className="align-self-center">
-                  <a
-                    className="action"
-                    href="demo-gym-and-fitness-classes.html"
-                  >
-                    <i className="bi bi-arrow-right text-dark-gray icon-extra-medium"></i>
+                  <a className="action">
+                    <ArrowRight />
                   </a>
                 </Col>
               </Row>
@@ -322,11 +339,8 @@ const GymTemplate = () => {
                   <p>Access on-demand training sessions anytime.</p>
                 </Col>
                 <Col xs={1} className="align-self-center">
-                  <a
-                    className="action"
-                    href="demo-gym-and-fitness-classes.html"
-                  >
-                    <i className="bi bi-arrow-right text-dark-gray icon-extra-medium"></i>
+                  <a className="action">
+                    <ArrowRight />
                   </a>
                 </Col>
               </Row>
@@ -348,11 +362,8 @@ const GymTemplate = () => {
                   <p>Track your fitness journey and see your growth.</p>
                 </Col>
                 <Col xs={1} className="align-self-center">
-                  <a
-                    className="action"
-                    href="demo-gym-and-fitness-classes.html"
-                  >
-                    <i className="bi bi-arrow-right text-dark-gray icon-extra-medium"></i>
+                  <a className="action">
+                    <ArrowRight />
                   </a>
                 </Col>
               </Row>
@@ -428,47 +439,43 @@ const GymTemplate = () => {
                 Fitness You’ll Enjoy with Our Workouts
                 <span className="text-base-color">.</span>
               </h2>
-              <Accordion defaultActiveKey="0" className="text-start">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>
-                    <div className="fs-5 text-dark-gray fw-500 mb-0">
-                      How to Raise Overall Fitness Level?
-                    </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>
-                      Our mission is to provide you with the ultimate fitness
-                      experience, tailored to your needs.
-                    </p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>
-                    <div className="fs-5 text-dark-gray fw-500 mb-0">
-                      How Can We Achieve Health Naturally?
-                    </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>
-                      We focus on natural methods to help you achieve a healthy
-                      lifestyle.
-                    </p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                  <Accordion.Header>
-                    <div className="fs-5 text-dark-gray fw-500 mb-0">
-                      Can I Get a Personal Trainer for Yoga?
-                    </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>
-                      Yes, our expert yoga trainers are available to guide you
-                      on your fitness journey.
-                    </p>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
+              <ul className="list-unstyled text-start ">
+                <li className="mb-4">
+                  <CheckCircle className="me-2 text-dark" />{" "}
+                  {/* Icon with some margin and color */}
+                  <strong className="fs-20px text-dark-gray fw-500">
+                    How to Raise Overall Fitness Level?
+                  </strong>
+                  <p className="mt-2">
+                    Our mission is to provide you with the ultimate fitness
+                    experience, tailored to your needs.
+                  </p>
+                </li>
+
+                <li className="mb-4">
+                  <CheckCircle className="me-2 text-dark" />{" "}
+                  {/* Icon with some margin and color */}
+                  <strong className="fs-20px text-dark-gray fw-500">
+                    How Can We Achieve Health Naturally?
+                  </strong>
+                  <p className="mt-2">
+                    We focus on natural methods to help you achieve a healthy
+                    lifestyle.
+                  </p>
+                </li>
+
+                <li className="mb-4">
+                  <CheckCircle className="me-2 text-dark" />{" "}
+                  {/* Icon with some margin and color */}
+                  <strong className="fs-20px text-dark-gray fw-500">
+                    Can I Get a Personal Trainer for Yoga?
+                  </strong>
+                  <p className="mt-2">
+                    Yes, our expert yoga trainers are available to guide you on
+                    your fitness journey.
+                  </p>
+                </li>
+              </ul>
             </Col>
           </Row>
           <div className="fs-1 fw-700 text-uppercase text-gradient-light-gray-white position-absolute bottom-0 start-0 z-index-minus-1 d-none d-lg-block">
@@ -476,13 +483,15 @@ const GymTemplate = () => {
           </div>
         </Container>
       </section>
-      <section className="gym bg-white primary-font py-3 py-lg-10 pb-5 md-pb-8 overlap-height overflow-hidden">
+      <section
+        id="testimonials"
+        className="gym bg-white primary-font py-3 py-lg-10 pb-5 md-pb-8 overlap-height overflow-hidden"
+      >
         <Container className="overlap-gap-section">
           <Row className="align-items-center justify-content-center">
             <Col
               xl={5}
-              lg={7}
-              md={10}
+              lg={5}
               className="position-relative pe-xl-0 text-center text-xl-start lg-mb-10px"
             >
               <span className="fs-19 lh-20 ls-0px fw-600 text-dark-gray d-inline-block text-decoration-line-bottom-medium border-color-base-color mb-25px">
@@ -512,9 +521,9 @@ const GymTemplate = () => {
                 {/* End slider navigation */}
               </div>
             </Col>
-            <Col xl={7} lg={10} className="overflow-hidden">
-              <div className="outside-box-right-15 xl-outside-box-right-20 sm-outside-box-right-0">
-                <Carousel className="carousel-shadow-right sm-carousel-shadow-none magic-cursor overflow-visible ps-25px sm-p-0">
+            <Col xl={7} lg={7} className="overflow-hidden">
+              <div className="">
+                <Carousel className="">
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
                     <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
@@ -572,7 +581,7 @@ const GymTemplate = () => {
                   {/* End review item */}
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <Card className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -595,12 +604,12 @@ const GymTemplate = () => {
                         identities, digital experiences, and print materials
                         that communicate.
                       </p>
-                    </div>
+                    </Card>
                   </Carousel.Item>
                   {/* End review item */}
                   {/* Review item */}
                   <Carousel.Item className="review-style-06">
-                    <div className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
+                    <Card className="d-flex border rounded rounded-md px-3 px-lg-6 justify-content-center h-100 flex-column bg-white box-shadow-medium p-45px md-p-35px border-radius-6px">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           className="rounded-circle w-90px h-90px me-20px"
@@ -623,7 +632,7 @@ const GymTemplate = () => {
                         identities, digital experiences, and print materials
                         that communicate.
                       </p>
-                    </div>
+                    </Card>
                   </Carousel.Item>
                   {/* End review item */}
                 </Carousel>
@@ -851,11 +860,62 @@ const GymTemplate = () => {
           </Row>
         </Container>
       </section>
-      <footer
-        className="text-center"
-        style={{ padding: "20px", backgroundColor: "#343a40", color: "white" }}
-      >
-        <p>&copy; 2024 FashionDesign. All rights reserved.</p>
+      <footer className="learning px-4 bg-gradient-aztec-green position-relative">
+        <Container className="footer-dark text-center text-sm-start position-relative">
+          <Row className="align-items-center footer-bottom border-top border-color-transparent-white-light pt-30px g-0">
+            <Col xl={7} className="ps-0 text-center text-xl-start lg-mb-10px">
+              <ul className="footer-navbar fs-16 lh-normal">
+                <li className="nav-item active">
+                  <a href="#home" className="nav-link alt-font ps-0">
+                    Home
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#about" className="nav-link alt-font">
+                    About
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#services" className="nav-link alt-font">
+                    Services
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#instructors" className="nav-link alt-font">
+                    Instructors
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#testimonials" className="nav-link alt-font">
+                    Testimonials
+                  </a>
+                </li>
+
+                <li className="nav-item">
+                  <a href="#contact" className="nav-link alt-font">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </Col>
+            <Col
+              xl={5}
+              className="last-paragraph-no-margin text-center text-xl-end"
+            >
+              <p className="fs-16">
+                © 2024 Proudly Powered by{" "}
+                <a
+                  href="https://www.dimpified.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white text-decoration-line-bottom"
+                >
+                  DIMP
+                </a>
+              </p>
+            </Col>
+          </Row>
+        </Container>
       </footer>
     </Fragment>
   );

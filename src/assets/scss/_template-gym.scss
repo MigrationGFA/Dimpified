@@ -9,9 +9,9 @@
   --primary-font: "Urbanist", sans-serif;
 }
 
-.gym-link .nav-link {
+.gym-link {
   color: white;
-  font-family: "Rufina", serif;
+  font-family: korolev-condensed, sans-serif;
 }
 .gym {
   padding-top: 70px;
@@ -22,7 +22,7 @@
 @media (max-width: 992px) {
   .gym-link {
     background-color: white;
-    font-family: "Rufina", serif;
+    font-family: korolev-condensed, sans-serif;
   }
   .gym {
     padding-right: 2rem;
