@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Laptop,
@@ -28,22 +28,17 @@ import {
   Send,
 } from "react-bootstrap-icons";
 import {
-  Modal,
-  Tab,
   Card,
   Button,
   Form,
   Container,
   Row,
   Col,
-  Badge,
-  Navbar as BootstrapNavbar,
+  Navbar,
   Nav,
-  NavDropdown,
-  Carousel,
-  ButtonGroup,
-  Pagination,
 } from "react-bootstrap";
+import sanitizeHtml from "sanitize-html";
+
 const blogPosts = [
   {
     imgSrc:
@@ -178,10 +173,17 @@ const courses = [
   },
 ];
 
-const OnlineCourses = () => {
+const Preview2 = () => {
+  const sanitizeContent = (html) => {
+    return sanitizeHtml(html, {
+      allowedTags: [], // Disallow all tags
+      allowedAttributes: {}, // Disallow all attributes
+    });
+  };
+
   return (
-    <Fragment>
-      <Navbar />
+    <div>
+      <UserNavbar />
       <Hero />
       <About />
       <Services />
@@ -190,22 +192,22 @@ const OnlineCourses = () => {
       <Blog />
       <Contact />
       <Footer />
-    </Fragment>
+    </div>
   );
 };
 
-export default OnlineCourses;
+export default Preview2;
 
 // BootstrapNavbar Component
-const Navbar = () => (
-  <BootstrapNavbar
+const UserNavbar = () => (
+  <Navbar
     expand="lg"
     bg="transparent"
     variant="transparent"
     className="px-4 learning-link"
   >
     <Container fluid>
-      <BootstrapNavbar.Brand href="/demo-elearning">
+      <Navbar.Brand href="/demo-elearning">
         <img
           src="https://gfa-tech.com/dimp-template-images/images/demo-elearning-logo-white.png"
           alt="E-learning Logo"
@@ -213,11 +215,11 @@ const Navbar = () => (
           height="39"
           className="default-logo"
         />
-      </BootstrapNavbar.Brand>
+      </Navbar.Brand>
 
-      <BootstrapNavbar.Toggle aria-controls="navbarNav" />
+      <Navbar.Toggle aria-controls="navbarNav" />
 
-      <BootstrapNavbar.Collapse id="navbarNav">
+      <Navbar.Collapse id="navbarNav">
         <Nav className="mx-auto alt-font fs-4 learning-link ">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#about">About</Nav.Link>
@@ -231,19 +233,17 @@ const Navbar = () => (
           href="signup"
           className="learning learning-link btn-small btn btn-base-color btn-rounded btn-box-shadow me-2"
         >
-         
           Sign Up
         </Button>
         <Button
           href="signin"
           className="learning learning-link btn-small btn-dark-gray btn-rounded btn-box-shadow"
         >
-          
           Sign In
         </Button>
-      </BootstrapNavbar.Collapse>
+      </Navbar.Collapse>
     </Container>
-  </BootstrapNavbar>
+  </Navbar>
 );
 
 // Hero Section

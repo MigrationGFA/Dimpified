@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Laptop,
@@ -28,22 +28,26 @@ import {
   Send,
 } from "react-bootstrap-icons";
 import {
-  Modal,
-  Tab,
   Card,
   Button,
   Form,
   Container,
   Row,
   Col,
-  Badge,
-  Navbar as BootstrapNavbar,
+  Navbar,
   Nav,
-  NavDropdown,
-  Carousel,
-  ButtonGroup,
-  Pagination,
 } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  updateContent,
+  updateStyles,
+  updateNavbarFromEcosystem,
+} from "../../../features/Template/MainTemplate";
+import { setActiveSection } from "../../../features/Template/activeTemplateSection";
+import EditableBlock from "../../EditableBlock";
+import SideEditor from "../../SideEditor";
+import useImageEditor from "../../userImageEditor";
+
 const blogPosts = [
   {
     imgSrc:
@@ -178,34 +182,111 @@ const courses = [
   },
 ];
 
-const OnlineCourses = () => {
+const Template2 = () => {
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  const content = useSelector((state) => state.mainTemplate.currentTemplate);
+  const ecosystemDetails = useSelector((state) => state.ecosystem);
+  const activeSection = useSelector(
+    (state) => state.activeSection.activeSection
+  );
+
+  const handleContentChange = (section, field, value, index = null) => {
+    dispatch(updateContent({ section, field, value, index }));
+  };
+
+  const handleBackgroundColorChange = (sectionId, color) => {
+    dispatch(
+      updateStyles({
+        section: sectionId,
+        styles: { backgroundColor: color },
+      })
+    );
+  };
+
+  const handleTextColorChange = (sectionId, color) => {
+    dispatch(updateStyles({ section: sectionId, styles: { color: color } }));
+  };
+
+  const handleFontChange = (sectionId, fontFamily) => {
+    dispatch(
+      updateStyles({
+        section: sectionId,
+        styles: { fontFamily },
+      })
+    );
+  };
+
+  const renderSection = (id, children) => {
+    return (
+      <section
+        id={id}
+        className="py-5"
+        style={{
+          ...content[id].styles,
+          border: activeSection === id ? "2px dotted black" : "none",
+        }}
+        onClick={() => dispatch(setActiveSection(id))}
+      >
+        <Container>{children}</Container>
+      </section>
+    );
+  };
+
+  const {
+    fileInputRefs,
+    handleEditImageClick,
+    handleImageChange,
+    loadingImage,
+  } = useImageEditor();
   return (
-    <Fragment>
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Team />
-      <Testimonials />
-      <Blog />
-      <Contact />
-      <Footer />
-    </Fragment>
+    <div>
+      <Container fluid>
+        <Row>
+          <Col md={9}>
+            <UserNavbar />
+            <Hero />
+            <About />
+            <Services />
+            <Team />
+            <Testimonials />
+            <Blog />
+            <Contact />
+            <Footer />
+          </Col>
+        </Row>
+      </Container>
+
+      <Col md={3}>
+        {activeSection && (
+          <SideEditor
+            sectionId={activeSection}
+            onBackgroundColorChange={handleBackgroundColorChange}
+            onTextColorChange={handleTextColorChange}
+            onFontChange={handleFontChange}
+          />
+        )}
+      </Col>
+    </div>
   );
 };
 
-export default OnlineCourses;
+export default Template2;
 
 // BootstrapNavbar Component
-const Navbar = () => (
-  <BootstrapNavbar
+const UserNavbar = () => (
+  <Navbar
     expand="lg"
     bg="transparent"
     variant="transparent"
     className="px-4 learning-link"
   >
     <Container fluid>
-      <BootstrapNavbar.Brand href="/demo-elearning">
+      <Navbar.Brand href="/demo-elearning">
         <img
           src="https://gfa-tech.com/dimp-template-images/images/demo-elearning-logo-white.png"
           alt="E-learning Logo"
@@ -213,11 +294,11 @@ const Navbar = () => (
           height="39"
           className="default-logo"
         />
-      </BootstrapNavbar.Brand>
+      </Navbar.Brand>
 
-      <BootstrapNavbar.Toggle aria-controls="navbarNav" />
+      <Navbar.Toggle aria-controls="navbarNav" />
 
-      <BootstrapNavbar.Collapse id="navbarNav">
+      <Navbar.Collapse id="navbarNav">
         <Nav className="mx-auto alt-font fs-4 learning-link ">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#about">About</Nav.Link>
@@ -231,19 +312,17 @@ const Navbar = () => (
           href="signup"
           className="learning learning-link btn-small btn btn-base-color btn-rounded btn-box-shadow me-2"
         >
-         
           Sign Up
         </Button>
         <Button
           href="signin"
           className="learning learning-link btn-small btn-dark-gray btn-rounded btn-box-shadow"
         >
-          
           Sign In
         </Button>
-      </BootstrapNavbar.Collapse>
+      </Navbar.Collapse>
     </Container>
-  </BootstrapNavbar>
+  </Navbar>
 );
 
 // Hero Section

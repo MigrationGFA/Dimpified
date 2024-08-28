@@ -69,7 +69,6 @@ import SocialMedia from "../Creator/Integrations/Social";
 import StoragePlatform from "../Creator/Integrations/StoragePlatform";
 import VideoPlayer from "../Creator/Integrations/VideoPlayer";
 
-
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
 import UserSignUp from "../Creator/authentication/UserSignUp";
@@ -154,7 +153,7 @@ import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
 import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
-import CommunityCreation from "../Components/CommunityChat/CommunityCreation"
+import CommunityCreation from "../Components/CommunityChat/CommunityCreation";
 
 // ** Import Admin Dahbaord Menu Pages
 import AdminSignIn from "../Admin/Authentication/AdminSignIn";
@@ -205,8 +204,8 @@ const AllRoutes = () => {
       <Route path="/barber-two" element={<BarberMordern />} />
       <Route path="/legal-template" element={<LegalTemplate />} />
       <Route path="/course-template" element={<OnlineCourses />} />
-      <Route path="/ngo-template" element={<NonGovTemplate/>} />
-      <Route path="/spa-template" element={<SpaTemplate/>} />
+      <Route path="/ngo-template" element={<NonGovTemplate />} />
+      <Route path="/spa-template" element={<SpaTemplate />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
@@ -250,7 +249,10 @@ const AllRoutes = () => {
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
 
-      <Route path="/creator/dashboard/Payment/Individual" element={<IndividualEcoPayment />} />
+      <Route
+        path="/creator/dashboard/Payment/Individual"
+        element={<IndividualEcoPayment />}
+      />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
@@ -289,9 +291,15 @@ const AllRoutes = () => {
         <Route path="/creator/communication" element={<Communication />} />
         <Route path="/creator/crm-tools" element={<CRMtools />} />
         <Route path="/creator/customer-service" element={<CustomerService />} />
-        <Route path="/creator/domain-management" element={<DomainManagement />} />
+        <Route
+          path="/creator/domain-management"
+          element={<DomainManagement />}
+        />
         <Route path="/creator/e-commerce" element={<Ecommerce />} />
-        <Route path="/creator/email-integration" element={<EmailIntegration />} />
+        <Route
+          path="/creator/email-integration"
+          element={<EmailIntegration />}
+        />
         <Route path="/creator/finance" element={<Finance />} />
         <Route path="/creator/live-session" element={<LiveSession />} />
         <Route path="/creator/mobile-app" element={<MobileApp />} />
@@ -398,7 +406,7 @@ const AllRoutes = () => {
       <Route
         path="/:ecosystemDomain/community-creation"
         element={<CommunityCreation />}
-      /> 
+      />
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/help-center" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
@@ -414,6 +422,7 @@ const AllRoutes = () => {
       </Route>
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
