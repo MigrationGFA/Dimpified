@@ -239,8 +239,6 @@ const BarberTemplate = () => {
     );
   };
 
-  // const { fileInputRef, handleEditImageClick, handleImageChange } =
-  //   useImageEditor("hero", "backgroundImage1");
   const {
     fileInputRefs,
     handleEditImageClick,
@@ -426,7 +424,6 @@ const BarberTemplate = () => {
                 ref={(ref) =>
                   (fileInputRefs.current["hero-backgroundImage1"] = ref)
                 }
-                // onChange={handleImageChange}
                 onChange={(e) =>
                   handleImageChange(e, "hero", "backgroundImage1")
                 }
