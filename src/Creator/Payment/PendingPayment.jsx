@@ -25,7 +25,7 @@ const PendingPayment = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-all-pending-payment"
+        `${import.meta.env.VITE_API_URL}/admin-all-pending-payment`
       );
       setPayments(response.data);
       setLoading(false);

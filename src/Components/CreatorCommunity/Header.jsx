@@ -5,7 +5,7 @@ import {
   FaHandsHelping,
   FaShare,
   FaEllipsisV,
-  FaTrash,
+  FaTrash
 } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import {
@@ -16,6 +16,9 @@ import {
   Button,
   Dropdown,
   Spinner,
+  Nav,
+  Tab,
+  Modal,
 } from "react-bootstrap";
 import { AiOutlineFileImage } from "react-icons/ai";
 import axios from "axios";
@@ -26,7 +29,16 @@ import { showToast } from "../../Components/Showtoast";
 import { useSelector } from "react-redux";
 import CommunityComment from "./CommunityComment";
 
-const PostCard = ({ post, onDelete, onEdit }) => {
+const PostCard = ({
+  community,
+  post,
+  onDelete,
+  onEdit,
+  fetchCommunityData,
+  isPending,
+  onApprove,
+  onReject,
+}) => {
   const { ecosystemDomain } = useParams();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -43,6 +55,40 @@ const PostCard = ({ post, onDelete, onEdit }) => {
       commentInputRef.current?.scrollIntoView({ behavior: "smooth" });
       commentInputRef.current?.focus();
     }, 0);
+  };
+
+  // useEffect(() => {
+  //   fetchCommunityData();
+  // }, []);
+
+  const handleLikeComment = async (communityId, postId) => {
+    try {
+      const isLiked = post.likesUserId.includes(userId);
+
+      if (isLiked) {
+        post.likesUserId = post.likesUserId.filter((id) => id !== userId);
+      } else {
+        post.likesUserId.push(userId);
+      }
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/like-unlike-post`,
+        {
+          communityId,
+          userId,
+          postId,
+        }
+      );
+
+      if (
+        response.data.message === "Post liked" ||
+        response.data.message === "Post unliked"
+      ) {
+        fetchCommunityData();
+      }
+    } catch (error) {
+      console.error("Error liking/unliking comment:", error);
+    }
   };
 
   const handleShare = async () => {
@@ -68,7 +114,7 @@ const PostCard = ({ post, onDelete, onEdit }) => {
   };
 
   return (
-    <Card className="mb-3 post-card">
+    <Card className="mb-3 post-card mt-5">
       <Card.Body>
         <div className="header-top d-flex align-items-center mb-3">
           <img
@@ -136,31 +182,45 @@ const PostCard = ({ post, onDelete, onEdit }) => {
                 </div>
                 {post.likes} likes
               </div>
-              {/* <div className="interaction-details">
-                {comments.length} comments
-              </div> */}
+              <div className="interaction-details">
+                {post.commentsCount} comments
+              </div>
             </div>
             <hr />
             <div className="interaction-buttons d-flex justify-content-between mt-2">
-              <div className="d-flex align-items-center">
+              <div
+                className="d-flex align-items-center cursor-pointer"
+                onClick={() => handleLikeComment(community._id, post._id)}
+              >
                 <FaHeart className="white-icon like-icon" />
                 <span className="ml-2">Like</span>
               </div>
               <div
-                className="d-flex align-items-center pointer"
+                className="d-flex align-items-center cursor-pointer"
                 onClick={handleCommentClick}
               >
                 <FaHandsHelping className="white-icon comment-icon" />
                 <span className="ml-2">Comment</span>
               </div>
               <div
-                className="d-flex align-items-center pointer"
+                className="d-flex align-items-center cursor-pointer"
                 onClick={handleShare}
               >
                 <FaShare className="fs-5 text-primary" />
                 <span className="ml-2">Share</span>
               </div>
             </div>
+
+            {isPending && (
+              <div className="mt-3 d-flex justify-content-between">
+                <Button variant="success" onClick={() => onApprove(post._id)}>
+                  Approve Post
+                </Button>
+                <Button variant="danger" onClick={() => onReject(post._id)}>
+                  Reject Post
+                </Button>
+              </div>
+            )}
 
             {isCommenting && (
               <div ref={commentInputRef}>
@@ -190,6 +250,8 @@ const PostCard = ({ post, onDelete, onEdit }) => {
 const Header = () => {
   const { ecosystemDomain } = useParams();
   const [posts, setPosts] = useState([]);
+  const [pendingPosts, setPendingPosts] = useState([]);
+  const [community, setCommunity] = useState([]);
   const [backgroundCoverPreview, setBackgroundCoverPreview] = useState(null);
   const [backgroundCoverImage, setBackgroundCoverImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -197,7 +259,10 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
   const [isPosting, setIsPosting] = useState(false);
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const userId =
     useSelector((state) => state.authentication.user.data.CreatorId) || {};
 
@@ -207,13 +272,27 @@ const Header = () => {
         `${import.meta.env.VITE_API_URL}/community/${ecosystemDomain}`
       );
       setPosts(response.data.posts);
+      setCommunity(response.data.community);
     } catch (error) {
       console.error("Error fetching community data:", error);
     }
   };
 
+  const fetchPendingPosts = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/pending-posts/${ecosystemDomain}`
+      );
+      setPendingPosts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching pending posts:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCommunityData();
+    fetchPendingPosts();
   }, [ecosystemDomain]);
 
   // Handle background cover image change
@@ -297,10 +376,73 @@ const Header = () => {
     }
   };
 
+  const handleApprovePost = async (postId) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/validate-post`,
+        {
+          status: "live",
+          postId,
+        }
+      );
+
+      if (response.data.message === "Post status updated to live") {
+        showToast(response.data.message);
+        fetchPendingPosts();
+        fetchCommunityData();
+      } else {
+        showToast(error.response.data.error);
+      }
+    } catch (error) {
+      console.error("Error approving post:", error);
+      showToast(error.response.data.error);
+    }
+  };
+
+  const handleRejectPost = async (postId) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/validate-post`,
+        {
+          status: "rejected",
+          postId,
+        }
+      );
+
+      if (response.data.message === "Post status updated to rejected") {
+        showToast(response.data.message);
+        fetchPendingPosts();
+        fetchCommunityData();
+      } else {
+        showToast(error.response.data.error);
+      }
+    } catch (error) {
+      console.error("Error approving post:", error);
+      showToast(error.response.data.error);
+    }
+  };
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  const filteredPosts = posts.filter(
+    (post) =>
+      post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const tabStyle = {
+    marginBottom: "1rem",
+  };
+
+  const tabLinkStyle = {
+    fontWeight: "bold",
+    padding: "0.5rem 1rem",
+    borderRadius: "0.375rem",
+    boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
+    textDecoration: "none",
+  };
   return (
     <div className="container">
       <div className="two-layered-box">
@@ -313,7 +455,7 @@ const Header = () => {
             />
           ) : (
             <div className="placeholder">
-              Click the pen icon to add an image
+              <Spinner animation="border" size="sm" />
             </div>
           )}
           <label htmlFor="background-cover-upload" className="edit-icon">
@@ -331,7 +473,7 @@ const Header = () => {
           <img src={Logo} alt="Logo" className="logo-preview rounded-full" />
         </div>
         <div className="lower-layer d-flex justify-content-between align-items-center">
-          <div className="text-container">
+          <div className="text-container mt-4">
             <h3 className="mb-0 font-weight-bold">
               Google Developer Groups (GDG)
             </h3>
@@ -339,14 +481,108 @@ const Header = () => {
               Technology, Information and Internet·
             </p>
           </div>
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search posts..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className="search-input"
-            />
+          <div>
+            <div className="d-flex ">
+              <i
+                className="fa-solid fa-circle-info"
+                style={{ cursor: "pointer", fontSize: "24px", marginBottom: "15px"}}
+                onClick={handleShow}
+              ></i>
+              <i className="fa-solid fa-ellipsis"  style={{ cursor: "pointer", fontSize: "24px", marginLeft: "30px"}}></i>
+
+              <Modal
+                show={show}
+                onHide={handleClose}
+                dialogClassName="custom-modal"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>About this Community</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div>
+                    <h4>Description</h4>
+                    <p>
+                      A community for Figma users looking to learn from others,
+                      share tips and tricks, and expand our skillset. Your go-to
+                      place for resources and conversation about all things
+                      design.
+                    </p>
+                    <hr />
+                    <h4>Details</h4>
+                    <dl>
+                      <dt>Private</dt>
+                      <dd>Only members can see posts in this group.</dd>
+                      <dt>Listed</dt>
+                      <dd>
+                        Group appears in search results and is visible to others
+                        on members’ profiles.
+                      </dd>
+                      <dt>Industry</dt>
+                      <dd>
+                        Design Services, Software Development, and Graphic
+                        Design
+                      </dd>
+                      <dt>Created</dt>
+                      <dd>Apr 2021</dd>
+                    </dl>
+                    <hr />
+                    <h4>Rules</h4>
+                    <ul>
+                      <li>
+                        Be kind: We follow the golden rule here - treat people
+                        the way you want to be treated. This is a place where
+                        people should feel comfortable asking questions and
+                        sharing ideas. Trolling, bullying, name-calling, hate
+                        speech, and abuse of any sort will not be tolerated.
+                      </li>
+                      <li>
+                        Be relevant: Try to stick to the topic of the group.
+                      </li>
+                      <li>
+                        Be present: All I ask is that you try to contribute
+                        where you can, when you can. The community is best when
+                        everyone participates and adds their voice to the
+                        conversation. Don’t be shy here, we want to hear from
+                        you!
+                      </li>
+                      <li>
+                        Be human: Please don't spam the group with sales
+                        pitches. If we see you're posting spam or hear you're
+                        bothering other members with messages, we will kick you
+                        out!
+                      </li>
+                      <li>
+                        Being part of this community requires mutual trust.
+                        Authentic, expressive discussions make groups great, but
+                        may also be sensitive and private. Please remember to
+                        value people's privacy and keep group discussions within
+                        the group.
+                      </li>
+                      <li>
+                        Overall, learn from one another and be helpful when you
+                        can 😊
+                      </li>
+                    </ul>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                 
+                </Modal.Footer>
+              </Modal>
+            </div>
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -429,28 +665,64 @@ const Header = () => {
         )}
       </div>
 
-      {posts && posts.length === 0 ? (
-        <div className="d-flex justify-content-center align-items-center">
-          <p>No posts available. Be the first to share something!</p>
+      <div className="row justify-content-center mt-3">
+        <div className="col-lg-12">
+          <Tab.Container defaultActiveKey="all">
+            <Nav className="mb-4">
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="all"
+                  className="fw-bold  px-4 py-2 rounded-3 shadow-sm nav-link-custom border-1"
+                >
+                  All
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="pending"
+                  className="fw-bold px-4 py-2 rounded-3 shadow-sm nav-link-custom ms-3 border-1"
+                >
+                  Pending
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+
+            <Tab.Content>
+              <Tab.Pane eventKey="all">
+                {filteredPosts.length > 0 ? (
+                  filteredPosts.map((post) => (
+                    <PostCard
+                      key={post._id}
+                      community={community}
+                      post={post}
+                      fetchCommunityData={fetchCommunityData}
+                    />
+                  ))
+                ) : (
+                  <p>No posts found.</p>
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="pending">
+                {pendingPosts.length > 0 ? (
+                  pendingPosts.map((post) => (
+                    <PostCard
+                      key={post._id}
+                      community={community}
+                      post={post}
+                      fetchCommunityData={fetchCommunityData}
+                      isPending={true}
+                      onApprove={handleApprovePost}
+                      onReject={handleRejectPost}
+                    />
+                  ))
+                ) : (
+                  <p>No pending posts found.</p>
+                )}
+              </Tab.Pane>
+            </Tab.Content>
+          </Tab.Container>
         </div>
-      ) : (
-        posts.map((post) => (
-          <PostCard
-            key={post._id}
-            post={post}
-            onDelete={(deletedPost) =>
-              setPosts(posts.filter((p) => p._id !== deletedPost._id))
-            }
-            onEdit={(editedPost, newContent) => {
-              setPosts(
-                posts.map((p) =>
-                  p._id === editedPost._id ? { ...p, content: newContent } : p
-                )
-              );
-            }}
-          />
-        ))
-      )}
+      </div>
     </div>
   );
 };

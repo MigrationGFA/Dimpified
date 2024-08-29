@@ -47,8 +47,8 @@ const JobTable = ({ data, header, currencyName }) => {
               // {`/jobs/listing/dashboard-job-list/?id=${row.original._id}`}
               className="text-inherit"
             >
-              <h4 className="mb-1 text-primary-hover">{row.original.course.title}</h4>
-              <h4 className="mb-1 text-primary-hover">{row.original.header}</h4>
+              <h4 className="mb-1 text-primary-hover">{row.original.course &&row.original.course.title}</h4>
+              <h4 className="mb-1 text-primary-hover">{row.original.service && row.original.service.header}</h4>
               <h4 className="mb-1 text-primary-hover">{row.original.productName}</h4>
               
             </Link>
@@ -56,7 +56,7 @@ const JobTable = ({ data, header, currencyName }) => {
         }  else if (accessorKey === "category") {
           return (
             <Fragment>
-              <p className="mb-1 text-primary-hover">{row.original.course.category} {row.original.productType}</p>
+              <p className="mb-1 text-primary-hover">{ row.original.course && row.original.course.category} {row.original.service && row.original.service.category}</p>
             </Fragment>
           );
         } else if (accessorKey === "amount") {

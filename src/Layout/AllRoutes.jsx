@@ -17,6 +17,16 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 
+import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
+import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
+import EventTemplate from "../dimp-templates/event-services/EventTemplate";
+import StateUpskilling from "../dimp-templates/government/StateUpskilling";
+import LegalTemplate from "../dimp-templates/professional-services/Legal";
+import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
+import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
+import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
+import GymTemplate from "../dimp-templates/personal-care-services/GymTemplate";
+
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
 import Analytics from "../Creator/analytics/Analytics";
@@ -40,6 +50,25 @@ import NotificationSingle from "../Creator/Notification/NotificationSingle";
 import PendingPayment from "../Creator/Payment/PendingPayment";
 import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
 import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
+
+// Import Integration components
+import Booking from "../Creator/Integrations/Booking";
+import Affiliates from "../Creator/Integrations/Affiliates";
+import Analytic from "../Creator/Integrations/Analytics";
+import Certificate from "../Creator/Integrations/Certifications";
+import Communication from "../Creator/Integrations/Communications";
+import CRMtools from "../Creator/Integrations/CRMTools";
+import CustomerService from "../Creator/Integrations/CustomerService";
+import DomainManagement from "../Creator/Integrations/DomainManagement";
+import Ecommerce from "../Creator/Integrations/Ecommerce";
+import EmailIntegration from "../Creator/Integrations/EmailIntegrations";
+import Finance from "../Creator/Integrations/Finance";
+import LiveSession from "../Creator/Integrations/LiveSessions";
+import MobileApp from "../Creator/Integrations/Mobile";
+import Security from "../Creator/Integrations/Security";
+import SocialMedia from "../Creator/Integrations/Social";
+import StoragePlatform from "../Creator/Integrations/StoragePlatform";
+import VideoPlayer from "../Creator/Integrations/VideoPlayer";
 
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
@@ -73,6 +102,7 @@ import Courses from "../Creator/ecosystem/Newecosystem/Courses";
 import PreviewAndSend from "../Creator/ecosystem/Newecosystem/PreviewAndSend";
 import AddNewCourse from "../Creator/ecosystem/AddNewCourse";
 import EcoPayment from "../Creator/ecosystem/Newecosystem/EcoPayment";
+import IndividualEcoPayment from "../Creator/ecosystem/Newecosystem/Individual/EcoPayment";
 import Integration from "../Creator/ecosystem/Newecosystem/Integration";
 import Template1 from "../EditTemplate/Template1";
 import NewSiteTemplate from "../Creator/ecosystem/Newecosystem/NewSiteTemplate";
@@ -134,6 +164,7 @@ import EventPage from "../developer-program/pages/EventsPage";
 import LoyaltyProgram from "../developer-program/pages/LoyaltyProgram";
 import DeveloperProgramSupport from "../developer-program/pages/Support";
 import DevProgramAuthForm from "../developer-program/pages/DevProgramAuthForm";
+import CommunityCreation from "../Components/CommunityChat/CommunityCreation";
 
 // ** Import Admin Dahbaord Menu Pages
 import AdminSignIn from "../Admin/Authentication/AdminSignIn";
@@ -149,7 +180,7 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 // subdomain
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
-import BarberTemplate from "../EditTemplate/BarberTemplate";
+import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -177,6 +208,17 @@ const AllRoutes = () => {
       <Route path="/personal-care-services" element={<PersonalCare />} />
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
+
+      <Route path="/salon-template" element={<SalonTemplate />} />
+      <Route path="/event-template" element={<EventTemplate />} />
+      <Route path="/upskill-template" element={<StateUpskilling />} />
+      <Route path="/barber-two" element={<BarberMordern />} />
+      <Route path="/legal-template" element={<LegalTemplate />} />
+      <Route path="/course-template" element={<OnlineCourses />} />
+      <Route path="/ngo-template" element={<NonGovTemplate />} />
+      <Route path="/spa-template" element={<SpaTemplate />} />
+      <Route path="/gym-template" element={<GymTemplate />} />
+
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
@@ -218,6 +260,11 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
+
+      <Route
+        path="/creator/dashboard/Payment/Individual"
+        element={<IndividualEcoPayment />}
+      />
       <Route path="/creator/dashboard/Integrations" element={<Integration />} />
       {/* <Route element={<ChatLayout />}>
         <Route path="/creator/dashboard/chat" element={<Chat />} />
@@ -249,6 +296,29 @@ const AllRoutes = () => {
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
         <Route path="/creator/received-payment" element={<ReceivedPayment />} />
+        <Route path="/creator/booking" element={<Booking />} />
+        <Route path="/creator/affiliates" element={<Affiliates />} />
+        <Route path="/creator/analytic" element={<Analytic />} />
+        <Route path="/creator/certification" element={<Certificate />} />
+        <Route path="/creator/communication" element={<Communication />} />
+        <Route path="/creator/crm-tools" element={<CRMtools />} />
+        <Route path="/creator/customer-service" element={<CustomerService />} />
+        <Route
+          path="/creator/domain-management"
+          element={<DomainManagement />}
+        />
+        <Route path="/creator/e-commerce" element={<Ecommerce />} />
+        <Route
+          path="/creator/email-integration"
+          element={<EmailIntegration />}
+        />
+        <Route path="/creator/finance" element={<Finance />} />
+        <Route path="/creator/live-session" element={<LiveSession />} />
+        <Route path="/creator/mobile-app" element={<MobileApp />} />
+        <Route path="/creator/security" element={<Security />} />
+        <Route path="/creator/social-media" element={<SocialMedia />} />
+        <Route path="/creator/storage-platform" element={<StoragePlatform />} />
+        <Route path="/creator/video-player" element={<VideoPlayer />} />
         <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
@@ -354,6 +424,10 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/creator-community-chat"
         element={<CreatorCommunityChat />}
       />
+      <Route
+        path="/:ecosystemDomain/community-creation"
+        element={<CommunityCreation />}
+      />
       <Route path="/User-delete-profile" element={<UserDeleteProfile />} />
       <Route path="/help-center" element={<UserResolution />} />
       <Route path="/User/browse-course" element={<UserBrowseCourse />} />
@@ -369,6 +443,7 @@ const AllRoutes = () => {
       </Route>
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
+
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />

@@ -15,7 +15,12 @@ import {
 import { FormSelect } from "../../../../Components/elements/form-select/FormSelect";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import IndividualHeader from "./individualHeader";
-import { updateField, setEcosystemId } from "../../../../features/ecosystem";
+import {
+  updateField,
+  setEcosystemId,
+  updateSocialMedia,
+  resetState
+} from "../../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
 import categorySubSection from "../../../ecosystem/Newecosystem/PostAService/SectionJson";
@@ -29,6 +34,7 @@ const NewEcosystem = () => {
   const creatorId = user?.data?.CreatorId;
 
   const [showModal, setShowModal] = useState(false);
+  const [showSocialModal, setShowSocialModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [domainName, setDomainName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,12 +46,63 @@ const NewEcosystem = () => {
   const [domainSuggestions, setDomainSuggestions] = useState([]);
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const [isOtherCategory, setIsOtherCategory] = useState(false);
-  useEffect(() => {
-    validateForm();
-  }, [ecosystem]);
+  const [socialMedia, setSocialMedia] = useState([{ name: "", link: "" }]);
+
+  const socialMediaOptions = [
+    { value: "facebook", label: "Facebook" },
+    { value: "instagram", label: "Instagram" },
+    { value: "linkedin", label: "LinkedIn" },
+    { value: "twitter", label: "Twitter" },
+    { value: "whatsapp", label: "WhatsApp" },
+    { value: "youtube", label: "YouTube" },
+    { value: "wechat", label: "WeChat" },
+    { value: "tiktok", label: "TikTok" },
+    { value: "telegram", label: "Telegram" },
+    { value: "pinterest", label: "Pinterest" },
+    { value: "reddit", label: "Reddit" },
+    { value: "quora", label: "Quora" },
+    { value: "discord", label: "Discord" },
+    { value: "twitch", label: "Twitch" },
+    { value: "threads", label: "Threads by Instagram" },
+  ];
+
+  const handlePlatformChange = (index, event) => {
+    if (event && event.target) {
+      const newLinks = socialMedia.map((link, i) =>
+        i === index ? { ...link, name: event.target.value } : link
+      );
+      setSocialMedia(newLinks);
+      dispatch(updateSocialMedia(newLinks));
+    } else {
+      console.error("Event or event.target is undefined");
+    }
+  };
+  
+  const handleUrlChange = (index, event) => {
+    const newLinks = socialMedia.map((link, i) =>
+      i === index ? { ...link, link: event.target.value } : link
+    );
+    setSocialMedia(newLinks);
+    dispatch(updateSocialMedia(newLinks));
+  };
+  
+  const addLink = () => {
+    setSocialMedia([...socialMedia, { name: "", link: "" }]);
+  };
+  
+  const removeLink = (index) => {
+    setSocialMedia(socialMedia.filter((_, i) => i !== index));
+  };
 
   const handleFieldChange = (field, value) => {
     dispatch(updateField({ field, value }));
+
+    if (field === "ecosystemName") {
+      const domainValue = value.toLowerCase().replace(/\s+/g, "-");
+      dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
+      validateDomain(domainValue);
+    }
+
     if (field === "ecosystemDomain") {
       validateDomain(value);
     }
@@ -76,14 +133,18 @@ const NewEcosystem = () => {
     }
   }, [ecosystem.targetAudienceSector]);
 
+  useEffect(() => {
+    validateForm();
+  }, [ecosystem]);
+
   const validateForm = () => {
     const {
       ecosystemName,
       ecosystemDomain,
       targetAudienceSector,
       mainObjective,
-      expectedAudienceNumber,
-      experience,
+      contact,
+      address,
       ecosystemDescription,
     } = ecosystem;
     if (
@@ -91,8 +152,8 @@ const NewEcosystem = () => {
       ecosystemDomain &&
       targetAudienceSector &&
       mainObjective &&
-      expectedAudienceNumber &&
-      experience &&
+      contact &&
+      address &&
       ecosystemDescription
     ) {
       setIsFormValid(true);
@@ -100,6 +161,7 @@ const NewEcosystem = () => {
       setIsFormValid(false);
     }
   };
+
 
   const validateDomain = async (ecosystemDomain) => {
     try {
@@ -150,78 +212,16 @@ const NewEcosystem = () => {
       const data = response.data.ecosystem;
       const { _id } = data;
       dispatch(setEcosystemId(_id));
-      navigate("/creator/dashboard/Edit-Template");
+      navigate("/creator/dashboard/Products/individual");
       showToast(response.data.message);
     } catch (error) {
       showToast(error.response.data.message);
-      navigate("/creator/dashboard/New-Ecosystem");
+      navigate("/creator/dashboard/New-Ecosystem/individual");
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const audienceNumber = [
-    { value: "1-500", label: "1 - 500" },
-    { value: "501-1000", label: "501 - 1,000" },
-    { value: "1001-1500", label: "1,001 - 1,500" },
-    { value: "1501-2000", label: "1,501 - 2,000" },
-    { value: "2001-2500", label: "2,001 - 2,500" },
-    { value: "2501-3000", label: "2,501 - 3,000" },
-    { value: "3001-4000", label: "3,001 - 4,000" },
-    { value: "4001-5000", label: "4,001 - 5,000" },
-    { value: "5001-6000", label: "5,001 - 6,000" },
-    { value: "6001-7000", label: "6,001 - 7,000" },
-    { value: "7001-8000", label: "7,001 - 8,000" },
-    { value: "8001-9000", label: "8,001 - 9,000" },
-    { value: "9001-10000", label: "9,001 - 10,000" },
-    { value: "10001-12000", label: "10,001 - 12,000" },
-    { value: "12001-14000", label: "12,001 - 14,000" },
-    { value: "14001-16000", label: "14,001 - 16,000" },
-    { value: "16001-18000", label: "16,001 - 18,000" },
-    { value: "18001-20000", label: "18,001 - 20,000" },
-    { value: "20001-25000", label: "20,001 - 25,000" },
-    { value: "25001-30000", label: "25,001 - 30,000" },
-    { value: "30001-35000", label: "30,001 - 35,000" },
-    { value: "35001-40000", label: "35,001 - 40,000" },
-    { value: "40001-45000", label: "40,001 - 45,000" },
-    { value: "45001-50000", label: "45,001 - 50,000" },
-    { value: "50001-60000", label: "50,001 - 60,000" },
-    { value: "60001-70000", label: "60,001 - 70,000" },
-    { value: "70001-80000", label: "70,001 - 80,000" },
-    { value: "80001-90000", label: "80,001 - 90,000" },
-    { value: "90001-100000", label: "90,001 - 100,000" },
-    { value: "100001-125000", label: "100,001 - 125,000" },
-    { value: "125001-150000", label: "125,001 - 150,000" },
-    { value: "150001-175000", label: "150,001 - 175,000" },
-    { value: "175001-200000", label: "175,001 - 200,000" },
-    { value: "200001-225000", label: "200,001 - 225,000" },
-    { value: "225001-250000", label: "225,001 - 250,000" },
-    { value: "250001-300000", label: "250,001 - 300,000" },
-    { value: "300001-350000", label: "300,001 - 350,000" },
-    { value: "350001-400000", label: "350,001 - 400,000" },
-    { value: "400001-450000", label: "400,001 - 450,000" },
-    { value: "450001-500000", label: "450,001 - 500,000" },
-    { value: "500001-600000", label: "500,001 - 600,000" },
-    { value: "600001-700000", label: "600,001 - 700,000" },
-    { value: "700001-800000", label: "700,001 - 800,000" },
-    { value: "800001-900000", label: "800,001 - 900,000" },
-    { value: "900001-1000000", label: "900,001 - 1,000,000" },
-    { value: "1000001-1250000", label: "1,000,001 - 1,250,000" },
-    { value: "1250001-1500000", label: "1,250,001 - 1,500,000" },
-    { value: "1500001-1750000", label: "1,500,001 - 1,750,000" },
-    { value: "1750001-2000000", label: "1,750,001 - 2,000,000" },
-    { value: "2000001-2500000", label: "2,000,001 - 2,500,000" },
-    { value: "2500001-3000000", label: "2,500,001 - 3,000,000" },
-    { value: "3000001-3500000", label: "3,000,001 - 3,500,000" },
-    { value: "3500001-4000000", label: "3,500,001 - 4,000,000" },
-    { value: "4000001-4500000", label: "4,000,001 - 4,500,000" },
-    { value: "4500001-5000000", label: "4,500,001 - 5,000,000" },
-  ];
-
-  const yesNoOptions = [
-    { value: "yes", label: "Yes" },
-    { value: "no", label: "No" },
-  ];
   const categoryOptions = [
     ...Object.keys(categorySubSection).map((cat) => ({
       value: cat,
@@ -242,7 +242,7 @@ const NewEcosystem = () => {
                   <h3 className="mb-0 h3 fw-bold">
                     Basic Ecosystem Information
                   </h3>
-                  <p>Step 1 of 3</p>
+                  <p>Step 1 of 4</p>
                 </div>
               </div>
               <div>
@@ -250,13 +250,12 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                        A. What’s the name of your business?{" "}
-                        <span className="text-danger">*</span>
+                      A. What’s the name of your business?<span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
                         id="ecosystem-name"
-                        placeholder="Enter your business name"
+                        placeholder="Ecosystem Name"
                         required
                         value={ecosystem.ecosystemName}
                         onChange={(e) =>
@@ -264,23 +263,20 @@ const NewEcosystem = () => {
                         }
                       />
                       <Form.Text className="text-muted fst-italic">
-                        This is the name your users will see on emails they
-                        receive from you.
+                        Note: This is the name your users will see on emails
+                        received.
                       </Form.Text>
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                        B. What should your website address be?{" "}
+                      B. What should your website address be?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
-                        <span className="input-group-text">
-                          www.dimpified.com/
-                        </span>
                         <Form.Control
                           type="text"
                           id="ecosystem-domain"
-                          placeholder="Enter your preferred website name"
+                          placeholder="Ecosystem Domain"
                           required
                           value={ecosystem.ecosystemDomain}
                           onChange={(e) =>
@@ -288,9 +284,11 @@ const NewEcosystem = () => {
                           }
                           isInvalid={domainErrorMessage !== ""}
                         />
+                        <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
-                        The name must only have lowercase letters and hyphens.
+                        The domain must contain only lowercase letters and
+                        hyphens.
                       </Form.Text>
                       {domainMessage && (
                         <Alert className="bg-primary text-white">
@@ -372,22 +370,19 @@ const NewEcosystem = () => {
                       )}
                     </Col>
                   </Row>
-                  <Row>
-                    <Col lg={6} className="col-12 mb-3">
+                  <Row className="mb-4">
+                    <Col lg={6} className="col-12">
                       <Form.Label htmlFor="contact-phone-number">
-                        E. What is your Business Phone Number?{" "}
+                        E. What is your Business Phone Number?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
                         id="contact-phone-number"
                         placeholder="Enter your contact phone number"
-                        value={ecosystem.expectedAudienceNumber}
+                        value={ecosystem.contact}
                         onChange={(e) =>
-                          handleFieldChange(
-                            "expectedAudienceNumber",
-                            e.target.value
-                          )
+                          handleFieldChange("contact", e.target.value)
                         }
                         required
                       />
@@ -395,16 +390,16 @@ const NewEcosystem = () => {
                     <Col lg={6} className="col-12">
                       <Form.Group className="mb-3">
                         <Form.Label htmlFor="address">
-                          F. What is your Business Address?{" "}
+                          F. What is your Business Address?
                           <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                           type="text"
                           id="address"
                           placeholder="Enter your address"
-                          value={ecosystem.experience}
+                          value={ecosystem.address}
                           onChange={(e) =>
-                            handleFieldChange("experience", e.target.value)
+                            handleFieldChange("address", e.target.value)
                           }
                           required
                         />
@@ -431,6 +426,19 @@ const NewEcosystem = () => {
                       rows={5}
                     />
                   </Col>
+                  <Row>
+                    <Col
+                      lg={4}
+                      style={{ display: "block", marginBottom: "15px" }}
+                    >
+                      <Form.Label htmlFor="ecosystem-social">
+                        H. Add Your Social Media Links
+                      </Form.Label>
+                      <Button onClick={() => setShowSocialModal(true)}>
+                        Add Social Media
+                      </Button>
+                    </Col>
+                  </Row>
                   <div className="d-flex justify-content-end mt-4">
                     <Button
                       variant="primary"
@@ -503,6 +511,62 @@ const NewEcosystem = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showSocialModal} onHide={() => setShowSocialModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Social Media Links</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {socialMedia.map((link, index) => (
+            <Row key={index} className="mb-3">
+              <Col lg={6} className="col-12">
+                <Form.Group controlId={`social-platform-${index}`}>
+                  <Form.Label>Social Media Platform</Form.Label>
+                  <Form.Select
+                    value={link.name}
+                    onChange={(e) => handlePlatformChange(index, e)}
+                  >
+                    <option value="" disabled>
+                      Select platform
+                    </option>
+                    {socialMediaOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col lg={6} className="col-12">
+                <Form.Group controlId={`social-url-${index}`}>
+                  <Form.Label>URL</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter URL"
+                    value={link.link}
+                    onChange={(e) => handleUrlChange(index, e)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col lg={12} className="text-right mt-2">
+                {socialMedia.length > 1 && (
+                  <Button variant="danger" onClick={() => removeLink(index)}>
+                    Remove
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          ))}
+          <Button variant="primary" onClick={addLink}>
+            Add another link
+          </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowSocialModal(false)}>
             Close
           </Button>
         </Modal.Footer>

@@ -14,37 +14,37 @@ import axios from "axios";
 import TemplateV1 from "./EcosystemDashboard/Template/TemplateV1";
 
 function App() {
-  const [template, setTemplate] = useState(null);
-  console.log("this is dimp landing page");
+  // const [template, setTemplate] = useState(null);
+  // console.log("this is dimp landing page");
 
-  useEffect(() => {
-    const hostname = window.location.hostname;
-    console.log("this is dimp host name", hostname);
+  // useEffect(() => {
+  //   const hostname = window.location.hostname;
+  //   console.log("this is dimp host name", hostname);
 
-    const parts = hostname.split(".");
-    if (parts.length > 2) {
-      const subdomain = parts.slice(0, -2).join(".");
-      console.log("this is dimp subdomain name", subdomain);
+  //   const parts = hostname.split(".");
+  //   if (parts.length > 2) {
+  //     const subdomain = parts.slice(0, -2).join(".");
+  //     console.log("this is dimp subdomain name", subdomain);
 
-      // Send a request to the backend with the subdomain
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/getTemplate/${subdomain}`)
-        .then((response) => {
-          setTemplate(response.data.templateDetails);
-          sessionStorage.setItem(
-            "ecoLogo",
-            response.data.templateDetails.navbar.logo
-          );
-        })
-        .catch((error) => {
-          console.error("Error fetching the template:", error);
-        });
-    }
-  }, []);
+  //     // Send a request to the backend with the subdomain
+  //     axios
+  //       .get(`${import.meta.env.VITE_API_URL}/getTemplate/${subdomain}`)
+  //       .then((response) => {
+  //         setTemplate(response.data.templateDetails);
+  //         sessionStorage.setItem(
+  //           "ecoLogo",
+  //           response.data.templateDetails.navbar.logo
+  //         );
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching the template:", error);
+  //       });
+  //   }
+  // }, []);
 
   return (
     <div>
-      {template ? (
+      {/* {template ? (
         <TemplateV1 details={template} />
       ) : (
         <Router>
@@ -53,13 +53,13 @@ function App() {
             <AllRoutes />
           </UserProvider>
         </Router>
-      )}
-      {/* <Router>
+      )} */}
+      <Router>
         <ScrollToTop />
         <UserProvider>
           <AllRoutes />
         </UserProvider>
-      </Router> */}
+      </Router>
     </div>
   );
 }

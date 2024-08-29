@@ -31,12 +31,12 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Integrations");
+    navigate("/creator/dashboard/Edit-Template");
   };
 
-  const handlePrevious = () => {
-    navigate("/creator/dashboard/Create-Form");
-  };
+  // const handlePrevious = () => {
+  //   navigate("/creator/dashboard/Create-Form");
+  // };
 
   const handleService = () => {
     setStep(2);
@@ -157,13 +157,13 @@ const Courses = () => {
 
               <div className="d-flex justify-content-between align-content-center">
                 <div>
-                  <Button
+                  {/* <Button
                     variant="secondary"
                     className="me-2"
                     onClick={handlePrevious}
                   >
                     Previous
-                  </Button>
+                  </Button> */}
                 </div>
                 <div className="d-flex justify-content-end">
                   <Button

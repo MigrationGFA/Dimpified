@@ -23,7 +23,7 @@ const ReceivedPayment = () => {
     const fetchPayments = async () => {
       try {
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/get-all-payment-records"
+          `${import.meta.env.VITE_API_URL}/get-all-payment-records`
         );
         setPayments(response.data.records);
         setLoading(false);

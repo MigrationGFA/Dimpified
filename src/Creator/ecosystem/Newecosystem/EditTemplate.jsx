@@ -15,16 +15,29 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Steps.css";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "./ecoHeader";
-import Template1 from "../../../EditTemplate/Template1";
-import Template2 from "../../../EditTemplate/Template2";
-import Template3 from "../../../EditTemplate/BarberTemplate";
-import PreviewPage from "../../../EditTemplate/Preview";
+
+// template import section
+import Template1 from "../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import Template2 from "../../../EditTemplate/AllCategory/Education/OnlineCourse1";
+import Template3 from "../../../EditTemplate/AllCategory/Professional/LegalTemplate1";
+import Template4 from "../../../EditTemplate/AllCategory/PersonalCare/Salon1";
+import Template6 from "../../../EditTemplate/AllCategory/Government/Upskilling1";
+
+// preview template section
+import BarberPreview1 from "../../../EditTemplate/PreviewPage/BarberPreview1";
+import Preview2 from "../../../EditTemplate/PreviewPage/Education/OnlineSchoolPreview";
+import Preview3 from "../../../EditTemplate/PreviewPage/Professional/LegalTemplate";
+import Preview6 from "../../../EditTemplate/PreviewPage/Government/UpskillingPreview1";
+
+// others
 import Templates from "../../../data/Template/LandingPageTemplate";
-import { useSelector } from "react-redux";
+import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 import PreviewPageSize from "./PreviewPageSize";
-import PreviewTemplateV1 from "../Preview/Template/TemplateV1";
+import { setTemplate } from "../../../features/Template/MainTemplate";
+import LoadingState from "../../../Components/Loading";
 
 const templateSections = [
   { id: 1, name: "Professional Services" },
@@ -57,112 +70,115 @@ const EditTemplate = () => {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const content = useSelector((state) => state.template1);
+  const dispatch = useDispatch();
+  const [templateLoading, setTemplateLoading] = useState(false);
+
+  const content = useSelector((state) => state.mainTemplate.currentTemplate);
   const userId = useSelector(
     (state) => state.authentication.user.data.CreatorId
   );
-  const ecosystemId = useSelector((state) => state.ecosystem.ecosystemId);
+  const ecosystemDomain = useSelector(
+    (state) => state.ecosystem.ecosystemDomain
+  );
+
+  const userType = useSelector((state) => state.authentication.user.data.role);
 
   const navigate = useNavigate();
 
   const handleTemplateSelect = (template) => {
-    setSelectedTemplate(template);
+    console.log("this is template id", template);
+    getTemplateDetails(template);
     setStep(2);
+    setSelectedTemplate(template);
+
     localStorage.setItem("templateId", template);
   };
+
+  const getTemplateDetails = async (templateId) => {
+    setTemplateLoading(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/reserved-template/${templateId}`
+      );
+      dispatch(setTemplate(response.data.template));
+      setTemplateLoading(false);
+      setStep(2);
+    } catch (error) {
+      setTemplateLoading(false);
+      console.log("this is error", error);
+    }
+  };
+
   const renderTemplate = (templateId) => {
     switch (templateId) {
       case 1:
-        return <Template2 />;
-      case 2:
-        return <Template3 />;
-      case 3:
         return <Template1 />;
-      // Add cases for Template3 and Template4...
+      case 2:
+        return <Template2 />;
+      case 3:
+        return <Template3 />;
+      case 4:
+        return <Template4 />;
+      case 6:
+        return <Template6 />;
       default:
         return <div>Invalid template</div>;
     }
   };
 
-  // to convert to file type
-  const convertBase64ToFile = (base64String, filename) => {
-    const arr = base64String.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
+  const renderPreviewTemplate = (templateId) => {
+    switch (templateId) {
+      case 1:
+        return <BarberPreview1 />;
+      case 2:
+        return <Preview2 />;
+      case 3:
+        return <Preview3 />;
+      case 6:
+        return <Preview6 />;
+      default:
+        return <div>Invalid template</div>;
     }
-    return new File([u8arr], filename, { type: mime });
   };
 
   const handleSubmit = async () => {
     setLoading(true);
-    const formData = new FormData();
-
     // Add template details to FormData
-    formData.append("creatorId", userId);
-    formData.append("ecosystemId", ecosystemId);
-    formData.append("templateNumber", localStorage.getItem("templateId"));
-
-    // Convert nested objects to JSON and append to FormData
-    formData.append("navbar", JSON.stringify(content.navbar));
-    formData.append("hero", JSON.stringify(content.hero));
-    formData.append("aboutUs", JSON.stringify(content.aboutUs));
-    formData.append("vision", JSON.stringify(content.Vision));
-    formData.append("audience", JSON.stringify(content.Audience));
-    formData.append("cta", JSON.stringify(content.CTA));
-    formData.append("whyUs", JSON.stringify(content.WhyUs));
-    formData.append("contactUs", JSON.stringify(content.contactUs));
-    formData.append("faq", JSON.stringify(content.faq));
-    formData.append("footer", JSON.stringify(content.footer));
-
-    // Convert and append base64 images directly to FormData
-    const imageProperties = {
-      "navbar.logo": "navbarLogo.png",
-      "hero.backgroundImage": "heroBackgroundImage.png",
-      "Vision.image": "visionImage.png",
-      "Audience.image1": "audienceImage1.png",
-      "Audience.image2": "audienceImage2.png",
-      "Audience.image3": "audienceImage3.png",
-      "Audience.image4": "audienceImage4.png",
-      "CTA.image": "ctaImage.png",
-      "footer.logo": "footerLogo.png",
+    const templateData = {
+      creatorId: userId,
+      ecosystemDomain: ecosystemDomain,
+      templateId: selectedTemplate,
+      navbar: content.navbar,
+      hero: content.hero,
+      aboutUs: content.aboutUs,
+      Vision: content.Vision,
+      Statistics: content.Statistics,
+      Patrners: content.Patrners,
+      Events: content.Events,
+      Gallery: content.Gallery,
+      LargeCta: content.LargeCta,
+      Team: content.Team,
+      Blog: content.Blog,
+      Reviews: content.Reviews,
+      contactUs: content.contactUs,
+      faq: content.faq,
+      faqStyles: content.faqStyles,
+      footer: content.footer,
     };
-    for (const [key, filename] of Object.entries(imageProperties)) {
-      const keys = key.split(".");
-      let imageProp = content;
-      try {
-        for (const k of keys) {
-          imageProp = imageProp[k];
-          if (imageProp === undefined) break; // Exit loop if property is undefined
-        }
-        if (
-          typeof imageProp === "string" &&
-          imageProp.startsWith("data:image")
-        ) {
-          const convertedFile = convertBase64ToFile(imageProp, filename);
-          formData.append(key, convertedFile);
-        }
-      } catch (error) {
-        console.error(`Error accessing property ${key}:`, error);
-      }
-    }
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ecosystem/create-templates`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        `${import.meta.env.VITE_API_URL}/ecosystem/create-creator-template`,
+        templateData
       );
       setLoading(false);
-      navigate("/creator/dashboard/Create-Form");
-      showToast(response.data.message);
+      if (userType === "creator" || userType === "enterprise") {
+        navigate("/creator/dashboard/Create-Form");
+        showToast(response.data.message);
+      } else {
+        navigate("/creator/dashboard/Create-Form");
+      }
+
       console.log("Template created successfully", response.data);
     } catch (error) {
       setLoading(false);
@@ -314,29 +330,43 @@ const EditTemplate = () => {
               </Row>
             </div>
           )}
-          {step === 2 && (
-            <div>
-              <h3>Edit Template Content</h3>
-
-              {renderTemplate(selectedTemplate)}
-              <div className="d-flex justify-content-between mt-3 w-75">
-                <Button variant="secondary" onClick={() => setStep(1)}>
-                  Backs
-                </Button>
-                <Button
-                  variant="primary"
-                  className="ml-12"
-                  onClick={() => setStep(3)}
+          {step === 2 &&
+            (templateLoading ? (
+              <LoadingState />
+            ) : (
+              <div
+                style={{
+                  width: "full",
+                }}
+              >
+                <div
+                  style={{
+                    width: "full",
+                  }}
                 >
-                  Continue
-                </Button>
+                  <h3>Edit Template Content</h3>
+                  <h4>Double tap a text field or header to edit it</h4>
+                </div>
+
+                {renderTemplate(selectedTemplate)}
+                <div className="d-flex justify-content-between mt-3 w-75">
+                  <Button variant="secondary" onClick={() => setStep(1)}>
+                    Backs
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="ml-12"
+                    onClick={() => setStep(3)}
+                  >
+                    Continue
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            ))}
           {step === 3 && (
             <div>
               <PreviewPageSize setView={setView} />
-              <PreviewPage view={view} />
+              {renderPreviewTemplate(selectedTemplate)}
               <div className="d-flex justify-content-between mt-3">
                 <Button variant="secondary" onClick={() => setStep(2)}>
                   Back

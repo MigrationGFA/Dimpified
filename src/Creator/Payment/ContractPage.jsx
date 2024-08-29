@@ -37,7 +37,7 @@ const ContractPage = () => {
     const contract = async () => {
       try {
         const response = await axios.get(
-          `https://unleashified-backend.azurewebsites.net/api/v1/get-my-contract/${userId}`
+          `${import.meta.env.VITE_API_URL}/get-my-contract/${userId}`
         );
         setAmountProgress(response.data.workInProgress.totalAmount);
         setWorkProgress(response.data.workInProgress.jobsWork);
