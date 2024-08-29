@@ -36,16 +36,21 @@ const CourseSingle = () => {
   const [notLogin, setNotLogin] = useState(false);
   const [navigatePage, setNavigatePage] = useState(false);
   const [navigateLoginPage, setNavigateLoginPage] = useState(false);
+  const [ecosystemDomain, setEcosystemDomain] = useState(null);
 
   const location = useLocation();
-  let { ecosystemDomain, id } = useParams();
+  let { id } = useParams();
 
   const user = useSelector((state) => state.authentication.user);
   console.log(user)
 
+  useEffect(() => {
+    localStorage.getItem("subDomain");
+  }, []);
 
   useEffect(() => {
     if (user === null) {
+      console.log("this is user", user);
       setNotLogin(true);
     }
   }, [user]);
@@ -61,9 +66,9 @@ const CourseSingle = () => {
 
   const handleLoginNavigate = () => {
     if (navigateLoginPage) {
-      navigate(`/${ecosystemDomain}/signin`);
+      navigate(`/signin`);
     } else {
-      navigate(`/${ecosystemDomain}`);
+      navigate(`/`);
     }
   };
 
@@ -81,16 +86,19 @@ const CourseSingle = () => {
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
     customer: {
-      email: user.data.email,
+      email: notLogin
+        ? "samuelmakinde1999@gmail.com"
+        : user?.data?.username || "",
       phone_number: "09064000000",
-      name: user.data.username,
+      name: notLogin
+        ? "samuelmakinde1999@gmail.com"
+        : user?.data?.username || "",
     },
     customizations: {
       title: "Course Purchase Payment",
       description: "Course Purchase Payment",
       logo: sessionStorage.getItem("ecoLogo"),
     },
-    
   });
 
   const verifyFlutterwave = async (tx_ref) => {
@@ -123,6 +131,9 @@ const CourseSingle = () => {
 
   const fetchCourseData = async () => {
     try {
+      console.log("this is fetch inside");
+      const ecosystemDomain = localStorage.getItem("subDomain");
+      console.log("this is domain", ecosystemDomain);
       const response = await axios.get(
         `${
           import.meta.env.VITE_API_URL
