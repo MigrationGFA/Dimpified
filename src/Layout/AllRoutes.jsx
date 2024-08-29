@@ -131,7 +131,11 @@ import UserLearningCourse from "../Components/marketing/Pages/courses/course-sin
 import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
-import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemMyProduct from "../EcosystemDashboard/MyCourses";
+import EcosystemBooking from "../EcosystemDashboard/Booking"
+import EcosystemCourses from "../EcosystemDashboard/Courses"
+import EcosystemServices from "../EcosystemDashboard/Services"
+import EcosystemProducts from "../EcosystemDashboard/Products"
 import EcosystemResolution from "../EcosystemDashboard/EcoResolution";
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
@@ -338,7 +342,23 @@ const AllRoutes = () => {
       />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
+        element={<EcosystemMyProduct />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Booking"
+        element={<EcosystemBooking />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Courses"
         element={<EcosystemCourses />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Services"
+        element={<EcosystemServices />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/DigitalProducts"
+        element={<EcosystemProducts />}
       />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
