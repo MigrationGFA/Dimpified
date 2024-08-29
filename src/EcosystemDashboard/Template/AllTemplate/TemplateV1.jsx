@@ -21,7 +21,7 @@ import {
 } from "react-icons/fa";
 import sanitizeHtml from "sanitize-html";
 import axios from "axios";
-
+import BookingModal from "../../Features/BookingModal";
 const iconStyle = {
   color: "#222",
   fontSize: "1.5rem" /* Adjust size as needed */,
@@ -51,9 +51,25 @@ const hoverStyle = {
 };
 const Template1 = ({ details, subdomain }) => {
   const [show, setShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [serviceDetails, setServiceDetails] = useState({});
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  // const handleShow = () => setModalShow(true);
+  const handleShow = (subService, serviceType, currency, domain) => {
+    setServiceDetails({
+      name: subService.name,
+      price: subService.price,
+      priceFormat: subService.priceFormat,
+      deliveryTime: subService.deliveryTime,
+      shortDescription: subService.shortDescription,
+      serviceType: serviceType,
+      currency,
+      domain,
+    });
+    setModalShow(true);
+  };
+
+  const handleClose = () => setModalShow(false);
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -291,10 +307,11 @@ const Template1 = ({ details, subdomain }) => {
                   TESTIMONIALS
                 </Nav.Link>
               </Nav>
-              <Button variant="dark" className="btn-lg" onClick={handleShow}>
-                <i className="feather icon-feather-calendar me-2"></i>
-                Book an appointment
-              </Button>
+              <a href="#services">
+                <Button variant="dark" className="btn-lg">
+                  Book an appointment
+                </Button>
+              </a>
             </Navbar.Collapse>
           </Container>
         </Navbar>
@@ -328,12 +345,12 @@ const Template1 = ({ details, subdomain }) => {
               <Row className="justify-content-center text-center mt-6">
                 <Col md={9} sm={12}>
                   <div className="d-grid d-md-block">
-                    <Link
-                      onClick={handleShow}
+                    <a
+                      href="#services"
                       className="btn btn-white btn-lg mb-2 mb-md-0"
                     >
                       Book an appointment
-                    </Link>{" "}
+                    </a>{" "}
                   </div>
                 </Col>
               </Row>
@@ -341,130 +358,12 @@ const Template1 = ({ details, subdomain }) => {
           </Container>
         </section>
 
-        {/* Modal Form */}
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Book an appointment</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {notification && <Alert variant="danger">{notification}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="name">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="email" className="mt-1">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="phone" className="mt-1">
-                <Form.Label>Phone number</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your phone number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="serviceLocation" className="mt-1">
-                <Form.Label>Where should we attend to you?</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={formData.serviceLocation}
-                  onChange={handleChange}
-                  style={{
-                    WebkitAppearance: "none",
-                    MozAppearance: "none",
-                    appearance: "none",
-                    background: `url('https://www.svgrepo.com/show/315098/caret-down.svg`,
-                    paddingRight: "1.75rem",
-                  }}
-                >
-                  <option value="">Select convenient location</option>
-                  <option value="Home service">Home service</option>
-                  <option value="Shop">Shop</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId="address" className="mt-1">
-                <Form.Label>Your address please? (for Home service)</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="service" className="mt-1">
-                <Form.Label>Choose your preferred barbing service</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={formData.service}
-                  onChange={handleChange}
-                  disabled={!formData.serviceLocation}
-                  style={{
-                    WebkitAppearance: "none",
-                    MozAppearance: "none",
-                    appearance: "none",
-                    background: `url('https://www.svgrepo.com/show/315098/caret-down.svg') no-repeat right 1.75rem center/8px 10px`,
-                    paddingRight: "1.75rem",
-                  }}
-                >
-                  <option value="">Select service</option>
-                  {barbingServices.map((service, index) => (
-                    <option key={index} value={service}>
-                      {service}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-
-              <Row className="g-2 mt-2">
-                <Form.Label>What date and time do you want to book?</Form.Label>
-                <Col xl={6} className="mb-3">
-                  <Form.Control
-                    className="border-color-transparent-dark-very-light bg-transparent"
-                    type="date"
-                    name="date"
-                    defaultValue="2023-01-01"
-                    min="2023-01-01"
-                    max="2099-12-31"
-                  />
-                </Col>
-                <Col xl={6}>
-                  <Form.Control
-                    className="border-color-transparent-dark-very-light bg-transparent"
-                    type="time"
-                    name="time"
-                    defaultValue="09:12"
-                    min="09:00"
-                    max="12:00"
-                  />
-                </Col>
-              </Row>
-              <Modal.Footer>
-                <Button variant="secondary" href="/payment">
-                  Pay-on-delivery
-                </Button>
-                <Button variant="dark" type="submit">
-                  Proceed to Payment
-                </Button>
-              </Modal.Footer>
-            </Form>
-          </Modal.Body>
-        </Modal>
+        <BookingModal
+          show={modalShow}
+          setModalShow={setModalShow}
+          // handleClose={() => setModalShow(false)}
+          information={serviceDetails}
+        />
 
         {/* About Section */}
         <section id="about" className="py-3 px-3 mt-10 py-lg-10">
@@ -485,12 +384,11 @@ const Template1 = ({ details, subdomain }) => {
                   </p>
 
                   <div className="d-grid d-md-block">
-                    <Link
-                      onClick={handleShow}
-                      className="btn btn-dark btn-lg mb-2 mb-md-0"
-                    >
-                      Book an appointment
-                    </Link>{" "}
+                    <a href="#services">
+                      <Button variant="dark" className="btn-lg">
+                        Book an appointment
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </Col>
@@ -537,21 +435,6 @@ const Template1 = ({ details, subdomain }) => {
           <Container>
             <h2 className="fs-2">Our Services</h2>
             <Row>
-              {/* {services.map((service, idx) => (
-                <Col md={6} className="mb-4 px-4" key={idx}>
-                  <div style={pricingStyle}>
-                    <Row>
-                      <Col>
-                        <div style={titleStyle}>{service.name}</div>
-                      </Col>
-                      <Col>
-                        <div style={priceStyle}>₦{service.price}</div>
-                      </Col>
-                    </Row>
-                    <p style={descriptionStyle}>{service.shortDescription}</p>
-                  </div>
-                </Col>
-              ))} */}
               {services.map((service, serviceIdx) => (
                 <div key={serviceIdx}>
                   <h5>{service.header}</h5>
@@ -575,12 +458,26 @@ const Template1 = ({ details, subdomain }) => {
                               {truncateMessage(subService.shortDescription)}
                             </Card.Text>
                             <Card.Text className="fs-5">
-                              Price: {service.price} {subService.priceFormat}
+                              Price: {service.currency}
+                              {subService.price}
+                            </Card.Text>
+                            <Card.Text className="fs-5">
+                              Payment: {subService.priceFormat}
                             </Card.Text>
                             <Card.Text className="fs-6">
                               Delivery Time: {subService.deliveryTime}
                             </Card.Text>
-                            <Button variant="dark" onClick={handleShow}>
+                            <Button
+                              variant="dark"
+                              onClick={() =>
+                                handleShow(
+                                  subService,
+                                  service.format,
+                                  service.currency,
+                                  service.ecosystemDomain
+                                )
+                              }
+                            >
                               Book a Visit
                             </Button>
                           </Card.Body>
@@ -607,6 +504,9 @@ const Template1 = ({ details, subdomain }) => {
                           className="d-block w-100 img-fluid"
                           src={src}
                           alt={`Slide ${imgIdx + 1}`}
+                          style={{
+                            height: "350px",
+                          }}
                         />
                       </Col>
                     ))}
@@ -860,143 +760,6 @@ const Template1 = ({ details, subdomain }) => {
                   </span>
                 </Col>
               ))}
-            </Row>
-          </Container>
-        </section>
-
-        <section
-          style={{
-            backgroundColor: "#fff",
-            padding: "50px 0",
-            textAlign: "center",
-          }}
-          id="appointment"
-          className="py-lg-10 px-3 py-3"
-        >
-          <Container>
-            <Row>
-              <Col
-                xl={4}
-                lg={5}
-                className="mb-4 mb-lg-0"
-                style={{ textAlign: "left" }}
-              >
-                <h2 className="text-dark fs-2 mb-4">
-                  Schedule an{" "}
-                  <span className="text-highlight">
-                    appointment
-                    <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
-                  </span>
-                </h2>
-                <p>
-                  Your information will be forwarded to a scheduling specialist
-                  who will contact you.
-                </p>
-                <div className="feature-box bg-medium-yellow p-3 border-radius-6px text-start">
-                  <div className="d-flex align-items-center">
-                    <img
-                      src="https://craftohtml.themezaa.com/images/demo-barber-home-13.jpg"
-                      className="h-60px me-3"
-                      height={40}
-                      alt="Phone appointment"
-                    />
-                    <div>
-                      <p className="mb-0">Phone appointment</p>
-                      <a
-                        href="tel:12345678910"
-                        className="fs-22 ls-minus-1px fw-600 text-dark"
-                      >
-                        +234 8098765432
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-              <Col xl={8} lg={7}>
-                <Form action="email-templates/contact-form.php" method="post">
-                  <Row className="justify-content-center">
-                    <Col md={6} className="mb-3">
-                      <Form.Control
-                        className="mb-3 border-color-transparent-dark-very-light bg-transparent"
-                        type="text"
-                        name="name"
-                        placeholder="Your name*"
-                        required
-                      />
-                      <Form.Control
-                        className="mb-3 border-color-transparent-dark-very-light bg-transparent"
-                        type="email"
-                        name="email"
-                        placeholder="Your email address*"
-                        required
-                      />
-                      <Row className="g-2">
-                        <Col xl={6} className="mb-3">
-                          <Form.Control
-                            className="border-color-transparent-dark-very-light bg-transparent"
-                            type="date"
-                            name="date"
-                            defaultValue="2023-01-01"
-                            min="2023-01-01"
-                            max="2099-12-31"
-                          />
-                        </Col>
-                        <Col xl={6}>
-                          <Form.Control
-                            className="border-color-transparent-dark-very-light bg-transparent"
-                            type="time"
-                            name="time"
-                            defaultValue="09:12"
-                            min="09:00"
-                            max="12:00"
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Select
-                        className="mb-3 border-color-transparent-dark-very-light bg-transparent"
-                        name="select"
-                        defaultValue=""
-                      >
-                        <option value="">Select barber service</option>
-                        <option value="Haircut">Haircut</option>
-                        <option value="Hair styling">Hair styling</option>
-                        <option value="Shaving">Shaving</option>
-                        <option value="Beard sculpting">Beard sculpting</option>
-                        <option value="Kids haircut">Kids haircut</option>
-                      </Form.Select>
-                      <Form.Control
-                        as="textarea"
-                        className="border-color-transparent-dark-very-light bg-transparent h-140px"
-                        rows="4"
-                        name="comment"
-                        placeholder="Your message"
-                      />
-                    </Col>
-                    <Col md={6} className="mt-3 text-center text-md-start">
-                      <p className="fs-14 lh-22 opacity-7 mb-0">
-                        We are committed to protecting your privacy. We will
-                        never collect information about you.
-                      </p>
-                    </Col>
-                    <Col md={6} className="mt-3 text-center text-md-end">
-                      <Button
-                        className="btn btn-lg  btn-dark w-100"
-                        type="submit"
-                      >
-                        <i className="feather icon-feather-calendar me-2"></i>
-                        <span className="btn-double-text">
-                          Book appointment
-                        </span>
-                      </Button>
-                    </Col>
-                    <Col md={12}>
-                      <div className="form-results d-none text-center mt-3 px-3"></div>
-                    </Col>
-                  </Row>
-                </Form>
-              </Col>
             </Row>
           </Container>
         </section>
