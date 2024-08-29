@@ -26,6 +26,7 @@ import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses"
 import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
 import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
 import GymTemplate from "../dimp-templates/personal-care-services/GymTemplate";
+import CateringTemplate from "../dimp-templates/event-services/CateringTemplate";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -208,6 +209,7 @@ const AllRoutes = () => {
       <Route path="/ngo-template" element={<NonGovTemplate />} />
       <Route path="/spa-template" element={<SpaTemplate />} />
       <Route path="/gym-template" element={<GymTemplate />} />
+      <Route path="/catering-template" element={<CateringTemplate />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
