@@ -300,7 +300,7 @@ const BarberPreview1 = () => {
                 <div className="py-6 py-lg-0 text-center pt-lg-14">
                   <h1 className="display-3 fw-bold mb-3 text-white">
                     <span className="text-white px-3  ">
-                      {content.hero.title1}
+                      {sanitizeContent(content.hero.title1)}
                     </span>
                   </h1>
                   <p className="mb-6 h2 text-white">
