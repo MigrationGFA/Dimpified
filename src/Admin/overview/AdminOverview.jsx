@@ -8,7 +8,7 @@ import StatRightIcon from "../../Admin/analytics/stats/StatRightIcon";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Last4Creator from "./Last4Creator";
 import Last4Ecosystem from "./Last4Ecosystem";
-import Last4Products from "./Last4Products"
+import Last4Products from "./Last4Products";
 import Activity from "./AdminActivity";
 import {
   TrafficChartSeries,
@@ -58,12 +58,7 @@ const ChartActionMenu = () => {
 };
 
 const Overview = () => {
-  const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 0,
-    totalSeeker: 1,
-    monthlyProvider: 0,
-    totalProvider: 1,
-  });
+  const [dashboardData, setDashboardData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -73,7 +68,7 @@ const Overview = () => {
   const fetchDashboardData = async () => {
     try {
       const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview"
+        `${import.meta.env.VITE_API_URL}/admin-ecosystem-dashboard-overview`
       );
       setDashboardData(response.data.dashboardData);
       setLoading(false);
@@ -103,12 +98,12 @@ const Overview = () => {
         </div>
       ) : (
         <div>
-           <Row>
+          <Row>
             <Col xl={3} lg={6} md={12} sm={12}>
-              <Link to="/creator/dashboard/All-Ecosystem">
+              <Link to="/admin/all-ecosystem">
                 <StatRightChart
                   title="Total Ecosystem"
-                  value={dashboardData?.totalEcosystems || "0"}
+                  value={dashboardData?.totalEcosystem || "0"}
                   summary="Number of sales"
                   summaryIcon="up"
                   showSummaryIcon
@@ -118,10 +113,10 @@ const Overview = () => {
               </Link>
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
-              <Link to="/creator/my-user">
+              <Link to="/admin/all-ecosystem">
                 <StatRightChart
-                  title="Total Users"
-                  value={dashboardData?.totalUsers || "0"}
+                  title="Total Draft Ecosystems"
+                  value={dashboardData?.totalDratfEcoystems || "0"}
                   summary="Number of pending"
                   summaryIcon="down"
                   showSummaryIcon
@@ -134,8 +129,8 @@ const Overview = () => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <Link to="/creator/support">
                 <StatRightChart
-                  title="Total Support Requests"
-                  value={dashboardData?.totalSupportRequests || "0"}
+                  title="/admin/all-ecosystem"
+                  value={dashboardData?.totalLiveEcosystems || "0"}
                   summary="Students"
                   summaryIcon="up"
                   showSummaryIcon
@@ -145,10 +140,10 @@ const Overview = () => {
               </Link>
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
-              <Link to="/creator/received-payment">
+              <Link to="/admin/all-ecosystem">
                 <StatRightChart
-                  title="Total Paid Users"
-                  value={dashboardData?.totalPaidUsers || "0"}
+                  title="Total Private Ecosystems"
+                  value={dashboardData?.totalPrivateEcosystems || "0"}
                   summary="Instructor"
                   summaryIcon="up"
                   showSummaryIcon
@@ -160,7 +155,7 @@ const Overview = () => {
           </Row>
 
           <Row>
-            <Col xl={8} lg={12} md={12} className="mb-4">
+            <Col xl={14} lg={12} md={12} className="mb-4">
               <Card>
                 <Card.Header className="align-items-center card-header-height d-flex justify-content-between align-items-center">
                   <div>

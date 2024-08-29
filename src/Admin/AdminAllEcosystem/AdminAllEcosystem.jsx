@@ -7,7 +7,7 @@ import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import { showToast } from "../../Components/Showtoast";
 
 const AdminAllEcosystem = () => {
-  const [allOutsource, setAllOutsource] = useState([]);
+  const [allEcosystem, setAllEcosystem] = useState([]);
   const [unpaidJobs, setUnpaidJobs] = useState([]);
   const [pendingJobs, setPendingJobs] = useState([]);
   const [completedJobs, setCompletedJobs] = useState([]);
@@ -19,16 +19,36 @@ const AdminAllEcosystem = () => {
   const [errorUnpaid, setErrorUnpaid] = useState(null);
   const [errorPaid, setErrorPaid] = useState(null);
   const [errorCompleted, setErrorCompleted] = useState(null);
+  const [dashboardData, setDashboardData] = useState({});
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAllOutsource = async () => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/admin-ecosystem-dashboard-overview`
+        );
+        setDashboardData(response.data.dashboardData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        setLoading(false);
+      }
+    };
+    fetchDashboardData();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllEcosystem = async () => {
       try {
         setLoadingAll(true);
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/admin-all-outSource-jobs"
+          `${import.meta.env.VITE_API_URL}/admin-all-ecosystems`
         );
-        setAllOutsource(response.data.jobs);
+
+        setAllEcosystem(response.data.ecosystemsWithLogos);
         setLoadingAll(false);
       } catch (error) {
         setErrorAll(error);
@@ -36,7 +56,7 @@ const AdminAllEcosystem = () => {
       }
     };
 
-    fetchAllOutsource();
+    fetchAllEcosystem();
   }, []);
 
   useEffect(() => {
@@ -44,9 +64,9 @@ const AdminAllEcosystem = () => {
       try {
         setLoadingUnpaid(true);
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/admin-all-unpaid-outsource-jobs"
+          `${import.meta.env.VITE_API_URL}/admin-pending-ecosystems`
         );
-        setUnpaidJobs(response.data.unpaidJobs);
+        setUnpaidJobs(response.data.ecosystemsWithLogos);
         setLoadingUnpaid(false);
       } catch (error) {
         setErrorUnpaid(error);
@@ -80,9 +100,9 @@ const AdminAllEcosystem = () => {
       try {
         setLoadingCompleted(true);
         const response = await axios.get(
-          "https://unleashified-backend.azurewebsites.net/api/v1/admin-all-completed-outsource-jobs"
+          `${import.meta.env.VITE_API_URL}/admin-completed-ecosystems`
         );
-        setCompletedJobs(response.data.completedJobs);
+        setCompletedJobs(response.data.ecosystemsWithLogos);
         setLoadingCompleted(false);
       } catch (error) {
         setErrorCompleted(error);
@@ -100,11 +120,11 @@ const AdminAllEcosystem = () => {
       );
       fetchPendingJobs();
       fetchCompletedJobs();
-      const message = response.data.message; 
+      const message = response.data.message;
       showToast(message);
     } catch (error) {
       console.error("Error marking job as completed:", error);
-      showToast('Error marking job as completed'); 
+      showToast("Error marking job as completed");
     }
   };
 
@@ -119,24 +139,26 @@ const AdminAllEcosystem = () => {
   return (
     <Fragment>
       <Row>
-            <Col lg={12} md={12} sm={12}>
-              <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
-                <div className="mb-3 mb-md-0">
-                  <h1 className="mb-1 h2 fw-bold">All Ecosystem</h1>
-                  <Breadcrumb>
-                    <Breadcrumb.Item href="/admin/dashboard/overview">Dashboard</Breadcrumb.Item>
-                    <Breadcrumb.Item active>All</Breadcrumb.Item>
-                  </Breadcrumb>
-                </div>
-              </div>
-            </Col>
-          </Row>
+        <Col lg={12} md={12} sm={12}>
+          <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
+            <div className="mb-3 mb-md-0">
+              <h1 className="mb-1 h2 fw-bold">All Ecosystem</h1>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/admin/dashboard/overview">
+                  Dashboard
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>All</Breadcrumb.Item>
+              </Breadcrumb>
+            </div>
+          </div>
+        </Col>
+      </Row>
       <Row>
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="All"
-            value="100"
-            summary="Number of support requests"
+            value={dashboardData.totalEcosystem}
+            summary="Number of all ecosystem"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -147,8 +169,8 @@ const AdminAllEcosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Draft"
-            value="50"
-            summary="Number of pending"
+            value={dashboardData.totalDratfEcoystems}
+            summary="Number of draft ecosystem"
             summaryIcon="down"
             showSummaryIcon
             classValue="mb-4"
@@ -159,8 +181,8 @@ const AdminAllEcosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Live"
-            value="30"
-            summary="Number of completed"
+            value={dashboardData.totalLiveEcosystems}
+            summary="Number of live ecosystem"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -171,8 +193,8 @@ const AdminAllEcosystem = () => {
         <Col xl={3} lg={6} md={12} sm={12}>
           <StatRightChart
             title="Private"
-            value="80"
-            summary="Total support requests"
+            value={dashboardData.totalPrivateEcosystems}
+            summary="Total private ecosystems"
             summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
@@ -206,7 +228,10 @@ const AdminAllEcosystem = () => {
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="completed" className="mb-sm-3 mb-md-0">
+                        <Nav.Link
+                          eventKey="completed"
+                          className="mb-sm-3 mb-md-0"
+                        >
                           Live
                         </Nav.Link>
                       </Nav.Item>
@@ -217,7 +242,7 @@ const AdminAllEcosystem = () => {
                       <Tab.Pane eventKey="all">
                         {!errorAll && (
                           <AllEcosystemTable
-                            jobs_data={allOutsource}
+                            jobs_data={allEcosystem}
                             handleCategoryClick={handleCategoryClick}
                           />
                         )}
@@ -239,7 +264,9 @@ const AdminAllEcosystem = () => {
                             handleCategoryClick={handleCategoryClick}
                           />
                         )}
-                        {errorCompleted && <div>Error fetching completed data</div>}
+                        {errorCompleted && (
+                          <div>Error fetching completed data</div>
+                        )}
                       </Tab.Pane>
                     </Tab.Content>
                   </Card.Body>

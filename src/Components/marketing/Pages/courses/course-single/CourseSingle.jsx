@@ -42,6 +42,7 @@ const CourseSingle = () => {
   let { id } = useParams();
 
   const user = useSelector((state) => state.authentication.user);
+  console.log(user)
 
   useEffect(() => {
     localStorage.getItem("subDomain");
@@ -107,9 +108,10 @@ const CourseSingle = () => {
         `${import.meta.env.VITE_API_URL}/verify-payment`,
         {
           reference: tx_ref,
+          creatorId: user.data.CreatorId,
           email: user.data.email,
           itemType: "Course",
-          userId: user.data.UserId,
+          userId: user.data.userId,
           provider: "flutterwave",
           itemId: id,
           ecosystemDomain: ecosystemDomain,

@@ -5,6 +5,7 @@ import TanstackTable from "../../Components/elements/advance-table/TanstackTable
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
+import person from "../../assets/avatar/person.png";
 
 const formatDate = (dateTimeString) => {
   const dateTime = new Date(dateTimeString);
@@ -42,7 +43,7 @@ const OutsourceTable = ({ jobs_data }) => {
   // };
 
   const getStatusBadgeColor = (status) => {
-    if (typeof status === 'string') {
+    if (typeof status === "string") {
       switch (status.toLowerCase()) {
         case "pending":
           return "warning";
@@ -57,11 +58,14 @@ const OutsourceTable = ({ jobs_data }) => {
       return "";
     }
   };
-  
+
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + '...' : str;
+  };
 
   const handleViewClick = (id) => {
     // Handle click event for View button
-    navigate(`/admin/out-source/job-single?id=${id}`); 
+    navigate(`/admin/out-source/job-single?id=${id}`);
   };
   const columns = useMemo(
     () => [
@@ -72,15 +76,20 @@ const OutsourceTable = ({ jobs_data }) => {
           <div style={{ display: "flex", alignItems: "center" }}>
             <a href="#" onClick={() => handleViewClick(row.original._id)}>
               <img
-                src={row.original?.jobPoster?.companyLogo}
+                src={row.original?.logo == null ? person : row.original?.logo}
                 alt="Company Logo"
-                style={{ width: "100px", height: "auto", marginRight: "10px" }}
+                style={{
+                  width: "100px",
+                  height: "auto",
+                  marginRight: "10px",
+                  // borderRadius: "100%",
+                }}
               />
             </a>
 
             <div>
               <div style={{ fontWeight: "bold" }}>
-                {row.original?.jobPoster?.companyName}
+                {row.original?.ecosystemName}
               </div>
               <div>Added on {formatDate(row.original?.createdAt)}</div>
             </div>
@@ -89,33 +98,25 @@ const OutsourceTable = ({ jobs_data }) => {
       },
       {
         header: "Description",
-        accessorKey: "paymentStatus",
-        cell: ({ row }) => (
-          <span>{ row.original?.paymentStatus}</span>
-        ),
+        accessorKey: "description",
+        cell: ({ row }) => <span>{truncate(row.original?.ecosystemDescription, 30)}</span>,
       },
       {
         header: "Sector",
-        accessorKey: "paymentStatus",
-        cell: ({ row }) => (
-          <span>{ row.original?.paymentStatus}</span>
-        ),
+        accessorKey: "sector",
+        cell: ({ row }) => <span>{row.original?.targetAudienceSector}</span>,
       },
       {
         header: "No of Users",
-        accessorKey: "paymentStatus",
-        cell: ({ row }) => (
-          <span>{ row.original?.paymentStatus}</span>
-        ),
+        accessorKey: "user",
+        cell: ({ row }) => <span>{row.original?.users}</span>,
       },
       {
         header: "Status",
         accessorKey: "status",
         cell: ({ row }) => (
           <Fragment>
-            <DotBadge
-              bg={getStatusBadgeColor(row.original?.status)}
-            />
+            <DotBadge bg={getStatusBadgeColor(row.original?.status)} />
             {row.original?.status}
           </Fragment>
         ),
