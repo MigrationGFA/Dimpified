@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -41,6 +41,44 @@ const Template4 = () => {
   const dispatch = useDispatch();
   const content = useSelector((state) => state.mainTemplate.currentTemplate);
   const ecosystemDetails = useSelector((state) => state.ecosystem);
+
+  const galleryItems = [
+    {
+      src: content.Gallery.image1,
+      alt: "Image 1",
+    },
+    {
+      src: content.Gallery.image2,
+      alt: "Image 2",
+    },
+    {
+      src: content.Gallery.image3,
+      alt: "Image 3",
+    },
+    {
+      src: content.Gallery.image4,
+      alt: "Image 4",
+    },
+    {
+      src: content.Gallery.image5,
+      alt: "Image 5",
+    },
+    {
+      src: content.Gallery.image6,
+      alt: "Image 6",
+    },
+    // Add more items as needed
+  ];
+
+  const chunkArray = (array, chunkSize) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
+    return result;
+  };
+
+  const galleryChunks = chunkArray(galleryItems, 6);
 
   const handleContentChange = (section, field, value, index = null) => {
     dispatch(updateContent({ section, field, value, index }));
@@ -103,7 +141,7 @@ const Template4 = () => {
               <Navbar bg="transparent" expand="lg" className="px-lg-3 py-lg-3">
                 <Container>
                   <Navbar.Brand
-                    className="fw-bold text-white d-flex align-items-center"
+                    className="fw-bold text-white d-flex align-items-center relative"
                     href="#home"
                   >
                     <img
@@ -111,6 +149,44 @@ const Template4 = () => {
                       alt="Logo"
                       width="146"
                       height="42"
+                      style={{
+                        position: "relative",
+                      }}
+                    />
+                    {/* Add image editing functionality */}
+                    <Button
+                      bg="primary"
+                      size="lg"
+                      onClick={() => handleEditImageClick("navbar", "logo")}
+                      style={{
+                        width: "250px",
+                        position: "absolute",
+                        top: "500px",
+                        left: "120px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Logo"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["navbar-logo"] = ref)
+                      }
+                      onChange={(e) => handleImageChange(e, "navbar", "logo")}
+                      style={{ display: "none" }}
                     />
                   </Navbar.Brand>
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -639,45 +715,83 @@ const Template4 = () => {
                 </section>
                 <section className="beauty overflow-hidden position-relative bg-white pb-lg-14 pb-3 pt-0 border-bottom border-color-extra-medium-gray">
                   <Container>
-                    <Row className="align-items-center">
-                      <Col className="position-relative appear anime-child anime-complete">
-                        <div className="outside-box-right-30">
-                          <Carousel>
-                            {galleryChunks.map((chunk, index) => (
-                              <Carousel.Item
-                                key={index}
-                                className="transition-inner-all"
+                    {galleryChunks.map((chunk, index) => (
+                      <Row key={index} className="mb-4">
+                        {chunk.map((item, idx) => (
+                          <Col key={idx} md={4} className="mb-4">
+                            <div className="gallery-box">
+                              <a
+                                href={item.src}
+                                data-group="lightbox-group-gallery-item-5"
+                                title="Lightbox gallery image title"
                               >
-                                <Row>
-                                  {chunk.map((item, idx) => (
-                                    <Col key={idx} md={3}>
-                                      <div className="gallery-box">
-                                        <a
-                                          href={item.src}
-                                          data-group="lightbox-group-gallery-item-5"
-                                          title="Lightbox gallery image title"
-                                        >
-                                          <div className="position-relative bg-dark-gray border-radius-6px overflow-hidden">
-                                            <img
-                                              src={item.src}
-                                              alt={item.alt}
-                                              className="d-block w-100"
-                                            />
-                                            <div className="d-flex align-items-center justify-content-center position-absolute top-0 left-0 w-100 h-100 gallery-hover move-bottom-top">
-                                              <i className="bi bi-camera icon-medium text-white"></i>
-                                            </div>
-                                          </div>
-                                        </a>
-                                      </div>
-                                    </Col>
-                                  ))}
-                                </Row>
-                              </Carousel.Item>
-                            ))}
-                          </Carousel>
-                        </div>
-                      </Col>
-                    </Row>
+                                <div className="position-relative bg-dark-gray border-radius-6px overflow-hidden">
+                                  <img
+                                    src={item.src}
+                                    alt={item.alt}
+                                    className="d-block w-100"
+                                    style={{
+                                      height: "280px",
+                                    }}
+                                  />
+                                  <div className="d-flex align-items-center justify-content-center position-absolute top-0 left-0 w-100 h-100 gallery-hover move-bottom-top">
+                                    <i className="bi bi-camera icon-medium text-white"></i>
+                                  </div>
+                                </div>
+                              </a>
+                              {/* Edit Image Button */}
+                              <Button
+                                variant="dark"
+                                onClick={() =>
+                                  handleEditImageClick(
+                                    "Gallery",
+                                    `image${idx + 1}`
+                                  )
+                                }
+                                style={{
+                                  position: "absolute",
+                                  top: "10px",
+                                  right: "10px",
+                                  zIndex: 1000,
+                                  backgroundColor: "rgba(0,0,0,0.5)",
+                                  color: "#fff",
+                                  border: "none",
+                                }}
+                              >
+                                {loadingImage ? (
+                                  <div
+                                    className="spinner-border spinner-border-sm text-primary"
+                                    role="status"
+                                  >
+                                    <span className="visually-hidden">
+                                      Loading...
+                                    </span>
+                                  </div>
+                                ) : (
+                                  "Edit Image"
+                                )}
+                              </Button>
+                              <input
+                                type="file"
+                                ref={(ref) =>
+                                  (fileInputRefs.current[
+                                    `Gallery-image${idx + 1}`
+                                  ] = ref)
+                                }
+                                onChange={(e) =>
+                                  handleImageChange(
+                                    e,
+                                    "Gallery",
+                                    `image${idx + 1}`
+                                  )
+                                }
+                                style={{ display: "none" }}
+                              />
+                            </div>
+                          </Col>
+                        ))}
+                      </Row>
+                    ))}
                   </Container>
                   <div
                     className="position-absolute left-0 bottom-0"
@@ -1152,7 +1266,7 @@ const Template4 = () => {
                     >
                       <a href="#home" className="footer-logo d-inline-block">
                         <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-white.png"
+                          src={content.navbar.logo}
                           alt="Logo"
                           width="146"
                           height="42"
@@ -1170,7 +1284,7 @@ const Template4 = () => {
                         Get in touch
                       </span>
                       <p className="primary-font lh-30 w-80 text-white lg-w-100">
-                        401 Broadway, 24th Floor New York, NY 10013
+                        {ecosystemDetails.address}
                       </p>
                     </Col>
 
@@ -1184,15 +1298,9 @@ const Template4 = () => {
                         Need support?
                       </span>
                       <a href="tel:1800222000" className="text-white lh-30">
-                        1-800-222-000
+                        {ecosystemDetails.contact}
                       </a>
                       <br />
-                      <a
-                        href="mailto:info@yourdomain.com"
-                        className="text-white"
-                      >
-                        info@yourdomain.com
-                      </a>
                     </Col>
 
                     <Col
@@ -1318,51 +1426,6 @@ const Template4 = () => {
 };
 
 export default Template4;
-const galleryItems = [
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-01.jpg",
-    alt: "Image 1",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-02.jpg",
-    alt: "Image 2",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-03.jpg",
-    alt: "Image 3",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-04.jpg",
-    alt: "Image 4",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-01.jpg",
-    alt: "Image 5",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-02.jpg",
-    alt: "Image 6",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-03.jpg",
-    alt: "Image 7",
-  },
-  {
-    src: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-wedding-04.jpg",
-    alt: "Image 8",
-  },
-  // Add more items as needed
-];
-
-const chunkArray = (array, chunkSize) => {
-  const result = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
-};
-
-const galleryChunks = chunkArray(galleryItems, 4);
 
 // Services Section
 const Services = () => (
@@ -1682,3 +1745,34 @@ const Footer = () => (
     </div>
   </footer>
 );
+
+// editable image
+export const EditableImage = ({ initialImage, onImageChange }) => {
+  const fileInputRef = useRef(null);
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      onImageChange(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div onClick={handleImageClick} style={{ cursor: "pointer" }}>
+      <img src={initialImage} alt="logo" width="50" />
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+    </div>
+  );
+};
