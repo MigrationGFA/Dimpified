@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, ListGroup, Image, Dropdown } from "react-bootstrap";
-
+import person from "../../assets/avatar/person.png";
 const Last4Creator = ({ title }) => {
   const [categories, setCategories] = useState([]);
 
@@ -13,9 +13,9 @@ const Last4Creator = ({ title }) => {
   const fetchPopularJobCategories = async () => {
     try {
       const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview-most-popular"
+        `${import.meta.env.VITE_API_URL}/admin-last-four-creators`
       );
-      setCategories(response.data.providers);
+      setCategories(response.data.lastFourCreatorWithLogos);
     } catch (error) {
       console.error("Error fetching popular job categories:", error);
     }
@@ -46,22 +46,25 @@ const Last4Creator = ({ title }) => {
           {categories.map((category, index) => (
             <ListGroup.Item
               className={`px-0 ${index === 0 ? "pt-0" : ""}`}
-              key={category.providerId}
+              key={category.id}
             >
               <Row>
                 <Col xs="auto">
                   <Image
-                    src={category.companyLogo}
+                    src={category.logo == null ? person : category.logo}
                     alt=""
-                    className="rounded-circle"
-                    style={{ width: "90px", height: "65px" }}
+                    // className="rounded-circle"
+                    style={{ width: "75px", height: "65px" }}
                   />
                 </Col>
                 <Col className="ms-n3">
-                  <h4 className="mb-0 h5">{category.companyName}</h4>
+                  <h4 className="mb-0 h5">{category.organizationName}</h4>
                   <span className="me-2 fs-6">
                     <span className="text-dark  me-1 fw-semi-bold">
-                      {category.totalJobs} Jobs
+                      {category.numberOfTargetAudience == null
+                        ? 0
+                        : category.numberOfTargetAudience}{" "}
+                      Audience
                     </span>
                   </span>
                 </Col>
