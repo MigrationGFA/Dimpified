@@ -120,6 +120,7 @@ const Booking = () => {
     { accessorKey: "description", header: "Description" },
     { accessorKey: "status", header: "Status" },
     { accessorKey: "paymentStatus", header: "Payment Status" },
+    { accessorKey: "action", header: "Action" },
   ];
 
   const completedHeader = [
@@ -214,7 +215,7 @@ const Booking = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/booking-overview/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/booking-overview/paullo5`
         );
         // ${ecosystemDomain}
         setTodayBookings(response.data.todayBookings);

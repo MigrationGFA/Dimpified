@@ -5,7 +5,6 @@ import DotBadge from "../Components/elements/bootstrap/DotBadge";
 import TanstackTable from "../Components/elements/advance-table/TanstackTable";
 import { showToast } from "../Components/Showtoast";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const BookingTable = ({ data, header }) => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +16,39 @@ const BookingTable = ({ data, header }) => {
   const [selectedJobSeekerId, setSelectedJobSeekerId] = useState(null);
   const [selectedJobTitle, setSelectedJobTitle] = useState(null);
   const [Rloading, setRLoading] = useState(false);
+  const [completedJobs, setCompletedJobs] = useState({});
+  const [loadingBookings, setLoadingBookings] = useState({});
+
+  const markCompleted = async (bookingId) => {
+    try {
+      console.log("Start marking complete:", bookingId);
+      setLoadingBookings((prev) => ({
+        ...prev,
+        [bookingId]: true,
+      }));
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/complete-booking`,
+        { bookingId }
+      );
+
+      if (response.status === 200) {
+        console.log("Marking as completed:", bookingId);
+        setCompletedJobs((prev) => ({
+          ...prev,
+          [bookingId]: true,
+        }));
+        showToast("Booking Marked Complete");
+      }
+    } catch (error) {
+      console.error("Error completing the booking:", error);
+    } finally {
+      setLoadingBookings((prev) => ({
+        ...prev,
+        [bookingId]: false,
+      }));
+    }
+  };
 
   function truncateDescription(description, maxLength = 40) {
     if (description.length <= maxLength) {
@@ -138,26 +170,25 @@ const BookingTable = ({ data, header }) => {
               <span>{row.original.time}</span>
             </Fragment>
           );
-        } else if (accessorKey === "") {
+        } else if (accessorKey === "action") {
           return (
-            <Fragment>
-              {row.original.paymentStatus === "paid" ? (
-                <Button variant="success" disabled>
-                  Paid
-                </Button>
-              ) : (
-                <button
-                  className="btn btn-primary"
-                  disabled={loading}
-                  style={{ opacity: loading ? 0.7 : 1 }}
-                  onClick={() => {
-                    handlePaymentClick(row);
-                  }}
-                >
-                  {loading ? "Processing" : "Make Payment"}
-                </button>
-              )}
-            </Fragment>
+            <Button
+              href="#"
+              variant="success"
+              className="btn-sm"
+              disabled={
+                completedJobs[row.original._id] ||
+                loadingBookings[row.original._id]
+              }
+              style={{ opacity: loadingBookings[row.original._id] ? 0.7 : 1 }}
+              onClick={() => markCompleted(row.original._id)}
+            >
+              {loadingBookings[row.original._id]
+                ? "Processing..."
+                : completedJobs[row.original._id]
+                ? "Completed"
+                : "Mark Complete"}
+            </Button>
           );
         } else if (accessorKey === "paymentStatus") {
           return (
