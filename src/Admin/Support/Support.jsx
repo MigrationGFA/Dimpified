@@ -11,17 +11,34 @@ const Support = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedSupportID, setSelectedSupportID] = useState(null);
   const [selectedUserMessage, setSelectedUserMessage] = useState("");
+  const [dashboardData, setDashboardData] = useState({});
 
   useEffect(() => {
+    fetchDashboardData();
     fetchData();
   }, []);
 
+
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/admin-support-dashboard-overview`
+        );
+        setDashboardData(response.data.dashboardData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        setLoading(false);
+      }
+    };
+ 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/all-contact-us"
+        `${import.meta.env.VITE_API_URL}/admin-all-support-requests`
       );
-      setData(response.data.contactUs || []);
+      setData(response.data.data || []);
+      console.log(response.data.data)
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -45,17 +62,25 @@ const Support = () => {
   const columns = useMemo(
     () => [
       { accessorKey: "id", header: "ID" },
-      { accessorKey: "firstName", header: "First Name" },
-      { accessorKey: "lastName", header: "Last Name" },
-      { accessorKey: "email", header: "Email" },
-      { accessorKey: "contact", header: "Contact" },
+      {
+        accessorKey: "organization_details",
+        header: "Organization Details",
+        cell: ({ row }) => (
+          <>
+            <div className="fw-semibold">{getNestedValue(row, "Creator.organizationName")}</div>
+            <div>{getNestedValue(row, "Creator.email")}</div>
+          </>
+        ),
+      },
       { accessorKey: "reason", header: "Reason" },
       {
         accessorKey: "message",
         header: "Message",
         cell: ({ row }) =>
           row.message.length > 20 ? (
-            <span title={row.message}>{row.message.slice(0, 20)}...</span>
+            <span title={row.message}>
+              {row.message.slice(0, 20)}...
+            </span>
           ) : (
             row.message
           ),
@@ -78,15 +103,17 @@ const Support = () => {
     []
   );
 
+  const getNestedValue = (obj, key) => {
+    return key.split('.').reduce((o, i) => (o ? o[i] : null), obj);
+  };
+
   return (
     <>
       <Row>
         <Col lg={12} md={12} sm={12}>
           <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
             <div className="mb-3 mb-lg-0">
-              <h1 className="mb-0 h2 fw-bold">
-                Support{" "}
-              </h1>
+              <h1 className="mb-0 h2 fw-bold">Support</h1>
             </div>
           </div>
         </Col>
@@ -101,10 +128,10 @@ const Support = () => {
       ) : (
         <>
           <Row>
-            <Col xl={3} lg={6} md={12} sm={12}>
+            <Col xl={4} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Total"
-                value={data.length.toString()}
+                value={dashboardData.totalSupportRequests}
                 summary="Number of support requests"
                 summaryIcon="up"
                 showSummaryIcon
@@ -113,12 +140,10 @@ const Support = () => {
               />
             </Col>
 
-            <Col xl={3} lg={6} md={12} sm={12}>
+            <Col xl={4} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Pending"
-                value={data
-                  .filter((item) => item.status === "pending")
-                  .length.toString()}
+                value={dashboardData.totalPendingSupportRequests}
                 summary="Number of pending"
                 summaryIcon="down"
                 showSummaryIcon
@@ -127,12 +152,10 @@ const Support = () => {
               />
             </Col>
 
-            <Col xl={3} lg={6} md={12} sm={12}>
+            <Col xl={4} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Completed "
-                value={data
-                  .filter((item) => item.status === "completed")
-                  .length.toString()}
+                title="Completed"
+                value={dashboardData.totalCompletedSupports}
                 summary="Number of completed"
                 summaryIcon="up"
                 showSummaryIcon
@@ -141,17 +164,17 @@ const Support = () => {
               />
             </Col>
 
-            <Col xl={3} lg={6} md={12} sm={12}>
+            {/* <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Support"
-                value={data.length.toString()}
+                value={data.length}
                 summary="Total support requests"
                 summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
                 chartName="AverageVisitTimeChart"
               />
-            </Col>
+            </Col> */}
           </Row>
 
           <Card className="border-0 mt-4">
@@ -168,22 +191,14 @@ const Support = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {loading ? (
-                    <tr>
-                      <td colSpan={columns.length} className="text-center">
-                        <Spinner animation="border" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </td>
-                    </tr>
-                  ) : data.length > 0 ? (
+                  {data.length > 0 ? (
                     data.map((row) => (
                       <tr key={row.id}>
                         {columns.map((column) => (
                           <td key={column.accessorKey}>
                             {column.cell
                               ? column.cell({ row })
-                              : row[column.accessorKey]}
+                              : getNestedValue(row, column.accessorKey)}
                           </td>
                         ))}
                       </tr>

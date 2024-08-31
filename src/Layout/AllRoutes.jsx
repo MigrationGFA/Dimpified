@@ -25,6 +25,8 @@ import LegalTemplate from "../dimp-templates/professional-services/Legal";
 import OnlineCourses from "../dimp-templates/educational-services/OnlineCourses";
 import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
 import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
+import GymTemplate from "../dimp-templates/personal-care-services/GymTemplate";
+import CateringTemplate from "../dimp-templates/event-services/CateringTemplate";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -124,11 +126,17 @@ import UserBrowseCourse from "../Components/marketing/Pages/courses/CourseFilter
 import UserSingleCourse from "../Components/marketing/Pages/courses/course-single/CourseSingle";
 import UserBrowseService from "../Components/marketing/Pages/service-single/ServicesList";
 import UserSingleService from "../Components/marketing/Pages/service-single/ServiceSingle";
+import UserServiceBilling from "../Components/marketing/Pages/service-single/ServiceBilling";
+import UserOrderSummary from "../Components/marketing/Pages/service-single/OrderSummary";
 import UserLearningCourse from "../Components/marketing/Pages/courses/course-single2/CourseSingle2";
 import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
-import EcosystemCourses from "../EcosystemDashboard/MyCourses";
+import EcosystemMyProduct from "../EcosystemDashboard/MyCourses";
+import EcosystemBooking from "../EcosystemDashboard/Booking"
+import EcosystemCourses from "../EcosystemDashboard/Courses"
+import EcosystemServices from "../EcosystemDashboard/Services"
+import EcosystemProducts from "../EcosystemDashboard/Products"
 import EcosystemResolution from "../EcosystemDashboard/EcoResolution";
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
@@ -151,8 +159,16 @@ import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/Ecosystem
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
-import UserChat from "../Components/Chat/UserChat";
+import UserChat from "../Components/Chat/UserChat";   
 import UserChatLayout from "../Components/Chat/UserChatLayout";
+import Join from "../developer-program/pages/Join";
+import AboutDevProgram from "../developer-program/pages/AboutDevProgram";
+import ApiLicense from "../developer-program/pages/ApiLicense";
+import Grow from "../developer-program/pages/Grow";
+import EventPage from "../developer-program/pages/EventsPage";
+import LoyaltyProgram from "../developer-program/pages/LoyaltyProgram";
+import DeveloperProgramSupport from "../developer-program/pages/Support";
+import DevProgramAuthForm from "../developer-program/pages/DevProgramAuthForm";
 import CommunityCreation from "../Components/CommunityChat/CommunityCreation";
 
 // ** Import Admin Dahbaord Menu Pages
@@ -165,7 +181,7 @@ import AdminAllEcosystem from "../Admin/AdminAllEcosystem/AdminAllEcosystem";
 import OutSource from "../Admin/Outsource/OutSource";
 import OutsourceJobSingle from "../Admin/Outsource/OutsourceJobSingle";
 import AdminSupport from "../Admin/Support/Support";
-
+import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 // subdomain
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
@@ -206,6 +222,8 @@ const AllRoutes = () => {
       <Route path="/course-template" element={<OnlineCourses />} />
       <Route path="/ngo-template" element={<NonGovTemplate />} />
       <Route path="/spa-template" element={<SpaTemplate />} />
+      <Route path="/gym-template" element={<GymTemplate />} />
+      <Route path="/catering-template" element={<CateringTemplate />} />
 
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
@@ -326,7 +344,23 @@ const AllRoutes = () => {
       />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/My-Courses"
+        element={<EcosystemMyProduct />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Booking"
+        element={<EcosystemBooking />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Courses"
         element={<EcosystemCourses />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/Services"
+        element={<EcosystemServices />}
+      />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/DigitalProducts"
+        element={<EcosystemProducts />}
       />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-reviews"
@@ -348,6 +382,7 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
+
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -381,6 +416,14 @@ const AllRoutes = () => {
 
       <Route path="/digital-service/:id" element={<UserSingleService />} />
       <Route path="/service/:id" element={<UserSingleService />} />
+      <Route
+        path="/:ecosystemDomain/service/service-billing/:id"
+        element={<UserServiceBilling />}
+      />
+      <Route
+        path="/:ecosystemDomain/service/order-summary/:id"
+        element={<UserOrderSummary />}
+      />
       <Route path="/signup" element={<RegisterEcosystem />} />
       <Route path="/signin" element={<EcosystemSignIn />} />
       <Route path="/forget-password" element={<EcosystemForgetPassword />} />
@@ -433,12 +476,39 @@ const AllRoutes = () => {
           path="/admin/out-source/job-single"
           element={<OutsourceJobSingle />}
         />
+        <Route
+          path="/admin/creator-single-page/"
+          element={<CreatorSinglePage />}
+        />
         <Route path="/admin/support" element={<AdminSupport />} />
         <Route
           path="admin/dashboard/layouts/layout-vertical"
           element={<AdminOverview />}
         />
       </Route>
+      <Route path="/dimp/developer-program/join" element={<Join />} />
+      <Route
+        path="/dimp/developer-program/about"
+        element={<AboutDevProgram />}
+      />
+      <Route
+        path="/dimp/developer-program/apilicense"
+        element={<ApiLicense />}
+      />
+      <Route path="/dimp/developer-program/grow" element={<Grow />} />
+      <Route path="/dimp/developer-program/events" element={<EventPage />} />
+      <Route
+        path="/dimp/developer-program/loyalty-program"
+        element={<LoyaltyProgram />}
+      />
+      <Route
+        path="/dimp/developer-program/support"
+        element={<DeveloperProgramSupport />}
+      />
+      <Route
+        path="/dimp/developer-program/auth"
+        element={<DevProgramAuthForm />}
+      />
     </Routes>
   );
 };

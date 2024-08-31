@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const RequestModalForm = ({
   header,
@@ -7,10 +8,18 @@ const RequestModalForm = ({
   service,
   price,
   name,
+  incentives,
   additionalRevision,
+  currency,
+  ecosystemDomain,
+  id,
 }) => {
   const [gigQuantity, setGigQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
+  const [scheduleDate, setScheduleDate] = useState("");
+  const [scheduleTime, setScheduleTime] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTotalPrice(price * gigQuantity);
@@ -26,15 +35,62 @@ const RequestModalForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
+    const dataToPass = {
+      header,
+      shortDescription,
+      service,
+      totalPrice,
+      incentives,
+      additionalRevision,
+      gigQuantity,
+      currency,
+    };
+
+    console.log("Navigating with data:", dataToPass);
+
+    // Navigate to the ServiceBilling component and pass the data
+    navigate(`/${ecosystemDomain}/service/service-billing/${id}`, {
+      state: { dataToPass },
+    });
   };
 
   return (
     <Form onSubmit={handleSubmit}>
+      <h3>Schedule a booking</h3>
+      <Row className="mb-4 border border-secondary rounded p-2">
+        <Form.Group as={Row} controlId="scheduleDate">
+          <Form.Label column sm="4">
+            Date
+          </Form.Label>
+          <Col sm="8">
+            <Form.Control
+              type="date"
+              value={scheduleDate}
+              onChange={(e) => setScheduleDate(e.target.value)}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="scheduleTime">
+          <Form.Label column sm="4">
+            Time
+          </Form.Label>
+          <Col sm="8">
+            <Form.Control
+              type="time"
+              value={scheduleTime}
+              onChange={(e) => setScheduleTime(e.target.value)}
+            />
+          </Col>
+        </Form.Group>
+      </Row>
+      <h3>Schedule Details</h3>
       <Row className="mb-4 border border-secondary rounded p-2">
         <div className="d-flex justify-content-between mb-2">
           <div className="display-6 fw-bold">{header || name}</div>
-          <div className="display-6">{price}</div>
+          <div className="display-6">
+            {currency}
+            {totalPrice}
+          </div>
         </div>
 
         <p>
@@ -56,8 +112,7 @@ const RequestModalForm = ({
           </Col>
         </Form.Group>
       </Row>
-
-      <Row className="mb-4">
+      {/* <Row className="mb-4">
         <h6>Upgrade your order with extras</h6>
         <Form.Group as={Row} controlId="extraFastDelivery">
           <Form.Label column sm="8">
@@ -92,8 +147,10 @@ const RequestModalForm = ({
             </Form.Control>
           </Col>
         </Form.Group>
+      </Row> */}
+      <Row>
+        <Button type="submit">Continue</Button>
       </Row>
-      {/* <Button type="submit">Submit</Button> */}
     </Form>
   );
 };

@@ -1,30 +1,37 @@
-
-  
 /* NavbarComponent.css */
 
 /* Ensure the dropdown menu displays correctly on hover */
 .navbar .dropdown:hover .dropdown-menu {
-    display: block;
-    opacity: 1; /* Ensure the dropdown is fully visible */
-    visibility: visible; /* Ensure the dropdown is visible */
-    /* transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; Smooth transition for visibility and opacity */
-    transform: translateX(-80%); /* Adjust position to prevent overflow */
-    max-width: 250px; /* Limit the width of the dropdown */
-  }
-  
-  /* Hide the dropdown arrow */
-  .navbar .dropdown-toggle::after {
-    display: none;
-  }
-  
-  /* Initial state of the dropdown menu */
-  .navbar .dropdown-menu {
-    opacity: 0; /* Hide dropdown initially */
-    visibility: hidden; /* Make it invisible initially */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition for visibility and opacity */
-    z-index: 1050; /* Ensure dropdown menu appears on top */
-    position: absolute; /* Ensure the menu is positioned above other content */
-  }
-  
+  display: block;
+  opacity: 1; /* Ensure the dropdown is fully visible */
+  visibility: visible; /* Ensure the dropdown is visible */
+  /* transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; Smooth transition for visibility and opacity */
+  transform: translateX(-80%); /* Adjust position to prevent overflow */
+  max-width: 250px; /* Limit the width of the dropdown */
+}
 
+/* Hide the dropdown arrow */
+.navbar .dropdown-toggle::after {
+  display: none;
+}
 
+/* Initial state of the dropdown menu */
+.navbar .dropdown-menu {
+  opacity: 0; /* Hide dropdown initially */
+  visibility: hidden; /* Make it invisible initially */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition for visibility and opacity */
+  z-index: 1050; /* Ensure dropdown menu appears on top */
+  position: absolute; /* Ensure the menu is positioned above other content */
+}
+
+/* Adjust the link text and icon spacing */
+.navbar .nav-link::after {
+  content: "\f107"; /* Unicode for the downward arrow */
+  font-weight: 900; /* Font weight for FontAwesome solid icons */
+  margin-left: 8px; /* Adjust spacing between text and icon */
+}
+
+#icon-dropdown .dropdown-menu {
+  right: 0;
+  left: auto;
+}

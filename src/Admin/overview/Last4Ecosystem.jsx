@@ -2,22 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Card, ListGroup, Dropdown, Image } from "react-bootstrap";
 import axios from "axios";
+import person from "../../assets/avatar/person.png";
 
 const Last4Ecosystem = ({ title }) => {
-  const [jobs, setJobs] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetchRecentJobs();
+    fetchRecentcategories();
   }, []);
 
-  const fetchRecentJobs = async () => {
+  const fetchRecentcategories = async () => {
     try {
       const response = await axios.get(
-        "https://unleashified-backend.azurewebsites.net/api/v1/admin-overview-last-four-jobs"
+        `${import.meta.env.VITE_API_URL}/admin-last-four-ecosystems`
       );
-      setJobs(response.data.lastFourJobs);
+      setCategories(response.data.lastFourEcosystemWithLogos);
     } catch (error) {
-      console.error("Error fetching recent jobs:", error);
+      console.error("Error fetching recent categories:", error);
     }
   };
 
@@ -68,27 +69,30 @@ const Last4Ecosystem = ({ title }) => {
       </Card.Header>
       <Card.Body>
         <ListGroup variant="flush">
-          {jobs.map((job, index) => (
+          {categories.map((categories, index) => (
             <ListGroup.Item
               className={`px-0 ${index === 0 ? "pt-0" : ""}`}
-              key={job._id}
+              key={categories._id}
             >
               <Row>
                 <Col xs="auto">
                   <Link to="#">
                     <Image
-                      src={job.jobPoster.companyLogo}
+                      src={categories.logo == null ? person : categories.logo}
                       alt=""
-                      className="img-fluid rounded img-4by3-lg"
+                      className="img-fluid img-4by3-lg"
+                      style={{ width: "75px", height: "65px" }}
                     />
                   </Link>
                 </Col>
                 <Col className="ps-0">
                   <Link to="#">
-                    <h5 className="text-primary-hover">{job.jobTitle}</h5>
+                    <h5 className="text-primary-hover">
+                      {categories?.ecosystemDomain}
+                    </h5>
                   </Link>
                   <div className="d-flex align-items-center">
-                    <span className="fs-6">{job.jobPoster.companyName}</span>
+                    <span className="fs-6">{categories?.ecosystemName}</span>
                   </div>
                 </Col>
                 <Col xs="auto">{/* <ActionMenu /> */}</Col>

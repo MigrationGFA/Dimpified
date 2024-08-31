@@ -13,14 +13,14 @@ import {
 } from "react-bootstrap";
 import { Form, Link, useLocation, useParams } from "react-router-dom";
 
-import { FaArrowRight, FaBookmark, FaNairaSign } from "react-icons/fa6";
+import { FaArrowRight, FaBookmark } from "react-icons/fa6";
 
 import GKTippy from "../../../elements/tooltips/GKTippy";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { IoMdTime } from "react-icons/io";
 import { TfiReload } from "react-icons/tfi";
-import { MdBookmarkBorder } from "react-icons/md";
+import { MdBookmarkBorder, MdCancel } from "react-icons/md";
 
 import { showToast } from "../../../Showtoast";
 import { IoPersonOutline } from "react-icons/io5";
@@ -190,6 +190,27 @@ const ServicesSingle = () => {
     }
   };
 
+  const formatCurrency = (currencyName) => {
+    switch (currencyName) {
+      case "naira":
+      case "NGN":
+        return `₦`;
+      case "dollars":
+      case "USD":
+        return `$`;
+      case "euros":
+      case "EUR":
+        return `€`;
+      case "pounds":
+      case "GBP":
+        return `£`;
+      default:
+        return `₦`;
+    }
+  };
+
+  let originalImgUrl = serviceDetails.backgroundCover?.[0] || "";
+  let updatedImgUrl = originalImgUrl ? encodeURI(originalImgUrl) : "";
   return (
     <Fragment>
       <NavbarDefault />
@@ -212,14 +233,8 @@ const ServicesSingle = () => {
               <div className="mb-3 mb-md-2 d-flex justify-content-center">
                 {serviceDetails && (
                   <Image
-                    src={
-                      serviceDetails && serviceDetails.backgroundCover == null
-                        ? ""
-                        : serviceDetails.backgroundCover[0]
-                    }
-                    alt={`${userDetails && userDetails.firstName} ${
-                      ecosystemDomain
-                    }`}
+                    src={updatedImgUrl}
+                    alt={`${serviceDetails && serviceDetails.ecosystemDomain} `}
                     className="img-fluid border zoom-image"
                     style={{ height: "400px", width: "100%" }}
                   />
@@ -351,9 +366,7 @@ const ServicesSingle = () => {
                         <i className="fe fe-briefcase text-muted"></i>
                         <span className="ms-1 ">
                           {serviceDetails && serviceDetails.category && (
-                            <span>
-                              Department: {serviceDetails.category}
-                            </span>
+                            <span>Department: {serviceDetails.category}</span>
                           )}
                         </span>
                       </span>
@@ -376,15 +389,16 @@ const ServicesSingle = () => {
                       </span>
                       <span className="me-4">
                         <i className="fe fe-clock text-muted"></i>
-                        <span className="ms-1 ">
-                          {serviceDetails.format} 
-                        </span>
+                        <span className="ms-1 ">{serviceDetails.format}</span>
                       </span>
                       {/* location */}
                       <span className="me-2">
-                      <i className="fe fe-map-pin text-muted"></i>
-                      <span className="ms-1 ">{serviceDetails.services && serviceDetails.services[0].priceFormat}</span>
-                    </span>
+                        <i className="fe fe-map-pin text-muted"></i>
+                        <span className="ms-1 ">
+                          {serviceDetails.services &&
+                            serviceDetails.services[0].priceFormat}
+                        </span>
+                      </span>
                     </div>
                     <div>
                       {/* time */}
@@ -395,34 +409,9 @@ const ServicesSingle = () => {
                 </div>
               </div>
             </div>
-            <div className="d-inline-flex flex-wrap">
-              {/* {userDetails.skills &&
-              userDetails.skills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="p-1 m-1 rounded-pill bg-secondary text-white"
-                  style={{ fontSize: "small" }}
-                >
-                  {skill}
-                </div>
-              ))} */}
-            </div>
+
             <hr className="my-4" />
-            <div>
-              <p>
-                <span>
-                  Total Job Done:{" "}
-                  <span className="text-dark">
-                    {serviceDetails.totalJobDone || 0}
-                  </span>
-                </span>
-              </p>
-            </div>
-            {/* <div
-                dangerouslySetInnerHTML={{
-                  __html: job.jobDetails,
-                }}
-              /> */}
+
             {/* button */}
             <div className="mt-5">
               <h1 className="fs-3">Service description</h1>
@@ -528,14 +517,13 @@ const ServicesSingle = () => {
                         </Button>
 
                         <div
-                          className="custom-modal"
                           style={{
                             position: "fixed",
                             top: 0,
                             right: 0,
                             height: "100%",
                             width: show ? "33.33%" : "0",
-                            overflow: "hidden",
+                            overflowY: "auto",
                             backgroundColor: "#fff",
                             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
                             transform: show
@@ -543,13 +531,30 @@ const ServicesSingle = () => {
                               : "translateX(100%)",
                             transition:
                               "transform 0.3s ease-out, width 0.3s ease-out",
-                            zIndex: 1050, // Same as Bootstrap modal z-index
+                            zIndex: 1050,
+                            ...(window.innerWidth <= 768
+                              ? {
+                                  width: show ? "100%" : "0",
+                                  maxHeight: "100vh",
+                                }
+                              : { width: show ? "33.33%" : "0" }),
                           }}
                         >
-                          <Modal.Header onHide={handleClose}>
+                          <Modal.Header
+                            onHide={handleClose}
+                            className="d-flex justify-content-between "
+                          >
                             <Modal.Title className="p-4 mt-2 display-6 fw-bold">
-                              Additional payment Information
+                              {/* Additional payment Information */}
+                              Booking Details
                             </Modal.Title>
+                            <Button
+                              variant="transparent"
+                              className="rounded-circle "
+                              onClick={handleClose}
+                            >
+                              <MdCancel className="display-6" />
+                            </Button>
                           </Modal.Header>
                           <Modal.Body className="p-4">
                             <RequestModalForm
@@ -557,17 +562,21 @@ const ServicesSingle = () => {
                               name={pkg.name}
                               header={pkg.header}
                               shortDescription={pkg.shortDescription}
-                              price={formatPrice(currencyName, pkg.price)}
+                              price={pkg.price}
+                              incentives={pkg.incentives}
+                              currency={formatCurrency(currencyName)}
+                              ecosystemDomain={ecosystemDomain}
+                              id={id}
                               // additionalRevision={pkg.additionalRevision.price}
                             />
                           </Modal.Body>
                           <Modal.Footer className="d-flex justify-content-around">
-                            <Button variant="secondary" onClick={handleClose}>
+                            {/* <Button variant="secondary" onClick={handleClose}>
                               Close
                             </Button>
                             <Button variant="primary" onClick={handleContinue}>
                               Continue
-                            </Button>
+                            </Button> */}
                           </Modal.Footer>
                         </div>
                       </div>
@@ -596,51 +605,6 @@ const ServicesSingle = () => {
               </a>
             </div>
           </Col>
-        </Row>
-        <Row>
-          {/* <Col xl={{ span: 8, offset: 2 }} md={12}>
-              <div className="mt-12">
-                <h2 className="mb-4">Similar Jobs</h2>
-                {similarJobs.map((job, index) => {
-                  return <JobListingListviewCard item={job} key={index} />;
-                })}
-              </div>
-            </Col> */}
-          {/* <Col xl={{ span: 8, offset: 2 }} md={12} className="mt-8">
-            <div className="d-xl-flex border p-4 rounded">
-              <div className="mb-3 mb-md-0">
-                {userDetails && (
-                  <img
-                    src={userDetails.userImage}
-                    alt={`${userDetails.firstName} ${userDetails.lastName}`}
-                    className="icon-shape border rounded-circle"
-                    style={{ maxHeight: "100px", maxWidth: "100%" }}
-                  />
-                )}
-              </div>
-
-              
-              <div id="contact-section" className="ms-xl-3 w-100 mt-3 mt-xl-0">
-                <div className="d-flex justify-content-between mb-5">
-                  <div>
-                   
-                      <h5>Contact: {userDetails.phoneNumber} </h5>
-                  
-                    {userDetails && userDetails.emailAddress && (
-                      <h5>Email: {userDetails.emailAddress} </h5>
-                    )}
-
-                    {serviceDetails && serviceDetails.serviceName && (
-                      <span>Service as {serviceDetails.serviceName}, </span>
-                    )}
-                  </div>
-                  <div>
-                    <Button variant="success">Contact Information</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Col> */}
         </Row>
         {showFallback && (
           <Modal show={showFallback} onHide={() => setShowFallback(false)}>
