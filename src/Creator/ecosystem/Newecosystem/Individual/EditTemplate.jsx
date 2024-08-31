@@ -173,6 +173,7 @@ const EditTemplate = () => {
       );
       setLoading(false);
       navigate("/creator/dashboard/Payment/Individual");
+      sessionStorage.removeItem('courseImage');
 
       console.log("Template created successfully", response.data);
     } catch (error) {
