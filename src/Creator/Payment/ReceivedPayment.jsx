@@ -5,6 +5,7 @@ import axios from "axios";
 import { numberWithCommas } from "../../helper/utils";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Pagination from "../../Components/elements/advance-table/Pagination";
+import InstructorProfileLayout from "../../EcosystemDashboard/InstructorProfileLayout";
 
 const ReceivedPayment = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -57,6 +58,7 @@ const ReceivedPayment = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
+    <InstructorProfileLayout>
     <div>
       <Row>
         <Col lg={12} md={12} sm={12}>
@@ -202,6 +204,7 @@ const ReceivedPayment = () => {
         </div>
       )}
     </div>
+    </InstructorProfileLayout>
   );
 };
 
