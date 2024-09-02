@@ -120,6 +120,7 @@ const Booking = () => {
     { accessorKey: "description", header: "Description" },
     { accessorKey: "status", header: "Status" },
     { accessorKey: "paymentStatus", header: "Payment Status" },
+    { accessorKey: "action", header: "Action" },
   ];
 
   const completedHeader = [
