@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Laptop,
@@ -39,7 +39,7 @@ import {
 } from "react-bootstrap";
 import sanitizeHtml from "sanitize-html";
 import { useSelector, useDispatch } from "react-redux";
-
+import axios from "axios";
 
 // const courses = [
 //   {
@@ -118,69 +118,87 @@ import { useSelector, useDispatch } from "react-redux";
 
 const CourseLogo = sessionStorage.getItem("courseImage");
 
-const Preview2 = () => {
-  const content = useSelector((state) => state.mainTemplate.currentTemplate);
-  const courses = useSelector((state) => state.course);
-  const ecosystemDetails = useSelector((state) => state.ecosystem);
+const Preview2 = ({ details, subdomain }) => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const blogPosts = [
     {
-      imgSrc: content.Blog.image1,
-      avatarSrc: "https://gfa-tech.com/dimp-template-images/images/avtar-05.jpg",
-      author: content.Blog.author1,
+      imgSrc: details.Blog.image1,
+      avatarSrc:
+        "https://gfa-tech.com/dimp-template-images/images/avtar-05.jpg",
+      author: details.Blog.author1,
       likes: 65,
-      title: content.Blog.header1,
-      content: content.Blog.content1,
+      title: details.Blog.header1,
+      details: details.Blog.content1,
     },
     {
-      imgSrc: content.Blog.image2,
-      avatarSrc: "https://gfa-tech.com/dimp-template-images/images/avtar-04.jpg",
-      author: content.Blog.author2,
+      imgSrc: details.Blog.image2,
+      avatarSrc:
+        "https://gfa-tech.com/dimp-template-images/images/avtar-04.jpg",
+      author: details.Blog.author2,
       likes: 35,
-      title: content.Blog.header2,
-      content: content.Blog.content2,
+      title: details.Blog.header2,
+      details: details.Blog.content2,
     },
     {
-      imgSrc: content.Blog.image3,
-      avatarSrc: "https://gfa-tech.com/dimp-template-images/images/avtar-03.jpg",
-      author: content.Blog.author3,
+      imgSrc: details.Blog.image3,
+      avatarSrc:
+        "https://gfa-tech.com/dimp-template-images/images/avtar-03.jpg",
+      author: details.Blog.author3,
       likes: 58,
-      title: content.Blog.header3,
-      content: content.Blog.content3,
+      title: details.Blog.header3,
+      details: details.Blog.content3,
     },
   ];
-  
+
   const reviews = [
     {
-      name: content.Reviews.header1,
-      role: content.Reviews.title1,
-      text: content.Reviews.summary1,
+      name: details.Reviews.header1,
+      role: details.Reviews.title1,
+      text: details.Reviews.summary1,
       rating: 4.5,
       date: "30 July",
-      imgSrc: content.Reviews.image1,
+      imgSrc: details.Reviews.image1,
       RimageKey: "image1",
     },
     {
-      name: content.Reviews.header2,
-      role: content.Reviews.title2,
-      text: content.Reviews.summary2,
+      name: details.Reviews.header2,
+      role: details.Reviews.title2,
+      text: details.Reviews.summary2,
       rating: 4.5,
       date: "15 Aug",
-      imgSrc: content.Reviews.image2,
+      imgSrc: details.Reviews.image2,
       RimageKey: "image2",
     },
     {
-      name: content.Reviews.header3,
-      role: content.Reviews.title3,
-      text: content.Reviews.summary3,
+      name: details.Reviews.header3,
+      role: details.Reviews.title3,
+      text: details.Reviews.summary3,
       rating: 4.5,
       date: "30 Sept",
-      imgSrc: content.Reviews.image3,
+      imgSrc: details.Reviews.image3,
       RimageKey: "image3",
     },
   ];
 
-  const CourseLogo =  sessionStorage.getItem('courseImage')
+  // services
+  useEffect(() => {
+    const getCoursesDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/ecosystem-courses/${subdomain}`
+        );
+        setCourses(response.data.courses);
+        console.log("this is service", response.data.courses);
+      } catch (error) {
+        console.log("not working", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getCoursesDetails();
+  }, [subdomain]);
 
   const sanitizeContent = (html) => {
     return sanitizeHtml(html, {
@@ -191,10 +209,13 @@ const Preview2 = () => {
 
   return (
     <div>
-      <Col md={12}  style={{
-        maxWidth: "100%",
-        wordWrap: "break-word",
-      }}>
+      <Col
+        md={12}
+        style={{
+          maxWidth: "100%",
+          wordWrap: "break-word",
+        }}
+      >
         <Navbar
           expand="lg"
           bg="transparent"
@@ -204,7 +225,7 @@ const Preview2 = () => {
           <Container fluid>
             <Navbar.Brand href="#home">
               <img
-                src={content.navbar.logo}
+                src={details.navbar.logo}
                 alt="E-learning Logo"
                 width="157"
                 height="39"
@@ -225,13 +246,13 @@ const Preview2 = () => {
                 <Nav.Link href="#contact">Contact</Nav.Link>
               </Nav>
               <Button
-                href="signup"
+                href="#signup"
                 className="learning learning-link btn-small btn btn-base-color btn-rounded btn-box-shadow me-2"
               >
                 Sign Up
               </Button>
               <Button
-                href="signin"
+                href="#signin"
                 className="learning learning-link btn-small btn-dark-gray btn-rounded btn-box-shadow"
               >
                 Sign In
@@ -263,22 +284,25 @@ const Preview2 = () => {
             />
           </div>
           <Container className="h-100">
-            <Row className="align-items-center justify-content-center h-100">
+            <Row className="align-items-center justify-details-center h-100">
               <Col
                 xl={5}
                 lg={6}
                 md={12}
-                className="text-white text-center text-lg-start position-relative z-index-1 d-flex flex-column justify-content-center h-100"
+                className="text-white text-center text-lg-start position-relative z-index-1 d-flex flex-column justify-details-center h-100"
               >
-                <span className="alt-font py-0 fs-75 lh-65 fw-500 mb-25px ls-minus-2px">
-                  {sanitizeContent(content.hero.span1)}
+                <span
+                  className="alt-font py-0 lh-65 fw-500 mb-25px ls-minus-2px"
+                  style={{ fontSize: "3rem" }}
+                >
+                  {sanitizeContent(details.hero.span1)}
                 </span>
                 <div className="mb-30px w-80 md-w-60 sm-w-100 d-block mx-auto mx-lg-0 overflow-hidden">
                   <span className="fs-18 fw-300 opacity-5 d-inline-block">
-                    {sanitizeContent(content.hero.span2)}
+                    {sanitizeContent(details.hero.span2)}
                   </span>
                 </div>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden mb-10">
                   <Button
                     href="#courses"
                     className="btn-extra-large btn-base-color btn-rounded fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon"
@@ -293,7 +317,7 @@ const Preview2 = () => {
                     <div className="atropos-rotate">
                       <div className="atropos-inner text-center w-100">
                         <div className="position-absolute left-0 right-0">
-                          <img src={content.hero.backgroundImage1} alt="" />
+                          <img src={details.hero.backgroundImage1} alt="" />
                         </div>
                         <img
                           className="position-relative z-index-9 animation-float"
@@ -322,7 +346,7 @@ const Preview2 = () => {
             style={{ transform: "translateY(-50px)" }}
           ></div>
           <Container className="learning px-4">
-            <Row className="align-items-end justify-content-center mb-4">
+            <Row className="align-items-end justify-details-center mb-4">
               <Col
                 xl={5}
                 lg={6}
@@ -336,59 +360,59 @@ const Preview2 = () => {
                     </div>
                     <div className="ms-3">
                       <span className="fw-bold primary-font text-dark">
-                      {sanitizeContent(content.aboutUs.title1)}
+                        {sanitizeContent(details.aboutUs.title1)}
                       </span>
                     </div>
                   </div>
                 </div>
                 <h2 className="fw-bold fs-2 alt-font text-dark">
-                {sanitizeContent(content.aboutUs.title2)}
+                  {sanitizeContent(details.aboutUs.title2)}
                 </h2>
               </Col>
               <Col xl={6} lg={6} md={10} className="text-center text-lg-start">
                 <span className="fw-bold text-dark mb-2 d-block">
-                {sanitizeContent(content.aboutUs.text2)}
-      
+                  {sanitizeContent(details.aboutUs.text2)}
                 </span>
                 <p className="text-muted">
-                {sanitizeContent(content.aboutUs.text1)}
+                  {sanitizeContent(details.aboutUs.text1)}
                 </p>
               </Col>
             </Row>
 
             <Row className="g-0 text-center">
-                    {[
-                      "section1icon",
-                      "section2icon",
-                      "section3icon",
-                      "section4icon",
-                    ].map((section, index) => (
-                      <Col
-                        lg={3}
-                        md={6}
-                        className="border-end mb-4 position-relative"
-                        key={section}
-                      >
-                        <div className="position-relative d-inline-block">
-                          <img
-                            src={content.Statistics[section]}
-                            alt=""
-                            className="h-75px position-relative z-index-1 mt-35px"
-                          />
-                          <div className="h-100px w-100px rounded-circle bg-very-light-gray position-absolute top-0 start-50 translate-middle-x"></div>
-                          
-                        </div>
-                        <span className="fw-bold text-dark mb-2 d-block">
-                         {sanitizeContent(content.Statistics[`section${index + 1}header`])}
-                        </span>
-                        <p className="text-muted">
-                          {sanitizeContent(content.Statistics[
-                                `section${index + 1}paragraphy`
-                              ])}
-                        </p>
-                      </Col>
-                    ))}
-                  </Row>
+              {[
+                "section1icon",
+                "section2icon",
+                "section3icon",
+                "section4icon",
+              ].map((section, index) => (
+                <Col
+                  lg={3}
+                  md={6}
+                  className="border-end mb-4 position-relative"
+                  key={section}
+                >
+                  <div className="position-relative d-inline-block">
+                    <img
+                      src={details.Statistics[section]}
+                      alt=""
+                      className="h-75px position-relative z-index-1 mt-35px"
+                    />
+                    <div className="h-100px w-100px rounded-circle bg-very-light-gray position-absolute top-0 start-50 translate-middle-x"></div>
+                  </div>
+                  <span className="fw-bold text-dark mb-2 d-block">
+                    {sanitizeContent(
+                      details.Statistics[`section${index + 1}header`]
+                    )}
+                  </span>
+                  <p className="text-muted">
+                    {sanitizeContent(
+                      details.Statistics[`section${index + 1}paragraphy`]
+                    )}
+                  </p>
+                </Col>
+              ))}
+            </Row>
           </Container>
         </section>
 
@@ -405,59 +429,55 @@ const Preview2 = () => {
               </Col>
             </Row>
             <Row>
-                  <Col md={4} className="mb-4">
-                    <Card className="border-radius-6px hover-box overflow-hidden box-shadow-large">
-                      <Card.Img
-                        variant="top"
-                        src={CourseLogo}
-                      />
-                      <Card.Body>
-                        <div className="bg-dark-gray w-80px h-80px rounded-circle d-flex justify-content-center align-items-center fw-500 text-white fs-20 position-absolute right-30px top-minus-40px">
-                          {courses.price}
+              {courses.map((course) => (
+                <Col md={4} className="mb-4" key={course.id}>
+                  <Card className="border-radius-6px hover-box overflow-hidden box-shadow-large">
+                    <Card.Img variant="top" src={course.image} />
+                    <Card.Body>
+                      <div className="bg-dark-gray w-80px h-80px rounded-circle d-flex justify-content-center align-items-center fw-500 text-white fs-20 position-absolute right-30px top-minus-40px">
+                        {course.price}
+                      </div>
+                      <Card.Title className="text-dark-gray text-uppercase fs-15 fw-600">
+                        {course.category}
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 fs-16">
+                        {course.level}
+                      </Card.Subtitle>
+                      <Card.Text className="mb-2">
+                        <a
+                          href="demo-elearning-courses-details.html"
+                          className="text-dark-gray fw-600 fs-19"
+                        >
+                          {course.title}
+                        </a>
+                      </Card.Text>
+                      <div className="d-flex align-items-center mb-2">
+                        {/* <div className="review-star-icon">
+                          {[...Array(5)].map((_, index) => (
+                            <StarFill key={index} className="text-dark-gray" />
+                          ))}
                         </div>
-                        <Card.Title className="text-dark-gray text-uppercase fs-15 fw-600 mt-4">
-                          {courses.category}
-                        </Card.Title>
-                        <Card.Subtitle className="mb-2 fs-16">
-                          {ecosystemDetails.ecosystemName}
-                        </Card.Subtitle>
-                        <Card.Text className="mb-2">
-                          <a
-                            href="demo-elearning-courses-details.html"
-                            className="text-dark-gray fw-600 fs-19"
-                          >
-                            {courses.courseTitle}
-                          </a>
-                        </Card.Text>
-                        {/* <div className="d-flex align-items-center mb-2">
-                            <div className="review-star-icon">
-                              {[...Array(5)].map((_, index) => (
-                                <StarFill
-                                  key={index}
-                                  className="text-dark-gray"
-                                />
-                              ))}
-                            </div>
-                            <span className="fs-15 ms-2">{course.reviews}</span>
-                          </div> */}
-                        {/* <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                              <Clipboard />
-                              <span className="fs-16 text-dark-gray fw-500">
-                                {course.lessons}
-                              </span>
-                            </div>
-                            <div>
-                              <People />
-                              <span className="fs-16 text-dark-gray fw-500">
-                                {course.students}
-                              </span>
-                            </div>
-                          </div> */}
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                </Row>
+                        <span className="fs-15 ms-2">{course.reviews}</span> */}
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <Clipboard />
+                          <span className="fs-16 text-dark-gray fw-500">
+                            {course.curriculum?.length || 0}
+                          </span>
+                        </div>
+                        <div>
+                          <People />
+                          <span className="fs-16 text-dark-gray fw-500">
+                            {course.totalNumberOfEnrolledStudent}
+                          </span>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </Container>
         </section>
 
@@ -476,68 +496,68 @@ const Preview2 = () => {
                     </div>
                     <div>
                       <span className="fs-5 primary-font fw-500 text-dark">
-                      {sanitizeContent(content.LargeCta.header2)}
+                        {sanitizeContent(details.LargeCta.header2)}
                       </span>
                     </div>
                   </div>
                 </div>
                 <h2 className="text-dark fs-2 alt-font fw-600 mb-3">
-                {sanitizeContent(content.LargeCta.header3)}
+                  {sanitizeContent(details.LargeCta.header3)}
                 </h2>
               </Col>
               <Col xl={5} lg={6} md={10} className="text-center text-lg-start">
                 <p className="text-dark primary-font">
-                {sanitizeContent(content.LargeCta.summary1)}
+                  {sanitizeContent(details.LargeCta.summary1)}
                 </p>
               </Col>
             </Row>
             <Row className="row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2">
-                    {[
-                      {
-                        name: content.Team.summary1,
-                        role: content.Team.header1,
-                        img: content.Team.image1,
-                        imageKey: "image1",
-                      },
-                      {
-                        name: content.Team.summary2,
-                        role: content.Team.header2,
-                        img: content.Team.image2,
-                        imageKey: "image2",
-                      },
-                      {
-                        name: content.Team.summary3,
-                        role: content.Team.header3,
-                        img: content.Team.image3,
-                        imageKey: "image3",
-                      },
-                      {
-                        name: content.Team.summary4,
-                        role: content.Team.header4,
-                        img: content.Team.image4,
-                        imageKey: "image4",
-                      },
-                    ].map((member, index) => (
-                      <Col key={index} className="text-center mb-4">
-                        <Card className="border-0 overflow-hidden">
-                          <Card.Img
-                            variant="top"
-                            src={member.img}
-                            alt={member.name}
-                            height={260}
-                          />
-                          <Card.Body className="bg-white text-dark text-center p-3">
-                            <Card.Title className="fs-3">
-                             {sanitizeContent(member.name)}
-                            </Card.Title>
-                            <Card.Text className="fs-5">
-                              {sanitizeContent(member.role)}
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    ))}
-                  </Row>
+              {[
+                {
+                  name: details.Team.summary1,
+                  role: details.Team.header1,
+                  img: details.Team.image1,
+                  imageKey: "image1",
+                },
+                {
+                  name: details.Team.summary2,
+                  role: details.Team.header2,
+                  img: details.Team.image2,
+                  imageKey: "image2",
+                },
+                {
+                  name: details.Team.summary3,
+                  role: details.Team.header3,
+                  img: details.Team.image3,
+                  imageKey: "image3",
+                },
+                {
+                  name: details.Team.summary4,
+                  role: details.Team.header4,
+                  img: details.Team.image4,
+                  imageKey: "image4",
+                },
+              ].map((member, index) => (
+                <Col key={index} className="text-center mb-4">
+                  <Card className="border-0 overflow-hidden">
+                    <Card.Img
+                      variant="top"
+                      src={member.img}
+                      alt={member.name}
+                      height={260}
+                    />
+                    <Card.Body className="bg-white text-dark text-center p-3">
+                      <Card.Title className="fs-3">
+                        {sanitizeContent(member.name)}
+                      </Card.Title>
+                      <Card.Text className="fs-5">
+                        {sanitizeContent(member.role)}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </Container>
         </section>
 
@@ -546,7 +566,7 @@ const Preview2 = () => {
           className="learning px-4 bg-gradient-tranquil-white position-relative"
         >
           <Container className="position-relative z-index-1">
-            <Row className="justify-content-center mb-3">
+            <Row className="justify-details-center mb-3">
               <Col xs={12} className="text-center">
                 <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
                   Trusted by hundreds of students
@@ -557,7 +577,7 @@ const Preview2 = () => {
               {reviews.map((review, index) => (
                 <Col key={index} className="mb-30px">
                   <Card className="border-radius-6px p-3 xl-p-10 bg-white box-shadow-quadruple-large">
-                    <Card.Body className="d-flex flex-column justify-content-center h-100">
+                    <Card.Body className="d-flex flex-column justify-details-center h-100">
                       <div className="mb-20px d-flex align-items-center">
                         <img
                           src={review.imgSrc}
@@ -568,10 +588,14 @@ const Preview2 = () => {
                           <div className="text-dark-gray fs-18 fw-600">
                             {sanitizeContent(review.name)}
                           </div>
-                          <div className="lh-24 fs-16">{sanitizeContent(review.role)}</div>
+                          <div className="lh-24 fs-16">
+                            {sanitizeContent(review.role)}
+                          </div>
                         </div>
                       </div>
-                      <p className="mb-15px md-w-85 sm-w-100">{sanitizeContent(review.text)}</p>
+                      <p className="mb-15px md-w-85 sm-w-100">
+                        {sanitizeContent(review.text)}
+                      </p>
                       <div className="d-flex align-items-center">
                         <div className="d-inline-block me-auto">
                           <div className="text-dark-gray fw-600 float-start fs-15 me-10px">
@@ -596,13 +620,10 @@ const Preview2 = () => {
               ))}
             </Row>
             <div className="fs-20 ls-minus-05px fw-500 text-dark-gray w-100 text-center">
-              <img
-                src={content.LargeCta.image1}
-                alt="eLearning"
-              />
+              <img src={details.LargeCta.image1} alt="eLearning" />
               <span className="d-block d-sm-inline-block position-relative xs-top-minus-10px">
                 <span className="fw-700 text-decoration-line-bottom">
-                {sanitizeContent(content.LargeCta.header1)}
+                  {sanitizeContent(details.LargeCta.header1)}
                 </span>
               </span>
             </div>
@@ -616,7 +637,7 @@ const Preview2 = () => {
           <Container className="overlap-gap-section">
             <Row className="mb-4 md-mb-6">
               <Col>
-                <Row className="justify-content-center mb-3">
+                <Row className="justify-details-center mb-3">
                   <Col xs={12} className="text-center">
                     <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
                       Our Blog Post
@@ -626,7 +647,10 @@ const Preview2 = () => {
                 <Row>
                   {blogPosts.map((post, index) => (
                     <Col key={index} xs={12} md={6} lg={4} className="mb-0">
-                      <Card className="card border-0 border-radius-4px overflow-hidden box-shadow-large box-shadow-extra-large-hover " style={{height: "680px"}}>
+                      <Card
+                        className="card border-0 border-radius-4px overflow-hidden box-shadow-large box-shadow-extra-large-hover "
+                        style={{ height: "680px" }}
+                      >
                         <Card.Body className="p-0">
                           <div className="blog-image p-0 position-relative overflow-hidden">
                             <a href="#">
@@ -634,14 +658,16 @@ const Preview2 = () => {
                             </a>
                           </div>
                           <Card.Body className="p-0">
-                            <div className="post-content p-4 md-p-4">
+                            <div className="post-details p-4 md-p-4">
                               <a
                                 href="#"
                                 className="card-title mb-10px fw-600 fs-19 lh-28 text-dark-gray d-inline-block"
                               >
                                 {sanitizeContent(post.title)}
                               </a>
-                              <p className="mb-0">{sanitizeContent (post.content)}</p>
+                              <p className="mb-0">
+                                {sanitizeContent(post.details)}
+                              </p>
                             </div>
                           </Card.Body>
                         </Card.Body>
@@ -659,14 +685,14 @@ const Preview2 = () => {
           className="learning px-4 overflow-hidden position-relative overlap-height py-6 py-lg-8"
         >
           <Container className="px-4 py-6 overlap-gap-section">
-            <Row className="justify-content-center mb-3">
+            <Row className="justify-details-center mb-3">
               <Col xs={12} className="text-center">
                 <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
                   How can we assist you?
                 </h2>
               </Col>
             </Row>
-            <Row className="justify-content-center mb-10">
+            <Row className="justify-details-center mb-10">
               <Col xl={9} lg={10}>
                 <Form
                   action="email-templates/contact-form.php"

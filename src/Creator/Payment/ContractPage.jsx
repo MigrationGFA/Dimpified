@@ -3,6 +3,7 @@ import { Card, Col, Row, Tab, Nav } from "react-bootstrap";
 import Icon from "@mdi/react";
 import { mdiHelpCircle, mdiCurrencyNgn } from "@mdi/js";
 import { Link } from "react-router-dom";
+import InstructorProfileLayout from "../../EcosystemDashboard/InstructorProfileLayout";
 
 import axios from "axios";
 import Payouts from "./Payouts";
@@ -51,9 +52,9 @@ const ContractPage = () => {
     contract();
   }, []);
   return (
-    <>
+    <InstructorProfileLayout>
       <Payouts />
-    </>
+    </InstructorProfileLayout>
   );
 };
 

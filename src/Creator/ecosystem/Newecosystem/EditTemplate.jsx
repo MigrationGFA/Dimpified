@@ -179,6 +179,8 @@ const EditTemplate = () => {
         navigate("/creator/dashboard/Create-Form");
       }
 
+      sessionStorage.removeItem('courseImage');
+
       console.log("Template created successfully", response.data);
     } catch (error) {
       setLoading(false);

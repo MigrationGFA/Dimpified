@@ -52,16 +52,7 @@ export const DashboardMenu = [
     icon: "user",
     link: "/creator/my-user",
   },
-  {
-    id: uuid(),
-    title: "Payment",
-    icon: "user",
-    children: [
-      { id: uuid(), link: "/creator/escrow-payment", name: "Earning" },
-      { id: uuid(), link: "/creator/received-payment", name: "Received" },
-      { id: uuid(), link: "/creator/withdraw-request", name: " Withdraw" },
-    ],
-  },
+ 
   // {
   //   id: uuid(),
   //   title: "Integrations",

@@ -86,16 +86,23 @@ const CoursesMedia = ({ submit, previous }) => {
     formData.append("creatorId", creatorId);
     formData.append("ecosystemDomain", ecosystem);
 
-    axios
+     axios
       .post(`${import.meta.env.VITE_API_URL}/create-course`, formData)
       .then((response) => {
         setLoading(false);
         showToast(response.data.message);
-        dispatch(resetCourseData());
+
+          // Save the course image to session storage
+    if (response.data.course && response.data.course.image) {
+      sessionStorage.setItem('courseImage', response.data.course.image);
+    }
+
+
+        // dispatch(resetCourseData());
         if (location.pathname.includes(`/${ecosystemDomain}/`)) {
           navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
         } else {
-          navigate('/creator/dashboard/Products');
+          navigate('/creator/dashboard/Edit-Template');
         }
       })
       .catch((error) => {

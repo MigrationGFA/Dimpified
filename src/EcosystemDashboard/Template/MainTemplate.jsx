@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import Template1 from "./AllTemplate/TemplateV1";
+import Template2 from "./AllTemplate/Template2";
 
 const MainTemplate = ({ subdomain }) => {
   const [details, setDetails] = useState(null);
@@ -39,13 +40,15 @@ const MainTemplate = ({ subdomain }) => {
   }
 
   const templateNumber = parseInt(details.templateId, 10);
+
   switch (templateNumber) {
     case 1:
       return <Template1 details={details} subdomain={subdomain} />;
+    case 2:
+      return <Template2 details={details} subdomain={subdomain} />;
     default:
-      break;
+      return <div>Error: Unknown template ID</div>;
   }
-  //   return <main>MainTemplate</main>;
 };
 
 export default MainTemplate;
