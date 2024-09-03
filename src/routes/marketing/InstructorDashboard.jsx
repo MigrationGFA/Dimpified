@@ -106,6 +106,17 @@ export const DashboardMenu = () => {
     },
     {
       id: 6,
+      title: "Payment",
+      link: `/${ecosystemDomain}/escrow-payment`,
+      icon: "dollar-sign",
+      children: [
+        { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/escrow-payment`, name: "Earning" },
+        { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/received-payment`, name: "Received"},
+        { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/withdraw-request`, name: " Withdraw"},
+      ],
+    },
+    {
+      id: 7,
       title: "Customers",
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-students`,
       icon: "users",

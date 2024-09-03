@@ -282,6 +282,7 @@ const AllRoutes = () => {
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route> */}
       {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
+
       <Route element={<UserDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
@@ -304,10 +305,10 @@ const AllRoutes = () => {
         <Route path="/creator/my-user" element={<MyUser />} />
         <Route path="/creator/jobProvider" element={<JobProvider />} />
         <Route path="/creator/jobSeeker" element={<JobSeeker />} />
-        <Route path="/creator/escrow-payment" element={<ContractPage />} />
+       
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
-        <Route path="/creator/received-payment" element={<ReceivedPayment />} />
+       
         <Route path="/creator/booking" element={<Booking />} />
         <Route path="/creator/affiliates" element={<Affiliates />} />
         <Route path="/creator/analytic" element={<Analytic />} />
@@ -331,7 +332,7 @@ const AllRoutes = () => {
         <Route path="/creator/social-media" element={<SocialMedia />} />
         <Route path="/creator/storage-platform" element={<StoragePlatform />} />
         <Route path="/creator/video-player" element={<VideoPlayer />} />
-        <Route path="/creator/withdraw-request" element={<WithdrawPayment />} />
+       
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
@@ -344,6 +345,10 @@ const AllRoutes = () => {
         />
       </Route>
       {/* Creator Ecosystem Dashboard */}
+      
+      <Route path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment" element={<ContractPage />} />
+      <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} />
+      <Route path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request" element={<WithdrawPayment />} />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard"
         element={<EcosystemDashboard />}
