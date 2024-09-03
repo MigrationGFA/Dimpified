@@ -34,7 +34,6 @@
   }
 }
 
-
 .custom-cursor .circle-cursor-inner {
   background-color: var(--dark-gray);
   width: 12px;
@@ -323,14 +322,6 @@ footer .nav-link {
   }
 }
 @media (max-width: 767px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    letter-spacing: 0;
-  }
   .menu-list-wrapper {
     padding: 25px 0;
   }

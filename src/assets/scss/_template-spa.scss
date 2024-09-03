@@ -27,7 +27,7 @@
 /* Mobile and Tablet styles */
 @media (max-width: 992px) {
   .spa-link {
-    background-color: white;
+    background-color: rgb(184, 94, 4);
     font-family: "Rufina", serif;
   }
   .spa {
@@ -36,7 +36,7 @@
   }
 
   .spa-link .nav-link {
-    color: black; /* Black text on a white background */
+    color: rgb(245, 237, 237); /* Black text on a white background */
   }
 }
 header .navbar-brand img {
