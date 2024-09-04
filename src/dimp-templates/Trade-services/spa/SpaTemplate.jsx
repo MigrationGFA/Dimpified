@@ -17,13 +17,9 @@ import {
 } from "react-bootstrap";
 import {
   Award,
-  EmojiSmile,
-  Tree,
-  Flower2,
   TelephoneOutbound,
   ArrowRight,
   ArrowUpShort,
-  PersonCircle,
   CurrencyDollar,
   ArrowLeft,
   Facebook,
@@ -68,14 +64,14 @@ const Navbar = () => (
         href="#home"
       >
         <img
-          src="https://craftohtml.themezaa.com/images/demo-spa-salon-logo-white@2x.png"
+          src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-logo-white.png"
           alt="Icon"
           style={{ marginLeft: "10px", height: "24px" }} // Adjust the margin and height as needed
         />
       </BootstrapNavbar.Brand>
       <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-      <BootstrapNavbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-auto spa-link">
+      <BootstrapNavbar.Collapse id="basic-navbar-nav" className=" spa-link">
+        <Nav className="mx-auto">
           <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#about"
@@ -85,18 +81,21 @@ const Navbar = () => (
           <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#services"
+            className="mx-2"
           >
             Services
           </Nav.Link>
           <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#gallery"
+            href="#pricing"
+            className="mx-2"
           >
-            Packages
+            Pricing
           </Nav.Link>
           <Nav.Link
             style={{ fontWeight: "600", fontSize: "1rem" }}
             href="#testimonials"
+            className="mx-2"
           >
             Testimonials
           </Nav.Link>
@@ -107,10 +106,14 @@ const Navbar = () => (
             Contact
           </Nav.Link>
         </Nav>
-        {/* <Button variant="dark" className="btn-lg">
-          <i className="feather icon-feather-calendar me-2"></i>
-          Contact Us
-        </Button> */}
+        <Button
+          href="#"
+          variant="link"
+          data-text="Online appointment"
+          className="btn-medium fw-500 my-2 mx-2 btn-double-border btn-border-color-transparent-white"
+        >
+          <span>Book appointment</span>
+        </Button>
       </BootstrapNavbar.Collapse>
     </Container>
   </BootstrapNavbar>
@@ -119,11 +122,11 @@ const Navbar = () => (
 // Hero Section
 const Hero = () => (
   <section className="spa p-0 bg-dark-gray">
-    <div className="position-relative full-screen ipad-top-space-margin md-h-600px sm-h-500px base-color">
+    <div className="position-relative full-screen  md-h-600px sm-h-500px base-color">
       <div
         className="position-absolute left-0px top-0px w-100 h-100 "
         style={{
-          backgroundImage: `url(https://craftohtml.themezaa.com/images/demo-spa-salon-slider-01.jpg)`,
+          backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-slider-01.jpg)`,
           backgroundSize: "cover",
           height: "100vh",
         }}
@@ -143,14 +146,12 @@ const Hero = () => (
               Relax your mind, soul, and body
             </div>
             <Button
-              href="demo-spa-salon-contact.html"
+              href="#"
               variant="link"
               data-text="Online appointment"
               className="btn-medium fw-500 btn-double-border btn-border-color-transparent-white"
             >
-              <span>
-                <span className="btn-double-text">Book appointment</span>
-              </span>
+              <span>Book appointment</span>
             </Button>
           </Col>
         </Row>
@@ -162,83 +163,11 @@ const Hero = () => (
 // About Section
 const About = () => (
   <Fragment>
-    {/* <section
-      className="spa pt-60px pb-60px background-repeat border-bottom border-color-light-gray"
-      style={{
-        backgroundImage:
-          "url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')",
-      }}
-    >
-      <Container
-        fluid
-        className="ps-9 pe-9 lg-ps-1 lg-pe-1 md-ps-15px md-pe-15px"
-      >
-        <Row className="row-cols-1 row-cols-lg-4 row-cols-sm-2 justify-content-center">
-         
-          <Col className="icon-with-text-style-03 border-end border-color-light-gray md-mb-30px xs-border-end-0">
-            <div className="feature-box ps-8 pe-8 xl-ps-2 xl-pe-2">
-              <div className="feature-box-icon">
-                <Award className="icon-extra-large text-base-color mb-20px" />
-              </div>
-              <div className="feature-box-content last-paragraph-no-margin">
-                <span className="d-inline-block text-dark-gray alt-font fs-22">
-                  Ultra luxury studio
-                </span>
-                <p className="lh-26">Modern infrastructure</p>
-              </div>
-            </div>
-          </Col>
-     
-          <Col className="icon-with-text-style-03 border-end border-color-light-gray md-mb-30px md-border-end-0">
-            <div className="feature-box ps-8 pe-8 xl-ps-2 xl-pe-2">
-              <div className="feature-box-icon">
-                <EmojiSmile className="icon-extra-large text-base-color mb-20px" />
-              </div>
-              <div className="feature-box-content last-paragraph-no-margin">
-                <span className="d-inline-block text-dark-gray alt-font fs-22">
-                  Certified manpower
-                </span>
-                <p className="lh-26">Amazing experience</p>
-              </div>
-            </div>
-          </Col>
-          
-          <Col className="icon-with-text-style-03 border-end border-color-light-gray xs-border-end-0 xs-mb-30px">
-            <div className="feature-box ps-8 pe-8 xl-ps-2 xl-pe-2">
-              <div className="feature-box-icon">
-                <Tree className="icon-extra-large text-base-color mb-20px" />
-              </div>
-              <div className="feature-box-content last-paragraph-no-margin">
-                <span className="d-inline-block text-dark-gray alt-font fs-22">
-                  Natural environment
-                </span>
-                <p className="lh-26">Unwind and discover joy</p>
-              </div>
-            </div>
-          </Col>
-         
-          <Col className="icon-with-text-style-03">
-            <div className="feature-box ps-8 pe-8 xl-ps-2 xl-pe-2">
-              <div className="feature-box-icon">
-                <Flower2 className="icon-extra-large text-base-color mb-20px" />
-              </div>
-              <div className="feature-box-content last-paragraph-no-margin">
-                <span className="d-inline-block text-dark-gray alt-font fs-22">
-                  Ayurvedic therapy
-                </span>
-                <p className="lh-26">Herbal remedies</p>
-              </div>
-            </div>
-          </Col>
-          
-        </Row>
-      </Container>
-    </section> */}
     <section
       className="spa background-repeat"
       style={{
         backgroundImage:
-          "url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')",
+          "url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')",
       }}
     >
       <Container>
@@ -258,13 +187,13 @@ const About = () => (
             </p>
             <div className="d-inline-block w-100">
               <Button
-                href="demo-spa-salon-about.html"
+                href="#"
                 variant="link"
-                data-text="Explore more"
+                data-text="Book Appointment"
                 className="btn-small  btn-double-border btn-border-base-color me-25px xs-me-15px"
               >
                 <span>
-                  <span className="btn-double-text">Explore more</span>
+                  <span>Book Appointment</span>
                   <span>
                     <ArrowRight />
                   </span>
@@ -290,14 +219,14 @@ const About = () => (
             <div className="w-80 overflow-hidden position-relative md-w-90 border-radius-6px float-end">
               <img
                 className="w-100"
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-01.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-01.jpg"
                 alt=""
               />
             </div>
             <div className="position-absolute left-minus-70px bottom-minus-30px w-60 overflow-hidden md-left-minus-100px sm-left-15px">
               <img
                 className="w-100 border-radius-6px"
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-02.jpg"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-02.jpg"
                 alt=""
               />
             </div>
@@ -351,24 +280,18 @@ const Services = () => (
   <section
     className="spa background-repeat border-top border-color-light-gray position-relative overlap-height z-index-1"
     style={{
-      backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')`,
+      backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')`,
     }}
   >
-    <div className="position-absolute right-minus-50px overlap-section z-index-minus-1 d-none d-lg-inline-block">
-      <img
-        src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-02.png"
-        alt=""
-      />
-    </div>
     <div className="position-absolute left-minus-100px top-50 z-index-minus-1 d-none d-lg-inline-block">
       <img
-        src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-03.png"
+        src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-bg-img-03.png"
         alt=""
       />
     </div>
     <Container className="overlap-gap-section">
       <Row className="justify-content-center mb-2">
-        <Col lg={6} md={8} className="text-center">
+        <Col lg={6} md={12} className="text-center">
           <span className="fs-15 mb-5px text-base-color fw-500 d-block text-uppercase ls-2px">
             Luxury services
           </span>
@@ -378,164 +301,157 @@ const Services = () => (
         </Col>
       </Row>
       <Row className="mb-5 xs-mb-15px">
-        <Col className="position-relative">
-          <div className="outside-box-right-40 sm-outside-box-right-0">
-            <Row>
-              <Col lg={4}>
-                <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
-                  <Col
-                    lg={6}
-                    className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
-                  >
-                    <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
-                      <img
-                        className="w-75px lg-w-65px"
-                        src="https://craftohtml.themezaa.com/images/demo-spa-salon-icon-01.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
-                      <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
-                        Beauty
-                      </span>
-                      <p className="text-light-opacity lh-30">
-                        Enhance your beauty with our specialized treatments.
-                      </p>
-                    </div>
-                    <div className="box-overlay bg-dark-gray"></div>
-                  </Col>
-                  <Col lg={6} className="services-box-img overflow-hidden">
-                    <div
-                      className="h-100 cover-background position-relative xs-h-300px"
-                      style={{
-                        backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-03.jpg')`,
-                      }}
-                    >
-                      <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
-                        01
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
+        <Col lg={6}>
+          <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
+            <Col
+              lg={6}
+              className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
+            >
+              <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
+                <img
+                  className="w-75px lg-w-65px"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-icon-01.png"
+                  alt=""
+                />
+              </div>
+              <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
+                <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
+                  Beauty
+                </span>
+                <p className="text-light-opacity lh-30">
+                  Enhance your beauty with our specialized treatments.
+                </p>
+              </div>
+              <div className="box-overlay bg-dark-gray"></div>
+            </Col>
+            <Col lg={6} className="services-box-img overflow-hidden">
+              <div
+                className="h-100 cover-background position-relative xs-h-300px"
+                style={{
+                  backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-03.jpg')`,
+                }}
+              >
+                <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
+                  01
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
 
-              <Col lg={4}>
-                <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
-                  <Col
-                    lg={6}
-                    className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
-                  >
-                    <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
-                      <img
-                        className="w-75px lg-w-65px"
-                        src="https://craftohtml.themezaa.com/images/demo-spa-salon-icon-02.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
-                      <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
-                        Therapy
-                      </span>
-                      <p className="text-light-opacity lh-30">
-                        Relax and rejuvenate with our expert therapy sessions.
-                      </p>
-                    </div>
-                    <div className="box-overlay bg-dark-gray"></div>
-                  </Col>
-                  <Col lg={6} className="services-box-img overflow-hidden">
-                    <div
-                      className="h-100 cover-background position-relative xs-h-300px"
-                      style={{
-                        backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-04.jpg')`,
-                      }}
-                    >
-                      <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
-                        02
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <Row className="mt-4">
-              <Col lg={4}>
-                <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
-                  <Col
-                    lg={6}
-                    className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
-                  >
-                    <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
-                      <img
-                        className="w-75px lg-w-65px"
-                        src="https://craftohtml.themezaa.com/images/demo-spa-salon-icon-02.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
-                      <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
-                        Therapy
-                      </span>
-                      <p className="text-light-opacity lh-30">
-                        Relax and rejuvenate with our expert therapy sessions.
-                      </p>
-                    </div>
-                    <div className="box-overlay bg-dark-gray"></div>
-                  </Col>
-                  <Col lg={6} className="services-box-img overflow-hidden">
-                    <div
-                      className="h-100 cover-background position-relative xs-h-300px"
-                      style={{
-                        backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-04.jpg')`,
-                      }}
-                    >
-                      <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
-                        03
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
+        <Col lg={6}>
+          <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
+            <Col
+              lg={6}
+              className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
+            >
+              <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
+                <img
+                  className="w-75px lg-w-65px"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-icon-02.png"
+                  alt=""
+                />
+              </div>
+              <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
+                <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
+                  Therapy
+                </span>
+                <p className="text-light-opacity lh-30">
+                  Relax and rejuvenate with our expert therapy sessions.
+                </p>
+              </div>
+              <div className="box-overlay bg-dark-gray"></div>
+            </Col>
+            <Col lg={6} className="services-box-img overflow-hidden">
+              <div
+                className="h-100 cover-background position-relative xs-h-300px"
+                style={{
+                  backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-04.jpg')`,
+                }}
+              >
+                <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
+                  02
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col lg={6}>
+          <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
+            <Col
+              lg={6}
+              className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
+            >
+              <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
+                <img
+                  className="w-75px lg-w-65px"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-icon-02.png"
+                  alt=""
+                />
+              </div>
+              <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
+                <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
+                  Therapy
+                </span>
+                <p className="text-light-opacity lh-30">
+                  Relax and rejuvenate with our expert therapy sessions.
+                </p>
+              </div>
+              <div className="box-overlay bg-dark-gray"></div>
+            </Col>
+            <Col lg={6} className="services-box-img overflow-hidden">
+              <div
+                className="h-100 cover-background position-relative xs-h-300px"
+                style={{
+                  backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-04.jpg')`,
+                }}
+              >
+                <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
+                  03
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
 
-              <Col lg={4}>
-                <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
-                  <Col
-                    lg={6}
-                    className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
-                  >
-                    <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
-                      <img
-                        className="w-75px lg-w-65px"
-                        src="https://craftohtml.themezaa.com/images/demo-spa-salon-icon-03.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
-                      <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
-                        Massage
-                      </span>
-                      <p className="text-light-opacity lh-30">
-                        Experience deep relaxation with our professional
-                        massages.
-                      </p>
-                    </div>
-                    <div className="box-overlay bg-dark-gray"></div>
-                  </Col>
-                  <Col lg={6} className="services-box-img overflow-hidden">
-                    <div
-                      className="h-100 cover-background position-relative xs-h-300px"
-                      style={{
-                        backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-05.jpg')`,
-                      }}
-                    >
-                      <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
-                        04
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </div>
+        <Col lg={6}>
+          <Row className="g-0 services-box-style-02 border-radius-6px overflow-hidden hover-box dark-hover">
+            <Col
+              lg={6}
+              className="position-relative bg-very-light-gray p-10 xxl-p-6 xs-p-10"
+            >
+              <div className="services-box-icon mb-65px position-relative z-index-9 lg-mb-30px">
+                <img
+                  className="w-75px lg-w-65px"
+                  src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-icon-03.png"
+                  alt=""
+                />
+              </div>
+              <div className="services-box-content last-paragraph-no-margin position-relative z-index-9">
+                <span className="d-inline-block alt-font text-dark-gray fs-24 mb-5px">
+                  Massage
+                </span>
+                <p className="text-light-opacity lh-30">
+                  Experience deep relaxation with our professional massages.
+                </p>
+              </div>
+              <div className="box-overlay bg-dark-gray"></div>
+            </Col>
+            <Col lg={6} className="services-box-img overflow-hidden">
+              <div
+                className="h-100 cover-background position-relative xs-h-300px"
+                style={{
+                  backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-05.jpg')`,
+                }}
+              >
+                <span className="position-absolute left-minus-30px bottom-50px fs-100 lg-fs-80 xs-fs-90 fw-600 text-very-light-gray xl-bottom-25px md-left-minus-20px">
+                  04
+                </span>
+              </div>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
@@ -546,157 +462,150 @@ const Pricing = () => (
   <section
     className="spa background-repeat border-top border-color-light-gray position-relative overlap-height z-index-1"
     style={{
-      backgroundImage: `url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')`,
+      backgroundImage: `url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')`,
     }}
   >
-    <div className="position-absolute right-minus-50px overlap-section z-index-minus-1 d-none d-lg-inline-block">
-      <img
-        src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-02.png"
-        alt=""
-      />
-    </div>
     <div className="position-absolute left-minus-100px top-50 z-index-minus-1 d-none d-lg-inline-block">
       <img
-        src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-03.png"
+        src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-bg-img-03.png"
         alt=""
       />
     </div>
-    <Container className="overlap-gap-section">
-      <Row className="justify-content-center">
-        <Col lg={10}>
-          <Row className="pricing-table-style-12 pe-15px md-pe-0">
-            <Col lg={6}>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-06.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Makeup & massage
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>43</span>
-                    </div>
+
+    <Row className="justify-content-center">
+      <Col lg={10}>
+        <Row className="pricing-table-style-12 pe-15px md-pe-0">
+          <Col lg={6}>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-06.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Makeup & massage
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>43</span>
                   </div>
-                  <p>50 Minute relaxation massage.</p>
                 </div>
-              </li>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-07.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Relaxing head
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>45</span>
-                    </div>
+                <p>50 Minute relaxation massage.</p>
+              </div>
+            </li>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-07.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Relaxing head
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>45</span>
                   </div>
-                  <p>One of the best ways to relax your head.</p>
                 </div>
-              </li>
-            </Col>
-            <Col lg={6}>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-08.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Deep tissue
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>59</span>
-                    </div>
+                <p>One of the best ways to relax your head.</p>
+              </div>
+            </li>
+          </Col>
+          <Col lg={6}>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-08.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Deep tissue
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>59</span>
                   </div>
-                  <p>Deep tissue massage helps relieve pain.</p>
                 </div>
-              </li>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-09.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Hot Stone Massage
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>53</span>
-                    </div>
+                <p>Deep tissue massage helps relieve pain.</p>
+              </div>
+            </li>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-09.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Hot Stone Massage
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>53</span>
                   </div>
-                  <p>A unique massage using warm volcanic stones.</p>
                 </div>
-              </li>
-            </Col>
-            <Col lg={6}>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-10.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Warm Candle
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>51</span>
-                    </div>
+                <p>A unique massage using warm volcanic stones.</p>
+              </div>
+            </li>
+          </Col>
+          <Col lg={6}>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-10.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Warm Candle
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>51</span>
                   </div>
-                  <p>A soothing massage with aromatic candle wax.</p>
                 </div>
-              </li>
-            </Col>
-            <Col lg={6}>
-              <li className="last-paragraph-no-margin">
-                <img
-                  src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-11.jpg"
-                  class="w-120px border-radius-100"
-                  alt=""
-                />
-                <div className="ms-30px xs-ms-0 flex-grow-1">
-                  <div className="d-flex align-items-center w-120 fs-18">
-                    <span className="fs-22 alt-font text-dark-gray">
-                      Warm Candle
-                    </span>
-                    <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
-                    <div className="ms-auto fs-26 alt-font text-dark-gray">
-                      <CurrencyDollar />
-                      <span>51</span>
-                    </div>
+                <p>A soothing massage with aromatic candle wax.</p>
+              </div>
+            </li>
+          </Col>
+          <Col lg={6}>
+            <li className="last-paragraph-no-margin">
+              <img
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-11.jpg"
+                class="w-120px border-radius-100"
+                alt=""
+              />
+              <div className="ms-30px xs-ms-0 flex-grow-1">
+                <div className="d-flex align-items-center w-120 fs-18">
+                  <span className="fs-22 alt-font text-dark-gray">
+                    Warm Candle
+                  </span>
+                  <div className="divider-style-03 divider-style-03-02 border-color-light-gray flex-grow-1 ms-20px me-20px"></div>
+                  <div className="ms-auto fs-26 alt-font text-dark-gray">
+                    <CurrencyDollar />
+                    <span>51</span>
                   </div>
-                  <p>A soothing massage with aromatic candle wax.</p>
                 </div>
-              </li>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+                <p>A soothing massage with aromatic candle wax.</p>
+              </div>
+            </li>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   </section>
 );
 // Gallery Section
@@ -706,28 +615,18 @@ const Gallery = () => (
       className="spa background-repeat border-top border-color-light-gray position-relative overlap-height z-index-1"
       style={{
         backgroundImage:
-          "url(https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg)",
+          "url(https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg)",
       }}
     >
-      <div
-        className="position-absolute right-minus-100px top-50 z-index-minus-1 d-none d-lg-inline-block"
-        style={{ transform: "translateY(-50px)" }}
-      >
-        <img
-          src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-05.png"
-          alt="Spa Therapy Decorative"
-        />
-      </div>
       <Container className="overlap-gap-section">
         <Row className="align-items-center position-relative justify-content-center justify-content-lg-start">
-          
           <Col
             lg={5}
             md={11}
             className="position-relative offset-lg-1 md-mb-35px"
           >
             <img
-              src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-12.jpg"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-12.jpg"
               className="w-100 border-radius-4px"
               alt="Spa Therapy"
             />
@@ -762,7 +661,7 @@ const Gallery = () => (
       className="spa background-repeat p-0"
       style={{
         backgroundImage:
-          "url(https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg)",
+          "url(https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg)",
       }}
     >
       <Container fluid className="p-0">
@@ -772,13 +671,13 @@ const Gallery = () => (
           </Col>
           <Col xs={5} lg={2} sm={3} className="text-center position-relative">
             <img
-              src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-13.png"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-13.png"
               className="animation-rotation"
               alt="Spa Therapy Icon"
             />
             <div className="absolute-middle-center lg-w-75">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-14.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-14.png"
                 alt="Spa Therapy Decoration"
               />
             </div>
@@ -798,7 +697,7 @@ const Testimonials = () => (
     className="spa background-repeat overlap-height position-relative pt-4 md-pt-8"
     style={{
       backgroundImage:
-        "url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')",
+        "url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')",
     }}
   >
     <div
@@ -806,7 +705,7 @@ const Testimonials = () => (
       style={{ transform: "translateY(-50px)" }}
     >
       <img
-        src="https://craftohtml.themezaa.com/images/demo-spa-salon-bg-img-03.png"
+        src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-bg-img-03.png"
         alt=""
       />
     </div>
@@ -817,7 +716,7 @@ const Testimonials = () => (
           className="testimonials-style-11 position-relative ps-15 pe-15 sm-ps-15px sm-pe-15px text-center"
         >
           <Carousel
-            interval={4000}
+            interval={2000}
             nextIcon={<ArrowRight />}
             prevIcon={<ArrowLeft />}
             className="slider-custom-text"
@@ -830,7 +729,7 @@ const Testimonials = () => (
                   for things.
                 </h6>
                 <span className="fs-15 text-base-color fw-500 d-block text-uppercase ls-2px">
-                  Jonsan Donner
+                  Mojisola R.
                 </span>
                 <span className="fs-14 lh-20 text-dark-gray fw-500 text-uppercase d-block ls-05px">
                   Relax Massage
@@ -845,7 +744,7 @@ const Testimonials = () => (
                   informative, and patient.
                 </h6>
                 <span className="fs-15 text-base-color fw-500 d-block text-uppercase ls-2px">
-                  Lauren Cruikshank
+                  Olamide A.
                 </span>
                 <span className="fs-14 lh-20 text-dark-gray fw-500 text-uppercase d-block ls-05px">
                   Relax Massage
@@ -860,7 +759,7 @@ const Testimonials = () => (
                   services they offer are to die for!
                 </h6>
                 <span className="fs-15 text-base-color fw-500 d-block text-uppercase ls-2px">
-                  Rosemary Downing
+                  Adedamola s.
                 </span>
                 <span className="fs-14 lh-20 text-dark-gray fw-500 text-uppercase d-block ls-05px">
                   Scalp Massage
@@ -876,7 +775,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-01.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-01.png"
                 className="h-110px"
                 alt=""
               />
@@ -889,7 +788,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-02.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-02.png"
                 className="h-110px"
                 alt=""
               />
@@ -902,7 +801,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-03.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-03.png"
                 className="h-110px"
                 alt=""
               />
@@ -915,7 +814,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-04.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-04.png"
                 className="h-110px"
                 alt=""
               />
@@ -928,7 +827,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-05.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-05.png"
                 className="h-110px"
                 alt=""
               />
@@ -941,7 +840,7 @@ const Testimonials = () => (
           <div className="client-box">
             <a href="#">
               <img
-                src="https://craftohtml.themezaa.com/images/demo-spa-salon-client-06.png"
+                src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-client-06.png"
                 className="h-110px"
                 alt=""
               />
@@ -960,7 +859,7 @@ const Contact = () => (
     className="spa px-6 position-relative z-index-1 pb-0"
     style={{
       backgroundImage:
-        "url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')",
+        "url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')",
     }}
   >
     <div className="d-none d-md-flex mb-1">
@@ -1142,13 +1041,13 @@ const Footer = () => (
     className="spa primary-font half-footer pb-45px border-top border-color-light-gray background-repeat"
     style={{
       backgroundImage:
-        "url('https://craftohtml.themezaa.com/images/demo-spa-salon-home-bg-01.jpg')",
+        "url('https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-bg-01.jpg')",
     }}
   >
     <Container>
       <div className="overlap-section position-absolute left-0px right-0px text-center d-none d-md-inline-block appear anime-child anime-complete">
         <Image
-          src="https://craftohtml.themezaa.com/images/demo-spa-salon-home-15.png"
+          src="https://gfa-tech.com/dimp-template-images/images/demo-spa-salon-home-15.png"
           alt="Spa Salon"
           className="lg-w-20"
         />
