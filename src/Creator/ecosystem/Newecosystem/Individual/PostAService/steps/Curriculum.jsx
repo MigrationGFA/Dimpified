@@ -10,6 +10,7 @@ import {
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { showToast } from "../../../../../../Components/Showtoast";
 import axios from "axios";
+import { useImageUploader } from "../../../../../../helper/UploadImage";
 
 const AddService = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,14 @@ const AddService = () => {
   const [price, setPrice] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
   const [priceFormat, setPriceFormat] = useState("");
+  const [serviceImage, setServiceImage] = useState("");
+
+  const {
+    fileInputRefs,
+    handleEditImageClick,
+    handleImageChange,
+    loadingImage,
+  } = useImageUploader();
 
   const jobSalaryFormats = [
     { value: "Fixed", label: "Fixed" },
@@ -36,6 +45,7 @@ const AddService = () => {
     setPrice("");
     setDeliveryTime("");
     setPriceFormat("");
+    setServiceImage("");
   };
 
   const handleShow = () => setShow(true);
@@ -48,6 +58,7 @@ const AddService = () => {
         price,
         deliveryTime,
         priceFormat,
+        serviceImage,
       })
     );
     handleClose();
@@ -126,6 +137,44 @@ const AddService = () => {
               ))}
             </Form.Select>
           </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Service Image</Form.Label>
+            <div className="d-flex align-items-center">
+              <Form.Control
+                type="text"
+                placeholder="Service Image URL"
+                value={serviceImage}
+                onChange={(e) => setServiceImage(e.target.value)}
+                readOnly // Make the input read-only as the image URL will be set automatically after upload
+                className="me-2"
+                disabled
+              />
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={(el) => (fileInputRefs.current["service-image"] = el)}
+                onChange={async (e) => {
+                  const imageUrl = await handleImageChange(
+                    e,
+                    "service",
+                    "image"
+                  );
+                  setServiceImage(imageUrl);
+                }}
+                style={{ display: "none" }}
+              />
+
+              <Button
+                variant="primary"
+                onClick={() => handleEditImageClick("service", "image")}
+                disabled={loadingImage}
+              >
+                {loadingImage ? "Uploading..." : "Upload Image"}
+              </Button>
+            </div>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline">
           <Button variant="primary" onClick={handleAddService}>
@@ -159,6 +208,7 @@ const Service = ({ submit, onPrevious }) => {
   const [editPrice, setEditPrice] = useState("");
   const [editDeliveryTime, setEditDeliveryTime] = useState("");
   const [editPriceFormat, setEditPriceFormat] = useState("");
+  const [editImage, setEditImage] = useState("");
 
   const jobSalaryFormats = [
     { value: "Fixed", label: "Fixed" },
@@ -178,7 +228,6 @@ const Service = ({ submit, onPrevious }) => {
     description,
     format,
     currency,
-    backgroundCover,
     services,
   } = serviceData;
 
@@ -191,89 +240,23 @@ const Service = ({ submit, onPrevious }) => {
 
   console.log(ecosystem);
 
-  const convertBase64ToFile = (base64String, filename) => {
-    const arr = base64String.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  };
-
   const handleSubmit = () => {
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("category", category);
-    formData.append("subCategory", subCategory);
-    formData.append("header", `${prefix} ${header}`);
-    formData.append("description", description);
-    formData.append("format", format);
-    formData.append("currency", currency);
-    formData.append("services", JSON.stringify(services));
-
-    // Convert and append base64 images directly to FormData
-    const imageProperties = {
-      "product.mainImage": "mainImage.png",
-      "product.thumbnailImage": "thumbnailImage.png",
-      "gallery.image1": "galleryImage1.png",
-      "gallery.image2": "galleryImage2.png",
-      "gallery.image3": "galleryImage3.png",
-      "gallery.image4": "galleryImage4.png",
-      "details.coverImage": "coverImage.png",
+    const serviceDetails = {
+      category: category,
+      subCategory: subCategory,
+      header: `${prefix} ${header}`,
+      description: description,
+      format: format,
+      currency: currency,
+      services: services,
+      creatorId: creatorId,
+      ecosystemDomain: ecosystem,
     };
 
-    // Assuming image data is within the serviceData object
-    for (const [key, filename] of Object.entries(imageProperties)) {
-      const keys = key.split(".");
-      let imageProp = serviceData;
-      try {
-        for (const k of keys) {
-          imageProp = imageProp[k];
-          if (imageProp === undefined) break; // Exit loop if property is undefined
-        }
-        if (
-          typeof imageProp === "string" &&
-          imageProp.startsWith("data:image")
-        ) {
-          const convertedFile = convertBase64ToFile(imageProp, filename);
-          formData.append(key, convertedFile);
-        }
-      } catch (error) {
-        console.error(`Error accessing property ${key}:`, error);
-      }
-    }
-
-    // Convert backgroundCover images from base64 to binary and append to formData as separate fields under the same key
-    if (Array.isArray(backgroundCover)) {
-      backgroundCover.forEach((image, index) => {
-        if (
-          typeof image.preview === "string" &&
-          image.preview.startsWith("data:image")
-        ) {
-          const convertedFile = convertBase64ToFile(
-            image.preview,
-            `backgroundCover${index}.png`
-          );
-          formData.append("backgroundCover", convertedFile);
-        }
-      });
-    } else {
-      console.error("Invalid backgroundCover data:", backgroundCover);
-    }
-
-    formData.append("creatorId", creatorId);
-    formData.append("ecosystemDomain", ecosystem);
-
     axios
-      .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(`${import.meta.env.VITE_API_URL}/create-service`, serviceDetails)
       .then((response) => {
         setLoading(false);
         if (response.data) {
@@ -312,13 +295,20 @@ const Service = ({ submit, onPrevious }) => {
 
   useEffect(() => {
     if (editIndex !== null) {
-      const { name, shortDescription, price, deliveryTime, priceFormat } =
-        sections[editIndex];
+      const {
+        name,
+        shortDescription,
+        price,
+        deliveryTime,
+        priceFormat,
+        serviceImage,
+      } = sections[editIndex];
       setEditName(name);
       setEditShortDescription(shortDescription);
       setEditPrice(price);
       setEditDeliveryTime(deliveryTime);
       setEditPriceFormat(priceFormat);
+      setEditImage(serviceImage);
     }
   }, [editIndex, sections]);
 
@@ -328,13 +318,20 @@ const Service = ({ submit, onPrevious }) => {
 
   const handleEditService = (index) => {
     setEditIndex(index);
-    const { name, shortDescription, price, deliveryTime, priceFormat } =
-      sections[index];
+    const {
+      name,
+      shortDescription,
+      price,
+      deliveryTime,
+      priceFormat,
+      serviceImage,
+    } = sections[index];
     setEditName(name);
     setEditShortDescription(shortDescription);
     setEditPrice(price);
     setEditDeliveryTime(deliveryTime);
     setEditPriceFormat(priceFormat);
+    setEditImage(serviceImage);
   };
 
   const handleFieldChange = (field, value) => {
@@ -369,6 +366,7 @@ const Service = ({ submit, onPrevious }) => {
           price: editPrice,
           deliveryTime: editDeliveryTime,
           priceFormat: editPriceFormat,
+          serviceImage: editImage,
         },
       })
     );
@@ -377,7 +375,7 @@ const Service = ({ submit, onPrevious }) => {
 
   return (
     <Form>
-      <Card className="mb-3 border-0">
+      <Card className="mb-3 border-0 ">
         <Card.Header className="border-bottom px-4 py-3">
           <h4 className="mb-0">Service</h4>
         </Card.Header>
@@ -462,16 +460,16 @@ const Service = ({ submit, onPrevious }) => {
                 <div>
                   <Button
                     variant="link"
-                    className="position-absolute top-0 end-0 text-danger me-2"
+                    className="position-absolute top-0 end-0 text-danger me-2 "
                     onClick={() => handleRemoveService(prIndex)}
                   >
                     Delete
                   </Button>
                   <Button
                     variant="link"
-                    className="position-absolute top-0 text-primary me-4"
+                    className="position-absolute top-0 text-primary "
                     onClick={() => handleEditService(prIndex)}
-                    style={{ right: "10%", maxWidth: "80%" }}
+                    style={{ right: "20%", maxWidth: "80%" }}
                   >
                     Edit
                   </Button>
@@ -518,6 +516,13 @@ const Service = ({ submit, onPrevious }) => {
                   >
                     {service.priceFormat}
                   </p>
+                  <img
+                    src={service.serviceImage}
+                    alt="image"
+                    style={{
+                      height: "50px",
+                    }}
+                  />
                 </div>
               )}
             </div>

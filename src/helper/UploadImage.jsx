@@ -1,14 +1,10 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateContent } from "../features/Template/MainTemplate";
 
-const useImageEditor = () => {
-  const dispatch = useDispatch();
+export const useImageUploader = () => {
   const fileInputRefs = useRef({});
   const [loadingImage, setLoading] = useState(false);
 
   const handleEditImageClick = (section, field) => {
-    // Make sure the correct input is triggered
     if (fileInputRefs.current[`${section}-${field}`]) {
       fileInputRefs.current[`${section}-${field}`].click();
     }
@@ -18,14 +14,12 @@ const useImageEditor = () => {
     const file = event.target.files[0];
     if (file) {
       setLoading(true);
-      // Prepare FormData for Cloudinary upload
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", `${import.meta.env.VITE_UPLOAD_PRESET}`);
       formData.append("cloud_name", `${import.meta.env.VITE_CLOUD_NAME}`);
 
       try {
-        // Upload image to Cloudinary
         const response = await fetch(
           `https://api.cloudinary.com/v1_1/${
             import.meta.env.VITE_CLOUD_NAME
@@ -37,18 +31,10 @@ const useImageEditor = () => {
         );
 
         const data = await response.json();
-        console.log("this is cloudinery response", data);
-        if (data.secure_url) {
-          // Dispatch Cloudinary image URL to Redux Toolkit
-          dispatch(
-            updateContent({
-              section: section,
-              field: field,
-              value: data.secure_url, // Use the Cloudinary URL
-            })
-          );
-        }
         setLoading(false);
+        if (data.secure_url) {
+          return data.secure_url; // Return the uploaded image URL
+        }
       } catch (error) {
         setLoading(false);
         console.error("Error uploading image to Cloudinary:", error);
@@ -63,5 +49,3 @@ const useImageEditor = () => {
     loadingImage,
   };
 };
-
-export default useImageEditor;

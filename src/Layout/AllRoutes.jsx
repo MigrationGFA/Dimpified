@@ -1,11 +1,15 @@
 // ** Import from react dom
 import { Route, Routes, Navigate } from "react-router-dom";
 
+
+
+
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
 import DimpHome from "../dimp-home/DimpHome";
 import CustomerTraining from "../dimp-pages/education/CustomerTraining";
 import Pricing from "../dimp-pages/pricing/Pricing";
+import NigerianPricing from "../dimp-pages/pricing/NigerianPricing";
 import Government from "../dimp-pages/government/Government";
 import Corporation from "../dimp-pages/corporation/Corporation";
 import NonProfit from "../dimp-pages/non-profit/NonProfit";
@@ -189,6 +193,7 @@ import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTempl
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
+  
 
   return (
     <Routes>
@@ -203,6 +208,7 @@ const AllRoutes = () => {
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/ng/pricing" element={<NigerianPricing />} />
       <Route path="/government" element={<Government />} />
       <Route path="/corporation" element={<Corporation />} />
       <Route path="/non-profit" element={<NonProfit />} />

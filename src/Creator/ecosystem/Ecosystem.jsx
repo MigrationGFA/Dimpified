@@ -142,7 +142,7 @@ const Ecosystem = () => {
       if (navigator.share) {
         await navigator.share({
           title: ecosystemName,
-          url: `${window.location.origin}/${ecosystemDomain}`,
+          url: `https://${ecosystemDomain}.dimpified.com/`,
         });
         console.log("Page shared successfully");
       } else {
@@ -162,7 +162,17 @@ const Ecosystem = () => {
     navigator.clipboard.writeText(siteNme);
   };
 
-  const handleContinue = async (ecosystemName, ecosystemDomain, steps, id) => {
+  const handleContinue = async (
+    ecosystemName,
+    ecosystemDomain,
+    steps,
+    id,
+    targetAudienceSector,
+    mainObjective,
+    contact,
+    address,
+    socialMedia
+  ) => {
     console.log("Ecosystem Name:", ecosystemName);
     console.log("Ecosystem Domain:", ecosystemDomain);
     console.log("Steps:", steps);
@@ -170,6 +180,17 @@ const Ecosystem = () => {
 
     dispatch(updateField({ field: "ecosystemName", value: ecosystemName }));
     dispatch(updateField({ field: "ecosystemDomain", value: ecosystemDomain }));
+    dispatch(
+      updateField({
+        field: "targetAudienceSector",
+        value: targetAudienceSector,
+      })
+    );
+    dispatch(updateField({ field: "mainObjective", value: mainObjective }));
+    dispatch(updateField({ field: "contact", value: contact }));
+    dispatch(updateField({ field: "address", value: address }));
+    dispatch(updateField({ field: "socialMedia", value: socialMedia }));
+
     dispatch(setEcosystemId(id));
 
     if (steps === 2) {
@@ -407,7 +428,12 @@ const Ecosystem = () => {
                                       eco.ecosystemName,
                                       eco.ecosystemDomain,
                                       eco.steps,
-                                      eco._id
+                                      eco._id,
+                                      eco.targetAudienceSector,
+                                      eco.mainObjective,
+                                      eco.contact,
+                                      eco.address,
+                                      eco.socialMedia
                                     )
                                   }
                                 >

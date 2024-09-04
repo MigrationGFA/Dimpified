@@ -8,7 +8,6 @@ const initialState = {
   description: "",
   format: "",
   currency: "",
-  backgroundCover: [],
   services: [],
 };
 

@@ -13,7 +13,7 @@ import productReducer from './features/product';
 import mainTemplateReducer from "./features/Template/MainTemplate"
 
 // Define your app version
-const APP_VERSION = '1.1.1';
+const APP_VERSION = '1.1.2';
 
 const persistConfig = {
   key: 'root',
