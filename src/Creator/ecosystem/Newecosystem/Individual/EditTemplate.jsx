@@ -27,6 +27,7 @@ import Template6 from "../../../../EditTemplate/AllCategory/Government/Upskillin
 import BarberPreview1 from "../../../../EditTemplate/PreviewPage/BarberPreview1";
 import Preview2 from "../../../../EditTemplate/PreviewPage/Education/OnlineSchoolPreview";
 import Preview3 from "../../../../EditTemplate/PreviewPage/Professional/LegalTemplate";
+import Preview4 from "../../../../EditTemplate/PreviewPage/PersonalCare/SalonPreview";
 import Preview6 from "../../../../EditTemplate/PreviewPage/Government/UpskillingPreview1";
 
 // others
@@ -133,6 +134,8 @@ const EditTemplate = () => {
         return <Preview2 />;
       case 3:
         return <Preview3 />;
+      case 4:
+        return <Preview4 />;
       case 6:
         return <Preview6 />;
       // Add cases for Template3 and Template4...
@@ -173,7 +176,7 @@ const EditTemplate = () => {
       );
       setLoading(false);
       navigate("/creator/dashboard/Payment/Individual");
-      sessionStorage.removeItem('courseImage');
+      sessionStorage.removeItem("courseImage");
 
       console.log("Template created successfully", response.data);
     } catch (error) {

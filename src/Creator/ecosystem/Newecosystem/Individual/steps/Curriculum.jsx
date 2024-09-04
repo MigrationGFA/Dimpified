@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, Form, Button, Modal } from "react-bootstrap";
 import { addTopic } from "../../../../../features/course";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTopic, removeTopic } from "../../../../../features/course";
+import useVideoEditor from "../../../../../helper/VideoUpload";
 
 const AddTopic = () => {
   const [show, setShow] = useState(false);
@@ -57,6 +57,13 @@ const AddTopic = () => {
   const isInitialSectionFilled =
     sections[0].title && sections[0].link && sections[0].duration;
 
+  const {
+    fileInputRefs,
+    handleEditVideoClick,
+    handleVideoChange,
+    loadingVideo,
+  } = useVideoEditor(handleSectionChange);
+
   return (
     <>
       <Button
@@ -104,6 +111,7 @@ const AddTopic = () => {
               onChange={(e) => setTotalDuration(e.target.value)}
             />
           </Form.Group>
+
           {sections.map((section, index) => (
             <div key={index} className="d-flex align-items-center mb-3 gap-3">
               <Form.Group>
@@ -118,18 +126,43 @@ const AddTopic = () => {
                   className="me-2"
                 />
               </Form.Group>
+
               <Form.Group>
                 <Form.Label>Section Content Link</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Section Content Link"
-                  value={section.link}
-                  onChange={(e) =>
-                    handleSectionChange(index, "link", e.target.value)
-                  }
-                  className="me-2"
-                />
+                <div className="d-flex align-items-center">
+                  <Form.Control
+                    type="text"
+                    placeholder="Section Content Link"
+                    value={section.link}
+                    onChange={(e) =>
+                      handleSectionChange(index, "link", e.target.value)
+                    }
+                    className="me-2"
+                  />
+                  <input
+                    type="file"
+                    accept="video/*"
+                    ref={(el) =>
+                      (fileInputRefs.current[`section-${index}-link`] = el)
+                    }
+                    onChange={
+                      (e) => handleVideoChange(e, index, "link") // Pass the index and field name
+                    }
+                    style={{ display: "none" }}
+                  />
+
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      handleEditVideoClick(`section-${index}`, "link")
+                    }
+                    disabled={loadingVideo}
+                  >
+                    {loadingVideo ? "Uploading..." : "Upload Video"}
+                  </Button>
+                </div>
               </Form.Group>
+
               <Form.Group>
                 <Form.Label>Section Duration</Form.Label>
                 <Form.Control
@@ -154,6 +187,7 @@ const AddTopic = () => {
               )}
             </div>
           ))}
+
           <Button
             variant="outline-primary"
             onClick={handleAddSection}
@@ -178,17 +212,22 @@ const AddTopic = () => {
 
 const Curriculum = ({ onNext, onPrevious }) => {
   const sections = useSelector((state) => state.course.curriculum) || [];
-  console.log(sections)
+  console.log(sections);
   const dispatch = useDispatch();
   const [editIndex, setEditIndex] = useState(null);
-  const [editCourseName, setEditCourseName] = useState('');
-  const [editDescription, setEditDescription] = useState('');
-  const [editTotalDuration, setEditTotalDuration] = useState('');
+  const [editCourseName, setEditCourseName] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editTotalDuration, setEditTotalDuration] = useState("");
   const [editSections, setEditSections] = useState([]);
 
   useEffect(() => {
     if (editIndex !== null) {
-      const { courseName, description, totalDuration, section: sec } = sections[editIndex];
+      const {
+        courseName,
+        description,
+        totalDuration,
+        section: sec,
+      } = sections[editIndex];
       setEditCourseName(courseName);
       setEditDescription(description);
       setEditTotalDuration(totalDuration);
@@ -202,7 +241,12 @@ const Curriculum = ({ onNext, onPrevious }) => {
 
   const handleEditSection = (index) => {
     setEditIndex(index);
-    const { courseName, description, totalDuration, section: sec } = sections[index];
+    const {
+      courseName,
+      description,
+      totalDuration,
+      section: sec,
+    } = sections[index];
     setEditCourseName(courseName);
     setEditDescription(description);
     setEditTotalDuration(totalDuration);
@@ -210,7 +254,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
   };
 
   const handleAddSection = () => {
-    setEditSections([...editSections, { title: '', link: '', duration: '' }]);
+    setEditSections([...editSections, { title: "", link: "", duration: "" }]);
   };
 
   const handleSectionChange = (index, field, value) => {
@@ -219,16 +263,15 @@ const Curriculum = ({ onNext, onPrevious }) => {
     setEditSections(newEditSections);
   };
 
-
   const handleFieldChange = (field, value) => {
     switch (field) {
-      case 'courseName':
+      case "courseName":
         setEditCourseName(value);
         break;
-      case 'description':
+      case "description":
         setEditDescription(value);
         break;
-      case 'totalDuration':
+      case "totalDuration":
         setEditTotalDuration(value);
         break;
       default:
@@ -259,7 +302,10 @@ const Curriculum = ({ onNext, onPrevious }) => {
         </Card.Header>
         <Card.Body>
           {sections.map((topic, prIndex) => (
-            <div key={prIndex} className="bg-light rounded p-2 mb-4 position-relative">
+            <div
+              key={prIndex}
+              className="bg-light rounded p-2 mb-4 position-relative"
+            >
               {editIndex === prIndex ? (
                 <div className="position-relative">
                   <Form.Group>
@@ -267,7 +313,9 @@ const Curriculum = ({ onNext, onPrevious }) => {
                     <Form.Control
                       type="text"
                       value={editCourseName}
-                      onChange={(e) => handleFieldChange('courseName', e.target.value)}
+                      onChange={(e) =>
+                        handleFieldChange("courseName", e.target.value)
+                      }
                     />
                   </Form.Group>
                   <Form.Group>
@@ -275,26 +323,41 @@ const Curriculum = ({ onNext, onPrevious }) => {
                     <Form.Control
                       as="textarea"
                       value={editDescription}
-                      onChange={(e) => handleFieldChange('description', e.target.value)}
+                      onChange={(e) =>
+                        handleFieldChange("description", e.target.value)
+                      }
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Audio/Video/Document course content Duration</Form.Label>
+                    <Form.Label>
+                      Audio/Video/Document course content Duration
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       value={editTotalDuration}
-                      onChange={(e) => handleFieldChange('totalDuration', e.target.value)}
+                      onChange={(e) =>
+                        handleFieldChange("totalDuration", e.target.value)
+                      }
                     />
                   </Form.Group>
                   {editSections.map((secs, secIndex) => (
-                    <div key={secIndex} className="d-flex align-items-center mb-3 mt-3 gap-3">
+                    <div
+                      key={secIndex}
+                      className="d-flex align-items-center mb-3 mt-3 gap-3"
+                    >
                       <Form.Group>
                         <Form.Label>Section Title</Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="Section Title"
                           value={secs.title}
-                          onChange={(e) => handleSectionChange(secIndex, 'title', e.target.value)}
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "title",
+                              e.target.value
+                            )
+                          }
                           className="me-2"
                         />
                       </Form.Group>
@@ -304,7 +367,14 @@ const Curriculum = ({ onNext, onPrevious }) => {
                           type="text"
                           placeholder="Section Content Link"
                           value={secs.link}
-                          onChange={(e) => handleSectionChange(secIndex, 'link', e.target.value)}
+                          disabled
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "link",
+                              e.target.value
+                            )
+                          }
                           className="me-2"
                         />
                       </Form.Group>
@@ -314,7 +384,13 @@ const Curriculum = ({ onNext, onPrevious }) => {
                           type="text"
                           placeholder="Section Duration"
                           value={secs.duration}
-                          onChange={(e) => handleSectionChange(secIndex, 'duration', e.target.value)}
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "duration",
+                              e.target.value
+                            )
+                          }
                           className="me-2"
                         />
                       </Form.Group>
@@ -341,7 +417,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
                     <Button
                       onClick={() => setEditIndex(null)}
                       className="me-2 position-absolute"
-                      style={{ right: '0%', maxWidth: '80%' }}
+                      style={{ right: "0%", maxWidth: "80%" }}
                     >
                       Cancel
                     </Button>
@@ -360,71 +436,97 @@ const Curriculum = ({ onNext, onPrevious }) => {
                     variant="link"
                     className="position-absolute top-0 text-primary me-4"
                     onClick={() => handleEditSection(prIndex)}
-                    style={{ right: '10%', maxWidth: '80%' }}
+                    style={{ right: "10%", maxWidth: "80%" }}
                   >
                     Edit
                   </Button>
                   <h4>{topic.courseName}</h4>
                   <p
                     style={{
-                      backgroundColor: 'white',
-                      border: '1px solid #ced4da',
-                      padding: '10px',
-                      borderRadius: '5px',
-                      height: '150px',
-                      overflowY: 'auto',
+                      backgroundColor: "white",
+                      border: "1px solid #ced4da",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      height: "150px",
+                      overflowY: "auto",
                     }}
                   >
                     {topic.description}
                   </p>
                   <p
                     style={{
-                      backgroundColor: 'white',
-                      border: '1px solid #ced4da',
-                      padding: '10px',
-                      borderRadius: '5px',
+                      backgroundColor: "white",
+                      border: "1px solid #ced4da",
+                      padding: "10px",
+                      borderRadius: "5px",
                     }}
                   >
                     {topic.totalDuration}
                   </p>
                   {topic.section &&
                     topic.section.map((sec, idx) => (
-                      <div key={idx} className="mb-2 d-flex" style={{ alignItems: 'center' }}>
-                        <p
+                      <div
+                        key={idx}
+                        className="d-flex align-items-center mb-2"
+                        style={{ gap: "10px" }}
+                      >
+                        {/* Title */}
+                        <div
                           style={{
-                            backgroundColor: 'white',
-                            border: '1px solid #ced4da',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            flex: '1',
+                            flex: "1",
+                            display: "flex",
+                            alignItems: "center",
                           }}
                         >
-                          <strong>Title:</strong> {sec.title}
-                        </p>
-                        <p
+                          <span
+                            style={{
+                              backgroundColor: "white",
+                              border: "1px solid #ced4da",
+                              padding: "5px 10px",
+                              borderRadius: "5px",
+                              fontWeight: "bold",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              flex: "1",
+                            }}
+                          >
+                            {sec.title}
+                          </span>
+                        </div>
+
+                        {/* Content Link Input */}
+                        <Form.Control
+                          type="text"
+                          placeholder="Link"
+                          value={sec.link}
+                          className="form-control-sm"
+                          style={{ flex: "2" }}
+                        />
+
+                        {/* Duration */}
+                        <div
                           style={{
-                            backgroundColor: 'white',
-                            border: '1px solid #ced4da',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            flex: '1',
+                            flex: "1",
+                            display: "flex",
+                            alignItems: "center",
                           }}
                         >
-                          <strong>Content Link:</strong> {sec.link}
-                        </p>
-                        <p
-                          style={{
-                            backgroundColor: 'white',
-                            border: '1px solid #ced4da',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            flex: '1',
-                          }}
-                        >
-                          <strong>Duration:</strong> {sec.duration}
-                        </p>
+                          <span
+                            style={{
+                              backgroundColor: "white",
+                              border: "1px solid #ced4da",
+                              padding: "5px 10px",
+                              borderRadius: "5px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              flex: "1",
+                            }}
+                          >
+                            {sec.duration}
+                          </span>
+                        </div>
                       </div>
                     ))}
                 </div>
@@ -438,7 +540,11 @@ const Curriculum = ({ onNext, onPrevious }) => {
         <Button variant="secondary" onClick={onPrevious}>
           Previous
         </Button>
-        <Button variant="primary" onClick={onNext} disabled={sections.length === 0}>
+        <Button
+          variant="primary"
+          onClick={onNext}
+          disabled={sections.length === 0}
+        >
           Next
         </Button>
       </div>

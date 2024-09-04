@@ -19,7 +19,7 @@ import {
   updateField,
   setEcosystemId,
   updateSocialMedia,
-  resetState
+  resetState,
 } from "../../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
@@ -77,7 +77,7 @@ const NewEcosystem = () => {
       console.error("Event or event.target is undefined");
     }
   };
-  
+
   const handleUrlChange = (index, event) => {
     const newLinks = socialMedia.map((link, i) =>
       i === index ? { ...link, link: event.target.value } : link
@@ -85,11 +85,11 @@ const NewEcosystem = () => {
     setSocialMedia(newLinks);
     dispatch(updateSocialMedia(newLinks));
   };
-  
+
   const addLink = () => {
     setSocialMedia([...socialMedia, { name: "", link: "" }]);
   };
-  
+
   const removeLink = (index) => {
     setSocialMedia(socialMedia.filter((_, i) => i !== index));
   };
@@ -161,7 +161,6 @@ const NewEcosystem = () => {
       setIsFormValid(false);
     }
   };
-
 
   const validateDomain = async (ecosystemDomain) => {
     try {
@@ -250,7 +249,8 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                      A. What’s the name of your business?<span className="text-danger">*</span>
+                        A. What’s the name of your business?
+                        <span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -269,7 +269,7 @@ const NewEcosystem = () => {
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                      B. What should your website address be?
+                        B. What should your website address be?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
@@ -567,7 +567,7 @@ const NewEcosystem = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowSocialModal(false)}>
-            Close
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

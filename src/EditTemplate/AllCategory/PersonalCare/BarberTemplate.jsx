@@ -210,19 +210,6 @@ const BarberTemplate = () => {
     }
   };
 
-  const checkAvailability = async () => {
-    try {
-      const response = await axios.post("/api/check-availability", {
-        date: formData.date,
-        time: formData.time,
-      });
-      return response.data.isAvailable;
-    } catch (error) {
-      console.error("Error checking availability:", error);
-      return false;
-    }
-  };
-
   const renderSection = (id, children) => {
     return (
       <section

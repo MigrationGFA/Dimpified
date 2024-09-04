@@ -3,11 +3,12 @@ import { Card, Form, Button } from "react-bootstrap";
 import { FormSelect } from "../../../../../../Components/elements/form-select/FormSelect2";
 import { useDispatch, useSelector } from "react-redux";
 import { updateServiceData } from "../../../../../../features/service";
-import categorySubSection from '../SectionJson';
+import categorySubSection from "../SectionJson";
 
 const BasicInformation = ({ handleNext }) => {
   const dispatch = useDispatch();
   const service = useSelector((state) => state.service);
+  const ecosystemDetail = useSelector((state) => state.ecosystem);
 
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const [isOtherCategory, setIsOtherCategory] = useState(false);
@@ -15,7 +16,7 @@ const BasicInformation = ({ handleNext }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(updateServiceData({ [name]: value }));
-    
+
     if (name === "category") {
       if (value === "Other") {
         setIsOtherCategory(true);
@@ -23,7 +24,9 @@ const BasicInformation = ({ handleNext }) => {
       } else {
         setIsOtherCategory(false);
         const subCategories = categorySubSection[value] || [];
-        setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+        setSubCategoryOptions(
+          subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+        );
       }
     }
   };
@@ -31,7 +34,9 @@ const BasicInformation = ({ handleNext }) => {
   useEffect(() => {
     if (service.category && service.category !== "Other") {
       const subCategories = categorySubSection[service.category] || [];
-      setSubCategoryOptions(subCategories.map(subCat => ({ value: subCat, label: subCat })));
+      setSubCategoryOptions(
+        subCategories.map((subCat) => ({ value: subCat, label: subCat }))
+      );
     }
   }, [service.category]);
 
@@ -43,8 +48,11 @@ const BasicInformation = ({ handleNext }) => {
   };
 
   const categoryOptions = [
-    ...Object.keys(categorySubSection).map(cat => ({ value: cat, label: cat })),
-    { value: "Other", label: "Other" }
+    ...Object.keys(categorySubSection).map((cat) => ({
+      value: cat,
+      label: cat,
+    })),
+    { value: "Other", label: "Other" },
   ];
 
   return (
@@ -74,7 +82,7 @@ const BasicInformation = ({ handleNext }) => {
                 placeholder="Enter SubCategory"
                 id="subCategory"
                 name="subCategory"
-                value={service.subCategory } 
+                value={service.subCategory}
                 onChange={handleChange}
                 required
               />
@@ -84,7 +92,7 @@ const BasicInformation = ({ handleNext }) => {
               <Form.Label>SubCategory</Form.Label>
               <FormSelect
                 placeholder="Select SubCategory"
-                selectedValue={service.subCategory} 
+                selectedValue={service.subCategory}
                 options={subCategoryOptions}
                 id="subCategory"
                 name="subCategory"
