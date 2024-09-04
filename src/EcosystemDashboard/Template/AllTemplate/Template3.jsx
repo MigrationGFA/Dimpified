@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowLeftShort,
@@ -33,12 +33,13 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import sanitizeHtml from "sanitize-html";
+import axios from "axios";
 
-const Preview3 = () => {
+const Preview3 = ({ details, subdomain }) => {
   const [show, setShow] = useState(false);
-  const content = useSelector((state) => state.mainTemplate.currentTemplate);
-  const services = useSelector((state) => state.service.services);
-  const ecosystemDetails = useSelector((state) => state.ecosystem);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+ 
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -54,6 +55,25 @@ const Preview3 = () => {
       allowedAttributes: {}, // Disallow all attributes
     });
   };
+
+  // services
+  useEffect(() => {
+    const getServiceeDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/get-all-services/${subdomain}`
+        );
+        setServices(response.data.services);
+        console.log("this is service", response.data.services);
+      } catch (error) {
+        console.log("not working", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getServiceeDetails();
+  }, [subdomain]);
+
   return (
     <Col md={12}>
       <Navbar
@@ -65,7 +85,7 @@ const Preview3 = () => {
         <Container fluid>
           <Navbar.Brand href="demo-lawyer.html">
             <img
-              src={content.navbar.logo}
+              src={details.navbar.logo}
               alt="Logo"
               className="default-logo"
               width="138"
@@ -76,7 +96,7 @@ const Preview3 = () => {
           <Navbar.Toggle aria-controls="BootstrapNavbarNav" />
           <Navbar.Collapse
             id="BootstrapNavbarNav"
-            className="justify-content-center"
+            className="justify-details-center"
           >
             <Nav className="mx-auto">
               <Nav.Link href="#home" className="nav-item text-white active">
@@ -103,7 +123,7 @@ const Preview3 = () => {
 
           <div className="d-none d-lg-flex ms-auto header-icon">
             <div className="d-none d-xxl-flex me-25px align-items-center">
-              <span className="w-40px h-40px bg-base-color d-flex align-items-center justify-content-center me-10px rounded-circle fs-15">
+              <span className="w-40px h-40px bg-base-color d-flex align-items-center justify-details-center me-10px rounded-circle fs-15">
                 <TelephoneOutbound />
               </span>
               <a href="" className="widget-text text-white-hover">
@@ -127,7 +147,7 @@ const Preview3 = () => {
         id="home"
         style={{
           height: "100vh",
-          backgroundImage: ` url(${content.hero.backgroundImage1})`,
+          backgroundImage: ` url(${details.hero.backgroundImage1})`,
           backgroundSize: "cover",
         }}
       >
@@ -135,16 +155,16 @@ const Preview3 = () => {
           <Row className="align-items-center h-100">
             <Col md={7} className="position-relative text-white">
               <span className="fs-19 text-base-color mb-30px md-mb-20px d-inline-block text-decoration-line-bottom">
-                {sanitizeContent(content.hero.span1)}
+                {sanitizeContent(details.hero.span1)}
               </span>
               <div className="alt-font fs-85 lg-fs-75 xs-fs-60 mb-60px md-mb-45px xs-mb-35px w-70 xl-w-80 md-w-100 ls-minus-2px text-shadow-double-large">
-                {sanitizeContent(content.hero.span2)}
+                {sanitizeContent(details.hero.span2)}
               </div>
               <Button
                 href="#contact"
                 className="btn-extra-large btn-rounded with-rounded btn-white btn-box-shadow fw-600"
               >
-                {sanitizeContent(content.hero.buttonText1)}
+                {sanitizeContent(details.hero.buttonText1)}
                 <span className="bg-dark-gray text-white">
                   <ArrowRight />
                 </span>
@@ -160,7 +180,7 @@ const Preview3 = () => {
             <Col lg={6} className="position-relative mb-4 md-mb-50px">
               <div className="overflow-hidden position-relative w-80 md-w-90 ms-auto">
                 <Image
-                  src={content.aboutUs.image1}
+                  src={details.aboutUs.image1}
                   className="w-100 border-radius-6px"
                   alt="Experienced Lawyer"
                 />
@@ -173,15 +193,15 @@ const Preview3 = () => {
                 alt="Law Firm Logo"
               />
               <h3 className="legal alt-font fs-2 fw-500 text-dark-gray ls-minus-1px">
-                {sanitizeContent(content.aboutUs.title1)}
+                {sanitizeContent(details.aboutUs.title1)}
               </h3>
               <p className="legal primary-font w-85 lg-w-100 mb-4">
-                {sanitizeContent(content.aboutUs.text1)}
+                {sanitizeContent(details.aboutUs.text1)}
               </p>
               <ul className="p-0 m-0 list-style-02">
                 <li className="pb-5px fs-18 text-dark-gray ls-minus-05px fw-600">
                   <i className="feather icon-feather-check-circle icon-small me-10px"></i>
-                  {sanitizeContent(content.aboutUs.text2)}
+                  {sanitizeContent(details.aboutUs.text2)}
                 </li>
               </ul>
               <div className="d-inline-block mt-30px">
@@ -228,7 +248,7 @@ const Preview3 = () => {
                   services.
                 </span>
               </h3>
-              <div className="d-flex justify-content-center justify-content-lg-start">
+              <div className="d-flex justify-details-center justify-details-lg-start">
                 <Button
                   variant="outline-light"
                   className="me-2"
@@ -261,7 +281,7 @@ const Preview3 = () => {
                           alt="Business law advisor"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
@@ -295,7 +315,7 @@ const Preview3 = () => {
                           alt="Investment litigation"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-02.png"
@@ -329,7 +349,7 @@ const Preview3 = () => {
                           alt="Trust and estates"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-03.png"
@@ -367,7 +387,7 @@ const Preview3 = () => {
                           alt="Child care support"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-4.png"
@@ -401,7 +421,7 @@ const Preview3 = () => {
                           alt="Personal injury advisor"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
@@ -435,7 +455,7 @@ const Preview3 = () => {
                           alt="Employment law advisor"
                           className="w-100"
                         />
-                        <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
                           <a href="#">
                             <img
                               src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
@@ -482,37 +502,37 @@ const Preview3 = () => {
           <Row className="mb-5">
             <Col lg={6} className="position-relative mb-5">
               <div className="d-flex  flex-column shadow-lg bg-white rounded overflow-hidden position-relative z-index-9">
-                <Row className="row-cols-1 row-cols-sm-2 justify-content-center m-0">
+                <Row className="row-cols-1 row-cols-sm-2 justify-details-center m-0">
                   <Col className="p-3 text-center border-bottom border-end text-center">
                     <h2 className="legal alt-font fs-60 fw-bold text-dark mb-2">
-                      {sanitizeContent(content.Statistics.section1header)}
+                      {sanitizeContent(details.Statistics.section1header)}
                     </h2>
                     <span className=" fs-17">
-                      {sanitizeContent(content.Statistics.section1span)}
+                      {sanitizeContent(details.Statistics.section1span)}
                     </span>
                   </Col>
                   <Col className="p-3 text-center border-bottom text-center">
                     <h2 className="legal alt-font fs-60 fw-bold text-dark mb-2">
-                      {sanitizeContent(content.Statistics.section4header)}
+                      {sanitizeContent(details.Statistics.section4header)}
                     </h2>
                     <span className="fs-17">
-                      {sanitizeContent(content.Statistics.section4span)}
+                      {sanitizeContent(details.Statistics.section4span)}
                     </span>
                   </Col>
                   <Col className="p-3 text-center border-end text-center">
                     <h2 className="legal alt-font fs-60 fw-bold text-dark mb-2">
-                      {sanitizeContent(content.Statistics.section2header)}
+                      {sanitizeContent(details.Statistics.section2header)}
                     </h2>
                     <span className="fs-17">
-                      {sanitizeContent(content.Statistics.section2span)}
+                      {sanitizeContent(details.Statistics.section2span)}
                     </span>
                   </Col>
                   <Col className="p-3 text-center text-center">
                     <h2 className="legal alt-font fs-60 fw-bold text-dark mb-2">
-                      {sanitizeContent(content.Statistics.section3header)}
+                      {sanitizeContent(details.Statistics.section3header)}
                     </h2>
                     <span className="fs-17">
-                      {sanitizeContent(content.Statistics.section3span)}
+                      {sanitizeContent(details.Statistics.section3span)}
                     </span>
                   </Col>
                 </Row>
@@ -526,40 +546,40 @@ const Preview3 = () => {
             </Col>
             <Col xl={{ span: 5, offset: 1 }} lg={6}>
               <h3 className="legal alt-font fs-2 fw-normal text-dark w-85 ls-minus-1px">
-                {sanitizeContent(content.contactUs.heading2)}
+                {sanitizeContent(details.contactUs.heading2)}
               </h3>
               <Accordion defaultActiveKey="0" className="legal primary-font">
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>
                     <ChevronUp className="me-2" />
-                    {sanitizeContent(content.Statistics.section1paragraphy)}
+                    {sanitizeContent(details.Statistics.section1paragraphy)}
                   </Accordion.Header>
                   <Accordion.Body>
-                    {sanitizeContent(content.Statistics.section1icon)}
+                    {sanitizeContent(details.Statistics.section1icon)}
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
                   <Accordion.Header>
                     <ChevronDown className="me-2" />
-                    {sanitizeContent(content.Statistics.section2paragraphy)}
+                    {sanitizeContent(details.Statistics.section2paragraphy)}
                   </Accordion.Header>
                   <Accordion.Body>
-                    {sanitizeContent(content.Statistics.section2icon)}
+                    {sanitizeContent(details.Statistics.section2icon)}
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
                   <Accordion.Header>
                     <ChevronDown className="me-2" />
-                    {sanitizeContent(content.Statistics.section3paragraphy)}
+                    {sanitizeContent(details.Statistics.section3paragraphy)}
                   </Accordion.Header>
                   <Accordion.Body>
-                    {sanitizeContent(content.Statistics.section2icon)}
+                    {sanitizeContent(details.Statistics.section2icon)}
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
             </Col>
           </Row>
-          {/* <Row className="justify-content-center align-items-center">
+          {/* <Row className="justify-details-center align-items-center">
       <Col xl={3} lg={4} className="mb-4 text-center text-lg-start">
         <h4 className="fw-normal text-dark mb-0">
           Powerful <span className="fw-bold font-italic text-decoration-underline">achievement</span>
@@ -586,7 +606,7 @@ const Preview3 = () => {
         className="legal px-4 bg-very-light-gray overlap-height position-relative"
       >
         <Container className="overlap-gap-section">
-          <Row className="justify-content-center mb-3">
+          <Row className="justify-details-center mb-3">
             <Col lg={7} className="text-center">
               <span className="fs-20 primary-font">Meet Our Experts</span>
               <h3 className="alt-font fw-500 fs-2 text-dark ls-minus-1">
@@ -598,7 +618,7 @@ const Preview3 = () => {
             </Col>
           </Row>
 
-          <Row className="row-cols-1 row-cols-xl-4 row-cols-sm-2 mb-lg-8 mb-4 justify-content-center">
+          <Row className="row-cols-1 row-cols-xl-4 row-cols-sm-2 mb-lg-8 mb-4 justify-details-center">
             {["image1", "image2", "image3", "image4"].map((imageKey, index) => (
               <Col
                 key={index}
@@ -608,18 +628,18 @@ const Preview3 = () => {
                   <a href="#Team">
                     <img
                       className="rounded-circle w-150px h-150px mb-3"
-                      src={content.Team[imageKey]}
-                      alt={content.Team[`header${index + 1}`]}
+                      src={details.Team[imageKey]}
+                      alt={details.Team[`header${index + 1}`]}
                     />
                   </a>
                   <a
                     href="/attorney-details/evan-thomson"
                     className="text-dark alt-font fs-19 fw-600 mb-2"
                   >
-                    {sanitizeContent(content.Team[`header${index + 1}`])}
+                    {sanitizeContent(details.Team[`header${index + 1}`])}
                   </a>
                   <p className="w-90 mx-auto lh-28">
-                    {sanitizeContent(content.Team[`summary${index + 1}`])}
+                    {sanitizeContent(details.Team[`summary${index + 1}`])}
                   </p>
                 </div>
               </Col>
@@ -636,20 +656,20 @@ const Preview3 = () => {
           className="cover-background p-10 border-radius-6px position-relative"
           style={{
             backgroundImage:
-              `url(${content.Reviews.image1})`,
+              `url(${details.Reviews.image1})`,
           }}
         >
           <div className="fs-1 alt-font text-white d-block lh-1">
             <Quote />
           </div>
           <h6 className="w-100 text-white fs-3 alt-font lh-2 mb-3 pe-6">
-          {sanitizeContent(content.Reviews.header1)}
+          {sanitizeContent(details.Reviews.header1)}
           </h6>
           <a
             href="#"
             className="text-white fs-6 fw-bold text-uppercase position-relative"
           >
-            <PersonFill /> {sanitizeContent(content.Reviews.title1)}
+            <PersonFill /> {sanitizeContent(details.Reviews.title1)}
           </a>
         </Col>
        
@@ -660,7 +680,7 @@ const Preview3 = () => {
 
   {/* <section id="blog" className="legal px-4">
     <Container>
-      <Row className="justify-content-center mb-3">
+      <Row className="justify-details-center mb-3">
         <Col lg={7} className="text-center">
           <span className="fs-20 primary-font">Our News and Blog</span>
           <h3 className="fw-500 fs-2 alt-font text-dark">
@@ -691,7 +711,7 @@ const Preview3 = () => {
                   <Card.Title className="mb-3">
                     What to do if teammates do not appreciate you?
                   </Card.Title>
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-details-between align-items-center">
                     <div>
                       <span className="text-muted">30 March 2023</span>
                       <br />
@@ -726,7 +746,7 @@ const Preview3 = () => {
                   <Card.Title className="mb-3">
                     Getting a consultant is the best decision.
                   </Card.Title>
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-details-between align-items-center">
                     <div>
                       <span className="text-muted">28 March 2023</span>
                       <br />
@@ -762,7 +782,7 @@ const Preview3 = () => {
                   <Card.Title className="mb-3">
                     Research and strategy are vital for the market.
                   </Card.Title>
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-details-between align-items-center">
                     <div>
                       <span className="text-muted">26 March 2023</span>
                       <br />
@@ -789,21 +809,21 @@ const Preview3 = () => {
   
   <section id="contact" className="legal px-4 bg-blue-whale py-0">
     <Container className="footer-top pt-lg-8 pt-3 pb-50px md-pb-35px">
-      <Row className="justify-content-center">
-        <Col className="position-relative justify-content-center align-items-center text-center">
+      <Row className="justify-details-center">
+        <Col className="position-relative justify-details-center align-items-center text-center">
           <Image
             src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-07.png"
             className="position-absolute left-90px lg-left-15px opacity-1 top-minus-35px sm-top-minus-25px w-10 sm-w-15 xs-w-80px"
             alt="Lawyer Image"
           />
           <h5 className="alt-font fs-2 d-inline-block align-middle text-white mb-0 me-35px md-me-0 position-relative">
-          {sanitizeContent(content.contactUs.header1)}
+          {sanitizeContent(details.contactUs.header1)}
           </h5>
           <Button
             variant="white"
             className="btn-large btn-rounded with-rounded btn-box-shadow fw-600 md-mt-40px sm-mt-30px"
           >
-            {sanitizeContent(content.contactUs.buttonText1)}
+            {sanitizeContent(details.contactUs.buttonText1)}
             <span className="bg-dark-gray text-white ms-2">
               <ArrowRight />
             </span>
@@ -830,7 +850,7 @@ const Preview3 = () => {
         >
           <a href="#footer" className="footer-logo d-inline-block">
             <Image
-              src={content.footer.logo}
+              src={details.footer.logo}
               alt="Logo"
               width="138"
               height="36"
@@ -843,7 +863,7 @@ const Preview3 = () => {
           className="last-paragraph-no-margin text-center text-lg-start md-mb-40px sm-mb-30px"
         >
           <span className="fs-22 legal alt-font md-w-80 xs-w-100 m-auto d-inline-block">
-          {sanitizeContent(content.footer.title1)}
+          {sanitizeContent(details.footer.title1)}
           </span>
         </Col>
 
@@ -874,7 +894,7 @@ const Preview3 = () => {
             href="#"
             className="text-white text-decoration-line-bottom"
           >
-            {sanitizeContent(content.footer.paragraph3)}
+            {sanitizeContent(details.footer.paragraph3)}
           </a>
         </Col>
       </Row>
@@ -891,7 +911,7 @@ const Preview3 = () => {
     <Container className="footer-bottom pt-25px pb-25px">
       <Row className="align-items-center">
         <Col lg={7} className="text-center text-lg-start sm-pb-10px">
-          <ul className="footer-navbar md-lh-normal list-unstyled d-flex justify-content-center justify-content-lg-start mb-0">
+          <ul className="footer-navbar md-lh-normal list-unstyled d-flex justify-details-center justify-details-lg-start mb-0">
             <li className="nav-item">
               <a href="#home" className="legal primary-font nav-link px-2">
                 Home

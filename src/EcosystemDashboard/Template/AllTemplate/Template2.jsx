@@ -116,7 +116,7 @@ import axios from "axios";
 //   },
 // ];
 
-const CourseLogo = sessionStorage.getItem("courseImage");
+
 
 const Preview2 = ({ details, subdomain }) => {
   const [courses, setCourses] = useState([]);

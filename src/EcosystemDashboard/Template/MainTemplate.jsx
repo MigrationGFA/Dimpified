@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import Template1 from "./AllTemplate/TemplateV1";
 import Template2 from "./AllTemplate/Template2";
+import Template3 from "./AllTemplate/Template3";
 
 const MainTemplate = ({ subdomain }) => {
   const [details, setDetails] = useState(null);
@@ -46,6 +47,8 @@ const MainTemplate = ({ subdomain }) => {
       return <Template1 details={details} subdomain={subdomain} />;
     case 2:
       return <Template2 details={details} subdomain={subdomain} />;
+    case 3:
+      return <Template3 details={details} subdomain={subdomain} />;
     default:
       return <div>Error: Unknown template ID</div>;
   }
