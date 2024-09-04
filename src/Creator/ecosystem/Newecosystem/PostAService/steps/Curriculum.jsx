@@ -1,52 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form, Card } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { addService, updateService, deleteService, resetServiceData } from "../../../../../features/service";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { showToast } from "../../../../../Components/Showtoast";
-import axios from 'axios';
+import { Card, Form, Button, Modal } from "react-bootstrap";
+import { addTopic } from "../../../../../features/course";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTopic, removeTopic } from "../../../../../features/course";
+import useVideoEditor from "../../../../../helper/VideoUpload";
 
-const AddService = () => {
-  const dispatch = useDispatch();
+const AddTopic = () => {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [deliveryTime, setDeliveryTime] = useState("");
-  const [priceFormat, setPriceFormat] = useState("");
+  const [courseName, setCourseName] = useState("");
+  const [description, setDescription] = useState("");
+  const [totalDuration, setTotalDuration] = useState("");
+  const [sections, setSections] = useState([
+    { title: "", link: "", duration: "" },
+  ]);
 
-  const jobSalaryFormats = [
-    { value: "Fixed", label: "Fixed" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Monthly", label: "Monthly" },
-    { value: "Yearly", label: "Yearly" },
-  ];
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setShow(false);
-    setName("");
-    setShortDescription("");
-    setPrice("");
-    setDeliveryTime("");
-    setPriceFormat("");
+    setCourseName("");
+    setDescription("");
+    setTotalDuration("");
+    setSections([{ title: "", link: "", duration: "" }]);
   };
 
   const handleShow = () => setShow(true);
 
-  const handleAddService = () => {
+  const handleAddSection = () => {
+    setSections([...sections, { title: "", link: "", duration: "" }]);
+  };
+
+  const handleRemoveSection = (index) => {
+    const newSections = [...sections];
+    newSections.splice(index, 1);
+    setSections(newSections);
+  };
+
+  const handleSectionChange = (index, field, value) => {
+    const newSections = [...sections];
+    newSections[index][field] = value;
+    setSections(newSections);
+  };
+
+  const handleAddTopic = () => {
     dispatch(
-      addService({
-        name,
-        shortDescription,
-        price,
-        deliveryTime,
-        priceFormat,
+      addTopic({
+        courseName: courseName,
+        description: description,
+        totalDuration: totalDuration,
+        section: sections,
       })
     );
     handleClose();
   };
+
+  const isInitialSectionFilled =
+    sections[0].title && sections[0].link && sections[0].duration;
+
+  const {
+    fileInputRefs,
+    handleEditVideoClick,
+    handleVideoChange,
+    loadingVideo,
+  } = useVideoEditor(handleSectionChange);
 
   return (
     <>
@@ -55,7 +71,7 @@ const AddService = () => {
         className="btn btn-outline-primary btn-sm mt-3"
         onClick={handleShow}
       >
-        Add New Service
+        Add New Module
       </Button>
       <Modal
         show={show}
@@ -65,66 +81,125 @@ const AddService = () => {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add New Service</Modal.Title>
+          <Modal.Title>Add New Module</Modal.Title>
         </Modal.Header>
         <Modal.Body className="pb-0">
-          <Form.Group className="mb-3">
-            <Form.Label>Service Name</Form.Label>
+          <Form.Group className="mb-3" controlId="formTopic">
             <Form.Control
               type="text"
-              placeholder="Service Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Module Title"
+              value={courseName}
+              onChange={(e) => setCourseName(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Short Description</Form.Label>
+          <Form.Group className="mb-3" controlId="formTopicDescription">
             <Form.Control
               as="textarea"
-              rows={3}
-              placeholder="Short Description"
-              value={shortDescription}
-              onChange={(e) => setShortDescription(e.target.value)}
+              placeholder="Module Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Price</Form.Label>
+          <Form.Group
+            className="mb-3"
+            controlId="formTopicCourseContentDuration"
+          >
             <Form.Control
               type="text"
-              placeholder="Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Total Audio/Video/Document course content duration"
+              value={totalDuration}
+              onChange={(e) => setTotalDuration(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Delivery Time</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Delivery Time"
-              value={deliveryTime}
-              onChange={(e) => setDeliveryTime(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Pricing Format</Form.Label>
-            <Form.Select
-              type="text"
-              placeholder="Job Salary Format"
-              value={priceFormat}
-              onChange={(e) => setPriceFormat(e.target.value)}
-            >
-              <option value="">Select Pricing Format</option>
-              {jobSalaryFormats.map((jobSalaryFormat, index) => (
-                <option key={index} value={jobSalaryFormat.value}>
-                  {jobSalaryFormat.label}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
+
+          {sections.map((section, index) => (
+            <div key={index} className="d-flex align-items-center mb-3 gap-3">
+              <Form.Group>
+                <Form.Label>Section Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Section Title"
+                  value={section.title}
+                  onChange={(e) =>
+                    handleSectionChange(index, "title", e.target.value)
+                  }
+                  className="me-2"
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Section Content Link</Form.Label>
+                <div className="d-flex align-items-center">
+                  <Form.Control
+                    type="text"
+                    placeholder="Section Content Link"
+                    value={section.link}
+                    onChange={(e) =>
+                      handleSectionChange(index, "link", e.target.value)
+                    }
+                    className="me-2"
+                  />
+                  <input
+                    type="file"
+                    accept="video/*"
+                    ref={(el) =>
+                      (fileInputRefs.current[`section-${index}-link`] = el)
+                    }
+                    onChange={
+                      (e) => handleVideoChange(e, index, "link") // Pass the index and field name
+                    }
+                    style={{ display: "none" }}
+                  />
+
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      handleEditVideoClick(`section-${index}`, "link")
+                    }
+                    disabled={loadingVideo}
+                  >
+                    {loadingVideo ? "Uploading..." : "Upload Video"}
+                  </Button>
+                </div>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Section Duration</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Section Duration"
+                  value={section.duration}
+                  onChange={(e) =>
+                    handleSectionChange(index, "duration", e.target.value)
+                  }
+                  className="me-2"
+                />
+              </Form.Group>
+
+              {index > 0 && (
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleRemoveSection(index)}
+                  className="mt-5"
+                >
+                  Remove
+                </Button>
+              )}
+            </div>
+          ))}
+
+          <Button
+            variant="outline-primary"
+            onClick={handleAddSection}
+            disabled={!isInitialSectionFilled}
+            className="mb-3"
+          >
+            Add Section
+          </Button>
         </Modal.Body>
-        <Modal.Footer className="pt-0 border-0 d-inline">
-          <Button variant="primary" onClick={handleAddService}>
-            Save Service
+        <Modal.Footer className="pt-0 border-0 d-inline ">
+          <Button variant="primary" onClick={handleAddTopic}>
+            save Module
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
             Close
@@ -135,219 +210,69 @@ const AddService = () => {
   );
 };
 
-const Service = ({ submit, onPrevious }) => {
-  const { ecosystemDomain } = useParams();
-  const location = useLocation();
-  const ecosystemFromState = useSelector((state) => state.ecosystem.ecosystemDomain);
-  const user = useSelector((state) => state.authentication.user);
-  const creatorId = user?.data?.CreatorId;
-  const navigate = useNavigate(); 
-  const [loading, setLoading] = useState(false);
-  const sections = useSelector((state) => state.service.services) || [];
+const Curriculum = ({ onNext, onPrevious }) => {
+  const sections = useSelector((state) => state.course.curriculum) || [];
+  console.log(sections);
   const dispatch = useDispatch();
   const [editIndex, setEditIndex] = useState(null);
-  const [editName, setEditName] = useState("");
-  const [editShortDescription, setEditShortDescription] = useState("");
-  const [editPrice, setEditPrice] = useState("");
-  const [editDeliveryTime, setEditDeliveryTime] = useState("");
-  const [editPriceFormat, setEditPriceFormat] = useState("");
-
-  const jobSalaryFormats = [
-    { value: "Fixed", label: "Fixed" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Monthly", label: "Monthly" },
-    { value: "Yearly", label: "Yearly" },
-  ];
-
- 
-  
-
-  const serviceData = useSelector((state) => state.service);
-  const {
-    category,
-    subCategory,
-    prefix,
-    header,
-    description,
-    format,
-    currency,
-    backgroundCover,
-    services,
-  } = serviceData;
-
- 
-
-  let ecosystem;
-  if (ecosystemDomain) {
-    ecosystem = ecosystemDomain;
-  } else {
-    ecosystem = ecosystemFromState;
-  }
-  
-  console.log(ecosystem)
-
-  const convertBase64ToFile = (base64String, filename) => {
-    const arr = base64String.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  };
-
-  
-
-  const handleSubmit = () => {
-    setLoading(true);
-  
-    const formData = new FormData();
-    formData.append("category", category);
-    formData.append("subCategory", subCategory);
-    formData.append("header", `${prefix} ${header}`);
-    formData.append("description", description);
-    formData.append("format", format);
-    formData.append("currency", currency);
-    formData.append("services", JSON.stringify(services));
-  
-    // Convert and append base64 images directly to FormData
-    const imageProperties = {
-      "product.mainImage": "mainImage.png",
-      "product.thumbnailImage": "thumbnailImage.png",
-      "gallery.image1": "galleryImage1.png",
-      "gallery.image2": "galleryImage2.png",
-      "gallery.image3": "galleryImage3.png",
-      "gallery.image4": "galleryImage4.png",
-      "details.coverImage": "coverImage.png",
-    };
-  
-    // Assuming image data is within the serviceData object
-    for (const [key, filename] of Object.entries(imageProperties)) {
-      const keys = key.split(".");
-      let imageProp = serviceData;
-      try {
-        for (const k of keys) {
-          imageProp = imageProp[k];
-          if (imageProp === undefined) break; // Exit loop if property is undefined
-        }
-        if (typeof imageProp === "string" && imageProp.startsWith("data:image")) {
-          const convertedFile = convertBase64ToFile(imageProp, filename);
-          formData.append(key, convertedFile);
-        }
-      } catch (error) {
-        console.error(`Error accessing property ${key}:`, error);
-      }
-    }
-  
-    // Convert backgroundCover images from base64 to binary and append to formData as separate fields under the same key
-    if (Array.isArray(backgroundCover)) {
-      backgroundCover.forEach((image, index) => {
-        if (typeof image.preview === "string" && image.preview.startsWith("data:image")) {
-          const convertedFile = convertBase64ToFile(image.preview, `backgroundCover${index}.png`);
-          formData.append("backgroundCover", convertedFile);
-        }
-      });
-    } else {
-      console.error("Invalid backgroundCover data:", backgroundCover);
-    }
-  
-    formData.append("creatorId", creatorId);
-    formData.append("ecosystemDomain", ecosystem);
-  
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/create-service`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        setLoading(false);
-        if (response.data) {
-          showToast(response.data.message);
-        }
-        dispatch(resetServiceData());
-      if (location.pathname.includes(`/${ecosystemDomain}/`)) {
-        navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
-      } else {
-        navigate('/creator/dashboard/Products');
-      }
-        submit();
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  };
-  
-  useEffect(() => {
-    if (submit && typeof submit !== 'function') {
-      console.error('submit is not a function');
-    }
-  }, [submit]);
-
-  const handlePrevious = () => {
-    if (onPrevious) {
-      onPrevious();
-    }
-  };
+  const [editCourseName, setEditCourseName] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editTotalDuration, setEditTotalDuration] = useState("");
+  const [editSections, setEditSections] = useState([]);
 
   useEffect(() => {
     if (editIndex !== null) {
       const {
-        name,
-        shortDescription,
-        price,
-        deliveryTime,
-        priceFormat,
+        courseName,
+        description,
+        totalDuration,
+        section: sec,
       } = sections[editIndex];
-      setEditName(name);
-      setEditShortDescription(shortDescription);
-      setEditPrice(price);
-      setEditDeliveryTime(deliveryTime);
-      setEditPriceFormat(priceFormat);
+      setEditCourseName(courseName);
+      setEditDescription(description);
+      setEditTotalDuration(totalDuration);
+      setEditSections(sec || []);
     }
   }, [editIndex, sections]);
 
-  const handleRemoveService = (index) => {
-    dispatch(deleteService(index));
+  const handleRemoveSection = (index) => {
+    dispatch(removeTopic(index));
   };
 
-  const handleEditService = (index) => {
+  const handleEditSection = (index) => {
     setEditIndex(index);
     const {
-      name,
-      shortDescription,
-      price,
-      deliveryTime,
-      priceFormat,
+      courseName,
+      description,
+      totalDuration,
+      section: sec,
     } = sections[index];
-    setEditName(name);
-    setEditShortDescription(shortDescription);
-    setEditPrice(price);
-    setEditDeliveryTime(deliveryTime);
-    setEditPriceFormat(priceFormat);
+    setEditCourseName(courseName);
+    setEditDescription(description);
+    setEditTotalDuration(totalDuration);
+    setEditSections(sec || []);
+  };
+
+  const handleAddSection = () => {
+    setEditSections([...editSections, { title: "", link: "", duration: "" }]);
+  };
+
+  const handleSectionChange = (index, field, value) => {
+    const newEditSections = [...editSections];
+    newEditSections[index] = { ...newEditSections[index], [field]: value };
+    setEditSections(newEditSections);
   };
 
   const handleFieldChange = (field, value) => {
     switch (field) {
-      case "name":
-        setEditName(value);
+      case "courseName":
+        setEditCourseName(value);
         break;
-      case "shortDescription":
-        setEditShortDescription(value);
+      case "description":
+        setEditDescription(value);
         break;
-      case "price":
-        setEditPrice(value);
-        break;
-      case "deliveryTime":
-        setEditDeliveryTime(value);
-        break;
-      case "priceFormat":
-        setEditPriceFormat(value);
+      case "totalDuration":
+        setEditTotalDuration(value);
         break;
       default:
         break;
@@ -356,14 +281,13 @@ const Service = ({ submit, onPrevious }) => {
 
   const handleSaveEdit = () => {
     dispatch(
-      updateService({
+      updateTopic({
         index: editIndex,
-        service: {
-          name: editName,
-          shortDescription: editShortDescription,
-          price: editPrice,
-          deliveryTime: editDeliveryTime,
-         priceFormat: editPriceFormat,
+        topic: {
+          courseName: editCourseName,
+          description: editDescription,
+          totalDuration: editTotalDuration,
+          section: editSections,
         },
       })
     );
@@ -374,10 +298,10 @@ const Service = ({ submit, onPrevious }) => {
     <Form>
       <Card className="mb-3 border-0">
         <Card.Header className="border-bottom px-4 py-3">
-          <h4 className="mb-0">Service</h4>
+          <h4 className="mb-0">Curriculum</h4>
         </Card.Header>
         <Card.Body>
-          {sections.map((service, prIndex) => (
+          {sections.map((topic, prIndex) => (
             <div
               key={prIndex}
               className="bg-light rounded p-2 mb-4 position-relative"
@@ -385,63 +309,109 @@ const Service = ({ submit, onPrevious }) => {
               {editIndex === prIndex ? (
                 <div className="position-relative">
                   <Form.Group>
-                    <Form.Label>Service Name</Form.Label>
+                    <Form.Label>Course Name</Form.Label>
                     <Form.Control
                       type="text"
-                      value={editName}
+                      value={editCourseName}
                       onChange={(e) =>
-                        handleFieldChange("name", e.target.value)
+                        handleFieldChange("courseName", e.target.value)
                       }
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Short Description</Form.Label>
+                    <Form.Label>Description</Form.Label>
                     <Form.Control
                       as="textarea"
-                      value={editShortDescription}
+                      value={editDescription}
                       onChange={(e) =>
-                        handleFieldChange("shortDescription", e.target.value)
+                        handleFieldChange("description", e.target.value)
                       }
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>
+                      Audio/Video/Document course content Duration
+                    </Form.Label>
                     <Form.Control
                       type="text"
-                      value={editPrice}
+                      value={editTotalDuration}
                       onChange={(e) =>
-                        handleFieldChange("price", e.target.value)
+                        handleFieldChange("totalDuration", e.target.value)
                       }
                     />
                   </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Delivery Time</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={editDeliveryTime}
-                      onChange={(e) =>
-                        handleFieldChange("deliveryTime", e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Pricing Format</Form.Label>
-                    <Form.Select
-                      type="text"
-                      placeholder="Job Salary Format"
-                      value={editPriceFormat}
-                      onChange={(e) =>
-                        handleFieldChange("priceFormat", e.target.value)
-                      }
+                  {editSections.map((secs, secIndex) => (
+                    <div
+                      key={secIndex}
+                      className="d-flex align-items-center mb-3 mt-3 gap-3"
                     >
-                      <option value="">Select Pricing Format</option>
-                      {jobSalaryFormats.map((jobSalaryFormat, index) => (
-                        <option key={index} value={jobSalaryFormat.value}>
-                          {jobSalaryFormat.label}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Section Title</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Section Title"
+                          value={secs.title}
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "title",
+                              e.target.value
+                            )
+                          }
+                          className="me-2"
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Section Content Link</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Section Content Link"
+                          value={secs.link}
+                          disabled
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "link",
+                              e.target.value
+                            )
+                          }
+                          className="me-2"
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Section Duration</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Section Duration"
+                          value={secs.duration}
+                          onChange={(e) =>
+                            handleSectionChange(
+                              secIndex,
+                              "duration",
+                              e.target.value
+                            )
+                          }
+                          className="me-2"
+                        />
+                      </Form.Group>
+                      {secIndex > 0 && (
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => {
+                            const newSections = [...editSections];
+                            newSections.splice(secIndex, 1);
+                            setEditSections(newSections);
+                          }}
+                          className="mt-4"
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                  <Button variant="outline-primary" onClick={handleAddSection}>
+                    Add Section
+                  </Button>
                   <div className="mt-5">
                     <Button onClick={handleSaveEdit}>Save</Button>
                     <Button
@@ -458,19 +428,19 @@ const Service = ({ submit, onPrevious }) => {
                   <Button
                     variant="link"
                     className="position-absolute top-0 end-0 text-danger me-2"
-                    onClick={() => handleRemoveService(prIndex)}
+                    onClick={() => handleRemoveSection(prIndex)}
                   >
                     Delete
                   </Button>
                   <Button
                     variant="link"
                     className="position-absolute top-0 text-primary me-4"
-                    onClick={() => handleEditService(prIndex)}
+                    onClick={() => handleEditSection(prIndex)}
                     style={{ right: "10%", maxWidth: "80%" }}
                   >
                     Edit
                   </Button>
-                  <h4>{service.name}</h4>
+                  <h4>{topic.courseName}</h4>
                   <p
                     style={{
                       backgroundColor: "white",
@@ -481,7 +451,7 @@ const Service = ({ submit, onPrevious }) => {
                       overflowY: "auto",
                     }}
                   >
-                    {service.shortDescription}
+                    {topic.description}
                   </p>
                   <p
                     style={{
@@ -491,49 +461,95 @@ const Service = ({ submit, onPrevious }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {service.price}
+                    {topic.totalDuration}
                   </p>
-                  <p
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid #ced4da",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {service.deliveryTime}
-                  </p>
-                  <p
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid #ced4da",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {service.priceFormat}
-                  </p>
+                  {topic.section &&
+                    topic.section.map((sec, idx) => (
+                      <div
+                        key={idx}
+                        className="d-flex align-items-center mb-2"
+                        style={{ gap: "10px" }}
+                      >
+                        {/* Title */}
+                        <div
+                          style={{
+                            flex: "1",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor: "white",
+                              border: "1px solid #ced4da",
+                              padding: "5px 10px",
+                              borderRadius: "5px",
+                              fontWeight: "bold",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              flex: "1",
+                            }}
+                          >
+                            {sec.title}
+                          </span>
+                        </div>
+
+                        {/* Content Link Input */}
+                        <Form.Control
+                          type="text"
+                          placeholder="Link"
+                          value={sec.link}
+                          className="form-control-sm"
+                          style={{ flex: "2" }}
+                        />
+
+                        {/* Duration */}
+                        <div
+                          style={{
+                            flex: "1",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor: "white",
+                              border: "1px solid #ced4da",
+                              padding: "5px 10px",
+                              borderRadius: "5px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              flex: "1",
+                            }}
+                          >
+                            {sec.duration}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               )}
             </div>
           ))}
-          <AddService />
+          <AddTopic />
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between">
-      <Button
-            variant="outline-secondary"
-            className="mr-2"
-            onClick={handlePrevious}
-          >
-            Previous
-          </Button>
-          <Button variant="primary" onClick={handleSubmit} disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
-          </Button>
+        <Button variant="secondary" onClick={onPrevious}>
+          Previous
+        </Button>
+        <Button
+          variant="primary"
+          onClick={onNext}
+          disabled={sections.length === 0}
+        >
+          Next
+        </Button>
       </div>
     </Form>
   );
 };
 
-export default Service;
+export default Curriculum;

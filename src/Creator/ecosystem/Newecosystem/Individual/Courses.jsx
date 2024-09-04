@@ -38,7 +38,7 @@ const Courses = () => {
   };
 
   const handleSkipAndContinue = () => {
-    navigate("/creator/dashboard/Payment/individual");
+    navigate("/creator/dashboard/Edit-Template/individual");
   };
 
   const handlePrevious = () => {
@@ -76,7 +76,7 @@ const Courses = () => {
   };
 
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 pb-5">
       <EcoHeader />
 
       <Container className="mt-5 ">
@@ -163,15 +163,6 @@ const Courses = () => {
               </Row>
 
               <div className="d-flex justify-content-between align-content-center">
-                <div>
-                  <Button
-                    variant="secondary"
-                    className="me-2"
-                    onClick={handlePrevious}
-                  >
-                    Previous
-                  </Button>
-                </div>
                 <div className="d-flex justify-content-end">
                   <Button
                     variant="secondary"

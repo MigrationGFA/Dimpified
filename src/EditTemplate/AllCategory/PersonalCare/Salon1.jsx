@@ -138,7 +138,7 @@ const Template4 = () => {
           <Col md={9}>
             {renderSection(
               "navbar",
-              <Navbar bg="transparent" expand="lg" className="px-lg-3 py-lg-3">
+              <Navbar bg="transparent" expand="lg" className="px-lg-3 py-lg-7">
                 <Container>
                   <Navbar.Brand
                     className="fw-bold text-white d-flex align-items-center relative"
@@ -161,8 +161,8 @@ const Template4 = () => {
                       style={{
                         width: "250px",
                         position: "absolute",
-                        top: "500px",
-                        left: "120px",
+                        top: "-40px",
+                        // left: "120px",
                         zIndex: 1000,
                         backgroundColor: "rgba(0,0,0,0.5)",
                         color: "#fff",
@@ -236,7 +236,7 @@ const Template4 = () => {
               <Fragment>
                 <section
                   id="home"
-                  className="px-4 beauty pb-0 top-space-padding bg-dark-gray full-screen border-top bg-white position-relative md-h-700px sm-h-600px sm-pb-70px"
+                  className="px-4 beauty pb-0 top-space-padding bg-dark-gray full-screen border-top bg-white position-relative sm-pb-70px"
                   style={{
                     backgroundImage: `url(${content.hero.backgroundImage1})`,
                     backgroundAttachment: "fixed",
@@ -886,7 +886,7 @@ const Template4 = () => {
                             alt="Client Review"
                             style={{
                               transform: "translateY(-22.4068px)",
-                              height: "450px",
+                              height: "420px",
                             }}
                           />
                           <Button
@@ -947,9 +947,11 @@ const Template4 = () => {
                         className="align-self-end ps-60px pt-50px pb-50px text-center text-md-start lg-p-15px animate-child animate-complete"
                       >
                         <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-black.png"
+                          src={content.navbar.logo}
                           className="mb-20px"
                           alt="Company Logo"
+                          width="146"
+                          height="42"
                         />
                         <h6 className="alt-font fs-3 text-dark-gray">
                           <EditableBlock
@@ -1590,189 +1592,3 @@ const Pricing = () => (
     </section>
   </Fragment>
 );
-
-// Footer Section
-const Footer = () => (
-  <footer className="beauty px-4 bg-gradient-blue-ironstone-brown">
-    <Container>
-      <Row className="justify-content-center pt-55px pb-55px sm-pt-40px sm-pb-40px">
-        <Col
-          lg={3}
-          md={12}
-          sm={6}
-          className="last-paragraph-no-margin text-center text-sm-start text-md-center text-lg-start md-mb-30px"
-        >
-          <a href="#home" className="footer-logo d-inline-block">
-            <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-logo-white.png"
-              alt="Logo"
-              width="146"
-              height="42"
-            />
-          </a>
-        </Col>
-
-        <Col
-          lg={3}
-          md={4}
-          sm={6}
-          className="sm-mb-30px last-paragraph-no-margin text-center text-sm-start"
-        >
-          <span className="primary-font d-block text-base-color fs-15 ls-1px mb-5px text-uppercase fw-600">
-            Get in touch
-          </span>
-          <p className="primary-font lh-30 w-80 text-white lg-w-100">
-            401 Broadway, 24th Floor New York, NY 10013
-          </p>
-        </Col>
-
-        <Col
-          lg={3}
-          md={4}
-          sm={6}
-          className="xs-mb-30px last-paragraph-no-margin text-center text-sm-start"
-        >
-          <span className="primary-font d-block text-base-color fs-15 ls-1px mb-5px text-uppercase fw-600">
-            Need support?
-          </span>
-          <a href="tel:1800222000" className="text-white lh-30">
-            1-800-222-000
-          </a>
-          <br />
-          <a href="mailto:info@yourdomain.com" className="text-white">
-            info@yourdomain.com
-          </a>
-        </Col>
-
-        <Col
-          lg={3}
-          md={4}
-          sm={6}
-          className="last-paragraph-no-margin text-center text-sm-start"
-        >
-          <span className="primary-font d-block text-base-color fs-15 ls-1px mb-10px text-uppercase fw-600">
-            Connect with us
-          </span>
-          <div className="elements-social social-icon-style-09">
-            <ul className="medium-icon light">
-              <li>
-                <a
-                  className="facebook"
-                  href="https://www.facebook.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-facebook-f"></i>
-                  <span></span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="instagram"
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-instagram"></i>
-                  <span></span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="twitter"
-                  href="https://www.twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fa-brands fa-twitter"></i>
-                  <span></span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </Col>
-      </Row>
-    </Container>
-
-    <div className="pt-20px pb-20px border-top border-color-transparent-white-light">
-      <Container>
-        <Row className="align-items-center">
-          <Col xxl={8} lg={7} className="text-center text-lg-start md-mb-10px">
-            <Nav className="footer-navbar fs-16">
-              <Nav.Item>
-                <Nav.Link href="#home">Home</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="#book">About</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="#book">Services</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="demo-beauty-salon-wedding.html">
-                  Gallery
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="demo-beauty-salon-review.html">
-                  Reviews
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="#book">Contact</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col
-            xxl={4}
-            lg={5}
-            className="fs-16 last-paragraph-no-margin text-white text-center text-lg-start"
-          >
-            <p>
-              © 2024 Proudly Powered by{" "}
-              <a
-                href="https://www.dimpified.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-decoration-line-bottom text-white"
-              >
-                DIMP from GFA Technologies
-              </a>
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  </footer>
-);
-
-// editable image
-export const EditableImage = ({ initialImage, onImageChange }) => {
-  const fileInputRef = useRef(null);
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      onImageChange(e.target.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  return (
-    <div onClick={handleImageClick} style={{ cursor: "pointer" }}>
-      <img src={initialImage} alt="logo" width="50" />
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        accept="image/*"
-        onChange={handleFileChange}
-      />
-    </div>
-  );
-};
