@@ -20,6 +20,7 @@ import TradeServices from "../dimp-pages/trade-services/TradeServices";
 import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
+import BarberLanding from "../dimp-pages/personal-care/BarberLanding";
 
 import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
@@ -219,6 +220,7 @@ const AllRoutes = () => {
       <Route path="/personal-care-services" element={<PersonalCare />} />
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
+      <Route path="/barbers" element={<BarberLanding />} />
 
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
