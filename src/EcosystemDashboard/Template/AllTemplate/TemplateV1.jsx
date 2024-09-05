@@ -22,6 +22,7 @@ import {
 import sanitizeHtml from "sanitize-html";
 import axios from "axios";
 import BookingModal from "../../Features/BookingModal";
+
 const iconStyle = {
   color: "#222",
   fontSize: "1.5rem" /* Adjust size as needed */,
@@ -69,7 +70,6 @@ const Template1 = ({ details, subdomain }) => {
     setModalShow(true);
   };
 
-  const handleClose = () => setModalShow(false);
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -185,58 +185,6 @@ const Template1 = ({ details, subdomain }) => {
     };
     getServiceeDetails();
   }, [subdomain]);
-
-  const serviceOptions = {
-    "Home service": [
-      "Haircut - #3000",
-      "Shave - #2500",
-      "Hair Dye - #5000",
-      "Beard Trim - #3000",
-    ],
-    Shop: [
-      "Haircut - #2000",
-      "Shave - #1500",
-      "Hair Dye - #4000",
-      "Beard Trim - #3000",
-    ],
-  };
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-
-    if (id === "serviceLocation") {
-      setBarbingServices(serviceOptions[value]);
-      setFormData({ ...formData, serviceLocation: value, service: "" });
-    }
-  };
-
-  const checkAvailability = async () => {
-    try {
-      const response = await axios.post("/api/check-availability", {
-        date: formData.date,
-        time: formData.time,
-      });
-      return response.data.isAvailable;
-    } catch (error) {
-      console.error("Error checking availability:", error);
-      return false;
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const isAvailable = await checkAvailability();
-    if (!isAvailable) {
-      setNotification(
-        "The selected date and time are already booked. Please choose another."
-      );
-      return;
-    }
-    // Proceed with booking
-    // Submit the booking form data to the server
-    handleClose();
-  };
 
   const sanitizeContent = (html) => {
     return sanitizeHtml(html, {
@@ -361,7 +309,6 @@ const Template1 = ({ details, subdomain }) => {
         <BookingModal
           show={modalShow}
           setModalShow={setModalShow}
-          // handleClose={() => setModalShow(false)}
           information={serviceDetails}
         />
 

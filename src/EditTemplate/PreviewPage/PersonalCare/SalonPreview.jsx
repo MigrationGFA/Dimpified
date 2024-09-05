@@ -21,9 +21,19 @@ import sanitizeHtml from "sanitize-html";
 
 import { useSelector } from "react-redux";
 
+const MAX_MESSAGE_LENGTH = 40;
+const truncateMessage = (messages) => {
+  if (messages.length > MAX_MESSAGE_LENGTH) {
+    return messages.slice(0, MAX_MESSAGE_LENGTH) + "...";
+  }
+  return messages;
+};
+
 const Preview4 = () => {
   const content = useSelector((state) => state.mainTemplate.currentTemplate);
   const ecosystemDetails = useSelector((state) => state.ecosystem);
+
+  const serviceDetails = useSelector((state) => state.service);
 
   const galleryItems = [
     {
@@ -373,8 +383,8 @@ const Preview4 = () => {
                 </Container>
               </section>
             </Fragment>
-            <Services />
-            <Pricing />
+            <Services serviceDetails={serviceDetails} />
+            <Pricing serviceDetails={serviceDetails} />
             <Fragment>
               <section
                 id="gallery"
@@ -654,65 +664,23 @@ const Preview4 = () => {
                       <h2 className="alt-font fs-1 text-white xs-mb-15px fancy-text-style-4 ls-minus-1px ps-5">
                         Book Now!
                       </h2>
-                      <Form
-                        action="email-templates/contact-form.php"
-                        method="post"
-                        className="px-5"
+                      <Button
+                        href="#services"
+                        className="btn btn-extra-large btn-base-color btn-hover-animation-switch btn-round-edge btn-box-shadow"
                       >
-                        <Form.Group className="position-relative mb-10px">
-                          <span className="primary-font form-icon">
-                            <Person className="icon-extra-medium" />
+                        <span>
+                          <span className="primary-font btn-text">
+                            Book appointment
                           </span>
-                          <Form.Control
-                            className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
-                            type="text"
-                            name="name"
-                            placeholder="Enter your name*"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group className="position-relative mb-10px">
-                          <span className="primary-font form-icon">
-                            <Envelope className="icon-extra-medium" />
+                          <span className="primary-font btn-icon">
+                            <i className="fa-solid fa-arrow-right fs-14"></i>
                           </span>
-                          <Form.Control
-                            className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
-                            type="email"
-                            name="email"
-                            placeholder="Enter your email address*"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group className="position-relative mb-10px">
-                          <span className="primary-font form-icon">
-                            <ChatSquareDots className="icon-extra-medium" />
+                          <span className="primary-font btn-icon">
+                            <i className="fa-solid fa-arrow-right fs-14"></i>
                           </span>
-                          <Form.Control
-                            as="textarea"
-                            className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
-                            name="service"
-                            placeholder="Which service would you like to book?"
-                            rows={2}
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group className="position-relative mb-12">
-                          <Form.Control
-                            as="textarea"
-                            className="ps-0 border-radius-0px fs-17 bg-transparent border-color-transparent-white-light placeholder-medium-gray"
-                            name="message"
-                            placeholder="Any special requests or notes"
-                            rows={4}
-                          />
-                        </Form.Group>
-                        <Button
-                          className="btn btn-medium btn-white btn-box-shadow mt-0px fw-700 submit btn-round-edge"
-                          type="submit"
-                        >
-                          Book Appointment
-                        </Button>
-                        <div className="form-results mt-20px d-none"></div>
-                      </Form>
+                        </span>
+                      </Button>
+
                       <div
                         className="w-200px h-200px xs-w-150px xs-h-150px bg-white border-radius-100 bg-gradient-solitude-blue-fair-pink d-flex align-items-center justify-content-center position-absolute right-minus-30px xs-right-minus-20px bottom-minus-60px xs-bottom-minus-40px"
                         style={{
@@ -797,53 +765,60 @@ const Preview4 = () => {
                     <br />
                   </Col>
 
-                  <Col
-                    lg={3}
-                    md={4}
-                    sm={6}
-                    className="last-paragraph-no-margin text-center text-sm-start"
-                  >
-                    <span className="primary-font d-block text-base-color fs-15 ls-1px mb-10px text-uppercase fw-600">
-                      Connect with us
-                    </span>
-                    <div className="elements-social social-icon-style-09">
-                      <ul className="medium-icon light">
-                        <li>
-                          <a
-                            className="facebook"
-                            href="https://www.facebook.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fa-brands fa-facebook-f"></i>
-                            <span></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="instagram"
-                            href="https://www.instagram.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fa-brands fa-instagram"></i>
-                            <span></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="twitter"
-                            href="https://www.twitter.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fa-brands fa-twitter"></i>
-                            <span></span>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </Col>
+                  {ecosystemDetails.socialMedia.length > 0 ? (
+                    <Col
+                      lg={3}
+                      md={4}
+                      sm={6}
+                      className="last-paragraph-no-margin text-center text-sm-start"
+                    >
+                      <span className="primary-font d-block text-base-color fs-15 ls-1px mb-10px text-uppercase fw-600">
+                        Connect with us
+                      </span>
+                      <div className="elements-social social-icon-style-09">
+                        <ul className="medium-icon light">
+                          {ecosystemDetails.socialMedia.map((social, index) => {
+                            // Determine the icon class and the link based on the social media name
+                            let iconClass = "";
+                            let socialLink = social.link || "#";
+
+                            switch (social.name.toLowerCase()) {
+                              case "facebook":
+                                iconClass = "fa-brands fa-facebook-f";
+                                break;
+                              case "instagram":
+                                iconClass = "fa-brands fa-instagram";
+                                break;
+                              case "twitter":
+                                iconClass = "fa-brands fa-twitter";
+                                break;
+                              // Add more cases for other social media platforms if needed
+                              default:
+                                break;
+                            }
+
+                            return (
+                              iconClass && (
+                                <li key={index}>
+                                  <a
+                                    className={social.name.toLowerCase()}
+                                    href={socialLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <i className={iconClass}></i>
+                                    <span></span>
+                                  </a>
+                                </li>
+                              )
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </Col>
+                  ) : (
+                    ""
+                  )}
                 </Row>
               </Container>
 
@@ -911,7 +886,7 @@ const Preview4 = () => {
 export default Preview4;
 
 // Services Section
-const Services = () => (
+const Services = ({ serviceDetails }) => (
   <Fragment>
     <section
       id="services"
@@ -933,141 +908,85 @@ const Services = () => (
         </Row>
 
         <Row className="row-cols-1 row-cols-lg-3 row-cols-md-2 transition-inner-all justify-content-center mb-4">
-          {[
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-02.jpg",
-              title: "Hair treatment",
-              description: "Advanced hair treatment",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-03.jpg",
-              title: "Reflexology",
-              description: "Different amounts of pressure",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-04.jpg",
-              title: "Makeup",
-              description: "Rethink your lash look",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-05.jpg",
-              title: "Skin care",
-              description: "Believe in your beauty",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-06.jpg",
-              title: "Cosmetology",
-              description: "Fabulous in every way",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-home-07.jpg",
-              title: "Grooming",
-              description: "Especially crafted to suit",
-            },
-          ].map((service, index) => (
-            <Col key={index} className="mb-20px">
-              <Card className="services-box-style-01 hover-box">
-                <div className="position-relative box-image border-radius-6px overflow-hidden">
-                  <a href="#book">
-                    <img src={service.img} alt="" fluid />
-                    <div className="box-overlay bg-gradient-blue-ironstone-brown"></div>
-                    <span className="primary-font d-flex justify-content-center align-items-center mx-auto icon-box absolute-middle-center z-index-1 w-65px h-65px rounded-circle border border-color-transparent-white border-1">
-                      <ArrowRight className="text-white" />
-                    </span>
-                  </a>
-                </div>
-                <Card.Body className="p-25px text-center">
-                  <Card.Title className="fs-22 text-dark-gray alt-font">
-                    {service.title}
-                  </Card.Title>
-                  <Card.Text className="lh-26">{service.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+          {serviceDetails &&
+            serviceDetails.services.length > 0 &&
+            serviceDetails.services.map((service, index) => (
+              <Col key={index} className="mb-20px">
+                <Card className="services-box-style-01 hover-box">
+                  <div className="position-relative box-image border-radius-6px overflow-hidden">
+                    <a href="#book">
+                      <img src={service.serviceImage} alt="" fluid />
+                      <div className="box-overlay bg-gradient-blue-ironstone-brown"></div>
+                      <span className="primary-font d-flex justify-content-center align-items-center mx-auto icon-box absolute-middle-center z-index-1 w-65px h-65px rounded-circle border border-color-transparent-white border-1">
+                        <ArrowRight className="text-white" />
+                      </span>
+                    </a>
+                  </div>
+                  <Card.Body className="p-25px text-center">
+                    <Card.Title className="fs-22 text-dark-gray alt-font">
+                      {service.name}
+                    </Card.Title>
+                    <Card.Text className="lh-26">
+                      {truncateMessage(service.shortDescription)}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
         </Row>
       </Container>
     </section>
   </Fragment>
 );
-const Pricing = () => (
+const Pricing = ({ serviceDetails }) => (
   <Fragment>
     <section className="beauty px-4 overlap-height bg-white border-bottom border-color-extra-medium-gray">
       <Container className="overlap-gap-section">
         <Row className="justify-content-between align-items-center mb-5 xs-mb-6">
-          {[
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-02.png",
-              title: "Hair wash and dry",
-              description: "Quick hair wash and blow",
-              price: "$35",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-03.png",
-              title: "Express makeup",
-              description: "Lovely on your special day",
-              price: "$65",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-04.png",
-              title: "Haircut by expert",
-              description: "Get the best haircut",
-              price: "$25",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-05.png",
-              title: "New hair styling",
-              description: "Trendy and glam hair style",
-              price: "$25",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-06.png",
-              title: "Wash and plain dry",
-              description: "Advanced hair treatment",
-              price: "$45",
-            },
-            {
-              img: "https://gfa-tech.com/dimp-template-images/images/demo-beauty-salon-icon-07.png",
-              title: "Organic skin treatment",
-              description: "Reduce dryness from skin",
-              price: "$55",
-            },
-          ].map((service, index) => (
-            <Col
-              lg={6}
-              className={`pe-${
-                index % 2 === 0 ? 50 : 30
-              }px md-pe-15px pricing-table-style-09`}
-              key={index}
-            >
-              <Row
-                className={`border-top border-color-extra-medium-gray g-0 xs-pt-20px xs-pb-20px ${
-                  index % 2 === 0 ? "xs-pt-20px xs-pb-20px" : ""
-                }`}
+          {serviceDetails &&
+            serviceDetails.services.length > 0 &&
+            serviceDetails.services.map((service, index) => (
+              <Col
+                lg={6}
+                className={`pe-${
+                  index % 2 === 0 ? 50 : 30
+                }px md-pe-15px pricing-table-style-09`}
+                key={index}
               >
-                <Col sm={3} className="text-center align-self-center">
-                  <img src={service.img} className="w-55px" alt="" />
-                </Col>
-                <Col
-                  sm={7}
-                  className="text-center text-sm-start last-paragraph-no-margin ps-40px pe-40px pt-30px pb-30px border-start border-color-extra-medium-gray xs-border-start-0 lg-ps-20px lg-pe-20px"
+                <Row
+                  className={`border-top border-color-extra-medium-gray g-0 xs-pt-20px xs-pb-20px ${
+                    index % 2 === 0 ? "xs-pt-20px xs-pb-20px" : ""
+                  }`}
                 >
-                  <span className="primary-font alt-font text-dark-gray fs-20 lg-fs-19">
-                    {service.title}
-                  </span>
-                  <p className="primary-font lh-26">{service.description}</p>
-                </Col>
-                <Col
-                  sm={2}
-                  className="text-center text-sm-start align-self-center"
-                >
-                  <h4 className="alt-font text-dark-gray mb-0 fw-400">
-                    {service.price}
-                  </h4>
-                </Col>
-              </Row>
-            </Col>
-          ))}
+                  <Col sm={2} className="text-center align-self-center">
+                    <img src={service.serviceImage} className="w-45px" alt="" />
+                  </Col>
+                  <Col
+                    sm={7}
+                    className="text-center text-sm-start last-paragraph-no-margin ps-10px pe-10px pt-30px pb-30px border-start border-color-extra-medium-gray xs-border-start-0 lg-ps-10px lg-pe-10px"
+                  >
+                    <span className="primary-font alt-font text-dark-gray fs-20 lg-fs-19">
+                      {service.name}
+                    </span>
+                    <p className="primary-font lh-26">
+                      {truncateMessage(service.shortDescription)}
+                    </p>
+                  </Col>
+                  <Col
+                    sm={3}
+                    className="text-center text-sm-start align-self-center"
+                  >
+                    <h4 className="alt-font text-dark-gray mb-0 fw-400">
+                      {service.price}
+                    </h4>
+                    <p className="alt-font text-dark-gray mb-0 fw-400">
+                      <small>{service.priceFormat} Price </small>
+                      {/* deliveryTime */}
+                    </p>
+                  </Col>
+                </Row>
+              </Col>
+            ))}
         </Row>
       </Container>
     </section>
