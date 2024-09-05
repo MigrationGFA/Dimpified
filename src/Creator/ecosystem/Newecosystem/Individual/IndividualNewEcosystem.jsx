@@ -19,7 +19,7 @@ import {
   updateField,
   setEcosystemId,
   updateSocialMedia,
-  resetState
+  resetState,
 } from "../../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
@@ -77,7 +77,7 @@ const NewEcosystem = () => {
       console.error("Event or event.target is undefined");
     }
   };
-  
+
   const handleUrlChange = (index, event) => {
     const newLinks = socialMedia.map((link, i) =>
       i === index ? { ...link, link: event.target.value } : link
@@ -85,27 +85,41 @@ const NewEcosystem = () => {
     setSocialMedia(newLinks);
     dispatch(updateSocialMedia(newLinks));
   };
-  
+
   const addLink = () => {
     setSocialMedia([...socialMedia, { name: "", link: "" }]);
   };
-  
+
   const removeLink = (index) => {
     setSocialMedia(socialMedia.filter((_, i) => i !== index));
   };
 
+
   const handleFieldChange = (field, value) => {
-    dispatch(updateField({ field, value }));
-
+    // Apply filtering only to ecosystemName and ecosystemDomain
+    const filteredValue = (field === "ecosystemName" || field === "ecosystemDomain") 
+      ? value.replace(/[.\s,_-]/g, "") 
+      : value;
+  
+    // Handle ecosystemName changes
     if (field === "ecosystemName") {
-      const domainValue = value.toLowerCase().replace(/\s+/g, "-");
+      const domainValue = filteredValue.toLowerCase();
+      dispatch(updateField({ field: "ecosystemName", value: filteredValue }));
       dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
+  
       validateDomain(domainValue);
+    } 
+    // Handle ecosystemDomain changes
+    else if (field === "ecosystemDomain") {
+      dispatch(updateField({ field: "ecosystemDomain", value: filteredValue }));
+      validateDomain(filteredValue);
+    } 
+    // For other fields, dispatch the unfiltered value
+    else {
+      dispatch(updateField({ field, value: filteredValue }));
     }
-
-    if (field === "ecosystemDomain") {
-      validateDomain(value);
-    }
+  
+    // Handle 'target' field for category-related logic
     if (field === "target") {
       if (value === "Other") {
         setIsOtherCategory(true);
@@ -119,6 +133,7 @@ const NewEcosystem = () => {
       }
     }
   };
+  
 
   useEffect(() => {
     if (
@@ -161,7 +176,6 @@ const NewEcosystem = () => {
       setIsFormValid(false);
     }
   };
-
 
   const validateDomain = async (ecosystemDomain) => {
     try {
@@ -250,7 +264,8 @@ const NewEcosystem = () => {
                   <Row className="mb-4">
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-name">
-                      A. What’s the name of your business?<span className="text-danger">*</span>
+                        A. What’s the name of your business?
+                        <span className="text-danger">*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -269,7 +284,7 @@ const NewEcosystem = () => {
                     </Col>
                     <Col lg={6} className="col-12">
                       <Form.Label htmlFor="ecosystem-domain">
-                      B. What should your website address be?
+                        B. What should your website address be?
                         <span className="text-danger">*</span>
                       </Form.Label>
                       <div className="input-group">
@@ -287,8 +302,7 @@ const NewEcosystem = () => {
                         <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
-                        The domain must contain only lowercase letters and
-                        hyphens.
+                        The domain must contain only lowercase letters.
                       </Form.Text>
                       {domainMessage && (
                         <Alert className="bg-primary text-white">
@@ -567,7 +581,7 @@ const NewEcosystem = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowSocialModal(false)}>
-            Close
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

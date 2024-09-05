@@ -34,13 +34,13 @@ const Settings = ({ onNext, onPrevious }) => {
     filesArray.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(addBackgroundCover({ name: file.name, preview: e.target.result }));
+        dispatch(
+          addBackgroundCover({ name: file.name, preview: e.target.result })
+        );
       };
       reader.readAsDataURL(file);
     });
   };
-  
-  
 
   const handleRemoveBackground = (index) => {
     dispatch(removeBackgroundCover(index));
@@ -50,14 +50,6 @@ const Settings = ({ onNext, onPrevious }) => {
     e.preventDefault();
     onNext();
   };
-
-  useEffect(() => {
-    return () => {
-      service.backgroundCover.forEach((image) => {
-        URL.revokeObjectURL(image.preview);
-      });
-    };
-  }, [service.backgroundCover]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -211,67 +203,6 @@ const Settings = ({ onNext, onPrevious }) => {
                     </Tooltip>
                   </div>
                 </Form.Group>
-              </Col>
-
-              {/* Service Background */}
-              <Col md={12} className="mb-3">
-                <Form.Label htmlFor="backgroundCover">
-                  Service Background{" "}
-                  <small className="text-muted">
-                    <em className="text-sm">
-                      (image files only: png, jpeg, jpg, etc....)
-                    </em>
-                  </small>
-                  <span className="text-danger">*</span>
-                </Form.Label>
-                <div className="d-flex align-items-center">
-                  <Form.Control
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                  />
-                  <Tooltip
-                    content="Upload background images related to the service"
-                    placement="left"
-                    className="custom-tooltip bg-primary text-white"
-                    style={{ minWidth: "150px" }}
-                  >
-                    <FaEye className="ms-2 cursor-pointer" />
-                  </Tooltip>
-                </div>
-                <div style={{ marginTop: "0.5rem" }}>
-                  {service.backgroundCover.map((image, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "0.5rem",
-                      }}
-                      className="d-inline-flex"
-                    >
-                      <img
-                        src={image.preview}
-                        alt={`Background ${index}`}
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          marginRight: "1px",
-                        }}
-                      />
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleRemoveBackground(index)}
-                        style={{ marginRight: "10px" }}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
-                </div>
               </Col>
             </Form.Group>
           </Col>

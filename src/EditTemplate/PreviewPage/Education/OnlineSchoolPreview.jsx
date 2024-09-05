@@ -216,13 +216,13 @@ const Preview2 = () => {
 
             <Navbar.Collapse id="navbarNav">
               <Nav className="mx-auto alt-font fs-4 learning-link ">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#about">About</Nav.Link>
-                <Nav.Link href="#courses">Courses</Nav.Link>
-                <Nav.Link href="#instructors">Instructors</Nav.Link>
-                <Nav.Link href="#testimonials">Testimonial</Nav.Link>
-                <Nav.Link href="#blog">Blog</Nav.Link>
-                <Nav.Link href="#contact">Contact</Nav.Link>
+                <Nav.Link href="#home" style={{fontSize: "0.875rem"}}>Home</Nav.Link>
+                <Nav.Link href="#about" style={{fontSize: "0.875rem"}}>About</Nav.Link>
+                <Nav.Link href="#courses" style={{fontSize: "0.875rem"}}>Courses</Nav.Link>
+                <Nav.Link href="#instructors" style={{fontSize: "0.875rem"}}>Instructors</Nav.Link>
+                <Nav.Link href="#testimonials" style={{fontSize: "0.875rem"}}>Testimonial</Nav.Link>
+                <Nav.Link href="#blog" style={{fontSize: "0.875rem"}}>Blog</Nav.Link>
+                <Nav.Link href="#contact" style={{fontSize: "0.875rem"}}>Contact</Nav.Link>
               </Nav>
               <Button
                 href="signup"
@@ -609,50 +609,6 @@ const Preview2 = () => {
           </Container>
         </section>
 
-        <section
-          id="blog"
-          className="learning px-4 bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
-        >
-          <Container className="overlap-gap-section">
-            <Row className="mb-4 md-mb-6">
-              <Col>
-                <Row className="justify-content-center mb-3">
-                  <Col xs={12} className="text-center">
-                    <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
-                      Our Blog Post
-                    </h2>
-                  </Col>
-                </Row>
-                <Row>
-                  {blogPosts.map((post, index) => (
-                    <Col key={index} xs={12} md={6} lg={4} className="mb-0">
-                      <Card className="card border-0 border-radius-4px overflow-hidden box-shadow-large box-shadow-extra-large-hover " style={{height: "680px"}}>
-                        <Card.Body className="p-0">
-                          <div className="blog-image p-0 position-relative overflow-hidden">
-                            <a href="#">
-                              <img src={post.imgSrc} alt={post.title} />
-                            </a>
-                          </div>
-                          <Card.Body className="p-0">
-                            <div className="post-content p-4 md-p-4">
-                              <a
-                                href="#"
-                                className="card-title mb-10px fw-600 fs-19 lh-28 text-dark-gray d-inline-block"
-                              >
-                                {sanitizeContent(post.title)}
-                              </a>
-                              <p className="mb-0">{sanitizeContent (post.content)}</p>
-                            </div>
-                          </Card.Body>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              </Col>
-            </Row>
-          </Container>
-        </section>
 
         <section
           id="contact"

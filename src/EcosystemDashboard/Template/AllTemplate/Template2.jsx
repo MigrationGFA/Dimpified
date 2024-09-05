@@ -38,87 +38,9 @@ import {
   Nav,
 } from "react-bootstrap";
 import sanitizeHtml from "sanitize-html";
-import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
-// const courses = [
-//   {
-//     id: 1,
-//     category: "Design",
-//     price: "$55",
-//     lessons: 10,
-//     students: 18,
-//     reviews: 20,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-01.jpg",
-//     title: "Business accounting and taxation fundamental",
-//     instructor: "Matthew Taylor",
-//   },
-//   {
-//     id: 2,
-//     category: "Finance",
-//     price: "$65",
-//     lessons: 22,
-//     students: 30,
-//     reviews: 39,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-02.jpg",
-//     title: "Finance fundamentals of management and planning",
-//     instructor: "Leonel Mooney",
-//   },
-//   {
-//     id: 3,
-//     category: "Design",
-//     price: "$80",
-//     lessons: 15,
-//     students: 55,
-//     reviews: 55,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-03.jpg",
-//     title: "Introduction to application design and development",
-//     instructor: "Herman Miller",
-//   },
-//   {
-//     id: 4,
-//     category: "Medicine",
-//     price: "$60",
-//     lessons: 10,
-//     students: 34,
-//     reviews: 42,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-04.jpg",
-//     title: "Genetic testing and sequencing technique",
-//     instructor: "Shoko Mugikura",
-//   },
-//   {
-//     id: 5,
-//     category: "Design",
-//     price: "$70",
-//     lessons: 20,
-//     students: 59,
-//     reviews: 56,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-05.jpg",
-//     title: "Introduction to web design and visualization",
-//     instructor: "Alexa Harvard",
-//   },
-//   {
-//     id: 6,
-//     category: "Business",
-//     price: "$45",
-//     lessons: 18,
-//     students: 80,
-//     reviews: 76,
-//     imageUrl:
-//       "https://gfa-tech.com/dimp-template-images/images/demo-elearning-courses-06.jpg",
-//     title: "Improve your English vocabulary and language",
-//     instructor: "Leonel Mooney",
-//   },
-// ];
-
-const CourseLogo = sessionStorage.getItem("courseImage");
-
-const Preview2 = ({ details, subdomain }) => {
+const Template2 = ({ details, subdomain }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -629,7 +551,7 @@ const Preview2 = ({ details, subdomain }) => {
             </div>
           </Container>
         </section>
-
+        {/* 
         <section
           id="blog"
           className="learning px-4 bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
@@ -678,7 +600,7 @@ const Preview2 = ({ details, subdomain }) => {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
 
         <section
           id="contact"
@@ -888,4 +810,4 @@ const Preview2 = ({ details, subdomain }) => {
   );
 };
 
-export default Preview2;
+export default Template2;
