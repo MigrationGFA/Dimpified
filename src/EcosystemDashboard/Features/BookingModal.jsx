@@ -81,10 +81,13 @@ const BookingModal = ({ show, setModalShow, information }) => {
     return `${timestamp}-${randomString}`;
   };
 
+  const percentageCalculation = (information.price * 2.5) / 100;
+  const totalAmount = information.price + percentageCalculation;
+
   const handleFlutterPayment = useFlutterwave({
     public_key: import.meta.env.VITE_FLW_PUBLIC_KEY,
     tx_ref: generateTxRef(),
-    amount: information.price,
+    amount: totalAmount,
     currency: information.currency,
     payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
     customer: {
