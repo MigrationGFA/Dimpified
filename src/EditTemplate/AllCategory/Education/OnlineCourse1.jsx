@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -283,13 +285,13 @@ const Template2 = () => {
 
                   <Navbar.Collapse id="navbarNav">
                     <Nav className="mx-auto alt-font fs-4 learning-link">
-                      <Nav.Link href="#home">Home</Nav.Link>
-                      <Nav.Link href="#about">About</Nav.Link>
-                      <Nav.Link href="#courses">Courses</Nav.Link>
-                      <Nav.Link href="#instructors">Instructors</Nav.Link>
-                      <Nav.Link href="#testimonials">Testimonial</Nav.Link>
-                      <Nav.Link href="#blog">Blog</Nav.Link>
-                      <Nav.Link href="#contact">Contact</Nav.Link>
+                      <Nav.Link href="#home" style={{fontSize: "0.875rem"}}>Home</Nav.Link>
+                      <Nav.Link href="#about" style={{fontSize: "0.875rem"}}>About</Nav.Link>
+                      <Nav.Link href="#courses" style={{fontSize: "0.875rem"}}>Courses</Nav.Link>
+                      <Nav.Link href="#instructors" style={{fontSize: "0.875rem"}}>Instructors</Nav.Link>
+                      <Nav.Link href="#testimonials" style={{fontSize: "0.875rem"}}>Testimonial</Nav.Link>
+                      <Nav.Link href="#blog" style={{fontSize: "0.875rem"}}>Blog</Nav.Link>
+                      <Nav.Link href="#contact" style={{fontSize: "0.875rem"}}>Contact</Nav.Link>
                     </Nav>
                     <Button
                       href="#signup"
@@ -316,7 +318,7 @@ const Template2 = () => {
                   backgroundImage: `url("https://gfa-tech.com/dimp-template-images/images/demo-elearning-hero-bg.jpg")`,
                   backgroundSize: "cover",
                   marginTop: "inherit",
-                  height: "100vh",
+                  // height: "100vh",
                 }}
               >
                 <div
@@ -536,47 +538,7 @@ const Template2 = () => {
                             className="h-75px position-relative z-index-1 mt-35px"
                           />
                           <div className="h-100px w-100px rounded-circle bg-very-light-gray position-absolute top-0 start-50 translate-middle-x"></div>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() =>
-                              handleEditImageClick("Statistics", section)
-                            }
-                            style={{
-                              position: "absolute",
-                              top: "50%",
-                              left: "50%",
-                              transform: "translate(-50%, -50%)",
-                              zIndex: 1000,
-                              backgroundColor: "rgba(0,0,0,0.5)",
-                              color: "#fff",
-                              border: "none",
-                            }}
-                          >
-                            {loadingImage ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-primary"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : (
-                              `Edit Icon ${index + 1}`
-                            )}
-                          </Button>
-                          <input
-                            type="file"
-                            ref={(ref) =>
-                              (fileInputRefs.current[`Statistics-${section}`] =
-                                ref)
-                            }
-                            onChange={(e) =>
-                              handleImageChange(e, "Statistics", section)
-                            }
-                            style={{ display: "none" }}
-                          />
+                        
                         </div>
                         <span className="fw-bold text-dark mb-2 d-block">
                           <EditableBlock
@@ -1056,123 +1018,6 @@ const Template2 = () => {
               </section>
             )}
 
-            {renderSection(
-              "Blog",
-              <section
-                id="blog"
-                className="learning px-4 bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
-              >
-                <Container className="overlap-gap-section">
-                  <Row className="mb-4 md-mb-6">
-                    <Col>
-                      <Row className="justify-content-center mb-3">
-                        <Col xs={12} className="text-center">
-                          <h2 className="alt-font fs-2 text-dark-gray fw-600 ls-minus-3px">
-                            Our Blog Post
-                          </h2>
-                        </Col>
-                      </Row>
-                      <Row>
-                        {blogPosts.map((post, index) => (
-                          <Col
-                            key={index}
-                            xs={12}
-                            md={6}
-                            lg={4}
-                            className="mb-0"
-                          >
-                            <Card className="card border-0 border-radius-4px overflow-hidden box-shadow-large box-shadow-extra-large-hover">
-                              <Card.Body className="p-0">
-                                <div className="blog-image p-0 position-relative overflow-hidden">
-                                  <a href="#">
-                                    <img src={post.imgSrc} alt={post.title} />
-                                  </a>
-                                  <Button
-                                    variant="primary"
-                                    size="sm"
-                                    onClick={() =>
-                                      handleEditImageClick(
-                                        "Blog",
-                                        `image${index + 1}`
-                                      )
-                                    }
-                                    style={{
-                                      position: "absolute",
-                                      top: "50%",
-                                      left: "50%",
-                                      transform: "translate(-50%, -50%)",
-                                      zIndex: 1000,
-                                      backgroundColor: "rgba(0,0,0,0.5)",
-                                      color: "#fff",
-                                      border: "none",
-                                    }}
-                                  >
-                                    {loadingImage ? (
-                                      <div
-                                        className="spinner-border spinner-border-sm text-primary"
-                                        role="status"
-                                      >
-                                        <span className="visually-hidden">
-                                          Loading...
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      `Edit Image ${index + 1}`
-                                    )}
-                                  </Button>
-                                  <input
-                                    type="file"
-                                    ref={(ref) =>
-                                      (fileInputRefs.current[
-                                        `Blog-image${index + 1}`
-                                      ] = ref)
-                                    }
-                                    onChange={(e) =>
-                                      handleImageChange(
-                                        e,
-                                        "Blog",
-                                        `image${index + 1}`
-                                      )
-                                    }
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                                <div className="post-content p-4 md-p-4">
-                                  <p className="card-title mb-10px fw-600 fs-19 lh-28 text-dark-gray d-inline-block">
-                                    <EditableBlock
-                                      initialContent={post.title}
-                                      onContentChange={(value) =>
-                                        handleContentChange(
-                                          "Blog",
-                                          `header${index + 1}`,
-                                          value
-                                        )
-                                      }
-                                    />
-                                  </p>
-                                  <p className="mb-0">
-                                    <EditableBlock
-                                      initialContent={post.content}
-                                      onContentChange={(value) =>
-                                        handleContentChange(
-                                          "Blog",
-                                          `content${index + 1}`,
-                                          value
-                                        )
-                                      }
-                                    />
-                                  </p>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          </Col>
-                        ))}
-                      </Row>
-                    </Col>
-                  </Row>
-                </Container>
-              </section>
-            )}
 
             <Contact />
             <Footer />

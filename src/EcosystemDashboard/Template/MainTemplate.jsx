@@ -3,6 +3,7 @@ import axios from "axios";
 import Template1 from "./AllTemplate/TemplateV1";
 import Template2 from "./AllTemplate/Template2";
 import Template4 from "./AllTemplate/Template4";
+import Template3 from "./AllTemplate/Template3";
 
 const MainTemplate = ({ subdomain }) => {
   const [details, setDetails] = useState(null);
@@ -56,6 +57,14 @@ const MainTemplate = ({ subdomain }) => {
     case 2:
       return (
         <Template2
+          details={details}
+          subdomain={subdomain}
+          ecosystemDetails={ecosystemDetails}
+        />
+      );
+    case 3:
+      return (
+        <Template3
           details={details}
           subdomain={subdomain}
           ecosystemDetails={ecosystemDetails}

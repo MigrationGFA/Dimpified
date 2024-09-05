@@ -551,7 +551,7 @@ const Template2 = ({ details, subdomain }) => {
             </div>
           </Container>
         </section>
-
+        {/* 
         <section
           id="blog"
           className="learning px-4 bg-gradient-tranquil-white overflow-hidden overlap-height position-relative"
@@ -600,7 +600,7 @@ const Template2 = ({ details, subdomain }) => {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
 
         <section
           id="contact"
