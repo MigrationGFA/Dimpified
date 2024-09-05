@@ -39,7 +39,6 @@ const Preview3 = ({ details, subdomain }) => {
   const [show, setShow] = useState(false);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
- 
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -248,7 +247,7 @@ const Preview3 = ({ details, subdomain }) => {
                   services.
                 </span>
               </h3>
-              <div className="d-flex justify-details-center justify-details-lg-start">
+              <div className="d-flex justify-content-center justify-content-lg-start">
                 <Button
                   variant="outline-light"
                   className="me-2"
@@ -272,218 +271,61 @@ const Preview3 = ({ details, subdomain }) => {
                 interval={2000}
                 className="carousel-fade"
               >
-                <Carousel.Item>
-                  <Row>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
-                          alt="Business law advisor"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
-                              className="w-60px"
-                              alt="Business law advisor icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Business law advisor
+                {/* Split services into groups of 3 */}
+                {services
+                  .reduce((rows, service, index) => {
+                    // Every 3 services form a row
+                    if (index % 3 === 0) {
+                      rows.push([]);
+                    }
+                    rows[rows.length - 1].push(service);
+                    return rows;
+                  }, [])
+                  .map((serviceGroup, rowIndex) => (
+                    <Carousel.Item key={rowIndex}>
+                      <Row>
+                        {serviceGroup.map((service, index) => (
+                          <Col lg={4} key={index}>
+                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px h-200px">
+                              <img
+                                src={service.serviceImage}
+                                alt={service.name}
+                                className="w-100 h-100"
+                              />
+                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                                <a href="#">
+                                  <img
+                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
+                                    className="w-60px"
+                                    alt={`${service.name} icon`}
+                                  />
                                 </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-02.jpg"
-                          alt="Investment litigation"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-02.png"
-                              className="w-60px"
-                              alt="Investment litigation icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Investment litigation
-                                </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-03.jpg"
-                          alt="Trust and estates"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-03.png"
-                              className="w-60px"
-                              alt="Trust and estates icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Trust and estates
-                                </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                  </Row>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <Row>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-04.jpg"
-                          alt="Child care support"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-4.png"
-                              className="w-60px"
-                              alt="Child care support icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Child care support
-                                </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-05.jpg"
-                          alt="Personal injury advisor"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
-                              className="w-60px"
-                              alt="Personal injury advisor icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Personal injury advisor
-                                </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                    <Col>
-                      <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                        <img
-                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
-                          alt="Employment law advisor"
-                          className="w-100"
-                        />
-                        <figcaption className="d-flex flex-column align-items-start justify-details-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                          <a href="#">
-                            <img
-                              src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
-                              className="w-60px"
-                              alt="Employment law advisor icon"
-                            />
-                          </a>
-                          <div className="d-flex w-100 align-items-center mt-auto">
-                            <div className="col last-paragraph-no-margin">
-                              <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                <a href="#" className="text-white">
-                                  Employment law advisor
-                                </a>
-                              </h6>
-                            </div>
-                            <a
-                              href="#"
-                              className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                            >
-                              <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                            </a>
-                          </div>
-                          <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                        </figcaption>
-                      </figure>
-                    </Col>
-                  </Row>
-                </Carousel.Item>
+                                <div className="d-flex w-100 align-items-center mt-auto">
+                                  <div className="col last-paragraph-no-margin">
+                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
+                                      <a href="#" className="text-white">
+                                        {service.name}
+                                      </a>
+                                    </h6>
+                                    <p className="text-white mt-2">
+                                      {service.priceFormat}: {service.price}
+                                    </p>
+                                  </div>
+                                  <a
+                                    href="#"
+                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
+                                  >
+                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
+                                  </a>
+                                </div>
+                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
+                              </figcaption>
+                            </figure>
+                          </Col>
+                        ))}
+                      </Row>
+                    </Carousel.Item>
+                  ))}
               </Carousel>
             </Col>
           </Row>
@@ -649,36 +491,36 @@ const Preview3 = ({ details, subdomain }) => {
       </section>
 
       <section className="legal px-4 py-3 mt-4 mt-lg-20">
-    <Container className="overlap-section" style={{ marginTop: "-244.9px" }}>
-      <Row className="g-0 overflow-hidden">
-        <Col
-          xs={12}
-          className="cover-background p-10 border-radius-6px position-relative"
-          style={{
-            backgroundImage:
-              `url(${details.Reviews.image1})`,
-          }}
+        <Container
+          className="overlap-section"
+          style={{ marginTop: "-244.9px" }}
         >
-          <div className="fs-1 alt-font text-white d-block lh-1">
-            <Quote />
-          </div>
-          <h6 className="w-100 text-white fs-3 alt-font lh-2 mb-3 pe-6">
-          {sanitizeContent(details.Reviews.header1)}
-          </h6>
-          <a
-            href="#"
-            className="text-white fs-6 fw-bold text-uppercase position-relative"
-          >
-            <PersonFill /> {sanitizeContent(details.Reviews.title1)}
-          </a>
-        </Col>
-       
-      </Row>
-    </Container>
-  </section>
+          <Row className="g-0 overflow-hidden">
+            <Col
+              xs={12}
+              className="cover-background p-10 border-radius-6px position-relative"
+              style={{
+                backgroundImage: `url(${details.Reviews.image1})`,
+              }}
+            >
+              <div className="fs-1 alt-font text-white d-block lh-1">
+                <Quote />
+              </div>
+              <h6 className="w-100 text-white fs-3 alt-font lh-2 mb-3 pe-6">
+                {sanitizeContent(details.Reviews.header1)}
+              </h6>
+              <a
+                href="#"
+                className="text-white fs-6 fw-bold text-uppercase position-relative"
+              >
+                <PersonFill /> {sanitizeContent(details.Reviews.title1)}
+              </a>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-
-  {/* <section id="blog" className="legal px-4">
+      {/* <section id="blog" className="legal px-4">
     <Container>
       <Row className="justify-details-center mb-3">
         <Col lg={7} className="text-center">
@@ -806,170 +648,167 @@ const Preview3 = ({ details, subdomain }) => {
       </Row>
     </Container>
   </section> */}
-  
-  <section id="contact" className="legal px-4 bg-blue-whale py-0">
-    <Container className="footer-top pt-lg-8 pt-3 pb-50px md-pb-35px">
-      <Row className="justify-details-center">
-        <Col className="position-relative justify-details-center align-items-center text-center">
-          <Image
-            src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-07.png"
-            className="position-absolute left-90px lg-left-15px opacity-1 top-minus-35px sm-top-minus-25px w-10 sm-w-15 xs-w-80px"
-            alt="Lawyer Image"
-          />
-          <h5 className="alt-font fs-2 d-inline-block align-middle text-white mb-0 me-35px md-me-0 position-relative">
-          {sanitizeContent(details.contactUs.header1)}
-          </h5>
-          <Button
-            variant="white"
-            className="btn-large btn-rounded with-rounded btn-box-shadow fw-600 md-mt-40px sm-mt-30px"
-          >
-            {sanitizeContent(details.contactUs.buttonText1)}
-            <span className="bg-dark-gray text-white ms-2">
-              <ArrowRight />
-            </span>
-          </Button>
-        </Col>
-      </Row>
-    </Container>
 
-    <Container>
-      <Row>
-        <Col>
-          <div className="divider-style-03 divider-style-03-01 border-color-transparent-white-light"></div>
-        </Col>
-      </Row>
-    </Container>
-  </section>
+      <section id="contact" className="legal px-4 bg-blue-whale py-0">
+        <Container className="footer-top pt-lg-8 pt-3 pb-50px md-pb-35px">
+          <Row className="justify-details-center">
+            <Col className="position-relative justify-details-center align-items-center text-center">
+              <Image
+                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-07.png"
+                className="position-absolute left-90px lg-left-15px opacity-1 top-minus-35px sm-top-minus-25px w-10 sm-w-15 xs-w-80px"
+                alt="Lawyer Image"
+              />
+              <h5 className="alt-font fs-2 d-inline-block align-middle text-white mb-0 me-35px md-me-0 position-relative">
+                {sanitizeContent(details.contactUs.header1)}
+              </h5>
+              <Button
+                variant="white"
+                className="btn-large btn-rounded with-rounded btn-box-shadow fw-600 md-mt-40px sm-mt-30px"
+              >
+                {sanitizeContent(details.contactUs.buttonText1)}
+                <span className="bg-dark-gray text-white ms-2">
+                  <ArrowRight />
+                </span>
+              </Button>
+            </Col>
+          </Row>
+        </Container>
 
-  <footer className="footer-dark bg-blue-whale py-0">
-    <Container>
-      <Row className="pt-50px pb-50px md-pt-35px md-pb-35px">
-        <Col
-          lg={2}
-          className="text-center text-lg-start last-paragraph-no-margin md-mb-15px"
-        >
-          <a href="#footer" className="footer-logo d-inline-block">
-            <Image
-              src={details.footer.logo}
-              alt="Logo"
-              width="138"
-              height="36"
-            />
-          </a>
-        </Col>
+        <Container>
+          <Row>
+            <Col>
+              <div className="divider-style-03 divider-style-03-01 border-color-transparent-white-light"></div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-        <Col
-          lg={4}
-          className="last-paragraph-no-margin text-center text-lg-start md-mb-40px sm-mb-30px"
-        >
-          <span className="fs-22 legal alt-font md-w-80 xs-w-100 m-auto d-inline-block">
-          {sanitizeContent(details.footer.title1)}
-          </span>
-        </Col>
-
-        <Col
-          lg={3}
-          className="offset-xl-1 col-sm-6 text-center text-lg-start last-paragraph-no-margin xs-mb-30px"
-        >
-          <span className="legal alt-font d-inline-block text-white mb-5px fs-18">
-            <GeoAlt className="me-2" />
-            {ecosystemDetails.address}
-          </span>
-          
-        </Col>
-
-        <Col
-          xl={2}
-          lg={3}
-          className="col-sm-6 text-center text-lg-start last-paragraph-no-margin"
-        >
-          <span className="alt-font d-inline-block text-white mb-5px fs-18">
-            <TelephoneOutbound className="me-2" />
-            Contact
-          </span>
-          <p>
-            <a href="#">{ecosystemDetails.contact}</a>
-          </p>
-          <a
-            href="#"
-            className="text-white text-decoration-line-bottom"
-          >
-            {sanitizeContent(details.footer.paragraph3)}
-          </a>
-        </Col>
-      </Row>
-    </Container>
-
-    <Container>
-      <Row>
-        <Col>
-          <div className="divider-style-03 divider-style-03-01 border-color-transparent-white-light"></div>
-        </Col>
-      </Row>
-    </Container>
-
-    <Container className="footer-bottom pt-25px pb-25px">
-      <Row className="align-items-center">
-        <Col lg={7} className="text-center text-lg-start sm-pb-10px">
-          <ul className="footer-navbar md-lh-normal list-unstyled d-flex justify-details-center justify-details-lg-start mb-0">
-            <li className="nav-item">
-              <a href="#home" className="legal primary-font nav-link px-2">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#about" className="legal primary-font nav-link px-2">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#services" className="legal primary-font nav-link px-2">
-                Practice areas
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#team" className="legal primary-font nav-link px-2">
-                Attorneys
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#blogl" className="legal primary-font nav-link px-2">
-                Journal
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#contact" className="legal primary-font nav-link px-2">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </Col>
-
-        <Col
-          lg={5}
-          className="text-center text-lg-end last-paragraph-no-margin"
-        >
-          <p>
-            Powered by{" "}
-            <a
-              href="https://www.dimpified.com/"
-              target="_blank"
-              className="text-decoration-line-bottom text-white"
+      <footer className="footer-dark bg-blue-whale py-0">
+        <Container>
+          <Row className="pt-50px pb-50px md-pt-35px md-pb-35px">
+            <Col
+              lg={2}
+              className="text-center text-lg-start last-paragraph-no-margin md-mb-15px"
             >
-              DIMP
-            </a>
-          </p>
-        </Col>
-      </Row>
-    </Container>
-  </footer>
+              <a href="#footer" className="footer-logo d-inline-block">
+                <Image
+                  src={details.footer.logo}
+                  alt="Logo"
+                  width="138"
+                  height="36"
+                />
+              </a>
+            </Col>
+
+            <Col
+              lg={4}
+              className="last-paragraph-no-margin text-center text-lg-start md-mb-40px sm-mb-30px"
+            >
+              <span className="fs-22 legal alt-font md-w-80 xs-w-100 m-auto d-inline-block">
+                {sanitizeContent(details.footer.title1)}
+              </span>
+            </Col>
+
+            <Col
+              lg={3}
+              className="offset-xl-1 col-sm-6 text-center text-lg-start last-paragraph-no-margin xs-mb-30px"
+            >
+              <span className="legal alt-font d-inline-block text-white mb-5px fs-18">
+                <GeoAlt className="me-2" />
+                {ecosystemDetails.address}
+              </span>
+            </Col>
+
+            <Col
+              xl={2}
+              lg={3}
+              className="col-sm-6 text-center text-lg-start last-paragraph-no-margin"
+            >
+              <span className="alt-font d-inline-block text-white mb-5px fs-18">
+                <TelephoneOutbound className="me-2" />
+                Contact
+              </span>
+              <p>
+                <a href="#">{ecosystemDetails.contact}</a>
+              </p>
+              <a href="#" className="text-white text-decoration-line-bottom">
+                {sanitizeContent(details.footer.paragraph3)}
+              </a>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col>
+              <div className="divider-style-03 divider-style-03-01 border-color-transparent-white-light"></div>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container className="footer-bottom pt-25px pb-25px">
+          <Row className="align-items-center">
+            <Col lg={7} className="text-center text-lg-start sm-pb-10px">
+              <ul className="footer-navbar md-lh-normal list-unstyled d-flex justify-details-center justify-details-lg-start mb-0">
+                <li className="nav-item">
+                  <a href="#home" className="legal primary-font nav-link px-2">
+                    Home
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#about" className="legal primary-font nav-link px-2">
+                    About
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#services"
+                    className="legal primary-font nav-link px-2"
+                  >
+                    Practice areas
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#team" className="legal primary-font nav-link px-2">
+                    Attorneys
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#blogl" className="legal primary-font nav-link px-2">
+                    Journal
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#contact"
+                    className="legal primary-font nav-link px-2"
+                  >
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </Col>
+
+            <Col
+              lg={5}
+              className="text-center text-lg-end last-paragraph-no-margin"
+            >
+              <p>
+                Powered by{" "}
+                <a
+                  href="https://www.dimpified.com/"
+                  target="_blank"
+                  className="text-decoration-line-bottom text-white"
+                >
+                  DIMP
+                </a>
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
     </Col>
   );
 };
 
 export default Preview3;
-
-
-
-
-

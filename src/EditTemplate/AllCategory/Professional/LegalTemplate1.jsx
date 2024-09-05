@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowLeftShort,
@@ -50,6 +50,8 @@ const Template3 = () => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
   const content = useSelector((state) => state.mainTemplate.currentTemplate);
+  const services = useSelector((state) => state.service.services);
+  console.log(services);
   const ecosystemDetails = useSelector((state) => state.ecosystem);
   const activeSection = useSelector(
     (state) => state.activeSection.activeSection
@@ -93,6 +95,8 @@ const Template3 = () => {
       </section>
     );
   };
+
+  const CarouselRef = useRef(null);
 
   const {
     fileInputRefs,
@@ -185,10 +189,7 @@ const Template3 = () => {
                       <span className="w-40px h-40px bg-base-color d-flex align-items-center justify-content-center me-10px rounded-circle fs-15">
                         <TelephoneOutbound />
                       </span>
-                      <a
-                        href=""
-                        className="widget-text text-white-hover"
-                      >
+                      <a href="" className="widget-text text-white-hover">
                         {ecosystemDetails.contact}
                       </a>
                     </div>
@@ -448,218 +449,62 @@ const Template3 = () => {
                       interval={2000}
                       className="carousel-fade"
                     >
-                      <Carousel.Item>
-                        <Row>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
-                                alt="Business law advisor"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
-                                    className="w-60px"
-                                    alt="Business law advisor icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Business law advisor
+                      {/* Split services into groups of 3 */}
+                      {services
+                        .reduce((rows, service, index) => {
+                          // Every 3 services form a row
+                          if (index % 3 === 0) {
+                            rows.push([]);
+                          }
+                          rows[rows.length - 1].push(service);
+                          return rows;
+                        }, [])
+                        .map((serviceGroup, rowIndex) => (
+                          <Carousel.Item key={rowIndex}>
+                            <Row>
+                              {serviceGroup.map((service, index) => (
+                                <Col lg={4} key={index}>
+                                  <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px h-200px">
+                                    <img
+                                      src={service.serviceImage}
+                                      alt={service.name}
+                                      className="w-100 h-100"
+                                    />
+                                    <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
+                                      <a href="#">
+                                        <img
+                                          src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-01.png"
+                                          className="w-60px"
+                                          alt={`${service.name} icon`}
+                                        />
                                       </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-02.jpg"
-                                alt="Investment litigation"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-02.png"
-                                    className="w-60px"
-                                    alt="Investment litigation icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Investment litigation
-                                      </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-03.jpg"
-                                alt="Trust and estates"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-03.png"
-                                    className="w-60px"
-                                    alt="Trust and estates icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Trust and estates
-                                      </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                        </Row>
-                      </Carousel.Item>
-                      <Carousel.Item>
-                        <Row>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-04.jpg"
-                                alt="Child care support"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-4.png"
-                                    className="w-60px"
-                                    alt="Child care support icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Child care support
-                                      </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-05.jpg"
-                                alt="Personal injury advisor"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
-                                    className="w-60px"
-                                    alt="Personal injury advisor icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Personal injury advisor
-                                      </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                          <Col>
-                            <figure className="m-0 hover-box overflow-hidden position-relative border-radius-6px">
-                              <img
-                                src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-01.jpg"
-                                alt="Employment law advisor"
-                                className="w-100"
-                              />
-                              <figcaption className="d-flex flex-column align-items-start justify-content-center position-absolute left-0px top-0px w-100 h-100 z-index-1 p-55px xl-p-35px">
-                                <a href="#">
-                                  <img
-                                    src="https://gfa-tech.com/dimp-template-images/images/demo-lawyer-home-icon-5.png"
-                                    className="w-60px"
-                                    alt="Employment law advisor icon"
-                                  />
-                                </a>
-                                <div className="d-flex w-100 align-items-center mt-auto">
-                                  <div className="col last-paragraph-no-margin">
-                                    <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
-                                      <a href="#" className="text-white">
-                                        Employment law advisor
-                                      </a>
-                                    </h6>
-                                  </div>
-                                  <a
-                                    href="#"
-                                    className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
-                                  >
-                                    <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
-                                  </a>
-                                </div>
-                                <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
-                              </figcaption>
-                            </figure>
-                          </Col>
-                        </Row>
-                      </Carousel.Item>
+                                      <div className="d-flex w-100 align-items-center mt-auto">
+                                        <div className="col last-paragraph-no-margin">
+                                          <h6 className="alt-font fw-500 font-style-italic mb-0 w-80 xl-w-95">
+                                            <a href="#" className="text-white">
+                                              {service.name}
+                                            </a>
+                                          </h6>
+                                          <p className="text-white mt-2">
+                                            {service.priceFormat}:{" "}
+                                            {service.price}
+                                          </p>
+                                        </div>
+                                        <a
+                                          href="#"
+                                          className="circle-box bg-white w-55px h-55px rounded-circle ms-auto position-relative rounded-box"
+                                        >
+                                          <ArrowRightShort className="icon-very-medium lh-0px text-dark-gray absolute-middle-center" />
+                                        </a>
+                                      </div>
+                                      <div className="position-absolute left-0px top-0px w-100 h-100 bg-gradient-gray-light-dark-transparent z-index-minus-1 opacity-9"></div>
+                                    </figcaption>
+                                  </figure>
+                                </Col>
+                              ))}
+                            </Row>
+                          </Carousel.Item>
+                        ))}
                     </Carousel>
                   </Col>
                 </Row>
@@ -821,7 +666,7 @@ const Template3 = () => {
                             <ChevronUp className="me-2" />
                             <EditableBlock
                               initialContent={
-                              content.Statistics.section1paragraphy  
+                                content.Statistics.section1paragraphy
                               }
                               onContentChange={(value) =>
                                 handleContentChange(
@@ -1323,14 +1168,10 @@ const Template3 = () => {
                       className="last-paragraph-no-margin text-center text-lg-start md-mb-40px sm-mb-30px"
                     >
                       <span className="fs-22 legal alt-font md-w-80 xs-w-100 m-auto d-inline-block">
-                      <EditableBlock
+                        <EditableBlock
                           initialContent={content.footer.title1}
                           onContentChange={(value) =>
-                            handleContentChange(
-                              "footer",
-                              "title1",
-                              value
-                            )
+                            handleContentChange("footer", "title1", value)
                           }
                         />
                       </span>
@@ -1344,7 +1185,6 @@ const Template3 = () => {
                         <GeoAlt className="me-2" />
                         {ecosystemDetails.address}
                       </span>
-                     
                     </Col>
 
                     <Col
@@ -1359,18 +1199,11 @@ const Template3 = () => {
                       <p>
                         <a href="#">{ecosystemDetails.contact}</a>
                       </p>
-                      <p
-                        
-                        className="text-white text-decoration-line-bottom"
-                      >
+                      <p className="text-white text-decoration-line-bottom">
                         <EditableBlock
                           initialContent={content.footer.paragraph3}
                           onContentChange={(value) =>
-                            handleContentChange(
-                              "footer",
-                              "paragraph3",
-                              value
-                            )
+                            handleContentChange("footer", "paragraph3", value)
                           }
                         />
                       </p>

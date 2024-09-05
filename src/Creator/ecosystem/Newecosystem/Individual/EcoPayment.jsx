@@ -1404,19 +1404,19 @@ const EcoPayment = ({ plan }) => {
                 {firstFourFeatures}
               </ul>
 
-              <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
+              {/* <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
                 Sign Up
-              </Button>
+              </Button> */}
 
               <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
                 {remainingFeatures}
               </ul>
-              <Button
+              {/* <Button
                 variant="outline-primary"
                 className="mt-3 w-100 btn-lg  mb-3"
               >
                 Sign Up Now
-              </Button>
+              </Button> */}
             </Card.Body>
           </Card>
         </Col>
@@ -1427,7 +1427,7 @@ const EcoPayment = ({ plan }) => {
       <Col md={3} className="mb-4" key={plan.name}>
         <Card
           className="border-0 mb-3"
-          style={{ height: "1870px", overflow: "hidden" }}
+          style={{ height: "2080px", overflow: "hidden" }}
         >
           <Card.Body>
             <Card.Title style={{ fontSize: "1.5rem" }}>{plan.name}</Card.Title>
@@ -1461,7 +1461,7 @@ const EcoPayment = ({ plan }) => {
               className="mt-3 w-100 btn-lg mb-3"
               onClick={() => handleSignUp(plan.name)}
             >
-              Sign Up Now
+              Subscribe Now
             </Button>
             <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
             {/* <Button
