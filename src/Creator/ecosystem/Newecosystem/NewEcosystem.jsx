@@ -19,7 +19,7 @@ import {
   updateField,
   setEcosystemId,
   updateSocialMedia,
-  resetState
+  resetState,
 } from "../../../features/ecosystem";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
@@ -33,7 +33,6 @@ const NewEcosystem = () => {
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
 
-  
   const [showModal, setShowModal] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -67,50 +66,51 @@ const NewEcosystem = () => {
     { value: "threads", label: "Threads by Instagram" },
   ];
 
- 
+  const handlePlatformChange = (index, event) => {
+    if (event && event.target) {
+      const newLinks = socialMedia.map((link, i) =>
+        i === index ? { ...link, name: event.target.value } : link
+      );
+      setSocialMedia(newLinks);
+      dispatch(updateSocialMedia(newLinks));
+    } else {
+      console.error("Event or event.target is undefined");
+    }
+  };
 
-const handlePlatformChange = (index, event) => {
-  if (event && event.target) {
+  const handleUrlChange = (index, event) => {
     const newLinks = socialMedia.map((link, i) =>
-      i === index ? { ...link, name: event.target.value } : link
+      i === index ? { ...link, link: event.target.value } : link
     );
     setSocialMedia(newLinks);
     dispatch(updateSocialMedia(newLinks));
-  } else {
-    console.error("Event or event.target is undefined");
-  }
-};
+  };
 
-const handleUrlChange = (index, event) => {
-  const newLinks = socialMedia.map((link, i) =>
-    i === index ? { ...link, link: event.target.value } : link
-  );
-  setSocialMedia(newLinks);
-  dispatch(updateSocialMedia(newLinks));
-};
+  const addLink = () => {
+    setSocialMedia([...socialMedia, { name: "", link: "" }]);
+  };
 
-const addLink = () => {
-  setSocialMedia([...socialMedia, { name: "", link: "" }]);
-};
-
-const removeLink = (index) => {
-  setSocialMedia(socialMedia.filter((_, i) => i !== index));
-};
-
+  const removeLink = (index) => {
+    setSocialMedia(socialMedia.filter((_, i) => i !== index));
+  };
 
   const handleFieldChange = (field, value) => {
-    dispatch(updateField({ field, value }));
-
+  
+    const filteredValue = value.replace(/[.\s,_-]/g, "");
+  
     if (field === "ecosystemName") {
-      const domainValue = value.toLowerCase().replace(/\s+/g, "-");
+      const domainValue = filteredValue.toLowerCase();
+      dispatch(updateField({ field: "ecosystemName", value: filteredValue }));
       dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
+  
       validateDomain(domainValue);
+    } else if (field === "ecosystemDomain") {
+      dispatch(updateField({ field: "ecosystemDomain", value: filteredValue }));
+      validateDomain(filteredValue);
+    } else {
+      dispatch(updateField({ field, value: filteredValue }));
     }
-
-    if (field === "ecosystemDomain") {
-      validateDomain(value);
-    }
-
+  
     if (field === "target") {
       if (value === "Other") {
         setIsOtherCategory(true);
@@ -124,6 +124,7 @@ const removeLink = (index) => {
       }
     }
   };
+  
 
   useEffect(() => {
     if (
@@ -292,8 +293,7 @@ const removeLink = (index) => {
                         <span className="input-group-text">.dimpified.com</span>
                       </div>
                       <Form.Text className="text-muted fst-italic">
-                        The domain must contain only lowercase letters and
-                        hyphens.
+                        The domain must contain only lowercase letters.
                       </Form.Text>
                       {domainMessage && (
                         <Alert className="bg-primary text-white">
