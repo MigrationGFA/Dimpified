@@ -476,7 +476,7 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
                           />
                         </Col>
                       ))
-                      .slice(0, 3)}
+                      .slice(0, 1)}
                   </Row>
                 </Carousel.Item>
               ))}

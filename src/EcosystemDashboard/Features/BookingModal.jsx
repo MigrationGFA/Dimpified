@@ -280,7 +280,7 @@ const BookingModal = ({ show, setModalShow, information }) => {
               <Button
                 variant="primary"
                 onClick={() => handleNextStep(2)}
-                disabled={selectedDate === "" && selectedTimeSlot === ""}
+                // disabled={selectedDate === "" && selectedTimeSlot === ""}
               >
                 Next
               </Button>
