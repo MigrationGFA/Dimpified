@@ -32,25 +32,25 @@ const ContractPage = () => {
   const [amountPending, setAmountPending] = useState(null);
   const [pendings, setPending] = useState([]);
   const [availableAmount, setAvailableAmount] = useState(null);
-  useEffect(() => {
-    const userId = sessionStorage.getItem("UserId");
+  // useEffect(() => {
+  //   const userId = sessionStorage.getItem("UserId");
 
-    const contract = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-my-contract/${userId}`
-        );
-        setAmountProgress(response.data.workInProgress.totalAmount);
-        setWorkProgress(response.data.workInProgress.jobsWork);
-        setAmountPending(response.data.pendingContract.totalAmountPending);
-        setPending(response.data.pendingContract.jobsPending);
-        setAvailableAmount(response.data.availableAmount);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    contract();
-  }, []);
+  //   const contract = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${import.meta.env.VITE_API_URL}/get-my-contract/${userId}`
+  //       );
+  //       setAmountProgress(response.data.workInProgress.totalAmount);
+  //       setWorkProgress(response.data.workInProgress.jobsWork);
+  //       setAmountPending(response.data.pendingContract.totalAmountPending);
+  //       setPending(response.data.pendingContract.jobsPending);
+  //       setAvailableAmount(response.data.availableAmount);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   contract();
+  // }, []);
   return (
     <InstructorProfileLayout>
       <Payouts />

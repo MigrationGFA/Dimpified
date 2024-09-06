@@ -347,7 +347,7 @@ const AllRoutes = () => {
       {/* Creator Ecosystem Dashboard */}
       
       <Route path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment" element={<ContractPage />} />
-      <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} />
+      {/* <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} /> */}
       <Route path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request" element={<WithdrawPayment />} />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard"

@@ -35,7 +35,8 @@ import { useSelector, useDispatch } from "react-redux";
 import sanitizeHtml from "sanitize-html";
 import axios from "axios";
 
-const Preview3 = ({ details, subdomain }) => {
+const Preview3 = ({ details, subdomain, ecosystemDetails }) => {
+
   const [show, setShow] = useState(false);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,8 +63,8 @@ const Preview3 = ({ details, subdomain }) => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/get-all-services/${subdomain}`
         );
-        setServices(response.data.services);
-        console.log("this is service", response.data.services);
+        setServices(response.data.services[0].services);
+        
       } catch (error) {
         console.log("not working", error);
       } finally {
