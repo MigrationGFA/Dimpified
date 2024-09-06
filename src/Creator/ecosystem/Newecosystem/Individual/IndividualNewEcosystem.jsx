@@ -51,19 +51,19 @@ const NewEcosystem = () => {
   const socialMediaOptions = [
     { value: "facebook", label: "Facebook" },
     { value: "instagram", label: "Instagram" },
-    { value: "linkedin", label: "LinkedIn" },
+    // { value: "linkedin", label: "LinkedIn" },
     { value: "twitter", label: "Twitter" },
-    { value: "whatsapp", label: "WhatsApp" },
-    { value: "youtube", label: "YouTube" },
-    { value: "wechat", label: "WeChat" },
-    { value: "tiktok", label: "TikTok" },
-    { value: "telegram", label: "Telegram" },
-    { value: "pinterest", label: "Pinterest" },
-    { value: "reddit", label: "Reddit" },
-    { value: "quora", label: "Quora" },
-    { value: "discord", label: "Discord" },
-    { value: "twitch", label: "Twitch" },
-    { value: "threads", label: "Threads by Instagram" },
+    // { value: "whatsapp", label: "WhatsApp" },
+    // { value: "youtube", label: "YouTube" },
+    // { value: "wechat", label: "WeChat" },
+    // { value: "tiktok", label: "TikTok" },
+    // { value: "telegram", label: "Telegram" },
+    // { value: "pinterest", label: "Pinterest" },
+    // { value: "reddit", label: "Reddit" },
+    // { value: "quora", label: "Quora" },
+    // { value: "discord", label: "Discord" },
+    // { value: "twitch", label: "Twitch" },
+    // { value: "threads", label: "Threads by Instagram" },
   ];
 
   const handlePlatformChange = (index, event) => {
@@ -94,31 +94,31 @@ const NewEcosystem = () => {
     setSocialMedia(socialMedia.filter((_, i) => i !== index));
   };
 
-
   const handleFieldChange = (field, value) => {
     // Apply filtering only to ecosystemName and ecosystemDomain
-    const filteredValue = (field === "ecosystemName" || field === "ecosystemDomain") 
-      ? value.replace(/[.\s,_-]/g, "") 
-      : value;
-  
+    const filteredValue =
+      field === "ecosystemName" || field === "ecosystemDomain"
+        ? value.replace(/[.\s,_-]/g, "")
+        : value;
+
     // Handle ecosystemName changes
     if (field === "ecosystemName") {
       const domainValue = filteredValue.toLowerCase();
       dispatch(updateField({ field: "ecosystemName", value: filteredValue }));
       dispatch(updateField({ field: "ecosystemDomain", value: domainValue }));
-  
+
       validateDomain(domainValue);
-    } 
+    }
     // Handle ecosystemDomain changes
     else if (field === "ecosystemDomain") {
       dispatch(updateField({ field: "ecosystemDomain", value: filteredValue }));
       validateDomain(filteredValue);
-    } 
+    }
     // For other fields, dispatch the unfiltered value
     else {
       dispatch(updateField({ field, value: filteredValue }));
     }
-  
+
     // Handle 'target' field for category-related logic
     if (field === "target") {
       if (value === "Other") {
@@ -133,7 +133,6 @@ const NewEcosystem = () => {
       }
     }
   };
-  
 
   useEffect(() => {
     if (

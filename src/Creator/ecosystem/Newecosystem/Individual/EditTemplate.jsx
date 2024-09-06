@@ -42,15 +42,15 @@ import { setTemplate } from "../../../../features/Template/MainTemplate";
 import LoadingState from "../../../../Components/Loading";
 
 const templateSections = [
-  { id: 1, name: "Professional Services" },
-  { id: 2, name: "Creative Services" },
-  { id: 3, name: "Trade Services" },
-  { id: 4, name: "Personal Care Services" },
-  { id: 5, name: "Educational Services" },
-  { id: 6, name: "Event Services" },
-  { id: 7, name: "Technology Services" },
+  { id: 1, name: "Professional Service" },
+  { id: 2, name: "Creative Service" },
+  { id: 3, name: "Trade Service" },
+  { id: 4, name: "Personal Care Service" },
+  { id: 5, name: "Educational Service" },
+  { id: 6, name: "Event Service" },
+  { id: 7, name: "Technology Service" },
   { id: 8, name: "Government" },
-  { id: 9, name: "Corporations" },
+  { id: 9, name: "Corporation" },
   { id: 10, name: "Foundation/NGO's" },
   { id: 11, name: "Religious Bodies" },
 ];
@@ -71,7 +71,6 @@ const EditTemplate = () => {
   const [step, setStep] = useState(1);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [activeSection, setActiveSection] = useState(templateSections[0].id);
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -82,6 +81,19 @@ const EditTemplate = () => {
   const ecosystemDomain = useSelector(
     (state) => state.ecosystem.ecosystemDomain
   );
+  const selectedSection = useSelector(
+    (state) => state.ecosystem.targetAudienceSector
+  );
+  console.log("this is select", selectedSection);
+
+  const defaultSectionId =
+    templateSections.find((section) => section.name === selectedSection)?.id ||
+    templateSections[0].id;
+  console.log("this is default", defaultSectionId);
+
+  const [activeSection, setActiveSection] = useState(defaultSectionId);
+  console.log("this is activeSection", activeSection);
+
   const userType = useSelector((state) => state.authentication.user.data.role);
 
   const navigate = useNavigate();

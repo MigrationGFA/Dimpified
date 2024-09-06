@@ -21,6 +21,7 @@ import { PaystackButton } from "react-paystack";
 import Paystack from "@paystack/inline-js";
 import { showToast } from "../../../../Components/Showtoast";
 import { resetState } from "../../../../features/ecosystem";
+import { resetServiceData } from "../../../../features/service";
 import { useDispatch } from "react-redux";
 
 // import FAQsData from "./FAQsData";
@@ -1140,6 +1141,8 @@ const EcoPayment = ({ plan }) => {
 
   const handleSkipAndContinue = () => {
     dispatch(resetState());
+    dispatch(resetServiceData());
+    showToast("Busines site Publish successfuly");
     navigate("/creator/dashboard/All-Ecosystem");
   };
 
@@ -1150,7 +1153,7 @@ const EcoPayment = ({ plan }) => {
     const sizePlans = selectedPlanObj?.[selectedSize];
     const planCode = sizePlans ? sizePlans[selectedPlan] : null;
 
-    if (planCode, planName) {
+    if ((planCode, planName)) {
       handlePaystackPayment(planCode, planName);
     } else {
       showToast("Invalid plan selected");

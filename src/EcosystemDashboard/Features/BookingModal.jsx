@@ -81,8 +81,9 @@ const BookingModal = ({ show, setModalShow, information }) => {
     return `${timestamp}-${randomString}`;
   };
 
-  const percentageCalculation = (information.price * 2.5) / 100;
-  const totalAmount = information.price + percentageCalculation;
+  const companyCharge = (information.price * 1.1) / 100;
+  const providerCharge = (information.price * 1.4) / 100;
+  const totalAmount = information.price + companyCharge + providerCharge;
 
   const handleFlutterPayment = useFlutterwave({
     public_key: import.meta.env.VITE_FLW_PUBLIC_KEY,
@@ -110,11 +111,13 @@ const BookingModal = ({ show, setModalShow, information }) => {
         {
           reference: tx_ref,
           email: formData.email,
-          itemType: "Booking",
+          itemType: "Service",
           userId: "not available",
           provider: "flutterwave",
           bookingId: bookingId,
           ecosystemDomain: information.domain,
+          companyCharge: companyCharge,
+          providerCharge: providerCharge,
         }
       );
       setLoading(false);
@@ -156,7 +159,7 @@ const BookingModal = ({ show, setModalShow, information }) => {
   };
 
   const submitBooking = async () => {
-    setLoading;
+    setLoading(true);
     true;
     try {
       const response = await axios.post(
@@ -274,7 +277,11 @@ const BookingModal = ({ show, setModalShow, information }) => {
               </Col>
             </Row>
             <div className="d-flex justify-content-between mt-4">
-              <Button variant="primary" onClick={() => handleNextStep(2)}>
+              <Button
+                variant="primary"
+                onClick={() => handleNextStep(2)}
+                // disabled={selectedDate === "" && selectedTimeSlot === ""}
+              >
                 Next
               </Button>
             </div>

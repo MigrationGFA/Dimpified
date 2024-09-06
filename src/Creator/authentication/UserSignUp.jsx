@@ -58,7 +58,7 @@ const UserRoleSelection = () => {
                   {/* Card Selection for User Roles */}
                   <div className="text-center">
                     <Row className="mb-4 d-flex justify-content-center">
-                      <Col md={5} className="mb-4">
+                      {/* <Col md={5} className="mb-4">
                         <Card
                           className={`cursor-pointer shadow-lg border border-2 ${
                             selectedRole === "enterprise"
@@ -80,7 +80,7 @@ const UserRoleSelection = () => {
                           For startups, medium-scale businesses, large-scale
                           businesses, NGOs, religious centers, and more.
                         </p>
-                      </Col>
+                      </Col> */}
                       <Col md={5} className="mb-4">
                         <Card
                           className={`cursor-pointer shadow-lg border ${
@@ -116,7 +116,9 @@ const UserRoleSelection = () => {
                   </Button>
                   <h3>
                     Sign Up as a{" "}
-                    {selectedRole === "enterprise" ? "Enterprise" : "Individual"}
+                    {selectedRole === "enterprise"
+                      ? "Enterprise"
+                      : "Individual"}
                   </h3>
                   <UserSignUpForm userRole={selectedRole} />
                 </div>

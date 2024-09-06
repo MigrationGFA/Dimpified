@@ -117,7 +117,7 @@ const Courses = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} className="mt-1 md-mt-0">
+                {/* <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
                     onClick={handleProduct}
@@ -139,8 +139,8 @@ const Courses = () => {
                       </Card.Text>
                     </Card.Body>
                   </Card>
-                </Col>
-                <Col md={3} className="mt-1 md-mt-0">
+                </Col> */}
+                {/* <Col md={3} className="mt-1 md-mt-0">
                   <Card
                     className="templates-card position-relative"
                     onClick={handleCreateNewCourse}
@@ -159,7 +159,7 @@ const Courses = () => {
                       </Card.Text>
                     </Card.Body>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
 
               <div className="d-flex justify-content-between align-content-center">

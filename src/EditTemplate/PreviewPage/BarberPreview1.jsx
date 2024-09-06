@@ -566,6 +566,9 @@ const BarberPreview1 = () => {
                           className="d-block w-100 img-fluid"
                           src={src}
                           alt={`Slide ${imgIdx + 1}`}
+                          style={{
+                            height: "300px",
+                          }}
                         />
                       </Col>
                     ))}
@@ -832,32 +835,55 @@ const BarberPreview1 = () => {
             <p>&copy; {sanitizeContent(content.footer.title1)}</p>
             <p>{sanitizeContent(content.footer.paragraph1)}</p>
             <Nav className="justify-content-center">
-              <Nav.Link
-                href="#facebook"
-                style={{
-                  ...iconStyle,
-                  fontSize: "20rem",
-                  ":hover": hoverStyle,
-                }}
-              >
-                <FaFacebookF />
-              </Nav.Link>
-              <Nav.Link
-                href="#instagram"
-                style={{
-                  ...iconStyle,
-                  fontSize: "20rem",
-                  ":hover": hoverStyle,
-                }}
-              >
-                <FaInstagram />
-              </Nav.Link>
-              <Nav.Link
-                href="#twitter"
-                style={{ ...iconStyle, ":hover": hoverStyle }}
-              >
-                <FaTwitter />
-              </Nav.Link>
+              {ecosystemDetails.socialMedia.length > 0 ? (
+                <Col lg={3} md={4} sm={6} className="last-paragraph-no-margin ">
+                  <span className="primary-font d-block  fs-15 ls-1px mb-10px text-uppercase fw-600">
+                    Connect with us
+                  </span>
+                  <div className="elements-social social-icon-style-09">
+                    <ul className="medium-icon light">
+                      {ecosystemDetails.socialMedia.map((social, index) => {
+                        // Determine the icon class and the link based on the social media name
+                        let iconClass = "";
+                        let socialLink = social.link || "#";
+
+                        switch (social.name.toLowerCase()) {
+                          case "facebook":
+                            iconClass = "fa-brands fa-facebook-f";
+                            break;
+                          case "instagram":
+                            iconClass = "fa-brands fa-instagram";
+                            break;
+                          case "twitter":
+                            iconClass = "fa-brands fa-twitter";
+                            break;
+                          // Add more cases for other social media platforms if needed
+                          default:
+                            break;
+                        }
+
+                        return (
+                          iconClass && (
+                            <li key={index}>
+                              <a
+                                className={social.name.toLowerCase()}
+                                href={socialLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <i className={iconClass}></i>
+                                <span></span>
+                              </a>
+                            </li>
+                          )
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </Col>
+              ) : (
+                ""
+              )}
             </Nav>
           </Container>
         </footer>

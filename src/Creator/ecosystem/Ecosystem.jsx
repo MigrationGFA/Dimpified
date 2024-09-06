@@ -345,8 +345,7 @@ const Ecosystem = () => {
                                 className="me-2 mb-2 mb-md-0"
                                 onClick={() =>
                                   saveEcoLogo(
-                                    // eco.templateLogos[0].logoPath,
-                                    eco.ecosystemName,
+                                    eco.templateLogos[0].logoPath,
                                     eco.ecosystemDomain
                                   )
                                 }
