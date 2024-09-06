@@ -32,6 +32,16 @@
     #5a2611
   );
 }
+.text-gradient-dark-purple-watermelon {
+  background: linear-gradient(
+    to right top,
+    rgb(255, 30, 128) 15.923566878980886%,
+    rgb(156, 50, 176) 50.63694267515923%,
+    rgb(96, 0, 255) 99.68152866242038%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .bg-gradient-dark-orange-transparent {
   background-image: linear-gradient(
     to right top,

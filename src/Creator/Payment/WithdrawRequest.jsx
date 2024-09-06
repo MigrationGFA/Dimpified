@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Spinner, Table, Badge, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { numberWithCommas } from "../../helper/utils";
 import { showToast } from "../../Components/Showtoast";
@@ -9,11 +9,8 @@ import Pagination from "../../Components/elements/advance-table/Pagination";
 import InstructorProfileLayout from "../../EcosystemDashboard/InstructorProfileLayout";
 
 const WithdrawPayment = () => {
-  const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 1,
-    totalSeeker: 1,
-    monthlyProvider: 1,
-    totalProvider: 1,
+  const { ecosystemDomain } = useParams();
+  const [withdrawalBlock, setWithdrawalBlock] = useState({
   });
   const [withdrawalRequests, setWithdrawalRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,9 +22,9 @@ const WithdrawPayment = () => {
     const fetchWithdrawalRequests = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/all-payment-request`
+          `${import.meta.env.VITE_API_URL}/get-withdrawal-requests/${ecosystemDomain}`
         );
-        setWithdrawalRequests(response.data.paymentRequests);
+        setWithdrawalRequests(response.data.withdrawalRequests || []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching withdrawal requests:", error);
@@ -36,8 +33,24 @@ const WithdrawPayment = () => {
     };
 
     fetchWithdrawalRequests();
-  }, []);
 
+  const fetchWithdrawalBlock = async() => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/total-withdrawals-stats/${ecosystemDomain}`
+      );
+      setWithdrawalBlock(response.data || []);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching withdrawal requests:", error);
+      setLoading(false);
+    }
+  }
+
+  fetchWithdrawalBlock();
+  }, [ecosystemDomain]);
+
+  // Handle action (e.g., mark request as completed)
   const handleAction = async (id) => {
     const rowIndex = withdrawalRequests.findIndex((row) => row.id === id);
     if (rowIndex !== -1) {
@@ -47,7 +60,7 @@ const WithdrawPayment = () => {
         setWithdrawalRequests(updatedData);
 
         const response = await axios.post(
-          `https://unleashified-backend.azurewebsites.net/api/v1/admin-mark-payment-request`,
+          `${import.meta.env.VITE_API_URL}/admin-mark-payment-request`,
           {
             requestId: id,
             status: "true",
@@ -55,7 +68,7 @@ const WithdrawPayment = () => {
         );
         showToast(response.data.message);
       } catch (error) {
-        showToast(error.response.data.message);
+        showToast(error.response?.data?.message || "Error updating status");
       } finally {
         const updatedData = [...withdrawalRequests];
         updatedData[rowIndex].Cloading = false;
@@ -64,7 +77,7 @@ const WithdrawPayment = () => {
     }
   };
 
-  // Get current requests
+  // Get current requests for pagination
   const indexOfLastRequest = currentPage * itemsPerPage;
   const indexOfFirstRequest = indexOfLastRequest - itemsPerPage;
   const currentRequests = withdrawalRequests.slice(
@@ -99,8 +112,8 @@ const WithdrawPayment = () => {
             <Row>
               <Col xl={3} lg={6} md={12} sm={12}>
                 <StatRightChart
-                  title="Total "
-                  value="1"
+                  title="Total"
+                  value={withdrawalBlock.totalWithdrawals}
                   summary="Number of sales"
                   summaryIcon="up"
                   showSummaryIcon
@@ -111,8 +124,8 @@ const WithdrawPayment = () => {
 
               <Col xl={3} lg={6} md={12} sm={12}>
                 <StatRightChart
-                  title="Completed "
-                  value="1"
+                  title="Completed"
+                  value={withdrawalBlock.completedWithdrawals}
                   summary="Number of pending"
                   summaryIcon="down"
                   showSummaryIcon
@@ -124,7 +137,7 @@ const WithdrawPayment = () => {
               <Col xl={3} lg={6} md={12} sm={12}>
                 <StatRightChart
                   title="Pending"
-                  value="0"
+                  value={withdrawalBlock.pendingWithdrawals}
                   summary="Students"
                   summaryIcon="up"
                   showSummaryIcon
@@ -135,8 +148,8 @@ const WithdrawPayment = () => {
 
               <Col xl={3} lg={6} md={12} sm={12}>
                 <StatRightChart
-                  title="Approved Payment"
-                  value="0"
+                  title="Month Withdraws"
+                  value={withdrawalBlock.currentMonthWithdrawals}
                   summary="Instructor"
                   summaryIcon="up"
                   showSummaryIcon
@@ -157,7 +170,6 @@ const WithdrawPayment = () => {
                       <th>ID</th>
                       <th>Amount (₦)</th>
                       <th>Bank Details</th>
-                      <th>User Details</th>
                       <th>Date</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -175,13 +187,9 @@ const WithdrawPayment = () => {
                           <br />
                           <p>{request.Account.bankName}</p>
                         </td>
+                      
                         <td>
-                          <span>{request.User.username}</span>
-                          <br />
-                          <span>{request.User.email}</span>
-                        </td>
-                        <td>
-                          {new Date(request.requestDate).toLocaleString()}
+                          {new Date(request.requestedAt).toLocaleString()}
                         </td>
                         <td>
                           <Badge

@@ -26,8 +26,8 @@ const Dashboard = () => {
 
   const [totalServices, setTotalServices] = useState("");
   const [totalAmount, setTotalAmount] = useState({
-    totalNaira: 0,
-    totalDollar: 0,
+    Naira: 0,
+    Dollar: 0,
   });
   const [totalProducts, setTotalProducts] = useState("");
   const [totalCourses, setTotalCourses] = useState("");
@@ -45,7 +45,6 @@ const Dashboard = () => {
           }/ecosystem-dashboard/${ecosystemDomain}`
         );
         const data = await response.data;
-        setTotalAmount(data.totalEarnings);
         setTotalProducts(data.totalProducts);
         setTotalCourses(data.totalCourses);
         setTotalServices(data.totalServices);
@@ -71,6 +70,23 @@ const Dashboard = () => {
     };
 
     fetchBestSellingData();
+
+
+    const fetchAmountData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
+        );
+
+        if (response.data) {
+          setTotalAmount(response.data.totalEarnings);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAmountData();
   }, []);
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
@@ -91,9 +107,9 @@ const Dashboard = () => {
   const getTotalAmount = (currency) => {
     switch (currency) {
       case "NGN":
-        return totalAmount.totalNaira;
+        return totalAmount.Naira;
       case "USD":
-        return totalAmount.totalDollar;
+        return totalAmount.Dollar;
       default:
         return 0;
     }
@@ -126,7 +142,7 @@ const Dashboard = () => {
       case "naira":
       case "NGN":
         return `₦${priceValue}`;
-      case "dollars":
+      case "dollar":
       case "USD":
         return `$${priceValue}`;
       case "euros":
