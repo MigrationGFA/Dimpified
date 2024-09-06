@@ -15,9 +15,7 @@ const Settings = ({ onNext, onPrevious }) => {
 
   const currencyType = [
     { value: "NGN", label: "Naira" },
-    { value: "USD", label: "Dollars" },
-    { value: "EUR", label: "Euros" },
-    { value: "GBP", label: "Pounds" },
+    // { value: "USD", label: "Dollars" },
   ];
 
   const formatType = [

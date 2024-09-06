@@ -50,7 +50,7 @@ const truncateMessage = (messages) => {
 const hoverStyle = {
   backgroundColor: "#333" /* Adjust hover background color as needed */,
 };
-const Template1 = ({ details, subdomain }) => {
+const Template1 = ({ details, subdomain, ecosystemDetails }) => {
   const [show, setShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [serviceDetails, setServiceDetails] = useState({});
@@ -193,6 +193,8 @@ const Template1 = ({ details, subdomain }) => {
     });
   };
 
+  console.log("this is ecosystem Details", ecosystemDetails);
+
   return (
     <div>
       {/* Navbar */}
@@ -208,7 +210,9 @@ const Template1 = ({ details, subdomain }) => {
               className="fw-bold text-dark d-flex align-items-center"
               href="#home"
             >
-              {sanitizeContent(details.navbar.brand)}
+              {sanitizeContent(details.navbar.brand) === "not available"
+                ? ecosystemDetails.ecosystemName
+                : sanitizeContent(details.navbar.brand)}
               <img
                 src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
                 alt="Icon"
@@ -466,10 +470,13 @@ const Template1 = ({ details, subdomain }) => {
                             className="d-block w-100 img-fluid"
                             src={src}
                             alt={`Slide ${imgIdx + 1}`}
+                            style={{
+                              height: "300px",
+                            }}
                           />
                         </Col>
                       ))
-                      .slice(0, 1)}
+                      .slice(0, 3)}
                   </Row>
                 </Carousel.Item>
               ))}
@@ -728,32 +735,68 @@ const Template1 = ({ details, subdomain }) => {
             <p>&copy; {sanitizeContent(details.footer.title1)}</p>
             <p>{sanitizeContent(details.footer.paragraph1)}</p>
             <Nav className="justify-content-center">
-              <Nav.Link
-                href="#facebook"
-                style={{
-                  ...iconStyle,
-                  fontSize: "20rem",
-                  ":hover": hoverStyle,
-                }}
-              >
-                <FaFacebookF />
-              </Nav.Link>
-              <Nav.Link
-                href="#instagram"
-                style={{
-                  ...iconStyle,
-                  fontSize: "20rem",
-                  ":hover": hoverStyle,
-                }}
-              >
-                <FaInstagram />
-              </Nav.Link>
-              <Nav.Link
-                href="#twitter"
-                style={{ ...iconStyle, ":hover": hoverStyle }}
-              >
-                <FaTwitter />
-              </Nav.Link>
+              {ecosystemDetails.socialMedia.length > 0 ? (
+                <Col lg={3} md={4} sm={6} className="last-paragraph-no-margin ">
+                  <span className="primary-font d-block  fs-15 ls-1px mb-10px text-uppercase fw-600">
+                    Connect with us
+                  </span>
+                  <div className="elements-social social-icon-style-09">
+                    <ul className="medium-icon light">
+                      {ecosystemDetails.socialMedia.map((social, index) => {
+                        // Determine the icon class and the link based on the social media name
+                        let iconClass = "";
+                        let socialLink = social.link || "#";
+
+                        switch (social.name.toLowerCase()) {
+                          case "facebook":
+                            iconClass = "fa-brands fa-facebook-f";
+                            break;
+                          case "instagram":
+                            iconClass = "fa-brands fa-instagram";
+                            break;
+                          case "twitter":
+                            iconClass = "fa-brands fa-twitter";
+                            break;
+                          // Add more cases for other social media platforms if needed
+                          default:
+                            break;
+                        }
+
+                        return (
+                          iconClass && (
+                            <li key={index}>
+                              <a
+                                className={social.name.toLowerCase()}
+                                href={socialLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <i className={iconClass}></i>
+                                <span></span>
+                              </a>
+                            </li>
+                          )
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </Col>
+              ) : (
+                ""
+              )}
+            </Nav>
+            <Nav className="justify-content-center mt-10">
+              <p>
+                © 2024 Proudly Powered by{" "}
+                <a
+                  href="https://www.dimpified.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-decoration-line-bottom text-white"
+                >
+                  DIMP from GFA Technologies
+                </a>
+              </p>
             </Nav>
           </Container>
         </footer>

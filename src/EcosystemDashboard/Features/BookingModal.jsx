@@ -277,7 +277,11 @@ const BookingModal = ({ show, setModalShow, information }) => {
               </Col>
             </Row>
             <div className="d-flex justify-content-between mt-4">
-              <Button variant="primary" onClick={() => handleNextStep(2)}>
+              <Button
+                variant="primary"
+                onClick={() => handleNextStep(2)}
+                disabled={selectedDate === "" && selectedTimeSlot === ""}
+              >
                 Next
               </Button>
             </div>
