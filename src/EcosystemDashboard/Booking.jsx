@@ -14,6 +14,9 @@ import {
   Tab,
   Nav,
   Spinner, // Import Spinner from React Bootstrap
+  Modal,
+  Form,
+  Button
 } from "react-bootstrap";
 // import BookingTable from "./ProductTable";
 import InstructorProfileLayout from "./InstructorProfileLayout";
@@ -22,6 +25,7 @@ import { mdiStar } from "@mdi/js";
 import axios from "axios"; // Import axios library
 import { numberWithCommas } from "../helper/utils";
 import BookingTable from "./BookingTable";
+import { showToast } from "../Components/Showtoast";
 
 const Booking = () => {
   let { ecosystemDomain } = useParams();
@@ -33,6 +37,17 @@ const Booking = () => {
   const [pending, setPending] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false); 
+  const [onsiteBooking, setOnsiteBooking] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    location: "",
+    service: "",
+    price: "",
+    date: "",
+    time: "",
+  });
 
   const oneWeekHeader = [
     {
@@ -212,27 +227,55 @@ const Booking = () => {
   ];
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/booking-overview/${ecosystemDomain}`
-        );
-        // ${ecosystemDomain}
-        setTodayBookings(response.data.todayBookings);
-        setWeekBookings(response.data.weekBookings);
-        setAllBookings(response.data.allBookings);
-        setPending(response.data.pendingBookings);
-        setCompleted(response.data.completedBookings);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+  
     fetchJobs();
   }, []);
+
+  const fetchJobs = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/booking-overview/${ecosystemDomain}`
+      );
+      // ${ecosystemDomain}
+      setTodayBookings(response.data.todayBookings);
+      setWeekBookings(response.data.weekBookings);
+      setAllBookings(response.data.allBookings);
+      setPending(response.data.pendingBookings);
+      setCompleted(response.data.completedBookings);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOnsiteBookingChange = (e) => {
+    const { name, value } = e.target;
+    setOnsiteBooking((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle form submission
+  const handleOnsiteBookingSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/onsite-booking`,
+        {
+          ...onsiteBooking,
+          ecosystemDomain,
+        }
+      );
+      console.log("Onsite booking created:", response.data);
+      showToast(response.data.message);
+      fetchJobs();
+      setShowModal(false); 
+      setOnsiteBooking("");
+    } catch (error) {
+      console.error("Error creating onsite booking:", error);
+      showToast(error.response.data.error);
+    }
+  };
 
   const todayHeader = [
     {
@@ -328,7 +371,13 @@ const Booking = () => {
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-                <h3 className="mb-0">Bookings</h3>
+              <div className="d-flex justify-content-between align-items-center">
+            <h3 className="mb-0">Bookings</h3>
+            {/* Button to trigger modal */}
+            <Button variant="primary" onClick={() => setShowModal(true)}>
+              Create Onsite Booking
+            </Button>
+          </div>
                 <p className="mb-0">
                   Manage your bookings and its update like All booking, pending,
                   and completed.
@@ -383,6 +432,121 @@ const Booking = () => {
           </Card>
         </Tab.Container>
       </Card>
+
+
+       {/* Modal for creating onsite booking */}
+       <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create Onsite Booking</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleOnsiteBookingSubmit}>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={onsiteBooking.name}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={onsiteBooking.email}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    name="phone"
+                    value={onsiteBooking.phone}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Location</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="location"
+                    value={onsiteBooking.location}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Service</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="service"
+                    value={onsiteBooking.service}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="price"
+                    value={onsiteBooking.price}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    value={onsiteBooking.date}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Time</Form.Label>
+                  <Form.Control
+                    type="time"
+                    name="time"
+                    value={onsiteBooking.time}
+                    onChange={handleOnsiteBookingChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={12}>
+                <Button variant="primary" type="submit">
+                  Submit Booking
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </InstructorProfileLayout>
   );
 };
