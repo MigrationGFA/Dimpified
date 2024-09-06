@@ -171,9 +171,10 @@ const Payouts = () => {
     fetchBankData();
   }, [userId]);
 
+
+
   const handleSave = async () => {
-    if (userId && accountName && accountNumber && bankName && currency) {
-      // Check if userId is present
+   
       try {
         const saveBankData = await axios.post(
          `${import.meta.env.VITE_API_URL}/save-bank-details`,
@@ -197,10 +198,7 @@ const Payouts = () => {
       }
 
       setShowModal(false);
-    } else {
-      console.error("Error: userId is required");
-      showToast("User ID is required");
-    }
+    
   };
 
   const handleAddAccount = () => {
