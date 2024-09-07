@@ -120,7 +120,7 @@ const Pricing = () => {
             feature: "Up to 500 monthly transactions allowed",
             available: true,
           },
-          { feature: "7.5% per transactions", available: true },
+          { feature: "7.5% fee per transaction", available: true },
         ],
         "Payment and Subscription": [
           { feature: "Online payment gateway", available: true },
@@ -162,7 +162,7 @@ const Pricing = () => {
             feature: "Up to 4,000 monthly transactions allowed",
             available: true,
           },
-          { feature: "4% per transactions", available: true },
+          { feature: "4% fee per transaction", available: true },
         ],
         "Payment and Subscription": [
           { feature: "Online payment gateway", available: true },
@@ -207,7 +207,7 @@ const Pricing = () => {
             feature: "Up to 125,000 monthly transactions allowed",
             available: true,
           },
-          { feature: "3% per transactions", available: true },
+          { feature: "3% fee per transaction", available: true },
         ],
         "Payment and Subscription": [
           { feature: "Online payment gateway", available: true },
@@ -249,7 +249,7 @@ const Pricing = () => {
             available: true,
           },
           { feature: "Up to 5,000,000 monthly transactions", available: true },
-          { feature: "2% per transactions", available: true },
+          { feature: "2% fee per transaction", available: true },
         ],
         "Payment and Subscription": [
           { feature: "Online payment gateway", available: true },
