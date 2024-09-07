@@ -133,7 +133,7 @@ const HeroLeftImage = () => {
       <Col lg={6} md={12} sm={12} xs={12} className="mt-2 mt-lg-0">
         {/* content */}
         <div className="ps-lg-7">
-          <SectionHeadingLeftBold title={title} subtitle={subtitle} />
+          <SectionHeadingLeftBold  title={title} subtitle={subtitle} />
           <Row className="mt-5">
             {/* list */}
             <Col>
@@ -159,7 +159,7 @@ const HeroLeftImage = () => {
                         />
                         <div className="ms-2">
                           <h5
-                            className="mt-2"
+                            className="mt-2 alt-font"
                             dangerouslySetInnerHTML={{ __html: item.title }}
                           ></h5>
                         </div>
@@ -192,10 +192,10 @@ const HeroLeftImage = () => {
                           }}
                         />
                         <div className="ms-2">
-                          <h4
-                            className="mt-2"
+                          <h5
+                            className="mt-2 alt-font"
                             dangerouslySetInnerHTML={{ __html: item.title }}
-                          ></h4>
+                          ></h5>
                         </div>
                       </div>
                     </ListGroup.Item>

@@ -19,11 +19,11 @@ const SectionHeadingDarkCenter = ({
 				</span>
 			)}
 			<h2
-				className={`${className} mt-4 mb-3 ${dark ? 'text-white' : ''} fw-bold`}
+				className={`${className} mt-3 sm-fs-40 alt-font mb-3 ${dark ? 'text-white' : ''} fw-bold`}
 			>
 				{title}
 			</h2>
-			<p className={`lead ${dark ? 'text-white-50' : ''} px-8`}>
+			<p className={`lead ${dark ? 'text-white-50' : ''} px-3`}>
 				{description}
 			</p>
 		</div>

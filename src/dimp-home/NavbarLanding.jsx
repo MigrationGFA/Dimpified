@@ -50,7 +50,7 @@ const NavbarLanding = (props) => {
         onToggle={(collapsed) => setExpandedMenu(collapsed)}
         expanded={expandedMenu}
         expand="lg"
-        className={`navbar navbar-default bg-white shadow-none ${
+        className={`navbar navbar-default bg-white py-4 shadow-none ${
           transparent ? "navbar-transparent" : ""
         }`}
       >
@@ -69,7 +69,7 @@ const NavbarLanding = (props) => {
               <UseCaseMenu style={linkStyle} />
               <Nav.Link
                 href="/pricing"
-                className="dropdown-arrow d-block nav-link lh-1 pt-2"
+                className="dropdown-arrow d-block nav-link lh-1 pt-10px"
                 style={linkStyle}
               >
                 Pricing

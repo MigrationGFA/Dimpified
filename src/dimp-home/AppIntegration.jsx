@@ -14,7 +14,7 @@ const AppIntegration = () => {
 	const description = `Connect your ecosystem with wide range of useful integrations and increase your revenue! `;
 
 	return (
-		<section className="py-lg-14 py-8 bg-purple mb-lg-6">
+		<section className="py-lg-14 py-8 px-3 bg-purple mb-lg-6">
 			<Container>
 				<Row className="justify-content-center">
 					<Col lg={6} md={12} xs={12}>

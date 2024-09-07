@@ -17,7 +17,7 @@ const TemplatesNoPlay = () => {
             <Row className="align-items-center">
               <Col lg={12} md={12} xs={12}>
                 <div className="mb-5 mb-lg-0">
-                <h2 className="display-5 fw-bold mb-3 text-center">
+                <h2 className="display-5 alt-font fw-bold mb-3 text-center">
                     Build a high-converting page for your ecosystem with{" "}
                     <u className="text-warning">
                       <span className="text-primary">

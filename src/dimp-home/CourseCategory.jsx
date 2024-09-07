@@ -14,7 +14,7 @@ const CourseCategory = () => {
     <Fragment>
       {/* Page header */}
 
-      <section className="py-0">
+      <section className="py-0 primary-font">
         <Container>
           <Row className="mb-6">
             <Col md={12} sm={12}>

@@ -8,7 +8,7 @@ import { Col, Row, Container } from "react-bootstrap";
 const CTA2Buttons = ({ title, description, btntext1, btnlink1, btntext2, btnlink2 }) => {
   return (
     <section
-      className="py-lg-16 py-10 bg-primary"
+      className="bg-primary py-lg-16 p-6 px-lg-20 rounded-4 text-center"
       style={{
         
         backgroundRepeat: "no-repeat",
@@ -36,6 +36,8 @@ const CTA2Buttons = ({ title, description, btntext1, btnlink1, btntext2, btnlink
         </Row>
       </Container>
     </section>
+
+    
   );
 };
 export default CTA2Buttons;
