@@ -21,7 +21,6 @@ const BookingTable = ({ data, header }) => {
 
   const markCompleted = async (bookingId) => {
     try {
-      console.log("Start marking complete:", bookingId);
       setLoadingBookings((prev) => ({
         ...prev,
         [bookingId]: true,
@@ -34,6 +33,10 @@ const BookingTable = ({ data, header }) => {
 
       if (response.status === 200) {
         console.log("Marking as completed:", bookingId);
+        setLoadingBookings((prev) => ({
+          ...prev,
+          [bookingId]: false,
+        }));
         setCompletedJobs((prev) => ({
           ...prev,
           [bookingId]: true,

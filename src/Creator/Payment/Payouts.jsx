@@ -16,7 +16,7 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import {
   flexRender,
@@ -56,9 +56,11 @@ import {useSelector}  from "react-redux"
 
 
 const Payouts = () => {
+  const {ecosystemDomain} = useParams();
   const userId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
+  console.log(userId)
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -96,11 +98,11 @@ const Payouts = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/creator/earnings/${userId}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
         );
 
         if (response.data) {
-          setEarnings(response.data);
+          setEarnings(response.data.totalEarnings);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -125,11 +127,7 @@ const Payouts = () => {
       case "Dollar":
         return `$`;
       case "euros":
-      case "EUR":
-        return `€`;
-      case "pounds":
-      case "GBP":
-        return `£`;
+     
       default:
         return `₦`;
     }
@@ -154,27 +152,29 @@ const Payouts = () => {
     indexOfLastAccount
   );
 
+  // Function to retrieve bank data from the server
+  const fetchBankData = async () => {
+    try {
+      const response = await axios.get(
+       `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
+      );
+      const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
+      setBankData(fetchedBankData);
+    } catch (error) {
+      console.error("Error fetching bank data:", error);
+    }
+  };
   useEffect(() => {
-    // Function to retrieve bank data from the server
-    const fetchBankData = async () => {
-      try {
-        const response = await axios.get(
-         `${import.meta.env.VITE_API_URL}/bank-details/${userId}`
-        );
-        const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
-        setBankData(fetchedBankData);
-      } catch (error) {
-        console.error("Error fetching bank data:", error);
-      }
-    };
+    
 
     // Fetch bank data from server
     fetchBankData();
   }, [userId]);
 
+
+
   const handleSave = async () => {
-    if (userId && accountName && accountNumber && bankName && currency) {
-      // Check if userId is present
+   
       try {
         const saveBankData = await axios.post(
          `${import.meta.env.VITE_API_URL}/save-bank-details`,
@@ -184,6 +184,7 @@ const Payouts = () => {
             accountNumber,
             bankName,
             currency,
+            ecosystemDomain
           }
         );
 
@@ -197,10 +198,7 @@ const Payouts = () => {
       }
 
       setShowModal(false);
-    } else {
-      console.error("Error: userId is required");
-      showToast("User ID is required");
-    }
+    
   };
 
   const handleAddAccount = () => {
@@ -230,8 +228,11 @@ const Payouts = () => {
           bankName: editedAccount.bankName,
           accountNumber: editedAccount.accountNumber,
           currency: editedAccount.currency,
+          ecosystemDomain,
         }
       );
+      fetchBankData();
+
       setShowEditModal(false);
       showToast("Account update Successfully");
     } catch (error) {
@@ -263,6 +264,7 @@ const Payouts = () => {
             accountId: selectedBankId,
             amount: parseFloat(withdrawnAmount),
             currency: selectedCurrency,
+             ecosystemDomain,
           }
         );
         showToast(response.data.message);
@@ -364,9 +366,8 @@ const Payouts = () => {
 
   const bankCurrency = [
     { value: "NGN", label: "Naira" },
-    { value: "EUR", label: "Euros" },
     { value: "USD", label: "Dollars" },
-    { value: "GBP", label: "Pounds" },
+
   ];
 
   const AlertDismissible = () => {
@@ -422,12 +423,7 @@ const Payouts = () => {
                     <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
                       USD
                     </DropdownItem>
-                    <DropdownItem onClick={() => handleCurrencyChange("EUR")}>
-                      EUR
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleCurrencyChange("GBP")}>
-                      GBP
-                    </DropdownItem>
+                   
                   </DropdownMenu>
                 </Dropdown>
                 <h4 className="mb-1">Your total earnings</h4>

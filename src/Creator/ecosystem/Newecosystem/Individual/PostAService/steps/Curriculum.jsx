@@ -106,7 +106,7 @@ const AddService = () => {
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}

@@ -21,9 +21,7 @@ const serviceSlice = createSlice({
         ...action.payload,
       };
     },
-    resetServiceData() {
-      return initialState;
-    },
+    resetServiceData: () => initialState,
     addBackgroundCover(state, action) {
         const newBackgroundCover = {
           name: action.payload.name,

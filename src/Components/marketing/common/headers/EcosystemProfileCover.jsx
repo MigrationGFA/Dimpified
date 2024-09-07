@@ -9,8 +9,8 @@ import LevelIconWithTooltip from "../../../../Components/elements/miscellaneous/
 import CheckedMark from "../../../../assets/images/svg/checked-mark.svg";
 import ProfileBackground from "../../../../assets/images/background/profile-bg.jpg";
 
-const ecoLogo = sessionStorage.getItem("ecoLogo")
-const ecosystemDomain = sessionStorage.getItem("ecosystemDomain")
+const ecoLogo = sessionStorage.getItem("ecoLogo");
+const ecosystemDomain = sessionStorage.getItem("ecosystemDomain");
 const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
   return (
     <Row className="align-items-center">
@@ -51,21 +51,21 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               </div>
               <div className="lh-1">
                 <h2 className="mb-0">
-                 This is {ecosystemDomain} ecosystem dashboard
+                  This is {ecosystemDomain} dashboard
                   <LevelIconWithTooltip level={dashboardData.level} />{" "}
                 </h2>
                 <p className="mb-0 d-block">{ecosystemDomain}</p>
               </div>
             </div>
             <div className="d-flex gap-2">
-              <Link
+              {/* <Link
                 to={dashboardData.link}
                 className={`btn btn${
                   dashboardData.outlinebutton ? "-outline" : ""
                 }-primary btn-sm d-none d-md-block`}
               >
                 {dashboardData.linkname}
-              </Link>
+              </Link> */}
               <Link
                 to={ServiceButton.link}
                 className={`btn btn${
@@ -74,15 +74,14 @@ const ProfileCover = ({ dashboardData, ServiceButton, ProductButton }) => {
               >
                 {ServiceButton.linkname}
               </Link>
-              <Link
+              {/* <Link
                 to={ProductButton.link}
                 className={`btn btn${
                   ProductButton.outlinebutton ? "-outline" : ""
                 }-primary btn-sm d-none d-md-block`}
               >
                 {ProductButton.linkname}
-              </Link>
-              
+              </Link> */}
             </div>
           </div>
         </Card>

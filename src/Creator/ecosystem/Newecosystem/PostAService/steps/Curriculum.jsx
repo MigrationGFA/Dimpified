@@ -1,68 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Card, Form, Button, Modal } from "react-bootstrap";
-import { addTopic } from "../../../../../features/course";
-import { useSelector, useDispatch } from "react-redux";
-import { updateTopic, removeTopic } from "../../../../../features/course";
-import useVideoEditor from "../../../../../helper/VideoUpload";
+import { Button, Modal, Form, Card } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addService,
+  updateService,
+  deleteService,
+  resetServiceData,
+} from "../../../../../features/service";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { showToast } from "../../../../../Components/Showtoast";
+import axios from "axios";
+import { useImageUploader } from "../../../../../helper/UploadImage";
 
-const AddTopic = () => {
-  const [show, setShow] = useState(false);
-  const [courseName, setCourseName] = useState("");
-  const [description, setDescription] = useState("");
-  const [totalDuration, setTotalDuration] = useState("");
-  const [sections, setSections] = useState([
-    { title: "", link: "", duration: "" },
-  ]);
-
+const AddService = () => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState("");
+  const [priceFormat, setPriceFormat] = useState("");
+  const [serviceImage, setServiceImage] = useState("");
+
+  const {
+    fileInputRefs,
+    handleEditImageClick,
+    handleImageChange,
+    loadingImage,
+  } = useImageUploader();
+
+  const jobSalaryFormats = [
+    { value: "Fixed", label: "Fixed" },
+    { value: "Hourly", label: "Hourly" },
+    { value: "Daily", label: "Daily" },
+    { value: "Weekly", label: "Weekly" },
+    { value: "Monthly", label: "Monthly" },
+    { value: "Yearly", label: "Yearly" },
+  ];
 
   const handleClose = () => {
     setShow(false);
-    setCourseName("");
-    setDescription("");
-    setTotalDuration("");
-    setSections([{ title: "", link: "", duration: "" }]);
+    setName("");
+    setShortDescription("");
+    setPrice("");
+    setDeliveryTime("");
+    setPriceFormat("");
+    setServiceImage("");
   };
 
   const handleShow = () => setShow(true);
 
-  const handleAddSection = () => {
-    setSections([...sections, { title: "", link: "", duration: "" }]);
-  };
-
-  const handleRemoveSection = (index) => {
-    const newSections = [...sections];
-    newSections.splice(index, 1);
-    setSections(newSections);
-  };
-
-  const handleSectionChange = (index, field, value) => {
-    const newSections = [...sections];
-    newSections[index][field] = value;
-    setSections(newSections);
-  };
-
-  const handleAddTopic = () => {
+  const handleAddService = () => {
     dispatch(
-      addTopic({
-        courseName: courseName,
-        description: description,
-        totalDuration: totalDuration,
-        section: sections,
+      addService({
+        name,
+        shortDescription,
+        price,
+        deliveryTime,
+        priceFormat,
+        serviceImage,
       })
     );
     handleClose();
   };
-
-  const isInitialSectionFilled =
-    sections[0].title && sections[0].link && sections[0].duration;
-
-  const {
-    fileInputRefs,
-    handleEditVideoClick,
-    handleVideoChange,
-    loadingVideo,
-  } = useVideoEditor(handleSectionChange);
 
   return (
     <>
@@ -71,7 +71,7 @@ const AddTopic = () => {
         className="btn btn-outline-primary btn-sm mt-3"
         onClick={handleShow}
       >
-        Add New Module
+        Add New Service
       </Button>
       <Modal
         show={show}
@@ -81,125 +81,104 @@ const AddTopic = () => {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add New Module</Modal.Title>
+          <Modal.Title>Add New Service</Modal.Title>
         </Modal.Header>
         <Modal.Body className="pb-0">
-          <Form.Group className="mb-3" controlId="formTopic">
+          <Form.Group className="mb-3">
+            <Form.Label>Service Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Module Title"
-              value={courseName}
-              onChange={(e) => setCourseName(e.target.value)}
+              placeholder="Service Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formTopicDescription">
+          <Form.Group className="mb-3">
+            <Form.Label>Short Description</Form.Label>
             <Form.Control
               as="textarea"
-              placeholder="Module Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+              placeholder="Short Description"
+              value={shortDescription}
+              onChange={(e) => setShortDescription(e.target.value)}
             />
           </Form.Group>
-          <Form.Group
-            className="mb-3"
-            controlId="formTopicCourseContentDuration"
-          >
+          <Form.Group className="mb-3">
+            <Form.Label>Price</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Total Audio/Video/Document course content duration"
-              value={totalDuration}
-              onChange={(e) => setTotalDuration(e.target.value)}
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Delivery Time</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Delivery Time"
+              value={deliveryTime}
+              onChange={(e) => setDeliveryTime(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Pricing Format</Form.Label>
+            <Form.Select
+              type="text"
+              placeholder="Job Salary Format"
+              value={priceFormat}
+              onChange={(e) => setPriceFormat(e.target.value)}
+            >
+              <option value="">Select Pricing Format</option>
+              {jobSalaryFormats.map((jobSalaryFormat, index) => (
+                <option key={index} value={jobSalaryFormat.value}>
+                  {jobSalaryFormat.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-          {sections.map((section, index) => (
-            <div key={index} className="d-flex align-items-center mb-3 gap-3">
-              <Form.Group>
-                <Form.Label>Section Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Section Title"
-                  value={section.title}
-                  onChange={(e) =>
-                    handleSectionChange(index, "title", e.target.value)
-                  }
-                  className="me-2"
-                />
-              </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Service Image</Form.Label>
+            <div className="d-flex align-items-center">
+              <Form.Control
+                type="text"
+                placeholder="Service Image URL"
+                value={serviceImage}
+                onChange={(e) => setServiceImage(e.target.value)}
+                readOnly // Make the input read-only as the image URL will be set automatically after upload
+                className="me-2"
+                disabled
+              />
 
-              <Form.Group>
-                <Form.Label>Section Content Link</Form.Label>
-                <div className="d-flex align-items-center">
-                  <Form.Control
-                    type="text"
-                    placeholder="Section Content Link"
-                    value={section.link}
-                    onChange={(e) =>
-                      handleSectionChange(index, "link", e.target.value)
-                    }
-                    className="me-2"
-                  />
-                  <input
-                    type="file"
-                    accept="video/*"
-                    ref={(el) =>
-                      (fileInputRefs.current[`section-${index}-link`] = el)
-                    }
-                    onChange={
-                      (e) => handleVideoChange(e, index, "link") // Pass the index and field name
-                    }
-                    style={{ display: "none" }}
-                  />
+              <input
+                type="file"
+                accept="image/*"
+                ref={(el) => (fileInputRefs.current["service-image"] = el)}
+                onChange={async (e) => {
+                  const imageUrl = await handleImageChange(
+                    e,
+                    "service",
+                    "image"
+                  );
+                  setServiceImage(imageUrl);
+                }}
+                style={{ display: "none" }}
+              />
 
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      handleEditVideoClick(`section-${index}`, "link")
-                    }
-                    disabled={loadingVideo}
-                  >
-                    {loadingVideo ? "Uploading..." : "Upload Video"}
-                  </Button>
-                </div>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Section Duration</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Section Duration"
-                  value={section.duration}
-                  onChange={(e) =>
-                    handleSectionChange(index, "duration", e.target.value)
-                  }
-                  className="me-2"
-                />
-              </Form.Group>
-
-              {index > 0 && (
-                <Button
-                  variant="outline-danger"
-                  onClick={() => handleRemoveSection(index)}
-                  className="mt-5"
-                >
-                  Remove
-                </Button>
-              )}
+              <Button
+                variant="primary"
+                onClick={() => handleEditImageClick("service", "image")}
+                disabled={loadingImage}
+              >
+                {loadingImage ? "Uploading..." : "Upload Image"}
+              </Button>
             </div>
-          ))}
-
-          <Button
-            variant="outline-primary"
-            onClick={handleAddSection}
-            disabled={!isInitialSectionFilled}
-            className="mb-3"
-          >
-            Add Section
-          </Button>
+          </Form.Group>
         </Modal.Body>
-        <Modal.Footer className="pt-0 border-0 d-inline ">
-          <Button variant="primary" onClick={handleAddTopic}>
-            save Module
+        <Modal.Footer className="pt-0 border-0 d-inline">
+          <Button variant="primary" onClick={handleAddService}>
+            Save Service
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
             Close
@@ -210,69 +189,167 @@ const AddTopic = () => {
   );
 };
 
-const Curriculum = ({ onNext, onPrevious }) => {
-  const sections = useSelector((state) => state.course.curriculum) || [];
-  console.log(sections);
+const Service = ({ submit, onPrevious }) => {
+  const { ecosystemDomain } = useParams();
+  const location = useLocation();
+  const ecosystemFromState = useSelector(
+    (state) => state.ecosystem.ecosystemDomain
+  );
+  const user = useSelector((state) => state.authentication.user);
+  const userType = useSelector((state) => state.authentication.user.data.role);
+  const creatorId = user?.data?.CreatorId;
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const sections = useSelector((state) => state.service.services) || [];
   const dispatch = useDispatch();
   const [editIndex, setEditIndex] = useState(null);
-  const [editCourseName, setEditCourseName] = useState("");
-  const [editDescription, setEditDescription] = useState("");
-  const [editTotalDuration, setEditTotalDuration] = useState("");
-  const [editSections, setEditSections] = useState([]);
+  const [editName, setEditName] = useState("");
+  const [editShortDescription, setEditShortDescription] = useState("");
+  const [editPrice, setEditPrice] = useState("");
+  const [editDeliveryTime, setEditDeliveryTime] = useState("");
+  const [editPriceFormat, setEditPriceFormat] = useState("");
+  const [editImage, setEditImage] = useState("");
+
+  const jobSalaryFormats = [
+    { value: "Fixed", label: "Fixed" },
+    { value: "Hourly", label: "Hourly" },
+    { value: "Daily", label: "Daily" },
+    { value: "Weekly", label: "Weekly" },
+    { value: "Monthly", label: "Monthly" },
+    { value: "Yearly", label: "Yearly" },
+  ];
+
+  const serviceData = useSelector((state) => state.service);
+  const {
+    category,
+    subCategory,
+    prefix,
+    header,
+    description,
+    format,
+    currency,
+    services,
+  } = serviceData;
+
+  let ecosystem;
+  if (ecosystemDomain) {
+    ecosystem = ecosystemDomain;
+  } else {
+    ecosystem = ecosystemFromState;
+  }
+
+  console.log(ecosystem);
+
+  const handleSubmit = () => {
+    setLoading(true);
+
+    const serviceDetails = {
+      category: category,
+      subCategory: subCategory,
+      header: `${prefix} ${header}`,
+      description: description,
+      format: format,
+      currency: currency,
+      services: services,
+      creatorId: creatorId,
+      ecosystemDomain: ecosystem,
+    };
+
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/create-service`, serviceDetails)
+      .then((response) => {
+        setLoading(false);
+        if (response.data) {
+          showToast(response.data.message);
+        }
+
+        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
+          dispatch(resetServiceData());
+          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+        } else {
+          if (userType === "consumer") {
+            navigate("/creator/dashboard/Edit-Template/individual");
+          } else {
+            navigate("/creator/dashboard/Products");
+          }
+        }
+        submit();
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (submit && typeof submit !== "function") {
+      console.error("submit is not a function");
+    }
+  }, [submit]);
+
+  const handlePrevious = () => {
+    if (onPrevious) {
+      onPrevious();
+    }
+  };
 
   useEffect(() => {
     if (editIndex !== null) {
       const {
-        courseName,
-        description,
-        totalDuration,
-        section: sec,
+        name,
+        shortDescription,
+        price,
+        deliveryTime,
+        priceFormat,
+        serviceImage,
       } = sections[editIndex];
-      setEditCourseName(courseName);
-      setEditDescription(description);
-      setEditTotalDuration(totalDuration);
-      setEditSections(sec || []);
+      setEditName(name);
+      setEditShortDescription(shortDescription);
+      setEditPrice(price);
+      setEditDeliveryTime(deliveryTime);
+      setEditPriceFormat(priceFormat);
+      setEditImage(serviceImage);
     }
   }, [editIndex, sections]);
 
-  const handleRemoveSection = (index) => {
-    dispatch(removeTopic(index));
+  const handleRemoveService = (index) => {
+    dispatch(deleteService(index));
   };
 
-  const handleEditSection = (index) => {
+  const handleEditService = (index) => {
     setEditIndex(index);
     const {
-      courseName,
-      description,
-      totalDuration,
-      section: sec,
+      name,
+      shortDescription,
+      price,
+      deliveryTime,
+      priceFormat,
+      serviceImage,
     } = sections[index];
-    setEditCourseName(courseName);
-    setEditDescription(description);
-    setEditTotalDuration(totalDuration);
-    setEditSections(sec || []);
-  };
-
-  const handleAddSection = () => {
-    setEditSections([...editSections, { title: "", link: "", duration: "" }]);
-  };
-
-  const handleSectionChange = (index, field, value) => {
-    const newEditSections = [...editSections];
-    newEditSections[index] = { ...newEditSections[index], [field]: value };
-    setEditSections(newEditSections);
+    setEditName(name);
+    setEditShortDescription(shortDescription);
+    setEditPrice(price);
+    setEditDeliveryTime(deliveryTime);
+    setEditPriceFormat(priceFormat);
+    setEditImage(serviceImage);
   };
 
   const handleFieldChange = (field, value) => {
     switch (field) {
-      case "courseName":
-        setEditCourseName(value);
+      case "name":
+        setEditName(value);
         break;
-      case "description":
-        setEditDescription(value);
+      case "shortDescription":
+        setEditShortDescription(value);
         break;
-      case "totalDuration":
-        setEditTotalDuration(value);
+      case "price":
+        setEditPrice(value);
+        break;
+      case "deliveryTime":
+        setEditDeliveryTime(value);
+        break;
+      case "priceFormat":
+        setEditPriceFormat(value);
         break;
       default:
         break;
@@ -281,13 +358,15 @@ const Curriculum = ({ onNext, onPrevious }) => {
 
   const handleSaveEdit = () => {
     dispatch(
-      updateTopic({
+      updateService({
         index: editIndex,
-        topic: {
-          courseName: editCourseName,
-          description: editDescription,
-          totalDuration: editTotalDuration,
-          section: editSections,
+        service: {
+          name: editName,
+          shortDescription: editShortDescription,
+          price: editPrice,
+          deliveryTime: editDeliveryTime,
+          priceFormat: editPriceFormat,
+          serviceImage: editImage,
         },
       })
     );
@@ -296,12 +375,12 @@ const Curriculum = ({ onNext, onPrevious }) => {
 
   return (
     <Form>
-      <Card className="mb-3 border-0">
+      <Card className="mb-3 border-0 ">
         <Card.Header className="border-bottom px-4 py-3">
-          <h4 className="mb-0">Curriculum</h4>
+          <h4 className="mb-0">Service</h4>
         </Card.Header>
         <Card.Body>
-          {sections.map((topic, prIndex) => (
+          {sections.map((service, prIndex) => (
             <div
               key={prIndex}
               className="bg-light rounded p-2 mb-4 position-relative"
@@ -309,109 +388,63 @@ const Curriculum = ({ onNext, onPrevious }) => {
               {editIndex === prIndex ? (
                 <div className="position-relative">
                   <Form.Group>
-                    <Form.Label>Course Name</Form.Label>
+                    <Form.Label>Service Name</Form.Label>
                     <Form.Control
                       type="text"
-                      value={editCourseName}
+                      value={editName}
                       onChange={(e) =>
-                        handleFieldChange("courseName", e.target.value)
+                        handleFieldChange("name", e.target.value)
                       }
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Short Description</Form.Label>
                     <Form.Control
                       as="textarea"
-                      value={editDescription}
+                      value={editShortDescription}
                       onChange={(e) =>
-                        handleFieldChange("description", e.target.value)
+                        handleFieldChange("shortDescription", e.target.value)
                       }
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>
-                      Audio/Video/Document course content Duration
-                    </Form.Label>
+                    <Form.Label>Price</Form.Label>
                     <Form.Control
-                      type="text"
-                      value={editTotalDuration}
+                      type="number"
+                      value={editPrice}
                       onChange={(e) =>
-                        handleFieldChange("totalDuration", e.target.value)
+                        handleFieldChange("price", e.target.value)
                       }
                     />
                   </Form.Group>
-                  {editSections.map((secs, secIndex) => (
-                    <div
-                      key={secIndex}
-                      className="d-flex align-items-center mb-3 mt-3 gap-3"
+                  <Form.Group>
+                    <Form.Label>Delivery Time</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={editDeliveryTime}
+                      onChange={(e) =>
+                        handleFieldChange("deliveryTime", e.target.value)
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Pricing Format</Form.Label>
+                    <Form.Select
+                      type="text"
+                      placeholder="Job Salary Format"
+                      value={editPriceFormat}
+                      onChange={(e) =>
+                        handleFieldChange("priceFormat", e.target.value)
+                      }
                     >
-                      <Form.Group>
-                        <Form.Label>Section Title</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Section Title"
-                          value={secs.title}
-                          onChange={(e) =>
-                            handleSectionChange(
-                              secIndex,
-                              "title",
-                              e.target.value
-                            )
-                          }
-                          className="me-2"
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Section Content Link</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Section Content Link"
-                          value={secs.link}
-                          disabled
-                          onChange={(e) =>
-                            handleSectionChange(
-                              secIndex,
-                              "link",
-                              e.target.value
-                            )
-                          }
-                          className="me-2"
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Section Duration</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Section Duration"
-                          value={secs.duration}
-                          onChange={(e) =>
-                            handleSectionChange(
-                              secIndex,
-                              "duration",
-                              e.target.value
-                            )
-                          }
-                          className="me-2"
-                        />
-                      </Form.Group>
-                      {secIndex > 0 && (
-                        <Button
-                          variant="outline-danger"
-                          onClick={() => {
-                            const newSections = [...editSections];
-                            newSections.splice(secIndex, 1);
-                            setEditSections(newSections);
-                          }}
-                          className="mt-4"
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                  ))}
-                  <Button variant="outline-primary" onClick={handleAddSection}>
-                    Add Section
-                  </Button>
+                      <option value="">Select Pricing Format</option>
+                      {jobSalaryFormats.map((jobSalaryFormat, index) => (
+                        <option key={index} value={jobSalaryFormat.value}>
+                          {jobSalaryFormat.label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
                   <div className="mt-5">
                     <Button onClick={handleSaveEdit}>Save</Button>
                     <Button
@@ -427,20 +460,20 @@ const Curriculum = ({ onNext, onPrevious }) => {
                 <div>
                   <Button
                     variant="link"
-                    className="position-absolute top-0 end-0 text-danger me-2"
-                    onClick={() => handleRemoveSection(prIndex)}
+                    className="position-absolute top-0 end-0 text-danger me-2 "
+                    onClick={() => handleRemoveService(prIndex)}
                   >
                     Delete
                   </Button>
                   <Button
                     variant="link"
-                    className="position-absolute top-0 text-primary me-4"
-                    onClick={() => handleEditSection(prIndex)}
-                    style={{ right: "10%", maxWidth: "80%" }}
+                    className="position-absolute top-0 text-primary "
+                    onClick={() => handleEditService(prIndex)}
+                    style={{ right: "20%", maxWidth: "80%" }}
                   >
                     Edit
                   </Button>
-                  <h4>{topic.courseName}</h4>
+                  <h4>{service.name}</h4>
                   <p
                     style={{
                       backgroundColor: "white",
@@ -451,7 +484,7 @@ const Curriculum = ({ onNext, onPrevious }) => {
                       overflowY: "auto",
                     }}
                   >
-                    {topic.description}
+                    {service.shortDescription}
                   </p>
                   <p
                     style={{
@@ -461,95 +494,56 @@ const Curriculum = ({ onNext, onPrevious }) => {
                       borderRadius: "5px",
                     }}
                   >
-                    {topic.totalDuration}
+                    {service.price}
                   </p>
-                  {topic.section &&
-                    topic.section.map((sec, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex align-items-center mb-2"
-                        style={{ gap: "10px" }}
-                      >
-                        {/* Title */}
-                        <div
-                          style={{
-                            flex: "1",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span
-                            style={{
-                              backgroundColor: "white",
-                              border: "1px solid #ced4da",
-                              padding: "5px 10px",
-                              borderRadius: "5px",
-                              fontWeight: "bold",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              flex: "1",
-                            }}
-                          >
-                            {sec.title}
-                          </span>
-                        </div>
-
-                        {/* Content Link Input */}
-                        <Form.Control
-                          type="text"
-                          placeholder="Link"
-                          value={sec.link}
-                          className="form-control-sm"
-                          style={{ flex: "2" }}
-                        />
-
-                        {/* Duration */}
-                        <div
-                          style={{
-                            flex: "1",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span
-                            style={{
-                              backgroundColor: "white",
-                              border: "1px solid #ced4da",
-                              padding: "5px 10px",
-                              borderRadius: "5px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              flex: "1",
-                            }}
-                          >
-                            {sec.duration}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
+                  <p
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid #ced4da",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {service.deliveryTime}
+                  </p>
+                  <p
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid #ced4da",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {service.priceFormat}
+                  </p>
+                  <img
+                    src={service.serviceImage}
+                    alt="image"
+                    style={{
+                      height: "50px",
+                    }}
+                  />
                 </div>
               )}
             </div>
           ))}
-          <AddTopic />
+          <AddService />
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-between">
-        <Button variant="secondary" onClick={onPrevious}>
+        <Button
+          variant="outline-secondary"
+          className="mr-2"
+          onClick={handlePrevious}
+        >
           Previous
         </Button>
-        <Button
-          variant="primary"
-          onClick={onNext}
-          disabled={sections.length === 0}
-        >
-          Next
+        <Button variant="primary" onClick={handleSubmit} disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
         </Button>
       </div>
     </Form>
   );
 };
 
-export default Curriculum;
+export default Service;
