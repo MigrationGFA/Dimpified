@@ -1,15 +1,11 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Accordion,
-  AccordionContext,
-  Nav,
-  useAccordionButton,
-} from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 
 export const DashboardMenu = () => {
   const [ecosystemDomain, setEcosystemDomain] = useState("");
+  const [hoveredEventKey, setHoveredEventKey] = useState(null); // Track hovered key
   const location = useLocation();
 
   useEffect(() => {
@@ -19,29 +15,9 @@ export const DashboardMenu = () => {
     }
   }, []);
 
-  const CustomToggle = ({ children, eventKey, icon }) => {
-    const { activeEventKey } = useContext(AccordionContext);
-    const decoratedOnClick = useAccordionButton(eventKey);
-    const isCurrentEventKey = activeEventKey === eventKey;
-
-    return (
-      <li className="nav-item">
-        <Link
-          className={`nav-link ${isCurrentEventKey ? "active" : ""}`}
-          onClick={decoratedOnClick}
-          to="#!"
-        >
-          <i className={`fe fe-${icon} nav-icon`} ></i>
-          {children}
-          <i
-            className={`fe ${
-              isCurrentEventKey ? "fe-chevron-up" : "fe-chevron-down"
-            } ml-2`}
-          ></i>{" "}
-        </Link>
-      </li>
-    );
-  };
+  // Handle hover events for showing/hiding child menus
+  const handleMouseEnter = (eventKey) => setHoveredEventKey(eventKey);
+  const handleMouseLeave = () => setHoveredEventKey(null);
 
   const menuItems = [
     {
@@ -52,66 +28,59 @@ export const DashboardMenu = () => {
     },
     {
       id: 2,
-      title: "My Product",
+      title: "Orders",
       link: `/${ecosystemDomain}/Ecosystemdashboard/My-Courses`,
-      icon: "book",
+      icon: "shopping-bag",
       children: [
         {
           id: uuid(),
-          link: `${ecosystemDomain}/Ecosystemdashboard/Booking`,
+          link: `/${ecosystemDomain}/Ecosystemdashboard/Booking`,
           name: "Bookings",
         },
         {
           id: uuid(),
-          link: `${ecosystemDomain}/Ecosystemdashboard/Courses`,
+          link: `/${ecosystemDomain}/Ecosystemdashboard/Courses`,
           name: "Courses",
         },
         {
           id: uuid(),
-          link: `${ecosystemDomain}/Ecosystemdashboard/DigitalProducts`,
+          link: `/${ecosystemDomain}/Ecosystemdashboard/DigitalProducts`,
           name: "Digital Products",
         },
-        {
-          id: uuid(),
-          link: `${ecosystemDomain}/Ecosystemdashboard/Services`,
-          name: "Services",
-        },
-
-        // { id: uuid(), link: "creator/dashboard/analytics", name: "Analytics" },
+        // {
+        //   id: uuid(),
+        //   link: `/${ecosystemDomain}/Ecosystemdashboard/Services`,
+        //   name: "Services",
+        // },
       ],
     },
-    // {
-    //   id: 9,
-    //   title: "Booking",
-    //   link: `/${ecosystemDomain}/Ecosystemdashboard/Booking`,
-    //   icon: "star",
-    // },
     {
       id: 3,
       title: "Reviews",
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-reviews`,
       icon: "star",
     },
-    // {
-    //   id: 4,
-    //   title: "Earnings",
-    //   link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-earning`,
-    //   icon: "pie-chart",
-    // },
     {
       id: 5,
-      title: "Orders",
+      title: "My Products",
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-orders`,
-      icon: "shopping-bag",
+      icon: "book",
     },
     {
       id: 6,
       title: "Payment",
       icon: "dollar-sign",
       children: [
-        { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/escrow-payment`, name: "Earning" },
-        // { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/received-payment`, name: "Received"},
-        { id: uuid(), link: `${ecosystemDomain}/Ecosystemdashboard/withdraw-request`, name: " Withdraw"},
+        {
+          id: uuid(),
+          link: `/${ecosystemDomain}/Ecosystemdashboard/escrow-payment`,
+          name: "Earning",
+        },
+        {
+          id: uuid(),
+          link: `/${ecosystemDomain}/Ecosystemdashboard/withdraw-request`,
+          name: "Withdraw",
+        },
       ],
     },
     {
@@ -120,12 +89,6 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-students`,
       icon: "users",
     },
-    // {
-    //   id: 7,
-    //   title: "Payouts",
-    //   link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-payouts`,
-    //   icon: "dollar-sign",
-    // },
     {
       id: 8,
       title: "Help Center",
@@ -138,76 +101,57 @@ export const DashboardMenu = () => {
       link: `/${ecosystemDomain}/creator-community-chat`,
       icon: "user",
     },
-    // {
-    // 	id: 8,
-    // 	title: 'Quiz',
-    // 	link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz',
-    // 	icon: 'help-circle'
-    // },
-    // {
-    // 	id: 9,
-    // 	title: 'Quiz Result',
-    // 	link: '/:ecosystemDomain/Ecosystemdashboard/Ecosystem-quiz-result',
-    // 	icon: 'help-circle'
-    // }
   ];
 
   return (
     <div>
-      <Accordion as="ul" className="nav flex-column list-unstyled">
-        {menuItems.map((item, index) =>
-          item.children ? (
-            <Fragment key={index}>
-              <CustomToggle eventKey={item.id} icon={item.icon}>
-                {item.title}
-              </CustomToggle>
-              <Accordion.Collapse
-                eventKey={item.id}
-                as="li"
-                bsPrefix="nav-item"
+      <ul className="nav flex-column list-unstyled">
+        {menuItems.map((item, index) => (
+          <Fragment key={index}>
+            {item.children ? (
+              <li
+                className="nav-item"
+                onMouseEnter={() => handleMouseEnter(item.id)}
+                onMouseLeave={handleMouseLeave}
               >
-                <Nav
-                  className="navbar-nav flex-column"
-                  style={{ paddingLeft: "0", paddingTop:"0", paddingBottom:"0" }}
+                <Link
+                  className={`nav-link ${hoveredEventKey === item.id ? "active" : ""}`}
+                  to="#!"
                 >
-                  {item.children.map((subItem) => (
-                    <Nav.Item
-                      as="li"
-                      key={subItem.id}
-                    >
-                      <Link
-                        className={`nav-link ${
-                          location.pathname === subItem.link ? "active" : ""
-                        }`}
-                        to={`/${subItem.link}`}
-                        style={{ paddingLeft: "1.5rem" }}
-                      >
-                        {subItem.name}
-                      </Link>
-                    </Nav.Item>
-                  ))}
-                </Nav>
-              </Accordion.Collapse>
-            </Fragment>
-          ) : (
-            <Nav.Item
-              as="li"
-              key={index}
-              className={`${item.link === location.pathname ? "active" : ""}`}
-            >
-              <Link className="nav-link" to={item.link}>
-                <i className={`fe fe-${item.icon} nav-icon`}></i>
-                {item.title}
-              </Link>
-            </Nav.Item>
-          )
-        )}
-      </Accordion>
+                  <i className={`fe fe-${item.icon} nav-icon`}></i>
+                  {item.title}
+                  <i className="fe fe-chevron-down ml-2"></i>
+                </Link>
+
+                {hoveredEventKey === item.id && (
+                  <ul className=" flex-column" style={{ paddingLeft: "3rem" }}>
+                    {item.children.map((subItem) => (
+                      <li key={subItem.id} style={{listStyle: "none"  }}>
+                        <Link
+                          className={`nav-link ${location.pathname === subItem.link ? "active" : ""}`}
+                          to={subItem.link}
+                        >
+                          {subItem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ) : (
+              <li className={`nav-item ${item.link === location.pathname ? "active" : ""}`} key={index}>
+                <Link className="nav-link" to={item.link}>
+                  <i className={`fe fe-${item.icon} nav-icon`}></i>
+                  {item.title}
+                </Link>
+              </li>
+            )}
+          </Fragment>
+        ))}
+      </ul>
     </div>
   );
 };
 
 export const StudentDashboardMenu = [DashboardMenu];
-//AccountSettingsMenu
-
 export default StudentDashboardMenu;
