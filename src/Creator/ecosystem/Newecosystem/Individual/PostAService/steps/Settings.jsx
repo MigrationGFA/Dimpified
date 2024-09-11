@@ -69,9 +69,9 @@ const Settings = ({ onNext, onPrevious }) => {
                   <span>
                     <Tooltip
                       content="Describe briefly the service you are offering"
-                      placement="left"
+                      placement="top"
                       className="bg-primary text-white"
-                      style={{ minWidth: "150px" }}
+                      style={{ minWidth: "80px" }}
                     >
                       <HiQuestionMarkCircle size={20} />
                     </Tooltip>
@@ -121,7 +121,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   <span>
                     <Tooltip
                       content="Provide detailed information about the service like the e.g"
-                      placement="left"
+                      placement="top"
                       className="custom-tooltip bg-primary text-white"
                       style={{ minWidth: "150px" }}
                     >
@@ -156,7 +156,7 @@ const Settings = ({ onNext, onPrevious }) => {
                   <span>
                     <Tooltip
                       content="Choose the format of the service (e.g., online, in-person)"
-                      placement="left"
+                      placement="top"
                       className="custom-tooltip bg-primary text-white"
                       style={{ minWidth: "150px" }}
                     >
@@ -193,7 +193,7 @@ const Settings = ({ onNext, onPrevious }) => {
                     <span>
                       <Tooltip
                         content="Choose your Currency according to you locality"
-                        placement="left"
+                        placement="top"
                         className="bg-primary text-white"
                         style={{ minWidth: "150px" }}
                       >

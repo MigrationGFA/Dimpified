@@ -15,6 +15,7 @@ import {
   Table,
   Button,
   Modal,
+  Spinner,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "react-feather";
@@ -76,6 +77,8 @@ const Payouts = () => {
   const [errorAcc, setErrorAcc] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [editedAccount, setEditedAccount] = useState(null);
+  const [loadingSave, setLoadingSave] = useState(false);
+  const [loadingWithdraw, setLoadingWithdraw] = useState(false);
 
   const [earnings, setEarnings] = useState({
     Naira: 0,
@@ -125,8 +128,6 @@ const Payouts = () => {
       case "dollars":
       case "Dollar":
         return `$`;
-      case "euros":
-
       default:
         return `₦`;
     }
@@ -169,6 +170,7 @@ const Payouts = () => {
   }, [userId]);
 
   const handleSave = async () => {
+    setLoadingSave(true);
     try {
       const saveBankData = await axios.post(
         `${import.meta.env.VITE_API_URL}/save-bank-details`,
@@ -189,6 +191,8 @@ const Payouts = () => {
     } catch (error) {
       console.error("Error:", error);
       showToast(error.response.data.message);
+    } finally {
+      setLoadingSave(false);
     }
 
     setShowModal(false);
@@ -209,7 +213,7 @@ const Payouts = () => {
   };
 
   const handleEditSave = async (accountId) => {
-    console.log(accountId);
+    setLoadingWithdraw(true);
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
         creatorId: userId,
@@ -227,6 +231,8 @@ const Payouts = () => {
     } catch (error) {
       console.error("Error editing account:", error);
       showToast("Error updating bank details");
+    } finally {
+      setLoadingWithdraw(false);
     }
   };
 
@@ -354,6 +360,7 @@ const Payouts = () => {
   });
 
   const bankCurrency = [
+    { value: "", label: "Select currency" },
     { value: "NGN", label: "Naira" },
     { value: "USD", label: "Dollars" },
   ];
@@ -579,9 +586,15 @@ const Payouts = () => {
                   >
                     Close
                   </Button>
-                  <Button variant="primary" onClick={handleSave}>
-                    Save
-                  </Button>
+                  {loadingSave ? (
+                    <Button variant="primary" disabled>
+                      <Spinner /> Saving
+                    </Button>
+                  ) : (
+                    <Button variant="primary" onClick={handleSave}>
+                      Save
+                    </Button>
+                  )}
                 </Modal.Footer>
               </Modal>
               {bankData.length > 0 && (
@@ -710,12 +723,19 @@ const Payouts = () => {
                   >
                     Close
                   </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleEditSave(editedAccount.accountId)}
-                  >
-                    Save
-                  </Button>
+                  {loadingWithdraw ? (
+                    <Button variant="primary" disabled>
+                      <Spinner /> Saving
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      style={{ opacity: ".7" }}
+                      disabled
+                    >
+                      Processing
+                    </Button>
+                  )}
                 </Modal.Footer>
               </Modal>
             </Col>

@@ -10,18 +10,17 @@ import {
   Modal,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { SizeSelect } from "../../../../Components/elements/form-select/SizeSelect";
-import pricingData from "./PricingData";
-import EcoHeader from "./individualHeader";
+import { SizeSelect } from "../../Components/elements/form-select/SizeSelect";
+import pricingData from "../ecosystem/Newecosystem/PricingData";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { usePaystackPayment } from "react-paystack";
 import { PaystackButton } from "react-paystack";
 import Paystack from "@paystack/inline-js";
-import { showToast } from "../../../../Components/Showtoast";
-import { resetState } from "../../../../features/ecosystem";
-import { resetServiceData } from "../../../../features/service";
+import { showToast } from "../../Components/Showtoast";
+import { resetState } from "../../features/ecosystem";
+import { resetServiceData } from "../../features/service";
 import { useDispatch } from "react-redux";
 import { Check, X } from "react-bootstrap-icons";
 
@@ -923,7 +922,7 @@ const paymentPlanCodes = {
   },
 };
 
-const EcoPayment = ({ plan }) => {
+const DashboardPricing = ({ plan }) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -1517,7 +1516,6 @@ const EcoPayment = ({ plan }) => {
   };
   return (
     <Fragment>
-      <EcoHeader />
       <section className="py-lg-5 py-3">
         <Container>
           {/* Page header */}
@@ -1572,17 +1570,11 @@ const EcoPayment = ({ plan }) => {
             </Col>
           </Row>
           <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
-          <Button
-            variant="primary"
-            onClick={handleSkipAndContinue}
-            className="mt-4 mb-5"
-          >
-            Publish
-          </Button>
+          
         </Container>
       </div>
     </Fragment>
   );
 };
 
-export default EcoPayment;
+export default DashboardPricing;
