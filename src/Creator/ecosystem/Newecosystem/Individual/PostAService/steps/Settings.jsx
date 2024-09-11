@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
   updateServiceData,
   addBackgroundCover,
   removeBackgroundCover,
 } from "../../../../../../features/service";
+import { HiQuestionMarkCircle } from "react-icons/hi";
 
 const Settings = ({ onNext, onPrevious }) => {
   const dispatch = useDispatch();
@@ -61,8 +61,21 @@ const Settings = ({ onNext, onPrevious }) => {
             <Form.Group as={Row} className="mb-4">
               {/* Header */}
               <Col md={12} className="mb-3">
-                <Form.Label htmlFor="header">
+                <Form.Label
+                  htmlFor="header"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   Header<span className="text-danger">*</span>
+                  <span>
+                    <Tooltip
+                      content="Describe briefly the service you are offering"
+                      placement="top"
+                      className="bg-primary text-white"
+                      style={{ minWidth: "80px" }}
+                    >
+                      <HiQuestionMarkCircle size={20} />
+                    </Tooltip>
+                  </span>
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Select
@@ -95,21 +108,26 @@ const Settings = ({ onNext, onPrevious }) => {
                       borderBottomLeftRadius: "0",
                     }}
                   />
-                  <Tooltip
-                    content="Describe briefly the service you are offering"
-                    placement="left"
-                    className="bg-primary text-white"
-                    style={{ minWidth: "150px" }}
-                  >
-                    <FaEye className="ms-2 cursor-pointer" />
-                  </Tooltip>
                 </div>
               </Col>
 
               {/* Description */}
               <Col md={12} className="mb-3">
-                <Form.Label htmlFor="description">
+                <Form.Label
+                  htmlFor="description"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   Description<span className="text-danger">*</span>
+                  <span>
+                    <Tooltip
+                      content="Provide detailed information about the service like the e.g"
+                      placement="top"
+                      className="custom-tooltip bg-primary text-white"
+                      style={{ minWidth: "150px" }}
+                    >
+                      <HiQuestionMarkCircle size={20} />
+                    </Tooltip>
+                  </span>
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Control
@@ -125,21 +143,26 @@ const Settings = ({ onNext, onPrevious }) => {
                     }
                     required
                   />
-                  <Tooltip
-                    content="Provide detailed information about the service like the e.g"
-                    placement="left"
-                    className="custom-tooltip bg-primary text-white"
-                    style={{ minWidth: "150px" }}
-                  >
-                    <FaEye className="ms-2 cursor-pointer" />
-                  </Tooltip>
                 </div>
               </Col>
 
               {/* Format */}
               <Col md={12} className="mb-3">
-                <Form.Label htmlFor="format">
+                <Form.Label
+                  htmlFor="format"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   Format<span className="text-danger">*</span>
+                  <span>
+                    <Tooltip
+                      content="Choose the format of the service (e.g., online, in-person)"
+                      placement="top"
+                      className="custom-tooltip bg-primary text-white"
+                      style={{ minWidth: "150px" }}
+                    >
+                      <HiQuestionMarkCircle size={20} />
+                    </Tooltip>
+                  </span>
                 </Form.Label>
                 <div className="d-flex">
                   <Form.Select
@@ -156,22 +179,27 @@ const Settings = ({ onNext, onPrevious }) => {
                       </option>
                     ))}
                   </Form.Select>
-                  <Tooltip
-                    content="Choose the format of the service (e.g., online, in-person)"
-                    placement="left"
-                    className="custom-tooltip bg-primary text-white"
-                    style={{ minWidth: "150px" }}
-                  >
-                    <FaEye className="ms-2 cursor-pointer" />
-                  </Tooltip>
                 </div>
               </Col>
 
               {/* Currency */}
               <Col md={12} className="mb-3">
                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="currency">
+                  <Form.Label
+                    htmlFor="currency"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
                     Currency<span className="text-danger">*</span>
+                    <span>
+                      <Tooltip
+                        content="Choose your Currency according to you locality"
+                        placement="top"
+                        className="bg-primary text-white"
+                        style={{ minWidth: "150px" }}
+                      >
+                        <HiQuestionMarkCircle size={20} />
+                      </Tooltip>
+                    </span>
                   </Form.Label>
                   <div className="d-flex align-items-center">
                     <Form.Select
@@ -191,14 +219,6 @@ const Settings = ({ onNext, onPrevious }) => {
                         </option>
                       ))}
                     </Form.Select>
-                    <Tooltip
-                      content="Choose your Currency according to you locality"
-                      placement="left"
-                      className="bg-primary text-white"
-                      style={{ minWidth: "150px" }}
-                    >
-                      <FaEye className="ms-2 cursor-pointer" />
-                    </Tooltip>
                   </div>
                 </Form.Group>
               </Col>
@@ -210,7 +230,16 @@ const Settings = ({ onNext, onPrevious }) => {
         <Button variant="secondary" onClick={onPrevious}>
           Previous
         </Button>
-        <Button variant="primary" type="submit">
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={
+            service.header === "" ||
+            service.description === "" ||
+            service.format === "" ||
+            service.currency === ""
+          }
+        >
           Next
         </Button>
       </div>

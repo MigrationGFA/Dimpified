@@ -130,8 +130,6 @@ const Payouts = () => {
       case "dollars":
       case "Dollar":
         return `$`;
-      case "euros":
-
       default:
         return `₦`;
     }
@@ -718,9 +716,10 @@ const Payouts = () => {
                   ) : (
                     <Button
                       variant="primary"
-                      onClick={() => handleEditSave(editedAccount.accountId)}
+                      style={{ opacity: ".7" }}
+                      disabled
                     >
-                      Save
+                      Processing
                     </Button>
                   )}
                 </Modal.Footer>

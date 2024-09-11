@@ -163,8 +163,7 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
     date: "",
     time: "",
   });
-  const [notification, setNotification] = useState(null);
-  const [barbingServices, setBarbingServices] = useState([]);
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -184,7 +183,7 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
       }
     };
     getServiceeDetails();
-  }, [subdomain]);
+  }, []);
 
   const sanitizeContent = (html) => {
     return sanitizeHtml(html, {
