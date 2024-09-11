@@ -10,9 +10,9 @@ const BecomeInstructor = () => {
           <Row className="align-items-center">
             {/* heading */}
             <Col lg={6} md={5} sm={12} className="mb-2">
-              <h1 className="display-5 alt-font fw-bold">Perfect for your industry.</h1>
+              <h1 className="display-5 alt-font fw-bold">Perfect for your business.</h1>
               <p className="lead">
-                Leverage DIMP in any industry of yours, be it enterprise or
+                Leverage DIMP in any business of yours, be it enterprise or
                 consumer.
               </p>
             </Col>

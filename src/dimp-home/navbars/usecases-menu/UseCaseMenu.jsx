@@ -32,7 +32,7 @@ const UseCaseMenu = () => {
                 <div className="lh-1 mb-5 border-bottom">
                   <h3 className="mb-1">Perfect for your Industry.</h3>
                   <p>
-                    Leverage DIMP in any industry of yours, be it enterprise or
+                    Leverage DIMP in any business of yours, be it enterprise or
                     consumer.
                   </p>
                 </div>

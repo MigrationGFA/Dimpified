@@ -39,9 +39,9 @@ const HeroGradient = () => {
           </Col>
           <Col lg={6} xs={12} className="order-md-1 px-3">
             {/* Heading */}
-            <h3 className="display-4 mb-5 fw-bold">
-              Empower Your Non-Profit organization with
-              <u className="text-primary">
+            <h3 className="fs-60 sm-fs-40 pe-lg-8 text-dark lh-70 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
+              Empower Your Non-Profit organization with{" "}
+              <u className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                 {" "}
                 Comprehensive Management Solutions
               </u>
@@ -86,7 +86,10 @@ const HeroGradient = () => {
 
             {/* Buttons */}
             <div className="mb-8 mb-lg-0">
-              <Link to="#" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
+              <Link
+                to="/creator/signup"
+                className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
+              >
                 Get Started Now
               </Link>
               <Link to="#" className="btn btn-lg btn-outline-primary">

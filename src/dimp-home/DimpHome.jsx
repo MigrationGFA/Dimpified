@@ -26,12 +26,15 @@ import FooterWithLinks from "./FooterWithLinks";
 import GradientBG from "../assets/images/background/gradient-bg.png";
 import { PlayCircleFill } from "react-bootstrap-icons";
 
+import HeaderWithTopbar from "./TopBar";
+
 // import required data files
 
 const DimpHome = () => {
   return (
     <Fragment>
       {/* Default Navbar */}
+      <HeaderWithTopbar />
       <NavbarLanding center />
 
       <main className="primary-font text-dark">

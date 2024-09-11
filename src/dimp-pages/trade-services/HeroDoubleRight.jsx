@@ -24,8 +24,8 @@ const HeroDoubleRight = () => {
               <h1 className="display-3 fw-bold mb-3">
                 <span className="text-dark  px-md-0">
                   Ecosystem Management Platform for
-                </span>
-                <span className="text-primary ms-2">
+                </span>{" "}
+                <span className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   <Typewriter
                     words={[
                       "Carpenters",
@@ -71,7 +71,7 @@ const HeroDoubleRight = () => {
               <div className="d-grid d-md-block">
                 <Link
                   to="/creator/signup"
-                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                  className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
                 >
                   Get started for free
                 </Link>{" "}

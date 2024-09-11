@@ -103,8 +103,11 @@ const FAQsection = () => {
           </Col>
         </Row>
         <div className="mt-10 text-center">
-          <Link to="#" className="btn btn-lg btn-primary">
-            Sold yet? Get Started Now!
+          <Link
+            to="/creator/signup"
+            className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px"
+          >
+            Sold yet? Get Started Now
           </Link>
         </div>
       </Container>
