@@ -29,7 +29,7 @@ const Order = () => {
     { accessorKey: "format", header: "Service Format" },
     // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   const productHeader = [
@@ -39,7 +39,7 @@ const Order = () => {
     { accessorKey: "productType", header: "Product Type" },
     // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const Order = () => {
     { accessorKey: "totalNumberOfEnrolledStudent", header: "No of Students" },
     { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
 

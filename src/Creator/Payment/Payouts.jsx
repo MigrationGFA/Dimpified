@@ -86,6 +86,7 @@ const Payouts = () => {
     EUR: 0,
     GBP: 0,
   });
+  const [availableBalance, setAvailableBalance] = useState("")
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -95,24 +96,25 @@ const Payouts = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_URL
-          }/ecosystem-earnings/${ecosystemDomain}`
-        );
-
-        if (response.data) {
-          setEarnings(response.data.totalEarnings);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    
 
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
+      );
+  
+      if (response.data) {
+        setEarnings(response.data.totalEarnings); 
+        setAvailableBalance(response.data.availableBalance);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -265,6 +267,7 @@ const Payouts = () => {
           }
         );
         showToast(response.data.message);
+        fetchData();
         setLoading(false);
         setErrorAcc("");
         setError("");
@@ -403,127 +406,110 @@ const Payouts = () => {
         <AlertDismissible />
         <Row className="mt-6">
           <Col xl={4} lg={4} md={12} sm={12} className="mb-3 mb-lg-0">
-            <div className="text-center">
-              {/* Payout chart */}
-              <ApexCharts
-                options={PayoutChartOptions}
-                series={PayoutChartSeries}
-                height={165}
-                type="bar"
+          <div className="text-center">
+      {/* Payout chart */}
+      <ApexCharts
+        options={PayoutChartOptions}
+        series={PayoutChartSeries}
+        height={165}
+        type="bar"
+      />
+
+      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+        <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={() => handleCurrencyChange("Naira")}>
+            NGN
+          </DropdownItem>
+          <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
+            USD
+            </DropdownItem>
+          </DropdownMenu>
+      </Dropdown>
+
+      <h4 className="mb-1">Your total earnings</h4>
+      <h5 className="mb-0 display-4 fw-bold">
+        {formatPrice(selectedCurrency)} {earnings[selectedCurrency] || 0.0}
+      </h5>
+      <p className="px-4">You can change your payout account above</p>
+
+      <Button
+        variant="primary"
+        onClick={() => {
+          setTotalAmount(availableBalance); 
+          setShowWithdrawModal(true);
+        }}
+      >
+        Withdraw Earnings
+      </Button>
+
+      {/* Withdraw Modal */}
+      <Modal show={showWithdrawModal} onHide={() => setShowWithdrawModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Withdraw Earnings</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="border p-4 rounded-3 mt-3">
+            <h4>Select Banks:</h4>
+            {bankData.length > 0 ? (
+              <select
+                className="form-select"
+                defaultValue=""
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select an account
+                </option>
+                {bankData.map((account, index) => (
+                  <option key={index} value={account.id}>
+                    {account.accountName} - {account.bankName} ({account.currency})
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <p>No accounts found.</p>
+            )}
+            {errorAcc && <div className="alert alert-danger mt-3">{errorAcc}</div>}
+          </div>
+
+          <div className="border p-4 rounded-3 mt-3">
+          <h4>
+          Ledger Balance: {formatPrice(selectedCurrency)}{" "}
+              {earnings.Naira || 0.0}
+            </h4>
+            <h4>
+              Available Balance: {formatPrice(selectedCurrency)}{" "}
+              {availableBalance || 0.0}
+            </h4>
+            <Form.Group controlId="withdrawnAmount">
+              <Form.Label>
+                Withdrawn Amount {formatPrice(selectedCurrency)}
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={`Enter amount in ${formatPrice(selectedCurrency)}`}
+                value={withdrawnAmount}
+                onChange={(e) => setWithdrawnAmount(e.target.value)}
               />
-              <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-                <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={() => handleCurrencyChange("Naira")}>
-                    NGN
-                  </DropdownItem>
-                  <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
-                    USD
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <h4 className="mb-1">Your total earnings</h4>
-              <h5 className="mb-0 display-4 fw-bold">
-                {formatPrice(selectedCurrency)}
-                {earnings[selectedCurrency] || 0.0}
-                {/* Display earnings with Naira sign */}
-              </h5>
-              <p className="px-4">You can change your payout account above</p>
-
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setTotalAmount(earnings[selectedCurrency]);
-                  console.log("this is earning", earnings[selectedCurrency]);
-                  setShowWithdrawModal(true);
-                }}
-              >
-                Withdraw Earnings
-              </Button>
-
-              {/* Withdraw Modal */}
-              <Modal
-                show={showWithdrawModal}
-                onHide={() => setShowWithdrawModal(false)}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Withdraw Earnings</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  {/* Display account details */}
-
-                  <div className="border p-4 rounded-3 mt-3">
-                    <h4>Select Banks:</h4>
-                    {/* <p>
-                        If the bank currency you select is difference from the
-                        currency you withdraw from, the amount will be converted
-                        according to your country head bank currency value
-                      </p> */}
-                    {bankData.length > 0 ? (
-                      <select
-                        className="form-select"
-                        defaultValue=""
-                        onChange={handleChange}
-                      >
-                        <option value="" disabled>
-                          Select an account
-                        </option>
-                        {bankData.map((account, index) => (
-                          <option key={index} value={account.id}>
-                            {account.accountName} - {account.bankName} (
-                            {account.currency})
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <p>No accounts found.</p>
-                    )}
-                    {errorAcc && (
-                      <div className="alert alert-danger mt-3">{errorAcc}</div>
-                    )}
-                  </div>
-
-                  {/* Display withdrawal amount input field */}
-                  <div className="border p-4 rounded-3 mt-3">
-                    <h4>
-                      Available Balance: {formatPrice(selectedCurrency)}
-                      {earnings[selectedCurrency] || 0.0}
-                    </h4>
-                    <Form.Group controlId="withdrawnAmount">
-                      <Form.Label>
-                        Withdrawn Amount {formatPrice(selectedCurrency)}
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder={`Enter amount in ${formatPrice(
-                          selectedCurrency
-                        )}`}
-                        value={withdrawnAmount}
-                        onChange={(e) => setWithdrawnAmount(e.target.value)}
-                      />
-                      {error && (
-                        <div className="alert alert-danger mt-3">{error}</div>
-                      )}
-                    </Form.Group>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  {loading ? (
-                    <Button
-                      variant="primary"
-                      style={{ opacity: ".7" }}
-                      disabled
-                    >
-                      Processing
-                    </Button>
-                  ) : (
-                    <Button variant="primary" onClick={handleWithdraw}>
-                      Withdraw
-                    </Button>
-                  )}
-                </Modal.Footer>
-              </Modal>
-            </div>
+              {error && (
+                <div className="alert alert-danger mt-3">{error}</div>
+              )}
+            </Form.Group>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          {loading ? (
+            <Button variant="primary" style={{ opacity: ".7" }} disabled>
+              Processing
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={handleWithdraw}>
+              Withdraw
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
+    </div>
           </Col>
           <Col xl={8} lg={8} md={12} sm={12}>
             <Col xs={12} className="mt-3 text-center">
@@ -590,7 +576,7 @@ const Payouts = () => {
                   </Button>
                   {loadingSave ? (
                     <Button variant="primary" disabled>
-                      <Spinner /> Saving
+                      <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
                     <Button variant="primary" onClick={handleSave}>
@@ -727,7 +713,7 @@ const Payouts = () => {
                   </Button>
                   {loadingWithdraw ? (
                     <Button variant="primary" disabled>
-                      <Spinner /> Saving
+                      <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
                     <Button
