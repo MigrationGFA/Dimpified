@@ -32,7 +32,6 @@ import VerifySVG from "./images/verify.svg";
 import Payment from "./images/paymentSVG.svg";
 import GlowBG from "./images/glow-bg.svg";
 
-
 // import custom components
 
 // import layouts
@@ -78,7 +77,7 @@ const BarberLanding = () => {
               md={9}
               className="position-relative z-index-1 px-3 d-flex flex-column justify-content-center h-100"
             >
-              <div className="fs-80 sm-fs-60 pe-lg-8 text-dark lh-100 fw-500 mb-6 ls-minus-5px fancy-text-style-4">
+              <div className="fs-80 sm-fs-50 pe-lg-8 text-dark lh-100 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
                 <span className="d-inline-block">Be among the</span>
                 <span className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   top 1% of barbers
@@ -91,7 +90,7 @@ const BarberLanding = () => {
                 <Button
                   href="/creator/signup"
                   target="_blank"
-                  className="btn btn-extra-large btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px"
+                  className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px"
                 >
                   <span className="btn-text ps-4">Get started for free</span>
                   <span className="btn-icon">
@@ -286,10 +285,7 @@ const BarberLanding = () => {
                       <Col className="icon-with-text-style-08 mb-25px">
                         <div className="feature-box feature-box-left-icon-middle">
                           <div className="feature-box-icon feature-box-icon-rounded box-shadow-medium-bottom w-70px h-70px md-w-60px md-h-60px me-15px rounded-circle bg-warning-subtle">
-                            <Window
-                              className="text-warning"
-                              size={30}
-                            />
+                            <Window className="text-warning" size={30} />
                           </div>
                           <div className="feature-box-content last-paragraph-no-margin">
                             <span className="lh-22 d-inline-block text-dark fw-500">
@@ -672,6 +668,7 @@ const BarberLanding = () => {
                 </p>
                 <Button
                   variant="white"
+                  href="/creator/signup"
                   className="btn btn-extra-large rounded-3 px-6"
                 >
                   Get Started For Free

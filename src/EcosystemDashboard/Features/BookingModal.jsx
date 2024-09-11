@@ -280,7 +280,7 @@ const BookingModal = ({ show, setModalShow, information }) => {
               <Button
                 variant="primary"
                 onClick={() => handleNextStep(2)}
-                // disabled={selectedDate === "" && selectedTimeSlot === ""}
+                disabled={selectedDate === null || selectedTimeSlot === null}
               >
                 Next
               </Button>
@@ -398,7 +398,15 @@ const BookingModal = ({ show, setModalShow, information }) => {
               <Button variant="secondary" onClick={handlePrevStep}>
                 Back
               </Button>
-              <Button variant="primary" onClick={handleSubmit}>
+              <Button
+                variant="primary"
+                onClick={handleSubmit}
+                disabled={
+                  formData.fullName === "" ||
+                  formData.email === "" ||
+                  formData.phone === ""
+                }
+              >
                 Next
               </Button>
             </div>

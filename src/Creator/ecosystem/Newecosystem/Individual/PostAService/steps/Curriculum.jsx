@@ -11,6 +11,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { showToast } from "../../../../../../Components/Showtoast";
 import axios from "axios";
 import { useImageUploader } from "../../../../../../helper/UploadImage";
+import { Tooltip } from "flowbite-react";
+import { HiQuestionMarkCircle } from "react-icons/hi";
 
 const AddService = () => {
   const dispatch = useDispatch();
@@ -85,7 +87,19 @@ const AddService = () => {
         </Modal.Header>
         <Modal.Body className="pb-0">
           <Form.Group className="mb-3">
-            <Form.Label>Service Name</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Service Name <span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="e.g children haircut, graphic designer"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="Service Name"

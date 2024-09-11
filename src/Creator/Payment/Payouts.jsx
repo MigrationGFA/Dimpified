@@ -169,36 +169,29 @@ const Payouts = () => {
   }, [userId]);
 
   const handleSave = async () => {
-    console.log("userId", userId);
-    if (userId && accountName && accountNumber && bankName && currency) {
-      // Check if userId is present
-      try {
-        const saveBankData = await axios.post(
-          `${import.meta.env.VITE_API_URL}/save-bank-details`,
-          {
-            creatorId: userId,
-            accountName,
-            accountNumber,
-            bankName,
-            currency,
-            ecosystemDomain,
-          }
-        );
+    try {
+      const saveBankData = await axios.post(
+        `${import.meta.env.VITE_API_URL}/save-bank-details`,
+        {
+          creatorId: userId,
+          accountName,
+          accountNumber,
+          bankName,
+          currency,
+          ecosystemDomain,
+        }
+      );
 
-        console.log("Response :", saveBankData.data);
-        setBankData([...bankData, saveBankData.data.newAccount]);
+      console.log("Response :", saveBankData.data);
+      setBankData([...bankData, saveBankData.data.newAccount]);
 
-        showToast(saveBankData.data.message);
-      } catch (error) {
-        console.error("Error:", error);
-        showToast(error.response.data.message);
-      }
-
-      setShowModal(false);
-    } else {
-      console.error("Error: userId is required");
-      showToast("User ID is required");
+      showToast(saveBankData.data.message);
+    } catch (error) {
+      console.error("Error:", error);
+      showToast(error.response.data.message);
     }
+
+    setShowModal(false);
   };
 
   const handleAddAccount = () => {

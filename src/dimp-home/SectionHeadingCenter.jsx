@@ -8,10 +8,10 @@ const SectionHeadingCenter = ({ title, subtitle, description }) => {
   return (
     <Row className="mb-10 justify-content-center">
       <Col lg={8} md={12} sm={12} className="text-center">
-        <span className="text-primary mb-3 mt-6 mt-lg-10 d-block text-uppercase fw-semi-bold ls-xl">
+        <span className="text-primary my-3 my-lg-5 d-block text-uppercase fw-semi-bold ls-xl">
           {subtitle}
         </span>
-        <h2 className="mb-2 display-4 fw-bold ">{title}</h2>
+        <h2 className="mb-2 display-4 sm-fs-40 alt-font fw-bold ">{title}</h2>
         <p className="lead">{description}</p>
       </Col>
     </Row>

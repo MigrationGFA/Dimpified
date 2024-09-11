@@ -7,7 +7,9 @@ import pricingData from "./PricingData";
 import NavbarLanding from "../../dimp-home/NavbarLanding";
 import FAQsData from "./FAQsData";
 import FooterWithLinks from "../../dimp-home/FooterWithLinks";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import GradientBG from "../../assets/images/background/gradient-bg.png";
+import GlowBG from "../../dimp-pages/personal-care/images/glow-bg.svg";
+import { Check, X } from "react-bootstrap-icons";
 
 const options = [
   { value: "1-500", label: "1 - 500" },
@@ -104,183 +106,176 @@ const Pricing = () => {
       Lite: {
         Website: [
           { feature: "Access to templates", available: true },
-          { feature: "No code web page edit mode", available: true },
+          { feature: "No code web page edit mode", available: false },
         ],
-        "Website and Landing Pages": [
-          { feature: "Access to templates", available: true },
-          { feature: "No code web page edit mode", available: true },
+        "Selling Online": [
+          { feature: "Website Builder", available: true },
           { feature: "Add logo to page", available: false },
           { feature: "Custom domain", available: false },
-          { feature: "Remove GFA brand from landing page", available: false },
+          {
+            feature: "Remove DIMP branding from landing page",
+            available: false,
+          },
+          {
+            feature: "Up to 500 monthly transactions allowed",
+            available: true,
+          },
+          { feature: "7.5% fee per transaction", available: true },
         ],
-        "Forms Design & Development": [
-          { feature: "1 form per ecosystem project", available: true },
-          { feature: "3 Usecase form templates", available: true },
-          { feature: "10 questions per form", available: true },
-          { feature: "Premium form templates", available: false },
-
-          { feature: "Remove GFA brand from form", available: false },
-        ],
-        "Course Management and Automation": [
-          { feature: "Course builder module", available: true },
-          { feature: "1 courses per ecosystem deployment", available: true },
-
-          { feature: "Assessment builder module", available: false },
-          { feature: "Statistics & visualization", available: false },
-
-          { feature: "Exams & Quizzes", available: false },
-          { feature: "Zoom, Teams or Webex Integration", available: false },
-        ],
-        "Payment and Subscriptions": [
-          { feature: "1 payment gateway", available: true },
-          { feature: "Payment management module", available: true },
-          { feature: "Customer payment summary", available: true },
-
+        "Payment and Subscription": [
+          { feature: "Online payment gateway", available: true },
+          { feature: "DIMP Wallet", available: true },
+          { feature: "Payment Analytics", available: true },
           { feature: "Multi-currency module", available: false },
+
           { feature: "Flexible pricing module", available: false },
         ],
-        Emails: [
-          { feature: "Up to 15000 emails per month", available: true },
-          { feature: "100 MB of image storage", available: true },
-          { feature: "3 sender email addresses, 1 domain", available: true },
-        ],
-        "Admin Users": [
-          { feature: "3 Admin Users per account", available: true },
+        "Features & Integrations": [
+          { feature: "Appointment booking", available: true },
+          { feature: "Community & Chat", available: false },
+
+          { feature: "Fundraising", available: false },
+          { feature: "Online learning management solution", available: true },
+
+          { feature: "Invoicing & billing", available: false },
+          { feature: "1 Admin user", available: true },
+          { feature: "Customer support ticketing module", available: false },
+          { feature: "Up to 1500 customer records", available: true },
+          { feature: "Email/In App support", available: true },
+
+          {
+            feature: "Professional email (purchased sepately)",
+            available: true,
+          },
         ],
       },
       Plus: {
-        "Website and Landing Pages": [
-          { feature: "Access to templates", available: true },
-          { feature: "No code web page edit mode", available: true },
-          { feature: "Add logo to page", available: true },
-          { feature: "Custom domain", available: false },
-          { feature: "Remove GFA brand from landing page", available: true },
+        "Selling Online": [
+          { feature: "Website Builder", available: true },
+          { feature: "Add logo to page", available: false },
+          { feature: "Custom domain (purchased separately)", available: true },
+          {
+            feature: "Remove DIMP branding from landing page",
+            available: true,
+          },
+          {
+            feature: "Up to 4,000 monthly transactions allowed",
+            available: true,
+          },
+          { feature: "4% fee per transaction", available: true },
         ],
-        "Forms Design & Development": [
-          { feature: "10 forms per ecosystem project", available: true },
-          { feature: "10 Usecase form templates", available: true },
-          { feature: "10 Premium form templates", available: true },
-          { feature: "10 questions per form", available: true },
-          { feature: "Remove GFA brand from form", available: false },
+        "Payment and Subscription": [
+          { feature: "Online payment gateway", available: true },
+          { feature: "DIMP Wallet", available: true },
+          { feature: "Payment Analytics", available: true },
+          { feature: "Multi-currency module", available: false },
+
+          { feature: "Flexible pricing module", available: true },
         ],
-        "Course Management and Automation": [
-          { feature: "Course builder module", available: true },
-          { feature: "Assessment builder module", available: true },
-          { feature: "10 courses per ecosystem deployment", available: true },
-          { feature: "Statistics & visualization", available: false },
-          { feature: "Exams & Quizzes", available: true },
-          { feature: "Zoom, Teams or Webex Integration", available: true },
-        ],
-        "Payment and Subscriptions": [
-          { feature: "3 payment gateways", available: true },
-          { feature: "Payment management module", available: true },
-          { feature: "Customer payment summary", available: true },
-          { feature: "Multi-currency module", available: true },
-          { feature: "Flexible pricing module", available: false },
-        ],
-        Emails: [
-          { feature: "Unlimited number of emails per month", available: true },
-          { feature: "200 MB of image storage", available: true },
-          { feature: "100 sender email addresses, 3 domain", available: true },
-        ],
-        "Admin Users": [
-          { feature: "10 Admin Users per account", available: true },
+        "Features & Integrations": [
+          { feature: "Appointment booking", available: true },
+          { feature: "Community & Chat", available: true },
+
+          { feature: "Fundraising", available: false },
+          { feature: "Online learning management solution", available: true },
+
+          { feature: "Invoicing & billing", available: true },
+          { feature: "Up to 3 Admin user", available: true },
+          { feature: "Customer support ticketing module", available: false },
+          { feature: "Up to 20,000 customer records", available: true },
+          {
+            feature: "Email/In App technical support available",
+            available: true,
+          },
+
+          {
+            feature: "Professional email (purchased sepately)",
+            available: true,
+          },
         ],
       },
       Pro: {
-        "Website and Landing Pages": [
-          { feature: "Access to templates", available: true },
-          { feature: "No code web page edit mode", available: true },
+        "Selling Online": [
+          { feature: "Website Builder", available: true },
           { feature: "Add logo to page", available: true },
-          { feature: "Custom domain", available: true },
-          { feature: "Remove GFA brand from landing page", available: true },
+          { feature: "Custom domain (purchased separately)", available: true },
+          {
+            feature: "Remove DIMP branding from landing page",
+            available: true,
+          },
+          {
+            feature: "Up to 125,000 monthly transactions allowed",
+            available: true,
+          },
+          { feature: "3% fee per transaction", available: true },
         ],
-        "Forms Design & Development": [
-          { feature: "20 forms per ecosystem project", available: true },
-          { feature: "20 Usecase form templates", available: true },
-          { feature: "20 Premium form templates", available: true },
-          { feature: "20 questions per form", available: true },
-          { feature: "Remove GFA brand from form", available: true },
-        ],
-        "Course Management and Automation": [
-          { feature: "Course builder module", available: true },
-          { feature: "Assessment builder module", available: true },
-          { feature: "Statistics & visualization", available: true },
-          { feature: "10 courses per ecosystem deployment", available: true },
-          { feature: "Exams & Quizzes", available: true },
-          { feature: "Zoom, Teams or Webex Integration", available: true },
-        ],
-        "Payment and Subscriptions": [
-          { feature: "6 payment gateways", available: true },
-          { feature: "Payment management module", available: true },
-          { feature: "Customer payment summary", available: true },
-          { feature: "Multi-currency module", available: true },
+        "Payment and Subscription": [
+          { feature: "Online payment gateway", available: true },
+          { feature: "DIMP Wallet", available: true },
+          { feature: "Payment Analytics", available: true },
+          { feature: "Multi-currency module", available: false },
+
           { feature: "Flexible pricing module", available: true },
         ],
-        Emails: [
-          { feature: "Unlimited number of emails per month", available: true },
-          { feature: "500 MB of image storage", available: true },
-          { feature: "300 sender email addresses, 5 domains", available: true },
-        ],
-        "Admin Users": [
-          { feature: "25 Admin Users per account", available: true },
+        "Features & Integrations": [
+          { feature: "Appointment booking", available: true },
+          { feature: "Community & Chat", available: true },
+
+          { feature: "Fundraising", available: false },
+          { feature: "Online learning management solution", available: true },
+
+          { feature: "Invoicing & billing", available: true },
+          { feature: "Up to 10 Admin user", available: true },
+          { feature: "Customer support ticketing module", available: true },
+          { feature: "Up to 500,000 customer records", available: true },
+          {
+            feature: "Fast, Priority technical support available",
+            available: true,
+          },
+
+          {
+            feature: "Professional email (purchased sepately)",
+            available: true,
+          },
         ],
       },
       Extra: {
-        "Website and Landing Pages": [
-          { feature: "Access to templates", available: true },
-          { feature: "No code web page edit mode", available: true },
+        "Selling Online": [
+          { feature: "Website Builder", available: true },
           { feature: "Add logo to page", available: true },
-          { feature: "Custom domain", available: true },
-          { feature: "Remove GFA brand from landing page", available: true },
+          { feature: "Custom domain (purchased separately)", available: true },
+          {
+            feature: "Remove DIMP branding from landing page",
+            available: true,
+          },
+          { feature: "Up to 5,000,000 monthly transactions", available: true },
+          { feature: "2% fee per transaction", available: true },
         ],
-        "Forms Design & Development": [
-          {
-            feature: "Unlimited Number of forms per ecosystem project",
-            available: true,
-          },
-          {
-            feature: "Unlimited Number of Usecase form templates",
-            available: true,
-          },
-          {
-            feature: "Unlimited Number of Premium form templates",
-            available: true,
-          },
-          {
-            feature: "Unlimited Number of questions per form",
-            available: true,
-          },
-          { feature: "Remove GFA brand from form", available: true },
-        ],
-        "Course Management and Automation": [
-          { feature: "Course builder module", available: true },
-          { feature: "Assessment builder module", available: true },
-          { feature: "Statistics & visualization", available: true },
-          {
-            feature: "30 Number of courses per ecosystem deployment",
-            available: true,
-          },
-          { feature: "Exams & Quizzes", available: true },
-          { feature: "Zoom, Teams or Webex Integration", available: true },
-        ],
-        "Payment and Subscriptions": [
-          { feature: "Unlimited Number of payment gateways", available: true },
-          { feature: "Payment management module", available: true },
-          { feature: "Customer payment summary", available: true },
+        "Payment and Subscription": [
+          { feature: "Online payment gateway", available: true },
+          { feature: "DIMP Wallet", available: true },
+          { feature: "Payment Analytics", available: true },
           { feature: "Multi-currency module", available: true },
+
           { feature: "Flexible pricing module", available: true },
         ],
-        Emails: [
-          { feature: "Unlimited number of emails per month", available: true },
-          { feature: "5 GB of image storage", available: true },
+        "Features & Integrations": [
+          { feature: "Appointment booking", available: true },
+          { feature: "Community & Chat", available: true },
+
+          { feature: "Fundraising", available: true },
+          { feature: "Online learning management solution", available: true },
+
+          { feature: "Invoicing & billing", available: true },
+          { feature: "Unlimited Admin user", available: true },
+          { feature: "Customer support ticketing module", available: true },
+          { feature: "Up to 10,000,000 customer records", available: true },
+          { feature: "Account Manager + Dedicated WhatsApp", available: true },
+
           {
-            feature: "Unlimited sender email addresses and domain",
+            feature: "Professional email (purchased sepately)",
             available: true,
           },
-        ],
-        "Admin Users": [
-          { feature: "Unlimited number of Admin Users", available: true },
         ],
       },
     };
@@ -289,14 +284,26 @@ const Pricing = () => {
       <ul className="lh-3" style={{ listStyleType: "none", paddingLeft: 0 }}>
         {Object.keys(features[plan]).map((section, sectionIndex) => (
           <li key={sectionIndex}>
-            <h5 className="mt-6">{section}</h5>
-            <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+            <h5 className="fw-700 mb-0 fs-15 my-3 my-lg-3 text-dark-gray alt-font">
+              {section}
+            </h5>
+            <ul
+              className="p-0 m-0 list-style-02 fw-500 fs-13"
+              style={{ listStyleType: "none", paddingLeft: 0 }}
+            >
               {features[plan][section].map((item, itemIndex) => (
-                <li key={itemIndex}>
+                <li
+                  className="pt-10px pb-10px border-top border-color-extra-small-gray text-dark-gray "
+                  key={itemIndex}
+                >
                   {item.available ? (
-                    <FaCheck color="green" className="fs-6" />
+                    <span className="d-flex align-self-center justify-content-center bg-green h-20px w-20px border-radius-100 me-10px">
+                      <Check className="text-white fs-20 d-flex" />
+                    </span>
                   ) : (
-                    <FaTimes color="red" />
+                    <span className="d-flex align-self-center justify-content-center bg-red h-20px w-20px border-radius-100 me-10px">
+                      <X className="text-white fs-20 d-flex" />
+                    </span>
                   )}{" "}
                   {item.feature}
                 </li>
@@ -316,22 +323,17 @@ const Pricing = () => {
 
       return (
         <Col md={3} className="mb-4" key={plan.name}>
-          <Card style={{ height: "1750px", overflow: "hidden" }}>
+          <Card className="" style={{ height: "1750px", overflow: "hidden" }}>
             <Card.Body>
               <Card.Title style={{ fontSize: "1.5rem" }}>Lite</Card.Title>
               <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
-              <h2>Free</h2>
-              <ul
-                style={{
-                  listStyleType: "none",
-                  paddingLeft: 0,
-                  visibility: "hidden",
-                }}
-              >
-                {firstFourFeatures}
-              </ul>
+              <h2 className="mb-lg-20 text-secondary">Free</h2>
 
-              <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
+              <Button
+                variant="outline-primary"
+                className="mt-3 w-100 btn-lg mb-3"
+                href="/creator/signup"
+              >
                 Sign Up
               </Button>
 
@@ -341,8 +343,9 @@ const Pricing = () => {
               <Button
                 variant="outline-primary"
                 className="mt-3 w-100 btn-lg  mb-3"
+                href="/creator/signup"
               >
-                Sign Up Now
+                Sign Up
               </Button>
             </Card.Body>
           </Card>
@@ -356,11 +359,15 @@ const Pricing = () => {
           className="border-0 mb-3"
           style={{ height: "1750px", overflow: "hidden" }}
         >
-          <Card.Body>
-            <Card.Title style={{ fontSize: "1.5rem" }}>{plan.name}</Card.Title>
+          <Card.Body className="bg-white">
+            <Card.Title className="text-dark" style={{ fontSize: "1.5rem" }}>
+              {plan.name}
+            </Card.Title>
             <Card.Text>{getPlanDescription(plan.name)}</Card.Text>
             <>
-              <Form.Label>Choose the size of your list</Form.Label>
+              <Form.Label>
+                Choose the number of monthly transactions.
+              </Form.Label>
               <SizeSelect
                 value={selectedSize}
                 onChange={handleSizeChange}
@@ -375,24 +382,29 @@ const Pricing = () => {
                     key={`${plan.name}-${selectedPlan}-${selectedSize}`}
                     className=" mt-5"
                   >
-                    $
+                    <span className="h2">₦</span>
                     <span className="mx-1 h2">
                       {pricingPlan.prices[selectedSize]?.[selectedPlan] ||
                         "N/A"}
                     </span>{" "}
-                    / {selectedPlan}
+                    {selectedPlan}
                   </p>
                 );
               }
               return null;
             })}
-            <Button variant="primary" className="mt-3 w-100 btn-lg mb-3">
+            <Button
+              variant="medium btn-primary btn-big border-1 border-color-transparent-white-light rounded-3"
+              className="mt-3 w-100 btn-lg mb-3"
+              href="/creator/signup"
+            >
               Sign Up Now
             </Button>
             <Card.Text>{getPlanFeatures(plan.name)}</Card.Text>
             <Button
-              variant="outline-primary"
+              variant="medium btn-primary btn-big border-1 border-color-transparent-white-light rounded-3"
               className="mt-3 w-100 btn-lg  mb-3"
+              href="/creator/signup"
             >
               Sign Up Now
             </Button>
@@ -405,16 +417,19 @@ const Pricing = () => {
   return (
     <Fragment>
       <NavbarLanding className="px-lg-10" />
-      <section className="py-lg-5 py-3">
+      <section
+        className="py-lg-10 py-10 px-4 text-dark bg-cover py-3"
+        style={{ backgroundImage: `url(${GlowBG})` }}
+      >
         <Container>
           {/* Page header */}
           <Row className="align-items-center">
             <Col xl={12} lg={12} md={12} sm={12}>
               <div className="mb-4 px-lg-1 px-1">
-                <h1 className="display-4 text-dark fw-bold">
+                <h1 className="fw-700 fs-40 sm-fs-40 lh-50 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   Choose your preferred plan
                 </h1>
-                <p className="display-8 text-dark">
+                <p className="display-8">
                   Choose the best plan that suits your needs and get started
                   with our ecosystem.
                 </p>
@@ -423,8 +438,8 @@ const Pricing = () => {
           </Row>
         </Container>
       </section>
-      <div>
-        <Container className="">
+      <div className="bg-gradient-top-very-light-gray px-4 ">
+        <Container className="py-3">
           <Row>
             <Col
               md={12}
@@ -443,32 +458,36 @@ const Pricing = () => {
                 <Form.Check
                   type="radio"
                   id="sixMonths"
-                  checked={selectedPlan === "6 Months"}
-                  onChange={() => handlePlanChange("6 Months")}
+                  checked={selectedPlan === "Biannually (6 Months)"}
+                  onChange={() => handlePlanChange("Biannually (6 Months)")}
                 />
-                <Form.Label htmlFor="sixMonths">6 Months</Form.Label>
+                <Form.Label htmlFor="sixMonths">
+                  Biannually (6 Months)
+                </Form.Label>
 
                 <Form.Check
                   type="radio"
                   id="annual"
-                  checked={selectedPlan === "Annual"}
-                  onChange={() => handlePlanChange("Annual")}
+                  checked={selectedPlan === "Yearly"}
+                  onChange={() => handlePlanChange("Yearly")}
                 />
-                <Form.Label htmlFor="annual">Annual</Form.Label>
+                <Form.Label htmlFor="annual">Yearly</Form.Label>
               </div>
             </Col>
           </Row>
-          <Row>{pricingData.plans.map((plan) => renderPlanCard(plan))}</Row>
-          <Button
+          <Row className="bg-gradient-top-very-light-gray">
+            {pricingData.plans.map((plan) => renderPlanCard(plan))}
+          </Row>
+          {/* <Button
             variant="primary"
             onClick={handleSkipAndContinue}
             className="mt-4 mb-5"
           >
             Continue
-          </Button>
+          </Button> */}
         </Container>
       </div>
-      <section className="bg-white py-lg-10 py-5">
+      <section className="bg-white py-lg-5 px-4 py-5">
         <Container>
           <Row>
             <Col md={12} sm={12}>

@@ -8,8 +8,7 @@
     // font-size: 0rem;
   }
   .navbar-toggler {
-    border: 1px solid var(--#{$prefix}primary);
-    border-color: var(--#{$prefix}primary)!important;
+    
     margin-left: 0.5rem;
     padding: 0.5rem;
     &:focus {

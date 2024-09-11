@@ -3,6 +3,19 @@
 // Use this to write your custom SCSS
 //
 
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+/* Hide on portrait tablets (min-width 768px and max-width 1024px) in portrait orientation */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .hide-on-tablet-portrait {
+    display: none;
+  }
+}
+
 .blog-only-text .card-body:hover .card-title,
 .text-shadow-large {
   text-shadow: 0 0 50px rgba(0, 0, 0, 0.9);

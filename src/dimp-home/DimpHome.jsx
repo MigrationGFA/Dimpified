@@ -1,6 +1,6 @@
 // import node module libraries
 import { Fragment } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button, Col } from "react-bootstrap";
 
 // import custom components
 
@@ -24,6 +24,7 @@ import TestimonialSection from "./TestimonialSection";
 import NavbarLanding from "./NavbarLanding";
 import FooterWithLinks from "./FooterWithLinks";
 import GradientBG from "../assets/images/background/gradient-bg.png";
+import { PlayCircleFill } from "react-bootstrap-icons";
 
 // import required data files
 
@@ -33,7 +34,7 @@ const DimpHome = () => {
       {/* Default Navbar */}
       <NavbarLanding center />
 
-      <main>
+      <main className="primary-font text-dark">
         {/* Page Content */}
 
         <HeroFormCenter />
@@ -66,19 +67,50 @@ const DimpHome = () => {
         </section>
         <AppIntegration />
 
-        <section className="px-lg-20 px-6 py-8 py-lg-6 bg-white">
+        <section className="px-lg-20 px-4 py-8 py-lg-6  bg-white">
           <TestimonialSection />
         </section>
 
         {/*  CTA section */}
-        <CTA2Buttons
-          className="bg-primary"
-          title="Are you ready? Sign Up Now!"
-          btntext1="Get started for Free"
-          btnlink1="/creator/signup"
-          btntext2="Schedule a demo"
-          btnlink2="https://calendly.com/jesutofunmi-ne2s"
-        />
+        <section className="">
+          <Container>
+            <Col xl={12} lg={12} md={12}>
+              <div className="bg-primary py-lg-16 p-6 mb-lg-10 mb-6 px-lg-20 rounded-4 text-center">
+                <div>
+                  <h2 className="alt-font fs-40 fw-400 text-white ls-minus-2px mb-4">
+                    Your business just got way more easier.
+                  </h2>
+                  <p className="text-white fs-4">
+                    Get a website. Get booked. Increase sales. Delight
+                    customers.
+                  </p>
+                  <Button
+                    variant="white"
+                    href="/creator/signup"
+                    className="btn btn-extra-large rounded-3 px-6"
+                  >
+                    Get Started For Free
+                  </Button>
+                </div>
+              </div>
+            </Col>
+          </Container>
+        </section>
+        <Button
+          variant="medium btn-primary btn-big border-1 border-color-transparent-white-light btn-rounded"
+          style={{
+            position: "fixed",
+            right: "40px",
+            bottom: "60px",
+            zIndex: 1000,
+            fontSize: "16px",
+          }}
+        >
+          Watch Demo{" "}
+          <span>
+            <PlayCircleFill size={20} />
+          </span>
+        </Button>
       </main>
 
       {/* Footer section */}

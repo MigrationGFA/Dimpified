@@ -227,7 +227,9 @@ const BarberPreview1 = () => {
               className="fw-bold text-dark d-flex align-items-center"
               href="#home"
             >
-              {sanitizeContent(content.navbar.brand)}
+              {sanitizeContent(content.navbar.brand) === "not available"
+                ? ecosystemDetails.ecosystemName
+                : sanitizeContent(content.navbar.brand)}
               <img
                 src="https://craftohtml.themezaa.com/images/demo-barber-icon-04.svg"
                 alt="Icon"
@@ -274,7 +276,7 @@ const BarberPreview1 = () => {
                   TESTIMONIALS
                 </Nav.Link>
               </Nav>
-              <Button variant="dark" className="btn-lg" onClick={handleShow}>
+              <Button variant="dark" className="btn-lg">
                 <i className="feather icon-feather-calendar me-2"></i>
                 Book an appointment
               </Button>
@@ -311,10 +313,7 @@ const BarberPreview1 = () => {
               <Row className="justify-content-center text-center mt-6">
                 <Col md={9} sm={12}>
                   <div className="d-grid d-md-block">
-                    <Link
-                      onClick={handleShow}
-                      className="btn btn-white btn-lg mb-2 mb-md-0"
-                    >
+                    <Link className="btn btn-white btn-lg mb-2 mb-md-0">
                       Book an appointment
                     </Link>{" "}
                   </div>
@@ -468,10 +467,7 @@ const BarberPreview1 = () => {
                   </p>
 
                   <div className="d-grid d-md-block">
-                    <Link
-                      onClick={handleShow}
-                      className="btn btn-dark btn-lg mb-2 mb-md-0"
-                    >
+                    <Link className="btn btn-dark btn-lg mb-2 mb-md-0">
                       Book an appointment
                     </Link>{" "}
                   </div>

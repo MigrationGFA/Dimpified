@@ -45,7 +45,7 @@ const HeroRightImage2 = () => {
       <Row>
         <Col xl={{ offset: 2, span: 8 }} md={12} xs={12}>
           <div className="text-center mt-6 mt-lg-16 mb-6">
-            <h2 className="h1 fw-bold">
+            <h2 className="h1 fw-bold alt-font">
               Personalize your ecosystem with your own user authentication page
             </h2>
           </div>
