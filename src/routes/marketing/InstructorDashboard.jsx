@@ -30,7 +30,7 @@ export const DashboardMenu = () => {
       id: 2,
       title: "Orders",
       link: `/${ecosystemDomain}/Ecosystemdashboard/My-Courses`,
-      icon: "book",
+      icon: "shopping-bag",
       children: [
         {
           id: uuid(),
@@ -64,7 +64,7 @@ export const DashboardMenu = () => {
       id: 5,
       title: "My Products",
       link: `/${ecosystemDomain}/Ecosystemdashboard/Ecosystem-orders`,
-      icon: "shopping-bag",
+      icon: "book",
     },
     {
       id: 6,

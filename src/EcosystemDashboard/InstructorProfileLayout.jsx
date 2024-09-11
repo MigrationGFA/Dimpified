@@ -58,9 +58,10 @@ const ProfileLayout = (props) => {
   };
 
   return (
-    <Fragment>
+    <Fragment >
+
       <NavbarDefault />
-      <section className="pt-5 pb-5">
+      <section className="pt-5 pb-5 overflow-x-hidden">
         <Container fluid>
           {/* User info */}
           <ProfileCover
