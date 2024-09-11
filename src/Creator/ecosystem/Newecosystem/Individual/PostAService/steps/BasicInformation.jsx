@@ -56,12 +56,7 @@ const BasicInformation = ({ handleNext }) => {
   ];
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      style={{
-        overflow: "hidden",
-      }}
-    >
+    <Form onSubmit={handleSubmit}>
       <Card className="mb-3">
         <Card.Header className="border-bottom px-4 py-3">
           <h4 className="mb-0">Basic Information</h4>

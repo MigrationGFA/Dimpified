@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { FaEye } from "react-icons/fa";
 import { Tooltip } from "flowbite-react";
 import {
   updateServiceData,
