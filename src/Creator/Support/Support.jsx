@@ -14,10 +14,12 @@ import { useSelector } from "react-redux";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import { showToast } from "../../Components/Showtoast";
 import PaginationComponent from "../../Components/elements/advance-table/Pagination";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const Support = () => {
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
+  const authFetch = AxiosInterceptor();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,7 @@ const Support = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${
           import.meta.env.VITE_API_URL
         }/support-request-by-a-creator/${creatorId}`
@@ -58,7 +60,7 @@ const Support = () => {
     }
     setReviewLoading(true);
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/creator-support`,
         {
           reason: formData.reason,
@@ -228,7 +230,7 @@ const Support = () => {
                   .filter((item) => item.status === "pending")
                   .length.toString()}
                 summary="Number of pending"
-                summaryIcon="down"
+                summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
                 chartName="VisitorChart"

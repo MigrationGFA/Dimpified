@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useMemo, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom";
 import {
   Card,
   Tab,
@@ -9,17 +9,17 @@ import {
 import InstructorProfileLayout from "./InstructorProfileLayout";
 import axios from "axios"; // Import axios library
 import CoursesTable from "./CoursesTable";
-
-
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 const Course = () => {
-  let {ecosystemDomain} = useParams();
+  let { ecosystemDomain } = useParams();
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
   const [courses, setCourses] = useState([]);
   const [services, setServices] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const authFetch = AxiosInterceptor();
 
   const serviceHeader = [
     { accessorKey: "image", header: "Service Image" },
@@ -39,13 +39,12 @@ const Course = () => {
     // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
     { accessorKey: "action", header: "Action" },
-    
   ];
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(
+        const response = await authFetch.get(
           `${import.meta.env.VITE_API_URL}/ecosystem-orders/${ecosystemDomain}`
         );
         setCourses(response.data.courses);
@@ -100,20 +99,20 @@ const Course = () => {
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="oneWeek" className="mb-sm-3 mb-md-0">
-                    One Week 
+                    One Week
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
-                   All
+                    All
                   </Nav.Link>
                 </Nav.Item>
               </Nav>
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-              <h3 className="mb-0"> Course Orders</h3>
-              <p className="mb-0">Manage your course orders.</p>
+                <h3 className="mb-0"> Course Orders</h3>
+                <p className="mb-0">Manage your course orders.</p>
               </div>
             </Card.Header>
             <Card.Body className="p-0">
@@ -132,14 +131,16 @@ const Course = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey="oneWeek" className="pb-4">
                   <CoursesTable
-                   header={courseHeader} data={courses}
+                    header={courseHeader}
+                    data={courses}
                     // serviceId={services._id}
                     // price={services.price}
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="all" className="pb-4">
                   <CoursesTable
-                    header={courseHeader} data={courses}
+                    header={courseHeader}
+                    data={courses}
                     // productId={products._id}
                   />
                 </Tab.Pane>

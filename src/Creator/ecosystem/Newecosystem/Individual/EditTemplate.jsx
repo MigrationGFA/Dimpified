@@ -15,6 +15,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../Steps.css";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "../Individual/individualHeader";
+import AxiosInterceptor from "../../../../Components/AxiosInterceptor";
 
 // template import part
 import Template1 from "../../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
@@ -84,7 +85,7 @@ const EditTemplate = () => {
   const selectedSection = useSelector(
     (state) => state.ecosystem.targetAudienceSector
   );
-  console.log("this is select", selectedSection);
+  const authFetch = AxiosInterceptor();
 
   const defaultSectionId =
     templateSections.find((section) => section.name === selectedSection)?.id ||
@@ -101,7 +102,7 @@ const EditTemplate = () => {
   const getTemplateDetails = async (templateId) => {
     setTemplateLoading(true);
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/reserved-template/${templateId}`
       );
       dispatch(setTemplate(response.data.template));
@@ -182,7 +183,7 @@ const EditTemplate = () => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/ecosystem/create-creator-template`,
         templateData
       );

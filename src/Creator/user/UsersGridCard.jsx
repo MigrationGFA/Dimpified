@@ -18,7 +18,9 @@ function UsersGridCard({ userDetails }) {
   });
 
   // Get creatorId from Redux state
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId
+  );
 
   const instructorsPerPage = 8;
   const pagesVisited = pageNumber * instructorsPerPage;
@@ -33,7 +35,9 @@ function UsersGridCard({ userDetails }) {
       if (creatorId) {
         try {
           // Use environment variable to construct the API URL
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const apiUrl = `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-users-stats/${creatorId}`;
           const response = await fetch(apiUrl);
           const data = await response.json();
           setStats(data);
@@ -80,11 +84,15 @@ function UsersGridCard({ userDetails }) {
             </div>
             <div className="d-flex justify-content-between border-bottom py-2">
               <span>Date Joined</span>
-              <span className="text-dark">{formatDate(instructor.createdAt)}</span>
+              <span className="text-dark">
+                {formatDate(instructor.createdAt)}
+              </span>
             </div>
             <div className="d-flex justify-content-between pt-2">
               <span>Products</span>
-              <span className="text-dark">{instructor.products == null ? 0 : instructor.products}</span>
+              <span className="text-dark">
+                {instructor.products == null ? 0 : instructor.products}
+              </span>
             </div>
           </Card.Body>
         </Card>
@@ -155,7 +163,7 @@ function UsersGridCard({ userDetails }) {
                 title="Verified Users"
                 value={stats.verifiedUsers}
                 summary="Number of pending"
-                summaryIcon="down"
+                summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4 custom-background"
                 chartName="VisitorChart"

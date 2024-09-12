@@ -80,6 +80,9 @@ export const authenticationSlice = createSlice({
             state.isLoading = false;
             state.error = null;
         },
+        updateAccessToken: (state, action) => {
+      state.user.accessToken = action.payload;
+    },
     },
     extraReducers: (builder) => {
         builder
@@ -113,7 +116,7 @@ export const authenticationSlice = createSlice({
     }
 });
 
-export const { logout } = authenticationSlice.actions;
+export const { logout, updateAccessToken } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
 

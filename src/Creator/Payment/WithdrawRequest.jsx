@@ -7,22 +7,25 @@ import { showToast } from "../../Components/Showtoast";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Pagination from "../../Components/elements/advance-table/Pagination";
 import InstructorProfileLayout from "../../EcosystemDashboard/InstructorProfileLayout";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const WithdrawPayment = () => {
   const { ecosystemDomain } = useParams();
-  const [withdrawalBlock, setWithdrawalBlock] = useState({
-  });
+  const [withdrawalBlock, setWithdrawalBlock] = useState({});
   const [withdrawalRequests, setWithdrawalRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Cloading, setCloading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
+  const authFetch = AxiosInterceptor();
 
   useEffect(() => {
     const fetchWithdrawalRequests = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-withdrawal-requests/${ecosystemDomain}`
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/get-withdrawal-requests/${ecosystemDomain}`
         );
         setWithdrawalRequests(response.data.withdrawalRequests || []);
         setLoading(false);
@@ -34,20 +37,22 @@ const WithdrawPayment = () => {
 
     fetchWithdrawalRequests();
 
-  const fetchWithdrawalBlock = async() => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/total-withdrawals-stats/${ecosystemDomain}`
-      );
-      setWithdrawalBlock(response.data || []);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching withdrawal requests:", error);
-      setLoading(false);
-    }
-  }
+    const fetchWithdrawalBlock = async () => {
+      try {
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/total-withdrawals-stats/${ecosystemDomain}`
+        );
+        setWithdrawalBlock(response.data || []);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching withdrawal requests:", error);
+        setLoading(false);
+      }
+    };
 
-  fetchWithdrawalBlock();
+    fetchWithdrawalBlock();
   }, [ecosystemDomain]);
 
   // Handle action (e.g., mark request as completed)
@@ -187,7 +192,7 @@ const WithdrawPayment = () => {
                           <br />
                           <p>{request.Account.bankName}</p>
                         </td>
-                      
+
                         <td>
                           {new Date(request.requestedAt).toLocaleString()}
                         </td>

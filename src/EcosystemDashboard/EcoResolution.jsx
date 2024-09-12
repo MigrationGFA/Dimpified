@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Spinner, Tab, Modal, FormSelect, Form } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Spinner,
+  Tab,
+  Modal,
+  FormSelect,
+  Form,
+} from "react-bootstrap";
 import InstructorProfileLayout from "./InstructorProfileLayout";
 import ResolutionTable from "./EcoResolutionTable";
 import axios from "axios";
 import { showToast } from "../Components/Showtoast";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 const EcoResolution = () => {
   const { ecosystemDomain } = useParams();
   const [resolution, setResolution] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const authFetch = AxiosInterceptor();
 
   const allJobsHeader = [
     { accessorKey: "id", header: "Id" },
@@ -19,22 +28,28 @@ const EcoResolution = () => {
     { accessorKey: "reason", header: "Reason" },
     { accessorKey: "message", header: "Message" },
     { accessorKey: "status", header: "Status" },
-    {accessorKey: "reply", header: "Action",cell: ({ row }) => (
-      <Button
-        variant="success"
-        size="sm"
-        onClick={() => handleReply(row.id, row.message)}
-      >
-        Reply
-      </Button>
-    ),},
+    {
+      accessorKey: "reply",
+      header: "Action",
+      cell: ({ row }) => (
+        <Button
+          variant="success"
+          size="sm"
+          onClick={() => handleReply(row.id, row.message)}
+        >
+          Reply
+        </Button>
+      ),
+    },
   ];
 
   useEffect(() => {
     const fetchAllResolutions = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/help-request-by-ecosystem/${ecosystemDomain}`
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/help-request-by-ecosystem/${ecosystemDomain}`
         );
         setResolution(response.data.helpRequestByEcosystem);
       } catch (error) {
@@ -47,9 +62,6 @@ const EcoResolution = () => {
     fetchAllResolutions();
   }, []);
 
-  
-
-  
   return (
     <InstructorProfileLayout>
       <Card className="border-0">
@@ -82,8 +94,6 @@ const EcoResolution = () => {
           </Card>
         </Tab.Container>
       </Card>
-
-      
     </InstructorProfileLayout>
   );
 };
