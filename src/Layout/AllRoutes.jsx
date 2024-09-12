@@ -58,23 +58,19 @@ import ReceivedPayment from "../Creator/Payment/ReceivedPayment";
 import WithdrawPayment from "../Creator/Payment/WithdrawRequest";
 
 // Import Integration components
-import Booking from "../Creator/Integrations/Booking";
+import LMS from "../Creator/Integrations/LMS";
 import Affiliates from "../Creator/Integrations/Affiliates";
 import Analytic from "../Creator/Integrations/Analytics";
-import Certificate from "../Creator/Integrations/Certifications";
 import Communication from "../Creator/Integrations/Communications";
-import CRMtools from "../Creator/Integrations/CRMTools";
+import ReminderNotification from "../Creator/Integrations/ReminderNotification";
 import CustomerService from "../Creator/Integrations/CustomerService";
 import DomainManagement from "../Creator/Integrations/DomainManagement";
-import Ecommerce from "../Creator/Integrations/Ecommerce";
 import EmailIntegration from "../Creator/Integrations/EmailIntegrations";
 import Finance from "../Creator/Integrations/Finance";
 import LiveSession from "../Creator/Integrations/LiveSessions";
-import MobileApp from "../Creator/Integrations/Mobile";
-import Security from "../Creator/Integrations/Security";
-import SocialMedia from "../Creator/Integrations/Social";
-import StoragePlatform from "../Creator/Integrations/StoragePlatform";
-import VideoPlayer from "../Creator/Integrations/VideoPlayer";
+import Report from "../Creator/Integrations/Report";
+import Gamification from "../Creator/Integrations/Gamification";
+import Growth from "../Creator/Integrations/Growth";
 
 // ** Import Authentication components
 import UserSignIn from "../Creator/authentication/UserSignIn";
@@ -311,29 +307,25 @@ const AllRoutes = () => {
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
        
-        <Route path="/creator/booking" element={<Booking />} />
+        <Route path="/creator/lms" element={<LMS />} />
         <Route path="/creator/affiliates" element={<Affiliates />} />
         <Route path="/creator/analytic" element={<Analytic />} />
-        <Route path="/creator/certification" element={<Certificate />} />
         <Route path="/creator/communication" element={<Communication />} />
-        <Route path="/creator/crm-tools" element={<CRMtools />} />
+        <Route path="/creator/reminder-notification" element={<ReminderNotification />} />
         <Route path="/creator/customer-service" element={<CustomerService />} />
         <Route
           path="/creator/domain-management"
           element={<DomainManagement />}
         />
-        <Route path="/creator/e-commerce" element={<Ecommerce />} />
+        <Route path="/creator/report" element={<Report />} />
         <Route
           path="/creator/email-integration"
           element={<EmailIntegration />}
         />
         <Route path="/creator/finance" element={<Finance />} />
         <Route path="/creator/live-session" element={<LiveSession />} />
-        <Route path="/creator/mobile-app" element={<MobileApp />} />
-        <Route path="/creator/security" element={<Security />} />
-        <Route path="/creator/social-media" element={<SocialMedia />} />
-        <Route path="/creator/storage-platform" element={<StoragePlatform />} />
-        <Route path="/creator/video-player" element={<VideoPlayer />} />
+        <Route path="/creator/gamification" element={<Gamification />} />
+        <Route path="/creator/growth" element={<Growth />} />
        
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
