@@ -39,21 +39,23 @@ const HeroGradient = () => {
           </Col>
           <Col lg={6} xs={12} className="order-md-1">
             {/* Heading */}
-            <h3 className="display-4 mb-5 fw-bold">
-             Organize programs that foster innovation and establish
-              
-              <u className="text-primary"> strategic patnerships.</u>
+            <h3 className="fs-60 sm-fs-50 pe-lg-8 text-dark lh-70 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
+              Organize programs that foster innovation and establish{" "}
+              <u className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
+                {" "}
+                strategic patnerships.
+              </u>
             </h3>
             <p className="fs-4">
               Leverge DIMP to organize programs that fosters early access to
-              cutting-edge innovations, attract top  talent and
-              establish strategic partnerships with promising startups.
+              cutting-edge innovations, attract top talent and establish
+              strategic partnerships with promising startups.
             </p>
 
             {/* list */}
             <ListGroup
               bsPrefix="list-unstyled"
-              className="fs-3 text-dark mb-6 fw-medium"
+              className="fs-4 text-dark mb-6 fw-medium"
             >
               <ListGroup.Item bsPrefix="mb-1" className="d-flex">
                 <Icon
@@ -83,10 +85,16 @@ const HeroGradient = () => {
 
             {/* Buttons */}
             <div className="mb-8 mb-lg-0">
-              <Link to="/creator/signup" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
+              <Link
+                to="/creator/signup"
+                className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0"
+              >
                 Get Started Now
               </Link>
-              <Link to="https://calendly.com/jesutofunmi-ne2s" className="btn btn-lg btn-outline-primary">
+              <Link
+                to="https://calendly.com/jesutofunmi-ne2s"
+                className="btn btn-lg btn-outline-primary"
+              >
                 Schedule a Demo
               </Link>
             </div>

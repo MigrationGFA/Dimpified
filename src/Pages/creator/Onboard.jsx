@@ -6,7 +6,10 @@ import { showToast } from "../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
 import Ecosystem from "../../assets/images/background/Onboard.jpg";
-import { EnterpriseCategories, IndividualCategories } from "../../data/CreatorInterest";
+import {
+  EnterpriseCategories,
+  IndividualCategories,
+} from "../../data/CreatorInterest";
 
 const Onboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -14,13 +17,17 @@ const Onboard = () => {
   const [department, setDepartment] = useState(null);
   const navigate = useNavigate();
 
-  const userId = useSelector((state) => state.authentication.user.data.CreatorId);
+  const userId = useSelector(
+    (state) => state.authentication.user.data.CreatorId
+  );
   const role = useSelector((state) => state.authentication.user.data.role);
-  console.log(role)
+  console.log(role);
 
   const handleCategoryClick = (categoryId) => {
     if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(selectedCategories.filter((id) => id !== categoryId));
+      setSelectedCategories(
+        selectedCategories.filter((id) => id !== categoryId)
+      );
     } else {
       setSelectedCategories([...selectedCategories, categoryId]);
     }
@@ -46,8 +53,8 @@ const Onboard = () => {
     }
   };
 
-
   const departments = [
+    { value: "Select Target Audience", label: "Select Target Audience" },
     { value: "1-500", label: "1 - 500" },
     { value: "501-1000", label: "501 - 1,000" },
     { value: "1001-1500", label: "1,001 - 1,500" },
@@ -105,7 +112,8 @@ const Onboard = () => {
     { value: "4500001-5000000", label: "4,500,001 - 5,000,000" },
   ];
 
-  const categories = role === "Enterprise" ? EnterpriseCategories : IndividualCategories;
+  const categories =
+    role === "Enterprise" ? EnterpriseCategories : IndividualCategories;
 
   return (
     <div className="d-flex justify-content-center align-items-center">
@@ -138,10 +146,10 @@ const Onboard = () => {
                   />
                 </div>
               </div>
-              <h2 className="mb-4">
-                Select at least one use case
+              <h4 className="mb-4">
+                Select at least one important thing you want to use DIMP for
                 <span className="text-danger">*</span>
-              </h2>
+              </h4>
               <div className="d-flex flex-wrap justify-content-center">
                 {categories.map((category) => (
                   <Button
@@ -195,7 +203,9 @@ const Onboard = () => {
                 <Button
                   variant="primary"
                   disabled={
-                    selectedCategories.length === 0 || department === null
+                    selectedCategories.length === 0 ||
+                    department === null ||
+                    department === "Select Target Audience"
                   }
                   onClick={handleSubmit}
                 >

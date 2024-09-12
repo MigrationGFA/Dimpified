@@ -11,6 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
+import GradientBG from "../../assets/images/background/gradient-bg.png";
+import AuthImg from "./images/auth-login-illustration-light.png";
 
 const formSchema = yup.object().shape({
   email: yup
@@ -51,7 +53,112 @@ const ForgetPassword = () => {
   };
   return (
     <Fragment>
-      <Row className="align-items-center justify-content-center g-0 min-vh-100">
+      <section className="z-index-99 my-4 my-lg-8 position-relative">
+        <div className="stack-box-contain">
+          <div className="bg-white rounded-4 mx-4 mx-lg-16">
+            <Row className="h-100 ">
+              <Col
+                lg={6}
+                className="order-lg-1 order-2 mb-4 mb-lg-0 hide-on-mobile hide-on-tablet-portrait"
+                style={{ backgroundImage: `url(${GradientBG})` }}
+              >
+                <div className="text-center">
+                  <img
+                    src={AuthImg}
+                    className="w-60 h-70 rounded-4 py-lg-10"
+                    alt=""
+                  />
+                </div>
+              </Col>
+              <Col
+                xl={6}
+                lg={6}
+                className="order-lg-1 order-2 py-6 px-6 px-lg-14 py-lg-10"
+              >
+                <div>
+                  <div className="">
+                    <div className="mb-4">
+                      <Image
+                        src={Logo}
+                        className="mb-4"
+                        alt="logo"
+                        style={{ height: "30px" }}
+                      />
+                      <h1 className="alt-font fs-20 lh-40">
+                        Forgot your password?
+                      </h1>
+                      <span>
+                      Kindly enter your email to reset your password.
+                        
+                      </span>
+                      
+                    </div>
+                    <Form onSubmit={handleSubmit(submit)}>
+                      <Row>
+                        <Col lg={12} md={12} className="mb-3">
+                          {/*  email */}
+                          <Form.Label>Email</Form.Label>
+                          {/* <Form.Control
+                      type="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      required
+                    /> */}
+                          <Form.Control
+                            type="email"
+                            id="email"
+                            placeholder="Email address here"
+                            {...register("email", { required: true })}
+                          />
+                          <small
+                            className="text-danger"
+                            style={{
+                              visibility: errors.email ? "visible" : "hidden",
+                            }}
+                          >
+                            {errors.email?.message}
+                          </small>
+                        </Col>
+                        <Col lg={12} md={12} className="mb-3 d-grid gap-2">
+                          {/* Button */}
+                          {loading ? (
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              className="opacity-50"
+                              disabled
+                            >
+                              Processing
+                            </Button>
+                          ) : (
+                            <Button variant="primary" type="submit">
+                              Send Reset Link
+                            </Button>
+                          )}
+                          {/* <Button variant="primary" type="submit">
+                      Send Reset Link
+                    </Button> */}
+                        </Col>
+                      </Row>
+                      <span>
+                        Return to the
+                        <Link
+                          to="/creator/signin"
+                          className="ms-1 text-primary fw-bold"
+                        >
+                          Sign in
+                        </Link>
+                        {" "} page.
+                      </span>
+                    </Form>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </section>
+      {/* <Row className="align-items-center justify-content-center g-0 min-vh-100">
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
             <Card.Body className="p-6">
@@ -70,18 +177,13 @@ const ForgetPassword = () => {
                 </span>
               </div>
 
-              {/* Form */}
+              
               <Form onSubmit={handleSubmit(submit)}>
                 <Row>
                   <Col lg={12} md={12} className="mb-3">
-                    {/*  email */}
+                 
                     <Form.Label>Email</Form.Label>
-                    {/* <Form.Control
-                      type="email"
-                      id="email"
-                      placeholder="Enter your email"
-                      required
-                    /> */}
+                   
                     <Form.Control
                       type="email"
                       id="email"
@@ -98,7 +200,7 @@ const ForgetPassword = () => {
                     </small>
                   </Col>
                   <Col lg={12} md={12} className="mb-3 d-grid gap-2">
-                    {/* Button */}
+               
                     {loading ? (
                       <Button
                         variant="primary"
@@ -113,9 +215,7 @@ const ForgetPassword = () => {
                         Send Reset Link
                       </Button>
                     )}
-                    {/* <Button variant="primary" type="submit">
-                      Send Reset Link
-                    </Button> */}
+                   
                   </Col>
                 </Row>
                 <span>
@@ -125,7 +225,7 @@ const ForgetPassword = () => {
             </Card.Body>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
     </Fragment>
   );
 };

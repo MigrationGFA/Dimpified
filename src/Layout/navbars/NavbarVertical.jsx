@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
  
@@ -11,6 +11,8 @@ import {
   Badge,
   useAccordionButton,
   AccordionContext,
+  Modal,
+  Button
 } from "react-bootstrap";
  
 // import simple bar scrolling used for notification item scrolling
@@ -24,9 +26,17 @@ import GiftBox from "../../assets/images/avatar/giftbox.png";
  
 // import routes file
 import { DashboardMenu } from "../../routes/CreatorDashboardRoutes";
+import DashboardPricing from "../../Creator/ecosystem/DashboardPricing";
+
  
 const NavbarVertical = (props) => {
   const location = useLocation();
+
+  const [showModal, setShowModal] = useState(false);
+
+  // Function to handle modal visibility
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
  
   const CustomToggle = ({ children, eventKey, icon }) => {
     const { activeEventKey } = useContext(AccordionContext);
@@ -315,13 +325,29 @@ const NavbarVertical = (props) => {
                 Upgrade your plan from a Free trial, to select ‘Business Plan’.
                 Start Now
               </p>
-              <Link to="#!" className="btn btn-white btn-sm mt-2">
-                Upgrade Now
-              </Link>
+              <Button className="btn btn-white btn-sm mt-2" onClick={handleShow}>
+              Upgrade Now
+            </Button>
             </div>
           </Card.Body>
         </Card>
       </SimpleBar>
+
+
+      <Modal show={showModal} onHide={handleClose} centered size="xl">
+        <Modal.Header closeButton>
+          <Modal.Title>Upgrade to Business Plan</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          
+         <DashboardPricing />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Fragment>
   );
 };

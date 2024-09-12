@@ -40,12 +40,14 @@ const HeroGradient = () => {
           </Col>
           <Col lg={6} xs={12} className="order-md-1">
             {/* Heading */}
-            <h3 className="display-3 mb-5 fw-bold">
-              Create a higher level of trust among the citizens of your
-              
-              <u className="text-primary"> administration</u>
+            <h3 className="fs-70 sm-fs-50 pe-lg-8 text-dark lh-75 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
+              Create a higher level of trust among the citizens of your{" "}
+              <u className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
+                {" "}
+                administration
+              </u>
             </h3>
-            <p className="display-7">
+            <p className="fs-20 text-dark lh-34 xs-fs-19 mb-35px xs-mb-20px w-85 lg-w-95 sm-w-100 ls-minus-05px">
               Leverge DIMP for Upskilling programs, e-governance programs,
               initiatives and tax management to upskill, empower and inform
               citizens of your adminitration.
@@ -54,7 +56,7 @@ const HeroGradient = () => {
             {/* list */}
             <ListGroup
               bsPrefix="list-unstyled"
-              className="fs-3 text-dark mb-6 fw-medium"
+              className="fs-4 text-dark mb-6 fw-medium"
             >
               <ListGroup.Item bsPrefix="mb-1" className="d-flex">
                 <Icon
@@ -84,7 +86,10 @@ const HeroGradient = () => {
 
             {/* Buttons */}
             <div className="mb-8 mb-lg-0">
-              <Link to="#" className="btn btn-lg btn-primary me-3 mb-2 mb-lg-0">
+              <Link
+                to="/creator/signup"
+                className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
+              >
                 Get Started Now
               </Link>
               <Link to="#" className="btn btn-lg btn-outline-primary">
@@ -100,7 +105,6 @@ const HeroGradient = () => {
           logos={LogoList1}
           limit={6}
           inverse={false}
-          
         />
       </Container>
     </section>

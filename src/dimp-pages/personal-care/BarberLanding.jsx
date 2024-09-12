@@ -69,16 +69,15 @@ const BarberLanding = () => {
         className="py-lg-10 py-6 px-4 fs-xs-16 position-relative bg-cover"
         style={{ backgroundImage: `url(${GlowBG})` }}
       >
-        <div className="bg-gradient-black-green position-absolute left-0 top-0 h-100 w-100 z-index-minus-1"></div>
         <Container className="h-100">
           <Row className="align-items-center h-100">
             <Col
               lg={6}
-              md={9}
+              md={6}
               className="position-relative z-index-1 px-3 d-flex flex-column justify-content-center h-100"
             >
               <div className="fs-80 sm-fs-50 pe-lg-8 text-dark lh-100 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
-                <span className="d-inline-block">Be among the</span>
+                <span className="d-inline-block">Be among the</span>{" "}
                 <span className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   top 1% of barbers
                 </span>
@@ -97,13 +96,6 @@ const BarberLanding = () => {
                     <ArrowRight />
                   </span>
                 </Button>
-                {/* <Button
-                  href="index.html"
-                  target="_blank"
-                  className="btn btn-extra-large btn-white btn-round-edge btn-box-shadow fw-600 xs-mt-10px xs-mb-10px"
-                >
-                  Get started
-                </Button> */}
               </div>
             </Col>
             <Col lg={5} md={6} className="offset-lg-1 ">
@@ -626,7 +618,7 @@ const BarberLanding = () => {
           <Row className="align-items-center justify-content-center text-center mb-6">
             <Col xl={10}>
               <h2 className="alt-font fs-50 fw-400 text-dark ls-minus-2px mb-0">
-                Over 50,000 Barbing entrepreneurs use DIMP for their business.
+                Lots of barbing entrepreneurs use DIMP for their business.
               </h2>
             </Col>
           </Row>

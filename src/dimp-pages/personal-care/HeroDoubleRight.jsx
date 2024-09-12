@@ -16,25 +16,25 @@ import Mechanic from "./images/massage-therapist.jpg";
 
 const HeroDoubleRight = () => {
   return (
-    <section className="px-lg-12 px-4 py-lg-7 py-6">
+    <section className="py-lg-10 py-6 px-4 fs-xs-16">
       <Container>
         <Row className="d-flex align-items-center">
           <Col xxl={6} xl={6} lg={6} xs={12}>
             <div>
-              <h1 className="display-3 fw-bold mb-3">
+              <h1 className="fs-70 sm-fs-50 pe-lg-8 text-dark lh-75 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
                 <span className="text-dark  px-md-0">
-                  Showcase Your Creativity As A
-                </span>
-                <span className="text-primary ms-2">
+                  Showcase your creativity as a
+                </span>{" "}
+                <span className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   <Typewriter
                     words={[
-                      "Barber",
-                      "Hair Stylist",
-                      "Massage Therapist",
-                      "Fitness Coach",
-                      "Chiropractor",
-                      "Tattoo Artist",
-                      "Make-Up Artist",
+                      "barber",
+                      "hair stylist",
+                      "make-Up artist",
+                      "massage therapist",
+                      "nail technician",
+                      "chiropractor",
+                      "tattoo Artist",
                     ]}
                     loop
                     cursor
@@ -45,12 +45,9 @@ const HeroDoubleRight = () => {
                   />
                 </span>
               </h1>
-              <p className="lead mb-4 pe-xl-12 ">
+              <p className="fs-20 text-dark lh-34 xs-fs-19 mb-35px xs-mb-20px w-85 lg-w-95 sm-w-100 ls-minus-05px">
                 Transform your personal care service business with our
-                all-in-one ecosystem management platform. From barbers and hair
-                stylists to massage therapists and fitness coaches, our tool
-                integrates everything you need to showcase your services, manage
-                your clients, and grow your business seamlessly.
+                all-in-one ecosystem management platform.
               </p>
               {/* <ListGroup as="ul" bsPrefix='list-unstyled' className="mb-5">
                 <ListGroup.Item as="li" bsPrefix="mb-2" >
@@ -73,7 +70,7 @@ const HeroDoubleRight = () => {
               <div className="d-grid d-md-block">
                 <Link
                   to="/creator/signup"
-                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                  className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
                 >
                   Get started for free
                 </Link>{" "}

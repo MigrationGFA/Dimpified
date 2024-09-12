@@ -46,7 +46,7 @@ const Course = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ecosystem-products/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-orders/${ecosystemDomain}`
         );
         setCourses(response.data.courses);
         // setServices(response.data.services);
@@ -89,38 +89,36 @@ const Course = () => {
   return (
     <InstructorProfileLayout>
       <Card className="border-0">
-        <Tab.Container defaultActiveKey="course">
+        <Tab.Container defaultActiveKey="today">
           <Card>
             <Card.Header className="border-bottom-0 p-0 bg-white">
-              {/* <Nav className="nav-lb-tab">
+              <Nav className="nav-lb-tab">
                 <Nav.Item>
-                  <Nav.Link eventKey="course" className="mb-sm-3 mb-md-0">
-                    Courses
+                  <Nav.Link eventKey="today" className="mb-sm-3 mb-md-0">
+                    Today
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="service" className="mb-sm-3 mb-md-0">
-                    Services
+                  <Nav.Link eventKey="oneWeek" className="mb-sm-3 mb-md-0">
+                    One Week 
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="product" className="mb-sm-3 mb-md-0">
-                    Digital Products
+                  <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
+                   All
                   </Nav.Link>
                 </Nav.Item>
-              </Nav> */}
+              </Nav>
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-                <h3 className="mb-0">Courses</h3>
-                <p className="mb-0">
-                  Manage your Courses and its update like live, draft, and insight.
-                </p>
+              <h3 className="mb-0"> Course Orders</h3>
+              <p className="mb-0">Manage your course orders.</p>
               </div>
             </Card.Header>
             <Card.Body className="p-0">
               <Tab.Content>
-                <Tab.Pane eventKey="course" className="pb-4">
+                <Tab.Pane eventKey="today" className="pb-4">
                   {isLoading ? (
                     <div
                       className="d-flex justify-content-center align-items-center"
@@ -132,21 +130,19 @@ const Course = () => {
                     <CoursesTable header={courseHeader} data={courses} />
                   )}
                 </Tab.Pane>
-                {/* <Tab.Pane eventKey="service" className="pb-4">
+                <Tab.Pane eventKey="oneWeek" className="pb-4">
                   <CoursesTable
-                    header={serviceHeader}
-                    data={services}
-                    serviceId={services._id}
-                    price={services.price}
+                   header={courseHeader} data={courses}
+                    // serviceId={services._id}
+                    // price={services.price}
                   />
                 </Tab.Pane>
-                <Tab.Pane eventKey="product" className="pb-4">
+                <Tab.Pane eventKey="all" className="pb-4">
                   <CoursesTable
-                    header={productHeader}
-                    data={products}
-                    productId={products._id}
+                    header={courseHeader} data={courses}
+                    // productId={products._id}
                   />
-                </Tab.Pane> */}
+                </Tab.Pane>
               </Tab.Content>
             </Card.Body>
           </Card>

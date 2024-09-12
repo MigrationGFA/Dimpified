@@ -23,24 +23,30 @@ const Order = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const serviceHeader = [
-    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "image", header: "Service Image" },
+    { accessorKey: "title", header: "Service Header" },
     { accessorKey: "category", header: "Category" },
-    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "format", header: "Service Format" },
+    // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   const productHeader = [
-    { accessorKey: "title", header: "Course Name" },
+    { accessorKey: "image", header: "Product Image" },
+    { accessorKey: "title", header: "Product Name" },
     { accessorKey: "category", header: "Category" },
-    { accessorKey: "amount", header: "Amount" },
+    { accessorKey: "productType", header: "Product Type" },
+    // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ecosystem-orders/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-products/${ecosystemDomain}`
         );
         setCourses(response.data.courses);
         setServices(response.data.services);
@@ -57,11 +63,15 @@ const Order = () => {
   }, []);
 
   const courseHeader = [
+    { accessorKey: "image", header: "Course Image" },
     { accessorKey: "title", header: "Course Name" },
     { accessorKey: "category", header: "Category" },
-    { accessorKey: "amount", header: "Amount" },
-    { accessorKey: "deliveryDate", header: "Purchased Date" },
+    { accessorKey: "totalNumberOfEnrolledStudent", header: "No of Students" },
+    { accessorKey: "price", header: "Price" },
+    { accessorKey: "deliveryDate", header: "Date Created" },
+    //{ accessorKey: "action", header: "Action" },
   ];
+
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
@@ -128,8 +138,11 @@ const Order = () => {
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-                <h3 className="mb-0">Orders</h3>
-                <p className="mb-0">Manage your orders.</p>
+              <h3 className="mb-0">My Products</h3>
+                <p className="mb-0">
+                  Manage your Products and its update like live, draft, and
+                  insight.
+                </p>
               </div>
             </Card.Header>
             <Card.Body className="p-0">

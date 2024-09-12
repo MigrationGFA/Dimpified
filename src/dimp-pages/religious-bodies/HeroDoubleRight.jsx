@@ -19,11 +19,11 @@ const HeroDoubleRight = () => {
         <Row className="d-flex align-items-center">
           <Col xxl={6} xl={6} lg={6} xs={12}>
             <div>
-              <h1 className="display-3 fw-bold mb-3">
+              <h1 className="fs-70 sm-fs-50 pe-lg-8 text-dark lh-75 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
                 <span className="text-dark  px-md-0">
                   Ecosystem Management Platform for
-                </span>
-                <span className="text-primary ms-2">
+                </span>{" "}
+                <span className="fw-700 d-inline-block text-gradient-fast-blue-purple-light-orange">
                   <Typewriter
                     words={[
                       "Religious Events",
@@ -41,7 +41,7 @@ const HeroDoubleRight = () => {
                   />
                 </span>
               </h1>
-              <p className="lead mb-4 pe-xl-12 ">
+              <p className="mb-4 pe-xl-12 ">
                 Streamline your religious organization's operations with our
                 comprehensive ecosystem management platform. From donor
                 management to event coordination, volunteer tracking to surveys,
@@ -69,7 +69,7 @@ const HeroDoubleRight = () => {
               <div className="d-grid d-md-block">
                 <Link
                   to="/creator/signup"
-                  className="btn btn-primary btn-lg mb-2 mb-md-0"
+                  className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
                 >
                   Get started for free
                 </Link>{" "}
