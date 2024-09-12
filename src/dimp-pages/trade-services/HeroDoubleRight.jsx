@@ -21,7 +21,7 @@ const HeroDoubleRight = () => {
         <Row className="d-flex align-items-center">
           <Col xxl={6} xl={6} lg={6} xs={12}>
             <div>
-              <h1 className="display-3 fw-bold mb-3">
+              <h1 className="fs-70 sm-fs-50 pe-lg-8 text-dark lh-75 fw-500 mb-6 ls-minus-3px fancy-text-style-4">
                 <span className="text-dark  px-md-0">
                   Ecosystem Management Platform for
                 </span>{" "}
@@ -44,7 +44,7 @@ const HeroDoubleRight = () => {
                   />
                 </span>
               </h1>
-              <p className="lead mb-4 pe-xl-12 ">
+              <p className="b-4 pe-xl-12 ">
                 Whether you offer house cleaning, handyman services, electrical
                 services, painting, auto repair, or carpentry, our platform
                 integrates everything you need to manage your business, attract
