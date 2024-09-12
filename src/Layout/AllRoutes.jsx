@@ -188,6 +188,8 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import AgentPage from "../agent-page/AgentPage";
+import AgentPageAuthForm from "../agent-page/pages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
 
 const AllRoutes = () => {
@@ -527,6 +529,15 @@ const AllRoutes = () => {
         path="/dimp/developer-program/auth"
         element={<DevProgramAuthForm />}
       />
+      <Route
+        path="/dimp/developer-program/auth"
+        element={<DevProgramAuthForm />}
+      />
+      <Route
+        path="/dimp/agent-page/auth"
+        element={<AgentPageAuthForm />}
+      />
+      <Route path="/dimp/agent-page" element={<AgentPage />}/> 
     </Routes>
   );
 };
