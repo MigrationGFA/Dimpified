@@ -191,6 +191,7 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import TrialExpired from "../Creator/Payment/TrialExpired";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -299,6 +300,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+    
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
         <Route
           path="/creator/jobs/category-single"
@@ -347,7 +349,7 @@ const AllRoutes = () => {
         />
       </Route>
       {/* Creator Ecosystem Dashboard */}
-      
+      <Route path="/trialExpired/upgrade" element={<TrialExpired />} />
       <Route path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment" element={<ContractPage />} />
       {/* <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} /> */}
       <Route path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request" element={<WithdrawPayment />} />
