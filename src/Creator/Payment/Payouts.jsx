@@ -30,6 +30,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { showToast } from "../../Components/Showtoast";
 import { Trash, Edit, MoreVertical } from "react-feather";
+import { useSelector } from "react-redux";
 
 // import media files
 import PayPal from "../../assets/images/brand/paypal-small.svg";
@@ -51,10 +52,12 @@ import {
   PayoutChartOptions,
 } from "../../data/charts/ChartData";
 
-import { useSelector } from "react-redux";
-
 const Payouts = () => {
   const { ecosystemDomain } = useParams();
+  const userPlan = useSelector(
+    (state) => state.authentication.user?.data?.plan || "Lite"
+  );
+
   const userId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
@@ -79,6 +82,19 @@ const Payouts = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
+  const [percentage, setPercentage] = useState(null);
+
+  useEffect(() => {
+    if (userPlan === "Lite") {
+      setPercentage(7.5);
+    } else if (userPlan === "Plus") {
+      setPercentage(4);
+    } else if (userPlan === "Pro") {
+      setPercentage(3);
+    } else {
+      setPercentage(2);
+    }
+  }, [userPlan]);
 
   const [earnings, setEarnings] = useState({
     Naira: 0,
@@ -86,7 +102,7 @@ const Payouts = () => {
     EUR: 0,
     GBP: 0,
   });
-  const [availableBalance, setAvailableBalance] = useState("")
+  const [availableBalance, setAvailableBalance] = useState("");
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -96,8 +112,6 @@ const Payouts = () => {
   };
 
   useEffect(() => {
-    
-
     fetchData();
   }, []);
 
@@ -106,9 +120,9 @@ const Payouts = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
       );
-  
+
       if (response.data) {
-        setEarnings(response.data.totalEarnings); 
+        setEarnings(response.data.totalEarnings);
         setAvailableBalance(response.data.availableBalance);
       }
     } catch (error) {
@@ -389,6 +403,30 @@ const Payouts = () => {
     return "";
   };
 
+  const AlertPaymentPlan = () => {
+    const [show, setShow] = useState(true);
+    if (show) {
+      return (
+        <Alert
+          variant="light-warning"
+          className="bg-light-warning text-dark-warning border-0"
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <strong>Current Plan</strong>
+          <p>
+            You are curently on {userPlan ? userPlan : "Lite"} plan which
+            involve deducting {percentage ? percentage : "0"}% of your total
+            earning.
+            {/* to move up to higher plan so as to have lesser percentage,
+            <button className="btn btn-primary btn-sm   ">UPGRADE PLAN</button> */}
+          </p>
+        </Alert>
+      );
+    }
+    return "";
+  };
+
   return (
     <Card className="border-0">
       <Card.Header>
@@ -402,112 +440,126 @@ const Payouts = () => {
       </Card.Header>
       <Card.Body>
         <AlertDismissible />
+        <AlertPaymentPlan />
         <Row className="mt-6">
           <Col xl={4} lg={4} md={12} sm={12} className="mb-3 mb-lg-0">
-          <div className="text-center">
-      {/* Payout chart */}
-      <ApexCharts
-        options={PayoutChartOptions}
-        series={PayoutChartSeries}
-        height={165}
-        type="bar"
-      />
-
-      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-        <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={() => handleCurrencyChange("Naira")}>
-            NGN
-          </DropdownItem>
-          <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
-            USD
-            </DropdownItem>
-          </DropdownMenu>
-      </Dropdown>
-
-      <h4 className="mb-1">Your total earnings</h4>
-      <h5 className="mb-0 display-4 fw-bold">
-        {formatPrice(selectedCurrency)} {earnings[selectedCurrency] || 0.0}
-      </h5>
-      <p className="px-4">You can change your payout account above</p>
-
-      <Button
-        variant="primary"
-        onClick={() => {
-          setTotalAmount(availableBalance); 
-          setShowWithdrawModal(true);
-        }}
-      >
-        Withdraw Earnings
-      </Button>
-
-      {/* Withdraw Modal */}
-      <Modal show={showWithdrawModal} onHide={() => setShowWithdrawModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Withdraw Earnings</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="border p-4 rounded-3 mt-3">
-            <h4>Select Banks:</h4>
-            {bankData.length > 0 ? (
-              <select
-                className="form-select"
-                defaultValue=""
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select an account
-                </option>
-                {bankData.map((account, index) => (
-                  <option key={index} value={account.id}>
-                    {account.accountName} - {account.bankName} ({account.currency})
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <p>No accounts found.</p>
-            )}
-            {errorAcc && <div className="alert alert-danger mt-3">{errorAcc}</div>}
-          </div>
-
-          <div className="border p-4 rounded-3 mt-3">
-          <h4>
-          Ledger Balance: {formatPrice(selectedCurrency)}{" "}
-              {earnings.Naira || 0.0}
-            </h4>
-            <h4>
-              Available Balance: {formatPrice(selectedCurrency)}{" "}
-              {availableBalance || 0.0}
-            </h4>
-            <Form.Group controlId="withdrawnAmount">
-              <Form.Label>
-                Withdrawn Amount {formatPrice(selectedCurrency)}
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder={`Enter amount in ${formatPrice(selectedCurrency)}`}
-                value={withdrawnAmount}
-                onChange={(e) => setWithdrawnAmount(e.target.value)}
+            <div className="text-center">
+              {/* Payout chart */}
+              <ApexCharts
+                options={PayoutChartOptions}
+                series={PayoutChartSeries}
+                height={165}
+                type="bar"
               />
-              {error && (
-                <div className="alert alert-danger mt-3">{error}</div>
-              )}
-            </Form.Group>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          {loading ? (
-            <Button variant="primary" style={{ opacity: ".7" }} disabled>
-              Processing
-            </Button>
-          ) : (
-            <Button variant="primary" onClick={handleWithdraw}>
-              Withdraw
-            </Button>
-          )}
-        </Modal.Footer>
-      </Modal>
-    </div>
+
+              <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={() => handleCurrencyChange("Naira")}>
+                    NGN
+                  </DropdownItem>
+                  <DropdownItem onClick={() => handleCurrencyChange("Dollar")}>
+                    USD
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+              <h4 className="mb-1">Your total earnings</h4>
+              <h5 className="mb-0 display-4 fw-bold">
+                {formatPrice(selectedCurrency)}{" "}
+                {earnings[selectedCurrency] || 0.0}
+              </h5>
+              <p className="px-4">You can change your payout account above</p>
+
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setTotalAmount(availableBalance);
+                  setShowWithdrawModal(true);
+                }}
+              >
+                Withdraw Earnings
+              </Button>
+
+              {/* Withdraw Modal */}
+              <Modal
+                show={showWithdrawModal}
+                onHide={() => setShowWithdrawModal(false)}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Withdraw Earnings</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="border p-4 rounded-3 mt-3">
+                    <h4>Select Banks:</h4>
+                    {bankData.length > 0 ? (
+                      <select
+                        className="form-select"
+                        defaultValue=""
+                        onChange={handleChange}
+                      >
+                        <option value="" disabled>
+                          Select an account
+                        </option>
+                        {bankData.map((account, index) => (
+                          <option key={index} value={account.id}>
+                            {account.accountName} - {account.bankName} (
+                            {account.currency})
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p>No accounts found.</p>
+                    )}
+                    {errorAcc && (
+                      <div className="alert alert-danger mt-3">{errorAcc}</div>
+                    )}
+                  </div>
+
+                  <div className="border p-4 rounded-3 mt-3">
+                    <h4>
+                      Ledger Balance: {formatPrice(selectedCurrency)}{" "}
+                      {earnings.Naira || 0.0}
+                    </h4>
+                    <h4>
+                      Available Balance: {formatPrice(selectedCurrency)}{" "}
+                      {availableBalance || 0.0}
+                    </h4>
+                    <Form.Group controlId="withdrawnAmount">
+                      <Form.Label>
+                        Withdrawn Amount {formatPrice(selectedCurrency)}
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder={`Enter amount in ${formatPrice(
+                          selectedCurrency
+                        )}`}
+                        value={withdrawnAmount}
+                        onChange={(e) => setWithdrawnAmount(e.target.value)}
+                      />
+                      {error && (
+                        <div className="alert alert-danger mt-3">{error}</div>
+                      )}
+                    </Form.Group>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  {loading ? (
+                    <Button
+                      variant="primary"
+                      style={{ opacity: ".7" }}
+                      disabled
+                    >
+                      Processing
+                    </Button>
+                  ) : (
+                    <Button variant="primary" onClick={handleWithdraw}>
+                      Withdraw
+                    </Button>
+                  )}
+                </Modal.Footer>
+              </Modal>
+            </div>
           </Col>
           <Col xl={8} lg={8} md={12} sm={12}>
             <Col xs={12} className="mt-3 text-center">
