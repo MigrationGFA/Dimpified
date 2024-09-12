@@ -31,14 +31,17 @@ const UsersListItems = ({ userDetails }) => {
     totalAmountPaid: 0,
   });
 
-  
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.CreatorId
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
       if (creatorId) {
         try {
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const apiUrl = `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-users-stats/${creatorId}`;
           const response = await fetch(apiUrl);
           const data = await response.json();
           setStats(data);
@@ -209,7 +212,7 @@ const UsersListItems = ({ userDetails }) => {
                 title="Verified Users"
                 value={numberWithCommas(stats.verifiedUsers)}
                 summary="Number of pending"
-                summaryIcon="down"
+                summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4 custom-background"
                 chartName="VisitorChart"

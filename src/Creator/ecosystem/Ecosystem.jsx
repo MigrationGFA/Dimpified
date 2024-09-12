@@ -6,6 +6,8 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../Components/elements/advance-table/Pagination";
 import { updateField, setEcosystemId } from "../../features/ecosystem";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
+
 // Function to shorten a message
 function shortenMessage(message, maxLength = 20) {
   if (message.length > maxLength) {
@@ -67,6 +69,7 @@ const Ecosystem = () => {
   const itemsPerPage = 10;
   const [showFallback, setShowFallback] = useState(false);
   const [url, setEcoUrl] = useState(null);
+  const authFetch = AxiosInterceptor();
 
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
@@ -87,7 +90,7 @@ const Ecosystem = () => {
   const getMyEcosystems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/creator-ecosystems/${creatorId}`
       );
       setEcosystems(response.data.ecosystem);
@@ -100,7 +103,7 @@ const Ecosystem = () => {
 
   const getMyEcosystemData = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/creator/my-ecosystem/${creatorId}`
       );
       setEcosystemData(response.data);
@@ -243,7 +246,7 @@ const Ecosystem = () => {
             title="Total Private"
             value={ecosystemData.totalPrivate}
             summary="Number of pending"
-            summaryIcon="down"
+            summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
             chartName="VisitorChart"

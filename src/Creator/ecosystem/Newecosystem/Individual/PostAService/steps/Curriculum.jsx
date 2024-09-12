@@ -13,6 +13,7 @@ import axios from "axios";
 import { useImageUploader } from "../../../../../../helper/UploadImage";
 import { Tooltip } from "flowbite-react";
 import { HiQuestionMarkCircle } from "react-icons/hi";
+import AxiosInterceptor from "../../../../../../Components/AxiosInterceptor";
 
 const AddService = () => {
   const dispatch = useDispatch();
@@ -280,6 +281,7 @@ const Service = ({ submit, onPrevious }) => {
   const ecosystemFromState = useSelector(
     (state) => state.ecosystem.ecosystemDomain
   );
+  const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
   const userType = useSelector((state) => state.authentication.user.data.role);
   const creatorId = user?.data?.CreatorId;
@@ -340,7 +342,7 @@ const Service = ({ submit, onPrevious }) => {
       ecosystemDomain: ecosystem,
     };
 
-    axios
+    authFetch
       .post(`${import.meta.env.VITE_API_URL}/create-service`, serviceDetails)
       .then((response) => {
         setLoading(false);
