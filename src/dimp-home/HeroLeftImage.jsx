@@ -78,7 +78,6 @@ const HeroLeftImage = () => {
       id: 1,
       title: `Custom Domain`,
 
-      
       image: Domain,
       description: "A lightweight LMS that's fast, flexible & easy to use.",
     },
@@ -127,13 +126,17 @@ const HeroLeftImage = () => {
       <Col lg={6} md={12} sm={12} xs={12}>
         {/* image */}
         <div className="mb-4 mb-lg-0  rounded-4 ">
-          <Image src={FeaturedImg1} alt="..." className="img-fluid w-100 border rounded rounded-1" />
+          <Image
+            src={FeaturedImg1}
+            alt="..."
+            className="img-fluid w-100 border rounded rounded-1"
+          />
         </div>
       </Col>
       <Col lg={6} md={12} sm={12} xs={12} className="mt-2 mt-lg-0">
         {/* content */}
         <div className="ps-lg-7">
-          <SectionHeadingLeftBold  title={title} subtitle={subtitle} />
+          <SectionHeadingLeftBold title={title} subtitle={subtitle} />
           <Row className="mt-5">
             {/* list */}
             <Col>
@@ -206,10 +209,10 @@ const HeroLeftImage = () => {
             <div className="d-grid d-md-block">
               <Link
                 to="/creator/signup"
-                className="btn btn-primary btn-lg mb-2 mb-md-0"
+                className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
               >
-                Get Started For Free
-              </Link>{" "}
+                Get Started Now
+              </Link>
               <Link
                 to="https://calendly.com/jesutofunmi-ne2s"
                 className="btn btn-outline-primary btn-lg mb-2 mb-md-0"

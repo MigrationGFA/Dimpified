@@ -59,11 +59,12 @@ const FAQsection = () => {
                   <h3>How can this platform help me attract more clients?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  By showcasing your services in stunning portfolios and engaging
-                  visual presentations, you can impress potential clients and
-                  demonstrate your expertise. Our platform also offers tools for
-                  effective client communications and marketing, helping you
-                  reach a wider audience and drive more business.
+                  By showcasing your services in stunning portfolios and
+                  engaging visual presentations, you can impress potential
+                  clients and demonstrate your expertise. Our platform also
+                  offers tools for effective client communications and
+                  marketing, helping you reach a wider audience and drive more
+                  business.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="4">
@@ -103,8 +104,11 @@ const FAQsection = () => {
           </Col>
         </Row>
         <div className="mt-10 text-center">
-          <Link to="#" className="btn btn-lg btn-primary">
-            Sold yet? Get Started Now!
+          <Link
+            to="/creator/signup"
+            className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px"
+          >
+            Sold yet? Get Started Now
           </Link>
         </div>
       </Container>

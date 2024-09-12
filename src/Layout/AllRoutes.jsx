@@ -1,9 +1,6 @@
 // ** Import from react dom
 import { Route, Routes, Navigate } from "react-router-dom";
 
-
-
-
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
 import DimpHome from "../dimp-home/DimpHome";
@@ -138,10 +135,10 @@ import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
 import EcosystemMyProduct from "../EcosystemDashboard/MyCourses";
-import EcosystemBooking from "../EcosystemDashboard/Booking"
-import EcosystemCourses from "../EcosystemDashboard/Courses"
-import EcosystemServices from "../EcosystemDashboard/Services"
-import EcosystemProducts from "../EcosystemDashboard/Products"
+import EcosystemBooking from "../EcosystemDashboard/Booking";
+import EcosystemCourses from "../EcosystemDashboard/Courses";
+import EcosystemServices from "../EcosystemDashboard/Services";
+import EcosystemProducts from "../EcosystemDashboard/Products";
 import EcosystemResolution from "../EcosystemDashboard/EcoResolution";
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
@@ -164,7 +161,7 @@ import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/Ecosystem
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
-import UserChat from "../Components/Chat/UserChat";   
+import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 import Join from "../developer-program/pages/Join";
 import AboutDevProgram from "../developer-program/pages/AboutDevProgram";
@@ -192,10 +189,12 @@ import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
 import TrialExpired from "../Creator/Payment/TrialExpired";
+import AgentPage from "../agent-page/AgentPage";
+import AgentPageAuthForm from "../agent-page/pages/AgentPageAuthForm";
+import EcoLoadingPage from "../Components/EcoLoading";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
-  
 
   return (
     <Routes>
@@ -207,6 +206,8 @@ const AllRoutes = () => {
       ) : (
         <Route path="/" element={<DimpHome />} />
       )}
+      <Route path="/loading" element={<EcoLoadingPage />} />
+
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
@@ -309,10 +310,10 @@ const AllRoutes = () => {
         <Route path="/creator/my-user" element={<MyUser />} />
         <Route path="/creator/jobProvider" element={<JobProvider />} />
         <Route path="/creator/jobSeeker" element={<JobSeeker />} />
-       
+
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
-       
+
         <Route path="/creator/booking" element={<Booking />} />
         <Route path="/creator/affiliates" element={<Affiliates />} />
         <Route path="/creator/analytic" element={<Analytic />} />
@@ -336,7 +337,7 @@ const AllRoutes = () => {
         <Route path="/creator/social-media" element={<SocialMedia />} />
         <Route path="/creator/storage-platform" element={<StoragePlatform />} />
         <Route path="/creator/video-player" element={<VideoPlayer />} />
-       
+
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
@@ -352,7 +353,10 @@ const AllRoutes = () => {
       <Route path="/trialExpired/upgrade" element={<TrialExpired />} />
       <Route path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment" element={<ContractPage />} />
       {/* <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} /> */}
-      <Route path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request" element={<WithdrawPayment />} />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request"
+        element={<WithdrawPayment />}
+      />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard"
         element={<EcosystemDashboard />}
@@ -524,6 +528,15 @@ const AllRoutes = () => {
         path="/dimp/developer-program/auth"
         element={<DevProgramAuthForm />}
       />
+      <Route
+        path="/dimp/developer-program/auth"
+        element={<DevProgramAuthForm />}
+      />
+      <Route
+        path="/dimp/agent-page/auth"
+        element={<AgentPageAuthForm />}
+      />
+      <Route path="/dimp/agent-page" element={<AgentPage />}/> 
     </Routes>
   );
 };

@@ -2,6 +2,24 @@
 // user.scss
 // Use this to write your custom SCSS
 //
+.bg-gradient-flamingo-amethyst-green {
+  background-image: linear-gradient(
+    to right,
+    #e3545c,
+    #c84d9d,
+    #885dd1,
+    #2f86bc,
+    #01a89e
+  );
+}
+
+
+.btn.btn-link-gradient {
+    padding: 0 0 3px !important;
+    position: relative;
+    border: 0;
+    background-color: transparent;
+}
 
 @media (max-width: 767px) {
   .hide-on-mobile {
@@ -5752,8 +5770,7 @@ header .left-nav .navbar-nav:before {
 .right-minus-150px {
   right: -150px;
 }
-header .header-top-bar,
- {
+header .header-top-bar {
   position: fixed;
   top: 0;
   right: 0;
@@ -6630,7 +6647,6 @@ header.sticky .navbar.disable-fixed {
 .navbar .navbar-nav .simple-dropdown .dropdown-menu .dropdown.open > a {
   color: var(--dark-gray);
 }
-
 
 .navbar .navbar-nav .simple-dropdown .dropdown-menu .dropdown .dropdown-menu {
   -webkit-animation: none;
@@ -9223,7 +9239,6 @@ blockquote footer {
   border-color: initial;
   color: initial;
 }
-
 
 .btn i {
   position: relative;
@@ -18392,7 +18407,6 @@ footer .footer-navbar .nav-item:last-child a {
 }
 /*# sourceMappingURL=style.min.css.map */
 
-
 @media (min-width: 992px) {
   .row.g-lg-0 {
     margin-right: 0;
@@ -18404,7 +18418,6 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 1600px) {
- 
   section.big-section {
     padding-top: 120px;
     padding-bottom: 120px;
@@ -18415,7 +18428,6 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 991px) {
- 
   section.half-section {
     padding-top: 50px;
     padding-bottom: 50px;
@@ -18446,7 +18458,6 @@ footer .footer-navbar .nav-item:last-child a {
   }
 }
 @media (max-width: 767px) {
- 
   section.half-section {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -38282,7 +38293,7 @@ footer .footer-navbar .nav-item:last-child a {
     transform: translate3d(70vw, 0, 0) !important;
     -webkit-transform: translate3d(70vw, 0, 0) !important;
   }
- 
+
   .navbar-expand-lg .container-lg,
   .navbar-expand-lg > .container-fluid {
     padding-right: 0;
@@ -38363,7 +38374,6 @@ footer .footer-navbar .nav-item:last-child a {
     order: 5;
   }
   .navbar-collapse {
-
     top: 100%;
     left: 0;
     width: 100%;
@@ -38667,7 +38677,7 @@ footer .footer-navbar .nav-item:last-child a {
     top: 15px;
     right: 15px;
   }
-  
+
   .header-search-popup .search-form {
     width: 85%;
   }

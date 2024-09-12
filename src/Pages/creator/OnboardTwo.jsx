@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Ecosystem from "../../assets/images/background/Onboard.jpg";
+import { useSelector } from "react-redux";
 
 const OnboardTwo = () => {
   const [ecosystemSetup, setEcosystemSetup] = useState(null);
   const navigate = useNavigate();
+  const role = useSelector((state) => state.authentication.user.data.role);
 
   const handleNoClick = () => {
     navigate("/creator/dashboard/overview");
   };
   const handleYesClick = () => {
-    navigate("/creator/dashboard/New-Ecosystem");
+    if (role === "Enterprise") {
+      navigate("/creator/dashboard/New-Ecosystem");
+    } else {
+      navigate("/creator/dashboard/New-Ecosystem/individual");
+    }
   };
 
   const handlePreviousClick = () => {

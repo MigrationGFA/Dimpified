@@ -111,7 +111,7 @@ const UserSignIn = () => {
               <Col
                 xl={6}
                 lg={6}
-                className="order-lg-1 order-2 px-6 px-lg-14 py-lg-10"
+                className="order-lg-1 order-2 py-6 px-6 px-lg-14 py-lg-10"
               >
                 <div>
                   <div className="">

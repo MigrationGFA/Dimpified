@@ -18,7 +18,7 @@ import Dashboard from "./images/ecosystem.png";
 
 const HeroFormCenter = () => {
   return (
-    <section className="pt-md-14 px-3 pb-4 bg-white">
+    <section className="pt-md-12 px-3 pb-4 bg-white">
       <Container>
         <Row className="justify-content-center mb-4">
           <Col xl={7} lg={7} md={12}>
@@ -61,7 +61,7 @@ const HeroFormCenter = () => {
               <div className="d-grid d-md-block">
                 <Link
                   to="/creator/signup"
-                  className="btn btn-primary btn-lg mb-2 me-2 mb-md-0"
+                  className="btn medium btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
                 >
                   Get started for free
                 </Link>{" "}
