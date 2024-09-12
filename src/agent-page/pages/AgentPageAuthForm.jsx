@@ -81,8 +81,8 @@ const AgentPageAuthForm = () => {
             <Form onSubmit={formik.handleSubmit} className="mt-4">
               <h2>
                 {activeTab === "signIn"
-                  ? "Sign in to your Dimp Developers Program account"
-                  : "Create a Username and Password for your Dimp developer account"}
+                  ? "Sign in to your Dimp Affiliate Program account"
+                  : "Create a Username and Password for your Dimp Affiliate account"}
               </h2>
               <Form.Group controlId="formUsername" className="mb-3">
                 <Form.Label>Username</Form.Label>
