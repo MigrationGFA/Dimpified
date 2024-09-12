@@ -20,7 +20,7 @@ const Hero = () => {
               you to earn with DIMP.
             </p>
           </div>
-          <div className="mt-4 d-flex justify-content-center">
+          {/* <div className="mt-4 d-flex justify-content-center">
             <Button variant="primary" className="me-2" href="/dimp/agent-page/auth?tab=register">
               SIGN UP
             </Button>
@@ -30,7 +30,7 @@ const Hero = () => {
             >
               SIGN IN
             </Button>
-          </div>
+          </div> */}
         </Col>
       </Row>
     </div>

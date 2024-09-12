@@ -36,7 +36,7 @@ const AgentPageAuthForm = () => {
     confirmEmail: Yup.string()
       .oneOf([Yup.ref("email"), null], "Emails must match")
       .required("Confirm Email is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
+    // phoneNumber: Yup.string().required("Phone number is required"),
   });
 
   const formik = useFormik({
@@ -45,7 +45,7 @@ const AgentPageAuthForm = () => {
       password: "",
       email: "",
       confirmEmail: "",
-      phoneNumber: "",
+      // phoneNumber: "",
     },
     validationSchema: activeTab === "register" ? validationSchema : null,
     onSubmit: (values) => {
@@ -81,8 +81,8 @@ const AgentPageAuthForm = () => {
             <Form onSubmit={formik.handleSubmit} className="mt-4">
               <h2>
                 {activeTab === "signIn"
-                  ? "Sign in to your Dimp Developers Program account"
-                  : "Create a Username and Password for your Dimp developer account"}
+                  ? "Sign in to your Dimp Affiliate Program account"
+                  : "Create a Username and Password for your Dimp Affiliate account"}
               </h2>
               <Form.Group controlId="formUsername" className="mb-3">
                 <Form.Label>Username</Form.Label>
@@ -163,7 +163,7 @@ const AgentPageAuthForm = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
 
-                  <Form.Group controlId="formPhoneNumber" className="mb-3">
+                  {/* <Form.Group controlId="formPhoneNumber" className="mb-3">
                     <Form.Label>
                       Mobile Phone Number (For Verification)
                     </Form.Label>
@@ -182,11 +182,11 @@ const AgentPageAuthForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.phoneNumber}
                     </Form.Control.Feedback>
-                  </Form.Group>
+                  </Form.Group> */}
 
                   <Form.Check
                     type="checkbox"
-                    label="I have read and accept the Dimp API License Agreement"
+                    label="I have read and accept the Dimp terms and condition"
                     required
                   />
                 </>
