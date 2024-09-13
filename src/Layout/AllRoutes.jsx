@@ -193,6 +193,14 @@ import AgentPage from "../agent-page/AgentPage";
 import AgentPageAuthForm from "../agent-page/pages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
 
+//Affliate 
+import AffliateDashboardIndex from "../AffilateDashboard/AffliateDashboardIndex";
+import AffiliateOverview from "../AffilateDashboard/AffliateOverview";
+import AffiliateMyUser from "../AffilateDashboard/AffliateMyUser";
+import AffiliateContractPage from "../AffilateDashboard/AffliateContractPage";
+import AffiliateWithdrawPayment from "../AffilateDashboard/WithdrawRequest";
+import AffiliateOnboarding from "../AffilateDashboard/AffiliateOnboarding";
+
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
 
@@ -537,6 +545,21 @@ const AllRoutes = () => {
         element={<AgentPageAuthForm />}
       />
       <Route path="/dimp/agent-page" element={<AgentPage />}/> 
+
+
+      <Route element={<AffliateDashboardIndex />}>
+      <Route path="/affiliate/dashboard/overview" element={<AffiliateOverview />} />
+      <Route path="/affiliate/dashboard/my-user" element={<AffiliateMyUser />} />
+      <Route path="/affiliate/dashboard/earning" element={<AffiliateContractPage />} />
+      <Route
+        path="/affiliate/dashboard/Withdraw"
+        element={<AffiliateWithdrawPayment />}
+      />
+      <Route
+        path="/affiliate/dashboard/onboard"
+        element={<AffiliateOnboarding />}
+      />
+      </Route>
     </Routes>
   );
 };
