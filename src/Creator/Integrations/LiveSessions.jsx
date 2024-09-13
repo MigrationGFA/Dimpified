@@ -11,7 +11,7 @@ const LiveSessions = () => {
     <div style={{ backgroundColor: '#f5f5f5', padding: '20px', height: '100vh', boxSizing: 'border-box' }}>
       <Container fluid style={{ padding: '0', margin: '0' }}>
         <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '5px' }}>
-          <h3>Live sessions</h3>
+          <h2>Live sessions</h2>
           <p>Connect your Zoom, Webex, and Teams accounts to create live classes and host webinars and meetings.</p>
           <Button variant="success" className="mb-4">Save</Button>
 
@@ -35,7 +35,7 @@ const LiveSessions = () => {
                 <Row className="no-gutters">
                   <Col md={8} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
                     <Card.Body>
-                      <h5>Zoom Integration</h5>
+                      <h4>Zoom Integration</h4>
                       <p>Use the Zoom integration to schedule and manage your live classes directly within your course platform.</p>
                     </Card.Body>
                   </Col>
@@ -85,7 +85,7 @@ const LiveSessions = () => {
                 <Row className="no-gutters">
                   <Col md={8} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
                     <Card.Body>
-                      <h5>Webex Integration</h5>
+                      <h4>Webex Integration</h4>
                       <p>Use the Webex integration to easily create and add video-conference learning activities to your courses.</p>
                     </Card.Body>
                   </Col>
@@ -133,7 +133,7 @@ const LiveSessions = () => {
                 <Row className="no-gutters">
                   <Col md={8} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
                     <Card.Body>
-                      <h5>Teams Integration</h5>
+                      <h4>Teams Integration</h4>
                       <p>Use the Teams integration to manage and schedule meetings and appointments with your students.</p>
                     </Card.Body>
                   </Col>

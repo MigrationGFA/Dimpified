@@ -36,7 +36,7 @@ const CustomerService = () => {
             <Row className="no-gutters">
               {/* Left Side with Gray Background */}
               <Col md={6} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
-                <h5>Freshchat</h5>
+                <h4>Freshchat</h4>
                 <p>
                   Follow the directions <a href="#">here</a> and copy/paste the widget code snippet.
                 </p>
@@ -75,7 +75,7 @@ const CustomerService = () => {
             <Row className="no-gutters">
               {/* Left Side with Gray Background */}
               <Col md={6} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
-                <h5>Zendesk</h5>
+                <h4>Zendesk</h4>
                 <p>
                   All you need is your Zendesk subdomain to enable the Zendesk widget. You can find instructions <a href="#">here</a> on how you can find your Zendesk subdomain.
                 </p>

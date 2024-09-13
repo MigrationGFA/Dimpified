@@ -25,7 +25,7 @@ const Affiliates = () => {
   return (
     <div style={{ backgroundColor: '#f5f5f5', padding: '20px', height: '100vh', boxSizing: 'border-box' }}>
       <Container fluid style={{ padding: '0', margin: '0' }}>
-        <h3>Affiliates</h3>
+        <h2>Affiliates</h2>
         <p>Integrate affiliate marketing via ReferralCandy or Refersion to boost product promotion.</p>
         <Button variant="success" className="mb-4">Save</Button>
 
@@ -34,7 +34,7 @@ const Affiliates = () => {
           <Row className="no-gutters">
             <Col md={6} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
               <Card.Body>
-                <h5>ReferralCandy</h5>
+                <h4>ReferralCandy</h4>
                 <p>
                   ReferralCandy is an ecommerce store plugin that helps you get more word of mouth sales.
                   Sign up for an account via LearnWorlds <a href="#">here</a> and get $50 worth of credits (1+1 months free).
@@ -92,7 +92,7 @@ const Affiliates = () => {
           <Row className="no-gutters">
             <Col md={6} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
               <Card.Body>
-                <h5>Refersion</h5>
+                <h4>Refersion</h4>
                 <p>
                   Refersion is a simple affiliate marketing software that allows you to easily manage your affiliates and automate their commissions.
                 </p>

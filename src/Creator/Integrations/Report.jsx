@@ -89,7 +89,7 @@ const ReportsCenter = () => {
           {/* Users Progress Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersProgress') && (
             <>
-              <h5>Users Progress</h5>
+              <h4>Users Progress</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -108,7 +108,7 @@ const ReportsCenter = () => {
           {/* Users Activity Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersActivity') && (
             <>
-              <h5>Users Activity</h5>
+              <h4>Users Activity</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -177,7 +177,7 @@ const ReportsCenter = () => {
           {/* Users Growth Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersGrowth') && (
             <>
-              <h5>Users Growth</h5>
+              <h4>Users Growth</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -220,7 +220,7 @@ const ReportsCenter = () => {
           {/* Users Engagement Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersEngagement') && (
             <>
-              <h5>Users Engagement</h5>
+              <h4>Users Engagement</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -253,7 +253,7 @@ const ReportsCenter = () => {
           {/* Learning Performances Section */}
           {(selectedTag === 'allReports' || selectedTag === 'learningPerformances') && (
             <>
-              <h5>Learning Performances</h5>
+              <h4>Learning Performances</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -286,7 +286,7 @@ const ReportsCenter = () => {
           {/* Marketing Performances Section */}
           {(selectedTag === 'allReports' || selectedTag === 'marketingPerformances') && (
             <>
-              <h5>Marketing Performances</h5>
+              <h4>Marketing Performances</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
@@ -319,7 +319,7 @@ const ReportsCenter = () => {
           {/* Users Groups & Seats Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersGroupsSeats') && (
             <>
-              <h5>Users Groups & Seats</h5>
+              <h4>Users Groups & Seats</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>

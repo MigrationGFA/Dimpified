@@ -36,7 +36,7 @@ const Growth = () => {
             <Row>
               {/* Left Side with Gray Background */}
               <Col md={6} className="p-4">
-                <h5>Google Verification</h5>
+                <h4>Google Verification</h4>
                 <p>
                   Verify your site on google by adding a verification code. We support the HTML Tag verification method found under the "Alternate method" tab. Paste the whole tag, and we will figure out the verification code automatically. Learn more <a href="#">here</a>.
                 </p>
@@ -75,7 +75,7 @@ const Growth = () => {
             <Row>
               {/* Left Side with Gray Background */}
               <Col md={6} className="p-4" style={{ backgroundColor: '#f5f5f5' }}>
-                <h5>Intercom</h5>
+                <h4>Intercom</h4>
                 <p>
                   Your App ID is available on the top right of the page in the API keys section of your app settings.
                   You can find more instructions <a href="#">here</a>.

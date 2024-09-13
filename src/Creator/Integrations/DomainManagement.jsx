@@ -13,7 +13,7 @@ const DomainEmailSetup = () => {
 
   return (
     <Container className="mt-4">
-      <h4>Site domain & email <a href="#">Learn more</a></h4>
+      <h2>Site domain & email</h2>
       <p>Set up the custom site and email domain, and completely remove the LearnWorlds brand from your site.</p>
 
       <div className="alert alert-warning mt-3">
@@ -25,7 +25,7 @@ const DomainEmailSetup = () => {
           <Row>
             <Col md={6} className="d-flex align-items-center" style={{ backgroundColor: '#f5f5f5' }}>
               <div>
-                <h6>Current Domain</h6>
+                <h4>Current Domain</h4>
                 <p>The site URL / domain which currently directs your users to the home page of your school.</p>
               </div>
             </Col>
@@ -41,11 +41,11 @@ const DomainEmailSetup = () => {
           <Row>
             <Col md={6} className="d-flex align-items-center" style={{ backgroundColor: '#f5f5f5' }}>
               <div>
-                <h6>Change Domain</h6>
+                <h4>Change Domain</h4>
                 <p>You can replace your LearnWorlds URL with your custom domain by adding a CNAME DNS record in your hosting provider account.</p>
               
                 <div style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '5px' }}>
-                  <h6>Instructions</h6>
+                  <h4>Instructions</h4>
                   <ol>
                     <li>Create a CNAME DNS record that points your chosen URL (e.g., www.yourschool.com or academy.yourschool.com) to your LearnWorlds school (e.g., paul123.learnworlds.com).</li>
                     <li>Set up the CNAME record in your hosting provider account.</li>

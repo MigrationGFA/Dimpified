@@ -25,10 +25,10 @@ const GamificationEngine = () => {
       <Container className="p-3 mb-4" style={{ backgroundColor: "#f8f9fa", borderRadius: "4px" }}>
         <Row className="align-items-center">
           <Col>
-            <h5>
+            <h4>
               Gamification engine{" "}
               <Badge bg="secondary" className="ms-2">Beta</Badge>
-            </h5>
+            </h4>
             <p className="mb-0">
               Enable the gamification engine to award digital badges to your users on specific events.
             </p>

@@ -65,9 +65,9 @@ const InvoiceSetup = () => (
 
     <Row className="border p-3 mb-3">
       <Col md={6}>
-        <h5>Invoice prefix</h5>
+        <h4>Invoice prefix</h4>
         <p>All invoice numbers will start with this prefix.</p>
-        <h5>Company VAT Number</h5>
+        <h4>Company VAT Number</h4>
         <p>Provide your company VAT number as will be presented in your invoices.</p>
       </Col>
       <Col md={6}>
@@ -78,7 +78,7 @@ const InvoiceSetup = () => (
 
     <Row className="border p-3 mb-3">
       <Col md={6}>
-        <h5>Invoice logo</h5>
+        <h4>Invoice logo</h4>
         <p>
           Provide an image to be placed on the upper-left corner of the invoices. The image (.png, .jpeg)
           must have 300px max-height & 200px max-width, and the size must not exceed 1MB.
@@ -90,18 +90,18 @@ const InvoiceSetup = () => (
         <Form.Check type="radio" id="uploadLogo" label="Upload logo" name="logoOption" />
       </Col>
       <Col md={6}>
-        <h5>Thank you message in invoices</h5>
+        <h4>Thank you message in invoices</h4>
         <p>A message to thank your learners in your invoices.</p>
       </Col>
       <Col md={6}>
         <Form.Control type="text" placeholder="Thank you message" />
       </Col>
       <Col md={6}>
-        <h5>Tax message in invoices</h5>
+        <h4>Tax message in invoices</h4>
         <p>A message that explains your tax policy in your invoices.</p>
       </Col>
       <Col md={8}>
-        <h5>Calculate VAT in invoices</h5>
+        <h4>Calculate VAT in invoices</h4>
         <p>
           Show VAT calculation in a separate line of your invoice. Total payable amount is always the price set in
           your course, bundle, or subscription.
@@ -115,11 +115,11 @@ const InvoiceSetup = () => (
     {/* Invoice Texts Section */}
     <Row className="p-3">
       <Col md={4}>
-        <h5>Invoice Texts</h5>
+        <h4>Invoice Texts</h4>
         <p>Update the texts on the invoices. Ensure that you check your invoices after making any changes.</p>
       </Col>
       <Col md={4}>
-        <h5>Default text</h5>
+        <h4>Default text</h4>
         <p>Invoice number</p>
         <p>Invoice</p>
         <p>Date</p>
@@ -136,7 +136,7 @@ const InvoiceSetup = () => (
         <p>VAT</p>
       </Col>
       <Col md={4}>
-        <h5>Edit text</h5>
+        <h4>Edit text</h4>
         <p>Invoice number</p>
         <p>Invoice</p>
         <p>Date</p>
@@ -194,7 +194,7 @@ const PaymentGateway = () => {
               <Card.Body>
                 <Row>
                   <Col md={6}>
-                    <h5>Payment Gateway</h5>
+                    <h4>Payment Gateway</h4>
                     <p>Select one or more payment methods:</p>
                     <Form.Check
                       type="checkbox"
@@ -224,7 +224,7 @@ const PaymentGateway = () => {
                     />
                   </Col>
                   <Col md={6}>
-                    <h5>ACTIVATE SANDBOX</h5>
+                    <h4>ACTIVATE SANDBOX</h4>
                     <p>Activate Sandbox to test the payment flows of your school.</p>
                     <div className="d-flex align-items-center">
                       <label className="me-2">ON</label>
