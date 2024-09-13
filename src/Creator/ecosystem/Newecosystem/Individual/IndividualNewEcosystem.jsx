@@ -25,6 +25,7 @@ import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
 import categorySubSection from "../../../ecosystem/Newecosystem/PostAService/SectionJson";
 import EcoLoadingPage from "../../../../Components/EcoLoading";
+import AxiosInterceptor from "../../../../Components/AxiosInterceptor";
 
 const NewEcosystem = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const NewEcosystem = () => {
   const dispatch = useDispatch();
   const ecosystem = useSelector((state) => state.ecosystem);
   const ecosystemMedia = useSelector((state) => state.ecosystem.socialMedia);
+  const authFetch = AxiosInterceptor();
 
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
@@ -170,7 +172,7 @@ const NewEcosystem = () => {
 
   const validateDomain = async (ecosystemDomain) => {
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/check-domain`,
         { domainName: ecosystemDomain }
       );
@@ -207,7 +209,7 @@ const NewEcosystem = () => {
     setIsProcessing(true);
     setConfirmModal(false);
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/ecosystem/aboutDetails`,
         {
           ...ecosystem,

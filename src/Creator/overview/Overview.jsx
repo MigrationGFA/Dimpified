@@ -13,6 +13,7 @@ import {
   OrderColumnChartSeries,
   OrderColumnChartOptions,
 } from "../../data/charts/AdminChartData";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Link
@@ -66,9 +67,10 @@ const Overview = () => {
     }
   }, [creatorId]);
 
+  const authFetch = AxiosInterceptor();
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${
           import.meta.env.VITE_API_URL
         }/creator/my-dashboard-overview/${creatorId}`
@@ -141,7 +143,7 @@ const Overview = () => {
                   title="Total Users"
                   value={dashboardData?.totalUsers || "0"}
                   summary="Number of pending"
-                  summaryIcon="down"
+                  summaryIcon="up"
                   showSummaryIcon
                   classValue="mb-4"
                   chartName="VisitorChart"

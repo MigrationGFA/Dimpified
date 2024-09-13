@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Card, ListGroup, Image } from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const RecentEcosystems = ({ title }) => {
   const [ecosystems, setEcosystems] = useState([]);
@@ -13,9 +14,10 @@ const RecentEcosystems = ({ title }) => {
     fetchRecentEcosystems();
   }, [creatorId]);
 
+  const authFetch = AxiosInterceptor();
   const fetchRecentEcosystems = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/last-four-ecosystems/${creatorId}`
       );
       setEcosystems(response.data.lastFourWithLogos);
@@ -25,9 +27,9 @@ const RecentEcosystems = ({ title }) => {
   };
 
   const itemStyle = {
-    minHeight: '120px', // Adjust this value to fit your design needs
-    display: 'flex',
-    alignItems: 'center',
+    minHeight: "120px", // Adjust this value to fit your design needs
+    display: "flex",
+    alignItems: "center",
   };
 
   return (
@@ -49,13 +51,21 @@ const RecentEcosystems = ({ title }) => {
                     src={ecosystem.logo}
                     alt={ecosystem.ecosystemName}
                     className="img-fluid rounded img-4by3-lg"
-                    style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'cover' }}
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "100px",
+                      objectFit: "cover",
+                    }}
                   />
                 </Col>
                 <Col className="ps-0">
-                  <h5 className="text-primary-hover">{ecosystem.ecosystemName}</h5>
+                  <h5 className="text-primary-hover">
+                    {ecosystem.ecosystemName}
+                  </h5>
                   <div className="d-flex align-items-center">
-                    <span className="fs-6">{ecosystem.targetAudienceSector}</span>
+                    <span className="fs-6">
+                      {ecosystem.targetAudienceSector}
+                    </span>
                   </div>
                   {/* Removed the description */}
                 </Col>

@@ -16,7 +16,7 @@ import {
   Spinner, // Import Spinner from React Bootstrap
   Modal,
   Form,
-  Button
+  Button,
 } from "react-bootstrap";
 // import BookingTable from "./ProductTable";
 import InstructorProfileLayout from "./InstructorProfileLayout";
@@ -26,6 +26,7 @@ import axios from "axios"; // Import axios library
 import { numberWithCommas } from "../helper/utils";
 import BookingTable from "./BookingTable";
 import { showToast } from "../Components/Showtoast";
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 const Booking = () => {
   let { ecosystemDomain } = useParams();
@@ -37,7 +38,7 @@ const Booking = () => {
   const [pending, setPending] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const [onsiteBooking, setOnsiteBooking] = useState({
     name: "",
     email: "",
@@ -48,6 +49,7 @@ const Booking = () => {
     date: "",
     time: "",
   });
+  const authFetch = AxiosInterceptor();
 
   const oneWeekHeader = [
     {
@@ -227,13 +229,12 @@ const Booking = () => {
   ];
 
   useEffect(() => {
-  
     fetchJobs();
   }, []);
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/booking-overview/${ecosystemDomain}`
       );
       // ${ecosystemDomain}
@@ -259,7 +260,7 @@ const Booking = () => {
   const handleOnsiteBookingSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/onsite-booking`,
         {
           ...onsiteBooking,
@@ -269,7 +270,7 @@ const Booking = () => {
       console.log("Onsite booking created:", response.data);
       showToast(response.data.message);
       fetchJobs();
-      setShowModal(false); 
+      setShowModal(false);
       setOnsiteBooking("");
     } catch (error) {
       console.error("Error creating onsite booking:", error);
@@ -371,13 +372,13 @@ const Booking = () => {
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-              <div className="d-flex justify-content-between align-items-center">
-            <h3 className="mb-0">Bookings</h3>
-            {/* Button to trigger modal */}
-            <Button variant="primary" onClick={() => setShowModal(true)}>
-              Create Onsite Booking
-            </Button>
-          </div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h3 className="mb-0">Bookings</h3>
+                  {/* Button to trigger modal */}
+                  <Button variant="primary" onClick={() => setShowModal(true)}>
+                    Create Onsite Booking
+                  </Button>
+                </div>
                 <p className="mb-0">
                   Manage your bookings and its update like All booking, pending,
                   and completed.
@@ -433,9 +434,8 @@ const Booking = () => {
         </Tab.Container>
       </Card>
 
-
-       {/* Modal for creating onsite booking */}
-       <Modal show={showModal} onHide={() => setShowModal(false)}>
+      {/* Modal for creating onsite booking */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Create Onsite Booking</Modal.Title>
         </Modal.Header>

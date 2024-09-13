@@ -4,11 +4,13 @@ import axios from "axios";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import SupportModal from "../Support/SupportModal";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const HelpCenter = () => {
   const creatorId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
+  const authFetch = AxiosInterceptor();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
@@ -25,12 +27,12 @@ const HelpCenter = () => {
     const fetchData = async () => {
       try {
         const [helpDataResponse, helpcenterDataResponse] = await Promise.all([
-          axios.get(
+          authFetch.get(
             `${
               import.meta.env.VITE_API_URL
             }/get-creator-help-request/${creatorId}`
           ),
-          axios.get(
+          authFetch.get(
             `${
               import.meta.env.VITE_API_URL
             }/creator/my-help-request/${creatorId}`
@@ -159,7 +161,7 @@ const HelpCenter = () => {
                 title="Completed"
                 value={stats.totalCompletedHelpRequest}
                 summary="Number of completed requests"
-                summaryIcon="down"
+                summaryIcon="up"
                 showSummaryIcon
                 classValue="mb-4"
                 chartName="VisitorChart"

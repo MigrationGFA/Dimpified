@@ -13,6 +13,7 @@ import axios from "axios";
 import InstructorProfileLayout from "./InstructorProfileLayout";
 import InstructorReviewCard from "../Components/marketing/common/cards/InstructorReviewCard";
 import { FormSelect } from "../Components/elements/form-select/FormSelect";
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 const Reviews = () => {
   let { ecosystemDomain } = useParams();
@@ -21,6 +22,7 @@ const Reviews = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
+  const authFetch = AxiosInterceptor();
 
   useEffect(() => {
     fetchUserRating();
@@ -29,7 +31,7 @@ const Reviews = () => {
   const fetchUserRating = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-reviews/${ecosystemDomain}`
       );
       setReviews(

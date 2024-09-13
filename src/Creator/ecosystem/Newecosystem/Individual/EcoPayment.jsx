@@ -1390,7 +1390,6 @@ const EcoPayment = ({ plan }) => {
     );
   };
 
-
   const renderPlanCard = (plan) => {
     if (plan.name === "Lite") {
       const liteFeatures = getPlanFeatures(plan.name);
@@ -1434,7 +1433,14 @@ const EcoPayment = ({ plan }) => {
     }
 
     return (
-      <Col md={3} className="mb-4" key={plan.name}>
+      <Col
+        md={3}
+        className="mb-4"
+        key={plan.name}
+        style={{
+          overflow: "hidden",
+        }}
+      >
         <Card
           className="border-0 mb-3"
           style={{ height: "1750px", overflow: "hidden" }}
@@ -1516,7 +1522,13 @@ const EcoPayment = ({ plan }) => {
     );
   };
   return (
-    <Fragment>
+    <Container
+      fluid
+      className="p-0 pb-5"
+      style={{
+        overflow: "hidden",
+      }}
+    >
       <EcoHeader />
       <section className="py-lg-5 py-3">
         <Container>
@@ -1581,7 +1593,7 @@ const EcoPayment = ({ plan }) => {
           </Button>
         </Container>
       </div>
-    </Fragment>
+    </Container>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Card, ListGroup, Image, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const TopEcosystem = ({ title }) => {
   const [ecosystems, setEcosystems] = useState([]);
@@ -15,10 +16,12 @@ const TopEcosystem = ({ title }) => {
     fetchTopEcosystems();
   }, [creatorId]);
 
+  const authFetch = AxiosInterceptor();
+
   const fetchTopEcosystems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/top-ecosystems/${creatorId}`
       );
       setEcosystems(response.data.ecosystemsWithLogos || []);
@@ -30,9 +33,9 @@ const TopEcosystem = ({ title }) => {
   };
 
   const itemStyle = {
-    minHeight: '120px', 
-    display: 'flex',
-    alignItems: 'center',
+    minHeight: "120px",
+    display: "flex",
+    alignItems: "center",
   };
 
   if (loading) {
@@ -64,11 +67,17 @@ const TopEcosystem = ({ title }) => {
                     src={ecosystem.logo}
                     alt={ecosystem.ecosystemName}
                     className="img-fluid rounded img-4by3-lg"
-                    style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'cover' }}
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "100px",
+                      objectFit: "cover",
+                    }}
                   />
                 </Col>
                 <Col className="ps-0">
-                  <h5 className="text-primary-hover">{ecosystem.ecosystemName}</h5>
+                  <h5 className="text-primary-hover">
+                    {ecosystem.ecosystemName}
+                  </h5>
                   {/* <div className="d-flex align-items-center">
                     <span className="fs-6">{ecosystem.ecosystemDomain}</span>
                   </div> */}
