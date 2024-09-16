@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 import StatRightBadge from "../Components/marketing/common/stats/StatRightBadge";
 import ApexCharts from "../Components/elements/charts/ApexCharts";
@@ -23,6 +24,7 @@ const Dashboard = () => {
   let { ecosystemDomain } = useParams();
   const userId =
     useSelector((state) => state.authentication.user.data.CreatorId) || {};
+  const authFetch = AxiosInterceptor();
 
   const [totalServices, setTotalServices] = useState("");
   const [totalAmount, setTotalAmount] = useState({
@@ -39,7 +41,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response = await authFetch.get(
           `${
             import.meta.env.VITE_API_URL
           }/ecosystem-dashboard/${ecosystemDomain}`
@@ -57,7 +59,7 @@ const Dashboard = () => {
 
     const fetchBestSellingData = async () => {
       try {
-        const response = await axios.get(
+        const response = await authFetch.get(
           `${
             import.meta.env.VITE_API_URL
           }/ecosystem-best-selling-products/${ecosystemDomain}`
@@ -71,11 +73,12 @@ const Dashboard = () => {
 
     fetchBestSellingData();
 
-
     const fetchAmountData = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-earnings/${ecosystemDomain}`
         );
 
         if (response.data) {
@@ -119,7 +122,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(
+        const response = await authFetch.get(
           `${
             import.meta.env.VITE_API_URL
           }/ecosystem-user-monthly-product-purchase/${userId}/${ecosystemDomain}`

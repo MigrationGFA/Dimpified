@@ -90,7 +90,7 @@ const BookingModal = ({ show, setModalShow, information }) => {
     tx_ref: generateTxRef(),
     amount: totalAmount,
     currency: information.currency,
-    payment_options: "card,mobilemoney,ussd,banktransfer,opay,account,",
+    payment_options: "card,mobilemoney,banktransfer,opay,account,",
     customer: {
       email: formData.email,
       phone_number: formData.phone,

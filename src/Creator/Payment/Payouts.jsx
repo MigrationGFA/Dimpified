@@ -51,13 +51,14 @@ import {
   PayoutChartSeries,
   PayoutChartOptions,
 } from "../../data/charts/ChartData";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const Payouts = () => {
   const { ecosystemDomain } = useParams();
   const userPlan = useSelector(
     (state) => state.authentication.user?.data?.plan || "Lite"
   );
-
+  const authFetch = AxiosInterceptor();
   const userId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
@@ -83,6 +84,23 @@ const Payouts = () => {
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
+  const [banks, setBanks] = useState([]);
+  const [bankCode, setBankCode] = useState(null);
+  const [bankLoading, setBankLoading] = useState(false);
+
+  // const handleBanks = async () => {
+  //   setBankLoading(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `${import.meta.env.VITE_API_URL}/get-all-banks`
+  //     );
+  //     setBankLoading(false);
+  //     setBanks(response.allBanks.data);
+  //   } catch (error) {
+  //     setBankLoading(false);
+  //     showToast("Can't get bank list");
+  //   }
+  // };
 
   useEffect(() => {
     if (userPlan === "Lite") {
@@ -117,7 +135,7 @@ const Payouts = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
       );
 
@@ -171,7 +189,7 @@ const Payouts = () => {
   // Function to retrieve bank data from the server
   const fetchBankData = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
       );
       const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
@@ -188,7 +206,7 @@ const Payouts = () => {
   const handleSave = async () => {
     setLoadingSave(true);
     try {
-      const saveBankData = await axios.post(
+      const saveBankData = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/save-bank-details`,
         {
           creatorId: userId,
@@ -216,6 +234,7 @@ const Payouts = () => {
 
   const handleAddAccount = () => {
     setShowModal(true);
+    // handleBanks();
   };
 
   const handleEdit = (id) => {
@@ -231,7 +250,7 @@ const Payouts = () => {
   const handleEditSave = async (accountId) => {
     setLoadingWithdraw(true);
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
+      await authFetch.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
         creatorId: userId,
         accountId: accountId,
         accountName: editedAccount.accountName,
@@ -268,7 +287,7 @@ const Payouts = () => {
       const withdrawAmountNumeric = parseFloat(withdrawnAmount);
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
-        const response = await axios.post(
+        const response = await authFetch.post(
           `${import.meta.env.VITE_API_URL}/withdrawal-request`,
           {
             creatorId: parseFloat(userId),
@@ -572,6 +591,34 @@ const Payouts = () => {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
+                    <Form.Group className="mb-3" controlId="bankName">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Bank Name"
+                        value={bankName}
+                        onChange={(e) => setBankName(e.target.value)}
+                      />
+                    </Form.Group>
+                    {/* <Form.Group className="mb-3" controlId="bankName">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Select
+                        value={bankName} // This will hold the selected bank code
+                        onChange={(e) => {
+                          const selectedBank = banks.find(
+                            (bank) => bank.id === e.target.value
+                          ); // Get the selected bank object
+                          setBankCode(selectedBank.id); // Capture the bank code if needed
+                        }}
+                      >
+                        <option value="">Select Bank</option>
+                        {banks.map((bank) => (
+                          <option key={bank.code} value={bank.code}>
+                            {bank.name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group> */}
                     <Form.Group className="mb-3" controlId="accountName">
                       <Form.Label>Account Name</Form.Label>
                       <Form.Control
@@ -590,15 +637,7 @@ const Payouts = () => {
                         onChange={(e) => setAccountNumber(e.target.value)}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Bank Name"
-                        value={bankName}
-                        onChange={(e) => setBankName(e.target.value)}
-                      />
-                    </Form.Group>
+
                     <Form.Group className="mb-3">
                       <Form.Label>Currency</Form.Label>
                       <Form.Select
