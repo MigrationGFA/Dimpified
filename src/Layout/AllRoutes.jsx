@@ -191,6 +191,7 @@ import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTempl
 import AgentPage from "../agent-page/AgentPage";
 import AgentPageAuthForm from "../agent-page/pages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
+import ProfilePage from "../agent-page/pages/ProfilePage";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -538,6 +539,7 @@ const AllRoutes = () => {
         element={<AgentPageAuthForm />}
       />
       <Route path="/dimp/agent-page" element={<AgentPage />}/> 
+      <Route path="/dimp/agent-page/profile" element={<ProfilePage />}/>
     </Routes>
   );
 };

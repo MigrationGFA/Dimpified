@@ -2,6 +2,7 @@ import { Navbar, Button, Container } from "react-bootstrap";
 import Logo from "../../../src/assets/DIMP logo colored.png";
 import { Link } from "react-router-dom";
 import "./NavbarComponent.module.css";
+import { IoMdPerson } from "react-icons/io";
 
 const NavbarComponent = () => {
   return (
@@ -34,6 +35,7 @@ const NavbarComponent = () => {
           >
             Sign In
           </Button>
+          {/* <Link to="/dimp/agent-page/profile"><IoMdPerson /></Link> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
