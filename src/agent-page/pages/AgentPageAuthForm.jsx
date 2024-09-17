@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Nav, Modal } from "react-bootstrap"; // Import Modal
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import NavbarComponent from "../components/Navbar";
 import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import Logo from "../../../src/assets/DIMP logo colored.png";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/login";
 
 const AgentPageAuthForm = () => {
   const location = useLocation();
@@ -16,8 +18,15 @@ const AgentPageAuthForm = () => {
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [showPassword, setShowPassword] = useState(false);
+  const [loginEmail, setLoginEmail] = useState(null);
+  const [loginPassword, setLoginPassword] = useState(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading, error, user } = useSelector(
+    (state) => state.authentication
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -80,6 +89,33 @@ const AgentPageAuthForm = () => {
     },
   });
 
+  const handleLogin = async (data, e) => {
+    e.preventDefault();
+
+    try {
+      // Dispatch the login action
+      const resultAction = await dispatch(
+        login({
+          email: data.email,
+          password: data.password,
+        })
+      );
+
+      if (login.rejected.match(resultAction)) {
+        // Login failed, access the payload from the rejected action
+        const errorPayload = resultAction.payload;
+        showToast(errorPayload);
+      } else if (login.fulfilled.match(resultAction)) {
+        // Login was successful
+        showToast(resultAction.payload.message);
+        navigate("/creator/dashboard/overview");
+      }
+    } catch (error) {
+      // Handle unexpected errors, such as network issues
+      showToast("An unexpected error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className="overflow-hidden bg-white">
       <NavbarComponent />
@@ -92,7 +128,7 @@ const AgentPageAuthForm = () => {
                   eventKey="signIn"
                   onClick={() => {
                     setActiveTab("signIn");
-                    setShowForgotPassword(false); 
+                    setShowForgotPassword(false);
                   }}
                 >
                   Sign In
@@ -112,37 +148,31 @@ const AgentPageAuthForm = () => {
             </Nav>
 
             {!showForgotPassword ? (
-              <Form onSubmit={formik.handleSubmit} className="mt-4">
+              <Form className="mt-4">
                 <h2>
                   {activeTab === "signIn"
                     ? "Sign in to your Dimp Affiliate Program account"
                     : "Create a Username and Password for your Dimp Affiliate account"}
                 </h2>
-                <Form.Group controlId="formUsername" className="mb-3">
-                  <Form.Label>Username</Form.Label>
+                <Form.Group controlId="loginEmail" className="mb-3">
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="text"
-                    name="username"
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                    placeholder="Enter your username"
-                    isInvalid={
-                      formik.touched.username && !!formik.errors.username
-                    }
+                    name="loginEmail"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    placeholder="Enter your email"
                     required
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.username}
-                  </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="formPassword" className="mb-3">
+                <Form.Group controlId="Loginpassword" className="mb-3">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
+                    name="Loginpassword"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
                     placeholder="Enter your password"
                     isInvalid={
                       formik.touched.password && !!formik.errors.password
@@ -155,9 +185,6 @@ const AgentPageAuthForm = () => {
                     checked={showPassword}
                     onChange={togglePasswordVisibility}
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {formik.errors.password}
-                  </Form.Control.Feedback>
                 </Form.Group>
 
                 {activeTab === "signIn" && (
@@ -220,9 +247,33 @@ const AgentPageAuthForm = () => {
                   </>
                 )}
 
-                <Button variant="primary" type="submit" className="mt-3">
-                  {activeTab === "signIn" ? "Sign In" : "Join"}
-                </Button>
+                {activeTab === "signIn" ? (
+                  <Col lg={12} md={12} className="mb-0 d-grid gap-2 mt-3 mb-6">
+                    {isLoading ? (
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="opacity-50"
+                        disabled
+                      >
+                        Processing
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={loginEmail === null || loginPassword === null}
+                        onClick={handleLogin}
+                      >
+                        Sign in
+                      </Button>
+                    )}
+                  </Col>
+                ) : (
+                  <Button variant="primary" type="submit" className="mt-3">
+                    Join
+                  </Button>
+                )}
               </Form>
             ) : (
               <Form className="mt-4">
