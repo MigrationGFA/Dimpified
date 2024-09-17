@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import { useLocation, Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import NavbarComponent from "../components/Navbar";
+import axios from "axios";
+import { showToast } from "../../Components/Showtoast";
+import Logo from "../../../src/assets/DIMP logo colored.png";
 
 const AgentPageAuthForm = () => {
   const location = useLocation();
@@ -14,7 +17,7 @@ const AgentPageAuthForm = () => {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // State to handle modal visibility
+  const [showSuccessModal, setShowSuccessModal] = useState(false); 
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -51,12 +54,28 @@ const AgentPageAuthForm = () => {
       confirmEmail: "",
     },
     validationSchema: activeTab === "register" ? validationSchema : null,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("Form submitted:", values);
 
       if (activeTab === "register") {
-        // Show the success modal after a successful registration
-        setShowSuccessModal(true);
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/affiliate/signup`,
+            {
+              userName: values.username,
+              password: values.password,
+              email: values.email,
+            }
+          );
+
+          if (response.status === 201) {
+            showToast(response.message);
+            setShowSuccessModal(true);
+          }
+        } catch (error) {
+          console.error("Error during registration:", error.response);
+          showToast("Registration failed. Please try again.");
+        }
       }
     },
   });
@@ -73,7 +92,7 @@ const AgentPageAuthForm = () => {
                   eventKey="signIn"
                   onClick={() => {
                     setActiveTab("signIn");
-                    setShowForgotPassword(false); // Reset on tab switch
+                    setShowForgotPassword(false); 
                   }}
                 >
                   Sign In
@@ -84,7 +103,7 @@ const AgentPageAuthForm = () => {
                   eventKey="register"
                   onClick={() => {
                     setActiveTab("register");
-                    setShowForgotPassword(false); // Reset on tab switch
+                    setShowForgotPassword(false);
                   }}
                 >
                   Register
@@ -237,14 +256,25 @@ const AgentPageAuthForm = () => {
       <Footer />
 
       {/* Success Modal */}
-      <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)}>
+      <Modal
+        show={showSuccessModal}
+        onHide={() => setShowSuccessModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Registration Successful</Modal.Title>
+          <Modal.Title className="w-100 text-center">
+            Registration Successful
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="text-center">
+          <img
+            src={Logo}
+            alt="Logo"
+            style={{ width: "80px", marginBottom: "15px" }}
+          />
           <p>Check your email to verify your account.</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="justify-content-center">
           <Button variant="primary" onClick={() => setShowSuccessModal(false)}>
             Close
           </Button>
