@@ -29,10 +29,10 @@ const Templates = [
   //   sectionId: 1, // Professional Services
   // },
    {
-    id: 8,
+    id: 10,
     name: "Barber Template-2",
     img: template10,
-    sectionId: 4, // NGO/FOUNDATION
+    sectionId: 4, // Personal Care Services
   },
   {
     id: 4,

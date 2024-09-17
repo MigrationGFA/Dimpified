@@ -27,681 +27,799 @@ import {
   ChatSquareDots,
   Calendar2Check,
 } from "react-bootstrap-icons";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  updateContent,
+  updateStyles,
+  updateNavbarFromEcosystem,
+} from "../../../features/Template/MainTemplate";
+import { setActiveSection } from "../../../features/Template/activeTemplateSection";
+import EditableBlock from "../../EditableBlock";
+import SideEditor from "../../SideEditor";
+import useImageEditor from "../../userImageEditor";
+
 const BarberTemplate2 = () => {
-  return (
-    <Fragment>
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Pricing />
-      <Gallery />
-      <Team />
-      <Testimonials />
-      <Statistics />
-      <Contact />
-      <Footer />
-    </Fragment>
-  );
-};
-
-export default BarberTemplate2;
-const images = [
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-04.jpg",
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-08.jpg",
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-06.jpg",
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-07.jpg",
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-08.jpg",
-  "https://gfa-tech.com/dimp-template-images/images/demo-barber-home-04.jpg",
-];
-const chunkArray = (array, chunkSize) => {
-  const result = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
-};
-
-// Group images into chunks of 4
-const imageChunks = chunkArray(images, 3);
-
-// Navbar Component
-const Navbar = () => (
-  <BootstrapNavbar
-    bg="transparent"
-    variant="transparent"
-    expand="lg"
-    className="px-4 px-lg-10"
-  >
-    <Container>
-      <BootstrapNavbar.Brand
-        className="fw-bold d-flex align-items-center"
-        href="#home"
-      >
-        <img
-          src="https://gfa-tech.com/dimp-template-images/images/demo-barber-logo-black.png"
-          alt="Logo"
-        />
-      </BootstrapNavbar.Brand>
-      <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-      <BootstrapNavbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-auto barber-link">
-          <Nav.Link
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#about"
-          >
-            About Us
-          </Nav.Link>
-          <Nav.Link
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#services"
-          >
-            Hair Services
-          </Nav.Link>
-          <Nav.Link
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#gallery"
-          >
-            Gallery
-          </Nav.Link>
-          <Nav.Link
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#barbers"
-          >
-            Barbers
-          </Nav.Link>
-          <Nav.Link
-            style={{ fontWeight: "600", fontSize: "1rem" }}
-            href="#testimonials"
-          >
-            Reviews
-          </Nav.Link>
-        </Nav>
-        <Button
-          href="#appointment"
-          className="btn-large btn-round-edge btn-box-shadow btn-white left-icon section-link"
-        >
-          <span>
-            <span className="btn-double-text">Contact Us</span>
-          </span>
-        </Button>
-      </BootstrapNavbar.Collapse>
-    </Container>
-  </BootstrapNavbar>
-);
-
-// Hero Section
-const Hero = () => {
+  const [show, setShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  // const [show, setShow] = useState(false);
-  // const [index, setIndex] = useState(0);
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   serviceLocation: "",
-  //   email: "",
-  //   phone: "",
-  //   address: "",
-  //   service: "",
-  //   date: "",
-  //   time: "",
-  // });
-  // const [notification, setNotification] = useState(null);
-  // const [barbingServices, setBarbingServices] = useState([]);
 
-  // const serviceOptions = {
-  //   "Home service": [
-  //     "Haircut - #3000",
-  //     "Shave - #2500",
-  //     "Hair Dye - #5000",
-  //     "Beard Trim - #3000",
-  //   ],
-  //   Shop: [
-  //     "Haircut - #2000",
-  //     "Shave - #1500",
-  //     "Hair Dye - #4000",
-  //     "Beard Trim - #3000",
-  //   ],
-  // };
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  const content = useSelector((state) => state.mainTemplate.currentTemplate);
+  const ecosystemDetails = useSelector((state) => state.ecosystem);
+  const activeSection = useSelector(
+    (state) => state.activeSection.activeSection
+  );
 
-  // const handleShow = () => setShow(true);
-  // const handleClose = () => setShow(false);
+  const services = useSelector((state) => state.service.services);
 
-  // const handleSelect = (selectedIndex) => {
-  //   setIndex(selectedIndex);
-  // };
+  const handleContentChange = (section, field, value, index = null) => {
+    dispatch(updateContent({ section, field, value, index }));
+  };
 
-  // const handleChange = (e) => {
-  //   const { id, value } = e.target;
-  //   setFormData({ ...formData, [id]: value });
+  const handleBackgroundColorChange = (sectionId, color) => {
+    dispatch(
+      updateStyles({ section: sectionId, styles: { backgroundColor: color } })
+    );
+  };
 
-  //   if (id === "serviceLocation") {
-  //     setBarbingServices(serviceOptions[value] || []);
-  //     setFormData({ ...formData, serviceLocation: value, service: "" });
-  //   }
-  // };
+  const handleTextColorChange = (sectionId, color) => {
+    dispatch(updateStyles({ section: sectionId, styles: { color: color } }));
+  };
 
-  // const checkAvailability = async () => {
-  //   try {
-  //     const response = await axios.post("/api/check-availability", {
-  //       date: formData.date,
-  //       time: formData.time,
-  //     });
-  //     return response.data.isAvailable;
-  //   } catch (error) {
-  //     console.error("Error checking availability:", error);
-  //     return false;
-  //   }
-  // };
+  const headerStyle = {
+    textAlign: "center",
+    marginBottom: "1rem",
+    fontSize: "2rem" /* Increased font size for the header */,
+  };
+  const handleFontChange = (sectionId, fontFamily) => {
+    dispatch(
+      updateStyles({
+        section: sectionId,
+        styles: { fontFamily },
+      })
+    );
+  };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const isAvailable = await checkAvailability();
-  //   if (!isAvailable) {
-  //     setNotification(
-  //       "The selected date and time are already booked. Please choose another."
-  //     );
-  //     return;
-  //   }
-  //   // Proceed with booking
-  //   // Submit the booking form data to the server
-  //   handleClose();
-  // };
+  const MAX_MESSAGE_LENGTH = 44;
 
+  const truncateMessage = (messages) => {
+    if (messages.length > MAX_MESSAGE_LENGTH) {
+      return messages.slice(0, MAX_MESSAGE_LENGTH) + "...";
+    }
+    return messages;
+  };
+
+  const contents = [
+    {
+      image: content.Team.image1,
+      header: content.Team.header1,
+      summary: content.Team.summary1,
+    },
+    {
+      image: content.Team.image2,
+      header: content.Team.header2,
+      summary: content.Team.summary2,
+    },
+    {
+      image: content.Team.image3,
+      header: content.Team.header3,
+      summary: content.Team.summary3,
+    },
+    {
+      image: content.Team.image4,
+      header: content.Team.header4,
+      summary: content.Team.summary4,
+    },
+  ];
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
+  const testimonials = [
+    {
+      title: content.Reviews.title1,
+      text: content.Reviews.summary1,
+      client: content.Reviews.header1,
+      img: content.Reviews.image1,
+    },
+    {
+      title: content.Reviews.title2,
+      text: content.Reviews.summary2,
+      client: content.Reviews.header2,
+      img: content.Reviews.image2,
+    },
+    {
+      title: content.Reviews.title3,
+      text: content.Reviews.summary3,
+      client: content.Reviews.header3,
+      img: content.Reviews.image3,
+    },
+  ];
+
+  const counters = [
+    {
+      value: content.Statistics.section1header,
+      label: content.Statistics.section1paragraphy,
+    },
+    {
+      value: content.Statistics.section2header,
+      label: content.Statistics.section2paragraphy,
+    },
+    {
+      value: content.Statistics.section3header,
+      label: content.Statistics.section3paragraphy,
+    },
+    {
+      value: content.Statistics.section4header,
+      label: content.Statistics.section4paragraphy,
+    },
+  ];
+
+  const renderSection = (id, children) => {
+    return (
+      <section
+        id={id}
+        className="py-5"
+        style={{
+          ...content[id].styles,
+          border: activeSection === id ? "2px dotted black" : "none",
+        }}
+        onClick={() => dispatch(setActiveSection(id))}
+      >
+        <Container>{children}</Container>
+      </section>
+    );
+  };
+
+  const pricingStyle = {
+    borderRadius: "4px",
+    padding: "15px 35px",
+    marginBottom: "20px",
+    border: "1px solid #fce38a", // Matches light-yellow border
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    transition: "transform 0.6s ease-out", // Animation for hover or other effects
+  };
+
+  const titleStyle = {
+    fontSize: "19px",
+    fontWeight: "700",
+    color: "#333", // Matches text-dark-gray
+    letterSpacing: "-0.5px",
+  };
+
+  const priceStyle = {
+    fontSize: "19px",
+    fontWeight: "700",
+    color: "#333",
+    textAlign: "right",
+  };
+
+  const descriptionStyle = {
+    marginTop: "10px",
+    fontSize: "14px",
+    color: "#777", // Description text style
+  };
+
+  const highlightStyle = {
+    backgroundColor: "#fce38a",
+    padding: "10px 30px",
+    fontWeight: "700",
+    textTransform: "uppercase",
+    fontSize: "13px",
+  };
+
+  const {
+    fileInputRefs,
+    handleEditImageClick,
+    handleImageChange,
+    loadingImage,
+  } = useImageEditor();
+
+  const images = [
+    content.Gallery.image1,
+    content.Gallery.image2,
+    content.Gallery.image3,
+    content.Gallery.image4,
+    content.Gallery.image5,
+    content.Gallery.image6,
+    
+  ];
+  const chunkArray = (array, chunkSize) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
+    return result;
+  };
+
+  // Group images into chunks of 4
+  const imageChunks = chunkArray(images, 3);
   return (
     <Fragment>
-      <section
-        id="home"
-        className="barber px-4 full-screen bg-dark-gray position-relative"
-        style={{
-          backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-bg.jpg)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <Container className="h-100">
-          <Row className="align-items-center justify-content-center h-100">
-            <Col lg={9} md={12} className="text-center">
-              <span className="fs-16 text-white text-uppercase text-shadow-double-large ls-3px d-block mb-25px sm-mb-15px">
-                London popular barber
-              </span>
-              <h1 className="fs-90 md-fs-80 ls-minus-4px alt-font text-white mb-35px md-mb-20px text-shadow-double-large xs-fs-60 xs-ls-minus-2px">
-                Talented men's barber studio
-              </h1>
-              <Button
-                onClick={() => setModalShow(true)}
-                className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
+      <Col md={9}>
+        {renderSection(
+          "navbar",
+          <BootstrapNavbar
+            bg="transparent"
+            variant=""
+            expand="lg"
+            className="px-lg-3 py-lg-3"
+          >
+            <Container>
+              <BootstrapNavbar.Brand
+                className="fw-bold d-flex align-items-center position-relative"
+                href="#home"
               >
-                <span>
-                  <span
-                    className="btn-double-text"
-                    data-text="Online appointment"
-                  >
-                    Online appointment
-                  </span>
-                  {""}
-                  <Calendar2Check />
-                </span>
-              </Button>
-            </Col>
-            <div className="text-center position-absolute left-0px bottom-50px md-bottom-30px w-100 animation-float">
-              <a href="#about" className="d-block text-white section-link">
-                <Mouse />
-              </a>
-            </div>
-          </Row>
-        </Container>
-      </section>
-    </Fragment>
-  );
-};
+                {/* Logo Image */}
+                <img
+                  src={content.navbar.logo}
+                  alt="Logo"
+                  style={{ width: "100px" }}
+                />
 
-// About Section
-const About = () => (
-  <section
-    id="about"
-    className="barber px-4 bg-very-light-yellow position-relative pb-8"
-  >
-    <Container>
-      <Row className="align-items-center mb-50px sm-mb-40px">
-        <Col
-          xl={5}
-          lg={6}
-          className="align-self-end mt-15 xl-mt-18 md-mt-22 xs-mt-30"
-        >
-          <h2 className="fs-60 alt-font  fw-400 ls-minus-2px text-white-gray mb-15px shadow-none">
-            Award{" "}
-            <span className="text-highlight">
-              winning
-              <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
-            </span>{" "}
-            barber studio.
-          </h2>
-          <p className="w-90 xl-w-100 mb-30px sm-mb-25px">
-            Our barbers are carefully hand-picked to ensure the finest service
-            in our barbershops around London, the UK, and the world. We’re well
-            trusted to deliver excellence with over 5000+ customer reviews.
-          </p>
-          <div className="d-inline-block">
-            <Button
-              href="#services"
-              className="btn btn-extra-large btn-base-color btn-hover-animation-switch btn-round-edge btn-box-shadow me-4"
-            >
-              <span>
-                <span className="primary-font btn-text text-white">
-                  Explore Services
-                </span>
-                <span className="primary-font btn-icon text-white">
-                  <i className="fa-solid fa-arrow-right fs-14"></i>
-                </span>
-                <span className="primary-font btn-icon text-white">
-                  <i className="fa-solid fa-arrow-right fs-14"></i>
-                </span>
-              </span>
-            </Button>
-          </div>
-        </Col>
-        <Col
-          lg={6}
-          className="offset-xl-1 position-relative md-mt-45px md-mb-50px"
+                {/* Edit Logo Button */}
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => handleEditImageClick("navbar", "logo")}
+                  style={{
+                    width: "250px",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    zIndex: 1000,
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    color: "#fff",
+                    border: "none",
+                  }}
+                >
+                  {loadingImage ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-primary"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    "Edit Logo Image"
+                  )}
+                </Button>
+
+                {/* Hidden File Input for Image Upload */}
+                <input
+                  type="file"
+                  ref={(ref) => (fileInputRefs.current["navbar-logo"] = ref)}
+                  onChange={(e) => handleImageChange(e, "navbar", "logo")}
+                  style={{ display: "none" }}
+                />
+              </BootstrapNavbar.Brand>
+
+              <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+              <BootstrapNavbar.Collapse id="basic-navbar-nav">
+                <Nav className="mx-auto barber-link">
+                  <Nav.Link
+                    style={{ fontWeight: "600", fontSize: "1rem" }}
+                    href="#about"
+                  >
+                    About Us
+                  </Nav.Link>
+                  <Nav.Link
+                    style={{ fontWeight: "600", fontSize: "1rem" }}
+                    href="#services"
+                  >
+                    Hair Services
+                  </Nav.Link>
+                  <Nav.Link
+                    style={{ fontWeight: "600", fontSize: "1rem" }}
+                    href="#gallery"
+                  >
+                    Gallery
+                  </Nav.Link>
+                  <Nav.Link
+                    style={{ fontWeight: "600", fontSize: "1rem" }}
+                    href="#barbers"
+                  >
+                    Barbers
+                  </Nav.Link>
+                  <Nav.Link
+                    style={{ fontWeight: "600", fontSize: "1rem" }}
+                    href="#testimonials"
+                  >
+                    Reviews
+                  </Nav.Link>
+                </Nav>
+                <Button
+                  href="#appointment"
+                  className="btn-large btn-round-edge btn-box-shadow btn-white left-icon section-link"
+                >
+                  <span>
+                    <span className="btn-double-text">
+                      <EditableBlock
+                        initialContent={content.navbar.buttonText1}
+                        onContentChange={(value) =>
+                          handleContentChange("navbar", "buttonText1", value)
+                        }
+                      />
+                    </span>
+                  </span>
+                </Button>
+              </BootstrapNavbar.Collapse>
+            </Container>
+          </BootstrapNavbar>
+        )}
+
+        {renderSection(
+          "hero",
+          <section
+            id="home"
+            className="barber px-4 full-screen bg-dark-gray position-relative"
+            style={{
+              backgroundImage: `url(${content.hero.backgroundImage1})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <Container className="h-100">
+              <Row className="align-items-center justify-content-center h-100">
+                <Col lg={9} md={12} className="text-center">
+                  <span className="fs-16 text-white text-uppercase text-shadow-double-large ls-3px d-block mb-25px sm-mb-15px">
+                    <EditableBlock
+                      initialContent={content.hero.title1}
+                      onContentChange={(value) =>
+                        handleContentChange("hero", "title1", value)
+                      }
+                    />
+                  </span>
+                  <h1 className="fs-90 md-fs-80 ls-minus-4px alt-font text-white mb-35px md-mb-20px text-shadow-double-large xs-fs-60 xs-ls-minus-2px">
+                    <EditableBlock
+                      initialContent={content.hero.title2}
+                      onContentChange={(value) =>
+                        handleContentChange("hero", "title2", value)
+                      }
+                    />
+                  </h1>
+                  <Button
+                    onClick={() => setModalShow(true)}
+                    className="btn-extra-large btn-round-edge btn-box-shadow btn-switch-text btn-white left-icon section-link"
+                  >
+                    <span>
+                      <span
+                        className="btn-double-text"
+                        data-text="Online appointment"
+                      >
+                        <EditableBlock
+                          initialContent={content.hero.buttonText1}
+                          onContentChange={(value) =>
+                            handleContentChange("hero", "buttonText1", value)
+                          }
+                        />
+                      </span>
+                      {""}
+                      <Calendar2Check />
+                    </span>
+                  </Button>
+                </Col>
+                <div className="text-center position-absolute left-0px bottom-50px md-bottom-30px w-100 animation-float">
+                  <a href="#about" className="d-block text-white section-link">
+                    <Mouse />
+                  </a>
+                </div>
+              </Row>
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => handleEditImageClick("hero", "backgroundImage1")}
+                style={{
+                  width: "250px",
+                  position: "absolute",
+                  top: "600px",
+                  left: "120px",
+                  zIndex: 1000,
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  color: "#fff",
+                  border: "none",
+                }}
+              >
+                {loadingImage ? (
+                  <div
+                    className="spinner-border spinner-border-sm text-primary"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  "Edit Background Image"
+                )}
+              </Button>
+              <input
+                type="file"
+                ref={(ref) =>
+                  (fileInputRefs.current["hero-backgroundImage1"] = ref)
+                }
+                onChange={(e) =>
+                  handleImageChange(e, "hero", "backgroundImage1")
+                }
+                style={{ display: "none" }}
+              />
+            </Container>
+          </section>
+        )}
+
+        {renderSection(
+          "aboutUs",
+          <section
+            id="about"
+            className="barber px-4 bg-very-light-yellow position-relative pb-8"
+          >
+            <Container>
+              <Row className="align-items-center mb-50px sm-mb-40px">
+                <Col
+                  xl={5}
+                  lg={6}
+                  className="align-self-end mt-15 xl-mt-18 md-mt-22 xs-mt-30"
+                >
+                  <h2 className="fs-60 alt-font  fw-400 ls-minus-2px text-white-gray mb-15px shadow-none">
+                    <EditableBlock
+                      initialContent={content.aboutUs.title1}
+                      onContentChange={(value) =>
+                        handleContentChange("aboutUs", "title1", value)
+                      }
+                    />
+                  </h2>
+                  <p className="w-90 xl-w-100 mb-30px sm-mb-25px">
+                    <EditableBlock
+                      initialContent={content.aboutUs.text1}
+                      onContentChange={(value) =>
+                        handleContentChange("aboutUs", "text1", value)
+                      }
+                    />
+                  </p>
+                  <div className="d-inline-block">
+                    <Button
+                      href="#services"
+                      className="btn btn-extra-large btn-base-color btn-hover-animation-switch btn-round-edge btn-box-shadow me-4"
+                    >
+                      <span>
+                        <span className="primary-font btn-text text-white">
+                          <EditableBlock
+                            initialContent={content.aboutUs.buttonText1}
+                            onContentChange={(value) =>
+                              handleContentChange(
+                                "aboutUs",
+                                "buttonText1",
+                                value
+                              )
+                            }
+                          />
+                        </span>
+                        <span className="primary-font btn-icon text-white">
+                          <i className="fa-solid fa-arrow-right fs-14"></i>
+                        </span>
+                        <span className="primary-font btn-icon text-white">
+                          <i className="fa-solid fa-arrow-right fs-14"></i>
+                        </span>
+                      </span>
+                    </Button>
+                  </div>
+                </Col>
+                <Col
+                  lg={6}
+                  className="offset-xl-1 position-relative md-mt-45px md-mb-50px"
+                >
+                  <div
+                    className="position-relative w-70 md-w-60"
+                    style={{ transition: "transform 0.6s ease-out" }}
+                  >
+                    {/* First Image Section */}
+                    <img
+                      src={content.aboutUs.image1}
+                      className="border-radius-6px "
+                      width={450}
+                      height={450}
+                      alt="Barber Studio"
+                    />
+
+                    {/* Edit Image Button */}
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      onClick={() => handleEditImageClick("aboutUs", "image1")}
+                      style={{
+                        width: "250px",
+                        position: "absolute",
+                        top: "0", // Align at the top
+                        left: "50%", // Center horizontally
+                        transform: "translateX(-50%)", // Center horizontally
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 1"
+                      )}
+                    </Button>
+
+                    {/* Hidden File Input */}
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["aboutUs-image1"] = ref)
+                      }
+                      onChange={(e) =>
+                        handleImageChange(e, "aboutUs", "image1")
+                      }
+                      style={{ display: "none" }}
+                    />
+                  </div>
+
+                  <div className="position-absolute right-15px bottom-minus-60px border-radius-6px lg-w-65 md-w-50 overflow-hidden">
+                    {/* Second Image Section */}
+                    <img
+                      src={content.aboutUs.image2}
+                      className="box-shadow-quadruple-large"
+                      alt="Barber Studio"
+                      width={400}
+                      height={350}
+                    />
+
+                    {/* Edit Image Button (Top center) */}
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      onClick={() => handleEditImageClick("aboutUs", "image2")}
+                      style={{
+                        width: "250px",
+                        position: "absolute",
+                        top: "0", // Align at the top
+                        left: "50%", // Center horizontally
+                        transform: "translateX(-50%)", // Center horizontally
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 2"
+                      )}
+                    </Button>
+
+                    {/* Hidden File Input */}
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["aboutUs-image2"] = ref)
+                      }
+                      onChange={(e) =>
+                        handleImageChange(e, "aboutUs", "image2")
+                      }
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        )}
+
+        <section
+          id="services"
+          className="barber px-4 bg-medium-yellow position-relative overlap-height pt-4"
         >
           <div
-            className="position-relative w-70 md-w-60"
-            style={{ transition: "transform 0.6s ease-out" }}
-          >
+            className="position-absolute left-0 top-minus-50px md-top-minus-30px sm-top-minus-25px xs-top-minus-15px background-position-left-top w-100 h-100px md-h-50px background-size-100 background-no-repeat"
+            style={{
+              backgroundImage: `url(images/demo-barber-home-bg-up.png)`,
+            }}
+          ></div>
+          <div className="position-absolute left-0 top-minus-130px lg-top-minus-90px d-none d-md-block">
             <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-01.jpg"
-              className="border-radius-6px"
-              alt="Barber Studio"
-            />
-          </div>
-          <div className="position-absolute right-15px bottom-minus-60px border-radius-6px lg-w-65 md-w-50 overflow-hidden">
-            <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-02.jpg"
-              className="box-shadow-quadruple-large"
-              alt="Barber Studio"
-            />
-          </div>
-        </Col>
-      </Row>
-    </Container>
-  </section>
-);
-
-// Services Section
-const Services = () => (
-  <section
-    id="services"
-    className="barber px-4 bg-medium-yellow position-relative overlap-height pt-4"
-  >
-    <div
-      className="position-absolute left-0 top-minus-50px md-top-minus-30px sm-top-minus-25px xs-top-minus-15px background-position-left-top w-100 h-100px md-h-50px background-size-100 background-no-repeat"
-      style={{ backgroundImage: `url(images/demo-barber-home-bg-up.png)` }}
-    ></div>
-    <div className="position-absolute left-0 top-minus-130px lg-top-minus-90px d-none d-md-block">
-      <img
-        src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-03.png"
-        alt=""
-        style={{ transform: "translateY(50px)" }}
-        onLoad={(e) => {
-          e.currentTarget.style.transform = "translateY(-50px)";
-        }}
-      />
-    </div>
-    <Container className="overlap-gap-section">
-      <Row className="mb-3">
-        <Col className="text-center">
-          <h2 className="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none">
-            Barbershop{" "}
-            <span className="text-highlight">
-              services
-              <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
-            </span>
-          </h2>
-        </Col>
-      </Row>
-      <Row className="row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-0 align-items-center mb-5 md-mb-7">
-        {/* Start Feature Box 1 */}
-        <Col className="services-box-style-07 text-center last-paragraph-no-margin border-end border-color-transparent-dark-very-light md-mb-50px xs-border-end-0">
-          <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
-            <div className="position-relative ms-auto me-auto mb-25px">
-              <img
-                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-01.svg"
-                className="h-70px position-relative z-index-1 mt-35px"
-                alt=""
-              />
-              <div className="h-85px w-85px rounded-circle bg-very-light-yellow position-absolute top-0 start-50 translate-middle-x"></div>
-            </div>
-            <span className="fs-20 fw-700 text-dark-gray d-block mb-5px">
-              Haircutting
-            </span>
-            <p className="lh-28">
-              Your choice of hairstyle is pivotal in the way.
-            </p>
-          </div>
-          <div className="d-flex flex-column overflow-hidden w-100 justify-content-center position-relative">
-            <div className="fs-14 fw-700 text-uppercase text-dark-gray border-top border-bottom border-color-transparent-dark-very-light pt-10px pb-10px">
-              <span className="text-down d-block">Starting from $35</span>
-            </div>
-            <div className="btn-hover d-flex align-items-center justify-content-center bg-dark-gray">
-              <Button
-                href="#book"
-                className="inner-link btn btn-link btn-hover-animation-switch btn-large text-white"
-              >
-                <span>
-                  <span className="btn-text">Request an appointment</span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                </span>
-              </Button>
-            </div>
-          </div>
-        </Col>
-        {/* End Feature Box 1 */}
-
-        {/* Start Feature Box 2 */}
-        <Col className="services-box-style-07 text-center last-paragraph-no-margin border-end md-border-end-0 border-color-transparent-dark-very-light md-mb-50px">
-          <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
-            <div className="position-relative ms-auto me-auto mb-25px">
-              <img
-                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-02.svg"
-                className="h-70px position-relative z-index-1 mt-35px"
-                alt=""
-              />
-              <div className="h-85px w-85px rounded-circle bg-very-light-yellow position-absolute top-0 start-50 translate-middle-x"></div>
-            </div>
-            <span className="fs-20 fw-700 text-dark-gray d-block mb-5px">
-              Shaving
-            </span>
-            <p className="lh-28">
-              Your choice of hairstyle is pivotal in the way.
-            </p>
-          </div>
-          <div className="d-flex flex-column overflow-hidden w-100 justify-content-center position-relative">
-            <div className="fs-14 fw-700 text-uppercase text-dark-gray border-top border-bottom border-color-transparent-dark-very-light pt-10px pb-10px">
-              <span className="text-down d-block">Starting from $25</span>
-            </div>
-            <div className="btn-hover d-flex align-items-center justify-content-center bg-dark-gray">
-              <Button
-                href="#appointment"
-                className="inner-link btn btn-link btn-hover-animation-switch btn-large text-white"
-              >
-                <span>
-                  <span className="btn-text">Request an appointment</span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                </span>
-              </Button>
-            </div>
-          </div>
-        </Col>
-        {/* End Feature Box 2 */}
-
-        {/* Start Feature Box 3 */}
-        <Col className="services-box-style-07 text-center last-paragraph-no-margin border-end border-color-transparent-dark-very-light xs-border-end-0 xs-mb-40px">
-          <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
-            <div className="position-relative ms-auto me-auto mb-25px">
-              <img
-                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-03.svg"
-                className="h-70px position-relative z-index-1 mt-35px"
-                alt=""
-              />
-              <div className="h-85px w-85px rounded-circle bg-very-light-yellow position-absolute top-0 start-50 translate-middle-x"></div>
-            </div>
-            <span className="fs-20 fw-700 text-dark-gray d-block mb-5px">
-              Styling
-            </span>
-            <p className="lh-28">
-              Your choice of hairstyle is pivotal in the way.
-            </p>
-          </div>
-          <div className="d-flex flex-column overflow-hidden w-100 justify-content-center position-relative">
-            <div className="fs-14 fw-700 text-uppercase text-dark-gray border-top border-bottom border-color-transparent-dark-very-light pt-10px pb-10px">
-              <span className="text-down d-block">Starting from $40</span>
-            </div>
-            <div className="btn-hover d-flex align-items-center justify-content-center bg-dark-gray">
-              <Button
-                href="#appointment"
-                className="inner-link btn btn-link btn-hover-animation-switch btn-large text-white"
-              >
-                <span>
-                  <span className="btn-text">Request an appointment</span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                </span>
-              </Button>
-            </div>
-          </div>
-        </Col>
-        {/* End Feature Box 3 */}
-
-        {/* Start Feature Box 4 */}
-        <Col className="services-box-style-07 text-center last-paragraph-no-margin">
-          <div className="pe-50px ps-50px pb-40px lg-p-30px lg-pt-0">
-            <div className="position-relative ms-auto me-auto mb-25px">
-              <img
-                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-04.svg"
-                className="h-70px position-relative z-index-1 mt-35px"
-                alt=""
-              />
-              <div className="h-85px w-85px rounded-circle bg-very-light-yellow position-absolute top-0 start-50 translate-middle-x"></div>
-            </div>
-            <span className="fs-20 fw-700 text-dark-gray d-block mb-5px">
-              Trimming
-            </span>
-            <p className="lh-28">
-              Your choice of hairstyle is pivotal in the way.
-            </p>
-          </div>
-          <div className="d-flex flex-column overflow-hidden w-100 justify-content-center position-relative">
-            <div className="fs-14 fw-700 text-uppercase text-dark-gray border-top border-bottom border-color-transparent-dark-very-light pt-10px pb-10px">
-              <span className="text-down d-block">Starting from $15</span>
-            </div>
-            <div className="btn-hover d-flex align-items-center justify-content-center bg-dark-gray">
-              <Button
-                href="#appointment"
-                className="inner-link btn btn-link btn-hover-animation-switch btn-large text-white"
-              >
-                <span>
-                  <span className="btn-text">Request an appointment</span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                  <span className="btn-icon">
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </span>
-                </span>
-              </Button>
-            </div>
-          </div>
-        </Col>
-        {/* End Feature Box 4 */}
-      </Row>
-      <Row className="justify-content-center">
-        <Col className="text-center last-paragraph-no-margin">
-          <div className="d-inline-block align-middle me-5px">
-            <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-05.png"
-              className="h-20px"
+              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-03.png"
               alt=""
+              style={{ transform: "translateY(50px)" }}
+              onLoad={(e) => {
+                e.currentTarget.style.transform = "translateY(-50px)";
+              }}
             />
           </div>
-          <div className="fs-20 ls-minus-05px text-dark-gray d-inline-block align-middle">
-            We're dedicated to empowering men to look and feel fantastic.
+          <Container className="overlap-gap-section">
+            <Row className="mb-3">
+              <Col className="text-center">
+                <h2 className="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none">
+                  Barbershop{" "}
+                  <span className="text-highlight">
+                    services
+                    <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
+                  </span>
+                </h2>
+              </Col>
+            </Row>
+            <Row className="row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 g-0 align-items-center mb-5 md-mb-7">
+              {services.map((service, index) => (
+                <Col key={index} xl={3} lg={3} sm={12}>
+                  <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
+                    <Card.Img
+                      variant="top"
+                      height={100}
+                      src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
+                      className="py-4"
+                    />
+                    <Card.Body>
+                      <Card.Title className="text-dark fs-3">
+                        {service.name}
+                      </Card.Title>
+                      <Card.Text className="fs-4">
+                        {truncateMessage(service.shortDescription)}
+                      </Card.Text>
+                      <Card.Text className="fs-5">
+                        Price: {service.price} {service.priceFormat}
+                      </Card.Text>
+                      <Card.Text className="fs-6">
+                        Delivery Time: {service.deliveryTime}
+                      </Card.Text>
+                      <Button variant="dark" onClick={handleShow}>
+                        Book a Visit
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <Row className="justify-content-center">
+              <Col className="text-center last-paragraph-no-margin">
+                <div className="d-inline-block align-middle me-5px">
+                  <img
+                    src="https://gfa-tech.com/dimp-template-images/images/demo-barber-icon-05.png"
+                    className="h-20px"
+                    alt=""
+                  />
+                </div>
+                <div className="fs-20 ls-minus-05px text-dark-gray d-inline-block align-middle">
+                  We're dedicated to empowering men to look and feel fantastic.
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+        <section
+          id="pricing"
+          class="barber px-4 bg-very-light-yellow overlap-height"
+        >
+          <div class="container overlap-gap-section">
+            <Row className="mb-4">
+              <Col xs={12}>
+                <p className="text-center">section not editable</p>
+              </Col>
+            </Row>
+            <div class="row mb-1">
+              <div class="col-12 text-center">
+                <h2
+                  class="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none"
+                  data-shadow-animation="true"
+                  data-animation-delay="700"
+                >
+                  Flexible{" "}
+                  <span class="text-highlight">
+                    pricing
+                    <span class="bg-base-color h-2px bottom-8px separator-animation"></span>
+                  </span>
+                </h2>
+              </div>
+            </div>
+            <Row className="row-cols-1 row-cols-lg-2 row-cols-md-1">
+              {services.map((service, idx) => (
+                <Col md={6} className="mb-4 px-4" key={idx}>
+                  {/* If you need to highlight a particular service like "Barber specials" */}
+                  {service.highlight && (
+                    <div style={highlightStyle}>{service.highlight}</div>
+                  )}
+                  <div style={pricingStyle}>
+                    <Row>
+                      <Col>
+                        <div style={titleStyle}>{service.name}</div>
+                      </Col>
+                      <Col>
+                        <div style={priceStyle}>₦{service.price}</div>
+                      </Col>
+                    </Row>
+                    <p style={descriptionStyle}>{service.shortDescription}</p>
+                  </div>
+                </Col>
+              ))}
+            </Row>
           </div>
-        </Col>
-      </Row>
-    </Container>
-  </section>
-);
+        </section>
 
-// Gallery Section
-const Gallery = () => (
-  <section className="barber px-4 bg-very-light-gray p-0">
-    <Container fluid className="p-0">
-      <Row className="g-0 position-relative overlap-section">
-        <Col md={12}>
-          <Carousel
-            controls={true}
-            indicators={true}
-            interval={3000}
-            pause={false}
-            keyboard={true}
-            className="image-gallery-style-01"
-          >
-            {imageChunks.map((chunk, index) => (
-              <Carousel.Item key={index}>
-                <Row className="g-0">
-                  {chunk.map((src, idx) => (
-                    <Col md={4} key={idx} className="p-1">
-                      <div className="gallery-box">
-                        <a
-                          href="#"
-                          data-group="lightbox-gallery"
-                          title="Lightbox gallery image title"
+        {renderSection(
+          "Gallery",
+
+          <Row>
+            {images.map((src, idx) => (
+              <Col key={idx} xl={4} lg={4} sm={12}>
+                <Card style={{ margin: "10px", backgroundColor: "#f7f3e8" }}>
+                  <Card.Img
+                    variant="top"
+                    height={300}
+                    src={src}
+                    className="py-4"
+                  />
+                  <Card.Body>
+                    <Button
+                      variant="dark"
+                      onClick={() =>
+                        handleEditImageClick("Gallery", `image${idx + 1}`)
+                      }
+                      style={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
                         >
-                          <div className="position-relative gallery-image bg-dark-gray overflow-hidden border-radius-6px">
-                            <img src={src} className="img-fluid h-100" alt="" />
-                          </div>
-                        </a>
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              </Carousel.Item>
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current[`Gallery-image${idx + 1}`] = ref)
+                      }
+                      onChange={(e) =>
+                        handleImageChange(e, "Gallery", `image${idx + 1}`)
+                      }
+                      style={{ display: "none" }}
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
             ))}
-          </Carousel>
-        </Col>
-      </Row>
-    </Container>
-  </section>
-);
+          </Row>
+        )}
 
-// Testimonials Section
-const Pricing = () => (
-  <section id="pricing" class="barber px-4 bg-very-light-yellow overlap-height">
-    <div class="container overlap-gap-section">
-      <div class="row mb-1">
-        <div class="col-12 text-center">
-          <h2
-            class="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none"
-            data-shadow-animation="true"
-            data-animation-delay="700"
-          >
-            Flexible{" "}
-            <span class="text-highlight">
-              pricing
-              <span class="bg-base-color h-2px bottom-8px separator-animation"></span>
-            </span>
-          </h2>
-        </div>
-      </div>
-      <div class="row row-cols-1 row-cols-lg-2 row-cols-md-1 sm-mb-10px xs-mb-0">
-        <div class="col">
-          <ul class="pricing-table-style-13">
-            <li class="flex-column last-paragraph-no-margin overflow-hidden p-0">
-              <div class="w-100 ps-35px pe-35px pt-15px pb-15px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Traditional hair styling
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$10.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-            <li class="flex-column last-paragraph-no-margin overflow-hidden border border-color-light-yellow border-radius-4px p-0 mt-20px mb-20px">
-              <div class="fs-13 text-uppercase lh-38 fw-700 w-100 bg-light-yellow text-dark-gray ps-30px pe-30px xs-ps-15px xs-pe-15px">
-                Barber specials
-              </div>
-              <div class="w-100 ps-35px pe-35px pt-25px pb-25px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Classic haircut and washing
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$10.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-            <li class="flex-column last-paragraph-no-margin overflow-hidden p-0">
-              <div class="w-100 ps-35px pe-35px pt-15px pb-15px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Arranging long beard
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$08.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="col">
-          <ul class="pricing-table-style-13">
-            <li class="flex-column last-paragraph-no-margin overflow-hidden p-0">
-              <div class="w-100 ps-35px pe-35px pt-15px pb-15px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Stylization beard
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$12.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-            <li class="flex-column last-paragraph-no-margin overflow-hidden border border-color-light-yellow border-radius-4px p-0 mt-20px mb-20px">
-              <div class="fs-13 text-uppercase lh-38 fw-700 w-100 bg-light-yellow text-dark-gray ps-30px pe-30px xs-ps-15px xs-pe-15px">
-                Barber specials
-              </div>
-              <div class="w-100 ps-35px pe-35px pt-25px pb-25px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Trimming long beard
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$11.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-            <li class="flex-column last-paragraph-no-margin overflow-hidden p-0">
-              <div class="w-100 ps-35px pe-35px pt-15px pb-15px xs-pe-15px xs-ps-15px">
-                <div class="fs-19 ls-05px d-flex align-items-baseline w-100">
-                  <span class="fw-700 text-dark-gray ls-minus-05px">
-                    Beard and hair washing
-                  </span>
-                  <div class="text-dark-gray ms-auto flex-shrink-0">$10.00</div>
-                </div>
-                <p>Lorem ipsum has been the industry.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-// Contact Section
-const Team = () => (
+        {/* {renderSection(
+  "Team",
   <section
     id="barbers"
     className="barber px-4 bg-very-light-yellow overlap-height position-relative"
   >
     <div
       className="position-absolute left-0 top-minus-50 lg-top-minus-10 background-position-left-top w-100 h-100 background-size-100 background-no-repeat"
-      style={{ backgroundImage: "url('images/demo-barber-home-bg-down.png')" }}
+      style={{
+        backgroundImage: "url('images/demo-barber-home-bg-down.png')",
+      }}
     ></div>
     <Container className="overlap-gap-section">
       <Row className="mb-3 animate__animated animate__fadeIn animate__delay-1s">
@@ -716,82 +834,76 @@ const Team = () => (
         </Col>
       </Row>
       <Row className="row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 justify-content-center mb-5 animate__animated animate__fadeIn">
-        <Col className="team-style-08 border-radius-6px md-mb-30px">
-          <Figure className="mb-0 position-relative">
-            <Figure.Image
-              className="border-radius-6px"
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-01.jpg"
-              alt="Michal Ruheen"
+        {contents.map((member, idx) => (
+          <Col
+            key={idx}
+            className="team-style-08 border-radius-6px md-mb-30px position-relative"
+          >
+            <Figure className="mb-0 position-relative">
+              <Figure.Image
+                className="border-radius-6px"
+                src={member.image}
+                alt={member.header}
+              />
+              <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
+                <div className="w-100">
+                  <span className="team-member-name fs-18 text-white d-block">
+                    <EditableBlock
+                      initialContent={member.header}
+                      onContentChange={(value) =>
+                        handleContentChange("Team", `header${idx + 1}`, value)
+                      }
+                    />
+                  </span>
+                  <span className="member-designation lh-20 text-white d-block">
+                    <EditableBlock
+                      initialContent={member.summary}
+                      onContentChange={(value) =>
+                        handleContentChange("Team", `summary${idx + 1}`, value)
+                      }
+                    />
+                  </span>
+                </div>
+              </Figure.Caption>
+            </Figure>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => handleEditImageClick("Team", `image${idx + 1}`)}
+              style={{
+                width: "250px",
+                position: "absolute",
+                top: `${600 + idx * 70}px`, // Adjust positioning based on index
+                left: "120px",
+                zIndex: 1000,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                color: "#fff",
+                border: "none",
+              }}
+            >
+              {loadingImage ? (
+                <div
+                  className="spinner-border spinner-border-sm text-primary"
+                  role="status"
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                `Edit Team Image ${idx + 1}`
+              )}
+            </Button>
+            <input
+              type="file"
+              ref={(ref) =>
+                (fileInputRefs.current[`Team-image${idx + 1}`] = ref)
+              }
+              onChange={(e) =>
+                handleImageChange(e, "Team", `image${idx + 1}`)
+              }
+              style={{ display: "none" }}
             />
-            <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
-              <div className="w-100">
-                <span className="team-member-name fs-18 text-white d-block">
-                  Michal Ruheen
-                </span>
-                <span className="member-designation lh-20 text-white d-block">
-                  Hair stylist
-                </span>
-              </div>
-            </Figure.Caption>
-          </Figure>
-        </Col>
-        <Col className="team-style-08 border-radius-6px md-mb-30px">
-          <Figure className="mb-0 position-relative">
-            <Figure.Image
-              className="border-radius-6px"
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-02.jpg"
-              alt="Jessica Dover"
-            />
-            <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
-              <div className="w-100">
-                <span className="team-member-name fs-18 text-white d-block">
-                  Jessica Dover
-                </span>
-                <span className="member-designation lh-20 text-white d-block">
-                  Hair stylist
-                </span>
-              </div>
-            </Figure.Caption>
-          </Figure>
-        </Col>
-        <Col className="team-style-08 xs-mb-30px">
-          <Figure className="mb-0 position-relative">
-            <Figure.Image
-              className="border-radius-6px"
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-03.jpg"
-              alt="Johncy Parker"
-            />
-            <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
-              <div className="w-100">
-                <span className="team-member-name fs-18 text-white d-block">
-                  Johncy Parker
-                </span>
-                <span className="member-designation lh-20 text-white d-block">
-                  Beard stylist
-                </span>
-              </div>
-            </Figure.Caption>
-          </Figure>
-        </Col>
-        <Col className="team-style-08">
-          <Figure className="mb-0 position-relative">
-            <Figure.Image
-              className="border-radius-6px"
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-team-04.jpg"
-              alt="Jemmy Watson"
-            />
-            <Figure.Caption className="w-100 h-100 d-flex align-items-end p-12 lg-p-8 bg-gradient-base-transparent border-radius-6px">
-              <div className="w-100">
-                <span className="team-member-name fs-18 text-white d-block">
-                  Jemmy Watson
-                </span>
-                <span className="member-designation lh-20 text-white d-block">
-                  Hair washer
-                </span>
-              </div>
-            </Figure.Caption>
-          </Figure>
-        </Col>
+          </Col>
+        ))}
       </Row>
       <Row className="justify-content-center animate__animated animate__fadeIn">
         <Col
@@ -812,366 +924,598 @@ const Team = () => (
       </Row>
     </Container>
   </section>
-);
-const Testimonials = () => (
-  <section className="barber px-4 bg-medium-yellow position-relative">
-    <div
-      className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
-      style={{
-        backgroundImage: `url('https://gfa-tech.com/dimp-template-imags/images/demo-barber-home-bg-up.png')`,
-      }}
-    ></div>
-    <Container>
-      <Row className="justify-content-center mb-1">
-        <Col className="text-center">
-          <h2
-            className="alt-font fs-2 fs-2 ls-minus-2px text-dark-gray shadow-none"
-            data-shadow-animation="true"
-            data-animation-delay="700"
+)} */}
+
+        {renderSection(
+          "Team",
+          <section
+            id="crew"
+            className="py-lg-10 px-3 py-3"
+            style={{ height: "inherit", backgroundColor: "#f1f1f1" }}
           >
-            Satisfied{" "}
-            <span className="text-highlight">
-              customers
-              <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
-            </span>
-          </h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center mb-6 sm-mb-12">
-        <Col
-          xl={11}
-          className="testimonials-style-11 position-relative ps-18 pe-18 sm-ps-0 sm-pe-0 text-center text-md-start"
-        >
-          <Carousel>
-            {/* Start testimonial item */}
-            <Carousel.Item>
-              <div className="text-center">
-                <span className="fs-20 lh-32 ls-minus-05px d-block mb-10px">
-                  The Barbers is an affordable, convenient and good quality
-                  place to get my hair cut. It is a friendly, laid back
-                  environment with great professionals. It is also friendly for
-                  all ages from kids to adults!
-                </span>
-                <span className="fs-19 fw-700 text-dark-gray py-3">
-                  Herman miller - Switzerland
-                </span>
-              </div>
-            </Carousel.Item>
-            {/* End testimonial item */}
-            {/* Start testimonial item */}
-            <Carousel.Item>
-              <div className="text-center">
-                <span className="fs-20 lh-32 ls-minus-05px d-block mb-10px">
-                  Great barber shop. Walked in and they took me immediately
-                  without an appointment. Quick haircut, great service and
-                  reasonable price. I didn't have to wait at all when I got to
-                  the barbershop.
-                </span>
-                <span className="fs-19 fw-700 text-dark-gray py-3">
-                  Matthew taylor - New York
-                </span>
-              </div>
-            </Carousel.Item>
-            {/* End testimonial item */}
-            {/* Start testimonial item */}
-            <Carousel.Item>
-              <div className="text-center">
-                <span className="fs-20 lh-32 ls-minus-05px d-block mb-10px">
-                  Barber was friendly and professional. He asked me what kind of
-                  hairstyle I want/used to have and he gave me his input on what
-                  he thinks would look good with my head shape. Cheers guys!
-                </span>
-                <span className="fs-19 fw-700 text-dark-gray py-3">
-                  Leonel mooney - London
-                </span>
-              </div>
-            </Carousel.Item>
-            {/* End testimonial item */}
-          </Carousel>
-        </Col>
-      </Row>
-    </Container>
-  </section>
-);
-const Statistics = () => (
-  <section className="barber px-4 bg-medium-yellow position-relative">
-    <div
-      className="position-absolute left-0 top-minus-50 md-top-minus-30 sm-top-minus-25 xs-top-minus-15 background-position-left-top w-100 h-100px background-size-100 background-no-repeat"
-      style={{ backgroundImage: "url(images/demo-barber-home-bg-up.png)" }}
-    ></div>
-    <Container>
-      <Row className="row-cols-1 row-cols-md-4 row-cols-sm-2 counter-style-04">
-        {/* Start counter item */}
-        <Col className="last-paragraph-no-margin sm-mb-30px text-center">
-          <h2
-            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
-            data-text="+"
-            data-to="437"
-          >
-            437
-          </h2>
-          <span className="lh-22 text-dark-gray d-block">
-            Haircuts per week
-          </span>
-        </Col>
-        {/* End counter item */}
-        {/* Start counter item */}
-        <Col className="last-paragraph-no-margin sm-mb-30px text-center">
-          <h2
-            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
-            data-text="+"
-            data-to="864"
-          >
-            864
-          </h2>
-          <span className="lh-22 text-dark-gray d-block">Shaved per week</span>
-        </Col>
-        {/* End counter item */}
-        {/* Start counter item */}
-        <Col className="last-paragraph-no-margin xs-mb-30px text-center">
-          <h2
-            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
-            data-text="+"
-            data-to="334"
-          >
-            334
-          </h2>
-          <span className="lh-22 text-dark-gray d-block">
-            Stylization per week
-          </span>
-        </Col>
-        {/* End counter item */}
-        {/* Start counter item */}
-        <Col className="last-paragraph-no-margin text-center">
-          <h2
-            className="alt-font fs-2 ls-minus-4px md-ls-minus-2px text-dark-gray vertical-counter d-inline-flex text-corduroy-green mb-0"
-            data-text="+"
-            data-to="453"
-          >
-            453
-          </h2>
-          <span className="lh-22 text-dark-gray d-block">Washing per week</span>
-        </Col>
-        {/* End counter item */}
-      </Row>
-    </Container>
-  </section>
-);
-const Contact = () => (
-  <section className="barber px-4 bg-very-light-yellow" id="appointment">
-    <Container>
-      <Row>
-        <Col xl={4} lg={5} className="md-mb-50px">
-          <h3
-            className="alt-font fs-2 ls-minus-2px text-dark-gray mb-20px shadow-none"
-            data-shadow-animation="true"
-            data-animation-delay="700"
-          >
-            Request an{" "}
-            <span className="text-highlight">
-              appointment
-              <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
-            </span>
-          </h3>
-          <p className="mb-30px">
-            Your information will be forwarded to a scheduling specialist who
-            will contact you.
-          </p>
-          <div className="icon-with-text-style-01 feature-box feature-box-left-icon-middle bg-medium-yellow p-25px border-radius-6px last-paragraph-no-margin w-95 md-w-100 text-start">
-            <div className="feature-box-icon me-15px">
-              <img
-                src="https://gfa-tech.com/dimp-template-images/images/demo-barber-home-13.jpg"
-                className="h-60px"
-                alt=""
-              />
-            </div>
-            <div className="feature-box-content">
-              <p className="lh-26 mb-0">Phone appointment</p>
-              <a
-                href="tel:12345678910"
-                className="fs-22 ls-minus-1px fw-600 ls-minus-05px text-dark-gray"
-              >
-                +1 234 567 8910
-              </a>
-            </div>
-          </div>
-        </Col>
-        <Col xl={8} lg={7}>
-          <div className="contact-form-style-05">
-            {/* Start contact form */}
-            <Form action="email-templates/contact-form.php" method="post">
-              <Row className="justify-content-center">
-                <Col md={6} className="sm-mb-20px">
-                  <Form.Control
-                    className="mb-20px border-color-transparent-dark-very-light bg-transparent required"
-                    type="text"
-                    name="name"
-                    placeholder="Your name*"
-                  />
-                  <Form.Control
-                    className="mb-20px border-color-transparent-dark-very-light bg-transparent required"
-                    type="email"
-                    name="email"
-                    placeholder="Your email address*"
-                  />
-                  <div className="date-time row gutter-very-small">
-                    <Col xl={6} className="date-icon lg-mb-25px">
-                      <Form.Control
-                        className="border-color-transparent-dark-very-light bg-transparent"
-                        type="date"
-                        name="date"
-                        defaultValue="2023-01-01"
-                        min="2023-01-01"
-                        max="2099-12-31"
-                      />
-                    </Col>
-                    <Col xl={6} className="time-icon">
-                      <Form.Control
-                        className="border-color-transparent-dark-very-light bg-transparent"
-                        type="time"
-                        name="time"
-                        defaultValue="09:12"
-                        min="09:00"
-                        max="12:00"
-                      />
-                    </Col>
-                  </div>
-                </Col>
-                <Col md={6}>
-                  <div className="mb-20px select">
-                    <Form.Select
-                      className="border-color-transparent-dark-very-light bg-transparent"
-                      name="select"
-                    >
-                      <option value="">Select barber service</option>
-                      <option value="Haircut">Haircut</option>
-                      <option value="Hair styling">Hair styling</option>
-                      <option value="Shaving">Shaving</option>
-                      <option value="Beard sculpting">Beard sculpting</option>
-                      <option value="Kids haircut">Kids haircut</option>
-                    </Form.Select>
-                  </div>
-                  <Form.Control
-                    as="textarea"
-                    className="border-color-transparent-dark-very-light bg-transparent h-140px"
-                    name="comment"
-                    placeholder="Your message"
-                    rows={4}
-                  />
-                </Col>
-                <Col md={6} className="mt-30px sm-mt-20px">
-                  <p className="fs-14 lh-22 opacity-7 text-center text-md-start mb-0">
-                    We are committed to protecting your privacy. We will never
-                    collect information about you.
-                  </p>
-                </Col>
-                <Col
-                  md={6}
-                  className="text-center text-md-end mt-30px sm-mt-20px"
-                >
-                  <input type="hidden" name="redirect" value="" />
-                  <Button
-                    className="btn-large btn-round-edge btn-box-shadow btn-switch-text btn-dark-gray left-icon submit w-100"
-                    type="submit"
-                  >
-                    <span>
-                      <span>
-                        <i className="feather icon-feather-calendar"></i>
-                      </span>
-                      <span
-                        className="btn-double-text"
-                        data-text="Book appointment"
-                      >
-                        Book appointment
-                      </span>
+            <div className="position-absolute top-0 start-0 w-100" />
+            <Container className="pt-5">
+              <Row className="mb-3 text-center">
+                <Col xs={12} className="text-center">
+                  <h2 className="alt-font fs-2 ls-minus-2px text-dark-gray shadow-none">
+                    Talented{" "}
+                    <span className="text-highlight">
+                      barbers
+                      <span className="bg-base-color h-2px bottom-8px separator-animation"></span>
                     </span>
-                  </Button>
-                </Col>
-                <Col xs={12}>
-                  <div className="form-results d-none text-center mt-15px ps-15px pe-15px"></div>
+                  </h2>
                 </Col>
               </Row>
-            </Form>
-            {/* End contact form */}
-          </div>
-        </Col>
-      </Row>
-    </Container>
-  </section>
-);
-// Footer Section
-const Footer = () => (
-  <footer
-    className="barber px-4 footer-light position-relative cover-background"
-    style={{
-      backgroundImage: `url(https://gfa-tech.com/dimp-template-images/images/demo-barber-home-footer-bg.jpg)`,
-    }}
-  >
-    <Container>
-      <Row className="justify-content-center align-items-center">
-        <Col md={10} className="text-center">
-          <a
-            href="demo-barber.html"
-            className="footer-logo position-relative z-index-1 d-inline-block"
+              <Row className="g-4 justify-content-center mb-5">
+                <Col xs={12} md={6} lg={3}>
+                  <Card
+                    className="border-0 rounded-3"
+                    style={{ position: "relative" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={content.Team.image1}
+                      style={{
+                        height: "260px",
+                      }}
+                      className="rounded-3"
+                    />
+                    <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
+                      <div>
+                        <Card.Title className="text-white fs-5">
+                          <EditableBlock
+                            initialContent={content.Team.header1}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "header1", value)
+                            }
+                          />
+                        </Card.Title>
+                        <Card.Subtitle className="text-white fs-6">
+                          <EditableBlock
+                            initialContent={content.Team.summary1}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "summary1", value)
+                            }
+                          />
+                        </Card.Subtitle>
+                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
+                    </Card.ImgOverlay>
+                    <Button
+                      onClick={() => handleEditImageClick("Team", "image1")}
+                      style={{
+                        position: "absolute",
+                        top: "70px",
+                        right: "10px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 1"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["Team-image1"] = ref)
+                      }
+                      onChange={(e) => handleImageChange(e, "Team", "image1")}
+                      style={{ display: "none" }}
+                    />
+                  </Card>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Card
+                    className="border-0 rounded-3"
+                    style={{ position: "relative" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={content.Team.image2}
+                      style={{
+                        height: "260px",
+                      }}
+                      className="rounded-3"
+                    />
+                    <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
+                      <div>
+                        <Card.Title className="text-white fs-5">
+                          <EditableBlock
+                            initialContent={content.Team.header2}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "header2", value)
+                            }
+                          />
+                        </Card.Title>
+                        <Card.Subtitle className="text-white fs-6">
+                          <EditableBlock
+                            initialContent={content.Team.summary2}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "summary2", value)
+                            }
+                          />
+                        </Card.Subtitle>
+                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
+                    </Card.ImgOverlay>
+                    <Button
+                      onClick={() => handleEditImageClick("Team", "image2")}
+                      style={{
+                        position: "absolute",
+                        top: "70px",
+                        right: "10px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 2"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["Team-image2"] = ref)
+                      }
+                      onChange={(e) => handleImageChange(e, "Team", "image2")}
+                      style={{ display: "none" }}
+                    />
+                  </Card>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Card
+                    className="border-0 rounded-3"
+                    style={{ position: "relative" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={content.Team.image3}
+                      style={{
+                        height: "260px",
+                      }}
+                      className="rounded-3 h-80"
+                    />
+                    <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
+                      <div>
+                        <Card.Title className="text-white fs-5">
+                          <EditableBlock
+                            initialContent={content.Team.header3}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "header3", value)
+                            }
+                          />
+                        </Card.Title>
+                        <Card.Subtitle className="text-white fs-6">
+                          <EditableBlock
+                            initialContent={content.Team.summary3}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "summary3", value)
+                            }
+                          />
+                        </Card.Subtitle>
+                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
+                    </Card.ImgOverlay>
+                    <Button
+                      onClick={() => handleEditImageClick("Team", "image3")}
+                      style={{
+                        position: "absolute",
+                        top: "70px",
+                        right: "10px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 3"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["Team-image3"] = ref)
+                      }
+                      onChange={(e) => handleImageChange(e, "Team", "image3")}
+                      style={{ display: "none" }}
+                    />
+                  </Card>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Card
+                    className="border-0 rounded-3"
+                    style={{ position: "relative" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={content.Team.image4}
+                      style={{
+                        height: "260px",
+                      }}
+                      className="rounded-3"
+                    />
+                    <Card.ImgOverlay className="d-flex align-items-end p-3 bg-gradient-base-transparent rounded-3">
+                      <div>
+                        <Card.Title className="text-white fs-5">
+                          <EditableBlock
+                            initialContent={content.Team.header4}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "header4", value)
+                            }
+                          />
+                        </Card.Title>
+                        <Card.Subtitle className="text-white fs-6">
+                          <EditableBlock
+                            initialContent={content.Team.summary4}
+                            onContentChange={(value) =>
+                              handleContentChange("Team", "summary4", value)
+                            }
+                          />
+                        </Card.Subtitle>
+                      </div>
+                      <div className="d-flex flex-column flex-shrink-1"></div>
+                    </Card.ImgOverlay>
+                    <Button
+                      onClick={() => handleEditImageClick("Team", "image4")}
+                      style={{
+                        position: "absolute",
+                        top: "70px",
+                        right: "10px",
+                        zIndex: 1000,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      {loadingImage ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-primary"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Edit Image 4"
+                      )}
+                    </Button>
+                    <input
+                      type="file"
+                      ref={(ref) =>
+                        (fileInputRefs.current["Team-image4"] = ref)
+                      }
+                      onChange={(e) => handleImageChange(e, "Team", "image4")}
+                      style={{ display: "none" }}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Row className="justify-content-center text-center">
+                <Col xs="auto">
+                  <div className="d-inline-block align-middle me-2">
+                    <img
+                      src="images/demo-barber-icon-05.png"
+                      className="h-20px"
+                      alt=""
+                    />
+                  </div>
+                  <div className="fs-20 ls-minus-05px text-dark-gray d-inline-block align-middle">
+                  <EditableBlock
+                            initialContent={content.Blog.header1}
+                            onContentChange={(value) =>
+                              handleContentChange("Blog", "header1", value)
+                            }
+                          />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        )}
+
+        {renderSection(
+          "Reviews",
+          <section
+            id="testimonials"
+            className="py-3 px-3 py-lg-10"
+            style={{ backgroundColor: "#f7f3e8", textAlign: "center" }}
           >
-            <img
-              src="https://gfa-tech.com/dimp-template-images/images/demo-barber-logo-black.png"
-              alt="Barber Logo"
-            />
-          </a>
-          <span className="fs-90 xs-fs-60 alt-font fs-2 text-base-color opacity-4 d-block mt-minus-50px mb-30px ls-minus-4px xs-ls-minus-2px">
-            Award winning barber studio
-          </span>
-          <Col
-            xs={12}
-            className="text-center elements-social social-icon-style-09 mb-30px"
+            <Container>
+              <h2 className="mb-4 fs-2">Satisfied Customers</h2>
+              {/* Display Testimonials in Static Cards */}
+              <Row className="justify-content-center">
+                {testimonials.map((testimonial, idx) => (
+                  <Col md={6} key={idx} className="mb-4">
+                    <Card
+                      className="px-3 px-lg-0"
+                      style={{
+                        backgroundColor: "#f7f3e8",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Card.Body>
+                        {/* Editable Testimonial Text */}
+                        <Card.Text className="font-italic fs-3 text-dark">
+                          <EditableBlock
+                            initialContent={testimonial.text}
+                            onContentChange={(value) =>
+                              handleContentChange(
+                                "Reviews",
+                                `summary${idx + 1}`,
+                                value
+                              )
+                            }
+                          />
+                        </Card.Text>
+
+                        {/* Editable Client Name */}
+                        <Card.Title className="mt-3 font-weight-bold mb-3">
+                          <EditableBlock
+                            initialContent={testimonial.title}
+                            onContentChange={(value) =>
+                              handleContentChange(
+                                "Reviews",
+                                `title${idx + 1}`,
+                                value
+                              )
+                            }
+                          />
+                        </Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+
+            <Container>
+            <Row>
+                {counters.map((counter, idx) => (
+                  <Col key={idx} className="mb-3">
+                    <h2 className="fs-2">
+                      <EditableBlock
+                        initialContent={
+                          content.Statistics[`section${idx + 1}header`]
+                        }
+                        onContentChange={(value) =>
+                          handleContentChange(
+                            "Statistics",
+                            `section${idx + 1}header`,
+                            value
+                          )
+                        }
+                      />
+                    </h2>
+                    <span className="lh-22 text-dark-gray d-block">
+                      <EditableBlock
+                        initialContent={
+                          content.Statistics[`section${idx + 1}paragraphy`]
+                        }
+                        onContentChange={(value) =>
+                          handleContentChange(
+                            "Statistics",
+                            `section${idx + 1}paragraphy`,
+                            value
+                          )
+                        }
+                      />
+                    </span>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          </section>
+        )}
+
+       
+
+        {renderSection(
+          "footer",
+          <footer
+            className="barber px-4 footer-light position-relative cover-background"
+            style={{
+              backgroundImage: `url(${content.footer.title1})`,
+            }}
           >
-            <ul className="large-icon light">
-              <li>
-                <a
-                  className="facebook"
-                  href="https://www.facebook.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebookF />
-                </a>
-              </li>
-              <li>
-                <a
-                  className="instagram"
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-              </li>
-              <li>
-                <a
-                  className="twitter"
-                  href="https://www.twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaTwitter />
-                </a>
-              </li>
-            </ul>
-          </Col>
-          <p className="mb-0 fs-16">
-            &copy; 2024 Proudly powered by{" "}
-            <a
-              href="https://www.dimpified.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-decoration-line-bottom text-white"
-            >
-              DIMP
-            </a>
-          </p>
-        </Col>
-      </Row>
-    </Container>
-  </footer>
-);
+            <Container>
+              <Row className="justify-content-center align-items-center">
+                <Col md={10} className="text-center">
+                  <div
+                   
+                    className="footer-logo position-relative z-index-1 d-inline-block"
+                  >
+                    <img
+                      src={content.footer.logo}
+                      alt="Barber Logo"
+                    />
+                     <Button
+                        variant="dark"
+                        onClick={() =>
+                          handleEditImageClick("footer", "logo")
+                        }
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "10px",
+                          zIndex: 1000,
+                          backgroundColor: "rgba(0,0,0,0.5)",
+                          color: "#fff",
+                          border: "none",
+                        }}
+                      >
+                        {loadingImage ? (
+                          <div
+                            className="spinner-border spinner-border-sm text-primary"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Edit Footer Logo"
+                        )}
+                      </Button>
+                      <input
+                        type="file"
+                        ref={(ref) =>
+                          (fileInputRefs.current["footer-logo"] =
+                            ref)
+                        }
+                        onChange={(e) =>
+                          handleImageChange(e, "footer", "logo")
+                        }
+                        style={{ display: "none" }}
+                      />
+                  </div>
+                  <span className="fs-90 xs-fs-60 alt-font fs-2 text-base-color opacity-4 d-block mt-minus-50px mb-30px ls-minus-4px xs-ls-minus-2px">
+                  <EditableBlock
+                        initialContent={
+                          content.footer.header
+                        }
+                        onContentChange={(value) =>
+                          handleContentChange(
+                            "Statistics",
+                            "header",
+                            value
+                          )
+                        }
+                      />
+                  </span>
+                  <Col
+                    xs={12}
+                    className="text-center elements-social social-icon-style-09 mb-30px"
+                  >
+                    <ul className="medium-icon light">
+                        {ecosystemDetails.socialMedia.map((social, index) => {
+                          // Determine the icon class and the link based on the social media name
+                          let iconClass = "";
+                          let socialLink = social.link || "#";
+
+                          switch (social.name.toLowerCase()) {
+                            case "facebook":
+                              iconClass = "fa-brands fa-facebook-f";
+                              break;
+                            case "instagram":
+                              iconClass = "fa-brands fa-instagram";
+                              break;
+                            case "twitter":
+                              iconClass = "fa-brands fa-twitter";
+                              break;
+                            // Add more cases for other social media platforms if needed
+                            default:
+                              break;
+                          }
+
+                          return (
+                            iconClass && (
+                              <li key={index}>
+                                <a
+                                  className={social.name.toLowerCase()}
+                                  href={socialLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <i className={iconClass}></i>
+                                  <span></span>
+                                </a>
+                              </li>
+                            )
+                          );
+                        })}
+                      </ul>
+                  </Col>
+                  <p className="mb-0 fs-16">
+                    &copy; 2024 Proudly powered by{" "}
+                    <a
+                      href="https://www.dimpified.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-decoration-line-bottom text-white"
+                    >
+                      DIMP
+                    </a>
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+            <Button
+                        variant="dark"
+                        onClick={() =>
+                          handleEditImageClick("footer", "title1")
+                        }
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "10px",
+                          zIndex: 1000,
+                          backgroundColor: "rgba(0,0,0,0.5)",
+                          color: "#fff",
+                          border: "none",
+                        }}
+                      >
+                        {loadingImage ? (
+                          <div
+                            className="spinner-border spinner-border-sm text-primary"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Edit Footer Background"
+                        )}
+                      </Button>
+                      <input
+                        type="file"
+                        ref={(ref) =>
+                          (fileInputRefs.current["footer-title1"] =
+                            ref)
+                        }
+                        onChange={(e) =>
+                          handleImageChange(e, "footer", "title1")
+                        }
+                        style={{ display: "none" }}
+                      />
+          </footer>
+        )}
+      </Col>
+
+      <Col md={3}>
+        {activeSection && (
+          <SideEditor
+            sectionId={activeSection}
+            onBackgroundColorChange={handleBackgroundColorChange}
+            onTextColorChange={handleTextColorChange}
+            onFontChange={handleFontChange}
+          />
+        )}
+      </Col>
+    </Fragment>
+  );
+};
+
+export default BarberTemplate2;
