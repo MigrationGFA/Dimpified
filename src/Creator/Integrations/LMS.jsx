@@ -396,6 +396,7 @@ const TabsComponent = () => {
               </Col>
             </Row>
           </Tab.Pane>
+          
         </Tab.Content>
       </Tab.Container>
     </Container>

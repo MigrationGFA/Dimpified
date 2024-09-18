@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button, Form, Badge, Table, Card } from "react-bootstrap";
-import { RiH2 } from "react-icons/ri";
+// import { RiH2 } from "react-icons/ri";
 
 const GamificationEngine = () => {
   return (
@@ -95,69 +95,87 @@ const badges = [
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "The Achiever",
+    description: "members who have created 30 or more favorites.",
+    condition: "This badge is awarded to Members who have created 30 or more favorites."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Civic Duty",
+    description: "members who have answered to polls 5 or more times.",
+    condition: "This badge is awarded to Members who have answered to polls 5 or more times."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Commentators",
+    description: "members who have created 20 or more comments.",
+    condition: "This badge is awarded to Members who have created 20 or more comments."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Core Community Member",
+    description: "members who have shared 10 or more posts & comments with more than 3 likes & upvotes each.",
+    condition: "This badge is awarded to Members who have shared 10 or more posts & comments with more than 3 likes & upvotes each."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Extrovert",
+    description: "members who have created 20 or more posts.",
+    condition: "This badge is awarded to Members who have created 20 or more posts."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Golden Community Member",
+    description: "members who have shared 20 or more posts & comments with more than 5 upvotes each.",
+    condition: "This badge is awarded to Members who have shared 20 or more posts & comments with more than 5 upvotes each."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Mentor",
+    description: "members who have created 30 or more followers.",
+    condition: "This badge is awarded to Members who have 30 or more followers."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Newbie",
+    description: "new members.",
+    condition: "This badge is awarded to Members that are new."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Note Master",
+    description: "members who have created 20 or more notes.",
+    condition: "This badge is awarded to Members who have created 20 or more notes."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Reporter",
+    description: "members who have shared 5 or more links with more than 10 likes & upvotes each.",
+    condition: "This badge is awarded to Members who have shared 5 or more links with more than 10 likes & upvotes each."
   },
   {
     image: "path/to/image2.png",
-    title: "Appreciated",
-    description: "Members who have 30 or more likes from others.",
-    condition: "This badge is awarded to Members who have 30 or more likes from others."
+    title: "Spammy",
+    description: "members who have 5 or more report abuses.",
+    condition: "This badge is awarded to Members who have 5 or more report abuses."
+  },
+  {
+    image: "path/to/image2.png",
+    title: "Stellar Post",
+    description: "members who have at least one post with more than 20 upvotes.",
+    condition: "This badge is awarded to Members who have at least one post with more than 20 upvotes."
+  },
+  {
+    image: "path/to/image2.png",
+    title: "The Pollster",
+    description: "members who have shared 5 or more polls with more than 50 votes each.",
+    condition: "This badge is awarded to Members who have shared 5 or more polls with more than 50 votes each."
+  },
+  {
+    image: "path/to/image2.png",
+    title: "V.I.P",
+    description: "members who have 100 or more upvotes on their posts and comments.",
+    condition: "This badge is awarded to Members who have 100 or more upvotes on their posts and comments."
   },
 
 ];
