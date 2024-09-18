@@ -1,20 +1,21 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
-import Logo from "../../../../src/assets/DIMP logo colored.png";
+import { Form, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // To navigate to the success page
 
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
+    password: Yup.string().required("Password is required"),
   });
 
   const formik = useFormik({
@@ -25,6 +26,7 @@ const Register = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setLoading(true);
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/affiliate/signup`,
@@ -37,11 +39,22 @@ const Register = () => {
 
         if (response.status === 201) {
           showToast(response.message);
-          setShowSuccessModal(true);
+          navigate("/registration-success", { state: { email: values.email } });
         }
       } catch (error) {
-        console.error("Error during registration:", error.response);
-        showToast("Registration failed. Please try again.");
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showToast(error.response.data.message);
+        } else {
+          showToast(
+            error.message || "An unexpected error occurred. Please try again."
+          );
+        }
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -87,35 +100,9 @@ const Register = () => {
         </Form.Group>
 
         <Button variant="primary" type="submit" className="mt-3">
-          Register
+          {loading ? <Spinner animation="border" size="sm" /> : "Register"}
         </Button>
       </Form>
-
-      {/* Success Modal */}
-      <Modal
-        show={showSuccessModal}
-        onHide={() => setShowSuccessModal(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title className="w-100 text-center">
-            Registration Successful
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="text-center">
-          <img
-            src={Logo}
-            alt="Logo"
-            style={{ width: "80px", marginBottom: "15px" }}
-          />
-          <p>Check your email to verify your account.</p>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-          <Button variant="primary" onClick={() => setShowSuccessModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

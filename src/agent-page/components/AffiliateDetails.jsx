@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { GiPlatform } from "react-icons/gi";
 import { HiOutlineStatusOnline } from "react-icons/hi";
 

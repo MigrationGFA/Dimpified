@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner, Modal } from "react-bootstrap"; // Import Spinner
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { affiliateLogin } from "../../../features/login";
 import { showToast } from "../../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../../../src/assets/DIMP logo colored.png";
 
 const SignIn = () => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { isLoading, error, user } = useSelector(
@@ -31,8 +34,8 @@ const SignIn = () => {
       password: "",
     },
     onSubmit: async (values) => {
+      setLoading(true);
       try {
-        // Dispatch the login action
         const resultAction = await dispatch(
           affiliateLogin({
             email: values.email,
@@ -41,17 +44,16 @@ const SignIn = () => {
         );
 
         if (affiliateLogin.rejected.match(resultAction)) {
-          // Login failed, access the payload from the rejected action
           const errorPayload = resultAction.payload;
           showToast(errorPayload);
         } else if (affiliateLogin.fulfilled.match(resultAction)) {
-          // Login was successful
           showToast(resultAction.payload.message);
           navigate("/creator/dashboard/overview");
         }
       } catch (error) {
-        // Handle unexpected errors, such as network issues
         showToast("An unexpected error occurred. Please try again.");
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -63,16 +65,31 @@ const SignIn = () => {
     onSubmit: async (values) => {
       console.log("Forgot Password:", values);
       try {
-        // Handle forgot password logic here
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/affiliate/forgot-password`,
           values
         );
         if (response.status === 200) {
-          console.log("Reset link sent");
+          showToast(response.data.message);
+          setShowSuccessModal(true);
         }
+        // if ( response.status === 429){
+        //   showToast(response.data.message)
+        // }
       } catch (error) {
         console.error("Error during password reset:", error.response);
+        // Check if there's an error response from the server
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showToast(error.response.data.message); // Show server error message
+        } else {
+          showToast(
+            error.message || "An unexpected error occurred. Please try again."
+          ); // Fallback to default error message
+        }
       }
     },
   });
@@ -106,8 +123,26 @@ const SignIn = () => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" className="mt-3">
-            Sign In
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-3"
+            disabled={loading}
+          >
+            {loading ? ( // Show spinner when loading
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />{" "}
+                Signing In...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </Button>
 
           <p className="mt-3">
@@ -144,6 +179,32 @@ const SignIn = () => {
           </Button>
         </Form>
       )}
+
+      {/* Success Modal */}
+      <Modal
+        show={showSuccessModal}
+        onHide={() => setShowSuccessModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="w-100 text-center">
+            Reset Successful
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <img
+            src={Logo}
+            alt="Logo"
+            style={{ width: "80px", marginBottom: "15px" }}
+          />
+          <p>Check your email to access your Reset link.</p>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button variant="primary" onClick={() => setShowSuccessModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
