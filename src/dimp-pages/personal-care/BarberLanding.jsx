@@ -147,11 +147,13 @@ const BarberLanding = () => {
           reverseGeocode(latitude, longitude);
         },
         (error) => {
-          setLocationError("Unable to retrieve your location automatically");
+          setLocationError(
+            "Unable to retrieve your location automatically. You can't register for the event."
+          );
         }
       );
     } else {
-      setLocationError("Geolocation is not supported by this browser.");
+      setLocationError("Location access is not supported by this browser.");
     }
   }, []); // Empty array ensures this runs only once on component mount
 
@@ -187,6 +189,7 @@ const BarberLanding = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submit button clicked"); // Debugging line
     if (!formData.consent) {
       setFormError("You must give consent before submitting the form.");
       return;
@@ -195,8 +198,7 @@ const BarberLanding = () => {
     setIsSubmitting(true);
 
     try {
-      // Log the form data
-      console.log("Form Data:", formData);
+      console.log("Form Data:", formData); // Debugging line
 
       // Post the form data to the server
       const response = await axios.post(
@@ -252,6 +254,15 @@ const BarberLanding = () => {
                     <ArrowRight />
                   </span>
                 </Button>
+                <a
+                  href="#events"
+                  className=" ms-2 btn btn-outline-primary fs-16  rounded-3 "
+                >
+                  <span className="btn-text ps-4">Register for the events</span>
+                  <span className="btn-icon">
+                    <ArrowRight />
+                  </span>
+                </a>
               </div>
             </Col>
             <Col lg={5} md={6} className="offset-lg-1 ">
@@ -771,7 +782,11 @@ const BarberLanding = () => {
       <section className="px-4 pb-lg-15 sm-pt-50px">
         <Container>
           <Row className="justify-content-center">
-            <Col lg={5} className="mb-5 appear anime-child anime-complete">
+            <Col
+              lg={5}
+              className="mb-5 appear anime-child anime-complete"
+              id="events"
+            >
               <span className="alt-font fs-6 fw-bold  py-2 px-3 mb-3 d-inline-block text-uppercase text-dark bg-gradient-light-pink-transparent rounded-pill">
                 Upcoming Event
               </span>
@@ -779,6 +794,9 @@ const BarberLanding = () => {
                 Register for the barbers workshop
               </h1>
               <Form onSubmit={handleSubmit} className="contact-form-style-03">
+                {locationError && (
+                  <p className="text-danger">{locationError}</p>
+                )}
                 <Form.Group className="mb-3" controlId="formName">
                   <Form.Label className="text-uppercase text-dark fw-bold">
                     Full Name*
@@ -944,7 +962,11 @@ const BarberLanding = () => {
                   </div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formLocation" style={{display: "none"}}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="formLocation"
+                  style={{ display: "none" }}
+                >
                   <Form.Label className="text-uppercase text-dark fw-bold">
                     Current Location*
                   </Form.Label>
@@ -957,9 +979,6 @@ const BarberLanding = () => {
                       readOnly
                     />
                   </div>
-                  {locationError && (
-                    <p className="text-danger">{locationError}</p>
-                  )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formConsent">
@@ -970,9 +989,10 @@ const BarberLanding = () => {
                     checked={formData.consent}
                     onChange={handleChange}
                     required
-                  /><Form.Label style={{ marginLeft: '4px', fontWeight: '500' }}>
-                  I agree to the terms and conditions and privacy policy.
-                </Form.Label>
+                  />
+                  <Form.Label style={{ marginLeft: "4px", fontWeight: "500" }}>
+                    I agree to the terms and conditions and privacy policy.
+                  </Form.Label>
                 </Form.Group>
 
                 {formError && (
@@ -992,7 +1012,7 @@ const BarberLanding = () => {
 
                 <Button
                   type="submit"
-                  className="mt-3 px-5 py-2"
+                  className="mt-3 btn btn-big medium mb-6 px-5 py-2"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
@@ -1000,12 +1020,11 @@ const BarberLanding = () => {
               </Form>
             </Col>
 
-            <Col xl={6} lg={8} md={10} className="offset-xl-1 hide-in-mobile pt-12 pt-lg-8">
+            <Col xl={6} lg={8} md={10} className="offset-xl-1  pt-12 pt-lg-8">
               <Row className="row-cols-1 justify-content-center">
-              
-              <h1 className="alt-font fs-30 text-dark fw-400 mb-3">
-                Event locations and date
-              </h1>
+                <h1 className="alt-font fs-30 text-dark fw-400 mb-3">
+                  Event locations and date
+                </h1>
                 {/* Services Box Item 1 */}
                 <Col className="services-box-style-02 mb-30px">
                   <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
