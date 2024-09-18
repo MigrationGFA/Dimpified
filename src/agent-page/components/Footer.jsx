@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container, Image } from "react-bootstrap";
-import { footerAgentDefaultLink } from "../utils/footerDefaultRoutes";
+import { footerAgentDefaultLink } from "../utils/footerAgentDefaultLink";
 
 // Import media files
 import FooterLogo from "../../assets/DIMP logo colored.png";

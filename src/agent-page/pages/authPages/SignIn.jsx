@@ -127,9 +127,9 @@ const SignIn = () => {
             variant="primary"
             type="submit"
             className="mt-3"
-            disabled={loading || isLoading}
+            disabled={loading}
           >
-            {loading || isLoading ? ( // Show spinner when loading
+            {loading ? ( // Show spinner when loading
               <>
                 <Spinner
                   as="span"

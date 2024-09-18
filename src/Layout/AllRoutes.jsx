@@ -195,6 +195,7 @@ import EcoLoadingPage from "../Components/EcoLoading";
 import ProfilePage from "../agent-page/pages/ProfilePage";
 import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
 import ResetPassword from "../agent-page/pages/authPages/ResetPassword";
+import RegistrationSuccess from "../agent-page/pages/authPages/RegistrationSuccess";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -543,6 +544,7 @@ const AllRoutes = () => {
       <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
       <Route path="/affiliate/verify-email" element={<EmailVerify />} />
       <Route path="/affiliate/reset-password" element={<ResetPassword />} />
+      <Route path="/registration-success" element={<RegistrationSuccess />} />
     </Routes>
   );
 };
