@@ -5,16 +5,18 @@ import { Form, Button, Modal } from "react-bootstrap";
 import Logo from "../../../../src/assets/DIMP logo colored.png";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
+import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
+    password: Yup.string().required("Password is required"),
   });
 
   const formik = useFormik({
@@ -25,6 +27,7 @@ const Register = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setLoading(true);
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/affiliate/signup`,
@@ -40,8 +43,20 @@ const Register = () => {
           setShowSuccessModal(true);
         }
       } catch (error) {
-        console.error("Error during registration:", error.response);
-        showToast("Registration failed. Please try again.");
+        // console.error("Error during registration:", error.response);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showToast(error.response.data.message);
+        } else {
+          showToast(
+            error.message || "An unexpected error occurred. Please try again."
+          );
+        }
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -87,7 +102,7 @@ const Register = () => {
         </Form.Group>
 
         <Button variant="primary" type="submit" className="mt-3">
-          Register
+          {loading ? <Spinner animation="border" size="sm" /> : "Register"}
         </Button>
       </Form>
 

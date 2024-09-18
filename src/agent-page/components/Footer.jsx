@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container, Image } from "react-bootstrap";
-import { footerDefaultLink } from "../utils/footerDefaultRoutes";
+import { footerAgentDefaultLink } from "../utils/footerDefaultRoutes";
 
 // Import media files
 import FooterLogo from "../../assets/DIMP logo colored.png";
@@ -34,7 +34,7 @@ const Footer = () => {
               <div className="mb-4">
                 <h3 className="fw-bold mb-3">Company</h3>
                 <ul className="list-unstyled">
-                  {footerDefaultLink.slice(0, 3).map((item) => (
+                  {footerAgentDefaultLink.slice(0, 3).map((item) => (
                     <li key={item.id}>
                       <Link to={item.link} className="nav-link text-black">
                         {item.linkName}
@@ -48,7 +48,7 @@ const Footer = () => {
               <div className="mb-4">
                 <h3 className="fw-bold mb-3">Support</h3>
                 <ul className="list-unstyled">
-                  {footerDefaultLink.slice(3).map((item) => (
+                  {footerAgentDefaultLink.slice(3).map((item) => (
                     <li key={item.id}>
                       <Link to={item.link} className="nav-link text-black">
                         {item.linkName}
