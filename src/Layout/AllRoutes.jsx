@@ -190,8 +190,10 @@ import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
 import TrialExpired from "../Creator/Payment/TrialExpired";
 import AgentPage from "../agent-page/AgentPage";
-import AgentPageAuthForm from "../agent-page/pages/AgentPageAuthForm";
+import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
+import ProfilePage from "../agent-page/pages/ProfilePage";
+import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
 
 //Affliate 
 import AffliateDashboardIndex from "../AffilateDashboard/AffliateDashboardIndex";
@@ -560,6 +562,10 @@ const AllRoutes = () => {
         element={<AffiliateOnboarding />}
       />
       </Route>
+      <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
+      <Route path="/dimp/agent-page" element={<AgentPage />} />
+      <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
+      <Route path="/affiliate/verify-email" element={<EmailVerify />} />
     </Routes>
   );
 };

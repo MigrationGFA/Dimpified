@@ -186,14 +186,14 @@ const FooterWithLinks = () => {
               <nav className="nav nav-footer">
                 <Link
                   className="nav-link ps-0"
-                  to="https://gfa-tech/company/privacy-policy"
+                  to="https://gfa-tech.com/company/privacy-policy"
                 >
                   Privacy Policy
                 </Link>
 
-                <Link className="nav-link" to="https://gfa-tech.com/company/privacy-policy/">
+                {/* <Link className="nav-link" to="https://gfa-tech.com/company/privacy-policy/">
                   Terms of Use
-                </Link>
+                </Link> */}
               </nav>
             </Col>
           </Row>
