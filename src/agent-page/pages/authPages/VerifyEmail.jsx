@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Logo from "../../../src/assets/DIMP logo colored.png";
+import Logo from "../../../../src/assets/DIMP logo colored.png";
 
 const EmailVerify = () => {
   const location = useLocation();
