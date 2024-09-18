@@ -18,6 +18,7 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 import BarberLanding from "../dimp-pages/personal-care/BarberLanding";
+import PressRelease from "../dimp-home/PressRelease";
 
 import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
@@ -209,6 +210,7 @@ const AllRoutes = () => {
         <Route path="/" element={<DimpHome />} />
       )}
       <Route path="/loading" element={<EcoLoadingPage />} />
+      <Route path="/press-release" element={<PressRelease />} />
 
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
