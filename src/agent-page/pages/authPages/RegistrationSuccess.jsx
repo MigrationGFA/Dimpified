@@ -43,7 +43,7 @@ const RegistrationSuccess = () => {
       />
       <h2>Registration Successful</h2>
       <p>
-        Check your email <strong>{email}</strong> to verify your account.
+        Check your email <strong> {email} </strong> to verify your account.
       </p>
 
       <Button
@@ -56,7 +56,7 @@ const RegistrationSuccess = () => {
       </Button>
 
       {/* <Button variant="primary" onClick={handleClose} className="mt-3">
-        Return
+        Return to sign in
       </Button> */}
     </div>
   );
