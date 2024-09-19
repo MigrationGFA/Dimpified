@@ -196,12 +196,12 @@ import ProfilePage from "../agent-page/pages/ProfilePage";
 import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
 
 //Affliate 
-import AffliateDashboardIndex from "../AffilateDashboard/AffliateDashboardIndex";
-import AffiliateOverview from "../AffilateDashboard/AffliateOverview";
-import AffiliateMyUser from "../AffilateDashboard/AffliateMyUser";
-import AffiliateContractPage from "../AffilateDashboard/AffliateContractPage";
-import AffiliateWithdrawPayment from "../AffilateDashboard/WithdrawRequest";
-import AffiliateOnboarding from "../AffilateDashboard/AffiliateOnboarding";
+import AffliateDashboardIndex from "../agent-page/AgentDashboard/AgentDashboardIndex";
+import AffiliateOverview from "../agent-page/AgentDashboard/AgentOverview";
+import AffiliateMyUser from "../agent-page/AgentDashboard/AgentMyUser";
+import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPage";
+import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
+import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -550,15 +550,15 @@ const AllRoutes = () => {
 
 
       <Route element={<AffliateDashboardIndex />}>
-      <Route path="/affiliate/dashboard/overview" element={<AffiliateOverview />} />
-      <Route path="/affiliate/dashboard/my-user" element={<AffiliateMyUser />} />
-      <Route path="/affiliate/dashboard/earning" element={<AffiliateContractPage />} />
+      <Route path="/agent/dashboard/overview" element={<AffiliateOverview />} />
+      <Route path="/agent/dashboard/my-user" element={<AffiliateMyUser />} />
+      <Route path="/agent/dashboard/earning" element={<AffiliateContractPage />} />
       <Route
-        path="/affiliate/dashboard/Withdraw"
+        path="/agent/dashboard/Withdraw"
         element={<AffiliateWithdrawPayment />}
       />
       <Route
-        path="/affiliate/dashboard/onboard"
+        path="/agent/dashboard/onboard"
         element={<AffiliateOnboarding />}
       />
       </Route>

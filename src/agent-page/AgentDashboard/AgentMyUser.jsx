@@ -1,75 +1,38 @@
 import { Fragment, useEffect, useState } from "react";
 import { Col, Row, Card, Tab, Breadcrumb } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 // import custom components
-import GridListViewButton from "../Components/elements/miscellaneous/GridListViewButton";
+import GridListViewButton from "../../Components/elements/miscellaneous/GridListViewButton";
 
 // import sub components
-import UsersGridView from "./UsersGridCard";
-import UsersListItems from "./UsersListItems";
-import { useSelector } from "react-redux";
+import UsersGridView from "../AgentDashboard/UsersGridCard";
+import UsersListItems from "../AgentDashboard/UsersListItems";
 
 const Instructor = () => {
-  const [dashboardData, setDashboardData] = useState({
-    monthlySeeker: 1,
-    totalSeeker: 1,
-    monthlyProvider: 1,
-    totalProvider: 1,
-  });
   const [userDetails, setUserDetails] = useState([]); 
-  const [myEcosystem, setMyEcosystem] = useState([]);
-
+  const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
-  const userId = user?.data?.CreatorId || "Unknown User";
-  const ecosystemId = user?.data?.ecosystemId || "Unknown Ecosystem";
+  const userId = user?.data?.AffiliateId || "Unknown User";
 
   const getMyUser = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-ecosystem-users/${userId}`
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/affiliate-all-onboarded-users/${userId}`
       );
-
-      setUserDetails(response.data.ecosystemUsers);
-      console.log(response.data.ecosystemUsers);
+      setUserDetails(response.data.getAllCreator);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching user details:", error);
     }
   };
 
-  // Get the IDs of the users
-  // const ecoIds = userDetails.map((item) => item.id);
-
-  // Fetch the ecosystem data
-  const getMyEcosystem = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/ecosystem-users`,
-        {
-          params: {
-            creatorId: userId,
-            ecosystemId: ecosystemId,
-          },
-        }
-      );
-      setMyEcosystem(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  // Fetch user data when component mounts or when `userId` changes
   useEffect(() => {
-    getMyUser();
+    if (userId !== "Unknown User") {
+      getMyUser();
+    }
   }, [userId]);
-
-  // Fetch the ecosystem data whenever `userDetails` changes
-  useEffect(() => {
-    if (userDetails.length > 0) {
-      getMyEcosystem();
-    }
-  }, [userDetails]);
 
   return (
     <Fragment>
@@ -92,7 +55,6 @@ const Instructor = () => {
                     <Breadcrumb.Item active>My User</Breadcrumb.Item>
                   </Breadcrumb>
                 </div>
-
                 <div>
                   <GridListViewButton keyGrid="grid" keyList="list" />
                 </div>

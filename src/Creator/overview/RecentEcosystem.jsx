@@ -6,7 +6,7 @@ import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const RecentEcosystems = ({ title }) => {
   const [ecosystems, setEcosystems] = useState([]);
-
+  const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
 
@@ -14,7 +14,7 @@ const RecentEcosystems = ({ title }) => {
     fetchRecentEcosystems();
   }, [creatorId]);
 
-  const authFetch = AxiosInterceptor();
+
   const fetchRecentEcosystems = async () => {
     try {
       const response = await authFetch.get(
@@ -39,7 +39,7 @@ const RecentEcosystems = ({ title }) => {
       </Card.Header>
       <Card.Body>
         <ListGroup variant="flush">
-          {ecosystems.map((ecosystem, index) => (
+          {ecosystems && ecosystems.map((ecosystem, index) => (
             <ListGroup.Item
               className={`px-0 ${index === 0 ? "pt-0" : ""}`}
               key={ecosystem._id}

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 
 import axios from "axios";
-import Payouts from "./AffliatePayouts";
-import WithdrawPayment from "./WithdrawRequest";
+import Payouts from "../AgentDashboard/AgentPayouts";
+import WithdrawPayment from "../AgentDashboard/WithdrawRequest";
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);

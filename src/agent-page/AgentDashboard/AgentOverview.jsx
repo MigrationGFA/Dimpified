@@ -3,16 +3,16 @@ import { Col, Row, Card, Dropdown, Spinner, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import ApexCharts from "../Components/elements/charts/ApexCharts";
-import StatRightChart from "../Creator/analytics/stats/StatRightChart";
-import TopEcosystem from "./TopEcosystem";
-import RecentEcosystem from "./RecentEcosystem";
+import ApexCharts from "../../Components/elements/charts/ApexCharts";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+import TopEcosystem from "../AgentDashboard/TopEcosystem";
+import RecentEcosystem from "../AgentDashboard/RecentEcosystem";
 import {
   TrafficChartSeries,
   TrafficChartOptions,
   OrderColumnChartSeries,
   OrderColumnChartOptions,
-} from "../data/charts/AdminChartData";
+} from "../../data/charts/AdminChartData";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Link

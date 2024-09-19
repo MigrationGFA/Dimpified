@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
  
 // import sub components
-import NavbarVertical from "./AffliateNavbarVertical";
-import HeaderDefault from "./AffliateHeaderDefault";
+import NavbarVertical from "./AgentNavbarVertical";
+import HeaderDefault from "./AgentHeaderDefault";
  
 const AffliateDashboardIndex = (props) => {
   const { children, className, overflowHidden } = props;

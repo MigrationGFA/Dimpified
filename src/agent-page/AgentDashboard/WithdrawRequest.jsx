@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Spinner, Table, Badge, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { numberWithCommas } from "../helper/utils";
-import { showToast } from "../Components/Showtoast";
-import StatRightChart from "../Creator/analytics/stats/StatRightChart";
-import Pagination from "../Components/elements/advance-table/Pagination";
+import { numberWithCommas } from "../../helper/utils";
+import { showToast } from "../../Components/Showtoast";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+import Pagination from "../../Components/elements/advance-table/Pagination";
 
 
 const WithdrawPayment = () => {

@@ -47,7 +47,7 @@ const SignIn = () => {
         } else if (affiliateLogin.fulfilled.match(resultAction)) {
           // Login was successful
           showToast(resultAction.payload.message);
-          navigate("/creator/dashboard/overview");
+          navigate("/agent/dashboard/overview");
         }
       } catch (error) {
         // Handle unexpected errors, such as network issues

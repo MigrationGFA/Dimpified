@@ -10,20 +10,20 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Dashboard",
     icon: "home",
-    link:  "/affiliate/dashboard/overview",
+    link:  "/agent/dashboard/overview",
   },
 
   {
     id: uuid(),
     title: "Overview",
     icon: "book",
-    link: "/affiliate/dashboard/overview",
+    link: "/agent/dashboard/overview",
   },
   {
     id: uuid(),
     title: "My Users",
     icon: "user",
-    link: "/affiliate/dashboard/my-user",
+    link: "/agent/dashboard/my-user",
   },
  
   
@@ -34,12 +34,12 @@ export const DashboardMenu = [
     children: [
       {
         id: uuid(),
-        link: "/affiliate/dashboard/earning",
+        link: "/agent/dashboard/earning",
         name: "Earning",
       },
       {
         id: uuid(),
-        link: "/affiliate/dashboard/Withdraw",
+        link: "/agent/dashboard/Withdraw",
         name: "Withdraw",
       },
     ],
@@ -48,7 +48,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Onboarding",
     icon: "user",
-    link: "/affiliate/dashboard/onboard",
+    link: "/agent/dashboard/onboard",
   },
   
 ];

@@ -14,10 +14,10 @@ import {
 import { MoreVertical, Trash, Edit, Mail } from "react-feather";
 import Icon from "@mdi/react";
 import { mdiStar } from "@mdi/js";
-import TanstackTable from "../Components/elements/advance-table/TanstackTable";
-import { numberWithCommas } from "../helper/utils";
-import StatRightChart from "../Creator/analytics/stats/StatRightChart";
-import avatar from "../assets/images/avatar/person.png";
+import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
+import { numberWithCommas } from "../../helper/utils";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+import avatar from "../../assets/images/avatar/person.png";
 
 const UsersListItems = ({ userDetails }) => {
   const [loading, setLoading] = useState(true);
@@ -28,17 +28,20 @@ const UsersListItems = ({ userDetails }) => {
     totalUsers: 0,
     verifiedUsers: 0,
     usersThisMonth: 0,
-    totalAmountPaid: 0,
+    uniqueSubscribedUsersCount: 0,
   });
 
-  
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.AffiliateId
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
       if (creatorId) {
         try {
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const apiUrl = `${
+            import.meta.env.VITE_API_URL
+          }/affiliate-onboarded-users-blocks/${creatorId}`;
           const response = await fetch(apiUrl);
           const data = await response.json();
           setStats(data);
@@ -111,19 +114,26 @@ const UsersListItems = ({ userDetails }) => {
               alt=""
               className="rounded-circle avatar-md me-2"
             />
-            <h5 className="mb-0">
-              {getValue()} {row.original.lastName} {row.original.firstName}
-            </h5>
+            <div className="">
+              <h5 className="mb-0">
+                {getValue()} {row.original.organizationName}
+              </h5>
+              <h5 className="mb-0">
+                {getValue()} {row.original.email}
+              </h5>
+            </div>
           </div>
         ),
       },
       {
-        accessorKey: "products",
-        header: "Products",
+        accessorKey: "Audience",
+        header: "Chosen Audience",
         cell: ({ getValue, row }) => (
           <div className="d-flex align-items-center">
             <h5 className="mb-0">
-              {row.original.courses == null ? 0 : row.original.courses}
+              {row.original.numberOfTargetAudience == null
+                ? 0
+                : row.original.numberOfTargetAudience}
             </h5>
           </div>
         ),
@@ -134,9 +144,9 @@ const UsersListItems = ({ userDetails }) => {
         cell: ({ getValue, row }) => formatDate(row.original.createdAt),
       },
       {
-        accessorKey: "Ecosystem",
-        header: "Ecosystem",
-        cell: ({ getValue, row }) => row.original.ecosystemDomain,
+        accessorKey: "websiteCount",
+        header: "Website User Count",
+        cell: ({ getValue, row }) => row.original.userCount,
       },
       {
         accessorKey: "shortcutmenu",
@@ -149,12 +159,12 @@ const UsersListItems = ({ userDetails }) => {
 
   const data = userDetails;
 
-  const ecosystems = [
-    "Ecosystem 1",
-    "Ecosystem 2",
-    "Ecosystem 3",
-    "Ecosystem 4",
-  ];
+  // const ecosystems = [
+  //   "Ecosystem 1",
+  //   "Ecosystem 2",
+  //   "Ecosystem 3",
+  //   "Ecosystem 4",
+  // ];
 
   const getSearchTerm = (event) => {
     const searchTerm = event.target.value;
@@ -162,11 +172,11 @@ const UsersListItems = ({ userDetails }) => {
     filterInstructors(searchTerm, selectedEcosystem);
   };
 
-  const handleEcosystemChange = (event) => {
-    const ecosystem = event.target.value;
-    setSelectedEcosystem(ecosystem);
-    filterInstructors(searchTerm, ecosystem);
-  };
+  // const handleEcosystemChange = (event) => {
+  //   const ecosystem = event.target.value;
+  //   setSelectedEcosystem(ecosystem);
+  //   filterInstructors(searchTerm, ecosystem);
+  // };
 
   const filterInstructors = (searchTerm, ecosystem) => {
     const filteredInstructors = userDetails.filter((instructor) => {
@@ -228,8 +238,8 @@ const UsersListItems = ({ userDetails }) => {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Amount Paid"
-                value={`${numberWithCommas(stats.totalAmountPaid)}`}
+                title="Subscribed Users"
+                value={`${numberWithCommas(stats.uniqueSubscribedUsersCount)}`}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon
@@ -240,7 +250,7 @@ const UsersListItems = ({ userDetails }) => {
           </Row>
           <div className="mb-4">
             <Form.Group className="d-flex align-items-center">
-              <Form.Control
+              {/* <Form.Control
                 as="select"
                 value={selectedEcosystem}
                 onChange={handleEcosystemChange}
@@ -258,7 +268,7 @@ const UsersListItems = ({ userDetails }) => {
                     {ecosystem}
                   </option>
                 ))}
-              </Form.Control>
+              </Form.Control> */}
               <Form.Control
                 type="search"
                 placeholder="Search"

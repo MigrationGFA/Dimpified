@@ -67,7 +67,7 @@ const Instructor = () => {
 
   // Fetch the ecosystem data whenever `userDetails` changes
   useEffect(() => {
-    if (userDetails.length > 0) {
+    if (userDetails && userDetails.length > 0) {
       getMyEcosystem();
     }
   }, [userDetails]);
@@ -83,7 +83,7 @@ const Instructor = () => {
                   <h1 className="mb-1 h2 fw-bold">
                     My User{" "}
                     <span className="fs-5 text-muted">
-                      ({userDetails.length})
+                      ({userDetails && userDetails.length})
                     </span>
                   </h1>
                   <Breadcrumb>

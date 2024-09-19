@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Col, Card, Image, Row, Form, Spinner } from "react-bootstrap";
 import { ChevronLeft, ChevronRight } from "react-feather";
-import StatRightChart from "../Creator/analytics/stats/StatRightChart";
-import avatar from "../assets/images/avatar/person.png";
+import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
+import avatar from "../../assets/images/avatar/person.png";
 import { useSelector } from "react-redux";
 
 function UsersGridCard({ userDetails }) {
@@ -14,11 +14,11 @@ function UsersGridCard({ userDetails }) {
     totalUsers: 0,
     verifiedUsers: 0,
     usersThisMonth: 0,
-    totalAmountPaid: 0,
+    uniqueSubscribedUsersCount: 0,
   });
 
   // Get creatorId from Redux state
-  const creatorId = useSelector((state) => state.authentication.user?.data?.CreatorId);
+  const creatorId = useSelector((state) => state.authentication.user?.data?.AffiliateId);
 
   const instructorsPerPage = 8;
   const pagesVisited = pageNumber * instructorsPerPage;
@@ -33,7 +33,7 @@ function UsersGridCard({ userDetails }) {
       if (creatorId) {
         try {
           // Use environment variable to construct the API URL
-          const apiUrl = `${import.meta.env.VITE_API_URL}/ecosystem-users-stats/${creatorId}`;
+          const apiUrl = `${import.meta.env.VITE_API_URL}/affiliate-onboarded-users-blocks/${creatorId}`;
           const response = await fetch(apiUrl);
           const data = await response.json();
           setStats(data);
@@ -62,7 +62,7 @@ function UsersGridCard({ userDetails }) {
     .slice(pagesVisited, pagesVisited + instructorsPerPage)
     .map((instructor) => (
       <Col xl={3} lg={6} md={6} sm={12} key={instructor.id}>
-        <Card className="mb-5">
+        <Card className="mb-5" style={{height:"500px"}}>
           <Card.Body>
             <div className="text-center">
               <Image
@@ -71,20 +71,29 @@ function UsersGridCard({ userDetails }) {
                 alt=""
               />
               <h4 className="mb-0">
-                {instructor.lastName} {instructor.firstName}
+                {instructor.organizationName}
               </h4>
             </div>
-            <div className="d-flex justify-content-between border-bottom py-2 mt-4">
-              <span>Ecosystem</span>
-              <span className="text-dark">{instructor.ecosystemDomain}</span>
+            <div className="d-flex flex-wrap justify-content-between border-bottom py-2 mt-4">
+              <span>Email</span>
+              <span className="text-dark " style={{width:"150px"}}>{instructor.email}</span>
             </div>
-            <div className="d-flex justify-content-between border-bottom py-2">
+            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
               <span>Date Joined</span>
               <span className="text-dark">{formatDate(instructor.createdAt)}</span>
             </div>
-            <div className="d-flex justify-content-between pt-2">
-              <span>Products</span>
-              <span className="text-dark">{instructor.products == null ? 0 : instructor.products}</span>
+            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+              <span>Chosen Audience</span>
+              <span className="text-dark">{instructor.numberOfTargetAudience == null ? 0 : instructor.numberOfTargetAudience}</span>
+            </div>
+            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+              <span>No of Transaction</span>
+              <span className="text-dark">{instructor.transactionNumber}</span>
+            </div>
+            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+              <span>Website User Count</span>
+              <span className="text-dark">{instructor.userCount}
+              </span>
             </div>
           </Card.Body>
         </Card>
@@ -94,12 +103,12 @@ function UsersGridCard({ userDetails }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
 
-  const ecosystems = [
-    "Ecosystem 1",
-    "Ecosystem 2",
-    "Ecosystem 3",
-    "Ecosystem 4",
-  ];
+  // const ecosystems = [
+  //   "Ecosystem 1",
+  //   "Ecosystem 2",
+  //   "Ecosystem 3",
+  //   "Ecosystem 4",
+  // ];
 
   const getSearchTerm = (event) => {
     let searchTerm = event.target.value;
@@ -107,11 +116,11 @@ function UsersGridCard({ userDetails }) {
     filterInstructors(searchTerm, selectedEcosystem);
   };
 
-  const handleEcosystemChange = (event) => {
-    let ecosystem = event.target.value;
-    setSelectedEcosystem(ecosystem);
-    filterInstructors(searchTerm, ecosystem);
-  };
+  // const handleEcosystemChange = (event) => {
+  //   let ecosystem = event.target.value;
+  //   setSelectedEcosystem(ecosystem);
+  //   filterInstructors(searchTerm, ecosystem);
+  // };
 
   const filterInstructors = (searchTerm, ecosystem) => {
     let filteredInstructors = userDetails.filter((instructor) => {
@@ -174,8 +183,8 @@ function UsersGridCard({ userDetails }) {
             </Col>
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
-                title="Total Amount Paid"
-                value={stats.totalAmountPaid}
+                title="Subscribed Users"
+                value={stats.uniqueSubscribedUsersCount}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon
@@ -187,7 +196,7 @@ function UsersGridCard({ userDetails }) {
 
           <div className="mb-4">
             <Form.Group className="d-flex align-items-center">
-              <Form.Control
+              {/* <Form.Control
                 as="select"
                 value={selectedEcosystem}
                 onChange={handleEcosystemChange}
@@ -205,7 +214,7 @@ function UsersGridCard({ userDetails }) {
                     {ecosystem}
                   </option>
                 ))}
-              </Form.Control>
+              </Form.Control> */}
               <Form.Control
                 type="search"
                 placeholder="Search Ecosystem"

@@ -21,11 +21,11 @@ import "simplebar/dist/simplebar.min.css";
  
 // import media files
 // import InverseLogo from '../../assets/images/brand/logo/logo-inverse.svg';
-import Logo from "../assets/DIMP logo.png";
+import Logo from "../../assets/DIMP logo.png";
 // import GiftBox from "../assets/images/avatar/giftbox.png";
  
 // import routes file
-import { DashboardMenu } from "../routes/AffliateDashboardRoutes.";
+import { DashboardMenu } from "../../routes/AffliateDashboardRoutes.";
 // import DashboardPricing from "../../Creator/ecosystem/DashboardPricing";
 
  
