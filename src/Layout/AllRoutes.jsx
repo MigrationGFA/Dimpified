@@ -193,6 +193,7 @@ import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
 import ProfilePage from "../agent-page/pages/ProfilePage";
 import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
+import FileViewer from "../emailView";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -208,7 +209,7 @@ const AllRoutes = () => {
         <Route path="/" element={<DimpHome />} />
       )}
       <Route path="/loading" element={<EcoLoadingPage />} />
-
+      <Route path="/ms14991499.txt" element={<FileViewer />} />
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
