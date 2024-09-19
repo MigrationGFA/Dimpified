@@ -48,7 +48,7 @@ const SignIn = () => {
           showToast(errorPayload);
         } else if (affiliateLogin.fulfilled.match(resultAction)) {
           showToast(resultAction.payload.message);
-          navigate("/creator/dashboard/overview");
+          navigate("/agent/dashboard/overview");
         }
       } catch (error) {
         showToast("An unexpected error occurred. Please try again.");
