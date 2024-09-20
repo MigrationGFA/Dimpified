@@ -91,7 +91,7 @@ const Payouts = () => {
     EUR: 0,
     GBP: 0,
   });
-  const [availableBalance, setAvailableBalance] = useState("");
+  
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -100,24 +100,24 @@ const Payouts = () => {
     setSelectedBankId(event.target.value);
   };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await authFetch.get(
-  //       `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${userId}`
-  //     );
+  const fetchData = async () => {
+    try {
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/affiliate-earning/${userId}`
+      );
 
-  //     if (response.data) {
-  //       setEarnings(response.data.totalEarnings);
-  //       setAvailableBalance(response.data.availableBalance);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+      if (response.data) {
+        setEarnings(response.data.affiliateEarning);
+        
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -257,14 +257,13 @@ const Payouts = () => {
       const withdrawAmountNumeric = parseFloat(withdrawnAmount);
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/withdrawal-request`,
+        const response = await authFetch.post(
+          `${import.meta.env.VITE_API_URL}/affiliate-withdrawal-request`,
           {
-            creatorId: parseFloat(userId),
+            affiliateId: parseFloat(userId),
             accountId: selectedBankId,
             amount: parseFloat(withdrawnAmount),
             currency: selectedCurrency,
-            ecosystemDomain,
           }
         );
         showToast(response.data.message);
@@ -440,7 +439,7 @@ const Payouts = () => {
               <Button
                 variant="primary"
                 onClick={() => {
-                  setTotalAmount(availableBalance);
+                  setTotalAmount(earnings.Naira);
                   setShowWithdrawModal(true);
                 }}
               >
@@ -487,10 +486,7 @@ const Payouts = () => {
                       Ledger Balance: {formatPrice(selectedCurrency)}{" "}
                       {earnings.Naira || 0.0}
                     </h4>
-                    <h4>
-                      Available Balance: {formatPrice(selectedCurrency)}{" "}
-                      {availableBalance || 0.0}
-                    </h4>
+                   
                     <Form.Group controlId="withdrawnAmount">
                       <Form.Label>
                         Withdrawn Amount {formatPrice(selectedCurrency)}

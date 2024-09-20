@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Nav, Navbar, Form } from "react-bootstrap";
 
 // import sub components
-import QuickMenu from "../../Layout/QuickMenu";
+import QuickMenu from "../../Layout/AgentQuickMenu";
 
 const HeaderDefault = (props) => {
   return (
