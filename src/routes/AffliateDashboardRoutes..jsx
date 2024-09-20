@@ -10,23 +10,16 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Dashboard",
     icon: "home",
-    link:  "/agent/dashboard/overview",
-  },
-
-  {
-    id: uuid(),
-    title: "Overview",
-    icon: "book",
     link: "/agent/dashboard/overview",
   },
+
   {
     id: uuid(),
     title: "My Users",
     icon: "user",
     link: "/agent/dashboard/my-user",
   },
- 
-  
+
   {
     id: uuid(),
     title: "Payment",
@@ -50,7 +43,6 @@ export const DashboardMenu = [
     icon: "user",
     link: "/agent/dashboard/onboard",
   },
-  
 ];
 
 export default DashboardMenu;
