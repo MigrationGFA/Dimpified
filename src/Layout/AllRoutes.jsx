@@ -189,6 +189,7 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import TrialExpired from "../Creator/Payment/TrialExpired";
 import AgentPage from "../agent-page/AgentPage";
 import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
@@ -198,6 +199,14 @@ import FileViewer from "../emailView";
 import ResetPassword from "../agent-page/pages/authPages/ResetPassword";
 import RegistrationSuccess from "../agent-page/pages/authPages/RegistrationSuccess";
 import CreatorRessetPassword from "../Creator/authentication/NewPassword";
+
+//Affliate
+import AffliateDashboardIndex from "../agent-page/AgentDashboard/AgentDashboardIndex";
+import AffiliateOverview from "../agent-page/AgentDashboard/AgentOverview";
+import AffiliateMyUser from "../agent-page/AgentDashboard/AgentMyUser";
+import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPage";
+import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
+import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -309,6 +318,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
         <Route
           path="/creator/jobs/category-single"
@@ -357,6 +367,11 @@ const AllRoutes = () => {
         />
       </Route>
       {/* Creator Ecosystem Dashboard */}
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
+        element={<ContractPage />}
+      />
+      <Route path="/trialExpired/upgrade" element={<TrialExpired />} />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
         element={<ContractPage />}
@@ -537,6 +552,28 @@ const AllRoutes = () => {
         path="/dimp/developer-program/auth"
         element={<DevProgramAuthForm />}
       />
+      <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
+      <Route path="/dimp/agent-page" element={<AgentPage />} />
+
+      <Route element={<AffliateDashboardIndex />}>
+        <Route
+          path="/agent/dashboard/overview"
+          element={<AffiliateOverview />}
+        />
+        <Route path="/agent/dashboard/my-user" element={<AffiliateMyUser />} />
+        <Route
+          path="/agent/dashboard/earning"
+          element={<AffiliateContractPage />}
+        />
+        <Route
+          path="/agent/dashboard/Withdraw"
+          element={<AffiliateWithdrawPayment />}
+        />
+        <Route
+          path="/agent/dashboard/onboard"
+          element={<AffiliateOnboarding />}
+        />
+      </Route>
       <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
       <Route path="/dimp/agent-page" element={<AgentPage />} />
       <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
