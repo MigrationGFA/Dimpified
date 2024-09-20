@@ -224,10 +224,10 @@ const AffiliateOverview = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {withdrawData.length > 0 ? (
+                      {withdrawData && withdrawData.length > 0 ? (
                         withdrawData.map((entry) => (
                           <tr key={entry.id}>
-                            <td>#00{entry.id}AWH</td>
+                            <td>#00{entry.id}AEH</td>
                             <td>{entry.amount}</td>
                             <td>{entry.currency}</td>
                             <td>{entry.planType}</td>
