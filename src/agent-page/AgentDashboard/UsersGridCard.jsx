@@ -1,12 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import ReactPaginate from "react-paginate";
 import { Col, Card, Image, Row, Form, Spinner } from "react-bootstrap";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import avatar from "../../assets/images/avatar/person.png";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
-function UsersGridCard({ userDetails }) {
+const UsersGridCard = ({ userDetails }) => {
+  const authFetch = AxiosInterceptor();
   const [instructors, setInstructorsList] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -16,126 +18,116 @@ function UsersGridCard({ userDetails }) {
     usersThisMonth: 0,
     uniqueSubscribedUsersCount: 0,
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Get creatorId from Redux state
-  const creatorId = useSelector((state) => state.authentication.user?.data?.AffiliateId);
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.AffiliateId
+  );
 
   const instructorsPerPage = 8;
   const pagesVisited = pageNumber * instructorsPerPage;
   const pageCount = Math.ceil(instructors.length / instructorsPerPage);
 
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+  const changePage = ({ selected }) => setPageNumber(selected);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (creatorId) {
-        try {
-          // Use environment variable to construct the API URL
-          const apiUrl = `${import.meta.env.VITE_API_URL}/affiliate-onboarded-users-blocks/${creatorId}`;
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          setStats(data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+  // Memoized fetch function to avoid redefining on every render
+  const fetchStats = useCallback(async () => {
+    if (creatorId && authFetch) {
+      try {
+        const apiUrl = `${import.meta.env.VITE_API_URL}/affiliate-onboarded-users-blocks/${creatorId}`;
+        const { data } = await authFetch.get(apiUrl);
+        setStats(data);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
       }
-    };
+    }
+  }, [creatorId, authFetch]);
 
-    fetchStats();
-  }, [creatorId]);
+  // Fetch stats when creatorId is available
+  useEffect(() => {
+    if (creatorId) {
+      fetchStats();
+    }
+  }, [creatorId, fetchStats]);
 
+  // Set user details on initial load and stop loading after that
   useEffect(() => {
     if (Array.isArray(userDetails)) {
       setInstructorsList(userDetails.slice(0, 500));
+      setLoading(false);
     }
-    setLoading(false);
   }, [userDetails]);
 
   const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    return new Date(dateString).toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    filterInstructors(term);
+  };
+
+  const filterInstructors = useCallback(
+    (term) => {
+      const filteredInstructors = userDetails.filter((instructor) =>
+        Object.values(instructor)
+          .join(" ")
+          .toLowerCase()
+          .includes(term.toLowerCase())
+      );
+      setInstructorsList(filteredInstructors.slice(0, 500));
+      setPageNumber(0);
+    },
+    [userDetails]
+  );
 
   const displayInstructors = instructors
     .slice(pagesVisited, pagesVisited + instructorsPerPage)
     .map((instructor) => (
       <Col xl={3} lg={6} md={6} sm={12} key={instructor.id}>
-        <Card className="mb-5" style={{height:"500px"}}>
+        <Card className="mb-5" style={{ height: "500px" }}>
           <Card.Body>
             <div className="text-center">
               <Image
-                src={instructor.imageUrl == null ? avatar : instructor.imageUrl}
+                src={instructor.imageUrl ?? avatar}
                 className="rounded-circle avatar-xl mb-3"
-                alt=""
+                alt="Instructor Avatar"
               />
-              <h4 className="mb-0">
-                {instructor.organizationName}
-              </h4>
+              <h4 className="mb-0">{instructor.organizationName}</h4>
             </div>
-            <div className="d-flex flex-wrap justify-content-between border-bottom py-2 mt-4">
+            <div className="d-flex justify-content-between border-bottom py-2 mt-4">
               <span>Email</span>
-              <span className="text-dark " style={{width:"150px"}}>{instructor.email}</span>
+              <span className="text-dark" style={{ width: "150px" }}>
+                {instructor.email}
+              </span>
             </div>
-            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+            <div className="d-flex justify-content-between border-bottom py-2">
               <span>Date Joined</span>
               <span className="text-dark">{formatDate(instructor.createdAt)}</span>
             </div>
-            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+            <div className="d-flex justify-content-between border-bottom py-2">
               <span>Chosen Audience</span>
-              <span className="text-dark">{instructor.numberOfTargetAudience == null ? 0 : instructor.numberOfTargetAudience}</span>
+              <span className="text-dark">
+                {instructor.numberOfTargetAudience ?? 0}
+              </span>
             </div>
-            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
-              <span>No of Transaction</span>
+            <div className="d-flex justify-content-between border-bottom py-2">
+              <span>No of Transactions</span>
               <span className="text-dark">{instructor.transactionNumber}</span>
             </div>
-            <div className="d-flex flex-wrap justify-content-between border-bottom py-2">
+            <div className="d-flex justify-content-between border-bottom py-2">
               <span>Website User Count</span>
-              <span className="text-dark">{instructor.userCount}
-              </span>
+              <span className="text-dark">{instructor.userCount}</span>
             </div>
           </Card.Body>
         </Card>
       </Col>
     ));
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedEcosystem, setSelectedEcosystem] = useState("");
-
-  // const ecosystems = [
-  //   "Ecosystem 1",
-  //   "Ecosystem 2",
-  //   "Ecosystem 3",
-  //   "Ecosystem 4",
-  // ];
-
-  const getSearchTerm = (event) => {
-    let searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-    filterInstructors(searchTerm, selectedEcosystem);
-  };
-
-  // const handleEcosystemChange = (event) => {
-  //   let ecosystem = event.target.value;
-  //   setSelectedEcosystem(ecosystem);
-  //   filterInstructors(searchTerm, ecosystem);
-  // };
-
-  const filterInstructors = (searchTerm, ecosystem) => {
-    let filteredInstructors = userDetails.filter((instructor) => {
-      const matchesSearchTerm = Object.values(instructor)
-        .join(" ")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesEcosystem = ecosystem
-        ? instructor.ecosystem === ecosystem
-        : true;
-      return matchesSearchTerm && matchesEcosystem;
-    });
-    setInstructorsList(filteredInstructors.slice(0, 500));
-    setPageNumber(0);
-  };
 
   return (
     <Fragment>
@@ -196,30 +188,11 @@ function UsersGridCard({ userDetails }) {
 
           <div className="mb-4">
             <Form.Group className="d-flex align-items-center">
-              {/* <Form.Control
-                as="select"
-                value={selectedEcosystem}
-                onChange={handleEcosystemChange}
-                className="mr-2"
-                style={{
-                  fontSize: "0.875rem",
-                  padding: "0.5rem",
-                  maxWidth: "200px",
-                  marginRight: "10px",
-                }}
-              >
-                <option value="">All Ecosystems</option>
-                {ecosystems.map((ecosystem, index) => (
-                  <option key={index} value={ecosystem}>
-                    {ecosystem}
-                  </option>
-                ))}
-              </Form.Control> */}
               <Form.Control
                 type="search"
-                placeholder="Search Ecosystem"
+                placeholder="Search Users"
                 value={searchTerm}
-                onChange={getSearchTerm}
+                onChange={handleSearch}
                 style={{
                   fontSize: "0.875rem",
                   padding: "0.5rem",
@@ -254,6 +227,6 @@ function UsersGridCard({ userDetails }) {
       )}
     </Fragment>
   );
-}
+};
 
 export default UsersGridCard;

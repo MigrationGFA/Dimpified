@@ -6,9 +6,11 @@ import { numberWithCommas } from "../../helper/utils";
 import { showToast } from "../../Components/Showtoast";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Pagination from "../../Components/elements/advance-table/Pagination";
-
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import { useSelector } from "react-redux";
 
 const WithdrawPayment = () => {
+  const authFetch = AxiosInterceptor();
   const { ecosystemDomain } = useParams();
   const [withdrawalBlock, setWithdrawalBlock] = useState({
   });
@@ -18,11 +20,15 @@ const WithdrawPayment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
 
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.AffiliateId
+  );
+
   useEffect(() => {
     const fetchWithdrawalRequests = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-withdrawal-requests/${ecosystemDomain}`
+        const response = await authFetch.get(
+          `${import.meta.env.VITE_API_URL}/affiliate-withdrawal-requests/${creatorId}`
         );
         setWithdrawalRequests(response.data.withdrawalRequests || []);
         setLoading(false);
@@ -36,8 +42,8 @@ const WithdrawPayment = () => {
 
   const fetchWithdrawalBlock = async() => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/total-withdrawals-stats/${ecosystemDomain}`
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/affiliate-total-withdrawals-stats/${creatorId}`
       );
       setWithdrawalBlock(response.data || []);
       setLoading(false);
@@ -59,7 +65,7 @@ const WithdrawPayment = () => {
         updatedData[rowIndex].Cloading = true;
         setWithdrawalRequests(updatedData);
 
-        const response = await axios.post(
+        const response = await authFetch.post(
           `${import.meta.env.VITE_API_URL}/admin-mark-payment-request`,
           {
             requestId: id,
@@ -172,20 +178,23 @@ const WithdrawPayment = () => {
                       <th>Bank Details</th>
                       <th>Date</th>
                       <th>Status</th>
-                      <th>Action</th>
+                      {/* <th>Action</th> */}
                     </tr>
                   </thead>
                   <tbody>
                     {currentRequests.map((request) => (
                       <tr key={request.id}>
-                        <td>#{request.id}</td>
+                        <td>#00{request.id}AWR</td>
                         <td>₦{numberWithCommas(request.amount)}</td>
                         <td>
-                          <span>{request.Account.accountNumber}</span>
+                          <span>{request.AffiliateAccount
+.accountNumber}</span>
                           <br />
-                          <span>{request.Account.accountName}</span>
+                          <span>{request.AffiliateAccount
+.accountName}</span>
                           <br />
-                          <p>{request.Account.bankName}</p>
+                          <p>{request.AffiliateAccount
+.bankName}</p>
                         </td>
                       
                         <td>
@@ -202,7 +211,7 @@ const WithdrawPayment = () => {
                             {request.status}
                           </Badge>
                         </td>
-                        <td>
+                        {/* <td>
                           {request.status !== "completed" && (
                             <Button
                               variant="success"
@@ -233,7 +242,7 @@ const WithdrawPayment = () => {
                               Completed
                             </Button>
                           )}
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

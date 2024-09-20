@@ -1,28 +1,18 @@
-import React, { useMemo, useState, useEffect, Fragment } from "react";
+import React, { useMemo, useState, useEffect, Fragment, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Dropdown,
-  Image,
-  OverlayTrigger,
-  Tooltip,
-  Form,
-  Spinner,
-  Row,
-  Col,
-} from "react-bootstrap";
-import { MoreVertical, Trash, Edit, Mail } from "react-feather";
-import Icon from "@mdi/react";
-import { mdiStar } from "@mdi/js";
+import { Form, Spinner, Row, Col, Image } from "react-bootstrap";
 import TanstackTable from "../../Components/elements/advance-table/TanstackTable";
 import { numberWithCommas } from "../../helper/utils";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import avatar from "../../assets/images/avatar/person.png";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import debounce from "lodash.debounce"; // for debouncing search input
 
 const UsersListItems = ({ userDetails }) => {
+  const authFetch = AxiosInterceptor(); // Removed memoization
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedEcosystem, setSelectedEcosystem] = useState("");
   const [instructors, setInstructorsList] = useState([]);
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -35,69 +25,54 @@ const UsersListItems = ({ userDetails }) => {
     (state) => state.authentication.user?.data?.AffiliateId
   );
 
+  // Fetch stats only once when creatorId is available
   useEffect(() => {
     const fetchStats = async () => {
-      if (creatorId) {
+      if (creatorId && authFetch) {
         try {
-          const apiUrl = `${
-            import.meta.env.VITE_API_URL
-          }/affiliate-onboarded-users-blocks/${creatorId}`;
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          setStats(data);
+          const apiUrl = `${import.meta.env.VITE_API_URL}/affiliate-onboarded-users-blocks/${creatorId}`;
+          const response = await authFetch.get(apiUrl);
+          setStats(response.data);
         } catch (error) {
           console.error("Failed to fetch stats:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
-    fetchStats();
-  }, [creatorId]);
+    if (creatorId && !stats.totalUsers) { // Fetch only if stats are not already loaded
+      fetchStats();
+    }
+  }, [creatorId, authFetch, stats.totalUsers]);
 
+  // Set instructors list when userDetails change
   useEffect(() => {
-    if (Array.isArray(userDetails)) {
+    if (Array.isArray(userDetails) && userDetails.length > 0) {
       setInstructorsList(userDetails.slice(0, 500));
     }
-    setLoading(false);
   }, [userDetails]);
 
-  // Utility function to format the date
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+  // Debounced search filter logic
+  const filterInstructors = useCallback(
+    debounce((searchTerm) => {
+      if (!userDetails) return;
+      const filteredInstructors = userDetails.filter((instructor) => {
+        const matchesSearchTerm = Object.values(instructor)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        return matchesSearchTerm;
+      });
+      setInstructorsList(filteredInstructors.slice(0, 500));
+    }, 300),
+    [userDetails]
+  );
 
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-      className="btn-icon btn btn-ghost btn-sm rounded-circle"
-    >
-      {children}
-    </Link>
-  ));
-
-  const ActionMenu = () => {
-    // return (
-    //     <Dropdown>
-    //         <Dropdown.Toggle as={CustomToggle}>
-    //             <MoreVertical size="15px" className="text-secondary" />
-    //         </Dropdown.Toggle>
-    //         <Dropdown.Menu align="end">
-    //             <Dropdown.Header>SETTINGS</Dropdown.Header>
-    //             <Dropdown.Item eventKey="1">
-    //                 <Edit size="15px" className="dropdown-item-icon" /> Edit
-    //             </Dropdown.Item>
-    //             <Dropdown.Item eventKey="2">
-    //                 <Trash size="15px" className="dropdown-item-icon" /> Remove
-    //             </Dropdown.Item>
-    //         </Dropdown.Menu>
-    //     </Dropdown>
-    // );
+  const getSearchTerm = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    filterInstructors(newSearchTerm);
   };
 
   const columns = useMemo(
@@ -108,19 +83,15 @@ const UsersListItems = ({ userDetails }) => {
         cell: ({ getValue, row }) => (
           <div className="d-flex align-items-center">
             <Image
-              src={
-                row.original.imageUrl == null ? avatar : row.original.imageUrl
-              }
+              src={row.original.imageUrl || avatar}
               alt=""
               className="rounded-circle avatar-md me-2"
             />
-            <div className="">
+            <div>
               <h5 className="mb-0">
                 {getValue()} {row.original.organizationName}
               </h5>
-              <h5 className="mb-0">
-                {getValue()} {row.original.email}
-              </h5>
+              <h5 className="mb-0">{row.original.email}</h5>
             </div>
           </div>
         ),
@@ -128,68 +99,35 @@ const UsersListItems = ({ userDetails }) => {
       {
         accessorKey: "Audience",
         header: "Chosen Audience",
-        cell: ({ getValue, row }) => (
-          <div className="d-flex align-items-center">
-            <h5 className="mb-0">
-              {row.original.numberOfTargetAudience == null
-                ? 0
-                : row.original.numberOfTargetAudience}
-            </h5>
-          </div>
+        cell: ({ row }) => (
+          <h5 className="mb-0">
+            {row.original.numberOfTargetAudience || 0}
+          </h5>
         ),
       },
       {
         accessorKey: "joined",
         header: "Joined",
-        cell: ({ getValue, row }) => formatDate(row.original.createdAt),
+        cell: ({ row }) => formatDate(row.original.createdAt),
       },
       {
         accessorKey: "websiteCount",
         header: "Website User Count",
-        cell: ({ getValue, row }) => row.original.userCount,
+        cell: ({ row }) => row.original.userCount,
       },
       {
         accessorKey: "shortcutmenu",
         header: "",
-        cell: () => <ActionMenu />,
+        cell: () => <div>Action Menu Placeholder</div>, // Example action menu placeholder
       },
     ],
     []
   );
 
-  const data = userDetails;
-
-  // const ecosystems = [
-  //   "Ecosystem 1",
-  //   "Ecosystem 2",
-  //   "Ecosystem 3",
-  //   "Ecosystem 4",
-  // ];
-
-  const getSearchTerm = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-    filterInstructors(searchTerm, selectedEcosystem);
-  };
-
-  // const handleEcosystemChange = (event) => {
-  //   const ecosystem = event.target.value;
-  //   setSelectedEcosystem(ecosystem);
-  //   filterInstructors(searchTerm, ecosystem);
-  // };
-
-  const filterInstructors = (searchTerm, ecosystem) => {
-    const filteredInstructors = userDetails.filter((instructor) => {
-      const matchesSearchTerm = Object.values(instructor)
-        .join(" ")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesEcosystem = ecosystem
-        ? instructor.ecosystem === ecosystem
-        : true;
-      return matchesSearchTerm && matchesEcosystem;
-    });
-    setInstructorsList(filteredInstructors.slice(0, 500));
+  // Utility function to format the date
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
@@ -239,7 +177,7 @@ const UsersListItems = ({ userDetails }) => {
             <Col xl={3} lg={6} md={12} sm={12}>
               <StatRightChart
                 title="Subscribed Users"
-                value={`${numberWithCommas(stats.uniqueSubscribedUsersCount)}`}
+                value={numberWithCommas(stats.uniqueSubscribedUsersCount)}
                 summary="Instructor"
                 summaryIcon="up"
                 showSummaryIcon
@@ -250,25 +188,6 @@ const UsersListItems = ({ userDetails }) => {
           </Row>
           <div className="mb-4">
             <Form.Group className="d-flex align-items-center">
-              {/* <Form.Control
-                as="select"
-                value={selectedEcosystem}
-                onChange={handleEcosystemChange}
-                className="mr-2 custom-form-control"
-                style={{
-                  fontSize: "0.875rem",
-                  padding: "0.5rem",
-                  maxWidth: "200px",
-                  marginRight: "10px",
-                }}
-              >
-                <option value="">All Ecosystems</option>
-                {ecosystems.map((ecosystem, index) => (
-                  <option key={index} value={ecosystem}>
-                    {ecosystem}
-                  </option>
-                ))}
-              </Form.Control> */}
               <Form.Control
                 type="search"
                 placeholder="Search"

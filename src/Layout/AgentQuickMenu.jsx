@@ -30,7 +30,7 @@ const QuickMenu = () => {
     // Dispatch the logout action
     dispatch(logout());
     showToast("LogOut Successfully");
-    navigate("/");
+    navigate("/dimp/agent-page");
   };
 
   const user = useSelector((state) => state.authentication.user);

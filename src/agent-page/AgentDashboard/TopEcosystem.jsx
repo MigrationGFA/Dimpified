@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Card, ListGroup, Image, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import avatar from "../../assets/images/avatar/person.png";
 
 const TopEcosystem = ({ title }) => {
+  const authFetch = AxiosInterceptor();
   const [ecosystems, setEcosystems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Get creatorId from Redux store
-  const user = useSelector((state) => state.authentication.user);
-  const creatorId = user?.data?.CreatorId;
+  const creatorId = useSelector(
+    (state) => state.authentication.user?.data?.AffiliateId
+  );
 
   useEffect(() => {
     fetchTopEcosystems();
@@ -18,10 +22,11 @@ const TopEcosystem = ({ title }) => {
   const fetchTopEcosystems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/top-ecosystems/${creatorId}`
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/affiliate-last-four-onboarded-users/${creatorId}`
       );
-      setEcosystems(response.data.ecosystemsWithLogos || []);
+      setEcosystems(response.data.
+        lastFourOnboardedUsers || []);
     } catch (error) {
       console.error("Error fetching top ecosystems:", error);
     } finally {
@@ -61,19 +66,19 @@ const TopEcosystem = ({ title }) => {
               <Row>
                 <Col xs="auto">
                   <Image
-                    src={ecosystem.logo}
-                    alt={ecosystem.ecosystemName}
+                    src={ecosystem.imageUrl == null? avatar: ecosystem.imageUrl}
+                    alt={ecosystem.organizationName}
                     className="img-fluid rounded img-4by3-lg"
-                    style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'cover' }}
+                    style={{ maxWidth: '60px', maxHeight: '60px', objectFit: 'cover' }}
                   />
                 </Col>
                 <Col className="ps-0">
-                  <h5 className="text-primary-hover">{ecosystem.ecosystemName}</h5>
-                  {/* <div className="d-flex align-items-center">
-                    <span className="fs-6">{ecosystem.ecosystemDomain}</span>
-                  </div> */}
+                  <h5 className="text-primary-hover">{ecosystem.organizationName}</h5>
                   <div className="d-flex align-items-center">
-                    <span className="fs-6">{ecosystem.users} Users</span>
+                    <span className="fs-6">User Type: {ecosystem.role}</span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <span className="fs-6">{ecosystem.email}</span>
                   </div>
                 </Col>
               </Row>
