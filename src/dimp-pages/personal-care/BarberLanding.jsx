@@ -1,5 +1,7 @@
 // import node module libraries
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import {
   Layers,
   Grid,
@@ -11,16 +13,21 @@ import {
   ArrowRight,
   Calendar2Check,
   Messenger,
-  BarChart,
-  Envelope,
-  Gift,
-  CheckCircle,
   Window,
   CashStack,
   PlayCircleFill,
+  GeoAlt,
 } from "react-bootstrap-icons";
 import { FaCheck } from "react-icons/fa";
-import { Container, Row, Col, Button, Accordion, Image } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Accordion,
+  Image,
+  Form,
+} from "react-bootstrap";
 import GradientBG from "../../assets/images/background/gradient-bg.png";
 
 import BarberImg from "./images/barber-img.jpg";
@@ -52,15 +59,135 @@ const reviews = [
     text: "The insights I get from the analytics tools have helped me understand my customers better and tailor my services to their needs. Highly recommended!",
   },
 ];
+const ScrollToHash = () => {
+  const { hash } = useLocation();
 
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
+
+  return null;
+};
 // import data files
 const BarberLanding = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    businessName: "",
+    email: "",
+    state: "",
+    lga: "",
+    businessAddress: "",
+    businessCity: "",
+    landmark: "",
+    consent: false,
+    latitude: null,
+    longitude: null,
+    city: "",
+  });
+  const [locationError, setLocationError] = useState("");
+  const [formError, setFormError] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Replace with your Google Maps Geocoding API key
+  const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
+
+  const nigeriaStates = ["Lagos", "Ogun"];
+
+  useEffect(() => {
+    // Automatically collect geolocation when the component is mounted
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setFormData((prevData) => ({
+            ...prevData,
+            latitude,
+            longitude,
+          }));
+          // Call the reverse geocoding function
+          reverseGeocode(latitude, longitude);
+        },
+        (error) => {
+          setLocationError(
+            "Unable to retrieve your location automatically. You can't register for the event."
+          );
+        }
+      );
+    } else {
+      setLocationError("Location access is not supported by this browser.");
+    }
+  }, []); // Empty array ensures this runs only once on component mount
+
+  const reverseGeocode = async (latitude, longitude) => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
+      );
+      if (response.data.results.length > 0) {
+        // Extract city/town name from the response
+        const addressComponents = response.data.results[0].address_components;
+        const city = addressComponents.find(
+          (component) =>
+            component.types.includes("locality") ||
+            component.types.includes("administrative_area_level_2")
+        );
+        if (city) {
+          setFormData((prevData) => ({
+            ...prevData,
+            city: city.long_name,
+          }));
+        }
+      }
+    } catch (error) {
+      setLocationError("Error retrieving location details.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Submit button clicked"); // Debugging line
+    if (!formData.consent) {
+      setFormError("You must give consent before submitting the form.");
+      return;
+    }
+    setFormError("");
+    setIsSubmitting(true);
+
+    try {
+      console.log("Form Data:", formData); // Debugging line
+
+      // Post the form data to the server
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/create-barber-contact`,
+        formData
+      );
+      setResponseMessage("You have sucessfully registered for the event!");
+    } catch (error) {
+      setFormError("Error submitting form. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     document.body.className = "bg-white";
   });
 
   return (
     <Fragment>
+      <ScrollToHash />
       {/*   Landing Page Navbar */}
       <NavbarLanding center />
 
@@ -96,6 +223,15 @@ const BarberLanding = () => {
                     <ArrowRight />
                   </span>
                 </Button>
+                <a
+                  href="#events"
+                  className=" ms-2 btn btn-outline-primary fs-16  rounded-3 "
+                >
+                  <span className="btn-text ps-4">Register for the events</span>
+                  <span className="btn-icon">
+                    <ArrowRight />
+                  </span>
+                </a>
               </div>
             </Col>
             <Col lg={5} md={6} className="offset-lg-1 ">
@@ -524,7 +660,7 @@ const BarberLanding = () => {
 
       <section className="z-index-99 p-4  position-relative p-0 forward">
         <div className="stack-box-contain">
-          <div className="bg-light rounded-4 p-3 py-lg-10 m-lg-16">
+          <div className="bg-light rounded-4 p-3 py-lg-10 m-lg-10">
             <Container fluid className="h-100 position-relative">
               <div className="position-absolute top-0 start-0 d-none d-lg-block">
                 <img src="images/crafto-landing-page-bg-04.png" alt="" />
@@ -611,6 +747,367 @@ const BarberLanding = () => {
             </Container>
           </div>
         </div>
+      </section>
+      <section className="px-4 pb-lg-15 sm-pt-50px">
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={5} className="mb-5 appear anime-child anime-complete">
+              <span className="alt-font fs-6 fw-bold  py-2 px-3 mb-3 d-inline-block text-uppercase text-dark bg-gradient-light-pink-transparent rounded-pill">
+                Upcoming Event
+              </span>
+              <h1 className="alt-font fs-40 text-dark fw-400 mb-3" id="events">
+                Register for the free barbers workshop
+              </h1>
+              <Form onSubmit={handleSubmit} className="contact-form-style-03">
+                {locationError && (
+                  <p className="text-danger">{locationError}</p>
+                )}
+                <Form.Group className="mb-3" controlId="formName">
+                  <Form.Label className="text-uppercase text-dark fw-bold">
+                    Full Name*
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      placeholder="Surname Firstname Othername"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+
+                <Row>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formBusinessName">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        Business Name*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          type="text"
+                          name="businessName"
+                          placeholder="Business Name"
+                          value={formData.businessName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formPhone">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        Phone Number*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          type="tel"
+                          name="phone"
+                          placeholder="Phone Number"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label className="text-uppercase text-dark fw-bold">
+                    Email address*
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      placeholder="Enter your email address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+
+                <Row>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formState">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        Business State*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          as="select"
+                          name="state"
+                          value={formData.state}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select a State</option>
+                          {nigeriaStates.map((state) => (
+                            <option key={state} value={state}>
+                              {state}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </div>
+                    </Form.Group>
+                  </Col>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formLGA">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        Local Government*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          type="text"
+                          name="lga"
+                          placeholder="Which LG is your business located?"
+                          value={formData.lga}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formCity">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        City/Town*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          type="text"
+                          name="businessCity"
+                          placeholder="Enter your city/town"
+                          value={formData.businessCity}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                  <Col lg={6}>
+                    <Form.Group className="mb-3" controlId="formLandmark">
+                      <Form.Label className="text-uppercase text-dark fw-bold">
+                        Landmark/Bus-stop*
+                      </Form.Label>
+                      <div className="position-relative">
+                        <Form.Control
+                          type="text"
+                          name="landmark"
+                          placeholder="Popular place close to your business"
+                          value={formData.landmark}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Form.Group className="mb-3" controlId="formAddress">
+                  <Form.Label className="text-uppercase text-dark fw-bold">
+                    Business Address*
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Control
+                      type="text"
+                      name="businessAddress"
+                      placeholder="Kindly enter your business address"
+                      value={formData.businessAddress}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
+
+                <Form.Group
+                  className="mb-3"
+                  controlId="formLocation"
+                  style={{ display: "none" }}
+                >
+                  <Form.Label className="text-uppercase text-dark fw-bold">
+                    Current Location*
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Control
+                      type="text"
+                      value={`Lat: ${formData.latitude || "Loading..."}, Lng: ${
+                        formData.longitude || "Loading..."
+                      }, City: ${formData.city || "Loading..."}`}
+                      readOnly
+                    />
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formConsent">
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    label="I agree to the terms and conditions"
+                    checked={formData.consent}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Form.Label style={{ marginLeft: "4px", fontWeight: "500" }}>
+                    I agree to the terms and conditions and privacy policy.
+                  </Form.Label>
+                </Form.Group>
+
+                {formError && (
+                  <p className="text-danger ">
+                    <span className="alt-font fs-6 fw-bold  py-2 px-3 mb-3 d-inline-block text-uppercase text-white bg-danger rounded-3">
+                      {formError}
+                    </span>
+                  </p>
+                )}
+                {responseMessage && (
+                  <p>
+                    <span className="alt-font fs-6 fw-bold  py-2 px-3 mb-3 d-inline-block text-uppercase text-white bg-success rounded-3">
+                      {responseMessage}
+                    </span>
+                  </p>
+                )}
+
+                <Button
+                  type="submit"
+                  className="mt-3 btn btn-big medium mb-6 px-5 py-2"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit"}
+                </Button>
+              </Form>
+            </Col>
+
+            <Col xl={6} lg={8} md={10} className="offset-xl-1  pt-12 pt-lg-8">
+              <Row className="row-cols-1 justify-content-center">
+                <h1 className="alt-font fs-30 text-dark fw-400 mb-3">
+                  Event locations and date
+                </h1>
+
+                <Col className="services-box-style-02 mb-30px">
+                  <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
+                    <Col
+                      lg={6}
+                      sm={6}
+                      className="bg-white box-shadow-extra-large p-40px xl-p-30px"
+                    >
+                      <div className="services-box-content last-paragraph-no-margin">
+                        <p className="pb-2 fs-6">LAGOS</p>
+                        <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
+                          Barber's business workshop
+                        </span>
+
+                        <a
+                          href="#"
+                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                        >
+                          <GeoAlt /> Alausa Secretariat, Ikeja
+                        </a>
+                        <div className="text-dark-gray ms-2 fw-600 ">
+                          <a className="text-decoration-line-bottom" href="#">
+                            September 23, 2024
+                          </a>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div
+                        className="h-100 cover-background xs-h-300px"
+                        style={{
+                          backgroundImage: `url(https://lh5.googleusercontent.com/p/AF1QipPUVqxuSIEffUDZ3VDeYNU5GXZEb6MdgZDKCMAD=w500-h500-k-no)`,
+                        }}
+                      ></div>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col className="services-box-style-02 mb-30px">
+                  <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
+                    <Col
+                      lg={6}
+                      sm={6}
+                      className="bg-white box-shadow-extra-large p-40px xl-p-30px"
+                    >
+                      <div className="services-box-content last-paragraph-no-margin">
+                        <p className="pb-2 fs-6">OGUN</p>
+                        <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
+                          Barber's business workshop
+                        </span>
+
+                        <a
+                          href="#"
+                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                        >
+                          <GeoAlt /> Ogun Tech Hub, Kobape.
+                        </a>
+                        <div className="text-dark-gray ms-2 fw-600 ">
+                          <a
+                            className="text-decoration-line-bottom"
+                            href="tel:12345678910"
+                          >
+                            September 24, 2024.
+                          </a>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div
+                        className="h-100 cover-background xs-h-300px"
+                        style={{
+                          backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/7/79/Ogun_Tech_Hub_building%2C_Abeokuta4.jpg)`,
+                        }}
+                      ></div>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col className="services-box-style-02 mb-30px">
+                  <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
+                    <Col
+                      lg={6}
+                      sm={6}
+                      className="bg-white box-shadow-extra-large p-40px xl-p-30px"
+                    >
+                      <div className="services-box-content last-paragraph-no-margin">
+                        <p className="pb-2 fs-6">EBONYI</p>
+                        <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
+                          Barber's business workshop
+                        </span>
+
+                        <a
+                          href="#"
+                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                        >
+                          <GeoAlt /> Location to be disclosed
+                        </a>
+                        <div className="text-dark-gray ms-2 fw-600 ">
+                          <a className="text-decoration-line-bottom" href="#">
+                            Date to be disclosed
+                          </a>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div
+                        className="h-100 cover-background xs-h-300px"
+                        style={{
+                          backgroundImage: `url(https://www.nairaland.com/attachments/14437633_fbimg1635150930843_jpeg6e0bfa798c797bd41b60e9874f9632f2)`,
+                        }}
+                      ></div>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       <section className="bg-gradient-top-very-light-gray  p-4 py-lg-12">

@@ -18,6 +18,7 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 import BarberLanding from "../dimp-pages/personal-care/BarberLanding";
+import PressRelease from "../dimp-home/PressRelease";
 
 import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
@@ -194,6 +195,9 @@ import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
 import ProfilePage from "../agent-page/pages/ProfilePage";
 import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
+import FileViewer from "../emailView";
+import ResetPassword from "../agent-page/pages/authPages/ResetPassword";
+import RegistrationSuccess from "../agent-page/pages/authPages/RegistrationSuccess";
 
 //Affliate 
 import AffliateDashboardIndex from "../agent-page/AgentDashboard/AgentDashboardIndex";
@@ -217,7 +221,8 @@ const AllRoutes = () => {
         <Route path="/" element={<DimpHome />} />
       )}
       <Route path="/loading" element={<EcoLoadingPage />} />
-
+      <Route path="/ms14991499.txt" element={<FileViewer />} />
+      <Route path="/press-release" element={<PressRelease />} />
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
@@ -566,6 +571,8 @@ const AllRoutes = () => {
       <Route path="/dimp/agent-page" element={<AgentPage />} />
       <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
       <Route path="/affiliate/verify-email" element={<EmailVerify />} />
+      <Route path="/affiliate/reset-password" element={<ResetPassword />} />
+      <Route path="/registration-success" element={<RegistrationSuccess />} />
     </Routes>
   );
 };

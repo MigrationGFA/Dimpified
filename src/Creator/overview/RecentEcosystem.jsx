@@ -3,6 +3,7 @@ import { Col, Row, Card, ListGroup, Image } from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import avatar from "../../assets/avatar/person.png";
 
 const RecentEcosystems = ({ title }) => {
   const [ecosystems, setEcosystems] = useState([]);
@@ -48,7 +49,7 @@ const RecentEcosystems = ({ title }) => {
               <Row>
                 <Col xs="auto">
                   <Image
-                    src={ecosystem.logo}
+                    src={ecosystem.logo == null ? avatar : ecosystem.logo}
                     alt={ecosystem.ecosystemName}
                     className="img-fluid rounded img-4by3-lg"
                     style={{

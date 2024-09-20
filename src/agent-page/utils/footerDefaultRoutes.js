@@ -5,4 +5,3 @@ export const footerDefaultLink = [
   { id: 4, link: "/apis", linkName: "APIs" },
   { id: 5, link: "/license", linkName: "API License Agreement" },
 ];
-
