@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Card, Dropdown, Spinner, Button, Table } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Card,
+  Dropdown,
+  Spinner,
+  Button,
+  Table,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -90,7 +98,7 @@ const AffiliateOverview = () => {
         `${import.meta.env.VITE_API_URL}/affiliate-earning-history/${creatorId}`
       );
       setWithdrawData(response.data.affiliateEarningHistory);
-      
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
@@ -220,7 +228,6 @@ const AffiliateOverview = () => {
                         <th>Size Limit</th>
                         <th>Interval</th>
                         <th>Date</th>
-                        
                       </tr>
                     </thead>
                     <tbody>
@@ -236,7 +243,6 @@ const AffiliateOverview = () => {
                             <td>
                               {new Date(entry.createdAt).toLocaleString()}
                             </td>
-                           
                           </tr>
                         ))
                       ) : (
