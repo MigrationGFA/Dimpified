@@ -5,10 +5,12 @@ import { Form, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { showToast } from "../../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // To navigate to the success page
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
@@ -89,14 +91,22 @@ const Register = () => {
 
         <Form.Group controlId="formPassword" className="mb-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder="Enter your password"
-            required
-          />
+          <div className="d-flex align-items-center">
+            <Form.Control
+              type={showNewPassword ? "text" : "password"}
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              placeholder="Enter your password"
+              required
+            />
+            <span
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              style={{ cursor: "pointer", marginLeft: "10px" }}
+            >
+              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
         </Form.Group>
 
         <Button variant="primary" type="submit" className="mt-3">

@@ -7,10 +7,12 @@ import { affiliateLogin } from "../../../features/login";
 import { showToast } from "../../../Components/Showtoast";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../../src/assets/DIMP logo colored.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -113,14 +115,22 @@ const SignIn = () => {
 
           <Form.Group controlId="formPassword" className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={signInFormik.values.password}
-              onChange={signInFormik.handleChange}
-              placeholder="Enter your password"
-              required
-            />
+            <div className="d-flex align-items-center">
+              <Form.Control
+                type={showNewPassword ? "text" : "password"}
+                name="password"
+                value={signInFormik.values.password}
+                onChange={signInFormik.handleChange}
+                placeholder="Enter your password"
+                required
+              />
+              <span
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+              >
+                {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
           </Form.Group>
 
           <Button
@@ -129,7 +139,7 @@ const SignIn = () => {
             className="mt-3"
             disabled={loading}
           >
-            {loading ? ( // Show spinner when loading
+            {loading ? (
               <>
                 <Spinner
                   as="span"
@@ -188,7 +198,7 @@ const SignIn = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title className="w-100 text-center">
-            Reset Successful
+            Reset link Sent
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
