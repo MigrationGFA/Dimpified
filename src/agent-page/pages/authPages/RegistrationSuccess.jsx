@@ -10,7 +10,7 @@ const RegistrationSuccess = () => {
   const email = location.state?.email;
 
   const handleClose = () => {
-    navigate("/dimp/agent-page/auth"); // Redirect to login page or any other page
+    // navigate("/dimp/agent-page/auth");
   };
 
   const handleResendEmail = async () => {
