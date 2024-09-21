@@ -1,5 +1,6 @@
 // import node module libraries
 import React, { Fragment, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import {
   Layers,
@@ -12,18 +13,10 @@ import {
   ArrowRight,
   Calendar2Check,
   Messenger,
-  BarChart,
-  Envelope,
-  Gift,
-  CheckCircle,
   Window,
   CashStack,
   PlayCircleFill,
-  EmojiSmile,
-  ChatSquareDots,
-  TelephoneOutbound,
   GeoAlt,
-  Telephone,
 } from "react-bootstrap-icons";
 import { FaCheck } from "react-icons/fa";
 import {
@@ -66,7 +59,20 @@ const reviews = [
     text: "The insights I get from the analytics tools have helped me understand my customers better and tailor my services to their needs. Highly recommended!",
   },
 ];
+const ScrollToHash = () => {
+  const { hash } = useLocation();
 
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
+
+  return null;
+};
 // import data files
 const BarberLanding = () => {
   const [formData, setFormData] = useState({
@@ -92,45 +98,7 @@ const BarberLanding = () => {
   // Replace with your Google Maps Geocoding API key
   const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
 
-  const nigeriaStates = [
-    "Abia",
-    "Adamawa",
-    "Akwa Ibom",
-    "Anambra",
-    "Bauchi",
-    "Bayelsa",
-    "Benue",
-    "Borno",
-    "Cross River",
-    "Delta",
-    "Ebonyi",
-    "Edo",
-    "Ekiti",
-    "Enugu",
-    "Gombe",
-    "Imo",
-    "Jigawa",
-    "Kaduna",
-    "Kano",
-    "Katsina",
-    "Kebbi",
-    "Kogi",
-    "Kwara",
-    "Lagos",
-    "Nasarawa",
-    "Niger",
-    "Ogun",
-    "Ondo",
-    "Osun",
-    "Oyo",
-    "Plateau",
-    "Rivers",
-    "Sokoto",
-    "Taraba",
-    "Yobe",
-    "Zamfara",
-    "FCT (Abuja)",
-  ];
+  const nigeriaStates = ["Lagos", "Ogun"];
 
   useEffect(() => {
     // Automatically collect geolocation when the component is mounted
@@ -219,6 +187,7 @@ const BarberLanding = () => {
 
   return (
     <Fragment>
+      <ScrollToHash />
       {/*   Landing Page Navbar */}
       <NavbarLanding center />
 
@@ -782,16 +751,12 @@ const BarberLanding = () => {
       <section className="px-4 pb-lg-15 sm-pt-50px">
         <Container>
           <Row className="justify-content-center">
-            <Col
-              lg={5}
-              className="mb-5 appear anime-child anime-complete"
-              id="events"
-            >
+            <Col lg={5} className="mb-5 appear anime-child anime-complete">
               <span className="alt-font fs-6 fw-bold  py-2 px-3 mb-3 d-inline-block text-uppercase text-dark bg-gradient-light-pink-transparent rounded-pill">
                 Upcoming Event
               </span>
-              <h1 className="alt-font fs-40 text-dark fw-400 mb-3">
-                Register for the barbers workshop
+              <h1 className="alt-font fs-40 text-dark fw-400 mb-3" id="events">
+                Register for the free barbers workshop
               </h1>
               <Form onSubmit={handleSubmit} className="contact-form-style-03">
                 {locationError && (
@@ -1025,7 +990,44 @@ const BarberLanding = () => {
                 <h1 className="alt-font fs-30 text-dark fw-400 mb-3">
                   Event locations and date
                 </h1>
-                {/* Services Box Item 1 */}
+
+                <Col className="services-box-style-02 mb-30px">
+                  <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
+                    <Col
+                      lg={6}
+                      sm={6}
+                      className="bg-white box-shadow-extra-large p-40px xl-p-30px"
+                    >
+                      <div className="services-box-content last-paragraph-no-margin">
+                        <p className="pb-2 fs-6">LAGOS</p>
+                        <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
+                          Barber's business workshop
+                        </span>
+
+                        <a
+                          href="#"
+                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                        >
+                          <GeoAlt /> Alausa Secretariat, Ikeja
+                        </a>
+                        <div className="text-dark-gray ms-2 fw-600 ">
+                          <a className="text-decoration-line-bottom" href="#">
+                            September 23, 2024
+                          </a>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div
+                        className="h-100 cover-background xs-h-300px"
+                        style={{
+                          backgroundImage: `url(https://lh5.googleusercontent.com/p/AF1QipPUVqxuSIEffUDZ3VDeYNU5GXZEb6MdgZDKCMAD=w500-h500-k-no)`,
+                        }}
+                      ></div>
+                    </Col>
+                  </Row>
+                </Col>
+
                 <Col className="services-box-style-02 mb-30px">
                   <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
                     <Col
@@ -1036,7 +1038,7 @@ const BarberLanding = () => {
                       <div className="services-box-content last-paragraph-no-margin">
                         <p className="pb-2 fs-6">OGUN</p>
                         <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
-                          Barber's digital transformation workshop
+                          Barber's business workshop
                         </span>
 
                         <a
@@ -1066,44 +1068,6 @@ const BarberLanding = () => {
                   </Row>
                 </Col>
 
-                {/* Services Box Item 2 */}
-                <Col className="services-box-style-02 mb-30px">
-                  <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
-                    <Col
-                      lg={6}
-                      sm={6}
-                      className="bg-white box-shadow-extra-large p-40px xl-p-30px"
-                    >
-                      <div className="services-box-content last-paragraph-no-margin">
-                        <p className="pb-2 fs-6">LAGOS</p>
-                        <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
-                          Barber's digital transformation workshop
-                        </span>
-
-                        <a
-                          href="#"
-                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
-                        >
-                          <GeoAlt /> Lagos State Secretariat
-                        </a>
-                        <div className="text-dark-gray ms-2 fw-600 ">
-                          <a className="text-decoration-line-bottom" href="#">
-                            September 26, 2024
-                          </a>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={6} sm={6}>
-                      <div
-                        className="h-100 cover-background xs-h-300px"
-                        style={{
-                          backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/State_House%2C_Alausa.jpg/337px-State_House%2C_Alausa.jpg)`,
-                        }}
-                      ></div>
-                    </Col>
-                  </Row>
-                </Col>
-
                 <Col className="services-box-style-02 mb-30px">
                   <Row className="g-0 box-shadow-quadruple-large border-radius-6px overflow-hidden">
                     <Col
@@ -1114,7 +1078,7 @@ const BarberLanding = () => {
                       <div className="services-box-content last-paragraph-no-margin">
                         <p className="pb-2 fs-6">EBONYI</p>
                         <span className="d-block text-dark-gray primary-font fw-500 fs-19 mb-10px">
-                          Barber's digital transformation workshop
+                          Barber's business workshop
                         </span>
 
                         <a

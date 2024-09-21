@@ -46,12 +46,12 @@ export const DashboardMenu = [
     icon: "book",
     link: "/creator/dashboard/All-Ecosystem",
   },
-  {
-    id: uuid(),
-    title: "My Users",
-    icon: "user",
-    link: "/creator/my-user",
-  },
+  // {
+  //   id: uuid(),
+  //   title: "My Users",
+  //   icon: "user",
+  //   link: "/creator/my-user",
+  // },
  
   // {
   //   id: uuid(),

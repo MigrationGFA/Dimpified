@@ -63,7 +63,9 @@ const BasicInformation = ({ handleNext }) => {
         </Card.Header>
         <Card.Body>
           <Form.Group className="mb-3">
-            <Form.Label>Category</Form.Label>
+            <Form.Label>
+              Category <span className="text-danger">*</span>
+            </Form.Label>
             <FormSelect
               placeholder="Select Category"
               selectedValue={service.category}
@@ -76,7 +78,9 @@ const BasicInformation = ({ handleNext }) => {
           </Form.Group>
           {isOtherCategory ? (
             <Form.Group className="mb-3">
-              <Form.Label>SubCategory</Form.Label>
+              <Form.Label>
+                SubCategory <span className="text-danger">*</span>
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter SubCategory"
@@ -89,7 +93,9 @@ const BasicInformation = ({ handleNext }) => {
             </Form.Group>
           ) : (
             <Form.Group className="mb-3">
-              <Form.Label>SubCategory</Form.Label>
+              <Form.Label>
+                SubCategory <span className="text-danger">*</span>
+              </Form.Label>
               <FormSelect
                 placeholder="Select SubCategory"
                 selectedValue={service.subCategory}
@@ -103,7 +109,11 @@ const BasicInformation = ({ handleNext }) => {
           )}
         </Card.Body>
       </Card>
-      <Button variant="primary" type="submit">
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={service.category === "" || service.subCategory === ""}
+      >
         Next
       </Button>
     </Form>

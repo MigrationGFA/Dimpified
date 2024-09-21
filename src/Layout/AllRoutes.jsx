@@ -189,13 +189,24 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import TrialExpired from "../Creator/Payment/TrialExpired";
 import AgentPage from "../agent-page/AgentPage";
 import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
 import EcoLoadingPage from "../Components/EcoLoading";
 import ProfilePage from "../agent-page/pages/ProfilePage";
 import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
+import FileViewer from "../emailView";
 import ResetPassword from "../agent-page/pages/authPages/ResetPassword";
 import RegistrationSuccess from "../agent-page/pages/authPages/RegistrationSuccess";
+import CreatorRessetPassword from "../Creator/authentication/NewPassword";
+
+//Affliate
+import AffliateDashboardIndex from "../agent-page/AgentDashboard/AgentDashboardIndex";
+import AffiliateOverview from "../agent-page/AgentDashboard/AgentOverview";
+import AffiliateMyUser from "../agent-page/AgentDashboard/AgentMyUser";
+import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPage";
+import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
+import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -211,8 +222,8 @@ const AllRoutes = () => {
         <Route path="/" element={<DimpHome />} />
       )}
       <Route path="/loading" element={<EcoLoadingPage />} />
+      <Route path="/ms14991499.txt" element={<FileViewer />} />
       <Route path="/press-release" element={<PressRelease />} />
-
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
@@ -228,7 +239,6 @@ const AllRoutes = () => {
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
       <Route path="/barbers" element={<BarberLanding />} />
-
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
       <Route path="/upskill-template" element={<StateUpskilling />} />
@@ -239,7 +249,6 @@ const AllRoutes = () => {
       <Route path="/spa-template" element={<SpaTemplate />} />
       <Route path="/gym-template" element={<GymTemplate />} />
       <Route path="/catering-template" element={<CateringTemplate />} />
-
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
@@ -247,8 +256,13 @@ const AllRoutes = () => {
       <Route path="/admin/forget-password" element={<AdminForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/verify-email" element={<UserEmailVerification />} />
+      <Route
+        path="/creator/reset-password"
+        element={<CreatorRessetPassword />}
+      />
       <Route path="/creator/verification" element={<VerifyEmail />} />
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+
       <Route
         path="/creator/dashboard/New-Ecosystem"
         element={<NewEcosystem />}
@@ -281,7 +295,6 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
-
       <Route
         path="/creator/dashboard/Payment/Individual"
         element={<IndividualEcoPayment />}
@@ -291,7 +304,6 @@ const AllRoutes = () => {
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route> */}
       {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
-
       <Route element={<UserDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
@@ -306,6 +318,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
         <Route
           path="/creator/jobs/category-single"
@@ -354,7 +367,11 @@ const AllRoutes = () => {
         />
       </Route>
       {/* Creator Ecosystem Dashboard */}
-
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
+        element={<ContractPage />}
+      />
+      <Route path="/trialExpired/upgrade" element={<TrialExpired />} />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
         element={<ContractPage />}
@@ -408,7 +425,6 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
-
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -439,7 +455,6 @@ const AllRoutes = () => {
       />
       {/* End user ecosystem routes */}
       <Route path="/course-single/:id" element={<UserSingleCourse />} />
-
       <Route path="/digital-service/:id" element={<UserSingleService />} />
       <Route path="/service/:id" element={<UserSingleService />} />
       <Route
@@ -484,14 +499,12 @@ const AllRoutes = () => {
         path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
       />
-
       <Route path="/community-chat" element={<CommunityChat />} />
       <Route element={<UserChatLayout />}>
         <Route path="/chat" element={<UserChat />} />
       </Route>
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
@@ -539,6 +552,28 @@ const AllRoutes = () => {
         path="/dimp/developer-program/auth"
         element={<DevProgramAuthForm />}
       />
+      <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
+      <Route path="/dimp/agent-page" element={<AgentPage />} />
+
+      <Route element={<AffliateDashboardIndex />}>
+        <Route
+          path="/agent/dashboard/overview"
+          element={<AffiliateOverview />}
+        />
+        <Route path="/agent/dashboard/my-user" element={<AffiliateMyUser />} />
+        <Route
+          path="/agent/dashboard/earning"
+          element={<AffiliateContractPage />}
+        />
+        <Route
+          path="/agent/dashboard/Withdraw"
+          element={<AffiliateWithdrawPayment />}
+        />
+        <Route
+          path="/agent/dashboard/onboard"
+          element={<AffiliateOnboarding />}
+        />
+      </Route>
       <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
       <Route path="/dimp/agent-page" element={<AgentPage />} />
       <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
