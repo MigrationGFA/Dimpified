@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../../src/assets/DIMP logo colored.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-
 const SignIn = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
@@ -116,22 +115,22 @@ const SignIn = () => {
 
           <Form.Group controlId="formPassword" className="mb-3">
             <Form.Label>Password</Form.Label>
-          <div className="d-flex align-items-center">
-            <Form.Control
-              type="password"
-              name="password"
-              value={signInFormik.values.password}
-              onChange={signInFormik.handleChange}
-              placeholder="Enter your password"
-              required
-            />
-            <span
-              onClick={() => setShowNewPassword(!showNewPassword)}
-              style={{ cursor: "pointer", marginLeft: "10px" }}
-            >
-              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+            <div className="d-flex align-items-center">
+              <Form.Control
+                type={showNewPassword ? "text" : "password"}
+                name="password"
+                value={signInFormik.values.password}
+                onChange={signInFormik.handleChange}
+                placeholder="Enter your password"
+                required
+              />
+              <span
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+              >
+                {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
           </Form.Group>
 
           <Button
