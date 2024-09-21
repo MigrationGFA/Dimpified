@@ -4,17 +4,19 @@ import { FaUser, FaBuilding, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { showToast } from "../../Components/Showtoast"; 
+import { showToast } from "../../Components/Showtoast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../assets/DIMP logo colored.png";
-import {useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
-
 
 // Define the Yup schema
 const formSchema = yup.object().shape({
-  email: yup.string().required("Email cannot be empty").email("Invalid email address"),
+  email: yup
+    .string()
+    .required("Email cannot be empty")
+    .email("Invalid email address"),
   password: yup.string().required("Password is required"),
   organisation: yup.string().when("userRole", {
     is: "enterprise",
@@ -30,7 +32,7 @@ const AffiliateOnboarding = () => {
   const [userRole, setUserRole] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false); 
+  const [isRegistered, setIsRegistered] = useState(false);
   const user = useSelector((state) => state.authentication.user);
   const affiliateId = user?.data?.AffiliateId;
   const authFetch = AxiosInterceptor();
@@ -58,7 +60,8 @@ const AffiliateOnboarding = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     const payload = {
-      organizationName: userRole === "enterprise" ? data.organisation : data.name,
+      organizationName:
+        userRole === "enterprise" ? data.organisation : data.name,
       email: data.email,
       password: data.password,
       role: userRole === "enterprise" ? "enterprise" : "consumer",
@@ -66,7 +69,10 @@ const AffiliateOnboarding = () => {
     };
 
     try {
-      await authFetch.post(`${import.meta.env.VITE_API_URL}/affiliate-onboard-creator`, payload);
+      await authFetch.post(
+        `${import.meta.env.VITE_API_URL}/affiliate-onboard-creator`,
+        payload
+      );
       setIsRegistered(true);
       showToast("Successfully Registered! Please verify your email.");
       sessionStorage.setItem("email", data.email);
@@ -83,7 +89,10 @@ const AffiliateOnboarding = () => {
     const email = sessionStorage.getItem("email");
 
     try {
-      await authFetch.post(`${import.meta.env.VITE_API_URL}/creator/resend-email`, { email });
+      await authFetch.post(
+        `${import.meta.env.VITE_API_URL}/creator/resend-email`,
+        { email }
+      );
       showToast("Verification link has been resent!");
     } catch (error) {
       showToast(error.response?.data?.msg || "Failed to resend email.");
@@ -92,11 +101,9 @@ const AffiliateOnboarding = () => {
     }
   };
 
-
   const handleGoBackToForm = () => {
     setIsRegistered(false);
   };
-
 
   // Form to show when not registered yet
   const registrationForm = (
@@ -104,23 +111,27 @@ const AffiliateOnboarding = () => {
       <h3 className="text-center mb-4">Affiliate Onboarding</h3>
 
       {/* User Role Selection */}
-      <div className="d-flex justify-content-around mb-4">
-        <Button
-          variant={userRole === "consumer" ? "primary" : "outline-primary"}
-          className="px-4"
-          onClick={() => handleRoleSelection("consumer")}
-        >
-          <FaUser className="me-2" />
-          Individual
-        </Button>
-        <Button
-          variant={userRole === "enterprise" ? "primary" : "outline-primary"}
-          className="px-4"
-          onClick={() => handleRoleSelection("enterprise")}
-        >
-          <FaBuilding className="me-2" />
-          Enterprise
-        </Button>
+      <div className="row justify-content-center mb-4">
+        <div className="col-12 col-md-6 col-lg-4 mb-2">
+          <Button
+            variant={userRole === "consumer" ? "primary" : "outline-primary"}
+            className="w-100"
+            onClick={() => handleRoleSelection("consumer")}
+          >
+            <FaUser className="me-2" />
+            Individual
+          </Button>
+        </div>
+        <div className="col-12 col-md-6 col-lg-4 mb-2">
+          <Button
+            variant={userRole === "enterprise" ? "primary" : "outline-primary"}
+            className="w-100"
+            onClick={() => handleRoleSelection("enterprise")}
+          >
+            <FaBuilding className="me-2" />
+            Enterprise
+          </Button>
+        </div>
       </div>
 
       {userRole && (
@@ -148,7 +159,9 @@ const AffiliateOnboarding = () => {
                 placeholder="Enter your name"
                 {...register("name")}
               />
-              {errors.name && <p className="text-danger">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-danger">{errors.name.message}</p>
+              )}
             </Form.Group>
           )}
 
@@ -160,7 +173,9 @@ const AffiliateOnboarding = () => {
               placeholder="Enter email"
               {...register("email")}
             />
-            {errors.email && <p className="text-danger">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-danger">{errors.email.message}</p>
+            )}
           </Form.Group>
 
           {/* Password Input */}
@@ -180,7 +195,9 @@ const AffiliateOnboarding = () => {
                 {passwordVisible ? <FaEyeSlash /> : <FaEye />}
               </div>
             </div>
-            {errors.password && <p className="text-danger">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-danger">{errors.password.message}</p>
+            )}
           </Form.Group>
 
           {/* Submit Button */}
@@ -198,18 +215,40 @@ const AffiliateOnboarding = () => {
   const verifyEmailContent = (
     <>
       <Row className="align-items-center justify-content-center">
-        <Col lg={1} md={1} className="align-items-center justify-content-center">
-          <FontAwesomeIcon icon={faArrowLeft} size="lg" onClick={handleGoBackToForm} style={{ cursor: "pointer" }} />
+        <Col
+          lg={1}
+          md={1}
+          className="align-items-center justify-content-center"
+        >
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            size="lg"
+            onClick={handleGoBackToForm}
+            style={{ cursor: "pointer" }}
+          />
         </Col>
-        <Col lg={10} md={9} className="d-flex align-items-center justify-content-center">
+        <Col
+          lg={10}
+          md={9}
+          className="d-flex align-items-center justify-content-center"
+        >
           <Navbar.Brand>
-            <Image src={Logo} className="mb-4 text-center" alt="logo" style={{ height: "100px" }} />
+            <Image
+              src={Logo}
+              className="mb-4 text-center"
+              alt="logo"
+              style={{ height: "100px" }}
+            />
           </Navbar.Brand>
         </Col>
       </Row>
 
       <Row className="align-items-center justify-content-center mt-5">
-        <Col lg={1} md={1} className="d-flex align-items-center justify-content-center">
+        <Col
+          lg={1}
+          md={1}
+          className="d-flex align-items-center justify-content-center"
+        >
           <FontAwesomeIcon icon={faEnvelope} size="3x" />
         </Col>
         <Col lg={12} md={12} className="text-center mt-4">
@@ -218,11 +257,18 @@ const AffiliateOnboarding = () => {
           <p>
             Didn&apos;t receive any email?
             {loading ? (
-              <div className="spinner-border spinner-border-sm text-primary" role="status">
+              <div
+                className="spinner-border spinner-border-sm text-primary"
+                role="status"
+              >
                 <span className="visually-hidden">Loading...</span>
               </div>
             ) : (
-              <span className="text-primary ml-6" style={{ cursor: "pointer" }} onClick={handleResendEmail}>
+              <span
+                className="text-primary ml-6"
+                style={{ cursor: "pointer" }}
+                onClick={handleResendEmail}
+              >
                 Resend link
               </span>
             )}

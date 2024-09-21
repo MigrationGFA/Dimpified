@@ -138,15 +138,26 @@ const Payouts = () => {
       const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
       );
-
+  
       if (response.data) {
-        setEarnings(response.data.totalEarnings);
-        setAvailableBalance(response.data.availableBalance);
+        if (response.data.totalEarnings !== undefined && response.data.availableBalance !== undefined) {
+          setEarnings(response.data.totalEarnings);
+          setAvailableBalance(response.data.availableBalance);
+        } else {
+          setEarnings(0); 
+          setAvailableBalance(0);
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  
+  useEffect(() => {
+    // Fetch earnings data when component mounts
+    fetchData();
+  }, [ecosystemDomain]);
+  
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -186,22 +197,29 @@ const Payouts = () => {
     indexOfLastAccount
   );
 
-  // Function to retrieve bank data from the server
-  const fetchBankData = async () => {
-    try {
-      const response = await authFetch.get(
-        `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
-      );
-      const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
+  
+const fetchBankData = async () => {
+  try {
+    const response = await authFetch.get(
+      `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
+    );
+
+    if (response.data.accountDetails && response.data.accountDetails.length > 0) {
+      const fetchedBankData = response.data.accountDetails;
       setBankData(fetchedBankData);
-    } catch (error) {
-      console.error("Error fetching bank data:", error);
+    } else {
+      setBankData([]); 
     }
-  };
-  useEffect(() => {
-    // Fetch bank data from server
-    fetchBankData();
-  }, [userId]);
+  } catch (error) {
+    console.error("Error fetching bank data:", error);
+  }
+};
+
+useEffect(() => {
+  
+  fetchBankData();
+}, [userId]);
+
 
   const handleSave = async () => {
     setLoadingSave(true);

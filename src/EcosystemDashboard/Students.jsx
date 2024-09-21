@@ -6,8 +6,10 @@ import StudentsListCard from './StudentsListCard';
 import InstructorProfileLayout from './InstructorProfileLayout';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import AxiosInterceptor from '../Components/AxiosInterceptor';
 
 const Students = () => {
+    const authFetch = AxiosInterceptor();
     let {ecosystemDomain} =useParams()
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ const Students = () => {
         const fetchStudents = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/ecosystem-students/${ecosystemDomain}`);
+                const response = await authFetch.get(`${import.meta.env.VITE_API_URL}/ecosystem-students/${ecosystemDomain}`);
                 setStudents(response.data.ecosystemUser);
                 setLoading(false);
             } catch (error) {
