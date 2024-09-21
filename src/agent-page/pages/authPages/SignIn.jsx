@@ -188,7 +188,7 @@ const SignIn = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title className="w-100 text-center">
-            Reset Successful
+            Reset link Sent
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
