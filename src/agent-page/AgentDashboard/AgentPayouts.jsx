@@ -54,7 +54,6 @@ import {
 } from "../../data/charts/ChartData";
 
 const Payouts = () => {
-
   const authFetch = AxiosInterceptor();
 
   const userId = useSelector(
@@ -83,15 +82,10 @@ const Payouts = () => {
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
 
-  
-
   const [earnings, setEarnings] = useState({
     Naira: 0,
     Dollar: 0,
-    EUR: 0,
-    GBP: 0,
   });
-  
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -111,12 +105,13 @@ const Payouts = () => {
       );
 
       if (response.data) {
-        if (response.data.affiliateEarning !== undefined && response.data.affiliateEarning !== undefined) {
+        if (
+          response.data.affiliateEarning !== undefined &&
+          response.data.affiliateEarning !== undefined
+        ) {
           setEarnings(response.data.affiliateEarning);
-        
         } else {
-          setEarnings(0); 
-          setAvailableBalance(0);
+          setEarnings(0);
         }
       }
     } catch (error) {
@@ -168,11 +163,14 @@ const Payouts = () => {
       const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/affiliate/get-my-account/${userId}`
       );
-      if (response.data.accountDetails && response.data.accountDetails.length > 0) {
+      if (
+        response.data.accountDetails &&
+        response.data.accountDetails.length > 0
+      ) {
         const fetchedBankData = response.data.accountDetails;
         setBankData(fetchedBankData);
       } else {
-        setBankData([]); 
+        setBankData([]);
       }
     } catch (error) {
       console.error("Error fetching bank data:", error);
@@ -194,7 +192,6 @@ const Payouts = () => {
           accountNumber,
           bankName,
           currency,
-          
         }
       );
 
@@ -222,22 +219,24 @@ const Payouts = () => {
       setEditedAccount({ ...accountToEdit, accountId: id });
       setShowEditModal(true);
     } else {
-      console.error('Account not found');
+      console.error("Account not found");
     }
   };
 
   const handleEditSave = async () => {
     setLoadingWithdraw(true);
     try {
-      await authFetch.put(`${import.meta.env.VITE_API_URL}/affiliate/edit-my-account`, {
-        affiliateId: userId,
-        accountId: editedAccount.accountId,
-        accountName: editedAccount.accountName,
-        bankName: editedAccount.bankName,
-        accountNumber: editedAccount.accountNumber,
-        // currency: editedAccount.currency,
-        
-      });
+      await authFetch.put(
+        `${import.meta.env.VITE_API_URL}/affiliate/edit-my-account`,
+        {
+          affiliateId: userId,
+          accountId: editedAccount.accountId,
+          accountName: editedAccount.accountName,
+          bankName: editedAccount.bankName,
+          accountNumber: editedAccount.accountNumber,
+          // currency: editedAccount.currency,
+        }
+      );
       fetchBankData();
 
       setShowEditModal(false);
@@ -400,7 +399,6 @@ const Payouts = () => {
     return "";
   };
 
-
   return (
     <Card className="border-0">
       <Card.Header>
@@ -414,7 +412,7 @@ const Payouts = () => {
       </Card.Header>
       <Card.Body>
         <AlertDismissible />
-        
+
         <Row className="mt-6">
           <Col xl={4} lg={4} md={12} sm={12} className="mb-3 mb-lg-0">
             <div className="text-center">
@@ -466,7 +464,7 @@ const Payouts = () => {
                 <Modal.Body>
                   <div className="border p-4 rounded-3 mt-3">
                     <h4>Select Banks:</h4>
-                    {bankData.length > 0 ? (
+                    {bankData && bankData.length > 0 ? (
                       <select
                         className="form-select"
                         defaultValue=""
@@ -495,7 +493,7 @@ const Payouts = () => {
                       Ledger Balance: {formatPrice(selectedCurrency)}{" "}
                       {earnings.Naira || 0.0}
                     </h4>
-                   
+
                     <Form.Group controlId="withdrawnAmount">
                       <Form.Label>
                         Withdrawn Amount {formatPrice(selectedCurrency)}
@@ -606,7 +604,7 @@ const Payouts = () => {
                   )}
                 </Modal.Footer>
               </Modal>
-              {bankData.length > 0 && (
+              {bankData && bankData.length > 0 && (
                 <div className="mt-3 mb-3">
                   {currentAccounts.map((account, index) => (
                     <div
@@ -636,7 +634,7 @@ const Payouts = () => {
                   ))}
                 </div>
               )}
-              {bankData.length > accountsPerPage && (
+              {bankData && bankData.length > accountsPerPage && (
                 <ReactPaginate
                   previousLabel={<ChevronLeft size="14px" />}
                   nextLabel={<ChevronRight size="14px" />}
@@ -733,14 +731,15 @@ const Payouts = () => {
                     Close
                   </Button>
                   {loadingWithdraw ? (
-                    <Button variant="primary" disabled  style={{ opacity: ".7" }}>
+                    <Button
+                      variant="primary"
+                      disabled
+                      style={{ opacity: ".7" }}
+                    >
                       <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
-                    <Button
-                      variant="primary"
-                      onClick={handleEditSave}
-                    >
+                    <Button variant="primary" onClick={handleEditSave}>
                       Save
                     </Button>
                   )}
