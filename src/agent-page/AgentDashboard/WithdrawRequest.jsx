@@ -8,27 +8,35 @@ import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import Pagination from "../../Components/elements/advance-table/Pagination";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faEnvelope,
+  faShareAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const WithdrawPayment = () => {
   const authFetch = AxiosInterceptor();
   const { ecosystemDomain } = useParams();
-  const [withdrawalBlock, setWithdrawalBlock] = useState({
-  });
+  const [withdrawalBlock, setWithdrawalBlock] = useState({});
   const [withdrawalRequests, setWithdrawalRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Cloading, setCloading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
 
-  const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.AffiliateId
+  const creatorId = useSelector((state) => state.authentication.user?.data?.id);
+  const AffiliateId = useSelector(
+    (state) => state.authentication.user?.data?.affiliateId
   );
 
   useEffect(() => {
     const fetchWithdrawalRequests = async () => {
       try {
         const response = await authFetch.get(
-          `${import.meta.env.VITE_API_URL}/affiliate-withdrawal-requests/${creatorId}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/affiliate-withdrawal-requests/${creatorId}`
         );
         setWithdrawalRequests(response.data.withdrawalRequests || []);
         setLoading(false);
@@ -40,20 +48,22 @@ const WithdrawPayment = () => {
 
     fetchWithdrawalRequests();
 
-  const fetchWithdrawalBlock = async() => {
-    try {
-      const response = await authFetch.get(
-        `${import.meta.env.VITE_API_URL}/affiliate-total-withdrawals-stats/${creatorId}`
-      );
-      setWithdrawalBlock(response.data || []);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching withdrawal requests:", error);
-      setLoading(false);
-    }
-  }
+    const fetchWithdrawalBlock = async () => {
+      try {
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/affiliate-total-withdrawals-stats/${creatorId}`
+        );
+        setWithdrawalBlock(response.data || []);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching withdrawal requests:", error);
+        setLoading(false);
+      }
+    };
 
-  fetchWithdrawalBlock();
+    fetchWithdrawalBlock();
   }, [ecosystemDomain]);
 
   // Handle action (e.g., mark request as completed)
@@ -83,6 +93,29 @@ const WithdrawPayment = () => {
     }
   };
 
+  // Function to handle sharing the onboard link
+  const handleShare = () => {
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${AffiliateId}`;
+
+    // Check if Web Share API is supported by the browser
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Join as a Creator",
+          text: "Join our platform through this link:",
+          url: onboardLink,
+        })
+        .then(() => showToast("Onboard link shared successfully!"))
+        .catch((error) => showToast("Error sharing the onboard link"));
+    } else {
+      // Fallback for browsers that don't support Web Share API (e.g., Firefox)
+      navigator.clipboard
+        .writeText(onboardLink)
+        .then(() => showToast("Onboard link copied to clipboard!"))
+        .catch((error) => showToast("Failed to copy link to clipboard"));
+    }
+  };
+
   // Get current requests for pagination
   const indexOfLastRequest = currentPage * itemsPerPage;
   const indexOfFirstRequest = indexOfLastRequest - itemsPerPage;
@@ -102,6 +135,13 @@ const WithdrawPayment = () => {
             <div className="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center">
               <div className="mb-3 mb-lg-0">
                 <h1 className="mb-0 h2 fw-bold">Withdraw Payment</h1>
+              </div>
+              {/* Share Onboard Link Button */}
+              <div className="text-end mb-4">
+                <Button variant="secondary" onClick={handleShare}>
+                  <FontAwesomeIcon icon={faShareAlt} className="me-2" />
+                  Share Onboard Link
+                </Button>
               </div>
             </div>
           </Col>
@@ -187,16 +227,13 @@ const WithdrawPayment = () => {
                         <td>#00{request.id}AWR</td>
                         <td>₦{numberWithCommas(request.amount)}</td>
                         <td>
-                          <span>{request.AffiliateAccount
-.accountNumber}</span>
+                          <span>{request.AffiliateAccount.accountNumber}</span>
                           <br />
-                          <span>{request.AffiliateAccount
-.accountName}</span>
+                          <span>{request.AffiliateAccount.accountName}</span>
                           <br />
-                          <p>{request.AffiliateAccount
-.bankName}</p>
+                          <p>{request.AffiliateAccount.bankName}</p>
                         </td>
-                      
+
                         <td>
                           {new Date(request.requestedAt).toLocaleString()}
                         </td>
