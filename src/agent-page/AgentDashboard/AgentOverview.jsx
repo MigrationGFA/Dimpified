@@ -9,6 +9,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
@@ -22,6 +23,11 @@ import {
   OrderColumnChartOptions,
 } from "../../data/charts/AdminChartData";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import {
+  faArrowLeft,
+  faEnvelope,
+  faShareAlt,
+} from "@fortawesome/free-solid-svg-icons"; 
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Link
@@ -69,8 +75,37 @@ const AffiliateOverview = () => {
 
   // Get the creator ID from the Redux store
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.AffiliateId
+    (state) => state.authentication.user?.data?.id
   );
+
+  const AffiliateId = useSelector(
+    (state) => state.authentication.user?.data?.affiliateId
+  );
+
+  
+
+  // Function to handle sharing the onboard link
+  const handleShare = () => {
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${AffiliateId}`;
+
+    // Check if Web Share API is supported by the browser
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Join as a Creator",
+          text: "Join our platform through this link:",
+          url: onboardLink,
+        })
+        .then(() => showToast("Onboard link shared successfully!"))
+        .catch((error) => showToast("Error sharing the onboard link"));
+    } else {
+      // Fallback for browsers that don't support Web Share API (e.g., Firefox)
+      navigator.clipboard
+        .writeText(onboardLink)
+        .then(() => showToast("Onboard link copied to clipboard!"))
+        .catch((error) => showToast("Failed to copy link to clipboard"));
+    }
+  };
 
   useEffect(() => {
     if (creatorId) {
@@ -126,14 +161,13 @@ const AffiliateOverview = () => {
             <div className="mb-3 mb-lg-0">
               <h1 className="mb-0 h2 fw-bold">Dashboard</h1>
             </div>
-            {/* <div>
-              <Link to={getLink()}>
-                <Button variant="primary">
-                  <i className="fe fe-edit me-2"></i>
-                  Create New Ecosystem
-                </Button>
-              </Link>
-            </div> */}
+            {/* Share Onboard Link Button */}
+            <div className="text-end mb-4">
+              <Button variant="secondary" onClick={handleShare}>
+                <FontAwesomeIcon icon={faShareAlt} className="me-2" />
+                Share Onboard Link
+              </Button>
+            </div>
           </div>
         </Col>
       </Row>

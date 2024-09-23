@@ -6,9 +6,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { showToast } from "../../Components/Showtoast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faEnvelope,
+  faShareAlt,
+} from "@fortawesome/free-solid-svg-icons"; // Import the share icon
 import Logo from "../../assets/DIMP logo colored.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 // Define the Yup schema
@@ -34,7 +38,10 @@ const AffiliateOnboarding = () => {
   const [loading, setLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const user = useSelector((state) => state.authentication.user);
-  const affiliateId = user?.data?.AffiliateId;
+  const creatorId = user?.data?.id; // Affiliate ID from user data
+  const AffiliateId = useSelector(
+    (state) => state.authentication.user?.data?.affiliateId
+  );
   const authFetch = AxiosInterceptor();
 
   // Set up useForm with Yup validation
@@ -65,7 +72,7 @@ const AffiliateOnboarding = () => {
       email: data.email,
       password: data.password,
       role: userRole === "enterprise" ? "enterprise" : "consumer",
-      affiliateId,
+      affiliateId: creatorId,
     };
 
     try {
@@ -80,6 +87,29 @@ const AffiliateOnboarding = () => {
       showToast(error.response?.data?.msg || "Registration failed");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Function to handle sharing the onboard link
+  const handleShare = () => {
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${AffiliateId}`;
+
+    // Check if Web Share API is supported by the browser
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Join as a Creator",
+          text: "Join our platform through this link:",
+          url: onboardLink,
+        })
+        .then(() => showToast("Onboard link shared successfully!"))
+        .catch((error) => showToast("Error sharing the onboard link"));
+    } else {
+      // Fallback for browsers that don't support Web Share API (e.g., Firefox)
+      navigator.clipboard
+        .writeText(onboardLink)
+        .then(() => showToast("Onboard link copied to clipboard!"))
+        .catch((error) => showToast("Failed to copy link to clipboard"));
     }
   };
 
@@ -107,108 +137,120 @@ const AffiliateOnboarding = () => {
 
   // Form to show when not registered yet
   const registrationForm = (
-    <>
-      <h3 className="text-center mb-4">Affiliate Onboarding</h3>
-
-      {/* User Role Selection */}
-      <div className="row justify-content-center mb-4">
-        <div className="col-12 col-md-6 col-lg-4 mb-2">
-          <Button
-            variant={userRole === "consumer" ? "primary" : "outline-primary"}
-            className="w-100"
-            onClick={() => handleRoleSelection("consumer")}
-          >
-            <FaUser className="me-2" />
-            Individual
-          </Button>
-        </div>
-        <div className="col-12 col-md-6 col-lg-4 mb-2">
-          <Button
-            variant={userRole === "enterprise" ? "primary" : "outline-primary"}
-            className="w-100"
-            onClick={() => handleRoleSelection("enterprise")}
-          >
-            <FaBuilding className="me-2" />
-            Enterprise
-          </Button>
-        </div>
+    <div>
+      {/* Share Onboard Link Button */}
+      <div className="text-end mb-4">
+        <Button variant="secondary" onClick={handleShare}>
+          <FontAwesomeIcon icon={faShareAlt} className="me-2" />
+          Share Onboard Link
+        </Button>
       </div>
 
-      {userRole && (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          {/* Conditional input based on user role */}
-          {userRole === "enterprise" && (
-            <Form.Group controlId="organisationName" className="mb-3">
-              <Form.Label>Organisation Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter organisation name"
-                {...register("organisation")}
-              />
-              {errors.organisation && (
-                <p className="text-danger">{errors.organisation.message}</p>
-              )}
-            </Form.Group>
-          )}
+      <div>
+        <h3 className="text-center mb-4">Affiliate Onboarding</h3>
 
-          {userRole === "consumer" && (
-            <Form.Group controlId="name" className="mb-3">
-              <Form.Label>Individual Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your name"
-                {...register("name")}
-              />
-              {errors.name && (
-                <p className="text-danger">{errors.name.message}</p>
-              )}
-            </Form.Group>
-          )}
-
-          {/* Email Input */}
-          <Form.Group controlId="email" className="mb-3">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className="text-danger">{errors.email.message}</p>
-            )}
-          </Form.Group>
-
-          {/* Password Input */}
-          <Form.Group controlId="password" className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <div className="position-relative">
-              <Form.Control
-                type={passwordVisible ? "text" : "password"}
-                placeholder="Enter password"
-                {...register("password")}
-              />
-              <div
-                className="position-absolute end-0 top-50 translate-middle-y"
-                style={{ right: "10px", cursor: "pointer" }}
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-              </div>
-            </div>
-            {errors.password && (
-              <p className="text-danger">{errors.password.message}</p>
-            )}
-          </Form.Group>
-
-          {/* Submit Button */}
-          <div className="d-grid gap-2">
-            <Button variant="primary" type="submit" disabled={loading}>
-              {loading ? "Registering..." : "Register"}
+        {/* User Role Selection */}
+        <div className="row justify-content-center mb-4">
+          <div className="col-12 col-md-6 col-lg-4 mb-2">
+            <Button
+              variant={userRole === "consumer" ? "primary" : "outline-primary"}
+              className="w-100"
+              onClick={() => handleRoleSelection("consumer")}
+            >
+              <FaUser className="me-2" />
+              Individual
             </Button>
           </div>
-        </Form>
-      )}
-    </>
+          <div className="col-12 col-md-6 col-lg-4 mb-2">
+            <Button
+              variant={
+                userRole === "enterprise" ? "primary" : "outline-primary"
+              }
+              className="w-100"
+              onClick={() => handleRoleSelection("enterprise")}
+            >
+              <FaBuilding className="me-2" />
+              Enterprise
+            </Button>
+          </div>
+        </div>
+
+        {userRole && (
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            {/* Conditional input based on user role */}
+            {userRole === "enterprise" && (
+              <Form.Group controlId="organisationName" className="mb-3">
+                <Form.Label>Organisation Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter organisation name"
+                  {...register("organisation")}
+                />
+                {errors.organisation && (
+                  <p className="text-danger">{errors.organisation.message}</p>
+                )}
+              </Form.Group>
+            )}
+
+            {userRole === "consumer" && (
+              <Form.Group controlId="name" className="mb-3">
+                <Form.Label>Individual Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your name"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-danger">{errors.name.message}</p>
+                )}
+              </Form.Group>
+            )}
+
+            {/* Email Input */}
+            <Form.Group controlId="email" className="mb-3">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-danger">{errors.email.message}</p>
+              )}
+            </Form.Group>
+
+            {/* Password Input */}
+            <Form.Group controlId="password" className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <div className="position-relative">
+                <Form.Control
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="Enter password"
+                  {...register("password")}
+                />
+                <div
+                  className="position-absolute end-0 top-50 translate-middle-y"
+                  style={{ right: "10px", cursor: "pointer" }}
+                  onClick={togglePasswordVisibility}
+                >
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                </div>
+              </div>
+              {errors.password && (
+                <p className="text-danger">{errors.password.message}</p>
+              )}
+            </Form.Group>
+
+            {/* Submit Button */}
+            <div className="d-grid gap-2">
+              <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? "Registering..." : "Register"}
+              </Button>
+            </div>
+          </Form>
+        )}
+      </div>
+    </div>
   );
 
   // Content to show after successful registration
@@ -279,9 +321,9 @@ const AffiliateOnboarding = () => {
   );
 
   return (
-    <div className="container mt-5">
+    <div className=" ">
       <Row className="justify-content-center">
-        <Col lg={6} md={8} sm={12}>
+        <Col lg={12} md={8} sm={12}>
           <Card className="shadow-sm p-5">
             {isRegistered ? verifyEmailContent : registrationForm}
           </Card>

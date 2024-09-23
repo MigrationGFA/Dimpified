@@ -42,7 +42,12 @@ import Pagination from "../../Components/elements/advance-table/Pagination";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
 import StatTopIcon from "../../Components/marketing/common/stats/StatTopIcon";
 import { FormSelect } from "../../Components/elements/form-select/FormSelect";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faEnvelope,
+  faShareAlt,
+} from "@fortawesome/free-solid-svg-icons";
 // import utility file
 import { numberWithCommas } from "../../helper/utils";
 
@@ -57,7 +62,10 @@ const Payouts = () => {
   const authFetch = AxiosInterceptor();
 
   const userId = useSelector(
-    (state) => state.authentication.user?.data?.AffiliateId || "Unknown User"
+    (state) => state.authentication.user?.data?.id || "Unknown User"
+  );
+  const AffiliateId = useSelector(
+    (state) => state.authentication.user?.data?.affiliateId
   );
 
   const [filtering, setFiltering] = useState("");
@@ -86,6 +94,28 @@ const Payouts = () => {
     Naira: 0,
     Dollar: 0,
   });
+  // Function to handle sharing the onboard link
+  const handleShare = () => {
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${AffiliateId}`;
+
+    // Check if Web Share API is supported by the browser
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Join as a Creator",
+          text: "Join our platform through this link:",
+          url: onboardLink,
+        })
+        .then(() => showToast("Onboard link shared successfully!"))
+        .catch((error) => showToast("Error sharing the onboard link"));
+    } else {
+      // Fallback for browsers that don't support Web Share API (e.g., Firefox)
+      navigator.clipboard
+        .writeText(onboardLink)
+        .then(() => showToast("Onboard link copied to clipboard!"))
+        .catch((error) => showToast("Failed to copy link to clipboard"));
+    }
+  };
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -402,12 +432,21 @@ const Payouts = () => {
   return (
     <Card className="border-0">
       <Card.Header>
-        <div className="mb-3 mb-lg-0">
-          <h3 className="mb-0">Payout Method</h3>
-          <p className="mb-0">
-            Payouts Dashboard is a quick overview of all current and old payment
-            requests.
-          </p>
+        <div className="d-flex justify-content-between">
+          <div className="mb-3 mb-lg-0">
+            <h3 className="mb-0">Payout Method</h3>
+            <p className="mb-0">
+              Payouts Dashboard is a quick overview of all current and old
+              payment requests.
+            </p>
+          </div>
+          {/* Share Onboard Link Button */}
+          <div className="text-end mb-4">
+            <Button variant="secondary" onClick={handleShare}>
+              <FontAwesomeIcon icon={faShareAlt} className="me-2" />
+              Share Onboard Link
+            </Button>
+          </div>
         </div>
       </Card.Header>
       <Card.Body>

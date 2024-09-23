@@ -1,7 +1,13 @@
 import { Fragment, useEffect, useState } from "react";
-import { Col, Row, Card, Tab, Breadcrumb } from "react-bootstrap";
+import { Col, Row, Card, Tab, Breadcrumb, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import AxiosInterceptor from "../../Components/AxiosInterceptor";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faEnvelope,
+  faShareAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 // import custom components
 import GridListViewButton from "../../Components/elements/miscellaneous/GridListViewButton";
@@ -11,15 +17,20 @@ import UsersGridView from "../AgentDashboard/UsersGridCard";
 import UsersListItems from "../AgentDashboard/UsersListItems";
 
 const Instructor = () => {
-  const [userDetails, setUserDetails] = useState([]); 
+  const [userDetails, setUserDetails] = useState([]);
   const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
-  const userId = user?.data?.AffiliateId || "Unknown User";
+  const userId = user?.data?.id || "Unknown User";
+  const affiliateId = useSelector(
+    (state) => state.authentication.user?.data?.affiliateId
+  );
 
   const getMyUser = async () => {
     try {
       const response = await authFetch.get(
-        `${import.meta.env.VITE_API_URL}/affiliate-all-onboarded-users/${userId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/affiliate-all-onboarded-users/${userId}`
       );
       setUserDetails(response.data.getAllCreator);
     } catch (error) {
@@ -33,6 +44,29 @@ const Instructor = () => {
       getMyUser();
     }
   }, [userId]);
+
+  // Function to handle sharing the onboard link
+  const handleShare = () => {
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${affiliateId}`;
+
+    // Check if Web Share API is supported by the browser
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Join as a Creator",
+          text: "Join our platform through this link:",
+          url: onboardLink,
+        })
+        .then(() => showToast("Onboard link shared successfully!"))
+        .catch((error) => showToast("Error sharing the onboard link"));
+    } else {
+      // Fallback for browsers that don't support Web Share API (e.g., Firefox)
+      navigator.clipboard
+        .writeText(onboardLink)
+        .then(() => showToast("Onboard link copied to clipboard!"))
+        .catch((error) => showToast("Failed to copy link to clipboard"));
+    }
+  };
 
   return (
     <Fragment>
@@ -55,8 +89,16 @@ const Instructor = () => {
                     <Breadcrumb.Item active>My User</Breadcrumb.Item>
                   </Breadcrumb>
                 </div>
-                <div>
-                  <GridListViewButton keyGrid="grid" keyList="list" />
+                <div className="justify-content-between d-flex">
+                  <div>
+                    <GridListViewButton keyGrid="grid" keyList="list" />
+                  </div>
+                  <div className="text-end mb-4">
+                    <Button variant="secondary" onClick={handleShare}>
+                      <FontAwesomeIcon icon={faShareAlt} className="me-2" />
+                      Share Onboard Link
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Col>

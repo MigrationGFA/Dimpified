@@ -254,7 +254,7 @@ const AllRoutes = () => {
       <Route path="/catering-template" element={<CateringTemplate />} />
       <Route path="/barber-three" element={<BarberTemplate3 />} />
 
-      <Route path="/creator/signin" element={<UserSignIn />} />
+      <Route path="/creator/signin/" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />
