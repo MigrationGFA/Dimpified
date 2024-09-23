@@ -30,6 +30,7 @@ import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
 import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
 import GymTemplate from "../dimp-templates/personal-care-services/GymTemplate";
 import CateringTemplate from "../dimp-templates/event-services/CateringTemplate";
+import BarberTemplate3 from "../dimp-templates/Trade-services/barber/BarberTemplate3";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -239,6 +240,8 @@ const AllRoutes = () => {
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
       <Route path="/barbers" element={<BarberLanding />} />
+
+      
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
       <Route path="/upskill-template" element={<StateUpskilling />} />
@@ -249,6 +252,8 @@ const AllRoutes = () => {
       <Route path="/spa-template" element={<SpaTemplate />} />
       <Route path="/gym-template" element={<GymTemplate />} />
       <Route path="/catering-template" element={<CateringTemplate />} />
+      <Route path="/barber-three" element={<BarberTemplate3 />} />
+
       <Route path="/creator/signin" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />

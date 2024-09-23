@@ -105,7 +105,14 @@ const Payouts = () => {
       );
 
       if (response.data) {
-        setEarnings(response.data.affiliateEarning);
+        if (
+          response.data.affiliateEarning !== undefined &&
+          response.data.affiliateEarning !== undefined
+        ) {
+          setEarnings(response.data.affiliateEarning);
+        } else {
+          setEarnings(0);
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -156,8 +163,15 @@ const Payouts = () => {
       const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/affiliate/get-my-account/${userId}`
       );
-      const fetchedBankData = response.data.accountDetails;
-      setBankData(fetchedBankData);
+      if (
+        response.data.accountDetails &&
+        response.data.accountDetails.length > 0
+      ) {
+        const fetchedBankData = response.data.accountDetails;
+        setBankData(fetchedBankData);
+      } else {
+        setBankData([]);
+      }
     } catch (error) {
       console.error("Error fetching bank data:", error);
     }

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../../../src/assets/DIMP logo colored.png";
 import { showToast } from "../../../Components/Showtoast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPassword = () => {
   const location = useLocation();
@@ -19,6 +20,8 @@ const ResetPassword = () => {
   const [resetStatus, setResetStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(true);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePasswordReset = async () => {
     if (newPassword !== confirmPassword) {
@@ -39,10 +42,10 @@ const ResetPassword = () => {
 
       if (response.status === 200) {
         setResetStatus("success");
-        showToast(response.message);
+        showToast(response.data.message || "Password Reset successfull");
       } else {
         setResetStatus("failure");
-        showToast(response.message);
+        showToast(response.data.message);
       }
     } catch (error) {
       setResetStatus("failure");
@@ -114,21 +117,41 @@ const ResetPassword = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="formNewPassword">
                   <Form.Label>New Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter new password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
+                  <div className="d-flex align-items-center">
+                    <Form.Control
+                      type={showNewPassword ? "text" : "password"}
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+
+                    <span
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      style={{ cursor: "pointer", marginLeft: "10px" }}
+                    >
+                      {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formConfirmPassword">
                   <Form.Label>Confirm New Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
+                  <div className="d-flex align-items-center">
+                    <Form.Control
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm new password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    <span
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      style={{ cursor: "pointer", marginLeft: "10px" }}
+                    >
+                      {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
                 </Form.Group>
               </Form>
               {resetStatus === "passwordMismatch" && (
