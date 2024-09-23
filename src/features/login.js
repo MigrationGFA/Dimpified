@@ -69,6 +69,32 @@ export const ecosystemLogin = createAsyncThunk('ecosystemUser/login', async ({ e
     }
 });
 
+// afiliate login
+export const affiliateLogin = createAsyncThunk('afiliate/login', async ({ email, password }, { rejectWithValue }) => {
+    // Make an API request to login the user with Axios
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/affiliate/login`, {
+            email,
+            password,
+        });
+
+        if (response.status === 200) {
+            // Login successful
+            const user = response.data;
+            return user;
+        }
+    }
+    catch (error) {
+        if (error.response && error.response.data.message) {
+            console.log("this is if error")
+            return rejectWithValue(error.response.data.message)
+        } else {
+            console.log("this is else error")
+
+            return rejectWithValue(error.message)
+        }
+    }
+});
 
 export const authenticationSlice = createSlice({
     name: 'authentication',
@@ -80,6 +106,9 @@ export const authenticationSlice = createSlice({
             state.isLoading = false;
             state.error = null;
         },
+        updateAccessToken: (state, action) => {
+      state.user.accessToken = action.payload;
+    },
     },
     extraReducers: (builder) => {
         builder
@@ -109,11 +138,25 @@ export const authenticationSlice = createSlice({
                 state.isLoading = false;
                 state.user = null;
                 state.error = action.payload;
-            });
+            })
+            // handle afiliate login
+            .addCase(affiliateLogin.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(affiliateLogin.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload;
+                state.error = "";
+            })
+            .addCase(affiliateLogin.rejected, (state, action) => {
+                state.isLoading = false;
+                state.user = null;
+                state.error = action.payload;
+            })
     }
 });
 
-export const { logout } = authenticationSlice.actions;
+export const { logout, updateAccessToken } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
 

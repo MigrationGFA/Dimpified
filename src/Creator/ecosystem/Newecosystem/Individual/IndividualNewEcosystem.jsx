@@ -24,12 +24,17 @@ import {
 import axios from "axios";
 import { showToast } from "../../../../Components/Showtoast";
 import categorySubSection from "../../../ecosystem/Newecosystem/PostAService/SectionJson";
+import EcoLoadingPage from "../../../../Components/EcoLoading";
+import AxiosInterceptor from "../../../../Components/AxiosInterceptor";
 
 const NewEcosystem = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ecosystem = useSelector((state) => state.ecosystem);
+  const ecosystemMedia = useSelector((state) => state.ecosystem.socialMedia);
+  const authFetch = AxiosInterceptor();
+
   const user = useSelector((state) => state.authentication.user);
   const creatorId = user?.data?.CreatorId;
 
@@ -53,17 +58,6 @@ const NewEcosystem = () => {
     { value: "instagram", label: "Instagram" },
     // { value: "linkedin", label: "LinkedIn" },
     { value: "twitter", label: "Twitter" },
-    // { value: "whatsapp", label: "WhatsApp" },
-    // { value: "youtube", label: "YouTube" },
-    // { value: "wechat", label: "WeChat" },
-    // { value: "tiktok", label: "TikTok" },
-    // { value: "telegram", label: "Telegram" },
-    // { value: "pinterest", label: "Pinterest" },
-    // { value: "reddit", label: "Reddit" },
-    // { value: "quora", label: "Quora" },
-    // { value: "discord", label: "Discord" },
-    // { value: "twitch", label: "Twitch" },
-    // { value: "threads", label: "Threads by Instagram" },
   ];
 
   const handlePlatformChange = (index, event) => {
@@ -178,7 +172,7 @@ const NewEcosystem = () => {
 
   const validateDomain = async (ecosystemDomain) => {
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/check-domain`,
         { domainName: ecosystemDomain }
       );
@@ -215,7 +209,7 @@ const NewEcosystem = () => {
     setIsProcessing(true);
     setConfirmModal(false);
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/ecosystem/aboutDetails`,
         {
           ...ecosystem,
@@ -243,10 +237,23 @@ const NewEcosystem = () => {
     { value: "Other", label: "Other" },
   ];
 
+  if (isProcessing) {
+    return (
+      <div>
+        <EcoLoadingPage />
+      </div>
+    );
+  }
   return (
-    <Container fluid className="p-0">
+    <Container
+      fluid
+      className="p-0 pb-5"
+      style={{
+        overflow: "hidden",
+      }}
+    >
       <IndividualHeader />
-      <Row className="mt-4 justify-content-center">
+      <Row className="mt-4 justify-content-center p-4">
         <Col lg={8}>
           <Card>
             <Card.Body>
@@ -447,6 +454,23 @@ const NewEcosystem = () => {
                       <Form.Label htmlFor="ecosystem-social">
                         H. Add Your Social Media Links
                       </Form.Label>
+                      <div>
+                        {ecosystemMedia &&
+                          ecosystemMedia.length > 0 &&
+                          ecosystemMedia.map((details, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                color: "black",
+                              }}
+                            >
+                              <p>
+                                {details.name}: {details.link}
+                              </p>
+                            </div>
+                          ))}
+                      </div>
+
                       <Button onClick={() => setShowSocialModal(true)}>
                         Add Social Media
                       </Button>

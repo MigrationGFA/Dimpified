@@ -6,7 +6,7 @@ import template5 from "../../assets/template/template5.png"
 import template6 from "../../assets/template/template6.png"
 import template7 from "../../assets/template/template7.png"
 import template8 from "../../assets/template/template8.png"
-
+import template10 from "../../assets/template/template10.png"
 
  
 const Templates = [
@@ -28,12 +28,18 @@ const Templates = [
   //   img: template3,
   //   sectionId: 1, // Professional Services
   // },
-  // {
-  //   id: 4,
-  //   name: "Beauty Salon Template-1",
-  //   img: template4,
-  //   sectionId: 4, // Personal Care Services
-  // },
+   {
+    id: 10,
+    name: "Barber Template-2",
+    img: template10,
+    sectionId: 4, // Personal Care Services
+  },
+  {
+    id: 4,
+    name: "Beauty Salon Template-1",
+    img: template4,
+    sectionId: 4, // Personal Care Services
+  },
 
   // {
   //   id: 5,
@@ -61,6 +67,9 @@ const Templates = [
   //   img: template8,
   //   sectionId: 10, // NGO/FOUNDATION
   // },
+
+   
+  
   
 
 ];

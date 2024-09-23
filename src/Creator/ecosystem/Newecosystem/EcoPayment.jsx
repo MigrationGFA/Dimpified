@@ -1010,8 +1010,11 @@ const EcoPayment = ({ plan }) => {
   //   // }, 1000);
   // };
 
+
+
   const handlePaystackPayment = (planCode, planName) => {
     const popup = new Paystack();
+    
 
     popup.newTransaction({
       key: "pk_live_f849722976a4354c340163f7d161f74d0f53fce6",

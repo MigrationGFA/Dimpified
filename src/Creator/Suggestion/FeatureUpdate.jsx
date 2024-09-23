@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { showToast } from "../../Components/Showtoast";
 import StatRightChart from "../../Creator/analytics/stats/StatRightChart";
 import PaginationComponent from "../../Components/elements/advance-table/Pagination";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const FeatureUpdate = () => {
   // State variables
@@ -31,6 +32,7 @@ const FeatureUpdate = () => {
   const [reviews, setReviews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const authFetch = AxiosInterceptor();
 
   // Redux state
   const user = useSelector((state) => state.authentication.user);
@@ -45,8 +47,14 @@ const FeatureUpdate = () => {
       try {
         setDashboardLoading(true);
         const [featureResponse, reviewResponse] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`),
-          axios.get(`${import.meta.env.VITE_API_URL}/get-reviews-by-creator/${creatorId}`),
+          authFetch.get(
+            `${import.meta.env.VITE_API_URL}/get-a-creator-feature/${creatorId}`
+          ),
+          authFetch.get(
+            `${
+              import.meta.env.VITE_API_URL
+            }/get-reviews-by-creator/${creatorId}`
+          ),
         ]);
         setFeatures(featureResponse.data.featuresByCreator || []);
         setReviews(reviewResponse.data.reviews || []);
@@ -69,7 +77,7 @@ const FeatureUpdate = () => {
 
     setReviewLoading(true);
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/creator-submit-review`,
         {
           rating,
@@ -89,7 +97,8 @@ const FeatureUpdate = () => {
       setReviews(reviewResponse.data.reviews || []);
     } catch (error) {
       showToast(
-        error.response?.data?.message || "Error submitting review. Please try again.",
+        error.response?.data?.message ||
+          "Error submitting review. Please try again.",
         "error"
       );
     } finally {
@@ -131,7 +140,8 @@ const FeatureUpdate = () => {
       setFeatures(featureResponse.data.featuresByCreator || []);
     } catch (error) {
       showToast(
-        error.response?.data?.message || "Error submitting feature request. Please try again.",
+        error.response?.data?.message ||
+          "Error submitting feature request. Please try again.",
         "error"
       );
     } finally {
@@ -209,7 +219,7 @@ const FeatureUpdate = () => {
             title="Completed Requests"
             value={reviews.length.toString()}
             summary="Number of reviews"
-            summaryIcon="down"
+            summaryIcon="up"
             showSummaryIcon
             classValue="mb-4"
             chartName="VisitorChart"
@@ -326,11 +336,7 @@ const FeatureUpdate = () => {
                 onChange={(e) => setFeatureDescription(e.target.value)}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={loading}
-            >
+            <Button variant="primary" type="submit" disabled={loading}>
               {loading ? (
                 <>
                   <Spinner animation="border" size="sm" />
@@ -345,7 +351,10 @@ const FeatureUpdate = () => {
       </Modal>
 
       {/* Feedback Modal */}
-      <Modal show={showFeedbackModal} onHide={() => setShowFeedbackModal(false)}>
+      <Modal
+        show={showFeedbackModal}
+        onHide={() => setShowFeedbackModal(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Submit Feedback</Modal.Title>
         </Modal.Header>

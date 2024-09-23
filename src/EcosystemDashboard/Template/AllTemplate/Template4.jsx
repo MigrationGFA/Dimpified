@@ -31,9 +31,10 @@ const truncateMessage = (messages) => {
 };
 
 const Template4 = ({ details, subdomain, ecosystemDetails }) => {
-  const [serviceDetails, setServiceDetails] = useState([]);
+  const [serviceDetails, setServiceDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
+  const [servicesOffer, setServices] = useState([]);
 
   const galleryItems = [
     {
@@ -109,7 +110,7 @@ const Template4 = ({ details, subdomain, ecosystemDetails }) => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/get-all-services/${subdomain}`
         );
-        setServiceDetails(response.data.services);
+        setServices(response.data.services);
 
         console.log("this is service", response.data.services);
       } catch (error) {
@@ -425,8 +426,8 @@ const Template4 = ({ details, subdomain, ecosystemDetails }) => {
             </Container>
           </section>
         </Fragment>
-        <Services serviceDetails={serviceDetails} handleShow={handleShow} />
-        <Pricing serviceDetails={serviceDetails} />
+        <Services servicesOffer={servicesOffer} handleShow={handleShow} />
+        <Pricing servicesOffer={servicesOffer} />
         <Fragment>
           <section
             id="gallery"
@@ -936,30 +937,34 @@ const Template4 = ({ details, subdomain, ecosystemDetails }) => {
 export default Template4;
 
 // Services Section
-const Services = ({ serviceDetails, handleShow }) => (
+const Services = ({ servicesOffer, handleShow }) => (
   <Fragment>
     <section
       id="services"
       className="beauty px-4 overlap-height bg-white border-bottom border-color-extra-medium-gray"
     >
       <Container className="overlap-gap-section">
-        <Row className="justify-content-center align-items-center mb-4">
-          <Col className="col-auto pe-25px border-2 border-end border-color-dark-gray sm-border-end-0 sm-pe-15px">
-            <span className="primary-font fs-16 text-uppercase text-gradient-san-blue-new-york-red fw-700 ls-1px">
-              Beauty salon services
-            </span>
-          </Col>
-          <Col className="col-12 col-md-auto ps-25px sm-ps-15px text-center">
-            <h3 className="alt-font fw-400 text-dark-gray ls-minus-1px mb-0">
-              Makeup and hairstyles
-            </h3>
-          </Col>
-        </Row>
+        {servicesOffer && servicesOffer.length > 0 ? (
+          <Row className="justify-content-center align-items-center mb-4">
+            <Col className="col-auto pe-25px border-2 border-end border-color-dark-gray sm-border-end-0 sm-pe-15px">
+              <span className="primary-font fs-16 text-uppercase text-gradient-san-blue-new-york-red fw-700 ls-1px">
+                Beauty salon services
+              </span>
+            </Col>
+            <Col className="col-12 col-md-auto ps-25px sm-ps-15px text-center">
+              <h3 className="alt-font fw-400 text-dark-gray ls-minus-1px mb-0">
+                Makeup and hairstyles
+              </h3>
+            </Col>
+          </Row>
+        ) : (
+          ""
+        )}
 
         <Row className="row-cols-1 row-cols-lg-3 row-cols-md-2 transition-inner-all justify-content-center mb-4">
-          {serviceDetails &&
-            serviceDetails.length > 0 &&
-            serviceDetails.map((serviceItem, index) => (
+          {servicesOffer &&
+            servicesOffer.length > 0 &&
+            servicesOffer.map((serviceItem, index) => (
               <Col key={index} className="mb-20px">
                 <p className="mb-5">{serviceItem.header}</p>
                 {serviceItem.services &&
@@ -1020,14 +1025,14 @@ const Services = ({ serviceDetails, handleShow }) => (
     </section>
   </Fragment>
 );
-const Pricing = ({ serviceDetails }) => (
+const Pricing = ({ servicesOffer }) => (
   <Fragment>
     <section className="beauty px-4 overlap-height bg-white border-bottom border-color-extra-medium-gray">
       <Container className="overlap-gap-section">
         <Row className="justify-content-between align-items-center mb-5 xs-mb-6">
-          {serviceDetails &&
-            serviceDetails.length > 0 &&
-            serviceDetails.map((serviceItem, index) => (
+          {servicesOffer &&
+            servicesOffer.length > 0 &&
+            servicesOffer.map((serviceItem, index) => (
               <div key={index}>
                 {serviceItem.services &&
                   serviceItem.services.length > 0 &&

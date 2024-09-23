@@ -15,6 +15,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../Steps.css";
 // import logo from "../../../assets/digital.png";
 import EcoHeader from "../Individual/individualHeader";
+import AxiosInterceptor from "../../../../Components/AxiosInterceptor";
 
 // template import part
 import Template1 from "../../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
@@ -22,6 +23,7 @@ import Template2 from "../../../../EditTemplate/AllCategory/Education/OnlineCour
 import Template3 from "../../../../EditTemplate/AllCategory/Professional/LegalTemplate1";
 import Template4 from "../../../../EditTemplate/AllCategory/PersonalCare/Salon1";
 import Template6 from "../../../../EditTemplate/AllCategory/Government/Upskilling1";
+import Template10 from "../../../../EditTemplate/AllCategory/PersonalCare/BarberTemplate2";
 
 // preview template
 import BarberPreview1 from "../../../../EditTemplate/PreviewPage/BarberPreview1";
@@ -29,6 +31,7 @@ import Preview2 from "../../../../EditTemplate/PreviewPage/Education/OnlineSchoo
 import Preview3 from "../../../../EditTemplate/PreviewPage/Professional/LegalTemplate";
 import Preview4 from "../../../../EditTemplate/PreviewPage/PersonalCare/SalonPreview";
 import Preview6 from "../../../../EditTemplate/PreviewPage/Government/UpskillingPreview1";
+import BarberPreview2 from "../../../../EditTemplate/PreviewPage/PersonalCare/BarberPreview2";
 
 // others
 import Templates from "../../../../data/Template/LandingPageTemplate";
@@ -84,7 +87,7 @@ const EditTemplate = () => {
   const selectedSection = useSelector(
     (state) => state.ecosystem.targetAudienceSector
   );
-  console.log("this is select", selectedSection);
+  const authFetch = AxiosInterceptor();
 
   const defaultSectionId =
     templateSections.find((section) => section.name === selectedSection)?.id ||
@@ -101,7 +104,7 @@ const EditTemplate = () => {
   const getTemplateDetails = async (templateId) => {
     setTemplateLoading(true);
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/reserved-template/${templateId}`
       );
       dispatch(setTemplate(response.data.template));
@@ -133,6 +136,8 @@ const EditTemplate = () => {
         return <Template4 />;
       case 6:
         return <Template6 />;
+      case 10:
+        return <Template10 />;
       default:
         return <div>Invalid template</div>;
     }
@@ -150,6 +155,8 @@ const EditTemplate = () => {
         return <Preview4 />;
       case 6:
         return <Preview6 />;
+      case 10:
+        return <BarberPreview2 />;
       // Add cases for Template3 and Template4...
       default:
         return <div>Invalid template</div>;
@@ -182,7 +189,7 @@ const EditTemplate = () => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/ecosystem/create-creator-template`,
         templateData
       );

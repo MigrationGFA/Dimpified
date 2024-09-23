@@ -30,9 +30,9 @@ const UseCaseMenu = () => {
             <Row>
               <Col xs={12}>
                 <div className="lh-1 mb-5 border-bottom">
-                  <h3 className="mb-1">Perfect for your Industry.</h3>
+                  <h3 className="mb-1">Perfect for your business.</h3>
                   <p>
-                    Leverage DIMP in any industry of yours, be it enterprise or
+                    Leverage DIMP in any business of yours, be it enterprise or
                     consumer.
                   </p>
                 </div>
@@ -106,9 +106,9 @@ const UseCaseMenu = () => {
         <NavDropdown.Item as="div" className="py-2 px-3">
           <Row>
             <Col lg={12} md={12} xs={12} className="lh-1 mb-1">
-              <h3 className="mb-1">Perfect for your Industry.</h3>
+              <h3 className="mb-1">Perfect for your business.</h3>
               <p>
-                Leverage DIMP in any industry of yours, <br /> be it enterprise
+                Leverage DIMP in any business of yours, <br /> be it enterprise
                 or consumer.
               </p>
             </Col>

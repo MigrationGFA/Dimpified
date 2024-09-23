@@ -3,6 +3,7 @@ import { Card, Row, Col, Form, Button, Container } from "react-bootstrap";
 import { showToast } from "../../Components/Showtoast";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const SocialProfiles = () => {
   const creatorId = useSelector(
@@ -24,13 +25,15 @@ const SocialProfiles = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const authFetch = AxiosInterceptor();
   useEffect(() => {
-  
     const fetchSocialProfiles = async () => {
       try {
-        if (!creatorId) return; 
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-creator-social-profile/${creatorId}`
+        if (!creatorId) return;
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/get-creator-social-profile/${creatorId}`
         );
         const user = response.data.creator;
         // Set the retrieved social profile data into the form fields
@@ -43,14 +46,11 @@ const SocialProfiles = () => {
         });
       } catch (error) {
         console.error("Error fetching social profiles:", error);
-        showToast("Failed to fetch social profiles", "error");
       }
     };
 
     fetchSocialProfiles();
   }, [creatorId]);
-
- 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ const SocialProfiles = () => {
         youtube: formData.youtube || "nil",
       };
 
-      const response = await axios.post(
+      const response = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/add-creator-social-profile`,
         formDataToSend
       );
@@ -99,139 +99,127 @@ const SocialProfiles = () => {
       }
     } catch (error) {
       console.error("Error updating social profiles:", error);
-      showToast(
-        "An error occurred while updating social profiles",
-        "error"
-      );
+      showToast("An error occurred while updating social profiles", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-      <Card className="border-0">
-        <Card.Header>
-          <div className="mb-3 mb-lg-0">
-            <h3 className="mb-0">Social Profiles</h3>
-            <p className="mb-0">
-              Add your social profile links in below social accounts.
-            </p>
-          </div>
-        </Card.Header>
-        <Card.Body>
-          <Form onSubmit={handleSubmit}>
-            {/* Twitter */}
-            <Row className="mb-5">
-              <Col lg={3} md={4} sm={12}>
-                <h5>Twitter</h5>
-              </Col>
-              <Col lg={9} md={8} sm={12}>
-                <Form.Control
-                  type="text"
-                  name="twitter"
-                  placeholder="Twitter Profile Name"
-                  className="form-control mb-1"
-                  value={formData.twitter}
-                  onChange={handleChange}
-                />
-              
-              </Col>
-            </Row>
-            {/* Facebook */}
-            <Row className="mb-5">
-              <Col lg={3} md={4} sm={12}>
-                <h5>Facebook</h5>
-              </Col>
-              <Col lg={9} md={8} sm={12}>
-                <Form.Control
-                  type="text"
-                  name="facebook"
-                  placeholder="Facebook Profile Name"
-                  className="form-control mb-1"
-                  value={formData.facebook}
-                  onChange={handleChange}
-                />
-               
-              </Col>
-            </Row>
-            {/* Instagram */}
-            <Row className="mb-5">
-              <Col lg={3} md={4} sm={12}>
-                <h5>Instagram</h5>
-              </Col>
-              <Col lg={9} md={8} sm={12}>
-                <Form.Control
-                  type="text"
-                  name="instagram"
-                  placeholder="Instagram Profile Name"
-                  className="form-control mb-1"
-                  value={formData.instagram}
-                  onChange={handleChange}
-                />
-               
-              </Col>
-            </Row>
-            {/* LinkedIn */}
-            <Row className="mb-5">
-              <Col lg={3} md={4} sm={12}>
-                <h5>LinkedIn Profile URL</h5>
-              </Col>
-              <Col lg={9} md={8} sm={12}>
-                <Form.Control
-                  type="text"
-                  name="LinkedIn"
-                  placeholder="LinkedIn Profile URL"
-                  className="form-control mb-1"
-                  value={formData.LinkedIn}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Row>
-            {/* YouTube */}
+    <Card className="border-0">
+      <Card.Header>
+        <div className="mb-3 mb-lg-0">
+          <h3 className="mb-0">Social Profiles</h3>
+          <p className="mb-0">
+            Add your social profile links in below social accounts.
+          </p>
+        </div>
+      </Card.Header>
+      <Card.Body>
+        <Form onSubmit={handleSubmit}>
+          {/* Twitter */}
+          <Row className="mb-5">
+            <Col lg={3} md={4} sm={12}>
+              <h5>Twitter</h5>
+            </Col>
+            <Col lg={9} md={8} sm={12}>
+              <Form.Control
+                type="text"
+                name="twitter"
+                placeholder="Twitter Profile Name"
+                className="form-control mb-1"
+                value={formData.twitter}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          {/* Facebook */}
+          <Row className="mb-5">
+            <Col lg={3} md={4} sm={12}>
+              <h5>Facebook</h5>
+            </Col>
+            <Col lg={9} md={8} sm={12}>
+              <Form.Control
+                type="text"
+                name="facebook"
+                placeholder="Facebook Profile Name"
+                className="form-control mb-1"
+                value={formData.facebook}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          {/* Instagram */}
+          <Row className="mb-5">
+            <Col lg={3} md={4} sm={12}>
+              <h5>Instagram</h5>
+            </Col>
+            <Col lg={9} md={8} sm={12}>
+              <Form.Control
+                type="text"
+                name="instagram"
+                placeholder="Instagram Profile Name"
+                className="form-control mb-1"
+                value={formData.instagram}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          {/* LinkedIn */}
+          <Row className="mb-5">
+            <Col lg={3} md={4} sm={12}>
+              <h5>LinkedIn Profile URL</h5>
+            </Col>
+            <Col lg={9} md={8} sm={12}>
+              <Form.Control
+                type="text"
+                name="LinkedIn"
+                placeholder="LinkedIn Profile URL"
+                className="form-control mb-1"
+                value={formData.LinkedIn}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          {/* YouTube */}
+          <Row className="mb-3">
+            <Col lg={3} md={4} sm={12}>
+              <h5>YouTube</h5>
+            </Col>
+            <Col lg={9} md={8} sm={12}>
+              <Form.Control
+                type="text"
+                name="youtube"
+                placeholder="YouTube URL"
+                className="form-control mb-1"
+                value={formData.youtube}
+                onChange={handleChange}
+              />
+            </Col>
+          </Row>
+          {/* Error message */}
+          {errors.general && (
             <Row className="mb-3">
-              <Col lg={3} md={4} sm={12}>
-                <h5>YouTube</h5>
-              </Col>
-              <Col lg={9} md={8} sm={12}>
-                <Form.Control
-                  type="text"
-                  name="youtube"
-                  placeholder="YouTube URL"
-                  className="form-control mb-1"
-                  value={formData.youtube}
-                  onChange={handleChange}
-                />
+              <Col
+                lg={{ span: 9, offset: 3 }}
+                md={{ span: 8, offset: 4 }}
+                sm={12}
+              >
+                <Form.Text className="text-danger">{errors.general}</Form.Text>
               </Col>
             </Row>
-            {/* Error message */}
-            {errors.general && (
-              <Row className="mb-3">
-                <Col
-                  lg={{ span: 9, offset: 3 }}
-                  md={{ span: 8, offset: 4 }}
-                  sm={12}
-                >
-                  <Form.Text className="text-danger">
-                    {errors.general}
-                  </Form.Text>
-                </Col>
-              </Row>
-            )}
-            {/* Button */}
-            <Row>
-              <Col lg={{ span: 6, offset: 3 }} sm={12}>
-              <Button
-              variant="primary"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Processing..." : "Save Social Profile"}
-            </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Card.Body>
-      </Card>
+          )}
+          {/* Button */}
+          <Row>
+            <Col lg={{ span: 6, offset: 3 }} sm={12}>
+              <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? "Processing..." : "Save Social Profile"}
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 

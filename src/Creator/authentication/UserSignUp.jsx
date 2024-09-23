@@ -285,10 +285,10 @@ const UserRoleSelection = () => {
                       <FaArrowLeft size={15} className="text-warning me-2" />go back
                     </Button>
                     <h3 className="alt-font">
-                      Sign Up as a{" "}
+                      Sign up as an{" "}
                       {selectedRole === "enterprise"
-                        ? "Enterprise"
-                        : "Individual"}
+                        ? "enterprise"
+                        : "individual"}
                     </h3>
                     <UserSignUpForm userRole={selectedRole} />
                   </div>

@@ -11,7 +11,7 @@ import {
 import JobTable from "./OrderTable";
 import InstructorProfileLayout from "./InstructorProfileLayout";
 import axios from "axios"; // Import axios library
-
+import AxiosInterceptor from "../Components/AxiosInterceptor";
 
 const Order = () => {
   let { ecosystemDomain } = useParams();
@@ -21,6 +21,7 @@ const Order = () => {
   const [services, setServices] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const authFetch = AxiosInterceptor();
 
   const serviceHeader = [
     { accessorKey: "image", header: "Service Image" },
@@ -29,7 +30,7 @@ const Order = () => {
     { accessorKey: "format", header: "Service Format" },
     // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   const productHeader = [
@@ -39,14 +40,16 @@ const Order = () => {
     { accessorKey: "productType", header: "Product Type" },
     // { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ecosystem-products/${ecosystemDomain}`
+        const response = await authFetch.get(
+          `${
+            import.meta.env.VITE_API_URL
+          }/ecosystem-products/${ecosystemDomain}`
         );
         setCourses(response.data.courses);
         setServices(response.data.services);
@@ -69,9 +72,8 @@ const Order = () => {
     { accessorKey: "totalNumberOfEnrolledStudent", header: "No of Students" },
     { accessorKey: "price", header: "Price" },
     { accessorKey: "deliveryDate", header: "Date Created" },
-    { accessorKey: "action", header: "Action" },
+    //{ accessorKey: "action", header: "Action" },
   ];
-
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
@@ -107,8 +109,11 @@ const Order = () => {
         </div>
       );
     } else {
-      const currencyName = data.length > 0 && data[0].course ? data[0].course.currency : "NGN";
-      return <JobTable header={header} data={data} currencyName={currencyName} />;
+      const currencyName =
+        data.length > 0 && data[0].course ? data[0].course.currency : "NGN";
+      return (
+        <JobTable header={header} data={data} currencyName={currencyName} />
+      );
     }
   };
 
@@ -138,7 +143,7 @@ const Order = () => {
             </Card.Header>
             <Card.Header>
               <div className="mb-3 mb-lg-0">
-              <h3 className="mb-0">My Products</h3>
+                <h3 className="mb-0">My Products</h3>
                 <p className="mb-0">
                   Manage your Products and its update like live, draft, and
                   insight.

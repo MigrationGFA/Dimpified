@@ -1,9 +1,6 @@
 // ** Import from react dom
 import { Route, Routes, Navigate } from "react-router-dom";
 
-
-
-
 // ** Import core SCSS styles
 import "../assets/scss/theme.scss";
 import DimpHome from "../dimp-home/DimpHome";
@@ -21,6 +18,7 @@ import PersonalCare from "../dimp-pages/personal-care/PersonalCare";
 import TechnologyServices from "../dimp-pages/technology/TechnologyServices";
 import EventServices from "../dimp-pages/event-services/EventServices";
 import BarberLanding from "../dimp-pages/personal-care/BarberLanding";
+import PressRelease from "../dimp-home/PressRelease";
 
 import SalonTemplate from "../dimp-templates/Trade-services/salon/SalonTemplate";
 import BarberMordern from "../dimp-templates/Trade-services/barber/BarberModern";
@@ -32,6 +30,7 @@ import NonGovTemplate from "../dimp-templates/non-profit/NonGovTemplate";
 import SpaTemplate from "../dimp-templates/Trade-services/spa/SpaTemplate";
 import GymTemplate from "../dimp-templates/personal-care-services/GymTemplate";
 import CateringTemplate from "../dimp-templates/event-services/CateringTemplate";
+import BarberTemplate3 from "../dimp-templates/Trade-services/barber/BarberTemplate3";
 
 // ** Import Dahbaord Menu Pages
 import Overview from "../Creator/overview/Overview";
@@ -134,10 +133,10 @@ import UserResolution from "../UserDashboard/student/Resolution";
 
 import EcosystemDashboard from "../EcosystemDashboard/Dashboard";
 import EcosystemMyProduct from "../EcosystemDashboard/MyCourses";
-import EcosystemBooking from "../EcosystemDashboard/Booking"
-import EcosystemCourses from "../EcosystemDashboard/Courses"
-import EcosystemServices from "../EcosystemDashboard/Services"
-import EcosystemProducts from "../EcosystemDashboard/Products"
+import EcosystemBooking from "../EcosystemDashboard/Booking";
+import EcosystemCourses from "../EcosystemDashboard/Courses";
+import EcosystemServices from "../EcosystemDashboard/Services";
+import EcosystemProducts from "../EcosystemDashboard/Products";
 import EcosystemResolution from "../EcosystemDashboard/EcoResolution";
 import EcosystemReviews from "../EcosystemDashboard/Reviews";
 import EcosystemEarning from "../EcosystemDashboard/Earnings";
@@ -160,7 +159,7 @@ import EcosystemVerifyEmail from "../EcosystemDashboard/Authentication/Ecosystem
 import DeveloperProgram from "../developer-program/DeveloperProgram";
 import CommunityChat from "../Components/CommunityChat/Page";
 import CreatorCommunityChat from "../Components/CreatorCommunity/Page";
-import UserChat from "../Components/Chat/UserChat";   
+import UserChat from "../Components/Chat/UserChat";
 import UserChatLayout from "../Components/Chat/UserChatLayout";
 import Join from "../developer-program/pages/Join";
 import AboutDevProgram from "../developer-program/pages/AboutDevProgram";
@@ -187,10 +186,27 @@ import CreatorSinglePage from "../Admin/Outsource/CreatorSinglePage";
 import getSubdomain from "../helper/Subdomain";
 import MainTemplate from "../EcosystemDashboard/Template/MainTemplate";
 import BarberTemplate from "../EditTemplate/AllCategory/PersonalCare/BarberTemplate";
+import TrialExpired from "../Creator/Payment/TrialExpired";
+import AgentPage from "../agent-page/AgentPage";
+import AgentPageAuthForm from "../agent-page/pages/authPages/AgentPageAuthForm";
+import EcoLoadingPage from "../Components/EcoLoading";
+import ProfilePage from "../agent-page/pages/ProfilePage";
+import EmailVerify from "../agent-page/pages/authPages/VerifyEmail";
+import FileViewer from "../emailView";
+import ResetPassword from "../agent-page/pages/authPages/ResetPassword";
+import RegistrationSuccess from "../agent-page/pages/authPages/RegistrationSuccess";
+import CreatorRessetPassword from "../Creator/authentication/NewPassword";
+
+//Affliate
+import AffliateDashboardIndex from "../agent-page/AgentDashboard/AgentDashboardIndex";
+import AffiliateOverview from "../agent-page/AgentDashboard/AgentOverview";
+import AffiliateMyUser from "../agent-page/AgentDashboard/AgentMyUser";
+import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPage";
+import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
+import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
-  
 
   return (
     <Routes>
@@ -202,6 +218,9 @@ const AllRoutes = () => {
       ) : (
         <Route path="/" element={<DimpHome />} />
       )}
+      <Route path="/loading" element={<EcoLoadingPage />} />
+      <Route path="/ms14991499.txt" element={<FileViewer />} />
+      <Route path="/press-release" element={<PressRelease />} />
       <Route path="/barber" element={<BarberTemplate />} />
       <Route path="/education" element={<CustomerTraining />} />
       <Route path="/pricing" element={<Pricing />} />
@@ -218,6 +237,7 @@ const AllRoutes = () => {
       <Route path="/event-services" element={<EventServices />} />
       <Route path="/barbers" element={<BarberLanding />} />
 
+      
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
       <Route path="/upskill-template" element={<StateUpskilling />} />
@@ -228,16 +248,22 @@ const AllRoutes = () => {
       <Route path="/spa-template" element={<SpaTemplate />} />
       <Route path="/gym-template" element={<GymTemplate />} />
       <Route path="/catering-template" element={<CateringTemplate />} />
+      <Route path="/barber-three" element={<BarberTemplate3 />} />
 
-      <Route path="/creator/signin" element={<UserSignIn />} />
+      <Route path="/creator/signin/" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />
       <Route path="/admin/forget-password" element={<AdminForgetPassword />} />
       <Route path="/creator/Onboard" element={<Onboard />} />
       <Route path="/creator/verify-email" element={<UserEmailVerification />} />
+      <Route
+        path="/creator/reset-password"
+        element={<CreatorRessetPassword />}
+      />
       <Route path="/creator/verification" element={<VerifyEmail />} />
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
+
       <Route
         path="/creator/dashboard/New-Ecosystem"
         element={<NewEcosystem />}
@@ -270,7 +296,6 @@ const AllRoutes = () => {
         element={<PreviewAndSend />}
       />
       <Route path="/creator/dashboard/Payment" element={<EcoPayment />} />
-
       <Route
         path="/creator/dashboard/Payment/Individual"
         element={<IndividualEcoPayment />}
@@ -280,7 +305,6 @@ const AllRoutes = () => {
         <Route path="/creator/dashboard/chat" element={<Chat />} />
       </Route> */}
       {/* Routes (CREATOR DASHBOARD ROUTERS) with DashboardIndex */}
-
       <Route element={<UserDashboardIndex />}>
         <Route path="/creator/dashboard/overview" element={<Overview />} />
         <Route path="/creator/dashboard/analytics" element={<Analytics />} />
@@ -295,6 +319,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/creator/jobs/all-jobs" element={<AllJobs />} />
+
         <Route path="/creator/jobs/job-category" element={<JobCategory />} />
         <Route
           path="/creator/jobs/category-single"
@@ -303,10 +328,11 @@ const AllRoutes = () => {
         <Route path="/creator/my-user" element={<MyUser />} />
         <Route path="/creator/jobProvider" element={<JobProvider />} />
         <Route path="/creator/jobSeeker" element={<JobSeeker />} />
-       
+
         <Route path="/creator/payout" element={<Payouts />} />
         <Route path="/creator/pending-payment" element={<PendingPayment />} />
-       
+        
+       {/* Integrations */}
         <Route path="/creator/lms" element={<LMS />} />
         <Route path="/creator/affiliates" element={<Affiliates />} />
         <Route path="/creator/analytic" element={<Analytic />} />
@@ -326,7 +352,7 @@ const AllRoutes = () => {
         <Route path="/creator/live-session" element={<LiveSession />} />
         <Route path="/creator/gamification" element={<Gamification />} />
         <Route path="/creator/growth" element={<Growth />} />
-       
+
         <Route path="/creator/feature-update" element={<FeatureUpdate />} />
         <Route path="/creator/help-center" element={<HelpCenter />} />
         <Route path="/creator/support" element={<Support />} />
@@ -339,10 +365,20 @@ const AllRoutes = () => {
         />
       </Route>
       {/* Creator Ecosystem Dashboard */}
-      
-      <Route path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment" element={<ContractPage />} />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
+        element={<ContractPage />}
+      />
+      <Route path="/trialExpired/upgrade" element={<TrialExpired />} />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/escrow-payment"
+        element={<ContractPage />}
+      />
       {/* <Route path="/:ecosystemDomain/Ecosystemdashboard/received-payment" element={<ReceivedPayment />} /> */}
-      <Route path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request" element={<WithdrawPayment />} />
+      <Route
+        path="/:ecosystemDomain/Ecosystemdashboard/withdraw-request"
+        element={<WithdrawPayment />}
+      />
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard"
         element={<EcosystemDashboard />}
@@ -387,7 +423,6 @@ const AllRoutes = () => {
         path="/:ecosystemDomain/Ecosystemdashboard/Ecosystem-payouts"
         element={<EcosystemPayouts />}
       />
-
       <Route
         path="/:ecosystemDomain/Ecosystemdashboard/Help-Center"
         element={<EcosystemResolution />}
@@ -418,7 +453,6 @@ const AllRoutes = () => {
       />
       {/* End user ecosystem routes */}
       <Route path="/course-single/:id" element={<UserSingleCourse />} />
-
       <Route path="/digital-service/:id" element={<UserSingleService />} />
       <Route path="/service/:id" element={<UserSingleService />} />
       <Route
@@ -463,14 +497,12 @@ const AllRoutes = () => {
         path="/User/single/learning/single-course"
         element={<UserLearningCourse />}
       />
-
       <Route path="/community-chat" element={<CommunityChat />} />
       <Route element={<UserChatLayout />}>
         <Route path="/chat" element={<UserChat />} />
       </Route>
       {/* dimp developer program */}
       <Route path="/dimp/developer-program" element={<DeveloperProgram />} />
-
       {/* Routes (ADMIN DASHBOARD ROUTERS) with DashboardIndex */}
       <Route element={<AdminDashboardIndex />}>
         <Route path="/admin/dashboard/overview" element={<AdminOverview />} />
@@ -514,6 +546,38 @@ const AllRoutes = () => {
         path="/dimp/developer-program/auth"
         element={<DevProgramAuthForm />}
       />
+      <Route
+        path="/dimp/developer-program/auth"
+        element={<DevProgramAuthForm />}
+      />
+      <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
+      <Route path="/dimp/agent-page" element={<AgentPage />} />
+
+      <Route element={<AffliateDashboardIndex />}>
+        <Route
+          path="/agent/dashboard/overview"
+          element={<AffiliateOverview />}
+        />
+        <Route path="/agent/dashboard/my-user" element={<AffiliateMyUser />} />
+        <Route
+          path="/agent/dashboard/earning"
+          element={<AffiliateContractPage />}
+        />
+        <Route
+          path="/agent/dashboard/Withdraw"
+          element={<AffiliateWithdrawPayment />}
+        />
+        <Route
+          path="/agent/dashboard/onboard"
+          element={<AffiliateOnboarding />}
+        />
+      </Route>
+      <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
+      <Route path="/dimp/agent-page" element={<AgentPage />} />
+      <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
+      <Route path="/affiliate/verify-email" element={<EmailVerify />} />
+      <Route path="/affiliate/reset-password" element={<ResetPassword />} />
+      <Route path="/registration-success" element={<RegistrationSuccess />} />
     </Routes>
   );
 };

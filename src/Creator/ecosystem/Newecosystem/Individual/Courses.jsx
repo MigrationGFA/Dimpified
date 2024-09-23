@@ -76,7 +76,13 @@ const Courses = () => {
   };
 
   return (
-    <Container fluid className="p-0 pb-5">
+    <Container
+      fluid
+      className="p-0 pb-5"
+      style={{
+        overflow: "hidden",
+      }}
+    >
       <EcoHeader />
 
       <Container className="mt-5 ">
@@ -170,9 +176,6 @@ const Courses = () => {
                     onClick={handleSkipAndContinue}
                   >
                     Skip and Continue
-                  </Button>
-                  <Button variant="primary" onClick={handleContinue}>
-                    Continue
                   </Button>
                 </div>
               </div>

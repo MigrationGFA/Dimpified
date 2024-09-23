@@ -15,6 +15,22 @@ import Technical from "../icons/technical-support.png";
 const NavbarMegaMenuRoutes = [
   {
     id: uuid(),
+    menuitem: "Health and Wellness Services",
+    children: [
+      {
+        id: uuid(),
+        menuitem: "Personal Care Services",
+        image: Health,
+        subtitle1: "Barber Shop,",
+        subtitle2: "Hair Salon,",
+        subtitle3: "Make-Up Salon,",
+        subtitle4: "Spa and Wellness centre.",
+        link: "/personal-care-services",
+      },
+    ],
+  },
+  {
+    id: uuid(),
 
     children: [
       {
@@ -27,7 +43,6 @@ const NavbarMegaMenuRoutes = [
         subtitle4: "Tax Mangement",
 
         link: "/government",
-
       },
     ],
   },
@@ -129,22 +144,7 @@ const NavbarMegaMenuRoutes = [
       },
     ],
   },
-  {
-    id: uuid(),
-    menuitem: "Health and Wellness Services",
-    children: [
-      {
-        id: uuid(),
-        menuitem: "Personal Care Services",
-        image: Health,
-        subtitle1: "Massage Therapy,",
-        subtitle2: "Physical Therapy,",
-        subtitle3: "Mental Health Counseling,",
-        subtitle4: "Weight Loss Coaching.",
-        link: "/personal-care-services",
-      },
-    ],
-  },
+  ,
   {
     id: uuid(),
     menuitem: "Educational Services",

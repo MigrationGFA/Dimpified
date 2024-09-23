@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Col, Row, Card, Tab, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 // import custom components
 import GridListViewButton from "../../Components/elements/miscellaneous/GridListViewButton";
@@ -18,16 +19,16 @@ const Instructor = () => {
     monthlyProvider: 1,
     totalProvider: 1,
   });
-  const [userDetails, setUserDetails] = useState([]); 
+  const [userDetails, setUserDetails] = useState([]);
   const [myEcosystem, setMyEcosystem] = useState([]);
-
+  const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
   const userId = user?.data?.CreatorId || "Unknown User";
   const ecosystemId = user?.data?.ecosystemId || "Unknown Ecosystem";
 
   const getMyUser = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/all-ecosystem-users/${userId}`
       );
 
@@ -44,7 +45,7 @@ const Instructor = () => {
   // Fetch the ecosystem data
   const getMyEcosystem = async () => {
     try {
-      const response = await axios.get(
+      const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-users`,
         {
           params: {
@@ -66,7 +67,7 @@ const Instructor = () => {
 
   // Fetch the ecosystem data whenever `userDetails` changes
   useEffect(() => {
-    if (userDetails.length > 0) {
+    if (userDetails && userDetails.length > 0) {
       getMyEcosystem();
     }
   }, [userDetails]);
@@ -82,7 +83,7 @@ const Instructor = () => {
                   <h1 className="mb-1 h2 fw-bold">
                     My User{" "}
                     <span className="fs-5 text-muted">
-                      ({userDetails.length})
+                      ({userDetails && userDetails.length})
                     </span>
                   </h1>
                   <Breadcrumb>

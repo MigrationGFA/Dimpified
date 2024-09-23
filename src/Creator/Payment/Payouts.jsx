@@ -30,6 +30,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { showToast } from "../../Components/Showtoast";
 import { Trash, Edit, MoreVertical } from "react-feather";
+import { useSelector } from "react-redux";
 
 // import media files
 import PayPal from "../../assets/images/brand/paypal-small.svg";
@@ -50,11 +51,14 @@ import {
   PayoutChartSeries,
   PayoutChartOptions,
 } from "../../data/charts/ChartData";
-
-import { useSelector } from "react-redux";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const Payouts = () => {
   const { ecosystemDomain } = useParams();
+  const userPlan = useSelector(
+    (state) => state.authentication.user?.data?.plan || "Lite"
+  );
+  const authFetch = AxiosInterceptor();
   const userId = useSelector(
     (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
   );
@@ -79,6 +83,36 @@ const Payouts = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
+  const [percentage, setPercentage] = useState(null);
+  const [banks, setBanks] = useState([]);
+  const [bankCode, setBankCode] = useState(null);
+  const [bankLoading, setBankLoading] = useState(false);
+
+  // const handleBanks = async () => {
+  //   setBankLoading(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `${import.meta.env.VITE_API_URL}/get-all-banks`
+  //     );
+  //     setBankLoading(false);
+  //     setBanks(response.allBanks.data);
+  //   } catch (error) {
+  //     setBankLoading(false);
+  //     showToast("Can't get bank list");
+  //   }
+  // };
+
+  useEffect(() => {
+    if (userPlan === "Lite") {
+      setPercentage(7.5);
+    } else if (userPlan === "Plus") {
+      setPercentage(4);
+    } else if (userPlan === "Pro") {
+      setPercentage(3);
+    } else {
+      setPercentage(2);
+    }
+  }, [userPlan]);
 
   const [earnings, setEarnings] = useState({
     Naira: 0,
@@ -86,6 +120,7 @@ const Payouts = () => {
     EUR: 0,
     GBP: 0,
   });
+  const [availableBalance, setAvailableBalance] = useState("");
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -95,24 +130,34 @@ const Payouts = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_URL
-          }/ecosystem-earnings/${ecosystemDomain}`
-        );
-
-        if (response.data) {
-          setEarnings(response.data.totalEarnings);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
+      );
+  
+      if (response.data) {
+        if (response.data.totalEarnings !== undefined && response.data.availableBalance !== undefined) {
+          setEarnings(response.data.totalEarnings);
+          setAvailableBalance(response.data.availableBalance);
+        } else {
+          setEarnings(0); 
+          setAvailableBalance(0);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  
+  useEffect(() => {
+    // Fetch earnings data when component mounts
+    fetchData();
+  }, [ecosystemDomain]);
+  
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -128,8 +173,6 @@ const Payouts = () => {
       case "dollars":
       case "Dollar":
         return `$`;
-      case "euros":
-
       default:
         return `₦`;
     }
@@ -154,27 +197,34 @@ const Payouts = () => {
     indexOfLastAccount
   );
 
-  // Function to retrieve bank data from the server
-  const fetchBankData = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
-      );
-      const fetchedBankData = response.data.accountDetails; // Access accountDetails array from response data
+  
+const fetchBankData = async () => {
+  try {
+    const response = await authFetch.get(
+      `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
+    );
+
+    if (response.data.accountDetails && response.data.accountDetails.length > 0) {
+      const fetchedBankData = response.data.accountDetails;
       setBankData(fetchedBankData);
-    } catch (error) {
-      console.error("Error fetching bank data:", error);
+    } else {
+      setBankData([]); 
     }
-  };
-  useEffect(() => {
-    // Fetch bank data from server
-    fetchBankData();
-  }, [userId]);
+  } catch (error) {
+    console.error("Error fetching bank data:", error);
+  }
+};
+
+useEffect(() => {
+  
+  fetchBankData();
+}, [userId]);
+
 
   const handleSave = async () => {
     setLoadingSave(true);
     try {
-      const saveBankData = await axios.post(
+      const saveBankData = await authFetch.post(
         `${import.meta.env.VITE_API_URL}/save-bank-details`,
         {
           creatorId: userId,
@@ -202,6 +252,7 @@ const Payouts = () => {
 
   const handleAddAccount = () => {
     setShowModal(true);
+    // handleBanks();
   };
 
   const handleEdit = (id) => {
@@ -217,7 +268,7 @@ const Payouts = () => {
   const handleEditSave = async (accountId) => {
     setLoadingWithdraw(true);
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
+      await authFetch.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
         creatorId: userId,
         accountId: accountId,
         accountName: editedAccount.accountName,
@@ -254,7 +305,7 @@ const Payouts = () => {
       const withdrawAmountNumeric = parseFloat(withdrawnAmount);
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
-        const response = await axios.post(
+        const response = await authFetch.post(
           `${import.meta.env.VITE_API_URL}/withdrawal-request`,
           {
             creatorId: parseFloat(userId),
@@ -265,6 +316,7 @@ const Payouts = () => {
           }
         );
         showToast(response.data.message);
+        fetchData();
         setLoading(false);
         setErrorAcc("");
         setError("");
@@ -388,6 +440,30 @@ const Payouts = () => {
     return "";
   };
 
+  const AlertPaymentPlan = () => {
+    const [show, setShow] = useState(true);
+    if (show) {
+      return (
+        <Alert
+          variant="light-warning"
+          className="bg-light-warning text-dark-warning border-0"
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <strong>Current Plan</strong>
+          <p>
+            You are curently on {userPlan ? userPlan : "Lite"} plan which
+            involve deducting {percentage ? percentage : "0"}% of your total
+            earning.
+            {/* to move up to higher plan so as to have lesser percentage,
+            <button className="btn btn-primary btn-sm   ">UPGRADE PLAN</button> */}
+          </p>
+        </Alert>
+      );
+    }
+    return "";
+  };
+
   return (
     <Card className="border-0">
       <Card.Header>
@@ -401,6 +477,7 @@ const Payouts = () => {
       </Card.Header>
       <Card.Body>
         <AlertDismissible />
+        <AlertPaymentPlan />
         <Row className="mt-6">
           <Col xl={4} lg={4} md={12} sm={12} className="mb-3 mb-lg-0">
             <div className="text-center">
@@ -411,6 +488,7 @@ const Payouts = () => {
                 height={165}
                 type="bar"
               />
+
               <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
                 <DropdownToggle caret>{selectedCurrency}</DropdownToggle>
                 <DropdownMenu>
@@ -422,19 +500,18 @@ const Payouts = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
+
               <h4 className="mb-1">Your total earnings</h4>
               <h5 className="mb-0 display-4 fw-bold">
-                {formatPrice(selectedCurrency)}
+                {formatPrice(selectedCurrency)}{" "}
                 {earnings[selectedCurrency] || 0.0}
-                {/* Display earnings with Naira sign */}
               </h5>
               <p className="px-4">You can change your payout account above</p>
 
               <Button
                 variant="primary"
                 onClick={() => {
-                  setTotalAmount(earnings[selectedCurrency]);
-                  console.log("this is earning", earnings[selectedCurrency]);
+                  setTotalAmount(availableBalance);
                   setShowWithdrawModal(true);
                 }}
               >
@@ -450,15 +527,8 @@ const Payouts = () => {
                   <Modal.Title>Withdraw Earnings</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  {/* Display account details */}
-
                   <div className="border p-4 rounded-3 mt-3">
                     <h4>Select Banks:</h4>
-                    {/* <p>
-                        If the bank currency you select is difference from the
-                        currency you withdraw from, the amount will be converted
-                        according to your country head bank currency value
-                      </p> */}
                     {bankData.length > 0 ? (
                       <select
                         className="form-select"
@@ -483,11 +553,14 @@ const Payouts = () => {
                     )}
                   </div>
 
-                  {/* Display withdrawal amount input field */}
                   <div className="border p-4 rounded-3 mt-3">
                     <h4>
-                      Available Balance: {formatPrice(selectedCurrency)}
-                      {earnings[selectedCurrency] || 0.0}
+                      Ledger Balance: {formatPrice(selectedCurrency)}{" "}
+                      {earnings.Naira || 0.0}
+                    </h4>
+                    <h4>
+                      Available Balance: {formatPrice(selectedCurrency)}{" "}
+                      {availableBalance || 0.0}
                     </h4>
                     <Form.Group controlId="withdrawnAmount">
                       <Form.Label>
@@ -536,6 +609,34 @@ const Payouts = () => {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
+                    <Form.Group className="mb-3" controlId="bankName">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Bank Name"
+                        value={bankName}
+                        onChange={(e) => setBankName(e.target.value)}
+                      />
+                    </Form.Group>
+                    {/* <Form.Group className="mb-3" controlId="bankName">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Select
+                        value={bankName} // This will hold the selected bank code
+                        onChange={(e) => {
+                          const selectedBank = banks.find(
+                            (bank) => bank.id === e.target.value
+                          ); // Get the selected bank object
+                          setBankCode(selectedBank.id); // Capture the bank code if needed
+                        }}
+                      >
+                        <option value="">Select Bank</option>
+                        {banks.map((bank) => (
+                          <option key={bank.code} value={bank.code}>
+                            {bank.name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group> */}
                     <Form.Group className="mb-3" controlId="accountName">
                       <Form.Label>Account Name</Form.Label>
                       <Form.Control
@@ -554,15 +655,7 @@ const Payouts = () => {
                         onChange={(e) => setAccountNumber(e.target.value)}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Bank Name"
-                        value={bankName}
-                        onChange={(e) => setBankName(e.target.value)}
-                      />
-                    </Form.Group>
+
                     <Form.Group className="mb-3">
                       <Form.Label>Currency</Form.Label>
                       <Form.Select
@@ -590,7 +683,7 @@ const Payouts = () => {
                   </Button>
                   {loadingSave ? (
                     <Button variant="primary" disabled>
-                      <Spinner /> Saving
+                      <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
                     <Button variant="primary" onClick={handleSave}>
@@ -727,14 +820,15 @@ const Payouts = () => {
                   </Button>
                   {loadingWithdraw ? (
                     <Button variant="primary" disabled>
-                      <Spinner /> Saving
+                      <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
                     <Button
                       variant="primary"
-                      onClick={() => handleEditSave(editedAccount.accountId)}
+                      style={{ opacity: ".7" }}
+                      disabled
                     >
-                      Save
+                      Processing
                     </Button>
                   )}
                 </Modal.Footer>

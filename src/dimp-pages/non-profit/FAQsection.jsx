@@ -22,11 +22,13 @@ const FAQsection = () => {
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
                 <Accordion.Header>
-                  <h3>How can I become an ecosystem creator on your platform?</h3>
+                  <h3>
+                    How can I become an ecosystem creator on your platform?
+                  </h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  To become an ecosystem creator, please click on the "Get Started Now"
-                  button and fill out the application form.
+                  To become an ecosystem creator, please click on the "Get
+                  Started Now" button and fill out the application form.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
@@ -34,10 +36,10 @@ const FAQsection = () => {
                   <h3>What support do you provide to ecosystem creators?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  We offer comprehensive support to our ecosystem creators including
-                  training on how to use our platform, access to our course
-                  resource library, marketing assistance, and ongoing technical
-                  support.
+                  We offer comprehensive support to our ecosystem creators
+                  including training on how to use our platform, access to our
+                  course resource library, marketing assistance, and ongoing
+                  technical support.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="2">
@@ -57,9 +59,9 @@ const FAQsection = () => {
                   <h3>How do I create and upload my course content?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Once you are register as an ecosystem creator, you will receive
-                  access to your ecosystem. You can upload video lectures,
-                  documents, quizzes, and other materials through our
+                  Once you are register as an ecosystem creator, you will
+                  receive access to your ecosystem. You can upload video
+                  lectures, documents, quizzes, and other materials through our
                   easy-to-use content management system.
                 </Accordion.Body>
               </Accordion.Item>
@@ -68,8 +70,8 @@ const FAQsection = () => {
                   <h3>Can I set my own course prices?</h3>
                 </Accordion.Header>
                 <Accordion.Body>
-                  Yes, as an ecosystem creator, you have the flexibility to set your
-                  own course prices. We also offer guidance on pricing
+                  Yes, as an ecosystem creator, you have the flexibility to set
+                  your own course prices. We also offer guidance on pricing
                   strategies to help you maximize your earnings and reach a
                   wider audience.
                 </Accordion.Body>
@@ -101,8 +103,11 @@ const FAQsection = () => {
           </Col>
         </Row>
         <div className="mt-10 text-center">
-          <Link to="#" className="btn btn-lg btn-primary">
-            Sold yet? Get Started Now!
+          <Link
+            to="/creator/signup"
+            className="btn large btn-big fs-16 btn-hover-animation-switch rounded-3 btn-box-shadow  fw-400 xs-mt-10px xs-mb-10px me-2"
+          >
+            Sold yet? Get Started Now
           </Link>
         </div>
       </Container>

@@ -4,6 +4,7 @@ import Template1 from "./AllTemplate/TemplateV1";
 import Template2 from "./AllTemplate/Template2";
 import Template4 from "./AllTemplate/Template4";
 import Template3 from "./AllTemplate/Template3";
+import Template10 from "./AllTemplate/Template10";
 
 const MainTemplate = ({ subdomain }) => {
   const [details, setDetails] = useState(null);
@@ -73,6 +74,14 @@ const MainTemplate = ({ subdomain }) => {
     case 4:
       return (
         <Template4
+          details={details}
+          subdomain={subdomain}
+          ecosystemDetails={ecosystemDetails}
+        />
+      );
+    case 10:
+      return (
+        <Template10
           details={details}
           subdomain={subdomain}
           ecosystemDetails={ecosystemDetails}

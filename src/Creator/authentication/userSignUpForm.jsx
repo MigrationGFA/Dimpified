@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; 
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,6 +12,11 @@ const UserSignUpForm = ({ userRole }) => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  
+  const searchParams = new URLSearchParams(location.search);
+  const ref = searchParams.get("ref") || "not available"; 
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
@@ -53,6 +58,7 @@ const UserSignUpForm = ({ userRole }) => {
           password: data.password,
           organizationName:
             userRole === "enterprise" ? data.organisation : userRole === "consumer" ? data.name : undefined,
+          refCode: ref, 
         }
       );
       setLoading(false);
@@ -62,7 +68,7 @@ const UserSignUpForm = ({ userRole }) => {
       }
     } catch (error) {
       setLoading(false);
-      showToast(error.response.data.message);
+      showToast(error.response?.data?.message || "An error occurred");
     }
   };
 
