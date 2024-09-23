@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import Notification from '../../assets/SocialImages/push-notifications-img1.jpg';
+import Notification2 from '../../assets/SocialImages/Notification2.jpg';
 
 const PushNotificationsPage = () => {
   const [isActivated, setIsActivated] = useState(false);
@@ -13,27 +15,15 @@ const PushNotificationsPage = () => {
       {/* Header Section */}
       <Row>
         <Col>
-          <h2 className="fw-bold">Push notifications <a href="#" style={{ color: '#28A745' }}>Learn more</a></h2>
+          <h2 className="fw-bold">Push notifications</h2>
           <p>Create, schedule, and choose mobile app users for push notifications, specifying delivery time and date.</p>
           <Button variant="success" disabled={!isActivated}>
-            Create your first push notification
+            Create your push notification
           </Button>
         </Col>
-      </Row>
-
-      {/* Upgrade Notification */}
+              {/* Activate Checkbox */}
       <Row>
-        <Col>
-          <div className="alert alert-info text-start mt-4">
-            You discovered a higher plan feature! Unlock the potential of push notifications. 
-            <a href="#" className="btn btn-primary ms-2">Upgrade now</a>
-          </div>
-        </Col>
-      </Row>
-
-      {/* Activate Checkbox */}
-      <Row>
-        <Col>
+      <Col className="d-flex justify-content-end">
           <div className="mb-3">
             <input
               type="checkbox"
@@ -46,10 +36,21 @@ const PushNotificationsPage = () => {
           </div>
         </Col>
       </Row>
+      </Row>
+
+      {/* Upgrade Notification */}
+      <Row>
+        <Col>
+          <div className="alert alert-info text-start mt-4">
+            You discovered a higher plan feature! Unlock the potential of push notifications. 
+            <a href="#" className="btn btn-primary ms-2">Upgrade now</a>
+          </div>
+        </Col>
+      </Row>
 
       {/* Main Content Section */}
       <Row className="mt-5">
-        <Col md={6} className="text-start">
+        <Col md={6} className="text-start mt-9">
           <h3>Interact with your learners via your own native mobile learning app with push notifications</h3>
           <p>
             Push notifications serve as direct lines of communication to your audience's mobile devices to foster immediate engagement.
@@ -58,87 +59,24 @@ const PushNotificationsPage = () => {
             Create your first push notification
           </Button>
         </Col>
-        <Col md={6}>
-          <img src="path_to_image" alt="Mobile app example" className="img-fluid" />
+        <Col md={6} className="mt-1">
+          <img src={Notification2} alt="Mobile app example" className="img-fluid" />
         </Col>
       </Row>
 
       {/* Push Notification Features Section */}
       <Row className="mt-5 text-center">
-        <Col>
-          <h4 className="fw-bold">Drive your learners to your app</h4>
+        <Col md="auto" className="text-center mt-4">
+          <h3><strong>Drive your learners to your app</strong></h3>
           <p>
             Push notifications are a powerful tool to give a nudge to your students, keep them on track, and make the most of their courses.
           </p>
-          <div className="d-flex justify-content-center">
-            <Row>
-              {/* Feature items */}
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_welcome_icon" alt="Welcome" className="mb-2"/>
-                    <p className="card-text">Welcome new students</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_schedule_icon" alt="Schedule" className="mb-2"/>
-                    <p className="card-text">Schedule training reminders</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_updates_icon" alt="Updates" className="mb-2"/>
-                    <p className="card-text">Updates on content initiatives</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_notices_icon" alt="Notices" className="mb-2"/>
-                    <p className="card-text">Notices of course events</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_sales_icon" alt="Sales" className="mb-2"/>
-                    <p className="card-text">Sales event promotions</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_motivation_icon" alt="Motivation" className="mb-2"/>
-                    <p className="card-text">Motivation and recognition</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_reduce_icon" alt="Reduce" className="mb-2"/>
-                    <p className="card-text">Reduce disengagement</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={3} className="mb-3">
-                <Card>
-                  <Card.Body>
-                    <img src="path_to_baseline_icon" alt="Baseline" className="mb-2"/>
-                    <p className="card-text">Baseline exams</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
+          <img
+            src={Notification}
+            alt="Explore the Variety of Question Types Available"
+            style={{ width: "75%" }}
+            className="img-fluid"
+          />
         </Col>
       </Row>
 

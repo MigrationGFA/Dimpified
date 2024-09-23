@@ -39,7 +39,9 @@ const AnalyticsTools = () => {
             <div>
               <h4>Google Analytics 4</h4>
               <p>Add the Google Analytics tracking ID by following the instructions <a href="#">here</a>.</p>
-              <Image src={GoogleAnalyticsImg} alt="Google Analytics" style={imageStyle} />
+              <Image src={GoogleAnalyticsImg} alt="Google Analytics" 
+              style={{ width: '200px', height: 'auto' }}
+               />
             </div>
           </Col>
           <Col md={5}>
@@ -97,7 +99,9 @@ const AnalyticsTools = () => {
             <div>
               <h4>Google Tag Manager</h4>
               <p>You can follow the instructions <a href="#">here</a> to create a Web Container. All we need is the GTM Code.</p>
-              <Image src={TagManagerImg} alt="Google Tag Manager" style={imageStyle} />
+              <Image src={TagManagerImg} alt="Google Tag Manager" 
+              style={{ width: '200px', height: 'auto' }}
+              />
             </div>
           </Col>
           <Col md={5}>
@@ -132,7 +136,9 @@ const AnalyticsTools = () => {
             <div>
               <h4>Meta Pixel</h4>
               <p>Go to your Meta Pixel tab in Ads Manager and click Create Pixel. After one has been created then you can find it by navigating to your Pixels page and clicking Actions  View Code.</p>
-              <Image src={MetaPixelImg} alt="Meta Pixel" style={imageStyle} />
+              <Image src={MetaPixelImg} alt="Meta Pixel" 
+              style={{ width: '200px', height: 'auto' }}
+               />
             </div>
           </Col>
           <Col md={5}>

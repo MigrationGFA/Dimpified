@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
+import Zendesk from "../../assets/SocialImages/zendesk.svg";
+import Fresh from "../../assets/SocialImages/freshchat.png";
 
 const CustomerService = () => {
   const [freshchatActive, setFreshchatActive] = useState(false);
@@ -40,7 +42,9 @@ const CustomerService = () => {
                 <p>
                   Follow the directions <a href="#">here</a> and copy/paste the widget code snippet.
                 </p>
-                <img src="https://via.placeholder.com/100x50" alt="Freshchat Logo" />
+                <img src={Fresh} alt="Freshchat Logo"
+                 style={{ width: '200px', height: 'auto' }}
+                 />
               </Col>
 
               {/* Right Side with White Background */}
@@ -79,7 +83,7 @@ const CustomerService = () => {
                 <p>
                   All you need is your Zendesk subdomain to enable the Zendesk widget. You can find instructions <a href="#">here</a> on how you can find your Zendesk subdomain.
                 </p>
-                <img src="https://via.placeholder.com/100x50" alt="Zendesk Logo" />
+                <img src={Zendesk}alt="Zendesk Logo" />
               </Col>
 
               {/* Right Side with White Background */}

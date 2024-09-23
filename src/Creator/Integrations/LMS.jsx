@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Nav, Tab, Image, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Nav, Tab, Image, Form, Offcanvas  } from "react-bootstrap";
 
 // Import images
 import Hero from "../../assets/SocialImages/question-banks-hero.jpg";
@@ -15,6 +15,9 @@ import bubblesLight from "../../assets/SocialImages/video-skin2-white.jpg";
 import bubblesDark from "../../assets/SocialImages/video-skin2-black.jpg";
 import accentLight from "../../assets/SocialImages/video-skin3-white.jpg";
 import accentDark from "../../assets/SocialImages/video-skin3-black.jpg";
+import learnworldsImg from "../../assets/SocialImages/Learnworldlogo.jpg";
+import vimeoImg from "../../assets/SocialImages/VimeoLogo.jpg";
+import wistiaImg from "../../assets/SocialImages/Wistia_Logo.jpg";
 
 // Sample paths for player skins
 const playerSkins = [
@@ -28,6 +31,17 @@ const playerSkins = [
 
 const TabsComponent = () => {
   const [activeKey, setActiveKey] = useState("certificate");
+  const [showPopup, setShowPopup] = useState(false);
+  const [isActivated, setIsActivated] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState('vimeo'); // Merged state
+
+  const handleShowPopup = () => setShowPopup(true);
+  const handleClosePopup = () => setShowPopup(false);
+  const handleCheckboxChange = (e) => setIsActivated(e.target.checked);
+
+  const handlePlayerSelect = (player) => {
+    setSelectedPlayer(player);
+  };
 
   return (
     <Container className="my-5" style={{ backgroundColor: "white" }}>
@@ -40,6 +54,17 @@ const TabsComponent = () => {
           </p>
           <Button variant="success">Save</Button>
         </Col>
+        <Row className="mb-4">
+  <Col className="d-flex justify-content-end">
+    <Form.Check
+      type="checkbox"
+      id="activate-checkbox"
+      label="Activate"
+      onChange={handleCheckboxChange}
+    />
+  </Col>
+</Row>
+
       </Row>
 
       <Tab.Container activeKey={activeKey} onSelect={(k) => setActiveKey(k)}>
@@ -141,91 +166,162 @@ const TabsComponent = () => {
             </Row>
           </Tab.Pane>
 
-          {/* Question banks Tab */}
           <Tab.Pane eventKey="question-banks">
-            <Row className="align-items-center mt-6">
-              <Col
-                md={6}
-                className="d-flex flex-column justify-content-center align-items-center mt-4"
-              >
-                <h2><strong>
-                  Save time by creating questions once and reusing across
-                  multiple courses
-                </strong></h2>
-                <p>
-                  Question banks are pools of pre-created questions that can be
-                  used across multiple quizzes, assessments, or exams. Use
-                  question banks to ensure consistency and avoid redundant
-                  question creation.
-                </p>
-                <Button variant="success">
-                  Create your first question bank
-                </Button>
-              </Col>
-              <Col md={6}>
-                <img
-                  src={Hero}
-                  alt="Creating questions"
-                  style={{ width: "80%" }}
-                  className="img-fluid"
-                />
-              </Col>
-            </Row>
+      
 
-            <Row className="my-5 justify-content-center mt-14">
-              <Col md="auto" className="text-center ">
-                <h3><strong>3 ways to populate your question banks</strong></h3>
-                <img
-                  src={Img1}
-                  alt="3 ways to populate your question banks"
-                  style={{ width: "70%" }}
-                  className="img-fluid"
-                />
-              </Col>
-            </Row>
+      <Row className="align-items-center mt-6">
+        <Col
+          md={6}
+          className="d-flex flex-column justify-content-center align-items-center mt-4"
+        >
+          <h2><strong>
+            Save time by creating questions once and reusing across
+            multiple courses
+          </strong></h2>
+          <p>
+            Question banks are pools of pre-created questions that can be
+            used across multiple quizzes, assessments, or exams. Use
+            question banks to ensure consistency and avoid redundant
+            question creation.
+          </p>
+          <Button
+            variant="success"
+            onClick={handleShowPopup}
+            disabled={!isActivated}
+          >
+            Create your first question bank
+          </Button>
+        </Col>
+        <Col md={6}>
+          <img
+            src={Hero}
+            alt="Creating questions"
+            style={{ width: "80%" }}
+            className="img-fluid"
+          />
+        </Col>
+      </Row>
 
-            <Row className="text-center mt-4 justify-content-center">
-              <Col md={4}>
-                <h4>
-                  <strong>1. Create questions from scratch</strong>
-                </h4>
-                <p>
-                  Directly add original questions to the bank, tailoring them to
-                  specific course needs or topics.
-                </p>
-              </Col>
-              <Col md={4}>
-                <h4>
-                  <strong>2. Import from XLS or CSV files</strong>
-                </h4>
-                <p>
-                  Easily upload questions in bulk from spreadsheets,
-                  streamlining the process of populating your question bank.
-                </p>
-              </Col>
-              <Col md={4}>
-                <h4>
-                  <strong>3. Import from existing courses</strong>
-                </h4>
-                <p>
-                  Utilize questions from your existing courses, transferring
-                  them to the bank for broader use.
-                </p>
-              </Col>
-            </Row>
+      <Row className="my-5 justify-content-center mt-14">
+        <Col md="auto" className="text-center">
+          <h3><strong>3 ways to populate your question banks</strong></h3>
+          <img
+            src={Img1}
+            alt="3 ways to populate your question banks"
+            style={{ width: "70%" }}
+            className="img-fluid"
+          />
+        </Col>
+      </Row>
 
-            <Row className="mt-8 justify-content-center ">
-              <Col md="auto" className="text-center mt-4">
-                <h3><strong>Explore the Variety of Question Types Available</strong></h3>
-                <img
-                  src={Img2}
-                  alt="Explore the Variety of Question Types Available"
-                  style={{ width: "75%" }}
-                  className="img-fluid"
-                />
-              </Col>
-            </Row>
-          </Tab.Pane>
+      <Row className="text-center mt-4 justify-content-center">
+        <Col md={4}>
+          <h4>
+            <strong>1. Create questions from scratch</strong>
+          </h4>
+          <p>
+            Directly add original questions to the bank, tailoring them to
+            specific course needs or topics.
+          </p>
+        </Col>
+        <Col md={4}>
+          <h4>
+            <strong>2. Import from XLS or CSV files</strong>
+          </h4>
+          <p>
+            Easily upload questions in bulk from spreadsheets,
+            streamlining the process of populating your question bank.
+          </p>
+        </Col>
+        <Col md={4}>
+          <h4>
+            <strong>3. Import from existing courses</strong>
+          </h4>
+          <p>
+            Utilize questions from your existing courses, transferring
+            them to the bank for broader use.
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="mt-8 justify-content-center">
+        <Col md="auto" className="text-center mt-4">
+          <h3><strong>Explore the Variety of Question Types Available</strong></h3>
+          <img
+            src={Img2}
+            alt="Explore the Variety of Question Types Available"
+            style={{ width: "75%" }}
+            className="img-fluid"
+          />
+        </Col>
+      </Row>
+
+      {/* Popup Offcanvas */}
+      <Offcanvas 
+        show={showPopup} 
+        onHide={handleClosePopup} 
+        placement="end" 
+        style={{ width: '40%', height: '100vh' }}  
+      >
+        <Offcanvas.Header closeButton style={{ backgroundColor: '#f4f4f4' }}>
+          <Offcanvas.Title style={{ fontSize: '1.5rem' }}>Create a new question bank</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body className="p-0 d-flex">
+          <Row className="w-100 m-0">
+            {/* Left Side Container (Grey Background) */}
+            <Col 
+              md={4} 
+              style={{ 
+                backgroundColor: '#f4f4f4', 
+                height: '100vh',
+                padding: '20px' 
+              }}
+              className="d-flex flex-column align-items-start"
+            >
+              <div>
+                <strong>Question bank name</strong>
+                <p className="text-muted">
+                  Please type the name of the new question bank.
+                </p>
+              </div>
+            </Col>
+
+            {/* Right Side Container (White Background) */}
+            <Col 
+              md={8} 
+              style={{ 
+                backgroundColor: '#ffffff', 
+                height: '100vh', 
+                padding: '20px' 
+              }}
+              className="d-flex flex-column align-items-start"
+            >
+              <Form>
+                <Form.Group controlId="questionBankName">
+                  <Form.Control
+                    type="text"
+                    placeholder="e.g. Questions for domain X"
+                  />
+                </Form.Group>
+                <div className="mt-4">
+                  <Button variant="success" className="me-2">
+                    Create & Edit
+                  </Button>
+                  <Button variant="success" className="me-2">
+                    Create
+                  </Button>
+                  <Button variant="outline-secondary" onClick={handleClosePopup}>
+                    Cancel
+                  </Button>
+                </div>
+              </Form>
+            </Col>
+          </Row>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </Tab.Pane>
+
+
 
           {/* Course form Tab */}
           <Tab.Pane eventKey="course-form">
@@ -397,6 +493,84 @@ const TabsComponent = () => {
             </Row>
           </Tab.Pane>
           
+{/* Video-Player Tab */}
+<Tab.Pane eventKey="video-player">
+  <Row className="align-items-center">
+    <Col md={4} style={{ padding: '1.5rem', backgroundColor: '#f5f5f5' }}> 
+      <Form>
+        {['learnworlds', 'vimeo', 'wistia'].map((player) => (
+          <Row className="mb-4" key={player}>
+            <Col className="text-center">
+              <div
+                onClick={() => handlePlayerSelect(player)}
+                style={{
+                  cursor: 'pointer',
+                  border: selectedPlayer === player ? '2px solid #22c55e' : '2px solid transparent', 
+                  borderRadius: '5px',
+                  padding: '10px',
+                  position: 'relative',
+                  transition: 'border 0.3s ease'
+                }}
+              >
+                <div className="text-center mb-2">{player.charAt(0).toUpperCase() + player.slice(1)}</div>
+                <div className="radio-label-img-container position-relative">
+                  <img
+                    src={player === 'learnworlds' ? learnworldsImg : player === 'vimeo' ? vimeoImg : wistiaImg}
+                    alt={player.charAt(0).toUpperCase() + player.slice(1)}
+                    fluid="true"
+                    style={{
+                      width: '60%',
+                      height: 'auto',
+                      backgroundColor: '#000',
+                      padding: '10px',
+                    }}
+                  />
+                  {selectedPlayer === player && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '-10px',
+                      right: '-10px',
+                      backgroundColor: '#22c55e',
+                      color: 'white',
+                      fontSize: '16px',
+                      padding: '5px',
+                      borderRadius: '50%',
+                    }}>&#10003;</span> // Checkmark icon inside a circle
+                  )}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        ))}
+      </Form>
+    </Col>
+
+    <Col md={8} style={{ padding: '1.5rem', backgroundColor: '#fff' }}> {/* White background for right section */}
+      {selectedPlayer === 'learnworlds' && (
+        <div>
+          <p>If you select LearnWorlds as your video storage provider, you will be able to upload your videos through the course authoring page. Just select the "Video library" tab, and upload your videos.</p>
+        </div>
+      )}
+
+      {selectedPlayer === 'vimeo' && (
+        <div>
+          <p>Your LearnWorlds site will be authorized to use Vimeo Account to store videos. Your account limits will apply. Make sure that you check out Vimeo's <a href="#">Terms of Service</a> and pick an appropriate subscription Plan. If you have any doubts, you may contact Vimeo directly.</p>
+          <Button variant="success">Connect your account</Button>
+        </div>
+      )}
+
+      {selectedPlayer === 'wistia' && (
+        <div>
+          <p>Your LearnWorlds site will be authorized to use Wistia Account to store videos. Your account limits will apply.</p>
+          <Button variant="success">Connect your account</Button>
+        </div>
+      )}
+    </Col>
+  </Row>
+</Tab.Pane>
+
+
+
         </Tab.Content>
       </Tab.Container>
     </Container>

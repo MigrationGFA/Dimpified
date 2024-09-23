@@ -40,7 +40,9 @@ const Affiliates = () => {
                   Sign up for an account via LearnWorlds <a href="#">here</a> and get $50 worth of credits (1+1 months free).
                 </p>
                 {/* Image is always displayed */}
-                <img src={Candy} alt="ReferralCandy" style={imageStyle} />
+                <img src={Candy} alt="ReferralCandy" 
+                style={{ width: '200px', height: 'auto' }}
+                 />
                 {referralCandyActive && (
                   <>
                     <p><strong>App ID</strong></p>
@@ -97,7 +99,9 @@ const Affiliates = () => {
                   Refersion is a simple affiliate marketing software that allows you to easily manage your affiliates and automate their commissions.
                 </p>
                 {/* Image is always displayed */}
-                <img src={Refersion} alt="Refersion" style={imageStyle} />
+                <img src={Refersion} alt="Refersion" 
+                style={{ width: '200px', height: 'auto' }}
+                 />
                 {refersionActive && (
                   <>
                     <p><strong>App ID</strong></p>

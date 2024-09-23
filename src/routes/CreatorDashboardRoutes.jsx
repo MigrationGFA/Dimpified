@@ -63,7 +63,7 @@ export const DashboardMenu = [
       { id: uuid(), link: "/creator/live-session", name: "Live sessions" },
       { id: uuid(), link: "/creator/email-integration", name: "Email integration" },
       { id: uuid(), link: "/creator/customer-service", name: "Customer service" },
-      { id: uuid(), link: "/creator/analytic", name: "Analytic" },
+      { id: uuid(), link: "/creator/analytic", name: "Analytics" },
       { id: uuid(), link: "/creator/affiliates", name: "Affiliates " },
       { id: uuid(), link: "/creator/finance", name: "Finance" },
       { id: uuid(), link: "/creator/reminder-notification", name: "Reminder and Notifications" },

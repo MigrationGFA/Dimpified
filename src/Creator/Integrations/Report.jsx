@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ReportsCenter = () => {
   const [selectedTag, setSelectedTag] = useState('allReports');
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
   };
+
+  const checkScroll = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+  };
+
+  const scroll = (scrollOffset) => {
+    scrollRef.current.scrollLeft += scrollOffset;
+    checkScroll(); // Check scroll status after scrolling
+  };
+
+  useEffect(() => {
+    checkScroll();
+  }, []);
 
   return (
     <Container className="mt-4" style={{ maxWidth: '1200px', height: 'auto' }}>
@@ -22,63 +41,34 @@ const ReportsCenter = () => {
       {/* Report Tags */}
       <Row>
         <Col>
-          <div className="d-flex mb-3">
-            <Button
-              variant={selectedTag === 'allReports' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('allReports')}
+          <div className="d-flex align-items-center position-relative">
+            <FaChevronLeft
+              className={`scroll-arrow ${!canScrollLeft ? 'disabled' : ''}`}
+              onClick={() => scroll(-100)}
+              style={arrowStyle}
+            />
+            <div
+              className="d-flex overflow-hidden mx-2"
+              ref={scrollRef}
+              onScroll={checkScroll}
+              style={{ display: 'flex', whiteSpace: 'nowrap', padding: '5px' }}
             >
-              All
-            </Button>
-            <Button
-              variant={selectedTag === 'usersProgress' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('usersProgress')}
-            >
-              Users progress
-            </Button>
-            <Button
-              variant={selectedTag === 'usersActivity' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('usersActivity')}
-            >
-              Users Activity
-            </Button>
-            <Button
-              variant={selectedTag === 'usersGrowth' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('usersGrowth')}
-            >
-              Users Growth
-            </Button>
-            <Button
-              variant={selectedTag === 'usersEngagement' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('usersEngagement')}
-            >
-              Users Engagement
-            </Button>
-            <Button
-              variant={selectedTag === 'learningPerformances' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('learningPerformances')}
-            >
-              Learning Performances
-            </Button>
-            <Button
-              variant={selectedTag === 'marketingPerformances' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('marketingPerformances')}
-            >
-              Marketing Performances
-            </Button>
-            <Button
-              variant={selectedTag === 'usersGroupsSeats' ? 'dark' : 'light'}
-              className="me-2"
-              onClick={() => handleTagClick('usersGroupsSeats')}
-            >
-              Users groups & seats
-            </Button>
+              {['allReports', 'usersProgress', 'usersActivity', 'usersGrowth', 'usersEngagement', 'learningPerformances', 'marketingPerformances', 'usersGroupsSeats'].map((tag) => (
+                <Button
+                  key={tag}
+                  variant={selectedTag === tag ? 'dark' : 'light'}
+                  className="me-2"
+                  onClick={() => handleTagClick(tag)}
+                >
+                  {tag.replace(/([A-Z])/g, ' $1').trim()} {/* Format the button text */}
+                </Button>
+              ))}
+            </div>
+            <FaChevronRight
+              className={`scroll-arrow ${!canScrollRight ? 'disabled' : ''}`}
+              onClick={() => scroll(100)}
+              style={arrowStyle}
+            />
           </div>
         </Col>
       </Row>
@@ -259,23 +249,7 @@ const ReportsCenter = () => {
                   <Card style={{ height: '200px' }}>
                     <Card.Body>
                       <Card.Title>Course Completion Rates</Card.Title>
-                      <Card.Text>Track the percentage of course completions.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Assessment Scores</Card.Title>
-                      <Card.Text>Analyze user performance on assessments.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Time Spent on Courses</Card.Title>
-                      <Card.Text>Measure the amount of time users spend on each course.</Card.Text>
+                      <Card.Text>Track course completion rates among users.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -291,57 +265,25 @@ const ReportsCenter = () => {
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
                     <Card.Body>
-                      <Card.Title>Campaign Effectiveness</Card.Title>
-                      <Card.Text>Evaluate the effectiveness of marketing campaigns.</Card.Text>
+                      <Card.Title>Campaign Performance</Card.Title>
+                      <Card.Text>Analyze the effectiveness of marketing campaigns.</Card.Text>
                     </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Lead Conversion Rates</Card.Title>
-                      <Card.Text>Analyze the rate at which leads are converted to users.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Cost per Acquisition</Card.Title>
-                      <Card.Text>Track the cost of acquiring new users.</Card.Text>
-                      </Card.Body>
                   </Card>
                 </Col>
               </Row>
             </>
           )}
 
-          {/* Users Groups & Seats Section */}
+          {/* Users Groups Seats Section */}
           {(selectedTag === 'allReports' || selectedTag === 'usersGroupsSeats') && (
             <>
-              <h4>Users Groups & Seats</h4>
+              <h4>Users Groups Seats</h4>
               <Row className="mb-4">
                 <Col md={4}>
                   <Card style={{ height: '200px' }}>
                     <Card.Body>
-                      <Card.Title>Group Enrollment</Card.Title>
-                      <Card.Text>Monitor enrollment within different user groups.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Available Seats</Card.Title>
-                      <Card.Text>Track the number of available seats in each course.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={4}>
-                  <Card style={{ height: '200px' }}>
-                    <Card.Body>
-                      <Card.Title>Seats Allocation</Card.Title>
-                      <Card.Text>See how seats are allocated among users and groups.</Card.Text>
+                      <Card.Title>Group Enrollments</Card.Title>
+                      <Card.Text>Track how many users are enrolled in groups.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -352,6 +294,15 @@ const ReportsCenter = () => {
       </Row>
     </Container>
   );
+};
+
+const arrowStyle = {
+  cursor: 'pointer',
+  fontSize: '24px',
+  color: '#007bff',
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
 };
 
 export default ReportsCenter;
