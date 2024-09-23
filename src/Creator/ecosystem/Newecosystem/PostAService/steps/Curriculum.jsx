@@ -11,6 +11,9 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { showToast } from "../../../../../Components/Showtoast";
 import axios from "axios";
 import { useImageUploader } from "../../../../../helper/UploadImage";
+import AxiosInterceptor from "../../../../../Components/AxiosInterceptor";
+import { Tooltip } from "flowbite-react";
+import { HiQuestionMarkCircle } from "react-icons/hi";
 
 const AddService = () => {
   const dispatch = useDispatch();
@@ -85,7 +88,19 @@ const AddService = () => {
         </Modal.Header>
         <Modal.Body className="pb-0">
           <Form.Group className="mb-3">
-            <Form.Label>Service Name</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Service Name <span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="e.g children haircut, graphic designer"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="Service Name"
@@ -94,7 +109,19 @@ const AddService = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Short Description</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Short Description <span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="e.g i will give superb hair-cut"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
@@ -104,16 +131,40 @@ const AddService = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Price</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Price<span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="Amount you charge for this services"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Delivery Time</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Delivery Time<span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="How long it takes you to deliver this service"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="Delivery Time"
@@ -122,7 +173,19 @@ const AddService = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Pricing Format</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Pricing Format<span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="is this a fixed rate or hourly charges"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <Form.Select
               type="text"
               placeholder="Job Salary Format"
@@ -139,7 +202,20 @@ const AddService = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Service Image</Form.Label>
+            <Form.Label style={{ display: "flex", alignItems: "center" }}>
+              Service Image
+              <span className="text-danger">*</span>
+              <span>
+                <Tooltip
+                  content="add sample image for this service"
+                  placement="top"
+                  className="bg-primary text-white"
+                  style={{ minWidth: "150px" }}
+                >
+                  <HiQuestionMarkCircle size={20} />
+                </Tooltip>
+              </span>
+            </Form.Label>
             <div className="d-flex align-items-center">
               <Form.Control
                 type="text"
@@ -177,7 +253,17 @@ const AddService = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="pt-0 border-0 d-inline">
-          <Button variant="primary" onClick={handleAddService}>
+          <Button
+            variant="primary"
+            onClick={handleAddService}
+            disabled={
+              name === "" ||
+              shortDescription === "" ||
+              deliveryTime === "" ||
+              priceFormat === "" ||
+              serviceImage === ""
+            }
+          >
             Save Service
           </Button>
           <Button variant="outline-secondary" onClick={handleClose}>
@@ -209,6 +295,7 @@ const Service = ({ submit, onPrevious }) => {
   const [editDeliveryTime, setEditDeliveryTime] = useState("");
   const [editPriceFormat, setEditPriceFormat] = useState("");
   const [editImage, setEditImage] = useState("");
+  const authFetch = AxiosInterceptor();
 
   const jobSalaryFormats = [
     { value: "Fixed", label: "Fixed" },
@@ -255,7 +342,7 @@ const Service = ({ submit, onPrevious }) => {
       ecosystemDomain: ecosystem,
     };
 
-    axios
+    authFetch
       .post(`${import.meta.env.VITE_API_URL}/create-service`, serviceDetails)
       .then((response) => {
         setLoading(false);
@@ -263,16 +350,9 @@ const Service = ({ submit, onPrevious }) => {
           showToast(response.data.message);
         }
 
-        if (location.pathname.includes(`/${ecosystemDomain}/`)) {
-          dispatch(resetServiceData());
-          navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
-        } else {
-          if (userType === "consumer") {
-            navigate("/creator/dashboard/Edit-Template/individual");
-          } else {
-            navigate("/creator/dashboard/Products");
-          }
-        }
+        dispatch(resetServiceData());
+        navigate(`/${ecosystemDomain}/Ecosystemdashboard`);
+
         submit();
       })
       .catch((error) => {
@@ -538,7 +618,11 @@ const Service = ({ submit, onPrevious }) => {
         >
           Previous
         </Button>
-        <Button variant="primary" onClick={handleSubmit} disabled={loading}>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={loading || sections.length === 0}
+        >
           {loading ? "Submitting..." : "Submit"}
         </Button>
       </div>

@@ -36,6 +36,7 @@ import { useSelector } from "react-redux";
 import PayPal from "../../assets/images/brand/paypal-small.svg";
 import Payoneer from "../../assets/images/brand/payoneer.svg";
 
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 // import custom components
 import Pagination from "../../Components/elements/advance-table/Pagination";
 import ApexCharts from "../../Components/elements/charts/ApexCharts";
@@ -51,18 +52,15 @@ import {
   PayoutChartSeries,
   PayoutChartOptions,
 } from "../../data/charts/ChartData";
-import AxiosInterceptor from "../../Components/AxiosInterceptor";
 
 const Payouts = () => {
-  const { ecosystemDomain } = useParams();
-  const userPlan = useSelector(
-    (state) => state.authentication.user?.data?.plan || "Lite"
-  );
+
   const authFetch = AxiosInterceptor();
+
   const userId = useSelector(
-    (state) => state.authentication.user?.data?.CreatorId || "Unknown User"
+    (state) => state.authentication.user?.data?.AffiliateId || "Unknown User"
   );
-  console.log(userId);
+
   const [filtering, setFiltering] = useState("");
   const [rowSelection, setRowSelection] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -84,35 +82,8 @@ const Payouts = () => {
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
-  const [banks, setBanks] = useState([]);
-  const [bankCode, setBankCode] = useState(null);
-  const [bankLoading, setBankLoading] = useState(false);
 
-  // const handleBanks = async () => {
-  //   setBankLoading(true);
-  //   try {
-  //     const response = await axios.get(
-  //       `${import.meta.env.VITE_API_URL}/get-all-banks`
-  //     );
-  //     setBankLoading(false);
-  //     setBanks(response.allBanks.data);
-  //   } catch (error) {
-  //     setBankLoading(false);
-  //     showToast("Can't get bank list");
-  //   }
-  // };
-
-  useEffect(() => {
-    if (userPlan === "Lite") {
-      setPercentage(7.5);
-    } else if (userPlan === "Plus") {
-      setPercentage(4);
-    } else if (userPlan === "Pro") {
-      setPercentage(3);
-    } else {
-      setPercentage(2);
-    }
-  }, [userPlan]);
+  
 
   const [earnings, setEarnings] = useState({
     Naira: 0,
@@ -120,7 +91,7 @@ const Payouts = () => {
     EUR: 0,
     GBP: 0,
   });
-  const [availableBalance, setAvailableBalance] = useState("");
+  
 
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -136,13 +107,13 @@ const Payouts = () => {
   const fetchData = async () => {
     try {
       const response = await authFetch.get(
-        `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
+        `${import.meta.env.VITE_API_URL}/affiliate-earning/${userId}`
       );
-  
+
       if (response.data) {
-        if (response.data.totalEarnings !== undefined && response.data.availableBalance !== undefined) {
-          setEarnings(response.data.totalEarnings);
-          setAvailableBalance(response.data.availableBalance);
+        if (response.data.affiliateEarning !== undefined && response.data.affiliateEarning !== undefined) {
+          setEarnings(response.data.affiliateEarning);
+        
         } else {
           setEarnings(0); 
           setAvailableBalance(0);
@@ -152,12 +123,6 @@ const Payouts = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
-  useEffect(() => {
-    // Fetch earnings data when component mounts
-    fetchData();
-  }, [ecosystemDomain]);
-  
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -197,42 +162,39 @@ const Payouts = () => {
     indexOfLastAccount
   );
 
-  
-const fetchBankData = async () => {
-  try {
-    const response = await authFetch.get(
-      `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
-    );
-
-    if (response.data.accountDetails && response.data.accountDetails.length > 0) {
-      const fetchedBankData = response.data.accountDetails;
-      setBankData(fetchedBankData);
-    } else {
-      setBankData([]); 
+  // Function to retrieve bank data from the server
+  const fetchBankData = async () => {
+    try {
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/affiliate/get-my-account/${userId}`
+      );
+      if (response.data.accountDetails && response.data.accountDetails.length > 0) {
+        const fetchedBankData = response.data.accountDetails;
+        setBankData(fetchedBankData);
+      } else {
+        setBankData([]); 
+      }
+    } catch (error) {
+      console.error("Error fetching bank data:", error);
     }
-  } catch (error) {
-    console.error("Error fetching bank data:", error);
-  }
-};
-
-useEffect(() => {
-  
-  fetchBankData();
-}, [userId]);
-
+  };
+  useEffect(() => {
+    // Fetch bank data from server
+    fetchBankData();
+  }, [userId]);
 
   const handleSave = async () => {
     setLoadingSave(true);
     try {
       const saveBankData = await authFetch.post(
-        `${import.meta.env.VITE_API_URL}/save-bank-details`,
+        `${import.meta.env.VITE_API_URL}/affiliate/add-my-account`,
         {
-          creatorId: userId,
+          affiliateId: userId,
           accountName,
           accountNumber,
           bankName,
           currency,
-          ecosystemDomain,
+          
         }
       );
 
@@ -252,30 +214,29 @@ useEffect(() => {
 
   const handleAddAccount = () => {
     setShowModal(true);
-    // handleBanks();
   };
 
   const handleEdit = (id) => {
-    const editedAccount = currentAccounts.find((account) => account.id === id);
-    if (editedAccount) {
-      setEditedAccount({ ...editedAccount, accountId: id });
+    const accountToEdit = currentAccounts.find((account) => account.id === id);
+    if (accountToEdit) {
+      setEditedAccount({ ...accountToEdit, accountId: id });
       setShowEditModal(true);
     } else {
-      console.error("Account not found");
+      console.error('Account not found');
     }
   };
 
-  const handleEditSave = async (accountId) => {
+  const handleEditSave = async () => {
     setLoadingWithdraw(true);
     try {
-      await authFetch.put(`${import.meta.env.VITE_API_URL}/edit-account`, {
-        creatorId: userId,
-        accountId: accountId,
+      await authFetch.put(`${import.meta.env.VITE_API_URL}/affiliate/edit-my-account`, {
+        affiliateId: userId,
+        accountId: editedAccount.accountId,
         accountName: editedAccount.accountName,
         bankName: editedAccount.bankName,
         accountNumber: editedAccount.accountNumber,
-        currency: editedAccount.currency,
-        ecosystemDomain,
+        // currency: editedAccount.currency,
+        
       });
       fetchBankData();
 
@@ -306,13 +267,12 @@ useEffect(() => {
       const totalAmountNumeric = parseFloat(totalAmount);
       if (withdrawAmountNumeric < totalAmountNumeric) {
         const response = await authFetch.post(
-          `${import.meta.env.VITE_API_URL}/withdrawal-request`,
+          `${import.meta.env.VITE_API_URL}/affiliate-withdrawal-request`,
           {
-            creatorId: parseFloat(userId),
+            affiliateId: parseFloat(userId),
             accountId: selectedBankId,
             amount: parseFloat(withdrawnAmount),
             currency: selectedCurrency,
-            ecosystemDomain,
           }
         );
         showToast(response.data.message);
@@ -440,29 +400,6 @@ useEffect(() => {
     return "";
   };
 
-  const AlertPaymentPlan = () => {
-    const [show, setShow] = useState(true);
-    if (show) {
-      return (
-        <Alert
-          variant="light-warning"
-          className="bg-light-warning text-dark-warning border-0"
-          onClose={() => setShow(false)}
-          dismissible
-        >
-          <strong>Current Plan</strong>
-          <p>
-            You are curently on {userPlan ? userPlan : "Lite"} plan which
-            involve deducting {percentage ? percentage : "0"}% of your total
-            earning.
-            {/* to move up to higher plan so as to have lesser percentage,
-            <button className="btn btn-primary btn-sm   ">UPGRADE PLAN</button> */}
-          </p>
-        </Alert>
-      );
-    }
-    return "";
-  };
 
   return (
     <Card className="border-0">
@@ -477,7 +414,7 @@ useEffect(() => {
       </Card.Header>
       <Card.Body>
         <AlertDismissible />
-        <AlertPaymentPlan />
+        
         <Row className="mt-6">
           <Col xl={4} lg={4} md={12} sm={12} className="mb-3 mb-lg-0">
             <div className="text-center">
@@ -511,7 +448,7 @@ useEffect(() => {
               <Button
                 variant="primary"
                 onClick={() => {
-                  setTotalAmount(availableBalance);
+                  setTotalAmount(earnings.Naira);
                   setShowWithdrawModal(true);
                 }}
               >
@@ -558,10 +495,7 @@ useEffect(() => {
                       Ledger Balance: {formatPrice(selectedCurrency)}{" "}
                       {earnings.Naira || 0.0}
                     </h4>
-                    <h4>
-                      Available Balance: {formatPrice(selectedCurrency)}{" "}
-                      {availableBalance || 0.0}
-                    </h4>
+                   
                     <Form.Group controlId="withdrawnAmount">
                       <Form.Label>
                         Withdrawn Amount {formatPrice(selectedCurrency)}
@@ -609,34 +543,6 @@ useEffect(() => {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
-                    <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Bank Name"
-                        value={bankName}
-                        onChange={(e) => setBankName(e.target.value)}
-                      />
-                    </Form.Group>
-                    {/* <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
-                      <Form.Select
-                        value={bankName} // This will hold the selected bank code
-                        onChange={(e) => {
-                          const selectedBank = banks.find(
-                            (bank) => bank.id === e.target.value
-                          ); // Get the selected bank object
-                          setBankCode(selectedBank.id); // Capture the bank code if needed
-                        }}
-                      >
-                        <option value="">Select Bank</option>
-                        {banks.map((bank) => (
-                          <option key={bank.code} value={bank.code}>
-                            {bank.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group> */}
                     <Form.Group className="mb-3" controlId="accountName">
                       <Form.Label>Account Name</Form.Label>
                       <Form.Control
@@ -655,7 +561,15 @@ useEffect(() => {
                         onChange={(e) => setAccountNumber(e.target.value)}
                       />
                     </Form.Group>
-
+                    <Form.Group className="mb-3" controlId="bankName">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Bank Name"
+                        value={bankName}
+                        onChange={(e) => setBankName(e.target.value)}
+                      />
+                    </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label>Currency</Form.Label>
                       <Form.Select
@@ -819,16 +733,15 @@ useEffect(() => {
                     Close
                   </Button>
                   {loadingWithdraw ? (
-                    <Button variant="primary" disabled>
+                    <Button variant="primary" disabled  style={{ opacity: ".7" }}>
                       <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
                     <Button
                       variant="primary"
-                      style={{ opacity: ".7" }}
-                      disabled
+                      onClick={handleEditSave}
                     >
-                      Processing
+                      Save
                     </Button>
                   )}
                 </Modal.Footer>

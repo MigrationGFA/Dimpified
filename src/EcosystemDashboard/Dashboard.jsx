@@ -76,18 +76,20 @@ const Dashboard = () => {
     const fetchAmountData = async () => {
       try {
         const response = await authFetch.get(
-          `${
-            import.meta.env.VITE_API_URL
-          }/ecosystem-earnings/${ecosystemDomain}`
+          `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
         );
-
-        if (response.data) {
+    
+        if (response.data && response.data.totalEarnings) {
           setTotalAmount(response.data.totalEarnings);
+        } else {
+          setTotalAmount({ Naira: 0, Dollar: 0 });
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setTotalAmount({ Naira: 0, Dollar: 0 });
       }
     };
+    
 
     fetchAmountData();
   }, []);
@@ -108,11 +110,14 @@ const Dashboard = () => {
   };
 
   const getTotalAmount = (currency) => {
+    if (!totalAmount) {
+      return 0; 
+    }
     switch (currency) {
       case "NGN":
-        return totalAmount.Naira;
+        return totalAmount.Naira || 0; 
       case "USD":
-        return totalAmount.Dollar;
+        return totalAmount.Dollar || 0; 
       default:
         return 0;
     }

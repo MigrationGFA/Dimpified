@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Card, Form, Button, Image, Alert } from "react-bootstrap";
-import Logo from "../assets/GFA logo Rebrand Blue.png";
-import Logo2 from "../assets/LogoList/cote-logo.png";
+import Logo from "../../assets/DIMP logo colored.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -25,7 +24,7 @@ const formSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Passwords do not match"),
 });
 
-const ForgetPassword = () => {
+const CreatorRessetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [cpasswordVisible, setCPasswordVisible] = useState(false);
@@ -62,7 +61,7 @@ const ForgetPassword = () => {
         }
       );
       setLoading(false);
-      navigate("/authentication/signin");
+      navigate("/creator/signin");
       showToast(response.data.message);
     } catch (error) {
       setLoading(false);
@@ -158,4 +157,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default CreatorRessetPassword;

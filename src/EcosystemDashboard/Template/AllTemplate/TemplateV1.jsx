@@ -54,6 +54,8 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
   const [show, setShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [serviceDetails, setServiceDetails] = useState({});
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // const handleShow = () => setModalShow(true);
   const handleShow = (subService, serviceType, currency, domain) => {
@@ -163,9 +165,6 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
     date: "",
     time: "",
   });
-
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // services
   useEffect(() => {
@@ -383,60 +382,69 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
           }}
         >
           <Container>
-            <h2 className="fs-2">Our Services</h2>
+            {services && services.length > 0 ? (
+              <h2 className="fs-2">Our Services</h2>
+            ) : (
+              ""
+            )}
             <Row>
-              {services.map((service, serviceIdx) => (
-                <div key={serviceIdx}>
-                  <h5>{service.header}</h5>
-                  <Row>
-                    {service.services.map((subService, idx) => (
-                      <Col key={idx} xl={3} lg={3} sm={12}>
-                        <Card
-                          style={{ margin: "10px", backgroundColor: "#f7f3e8" }}
-                        >
-                          <Card.Img
-                            variant="top"
-                            height={100}
-                            src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
-                            className="py-4"
-                          />
-                          <Card.Body>
-                            <Card.Title className="text-dark fs-3">
-                              {subService.name}
-                            </Card.Title>
-                            <Card.Text className="fs-4">
-                              {truncateMessage(subService.shortDescription)}
-                            </Card.Text>
-                            <Card.Text className="fs-5">
-                              Price: {service.currency}
-                              {subService.price}
-                            </Card.Text>
-                            <Card.Text className="fs-5">
-                              Payment: {subService.priceFormat}
-                            </Card.Text>
-                            <Card.Text className="fs-6">
-                              Delivery Time: {subService.deliveryTime}
-                            </Card.Text>
-                            <Button
-                              variant="dark"
-                              onClick={() =>
-                                handleShow(
-                                  subService,
-                                  service.format,
-                                  service.currency,
-                                  service.ecosystemDomain
-                                )
-                              }
-                            >
-                              Book a Visit
-                            </Button>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    ))}
-                  </Row>
-                </div>
-              ))}
+              {services &&
+                services.length > 0 &&
+                services.map((service, serviceIdx) => (
+                  <div key={serviceIdx}>
+                    <h5>{service.header}</h5>
+                    <Row>
+                      {service.services.map((subService, idx) => (
+                        <Col key={idx} xl={3} lg={3} sm={12}>
+                          <Card
+                            style={{
+                              margin: "10px",
+                              backgroundColor: "#f7f3e8",
+                            }}
+                          >
+                            <Card.Img
+                              variant="top"
+                              height={100}
+                              src="https://craftohtml.themezaa.com/images/demo-barber-icon-01.svg" // Replace this with your dynamic image link if available
+                              className="py-4"
+                            />
+                            <Card.Body>
+                              <Card.Title className="text-dark fs-3">
+                                {subService.name}
+                              </Card.Title>
+                              <Card.Text className="fs-4">
+                                {truncateMessage(subService.shortDescription)}
+                              </Card.Text>
+                              <Card.Text className="fs-5">
+                                Price: {service.currency}
+                                {subService.price}
+                              </Card.Text>
+                              <Card.Text className="fs-5">
+                                Payment: {subService.priceFormat}
+                              </Card.Text>
+                              <Card.Text className="fs-6">
+                                Delivery Time: {subService.deliveryTime}
+                              </Card.Text>
+                              <Button
+                                variant="dark"
+                                onClick={() =>
+                                  handleShow(
+                                    subService,
+                                    service.format,
+                                    service.currency,
+                                    service.ecosystemDomain
+                                  )
+                                }
+                              >
+                                Book a Visit
+                              </Button>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                      ))}
+                    </Row>
+                  </div>
+                ))}
             </Row>
           </Container>
           <Container fluid className="pt-lg-10 pt-3 px-0">
@@ -498,40 +506,46 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
           <Container>
             <Row className="mb-4">
               <Col xs={12}>
-                <h2 style={headerStyle}>
-                  Flexible <span className="text-highlight">Pricing</span>
-                </h2>
+                {services && services.length > 0 ? (
+                  <h2 style={headerStyle}>
+                    Flexible <span className="text-highlight">Pricing</span>
+                  </h2>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
-            {services.map((service, serviceIdx) => (
-              <div key={serviceIdx}>
-                <h5 className="text-center">{service.header}</h5>
-                <Row>
-                  {service.services.map((subService, idx) => (
-                    <Col md={6} className="mb-4 px-4" key={idx}>
-                      <div style={pricingStyle}>
-                        <Row>
-                          <Col>
-                            <div style={titleStyle}>{subService.name}</div>
-                          </Col>
-                          <Col>
-                            <div style={priceStyle}>₦{subService.price}</div>
-                          </Col>
-                        </Row>
-                        <p
-                          className="px-4"
-                          style={{
-                            color: "#666",
-                          }}
-                        >
-                          {subService.shortDescription}
-                        </p>
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            ))}
+            {services &&
+              services.length > 0 &&
+              services.map((service, serviceIdx) => (
+                <div key={serviceIdx}>
+                  <h5 className="text-center">{service.header}</h5>
+                  <Row>
+                    {service.services.map((subService, idx) => (
+                      <Col md={6} className="mb-4 px-4" key={idx}>
+                        <div style={pricingStyle}>
+                          <Row>
+                            <Col>
+                              <div style={titleStyle}>{subService.name}</div>
+                            </Col>
+                            <Col>
+                              <div style={priceStyle}>₦{subService.price}</div>
+                            </Col>
+                          </Row>
+                          <p
+                            className="px-4"
+                            style={{
+                              color: "#666",
+                            }}
+                          >
+                            {subService.shortDescription}
+                          </p>
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
+              ))}
           </Container>
         </section>
 

@@ -67,13 +67,13 @@ const NavbarLanding = (props) => {
             <Nav className={`${"mx-auto"}`}>
               <FeaturesMenu style={linkStyle} />
               <UseCaseMenu style={linkStyle} />
-              <Nav.Link
-                href="/pricing"
+              <Link
+                to ="/pricing"
                 className="dropdown-arrow d-block nav-link lh-1 pt-10px"
                 style={linkStyle}
               >
                 Pricing
-              </Nav.Link>
+              </Link>
 
               <SupportMenu style={linkStyle} />
             </Nav>
@@ -85,20 +85,20 @@ const NavbarLanding = (props) => {
               }`}
             >
               <div className={`mt-3 mt-lg-0`}>
-                <Nav.Link
-                  href="/creator/signin"
+                <Link
+                  to="/creator/signin"
                   bsPrefix="btn"
                   className="btn btn-outline-primary mx-2"
                 >
                   Sign In
-                </Nav.Link>
-                <Nav.Link
-                  href="/creator/signup"
+                </Link>
+                <Link
+                  to="/creator/signup"
                   bsPrefix="btn"
                   className="btn btn-primary"
                 >
                   Get Started For Free
-                </Nav.Link>
+                </Link>
               </div>
             </Nav>
           </Navbar.Collapse>
