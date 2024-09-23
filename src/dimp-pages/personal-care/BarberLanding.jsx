@@ -17,6 +17,7 @@ import {
   CashStack,
   PlayCircleFill,
   GeoAlt,
+  Clock,
 } from "react-bootstrap-icons";
 import { FaCheck } from "react-icons/fa";
 import {
@@ -88,6 +89,7 @@ const BarberLanding = () => {
     consent: false,
     latitude: null,
     longitude: null,
+    eventInfo: "",
     city: "",
   });
   const [locationError, setLocationError] = useState("");
@@ -926,6 +928,21 @@ const BarberLanding = () => {
                     />
                   </div>
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="formAddress">
+                  <Form.Label className="text-uppercase text-dark fw-bold">
+                    How did you hear about the event?*
+                  </Form.Label>
+                  <div className="position-relative">
+                    <Form.Control
+                      type="text"
+                      name="eventInfo"
+                      placeholder="Newspaper, GFA website e.t.c."
+                      value={formData.eventInfo}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </Form.Group>
 
                 <Form.Group
                   className="mb-3"
@@ -1006,11 +1023,16 @@ const BarberLanding = () => {
 
                         <a
                           href="#"
-                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                          className="fs-14 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-15px"
                         >
-                          <GeoAlt /> Alausa Secretariat, Ikeja
+                          <GeoAlt className="me-2" /> T - Block Ministry of Local Government and
+                          Chieftaincy Affairs and Local Development, Alausa
+                          Secretariat, Ikeja
                         </a>
-                        <div className="text-dark-gray ms-2 fw-600 ">
+                        <div className="text-dark-gray fw-600 mb-15px">
+                          <a href="#"><Clock className="me-2"/>9:00am</a>
+                        </div>
+                        <div className="text-dark-gray  fw-600 ">
                           <a className="text-decoration-line-bottom" href="#">
                             September 23, 2024
                           </a>
@@ -1021,7 +1043,7 @@ const BarberLanding = () => {
                       <div
                         className="h-100 cover-background xs-h-300px"
                         style={{
-                          backgroundImage: `url(https://lh5.googleusercontent.com/p/AF1QipPUVqxuSIEffUDZ3VDeYNU5GXZEb6MdgZDKCMAD=w500-h500-k-no)`,
+                          backgroundImage: `url(https://lh5.googleusercontent.com/p/AF1QipPUVqxuSIEffUDZ3VDeYNU5GXZEb6MdgZDKCMAD=w1080-k-no)`,
                         }}
                       ></div>
                     </Col>
@@ -1043,16 +1065,16 @@ const BarberLanding = () => {
 
                         <a
                           href="#"
-                          className="fs-16 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-25px"
+                          className="fs-14 lh-20 primary-font fw-500 text-dark-gray  d-inline-block mb-15px"
                         >
-                          <GeoAlt /> Ogun Tech Hub, Kobape.
+                          <GeoAlt className="me-2" /> Ogun Tech Hub, Kobape Road, Abeokuta
                         </a>
-                        <div className="text-dark-gray ms-2 fw-600 ">
-                          <a
-                            className="text-decoration-line-bottom"
-                            href="tel:12345678910"
-                          >
-                            September 24, 2024.
+                        <div className="text-dark-gray fw-600 mb-15px">
+                          <a href="#"><Clock className="me-2"/>9:00am</a>
+                        </div>
+                        <div className="text-dark-gray  fw-600 ">
+                          <a className="text-decoration-line-bottom" href="#">
+                            September 26, 2024
                           </a>
                         </div>
                       </div>
