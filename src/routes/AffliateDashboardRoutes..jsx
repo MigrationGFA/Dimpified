@@ -12,7 +12,6 @@ export const DashboardMenu = [
     icon: "home",
     link: "/agent/dashboard/overview",
   },
-
   {
     id: uuid(),
     title: "My Users",
