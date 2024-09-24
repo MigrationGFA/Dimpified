@@ -36,6 +36,13 @@ export const DashboardMenu = [
       },
     ],
   },
+  
+  {
+    id: uuid(),
+    title: "Profile",
+    icon: "user",
+    link: "/agent/dashboard/profile",
+  },
   {
     id: uuid(),
     title: "Onboarding",

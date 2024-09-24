@@ -578,10 +578,12 @@ const AllRoutes = () => {
           path="/agent/dashboard/onboard"
           element={<AffiliateOnboarding />}
         />
+        <Route path="/agent/dashboard/profile" element={<ProfilePage />} />
       </Route>
+      
       <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
       <Route path="/dimp/agent-page" element={<AgentPage />} />
-      <Route path="/dimp/agent-page/profile" element={<ProfilePage />} />
+
       <Route path="/affiliate/verify-email" element={<EmailVerify />} />
       <Route path="/affiliate/reset-password" element={<ResetPassword />} />
       <Route path="/registration-success" element={<RegistrationSuccess />} />

@@ -89,6 +89,10 @@ const Payouts = () => {
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
+ const [banks, setBanks] = useState([]);
+  const [bankLoading, setBankLoading] = useState(false);
+  const [bankCode, setBankCode] = useState("");
+  const [loadingVerify, setLoadingVerify] = useState(false);
 
   const [earnings, setEarnings] = useState({
     Naira: 0,
@@ -211,7 +215,63 @@ const Payouts = () => {
     fetchBankData();
   }, [userId]);
 
+  useEffect(() => {
+    const fetchBanks = async () => {
+      try {
+        const response = await authFetch.get(
+          `${import.meta.env.VITE_API_URL}/get-all-banks`
+        );
+        setBanks(response.data.allBanks.data);
+      } catch (error) {
+        console.error("Error fetching banks:", error);
+        showToast("Failed to load banks.");
+      }
+    };
+    fetchBanks();
+  }, []);
+
+  useEffect(() => {
+    const verifyAccount = async () => {
+      if (accountNumber.length === 10 && bankCode) {
+        setLoadingVerify(true);
+        try {
+          const response = await authFetch.post(
+            `${import.meta.env.VITE_API_URL}/verify-bank-details`,
+            {
+              account: accountNumber,
+              bankCode: bankCode,
+            }
+          );
+
+          if (response.data.verifyDetails && response.data.verifyDetails.status === true) {
+            setAccountName(response.data.verifyDetails.data.account_name); 
+            showToast("Account verified successfully.");
+          } else {
+            showToast("Bank verification failed. Please check the details.");
+            setAccountName("");
+          }
+        } catch (error) {
+          console.error("Error verifying bank details:", error);
+          showToast("Error verifying bank details. Please try again.");
+          setAccountName("");
+        } finally {
+          setLoadingVerify(false);
+        }
+      }
+    };
+
+    if (accountNumber.length === 10) {
+      verifyAccount();
+    }
+  }, [accountNumber, bankCode]); 
+
   const handleSave = async () => {
+    if (!bankCode || !accountNumber || !accountName) {
+      showToast(
+        "Please complete all fields and ensure the account is verified."
+      );
+      return;
+    }
     setLoadingSave(true);
     try {
       const saveBankData = await authFetch.post(
@@ -225,13 +285,13 @@ const Payouts = () => {
         }
       );
 
-      console.log("Response :", saveBankData.data);
+
       setBankData([...bankData, saveBankData.data.newAccount]);
 
       showToast(saveBankData.data.message);
     } catch (error) {
-      console.error("Error:", error);
-      showToast(error.response.data.message);
+      console.error("Error saving bank details:", error);
+      showToast(error.response?.data?.message || "An error occurred");
     } finally {
       setLoadingSave(false);
     }
@@ -580,15 +640,27 @@ const Payouts = () => {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
-                    <Form.Group className="mb-3" controlId="accountName">
-                      <Form.Label>Account Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Account Name"
-                        value={accountName}
-                        onChange={(e) => setAccountName(e.target.value)}
-                      />
+                    <Form.Group className="mb-3" controlId="bankSelect">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Select
+                        value={bankCode}
+                        onChange={(e) => {
+                          const selectedBank = banks.find(
+                            (bank) => bank.code === e.target.value
+                          );
+                          setBankCode(selectedBank.code);
+                          setBankName(selectedBank.name);
+                        }}
+                      >
+                        <option value="">Select Bank</option>
+                        {banks.map((bank) => (
+                          <option key={bank.code} value={bank.code}>
+                            {bank.name}
+                          </option>
+                        ))}
+                      </Form.Select>
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="accountNumber">
                       <Form.Label>Account Number</Form.Label>
                       <Form.Control
@@ -596,23 +668,25 @@ const Payouts = () => {
                         placeholder="Enter Account Number"
                         value={accountNumber}
                         onChange={(e) => setAccountNumber(e.target.value)}
+                        maxLength={10}
                       />
+                      {loadingVerify && <div>Verifying account number...</div>}
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
+
+                    <Form.Group className="mb-3" controlId="accountName">
+                      <Form.Label>Account Name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Enter Bank Name"
-                        value={bankName}
-                        onChange={(e) => setBankName(e.target.value)}
+                        placeholder="Account Name will appear here after verification"
+                        value={accountName}
+                        onChange={(e) => setAccountName(e.target.value)}
+                        readOnly // Account name is populated automatically
                       />
                     </Form.Group>
+
                     <Form.Group className="mb-3">
                       <Form.Label>Currency</Form.Label>
                       <Form.Select
-                        placeholder="select currency"
-                        id="course_currency"
-                        name="currency"
                         value={currency}
                         onChange={(e) => setCurrency(e.target.value)}
                       >

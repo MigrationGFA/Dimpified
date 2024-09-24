@@ -13,8 +13,6 @@ import axios from "axios";
 import { showToast } from "../../Components/Showtoast";
 import { useGlobalContext } from "../../context/AuthContext";
 import AvatarPlaceholder from "../../assets/images/avatar/person.png";
-import NavbarComponent from "../components/Navbar";
-import Footer from "../components/Footer";
 import Select from "react-select";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
@@ -98,7 +96,6 @@ const ProfilePage = () => {
 
   return (
     <div className="bg-white overflow-hidden">
-      <NavbarComponent />
       <Container className="py-10">
         <Card className="border">
           <Card.Header>
@@ -215,7 +212,7 @@ const ProfilePage = () => {
           </Card.Body>
         </Card>
       </Container>
-      <Footer />
+   
     </div>
   );
 };
