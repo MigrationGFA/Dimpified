@@ -85,8 +85,11 @@ const Payouts = () => {
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
   const [banks, setBanks] = useState([]);
-  const [bankCode, setBankCode] = useState(null);
   const [bankLoading, setBankLoading] = useState(false);
+  const [bankCode, setBankCode] = useState("");
+  const [loadingVerify, setLoadingVerify] = useState(false);
+
+
 
   // const handleBanks = async () => {
   //   setBankLoading(true);
@@ -121,7 +124,6 @@ const Payouts = () => {
     GBP: 0,
   });
   const [availableBalance, setAvailableBalance] = useState("");
-
   const [selectedCurrency, setSelectedCurrency] = useState("Naira");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -138,13 +140,16 @@ const Payouts = () => {
       const response = await authFetch.get(
         `${import.meta.env.VITE_API_URL}/ecosystem-earnings/${ecosystemDomain}`
       );
-  
+
       if (response.data) {
-        if (response.data.totalEarnings !== undefined && response.data.availableBalance !== undefined) {
+        if (
+          response.data.totalEarnings !== undefined &&
+          response.data.availableBalance !== undefined
+        ) {
           setEarnings(response.data.totalEarnings);
           setAvailableBalance(response.data.availableBalance);
         } else {
-          setEarnings(0); 
+          setEarnings(0);
           setAvailableBalance(0);
         }
       }
@@ -152,12 +157,11 @@ const Payouts = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   useEffect(() => {
     // Fetch earnings data when component mounts
     fetchData();
   }, [ecosystemDomain]);
-  
 
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
@@ -197,31 +201,90 @@ const Payouts = () => {
     indexOfLastAccount
   );
 
-  
-const fetchBankData = async () => {
-  try {
-    const response = await authFetch.get(
-      `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
-    );
+  const fetchBankData = async () => {
+    try {
+      const response = await authFetch.get(
+        `${import.meta.env.VITE_API_URL}/bank-details/${ecosystemDomain}`
+      );
 
-    if (response.data.accountDetails && response.data.accountDetails.length > 0) {
-      const fetchedBankData = response.data.accountDetails;
-      setBankData(fetchedBankData);
-    } else {
-      setBankData([]); 
+      if (
+        response.data.accountDetails &&
+        response.data.accountDetails.length > 0
+      ) {
+        const fetchedBankData = response.data.accountDetails;
+        setBankData(fetchedBankData);
+      } else {
+        setBankData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching bank data:", error);
     }
-  } catch (error) {
-    console.error("Error fetching bank data:", error);
-  }
-};
+  };
 
-useEffect(() => {
-  
-  fetchBankData();
-}, [userId]);
+  useEffect(() => {
+    fetchBankData();
+  }, [userId]);
 
+  // Fetch list of banks from the API
+  useEffect(() => {
+    const fetchBanks = async () => {
+      try {
+        const response = await authFetch.get(
+          `${import.meta.env.VITE_API_URL}/get-all-banks`
+        );
+        setBanks(response.data.allBanks.data);
+      } catch (error) {
+        console.error("Error fetching banks:", error);
+        showToast("Failed to load banks.");
+      }
+    };
+    fetchBanks();
+  }, []);
+
+  // Automatically verify account number when 10 digits are entered
+  useEffect(() => {
+    const verifyAccount = async () => {
+      if (accountNumber.length === 10 && bankCode) {
+        setLoadingVerify(true);
+        try {
+          const response = await authFetch.post(
+            `${import.meta.env.VITE_API_URL}/verify-bank-details`,
+            {
+              account: accountNumber,
+              bankCode: bankCode,
+            }
+          );
+
+          if (response.data.verifyDetails && response.data.verifyDetails.status === true) {
+            setAccountName(response.data.verifyDetails.data.account_name); 
+            showToast("Account verified successfully.");
+          } else {
+            showToast("Bank verification failed. Please check the details.");
+            setAccountName("");
+          }
+        } catch (error) {
+          console.error("Error verifying bank details:", error);
+          showToast("Error verifying bank details. Please try again.");
+          setAccountName("");
+        } finally {
+          setLoadingVerify(false);
+        }
+      }
+    };
+
+    if (accountNumber.length === 10) {
+      verifyAccount();
+    }
+  }, [accountNumber, bankCode]); 
 
   const handleSave = async () => {
+    if (!bankCode || !accountNumber || !accountName) {
+      showToast(
+        "Please complete all fields and ensure the account is verified."
+      );
+      return;
+    }
+
     setLoadingSave(true);
     try {
       const saveBankData = await authFetch.post(
@@ -236,18 +299,15 @@ useEffect(() => {
         }
       );
 
-      console.log("Response :", saveBankData.data);
-      setBankData([...bankData, saveBankData.data.newAccount]);
-
+      setBankData((prevData) => [...prevData, saveBankData.data.newAccount]);
       showToast(saveBankData.data.message);
     } catch (error) {
-      console.error("Error:", error);
-      showToast(error.response.data.message);
+      console.error("Error saving bank details:", error);
+      showToast(error.response?.data?.message || "An error occurred");
     } finally {
       setLoadingSave(false);
+      setShowModal(false);
     }
-
-    setShowModal(false);
   };
 
   const handleAddAccount = () => {
@@ -538,8 +598,8 @@ useEffect(() => {
                         <option value="" disabled>
                           Select an account
                         </option>
-                        {bankData.map((account, index) => (
-                          <option key={index} value={account.id}>
+                        {bankData.map((account) => (
+                          <option key={account.id} value={account.id}>
                             {account.accountName} - {account.bankName} (
                             {account.currency})
                           </option>
@@ -609,24 +669,16 @@ useEffect(() => {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
-                    <Form.Group className="mb-3" controlId="bankName">
-                      <Form.Label>Bank Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Bank Name"
-                        value={bankName}
-                        onChange={(e) => setBankName(e.target.value)}
-                      />
-                    </Form.Group>
-                    {/* <Form.Group className="mb-3" controlId="bankName">
+                    <Form.Group className="mb-3" controlId="bankSelect">
                       <Form.Label>Bank Name</Form.Label>
                       <Form.Select
-                        value={bankName} // This will hold the selected bank code
+                        value={bankCode}
                         onChange={(e) => {
                           const selectedBank = banks.find(
-                            (bank) => bank.id === e.target.value
-                          ); // Get the selected bank object
-                          setBankCode(selectedBank.id); // Capture the bank code if needed
+                            (bank) => bank.code === e.target.value
+                          );
+                          setBankCode(selectedBank.code);
+                          setBankName(selectedBank.name);
                         }}
                       >
                         <option value="">Select Bank</option>
@@ -636,16 +688,8 @@ useEffect(() => {
                           </option>
                         ))}
                       </Form.Select>
-                    </Form.Group> */}
-                    <Form.Group className="mb-3" controlId="accountName">
-                      <Form.Label>Account Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Account Name"
-                        value={accountName}
-                        onChange={(e) => setAccountName(e.target.value)}
-                      />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="accountNumber">
                       <Form.Label>Account Number</Form.Label>
                       <Form.Control
@@ -653,15 +697,25 @@ useEffect(() => {
                         placeholder="Enter Account Number"
                         value={accountNumber}
                         onChange={(e) => setAccountNumber(e.target.value)}
+                        maxLength={10}
+                      />
+                      {loadingVerify && <div>Verifying account number...</div>}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="accountName">
+                      <Form.Label>Account Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Account Name will appear here after verification"
+                        value={accountName}
+                        onChange={(e) => setAccountName(e.target.value)}
+                        readOnly // Account name is populated automatically
                       />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                       <Form.Label>Currency</Form.Label>
                       <Form.Select
-                        placeholder="select currency"
-                        id="course_currency"
-                        name="currency"
                         value={currency}
                         onChange={(e) => setCurrency(e.target.value)}
                       >
@@ -819,16 +873,16 @@ useEffect(() => {
                     Close
                   </Button>
                   {loadingWithdraw ? (
-                    <Button variant="primary" disabled>
+                    <Button
+                      variant="primary"
+                      disabled
+                      style={{ opacity: ".7" }}
+                    >
                       <Spinner animation="border" size="sm" /> Saving
                     </Button>
                   ) : (
-                    <Button
-                      variant="primary"
-                      style={{ opacity: ".7" }}
-                      disabled
-                    >
-                      Processing
+                    <Button variant="primary" onClick={handleEditSave}>
+                      Save
                     </Button>
                   )}
                 </Modal.Footer>
@@ -838,99 +892,6 @@ useEffect(() => {
         </Row>
       </Card.Body>
     </Card>
-
-    // <Row className="mt-4">
-    //   <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-    //     <StatTopIcon
-    //       title="Earning this month"
-    //       value={
-    //         (totalAmount / 100)
-    //           .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-    //           .slice(0, -3) +
-    //         "." +
-    //         (totalAmount % 100).toString().padStart(2, "0")
-    //       }
-    //       iconName="folder"
-    //       colorVariant="primary"
-    //       progress={65}
-    //     />
-    //   </Col>
-    //   <Col lg={4} md={12} sm={12} className="mb-4 mb-lg-0">
-    //     <StatTopIcon
-    //       title="Account Balance"
-    //       value={
-    //         (totalAmount / 100)
-    //           .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-    //           .slice(0, -3) +
-    //         "." +
-    //         (totalAmount % 100).toString().padStart(2, "0")
-    //       }
-    //       iconName="shopping-bag"
-    //       colorVariant="danger"
-    //       progress={65}
-    //     />
-    //   </Col>
-    //   <Col lg={4} md={12} sm={12}>
-    //     <StatTopIcon
-    //       title="Life Time Sales"
-    //       value={
-    //         (totalAmount / 100)
-    //           .toLocaleString("en-NG", { style: "currency", currency: "NGN" })
-    //           .slice(0, -3) +
-    //         "." +
-    //         (totalAmount % 100).toString().padStart(2, "0")
-    //       }
-    //       iconName="send"
-    //       colorVariant="warning"
-    //       progress={65}
-    //     />
-    //   </Col>
-    // </Row>
-
-    // <Card className="border-0 mt-4">
-    //   <Card.Header>
-    //     <h3 className="mb-0 h4">Withdraw History</h3>
-    //   </Card.Header>
-    //   <Card.Body className="p-0 pb-4">
-    //     <Table hover responsive className="text-nowrap table-centered">
-    //       <thead>
-    //         {table.getHeaderGroups().map((headerGroup) => (
-    //           <tr key={headerGroup.id}>
-    //             {headerGroup.headers.map((header) => (
-    //               <th key={header.id}>
-    //                 {header.isPlaceholder
-    //                   ? null
-    //                   : flexRender(
-    //                       header.column.columnDef.header,
-    //                       header.getContext()
-    //                     )}
-    //               </th>
-    //             ))}
-    //           </tr>
-    //         ))}
-    //       </thead>
-    //       <tbody>
-    //         {table.getRowModel().rows.map((row) => (
-    //           <tr key={row.id}>
-    //             {row.getVisibleCells().map((cell) => (
-    //               <td key={cell.id}>
-    //                 {flexRender(
-    //                   cell.column.columnDef.cell,
-    //                   cell.getContext()
-    //                 )}
-    //               </td>
-    //             ))}
-    //           </tr>
-    //         ))}
-    //       </tbody>
-    //     </Table>
-
-    //     {/* Pagination @ Footer */}
-    //     <div className="mt-4">
-    //       <Pagination table={table} />
-    //     </div>
-    //   </Card.Body>
-    // </Card>
   );
 };
 
