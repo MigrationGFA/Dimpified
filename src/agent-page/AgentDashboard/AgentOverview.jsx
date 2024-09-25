@@ -27,7 +27,8 @@ import {
   faArrowLeft,
   faEnvelope,
   faShareAlt,
-} from "@fortawesome/free-solid-svg-icons"; 
+} from "@fortawesome/free-solid-svg-icons";
+import { showToast } from "../../Components/Showtoast";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Link
@@ -74,15 +75,11 @@ const AffiliateOverview = () => {
   const [loading, setLoading] = useState(true);
 
   // Get the creator ID from the Redux store
-  const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
-  );
+  const creatorId = useSelector((state) => state.authentication.user?.data?.id);
 
   const AffiliateId = useSelector(
     (state) => state.authentication.user?.data?.affiliateId
   );
-
-  
 
   // Function to handle sharing the onboard link
   const handleShare = () => {
@@ -105,6 +102,12 @@ const AffiliateOverview = () => {
         .then(() => showToast("Onboard link copied to clipboard!"))
         .catch((error) => showToast("Failed to copy link to clipboard"));
     }
+  };
+
+  const handleCopy = () => {
+    // Copy the URL to the clipboard
+    const onboardLink = `${window.location.origin}/creator/signup?ref=${AffiliateId}`;
+    navigator.clipboard.writeText(onboardLink);
   };
 
   useEffect(() => {
@@ -140,18 +143,6 @@ const AffiliateOverview = () => {
       setLoading(false);
     }
   };
-
-  // const role = useSelector((state) => state.authentication.user?.data?.role);
-
-  // const getLink = () => {
-  //   if (role === "creator" || role === "Enterprise") {
-  //     return "/creator/dashboard/New-Ecosystem";
-  //   } else if (role === "consumer") {
-  //     return "/creator/dashboard/New-Ecosystem/individual";
-  //   } else {
-  //     return "";
-  //   }
-  // };
 
   return (
     <div>
