@@ -89,7 +89,7 @@ const Payouts = () => {
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [percentage, setPercentage] = useState(null);
- const [banks, setBanks] = useState([]);
+  const [banks, setBanks] = useState([]);
   const [bankLoading, setBankLoading] = useState(false);
   const [bankCode, setBankCode] = useState("");
   const [loadingVerify, setLoadingVerify] = useState(false);
@@ -243,8 +243,11 @@ const Payouts = () => {
             }
           );
 
-          if (response.data.verifyDetails && response.data.verifyDetails.status === true) {
-            setAccountName(response.data.verifyDetails.data.account_name); 
+          if (
+            response.data.verifyDetails &&
+            response.data.verifyDetails.status === true
+          ) {
+            setAccountName(response.data.verifyDetails.data.account_name);
             showToast("Account verified successfully.");
           } else {
             showToast("Bank verification failed. Please check the details.");
@@ -263,7 +266,7 @@ const Payouts = () => {
     if (accountNumber.length === 10) {
       verifyAccount();
     }
-  }, [accountNumber, bankCode]); 
+  }, [accountNumber, bankCode]);
 
   const handleSave = async () => {
     if (!bankCode || !accountNumber || !accountName) {
@@ -284,7 +287,6 @@ const Payouts = () => {
           currency,
         }
       );
-
 
       setBankData([...bankData, saveBankData.data.newAccount]);
 
