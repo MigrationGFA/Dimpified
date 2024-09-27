@@ -21,7 +21,7 @@ const Instructor = () => {
   const [userDetails, setUserDetails] = useState([]);
   const authFetch = AxiosInterceptor();
   const user = useSelector((state) => state.authentication.user);
-  const userId = user?.data?.id || "Unknown User";
+  const userId = user?.data?.AffiliateId || "Unknown User";
   const affiliateId = useSelector(
     (state) => state.authentication.user?.data?.affiliateId
   );

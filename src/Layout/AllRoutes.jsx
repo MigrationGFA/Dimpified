@@ -153,6 +153,7 @@ import EcosystemQuizResult from "../EcosystemDashboard/QuizResult";
 import TemplateV1 from "../EcosystemDashboard/Template/TemplateV1";
 import PostAService from "../Creator/ecosystem/Newecosystem/PostAService/PostAService";
 import PostAProduct from "../Creator/ecosystem/Newecosystem/PostAProduct/PostAProduct";
+import EmailSignIn from "../Creator/authentication/EmailSignIn";
 
 // ** Import Ecosystem Authentication components
 import RegisterEcosystem from "../EcosystemDashboard/Authentication/Register";
@@ -209,6 +210,8 @@ import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPag
 import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
 import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
 
+
+
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
 
@@ -255,6 +258,7 @@ const AllRoutes = () => {
       <Route path="/barber-three" element={<BarberTemplate3 />} />
 
       <Route path="/creator/signin/" element={<UserSignIn />} />
+      <Route path="/creator/Email-signIn/" element={<EmailSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />

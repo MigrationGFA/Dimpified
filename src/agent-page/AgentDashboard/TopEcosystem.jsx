@@ -12,7 +12,7 @@ const TopEcosystem = ({ title }) => {
 
   // Get creatorId from Redux store
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
+    (state) => state.authentication.user?.data?.AffiliateId
   );
 
   useEffect(() => {
