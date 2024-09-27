@@ -25,7 +25,7 @@ const WithdrawPayment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
 
-  const creatorId = useSelector((state) => state.authentication.user?.data?.id);
+  const creatorId = useSelector((state) => state.authentication.user?.data?.AffiliateId);
   const AffiliateId = useSelector(
     (state) => state.authentication.user?.data?.affiliateId
   );

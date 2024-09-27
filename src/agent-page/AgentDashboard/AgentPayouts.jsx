@@ -62,7 +62,7 @@ const Payouts = () => {
   const authFetch = AxiosInterceptor();
 
   const userId = useSelector(
-    (state) => state.authentication.user?.data?.id || "Unknown User"
+    (state) => state.authentication.user?.data?.AffiliateId|| "Unknown User"
   );
   const AffiliateId = useSelector(
     (state) => state.authentication.user?.data?.affiliateId

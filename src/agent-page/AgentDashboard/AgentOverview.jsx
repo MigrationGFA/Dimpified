@@ -75,7 +75,7 @@ const AffiliateOverview = () => {
 
   // Get the creator ID from the Redux store
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
+    (state) => state.authentication.user?.data?.AffiliateId
   );
 
   const AffiliateId = useSelector(

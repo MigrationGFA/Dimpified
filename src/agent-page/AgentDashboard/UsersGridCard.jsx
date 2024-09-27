@@ -21,7 +21,7 @@ const UsersGridCard = ({ userDetails }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
+    (state) => state.authentication.user?.data?.AffiliateId
   );
 
   const instructorsPerPage = 8;

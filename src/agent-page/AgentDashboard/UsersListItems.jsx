@@ -22,7 +22,7 @@ const UsersListItems = ({ userDetails }) => {
   });
 
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
+    (state) => state.authentication.user?.data?.AffiliateId
   );
 
   // Fetch stats only once when creatorId is available

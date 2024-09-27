@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   Card,
   Form,
@@ -9,64 +9,106 @@ import {
   Image,
   Container,
 } from "react-bootstrap";
-import axios from "axios";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import AxiosInterceptor from "../../Components/AxiosInterceptor";
 import { showToast } from "../../Components/Showtoast";
-import { useGlobalContext } from "../../context/AuthContext";
 import AvatarPlaceholder from "../../assets/images/avatar/person.png";
 import Select from "react-select";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+
+// Template sections for interestedCategory dropdown
+const templateSections = [
+  { id: 0, name: "Select Category" },
+  { id: 1, name: "Professional Service" },
+  { id: 2, name: "Creative Service" },
+  { id: 3, name: "Trade Service" },
+  { id: 4, name: "Personal Care Service" },
+  { id: 5, name: "Educational Service" },
+  { id: 6, name: "Event Service" },
+  { id: 7, name: "Technology Service" },
+  { id: 8, name: "Government" },
+  { id: 9, name: "Corporation" },
+  { id: 10, name: "Foundation/NGO's" },
+  { id: 11, name: "Religious Bodies" },
+];
 
 const ProfilePage = () => {
-  const { userId } = useGlobalContext();
+  const authFetch = AxiosInterceptor();
+  const affiliateId = useSelector(
+    (state) => state.authentication.user?.data?.AffiliateId
+  );
+
+  // State for form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    contact: "",
+    phoneNumber: "",
     state: "",
     country: "",
     image: null,
-    portfolio: "",
-    description: "",
+    affiliateId,
+    interestedCategory: "",
+    localGovernment: "",
+    domain: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${userId}`);
-        const userData = response.data.userDetails;
+        const response = await authFetch.get(
+          `${import.meta.env.VITE_API_URL}/get-affiliate-profile/${affiliateId}`
+        );
+        const userData = response.data.affiliateProfile;
         setFormData({
           firstName: userData.firstName || "",
           lastName: userData.lastName || "",
-          contact: userData.contact || "",
+          phoneNumber: userData.phoneNumber || "",
           state: userData.state || "",
           country: userData.country || "",
           image: userData.image || AvatarPlaceholder,
-          portfolio: userData.portfolio || "",
-          description: userData.description || "",
+          localGovernment: userData.localGovernment || "",
+          domain: userData.domain || "",
+          interestedCategory: userData.interestedCategory || "",
         });
       } catch (error) {
         console.error("Error fetching user details:", error);
         showToast(error.response?.data?.message || "An error occurred.");
       }
     };
-    if (userId) fetchUserData();
-  }, [userId]);
+    if (affiliateId) fetchUserData();
+  }, [affiliateId]);
 
+  const initialFormData = {
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    state: "",
+    country: "",
+    image: null,
+    interestedCategory: "",
+    localGovernment: "",
+    domain: "",
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
 
-      const response = await axios.post(
-        `/update-profile/${userId}`,
+      const response = await authFetch.post(
+        `${import.meta.env.VITE_API_URL}/affiliate/profile`,
         formDataToSend
       );
+
       showToast(response.data.message);
+      setFormData(initialFormData);
     } catch (error) {
       console.error("Error updating profile:", error);
       showToast(error.response?.data?.message || "An error occurred.");
@@ -75,17 +117,25 @@ const ProfilePage = () => {
     }
   };
 
+  // Handle form data change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle image change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const image = file ? URL.createObjectURL(file) : null;
     setFormData({ ...formData, image });
   };
 
+  // Handle interestedCategory change from Select dropdown
+  const handleCategoryChange = (selectedOption) => {
+    setFormData({ ...formData, interestedCategory: selectedOption.value });
+  };
+
+  // Handle country and state changes
   const handleCountryChange = (country) => {
     setFormData({ ...formData, country });
   };
@@ -119,6 +169,7 @@ const ProfilePage = () => {
                   />
                 </div>
               </div>
+
               <Row>
                 <Col md={6}>
                   <Form.Group controlId="formFirstName">
@@ -145,12 +196,12 @@ const ProfilePage = () => {
                   </Form.Group>
                 </Col>
                 <Col md={6}>
-                  <Form.Group controlId="formContact">
-                    <Form.Label>Phone</Form.Label>
+                  <Form.Group controlId="formPhoneNumber">
+                    <Form.Label>Phone Number</Form.Label>
                     <Form.Control
                       type="text"
-                      name="contact"
-                      value={formData.contact}
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
                       onChange={handleChange}
                       required
                     />
@@ -172,37 +223,62 @@ const ProfilePage = () => {
                     <RegionDropdown
                       country={formData.country}
                       value={formData.state}
-                      onChange={(val) => handleStateChange(val)}
+                      onChange={handleStateChange}
                       classes="form-control"
                     />
                   </Form.Group>
                 </Col>
+
+                {/* Interested Category Select */}
                 <Col md={6}>
-                  <Form.Group controlId="formPortfolio">
-                    <Form.Label>Short Portfolio</Form.Label>
+                  <Form.Group controlId="formInterestedCategory">
+                    <Form.Label>Interested Category</Form.Label>
+                    <Select
+                      options={templateSections.map((section) => ({
+                        value: section.name,
+                        label: section.name,
+                      }))}
+                      onChange={handleCategoryChange}
+                      placeholder="Select Category"
+                      value={
+                        formData.interestedCategory
+                          ? {
+                              value: formData.interestedCategory,
+                              label: formData.interestedCategory,
+                            }
+                          : { value: "", label: "Select Category" }
+                      }
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col md={6}>
+                  <Form.Group controlId="formLocalGovernment">
+                    <Form.Label>Local Government</Form.Label>
                     <Form.Control
                       type="text"
-                      name="portfolio"
-                      value={formData.portfolio}
+                      name="localGovernment"
+                      value={formData.localGovernment}
                       onChange={handleChange}
                       required
                     />
                   </Form.Group>
                 </Col>
+
                 <Col md={6}>
-                  <Form.Group controlId="formDescription">
-                    <Form.Label>Portfolio Description</Form.Label>
+                  <Form.Group controlId="formDomain">
+                    <Form.Label>Domain</Form.Label>
                     <Form.Control
-                      as="textarea"
-                      rows={3}
-                      name="description"
-                      value={formData.description}
+                      type="text"
+                      name="domain"
+                      value={formData.domain}
                       onChange={handleChange}
                       required
                     />
                   </Form.Group>
                 </Col>
-                <Col sm={12} className="mt-2"> 
+
+                <Col sm={12} className="mt-2">
                   <Button type="submit" variant="primary" disabled={loading}>
                     {loading ? "Updating..." : "Update Profile"}
                   </Button>
@@ -212,7 +288,6 @@ const ProfilePage = () => {
           </Card.Body>
         </Card>
       </Container>
-   
     </div>
   );
 };
