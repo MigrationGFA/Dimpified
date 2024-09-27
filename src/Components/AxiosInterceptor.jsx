@@ -43,9 +43,7 @@ const AxiosInterceptor = () => {
       return response;
     },
     (error) => {
-      if (error.response.status === 404) {
-        navigate("*");
-      } else if (error.response.status === 401) {
+      if (error.response.status === 401) {
         navigate("/creator/signin");
       }
 
