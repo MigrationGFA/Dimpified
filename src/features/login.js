@@ -1,162 +1,206 @@
-
-import { createSlice } from '@reduxjs/toolkit';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-
+import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
-    user: null,
-    isLoading: false,
-    error: null,
+  user: null,
+  isLoading: false,
+  error: null,
 };
 
-
-
 // creator login
-export const login = createAsyncThunk('authentication/login', async ({ email, password }, { rejectWithValue }) => {
+export const login = createAsyncThunk(
+  "authentication/login",
+  async ({ email, password }, { rejectWithValue }) => {
     // Make an API request to login the user with Axios
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/creator/login`, {
-            email,
-            password,
-        });
-
-        if (response.status === 200) {
-            // Login successful
-            const user = response.data;
-            return user;
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/creator/login`,
+        {
+          email,
+          password,
         }
-    }
-    catch (error) {
-        if (error.response && error.response.data.message) {
-            console.log("this is if error")
-            return rejectWithValue(error.response.data.message)
-        } else {
-            console.log("this is else error")
+      );
 
-            return rejectWithValue(error.message)
-        }
+      if (response.status === 200) {
+        // Login successful
+        const user = response.data;
+        return user;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        console.log("this is if error");
+        return rejectWithValue(error.response.data.message);
+      } else {
+        console.log("this is else error");
+
+        return rejectWithValue(error.message);
+      }
     }
-});
+  }
+);
 
 // enduser login
 
-export const ecosystemLogin = createAsyncThunk('ecosystemUser/login', async ({ email, password, domainName }, { rejectWithValue }) => {
+export const ecosystemLogin = createAsyncThunk(
+  "ecosystemUser/login",
+  async ({ email, password, domainName }, { rejectWithValue }) => {
     // Make an API request to login the user with Axios
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/ecosystem-user/login`, {
-            email,
-            password,
-            domainName
-        });
-
-        if (response.status === 200) {
-            // Login successful
-            const user = response.data;
-            return user;
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ecosystem-user/login`,
+        {
+          email,
+          password,
+          domainName,
         }
-    }
-    catch (error) {
-        if (error.response && error.response.data.msg) {
-            console.log("this is if error")
-            return rejectWithValue(error.response.data.msg)
-        } else {
-            console.log("this is else error")
+      );
 
-            return rejectWithValue(error.message)
-        }
+      if (response.status === 200) {
+        // Login successful
+        const user = response.data;
+        return user;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.msg) {
+        console.log("this is if error");
+        return rejectWithValue(error.response.data.msg);
+      } else {
+        console.log("this is else error");
+
+        return rejectWithValue(error.message);
+      }
     }
-});
+  }
+);
 
 // afiliate login
-export const affiliateLogin = createAsyncThunk('afiliate/login', async ({ email, password }, { rejectWithValue }) => {
+export const affiliateLogin = createAsyncThunk(
+  "afiliate/login",
+  async ({ email, password }, { rejectWithValue }) => {
     // Make an API request to login the user with Axios
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/affiliate/login`, {
-            email,
-            password,
-        });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/affiliate/login`,
+        {
+          email,
+          password,
+        }
+      );
 
+      if (response.status === 200) {
+        // Login successful
+        const user = response.data;
+        return user;
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        console.log("this is if error");
+        return rejectWithValue(error.response.data.message);
+      } else {
+        console.log("this is else error");
+
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const emailLogin = createAsyncThunk(
+    'authentication/emailLogin',
+    async (email, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/gfa-creator-login/${email}`);
+  
         if (response.status === 200) {
-            // Login successful
-            const user = response.data;
-            return user;
+          return response.data;
         }
-    }
-    catch (error) {
+      } catch (error) {
         if (error.response && error.response.data.message) {
-            console.log("this is if error")
-            return rejectWithValue(error.response.data.message)
+          return rejectWithValue(error.response.data.message);
         } else {
-            console.log("this is else error")
-
-            return rejectWithValue(error.message)
+          return rejectWithValue('An unexpected error occurred');
         }
+      }
     }
-});
+  );
+
 
 export const authenticationSlice = createSlice({
-    name: 'authentication',
-    initialState,
-    reducers: {
-        logout: (state) => {
-            // Reset user data when logging out
-            state.user = null;
-            state.isLoading = false;
-            state.error = null;
-        },
-        updateAccessToken: (state, action) => {
+  name: "authentication",
+  initialState,
+  reducers: {
+    logout: (state) => {
+      // Reset user data when logging out
+      state.user = null;
+      state.isLoading = false;
+      state.error = null;
+    },
+    updateAccessToken: (state, action) => {
       state.user.accessToken = action.payload;
     },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(login.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.user = action.payload;
-                state.error = "";
-            })
-            .addCase(login.rejected, (state, action) => {
-                state.isLoading = false;
-                state.user = null;
-                state.error = action.payload;
-            })
-             // Handle end-user login
-            .addCase(ecosystemLogin.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(ecosystemLogin.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.user = action.payload;
-                state.error = "";
-            })
-            .addCase(ecosystemLogin.rejected, (state, action) => {
-                state.isLoading = false;
-                state.user = null;
-                state.error = action.payload;
-            })
-            // handle afiliate login
-            .addCase(affiliateLogin.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(affiliateLogin.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.user = action.payload;
-                state.error = "";
-            })
-            .addCase(affiliateLogin.rejected, (state, action) => {
-                state.isLoading = false;
-                state.user = null;
-                state.error = action.payload;
-            })
-    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = "";
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload;
+      })
+      // Handle end-user login
+      .addCase(ecosystemLogin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(ecosystemLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = "";
+      })
+      .addCase(ecosystemLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload;
+      })
+      // handle afiliate login
+      .addCase(affiliateLogin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(affiliateLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = "";
+      })
+      .addCase(affiliateLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload;
+      })
+
+      // Handle email login
+      .addCase(emailLogin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(emailLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(emailLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload;
+      });
+  },
 });
 
 export const { logout, updateAccessToken } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
-

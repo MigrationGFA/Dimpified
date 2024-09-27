@@ -9,7 +9,7 @@ const RecentEcosystems = ({ title }) => {
   const [ecosystems, setEcosystems] = useState([]);
   const authFetch = AxiosInterceptor();
   const creatorId = useSelector(
-    (state) => state.authentication.user?.data?.id
+    (state) => state.authentication.user?.data?.AffiliateId
   );
 
   useEffect(() => {

@@ -38,7 +38,7 @@ const AffiliateOnboarding = () => {
   const [loading, setLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const user = useSelector((state) => state.authentication.user);
-  const creatorId = user?.data?.id; // Affiliate ID from user data
+  const creatorId = user?.data?.AffiliateId; 
   const AffiliateId = useSelector(
     (state) => state.authentication.user?.data?.affiliateId
   );
