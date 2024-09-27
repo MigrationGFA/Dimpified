@@ -208,6 +208,7 @@ import AffiliateMyUser from "../agent-page/AgentDashboard/AgentMyUser";
 import AffiliateContractPage from "../agent-page/AgentDashboard/AgentContractPage";
 import AffiliateWithdrawPayment from "../agent-page/AgentDashboard/WithdrawRequest";
 import AffiliateOnboarding from "../agent-page/AgentDashboard/AgentOnboarding";
+import Error from "../Components/ErrorPage";
 
 const AllRoutes = () => {
   const ecosystemDomain = getSubdomain();
@@ -240,8 +241,6 @@ const AllRoutes = () => {
       <Route path="/technology-services" element={<TechnologyServices />} />
       <Route path="/event-services" element={<EventServices />} />
       <Route path="/barbers" element={<BarberLanding />} />
-
-      
       <Route path="/salon-template" element={<SalonTemplate />} />
       <Route path="/event-template" element={<EventTemplate />} />
       <Route path="/upskill-template" element={<StateUpskilling />} />
@@ -253,7 +252,6 @@ const AllRoutes = () => {
       <Route path="/gym-template" element={<GymTemplate />} />
       <Route path="/catering-template" element={<CateringTemplate />} />
       <Route path="/barber-three" element={<BarberTemplate3 />} />
-
       <Route path="/creator/signin/" element={<UserSignIn />} />
       <Route path="/creator/signup" element={<UserSignUp />} />
       <Route path="/creator/forget-password" element={<UserForgetPassword />} />
@@ -267,7 +265,6 @@ const AllRoutes = () => {
       />
       <Route path="/creator/verification" element={<VerifyEmail />} />
       <Route path="/creator/OnboardTwo" element={<OnboardTwo />} />
-
       <Route
         path="/creator/dashboard/New-Ecosystem"
         element={<NewEcosystem />}
@@ -559,7 +556,6 @@ const AllRoutes = () => {
       />
       <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
       <Route path="/dimp/agent-page" element={<AgentPage />} />
-
       <Route element={<AffliateDashboardIndex />}>
         <Route
           path="/agent/dashboard/overview"
@@ -580,13 +576,12 @@ const AllRoutes = () => {
         />
         <Route path="/agent/dashboard/profile" element={<ProfilePage />} />
       </Route>
-      
       <Route path="/dimp/agent-page/auth" element={<AgentPageAuthForm />} />
       <Route path="/dimp/agent-page" element={<AgentPage />} />
-
       <Route path="/affiliate/verify-email" element={<EmailVerify />} />
       <Route path="/affiliate/reset-password" element={<ResetPassword />} />
       <Route path="/registration-success" element={<RegistrationSuccess />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 };

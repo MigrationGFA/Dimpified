@@ -14,9 +14,6 @@ const AxiosInterceptor = () => {
 
   authFetch.interceptors.request.use(
     (config) => {
-      if (selector.user === null) {
-        navigate("/creator/signin");
-      }
       const accessToken = selector.accessToken;
       const refreshToken = selector.refreshToken;
 

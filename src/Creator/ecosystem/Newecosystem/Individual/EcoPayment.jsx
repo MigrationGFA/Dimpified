@@ -1024,7 +1024,7 @@ const EcoPayment = ({ plan }) => {
       //plan: "PLN_marhiqmjkhdm3ta",
       currency: "NGN",
       text: loading ? "Processing" : "Paystack",
-      payment_options: "card,mobilemoney,ussd",
+      payment_options: "card",
       metadata: {
         custom_fields: [
           {
