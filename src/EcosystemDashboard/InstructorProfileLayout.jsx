@@ -80,9 +80,9 @@ const ProfileLayout = (props) => {
                 <div className="d-flex">
                   <Link
                     className="btn btn-primary d-xl-none d-lg-none d-md-none text-inherit fw-bold fs-5 float-start py-1"
-                    to="/Instructordashboard/instructor-add-new-course"
+                    to={`/${ecosystemDomain}/Ecosystemdashboard/Add-New-Service`}
                   >
-                    Create New Course
+                    Create New Service
                   </Link>
                 </div>
                 <Navbar.Toggle
