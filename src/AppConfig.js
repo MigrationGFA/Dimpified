@@ -1,11 +1,11 @@
 /* eslint-disable */
 export const settings = {
 	app: {
-		name: 'Geeks React',
-		version: '2.2.1'
+		name: 'Dimpified',
+		version: '1.0.1'
 	},
 	theme: {
-		skin: 'light' // possible values are light, dark
+		skin: 'light' 
 	}
 };
 export default { settings };
