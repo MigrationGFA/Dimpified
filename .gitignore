@@ -12,7 +12,7 @@ dist
 dist-ssr
 
 # Environment and local configurations
-.env
+*.env
 *.local
 
 # Ignore IDE/editor specific files
