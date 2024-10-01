@@ -241,21 +241,6 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
                 >
                   GALLERY
                 </Nav.Link>
-
-                <Nav.Link
-                  className="text-dark"
-                  style={{ fontWeight: "600", fontSize: "1rem" }}
-                  href="#crew"
-                >
-                  CREW
-                </Nav.Link>
-                <Nav.Link
-                  className="text-dark"
-                  style={{ fontWeight: "600", fontSize: "1rem" }}
-                  href="#testimonials"
-                >
-                  TESTIMONIALS
-                </Nav.Link>
               </Nav>
               <a href="#services">
                 <Button variant="dark" className="btn-lg">
@@ -550,7 +535,7 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
         </section>
 
         {/* Crew Section */}
-        <section
+        {/* <section
           id="crew"
           className="py-lg-10 px-3 py-3"
           style={{ height: "inherit", backgroundColor: "#f1f1f1" }}
@@ -672,9 +657,9 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
 
-        {/* Testimonials Section */}
+        {/* Testimonials Section
         <section
           id="testimonials"
           className="py-3 px-3 py-lg-10"
@@ -729,7 +714,7 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
               ))}
             </Row>
           </Container>
-        </section>
+        </section> */}
 
         {/* Footer */}
         <footer
@@ -739,14 +724,14 @@ const Template1 = ({ details, subdomain, ecosystemDetails }) => {
             textAlign: "center",
           }}
         >
-          <Container className="py-lg-14 px-3 py-4">
+          <Container className="py-lg-4 px-3 py-4">
             <h1 className="display-3 fw-bold mb-3 text-white">
               <span className=" px-3 px-md-0 ">
                 {sanitizeContent(details.footer.header)}
               </span>
             </h1>
-            <p>&copy; {sanitizeContent(details.footer.title1)}</p>
-            <p>{sanitizeContent(details.footer.paragraph1)}</p>
+            {/* <p>&copy; {sanitizeContent(details.footer.title1)}</p> */}
+            {/* <p>{sanitizeContent(details.footer.paragraph1)}</p> */}
             <Nav className="justify-content-center">
               {ecosystemDetails.socialMedia.length > 0 ? (
                 <Col lg={3} md={4} sm={6} className="last-paragraph-no-margin ">
